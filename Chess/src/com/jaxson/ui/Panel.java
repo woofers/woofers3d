@@ -1,0 +1,33 @@
+package com.jaxson.ui;
+
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.LayoutManager;
+
+public class Panel extends JPanel
+{
+	public Panel()
+	{
+		this(new FlowLayout());
+	}
+
+	public Panel(LayoutManager layout)
+	{
+		super(layout);
+	}
+
+	public void draw()
+	{
+		revalidate();
+		repaint();
+	}
+
+	public void setPanelSize(int width, int height)
+	{
+		setSize(width, height);
+		setMinimumSize(new Dimension(width, height));
+		setMaximumSize(new Dimension(width, height));
+		setPreferredSize(new Dimension(width, height));
+	}
+}
