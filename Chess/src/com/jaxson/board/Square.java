@@ -38,7 +38,7 @@ class MyMouseAdapter<T extends Panel> extends MouseAdapter
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		object.setBackground(Color.GREEN);
+		object.setBackground(Color.BLUE);
 	}
 
 	@Override
