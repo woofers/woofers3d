@@ -22,6 +22,6 @@ class MyRunnable<T extends Window> implements Runnable
 
 	public void run()
 	{
-		T window = new T(width, height);
+		GameWindow window = new GameWindow(width, height);
 	}
 }

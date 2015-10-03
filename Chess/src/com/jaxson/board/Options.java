@@ -1,19 +1,34 @@
 package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
+import java.awt.Dimension;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class Options extends Panel
 {
-	private JButton[] buttons;
+	private JButton button;
+	private JComboBox difficulty;
+	private JComboBox gridSize;
+
 
 	public Options()
 	{
 		super();
-		buttons = new JButton[2];
-		buttons[0] = new JButton("Reset");
-		add(buttons[0]);
-		buttons[1] = new JButton("2 Player");
-		add(buttons[1]);
+		difficulty = new JComboBox();
+		difficulty.addItem("Easy");
+		difficulty.addItem("Hard");
+		difficulty.setPreferredSize(new Dimension(80, 20));
+		add(difficulty);
+
+		gridSize = new JComboBox();
+		gridSize.addItem("6 x 6");
+		gridSize.addItem("8 x 8");
+		gridSize.addItem("10 X 10");
+		gridSize.setPreferredSize(new Dimension(80, 20));
+		add(gridSize);
+
+		button = new JButton("Reset");
+		add(button);
 	}
 }
