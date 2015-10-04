@@ -6,28 +6,49 @@ import java.awt.GridLayout;
 
 public class Board extends Panel
 {
-	private static final int rowSize = 8;
-
+	private int gridWidth, gridHeight;
 	private Square[][] squares;
 	private Color[] colors;
 
 	public Board()
 	{
-		super(new GridLayout(rowSize, rowSize));
+		super();
 
 		colors = new Color[2];
 		colors[0] = Color.WHITE;
 		colors[1] = Color.BLACK;
+		gridWidth = 0;
+		gridHeight = 0;
+	}
 
-		squares = new Square[rowSize][rowSize];
-		for (int x = 0; x < rowSize; x ++)
+	public void createGrid(int width, int height)
+	{
+		gridWidth = width;
+		gridHeight = height;
+
+		setLayout(new GridLayout(gridWidth, gridHeight));
+		squares = new Square[gridWidth][gridHeight];
+		for (int x = 0; x < gridWidth; x ++)
 		{
-			for (int y = 0; y < rowSize; y ++)
+			for (int y = 0; y < gridHeight; y ++)
 			{
 				squares[x][y] = new Square(getColor(x, y));
 				add(squares[x][y]);
 			}
 		}
+	}
+
+	public void removeGrid()
+	{
+		for (int x = 0; x < gridWidth; x ++)
+		{
+			for (int y = 0; y < gridHeight; y ++)
+			{
+				remove(squares[x][y]);
+				squares[x][y] = null;
+			}
+		}
+		draw();
 	}
 
 	private Color getColor(int x, int y)

@@ -9,28 +9,33 @@ import java.awt.event.MouseEvent;
 
 public class Square extends Panel
 {
-	//private Point location;
-	private Boolean isEmtpy;
-	private Square leftTop, rightTop, leftBottom, rightBotton;
+	private Piece piece;
 
 	public Square(Color color)
 	{
 		super();
 		setBackground(color);
-		addMouseListener(new MyMouseAdapter<Square>(this));
+		addMouseListener(new MyMouseAdapter(this));
+		piece = new Piece(Piece.KING, Piece.WHITE);
+		// /add(piece);
 	}
 
 	public Color getPlayer()
 	{
 		return null;
 	}
+
+	public Boolean isEmpty()
+	{
+		return null;
+	}
 }
 
-class MyMouseAdapter<T extends Panel> extends MouseAdapter
+class MyMouseAdapter extends MouseAdapter
 {
-	private T object;
+	private Square object;
 
-	public MyMouseAdapter(T object)
+	public MyMouseAdapter(Square object)
 	{
 		this.object = object;
 	}

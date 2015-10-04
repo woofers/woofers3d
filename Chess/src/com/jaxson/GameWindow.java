@@ -20,7 +20,7 @@ public class GameWindow extends Window
 		scaleContainer = new ScaleContainer<Board>(board);
 		add(scaleContainer, BorderLayout.CENTER);
 
-		options = new Options();
+		options = new Options(board);
 		options.setPreferredSize(new Dimension(100, 100));
 		add(options, BorderLayout.LINE_END);
 

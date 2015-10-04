@@ -1,9 +1,9 @@
 <project name="Checkers" basedir="." default="main">
 
     <property name="build.dir"   value="bin"/>
-    <property name="src.dir"     value="src"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
+    <property name="src.dir"     value="src"/>
     <property name="main-class"  value="com.jaxson.Main"/>
 
     <target name="clean">
