@@ -8,16 +8,15 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Square extends Panel
+public class Spot extends Panel
 {
 	private Piece piece;
 
-	public Square(Color color)
+	public Spot(Color color)
 	{
 		super(new BorderLayout());
 		setBackground(color);
 		addMouseListener(new MyMouseAdapter(this));
-		createPiece(Piece.KING, Piece.WHITE);
 	}
 
 	public void createPiece(int type, int color)
@@ -52,9 +51,9 @@ public class Square extends Panel
 
 class MyMouseAdapter extends MouseAdapter
 {
-	private Square object;
+	private Spot object;
 
-	public MyMouseAdapter(Square object)
+	public MyMouseAdapter(Spot object)
 	{
 		this.object = object;
 	}

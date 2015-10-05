@@ -12,6 +12,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 	public ScaleContainer(T panel)
 	{
 		super();
+		setOpaque(false);
 		add(panel);
 		aspectRatio = getAspectRatio(panel);
 		this.panel = panel;

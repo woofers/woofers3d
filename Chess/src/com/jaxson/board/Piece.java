@@ -19,6 +19,8 @@ public class Piece extends Panel
 	public static final int WHITE  = 1;
 	public static final int BLACK  = 2;
 
+	private static final double SCALE = 0.8;
+
 	public int color;
 	public int type;
 	private Image image;
@@ -37,12 +39,23 @@ public class Piece extends Panel
 		}
 		catch (IOException ex)
 		{
+
 		}
+	}
+
+	private int toInt(double i)
+	{
+		return (int)(Math.floor(i));
 	}
 
 	@Override
 	public void paint(Graphics g)
 	{
-		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);
+		int width, height, x, y;
+		width = toInt(getWidth() * SCALE);
+		height = toInt(getHeight() * SCALE);
+		x = toInt((getWidth() - width) / 2);
+		y = toInt((getHeight() - height) / 2);
+		g.drawImage(image, x, y, width, height, null);
 	}
 }

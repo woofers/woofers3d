@@ -6,8 +6,10 @@ import java.awt.GridLayout;
 
 public class Board extends Panel
 {
+	private static final int size = 8;
+
 	private int gridWidth, gridHeight;
-	private Square[][] squares;
+	private Spot[][] board;
 	private Color[] colors;
 
 	public Board()
@@ -27,17 +29,48 @@ public class Board extends Panel
 		gridHeight = height;
 
 		setLayout(new GridLayout(gridWidth, gridHeight));
-		squares = new Square[gridWidth][gridHeight];
-		for (int x = 0; x < gridWidth; x ++)
+		board = new Spot[gridWidth][gridHeight];
+		for (int y = 0; y < gridHeight; y ++)
 		{
-			for (int y = 0; y < gridHeight; y ++)
+			for (int x = 0; x < gridWidth; x ++)
 			{
-				squares[x][y] = new Square(getColor(x, y));
-				add(squares[x][y]);
+				board[x][y] = new Spot(getColor(x, y));
+				add(board[x][y]);
 			}
 		}
-		squares[0][0].draw();
-		System.out.println(squares[0][0].getSize());
+		addPieces();
+	}
+
+	private void addPieces()
+	{
+		board[0][gridHeight - size].createPiece(Piece.ROOK, Piece.BLACK);
+		board[1][gridHeight - size].createPiece(Piece.KNIGHT, Piece.BLACK);
+		board[2][gridHeight - size].createPiece(Piece.BISHOP, Piece.BLACK);
+		board[3][gridHeight - size].createPiece(Piece.QUEEN, Piece.BLACK);
+		board[4][gridHeight - size].createPiece(Piece.KING, Piece.BLACK);
+		board[5][gridHeight - size].createPiece(Piece.BISHOP, Piece.BLACK);
+		board[6][gridHeight - size].createPiece(Piece.KNIGHT, Piece.BLACK);
+		board[7][gridHeight - size].createPiece(Piece.ROOK, Piece.BLACK);
+		for (int x = 0; x < gridWidth; x ++)
+		{
+			board[x][gridHeight - size + 1].createPiece(Piece.PAWN, Piece.BLACK);
+		}
+
+		int start = gridWidth - size;
+		for (int x = start; x < gridWidth - (start); x ++)
+		{
+			board[x][gridHeight - 2].createPiece(Piece.PAWN, Piece.WHITE);
+		}
+
+
+		board[0][gridHeight - 1].createPiece(Piece.ROOK, Piece.WHITE);
+		board[1][gridHeight - 1].createPiece(Piece.KNIGHT, Piece.WHITE);
+		board[2][gridHeight - 1].createPiece(Piece.BISHOP, Piece.WHITE);
+		board[3][gridHeight - 1].createPiece(Piece.QUEEN, Piece.WHITE);
+		board[4][gridHeight - 1].createPiece(Piece.KING, Piece.WHITE);
+		board[5][gridHeight - 1].createPiece(Piece.BISHOP, Piece.WHITE);
+		board[6][gridHeight - 1].createPiece(Piece.KNIGHT, Piece.WHITE);
+		board[7][gridHeight - 1].createPiece(Piece.ROOK, Piece.WHITE);
 	}
 
 	public void removeGrid()
@@ -46,8 +79,8 @@ public class Board extends Panel
 		{
 			for (int y = 0; y < gridHeight; y ++)
 			{
-				remove(squares[x][y]);
-				squares[x][y] = null;
+				remove(board[x][y]);
+				board[x][y] = null;
 			}
 		}
 		draw();
