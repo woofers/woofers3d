@@ -9,14 +9,21 @@ import javax.swing.JComboBox;
 public class Options extends Panel
 {
 	private Board board;
-	private JButton reset;
+	private JComboBox playerMode;
 	private JComboBox difficulty;
 	private JComboBox gridSize;
+	private JButton reset;
 
 	public Options(Board board)
 	{
 		super();
 		this.board = board;
+
+		playerMode = new JComboBox();
+		playerMode.addItem("1 Player");
+		playerMode.addItem("2 Player");
+		playerMode.setPreferredSize(new Dimension(80, 20));
+		add(playerMode);
 
 		difficulty = new JComboBox();
 		difficulty.addItem("Easy");

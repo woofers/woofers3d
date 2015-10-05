@@ -15,8 +15,8 @@ public class Board extends Panel
 		super();
 
 		colors = new Color[2];
-		colors[0] = Color.WHITE;
-		colors[1] = Color.BLACK;
+		colors[0] = new Color(209, 139, 71);
+		colors[1] = new Color(255, 206, 158);
 		gridWidth = 0;
 		gridHeight = 0;
 	}
@@ -36,6 +36,8 @@ public class Board extends Panel
 				add(squares[x][y]);
 			}
 		}
+		squares[0][0].draw();
+		System.out.println(squares[0][0].getSize());
 	}
 
 	public void removeGrid()

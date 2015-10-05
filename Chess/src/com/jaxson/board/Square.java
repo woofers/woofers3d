@@ -1,6 +1,7 @@
 package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,21 +14,39 @@ public class Square extends Panel
 
 	public Square(Color color)
 	{
-		super();
+		super(new BorderLayout());
 		setBackground(color);
 		addMouseListener(new MyMouseAdapter(this));
-		piece = new Piece(Piece.KING, Piece.WHITE);
-		// /add(piece);
+		createPiece(Piece.KING, Piece.WHITE);
 	}
 
-	public Color getPlayer()
+	public void createPiece(int type, int color)
 	{
-		return null;
+		removePiece();
+		piece = new Piece(type, color);
+		add(piece);
+	}
+
+	public void setPiece(Piece piece)
+	{
+		removePiece();
+		this.piece = piece;
+		add(piece);
+	}
+
+	public void removePiece()
+	{
+		if (isEmpty())
+		{
+			return;
+		}
+		remove(piece);
+		piece = null;
 	}
 
 	public Boolean isEmpty()
 	{
-		return null;
+		return piece == null;
 	}
 }
 
