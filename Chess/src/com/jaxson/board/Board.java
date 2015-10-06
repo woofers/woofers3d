@@ -7,18 +7,15 @@ import java.awt.GridLayout;
 public class Board extends Panel
 {
 	private static final int size = 8;
+	private static final Color light = new Color(209, 139, 71);
+	private static final Color dark = new Color(255, 206, 158);
 
 	private int gridWidth, gridHeight;
 	private Spot[][] board;
-	private Color[] colors;
 
 	public Board()
 	{
 		super();
-
-		colors = new Color[2];
-		colors[0] = new Color(209, 139, 71);
-		colors[1] = new Color(255, 206, 158);
 		gridWidth = 0;
 		gridHeight = 0;
 	}
@@ -38,7 +35,31 @@ public class Board extends Panel
 				add(board[x][y]);
 			}
 		}
+		Spot leftSpot, rightSpot, topSpot, bottomSpot;
+		for (int y = 0; y < gridHeight; y ++)
+		{
+			for (int x = 0; x < gridWidth; x ++)
+			{
+				leftSpot = getSpot(x - 1, y);
+				rightSpot = getSpot(x + 1, y);
+				topSpot = getSpot(x, y - 1);
+				bottomSpot = getSpot(x, y + 1);
+				board[x][y].setLink(leftSpot, rightSpot, topSpot, bottomSpot);
+			}
+		}
 		addPieces();
+	}
+
+	private Spot getSpot(int x, int y)
+	{
+		if (x >= 0 && x < gridWidth)
+		{
+			if (y >= 0 && y < gridHeight)
+			{
+				return board[x][y];
+			}
+		}
+		return null;
 	}
 
 	private void addPieces()
@@ -62,7 +83,6 @@ public class Board extends Panel
 		for (int x = start; x < start + size / 2; x ++)
 		{
 			board[x][row].createPiece(Piece.PAWN, color);
-
 		}
 	}
 
@@ -112,15 +132,15 @@ public class Board extends Panel
 		{
 			if (isEven(x))
 			{
-				return colors[1];
+				return dark;
 			}
-			return colors[0];
+			return light;
 		}
 		if (isEven(x))
 		{
-			return colors[0];
+			return light;
 		}
-		return colors[1];
+		return dark;
 	}
 
 	private int zero(int i)

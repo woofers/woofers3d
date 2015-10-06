@@ -11,11 +11,14 @@ import java.awt.event.MouseEvent;
 public class Spot extends Panel
 {
 	private static final Color selectedColor = new Color(43, 177, 94);
-	private static final Color holdColor = selectedColor.darker();
+	private static final Color holdSelectedColor = selectedColor.darker();
+	private static final Color moveColor = new Color(224, 65, 100);
+	private static final Color holdMoveColor = moveColor.darker();
 
-	public Board board;
+	private Board board;
 	private Piece piece;
 	private Color color;
+	private Spot leftSpot, rightSpot, topSpot, bottomSpot;
 
 	public Spot(Color color, Board board)
 	{
@@ -26,16 +29,12 @@ public class Spot extends Panel
 		addMouseListener(new MyMouseAdapter(this));
 	}
 
-	public void toggleSelect()
+	public void setLink(Spot leftSpot, Spot rightSpot, Spot topSpot, Spot bottomSpot)
 	{
-		if (isSelected())
-		{
-			deselect();
-		}
-		else
-		{
-			select();
-		}
+		this.leftSpot = leftSpot;
+		this.rightSpot = rightSpot;
+		this.topSpot = topSpot;
+		this.bottomSpot = bottomSpot;
 	}
 
 	public void select()
@@ -43,6 +42,7 @@ public class Spot extends Panel
 		if (!isEmpty())
 		{
 			setBackground(selectedColor);
+			displayMoves();
 		}
 	}
 
@@ -50,8 +50,18 @@ public class Spot extends Panel
 	{
 		if (!isEmpty())
 		{
-			setBackground(holdColor);
+			setBackground(holdSelectedColor);
 		}
+	}
+
+	public void moveSelect()
+	{
+		setBackground(moveColor);
+	}
+
+	public void holdMoveSelect()
+	{
+		setBackground(holdMoveColor);
 	}
 
 	public void deselect()
@@ -61,7 +71,64 @@ public class Spot extends Panel
 
 	public Boolean isSelected()
 	{
-		return getBackground() == selectedColor || getBackground() == holdColor;
+		Color color = getBackground();
+		return color == selectedColor || color == holdSelectedColor;
+	}
+
+	public Boolean isMoveSelected()
+	{
+		Color color = getBackground();
+		return color == moveColor || color == holdMoveColor;
+	}
+
+	private void displayMoves()
+	{
+		Spot[] legalMoves = getLegalMoves();
+		for (int i = 0; i < legalMoves.length; i ++)
+		{
+			if (legalMoves[i] != null)
+			{
+				legalMoves[i].moveSelect();
+			}
+		}
+	}
+
+	private void hideMoves()
+	{
+		Spot[] legalMoves = getLegalMoves();
+		for (int i = 0; i < legalMoves.length; i ++)
+		{
+			if (legalMoves[i] != null)
+			{
+				legalMoves[i].deselect();
+			}
+		}
+	}
+
+	private Spot[] getLegalMoves()
+	{
+		Spot[] moves = new Spot[7];
+
+		switch (piece.type)
+		{
+			case Piece.KING:
+				moves = getSurrondingSpots();
+				break;
+			case Piece.QUEEN:
+				break;
+			case Piece.ROOK:
+
+				break;
+			case Piece.BISHOP:
+				break;
+			case Piece.KNIGHT:
+				break;
+			case Piece.PAWN:
+				break;
+			default:
+				break;
+		}
+		return moves;
 	}
 
 	public void createPiece(int type, int color)
@@ -92,6 +159,129 @@ public class Spot extends Panel
 	{
 		return piece == null;
 	}
+
+	private Spot[] getSurrondingSpots()
+	{
+		Spot[] spots = new Spot[7];
+		spots[0] = getTopLeft();
+		spots[1] = getTopMiddle();
+		spots[2] = getTopRight();
+		spots[3] = getMiddleLeft();
+		spots[4] = getMiddleRight();
+		spots[5] = getBottomLeft();
+		spots[6] = getBottomMiddle();
+		spots[7] = getBottomRight();
+		return spots;
+	}
+
+	public Spot[] getAllTopLeft()
+	{
+		return null;
+	}
+
+	public Spot[] getAllTopMiddle()
+	{
+		return null;
+	}
+
+	public Spot[] getAllTopRight()
+	{
+		return null;
+	}
+
+	public Spot[] getAllMiddleLeft()
+	{
+		return null;
+	}
+
+	public Spot[] getAllMiddleRight()
+	{
+		return null;
+	}
+
+	public Spot[] getAllBottomLeft()
+	{
+		return null;
+	}
+
+	public Spot[] getAllBottomMiddle()
+	{
+		return null;
+	}
+
+	public Spot[] getAllBottomRight()
+	{
+		return null;
+	}
+
+	public Spot getTopLeft()
+	{
+		return topSpot.getMiddleLeft();
+	}
+
+	public Spot getTopMiddle()
+	{
+		return topSpot;
+	}
+
+	public Spot getTopRight()
+	{
+		return topSpot.getMiddleRight();
+	}
+
+	public Spot getMiddleLeft()
+	{
+		return leftSpot;
+	}
+
+	public Spot getMiddleRight()
+	{
+		return rightSpot;
+	}
+
+	public Spot getBottomLeft()
+	{
+		return bottomSpot.getMiddleLeft();
+	}
+
+	public Spot getBottomMiddle()
+	{
+		return bottomSpot;
+	}
+
+	public Spot getBottomRight()
+	{
+		return bottomSpot.getMiddleRight();
+	}
+
+	public void onCick()
+	{
+		if (isSelected())
+		{
+			board.deselect();
+		}
+		else if (isMoveSelected())
+		{
+
+		}
+		else
+		{
+			board.deselect();
+			holdSelect();
+		}
+	}
+
+	public void onRelease()
+	{
+		if (isSelected())
+		{
+			select();
+		}
+		else if (isMoveSelected())
+		{
+
+		}
+	}
 }
 
 class MyMouseAdapter extends MouseAdapter
@@ -106,13 +296,12 @@ class MyMouseAdapter extends MouseAdapter
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		object.board.deselect();
-		object.holdSelect();
+		object.onCick();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		object.select();
+		object.onRelease();
 	}
 }
