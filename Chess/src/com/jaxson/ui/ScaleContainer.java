@@ -7,14 +7,12 @@ import java.awt.event.ComponentEvent;
 public class ScaleContainer<T extends Panel> extends Panel
 {
 	private T panel;
-	private double aspectRatio;
 
 	public ScaleContainer(T panel)
 	{
 		super();
 		setOpaque(false);
 		add(panel);
-		aspectRatio = getAspectRatio(panel);
 		this.panel = panel;
 		addComponentListener(new MyComponentAdapter<ScaleContainer>(this));
 	}
@@ -22,7 +20,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 	public void keepAspectRatio()
 	{
 		int size =  Math.min(getWidth(), getHeight());
-		panel.setPanelSize(size, (int)(size / aspectRatio));
+		panel.setPanelSize(size, (int)(size / getAspectRatio(panel)));
 		draw();
 	}
 

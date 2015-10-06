@@ -34,7 +34,7 @@ public class Board extends Panel
 		{
 			for (int x = 0; x < gridWidth; x ++)
 			{
-				board[x][y] = new Spot(getColor(x, y));
+				board[x][y] = new Spot(getColor(x, y), this);
 				add(board[x][y]);
 			}
 		}
@@ -43,34 +43,43 @@ public class Board extends Panel
 
 	private void addPieces()
 	{
-		board[0][gridHeight - size].createPiece(Piece.ROOK, Piece.BLACK);
-		board[1][gridHeight - size].createPiece(Piece.KNIGHT, Piece.BLACK);
-		board[2][gridHeight - size].createPiece(Piece.BISHOP, Piece.BLACK);
-		board[3][gridHeight - size].createPiece(Piece.QUEEN, Piece.BLACK);
-		board[4][gridHeight - size].createPiece(Piece.KING, Piece.BLACK);
-		board[5][gridHeight - size].createPiece(Piece.BISHOP, Piece.BLACK);
-		board[6][gridHeight - size].createPiece(Piece.KNIGHT, Piece.BLACK);
-		board[7][gridHeight - size].createPiece(Piece.ROOK, Piece.BLACK);
-		for (int x = 0; x < gridWidth; x ++)
+		createBottomRow(0, Piece.BLACK);
+		createBottomRow(gridHeight - 1, Piece.WHITE);
+		createPawns(1, Piece.BLACK);
+		createPawns(gridHeight - 2, Piece.WHITE);
+	}
+
+	private void createPawns(int row, int color)
+	{
+		int delta, start;
+		delta = gridWidth - size;
+		start = zero(size / 2 + delta / 2);
+		for (int x = start; x > start - size / 2; x --)
 		{
-			board[x][gridHeight - size + 1].createPiece(Piece.PAWN, Piece.BLACK);
+			board[x][row].createPiece(Piece.PAWN, color);
 		}
-
-		int start = gridWidth - size;
-		for (int x = start; x < gridWidth - (start); x ++)
+		start ++;
+		for (int x = start; x < start + size / 2; x ++)
 		{
-			board[x][gridHeight - 2].createPiece(Piece.PAWN, Piece.WHITE);
+			board[x][row].createPiece(Piece.PAWN, color);
+
 		}
+	}
 
-
-		board[0][gridHeight - 1].createPiece(Piece.ROOK, Piece.WHITE);
-		board[1][gridHeight - 1].createPiece(Piece.KNIGHT, Piece.WHITE);
-		board[2][gridHeight - 1].createPiece(Piece.BISHOP, Piece.WHITE);
-		board[3][gridHeight - 1].createPiece(Piece.QUEEN, Piece.WHITE);
-		board[4][gridHeight - 1].createPiece(Piece.KING, Piece.WHITE);
-		board[5][gridHeight - 1].createPiece(Piece.BISHOP, Piece.WHITE);
-		board[6][gridHeight - 1].createPiece(Piece.KNIGHT, Piece.WHITE);
-		board[7][gridHeight - 1].createPiece(Piece.ROOK, Piece.WHITE);
+	private void createBottomRow(int row, int color)
+	{
+		int delta, queen, king;
+		delta = gridWidth - size;
+		queen = zero(size / 2 + delta / 2);
+		king = queen + 1;
+		board[queen - 3][row].createPiece(Piece.ROOK, color);
+		board[queen - 2][row].createPiece(Piece.KNIGHT, color);
+		board[queen - 1][row].createPiece(Piece.BISHOP, color);
+		board[queen][row].createPiece(Piece.QUEEN, color);
+		board[king][row].createPiece(Piece.KING, color);
+		board[king + 1][row].createPiece(Piece.BISHOP, color);
+		board[king + 2][row].createPiece(Piece.KNIGHT, color);
+		board[king + 3][row].createPiece(Piece.ROOK, color);
 	}
 
 	public void removeGrid()
@@ -84,6 +93,17 @@ public class Board extends Panel
 			}
 		}
 		draw();
+	}
+
+	public void deselect()
+	{
+		for (int y = 0; y < gridHeight; y ++)
+		{
+			for (int x = 0; x < gridWidth; x ++)
+			{
+				board[x][y].deselect();
+			}
+		}
 	}
 
 	private Color getColor(int x, int y)
@@ -101,6 +121,15 @@ public class Board extends Panel
 			return colors[0];
 		}
 		return colors[1];
+	}
+
+	private int zero(int i)
+	{
+		if (i <= 0)
+		{
+			return 0;
+		}
+		return i - 1;
 	}
 
 	private boolean isEven(int i)

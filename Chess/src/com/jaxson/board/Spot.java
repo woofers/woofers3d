@@ -10,13 +10,58 @@ import java.awt.event.MouseEvent;
 
 public class Spot extends Panel
 {
-	private Piece piece;
+	private static final Color selectedColor = new Color(43, 177, 94);
+	private static final Color holdColor = selectedColor.darker();
 
-	public Spot(Color color)
+	public Board board;
+	private Piece piece;
+	private Color color;
+
+	public Spot(Color color, Board board)
 	{
 		super(new BorderLayout());
+		this.board = board;
+		this.color = color;
 		setBackground(color);
 		addMouseListener(new MyMouseAdapter(this));
+	}
+
+	public void toggleSelect()
+	{
+		if (isSelected())
+		{
+			deselect();
+		}
+		else
+		{
+			select();
+		}
+	}
+
+	public void select()
+	{
+		if (!isEmpty())
+		{
+			setBackground(selectedColor);
+		}
+	}
+
+	public void holdSelect()
+	{
+		if (!isEmpty())
+		{
+			setBackground(holdColor);
+		}
+	}
+
+	public void deselect()
+	{
+		setBackground(color);
+	}
+
+	public Boolean isSelected()
+	{
+		return getBackground() == selectedColor || getBackground() == holdColor;
 	}
 
 	public void createPiece(int type, int color)
@@ -61,12 +106,13 @@ class MyMouseAdapter extends MouseAdapter
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		object.setBackground(Color.BLUE);
+		object.board.deselect();
+		object.holdSelect();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		object.setBackground(Color.YELLOW);
+		object.select();
 	}
 }

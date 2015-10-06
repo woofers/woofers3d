@@ -32,10 +32,11 @@ public class Options extends Panel
 		add(difficulty);
 
 		gridSize = new JComboBox();
-		//gridSize.addItem("6 x 6");
 		gridSize.addItem("8 x 8");
 		gridSize.addItem("10 x 10");
-		//gridSize.setSelectedIndex(1);
+		gridSize.addItem("12 x 12");
+		gridSize.addItem("14 x 14");
+		gridSize.addItem("16 x 16");
 		gridSize.setPreferredSize(new Dimension(80, 20));
 		add(gridSize);
 
