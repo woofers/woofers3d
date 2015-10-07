@@ -10,10 +10,10 @@ import java.awt.event.MouseEvent;
 
 public class Spot extends Panel
 {
-	private static final Color selectedColor = new Color(43, 177, 94);
-	private static final Color holdSelectedColor = selectedColor.darker();
-	private static final Color moveColor = new Color(224, 65, 100);
-	private static final Color holdMoveColor = moveColor.darker();
+	private static final Color SELECTEDCOLOR = new Color(43, 177, 94);
+	private static final Color HOLDSELECTEDCOLOR = SELECTEDCOLOR.darker();
+	private static final Color MOVECOLOR = new Color(224, 65, 100);
+	private static final Color HOLDMOVECOLOR = MOVECOLOR.darker();
 
 	private Board board;
 	private Piece piece;
@@ -41,7 +41,7 @@ public class Spot extends Panel
 	{
 		if (!isEmpty())
 		{
-			setBackground(selectedColor);
+			setBackground(SELECTEDCOLOR);
 			displayMoves();
 		}
 	}
@@ -50,18 +50,18 @@ public class Spot extends Panel
 	{
 		if (!isEmpty())
 		{
-			setBackground(holdSelectedColor);
+			setBackground(HOLDSELECTEDCOLOR);
 		}
 	}
 
 	public void moveSelect()
 	{
-		setBackground(moveColor);
+		setBackground(MOVECOLOR);
 	}
 
 	public void holdMoveSelect()
 	{
-		setBackground(holdMoveColor);
+		setBackground(HOLDMOVECOLOR);
 	}
 
 	public void deselect()
@@ -72,13 +72,13 @@ public class Spot extends Panel
 	public Boolean isSelected()
 	{
 		Color color = getBackground();
-		return color == selectedColor || color == holdSelectedColor;
+		return color == SELECTEDCOLOR || color == HOLDSELECTEDCOLOR;
 	}
 
 	public Boolean isMoveSelected()
 	{
 		Color color = getBackground();
-		return color == moveColor || color == holdMoveColor;
+		return color == MOVECOLOR || color == HOLDMOVECOLOR;
 	}
 
 	private void displayMoves()
@@ -88,6 +88,10 @@ public class Spot extends Panel
 		{
 			if (legalMoves[i] != null)
 			{
+				if (legalMoves[i].isEmpty())
+				{
+
+				}
 				legalMoves[i].moveSelect();
 			}
 		}
@@ -162,7 +166,7 @@ public class Spot extends Panel
 
 	private Spot[] getSurrondingSpots()
 	{
-		Spot[] spots = new Spot[7];
+		Spot[] spots = new Spot[8];
 		spots[0] = getTopLeft();
 		spots[1] = getTopMiddle();
 		spots[2] = getTopRight();
@@ -216,6 +220,10 @@ public class Spot extends Panel
 
 	public Spot getTopLeft()
 	{
+		if (topSpot == null)
+		{
+			return topSpot;
+		}
 		return topSpot.getMiddleLeft();
 	}
 
@@ -226,6 +234,10 @@ public class Spot extends Panel
 
 	public Spot getTopRight()
 	{
+		if (topSpot == null)
+		{
+			return topSpot;
+		}
 		return topSpot.getMiddleRight();
 	}
 
@@ -241,6 +253,10 @@ public class Spot extends Panel
 
 	public Spot getBottomLeft()
 	{
+		if (bottomSpot == null)
+		{
+			return bottomSpot;
+		}
 		return bottomSpot.getMiddleLeft();
 	}
 
@@ -251,6 +267,10 @@ public class Spot extends Panel
 
 	public Spot getBottomRight()
 	{
+		if (bottomSpot == null)
+		{
+			return bottomSpot;
+		}
 		return bottomSpot.getMiddleRight();
 	}
 
@@ -262,7 +282,7 @@ public class Spot extends Panel
 		}
 		else if (isMoveSelected())
 		{
-
+			holdMoveSelect();
 		}
 		else
 		{
@@ -279,7 +299,7 @@ public class Spot extends Panel
 		}
 		else if (isMoveSelected())
 		{
-
+			moveSelect();
 		}
 	}
 }
