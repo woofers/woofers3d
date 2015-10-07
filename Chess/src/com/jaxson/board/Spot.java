@@ -222,7 +222,7 @@ public class Spot extends Panel
 	{
 		if (topSpot == null)
 		{
-			return topSpot;
+			return null;
 		}
 		return topSpot.getMiddleLeft();
 	}
@@ -236,7 +236,7 @@ public class Spot extends Panel
 	{
 		if (topSpot == null)
 		{
-			return topSpot;
+			return null;
 		}
 		return topSpot.getMiddleRight();
 	}
@@ -255,7 +255,7 @@ public class Spot extends Panel
 	{
 		if (bottomSpot == null)
 		{
-			return bottomSpot;
+			return null;
 		}
 		return bottomSpot.getMiddleLeft();
 	}
@@ -269,9 +269,42 @@ public class Spot extends Panel
 	{
 		if (bottomSpot == null)
 		{
-			return bottomSpot;
+			return null;
 		}
 		return bottomSpot.getMiddleRight();
+	}
+
+	public int toInt()
+	{
+		if (isEmpty())
+		{
+			return 0;
+		}
+		return joinInt(piece.color, piece.type);
+	}
+
+	private int joinInt(int a, int b)
+	{
+		String string = Integer.toString(a) + Integer.toString(b);
+		return Integer.parseInt(string);
+	}
+
+	public int getType()
+	{
+		if (isEmpty())
+		{
+			return 0;
+		}
+		return piece.type;
+	}
+
+	public int getColor()
+	{
+		if (isEmpty())
+		{
+			return 0;
+		}
+		return piece.color;
 	}
 
 	public void onCick()

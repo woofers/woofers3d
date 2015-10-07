@@ -1,23 +1,22 @@
 package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
+import com.jaxson.board.containers.IntPiece;
 import java.awt.Color;
 import java.awt.GridLayout;
 
 public class Board extends Panel
 {
-	private static final int size = 8;
-	private static final Color light = new Color(209, 139, 71);
-	private static final Color dark = new Color(255, 206, 158);
+	private static final Color LIGHT = new Color(209, 139, 71);
+	private static final Color DARK  = new Color(255, 206, 158);
+	private static final int SIZE = 8;
 
-	private int gridWidth, gridHeight;
+	private int gridWidth, gridHeight = 0;
 	private Spot[][] board;
 
 	public Board()
 	{
 		super();
-		gridWidth = 0;
-		gridHeight = 0;
 	}
 
 	public void createGrid(int width, int height)
@@ -68,19 +67,22 @@ public class Board extends Panel
 		createBottomRow(gridHeight - 1, Piece.WHITE);
 		createPawns(1, Piece.BLACK);
 		createPawns(gridHeight - 2, Piece.WHITE);
+
+		IntBoard intBoard = toIntBoard();
+		intBoard.print();
 	}
 
 	private void createPawns(int row, int color)
 	{
 		int delta, start;
-		delta = gridWidth - size;
-		start = zero(size / 2 + delta / 2);
-		for (int x = start; x > start - size / 2; x --)
+		delta = gridWidth - SIZE;
+		start = zero(SIZE / 2 + delta / 2);
+		for (int x = start; x > start - SIZE / 2; x --)
 		{
 			board[x][row].createPiece(Piece.PAWN, color);
 		}
 		start ++;
-		for (int x = start; x < start + size / 2; x ++)
+		for (int x = start; x < start + SIZE / 2; x ++)
 		{
 			board[x][row].createPiece(Piece.PAWN, color);
 		}
@@ -89,8 +91,8 @@ public class Board extends Panel
 	private void createBottomRow(int row, int color)
 	{
 		int delta, queen, king;
-		delta = gridWidth - size;
-		queen = zero(size / 2 + delta / 2);
+		delta = gridWidth - SIZE;
+		queen = zero(SIZE / 2 + delta / 2);
 		king = queen + 1;
 		board[queen - 3][row].createPiece(Piece.ROOK, color);
 		board[queen - 2][row].createPiece(Piece.KNIGHT, color);
@@ -132,15 +134,15 @@ public class Board extends Panel
 		{
 			if (isEven(x))
 			{
-				return dark;
+				return DARK;
 			}
-			return light;
+			return LIGHT;
 		}
 		if (isEven(x))
 		{
-			return light;
+			return LIGHT;
 		}
-		return dark;
+		return DARK;
 	}
 
 	private int zero(int i)
@@ -155,5 +157,20 @@ public class Board extends Panel
 	private boolean isEven(int i)
 	{
 		return i % 2 == 0;
+	}
+
+	private IntBoard toIntBoard()
+	{
+		IntBoard intBoard = new IntBoard(gridWidth, gridHeight);
+		IntPiece[][] board = new IntPiece[gridWidth][gridHeight];
+		for (int y = 0; y < gridHeight; y ++)
+		{
+			for (int x = 0; x < gridWidth; x ++)
+			{
+				board[x][y] = new IntPiece(this.board[x][y].getColor(), this.board[x][y].getType());
+			}
+		}
+		intBoard.setBoard(board);
+		return intBoard;
 	}
 }

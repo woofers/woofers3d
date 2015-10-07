@@ -17,7 +17,7 @@ public class GameWindow extends Window
 		setTitle("Chess");
 
 		board = new Board();
-		scaleContainer = new ScaleContainer<Board>(board);
+		scaleContainer = new ScaleContainer<>(board);
 		add(scaleContainer, BorderLayout.CENTER);
 
 		options = new Options(board);

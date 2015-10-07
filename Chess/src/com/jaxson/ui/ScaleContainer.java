@@ -14,7 +14,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 		setOpaque(false);
 		add(panel);
 		this.panel = panel;
-		addComponentListener(new MyComponentAdapter<ScaleContainer>(this));
+		addComponentListener(new MyComponentAdapter(this));
 	}
 
 	public void keepAspectRatio()
@@ -35,11 +35,11 @@ public class ScaleContainer<T extends Panel> extends Panel
 	}
 }
 
-class MyComponentAdapter<T extends ScaleContainer> extends ComponentAdapter
+class MyComponentAdapter extends ComponentAdapter
 {
-	private T object;
+	private ScaleContainer object;
 
-	public MyComponentAdapter(T object)
+	public MyComponentAdapter(ScaleContainer object)
 	{
 		this.object = object;
 	}
