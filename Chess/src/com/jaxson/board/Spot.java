@@ -1,6 +1,7 @@
 package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
+import com.jaxson.board.containers.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -10,6 +11,8 @@ import java.awt.event.MouseEvent;
 
 public class Spot extends Panel
 {
+	private static final Color LIGHTCOLOR = new Color(209, 139, 71);
+	private static final Color DARKCOLOR  = new Color(255, 206, 158);
 	private static final Color SELECTEDCOLOR = new Color(43, 177, 94);
 	private static final Color HOLDSELECTEDCOLOR = SELECTEDCOLOR.darker();
 	private static final Color MOVECOLOR = new Color(224, 65, 100);
@@ -17,24 +20,39 @@ public class Spot extends Panel
 
 	private Board board;
 	private Piece piece;
+	private Point location;
 	private Color color;
-	private Spot leftSpot, rightSpot, topSpot, bottomSpot;
 
-	public Spot(Color color, Board board)
+	public Spot(Point location, Board board)
 	{
 		super(new BorderLayout());
 		this.board = board;
-		this.color = color;
+		this.location = location;
+		color = getColor(location);
 		setBackground(color);
 		addMouseListener(new MyMouseAdapter(this));
 	}
 
-	public void setLink(Spot leftSpot, Spot rightSpot, Spot topSpot, Spot bottomSpot)
+	private Color getColor(Point spot)
 	{
-		this.leftSpot = leftSpot;
-		this.rightSpot = rightSpot;
-		this.topSpot = topSpot;
-		this.bottomSpot = bottomSpot;
+		if (isEven(spot.y))
+		{
+			if (isEven(spot.x))
+			{
+				return DARKCOLOR;
+			}
+			return LIGHTCOLOR;
+		}
+		if (isEven(spot.x))
+		{
+			return LIGHTCOLOR;
+		}
+		return DARKCOLOR;
+	}
+
+	private boolean isEven(int i)
+	{
+		return i % 2 == 0;
 	}
 
 	public void select()
@@ -83,56 +101,13 @@ public class Spot extends Panel
 
 	private void displayMoves()
 	{
-		Spot[] legalMoves = getLegalMoves();
-		for (int i = 0; i < legalMoves.length; i ++)
-		{
-			if (legalMoves[i] != null)
-			{
-				if (legalMoves[i].isEmpty())
-				{
-
-				}
-				legalMoves[i].moveSelect();
-			}
-		}
+		IntBoard intBoard = new IntBoard(board);
+		intBoard.displayMoves(toIntPiece());
 	}
 
 	private void hideMoves()
 	{
-		Spot[] legalMoves = getLegalMoves();
-		for (int i = 0; i < legalMoves.length; i ++)
-		{
-			if (legalMoves[i] != null)
-			{
-				legalMoves[i].deselect();
-			}
-		}
-	}
 
-	private Spot[] getLegalMoves()
-	{
-		Spot[] moves = new Spot[7];
-
-		switch (piece.type)
-		{
-			case Piece.KING:
-				moves = getSurrondingSpots();
-				break;
-			case Piece.QUEEN:
-				break;
-			case Piece.ROOK:
-
-				break;
-			case Piece.BISHOP:
-				break;
-			case Piece.KNIGHT:
-				break;
-			case Piece.PAWN:
-				break;
-			default:
-				break;
-		}
-		return moves;
 	}
 
 	public void createPiece(int type, int color)
@@ -164,147 +139,13 @@ public class Spot extends Panel
 		return piece == null;
 	}
 
-	private Spot[] getSurrondingSpots()
-	{
-		Spot[] spots = new Spot[8];
-		spots[0] = getTopLeft();
-		spots[1] = getTopMiddle();
-		spots[2] = getTopRight();
-		spots[3] = getMiddleLeft();
-		spots[4] = getMiddleRight();
-		spots[5] = getBottomLeft();
-		spots[6] = getBottomMiddle();
-		spots[7] = getBottomRight();
-		return spots;
-	}
-
-	public Spot[] getAllTopLeft()
-	{
-		return null;
-	}
-
-	public Spot[] getAllTopMiddle()
-	{
-		return null;
-	}
-
-	public Spot[] getAllTopRight()
-	{
-		return null;
-	}
-
-	public Spot[] getAllMiddleLeft()
-	{
-		return null;
-	}
-
-	public Spot[] getAllMiddleRight()
-	{
-		return null;
-	}
-
-	public Spot[] getAllBottomLeft()
-	{
-		return null;
-	}
-
-	public Spot[] getAllBottomMiddle()
-	{
-		return null;
-	}
-
-	public Spot[] getAllBottomRight()
-	{
-		return null;
-	}
-
-	public Spot getTopLeft()
-	{
-		if (topSpot == null)
-		{
-			return null;
-		}
-		return topSpot.getMiddleLeft();
-	}
-
-	public Spot getTopMiddle()
-	{
-		return topSpot;
-	}
-
-	public Spot getTopRight()
-	{
-		if (topSpot == null)
-		{
-			return null;
-		}
-		return topSpot.getMiddleRight();
-	}
-
-	public Spot getMiddleLeft()
-	{
-		return leftSpot;
-	}
-
-	public Spot getMiddleRight()
-	{
-		return rightSpot;
-	}
-
-	public Spot getBottomLeft()
-	{
-		if (bottomSpot == null)
-		{
-			return null;
-		}
-		return bottomSpot.getMiddleLeft();
-	}
-
-	public Spot getBottomMiddle()
-	{
-		return bottomSpot;
-	}
-
-	public Spot getBottomRight()
-	{
-		if (bottomSpot == null)
-		{
-			return null;
-		}
-		return bottomSpot.getMiddleRight();
-	}
-
-	public int toInt()
+	public IntPiece toIntPiece()
 	{
 		if (isEmpty())
 		{
-			return 0;
+			return new IntPiece();
 		}
-		return joinInt(piece.color, piece.type);
-	}
-
-	private int joinInt(int a, int b)
-	{
-		String string = Integer.toString(a) + Integer.toString(b);
-		return Integer.parseInt(string);
-	}
-
-	public int getType()
-	{
-		if (isEmpty())
-		{
-			return 0;
-		}
-		return piece.type;
-	}
-
-	public int getColor()
-	{
-		if (isEmpty())
-		{
-			return 0;
-		}
-		return piece.color;
+		return new IntPiece(piece.color, piece.type, location);
 	}
 
 	public void onCick()

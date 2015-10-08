@@ -1,45 +1,59 @@
 package com.jaxson.board;
 
+import com.jaxson.board.Board;
 import com.jaxson.board.containers.*;
+import java.util.ArrayList;
 
 public class IntBoard
 {
 	private int gridWidth, gridHeight = 0;
-	private IntPiece[][] board;
+	private int currentColor;
+	private Board board;
+	private IntPiece[][] spots;
 
-	public IntBoard(int width, int height)
+	public IntBoard(Board spots)
 	{
-		gridWidth = width;
-		gridHeight = height;
+		this.board = board;
+		gridWidth = spots.gridWidth;
+		gridHeight = spots.gridHeight;
 	}
 
 	public void setBoard(IntPiece[][] board)
 	{
-		this.board = board;
+		this.spots = board;
 	}
 
-	private void getPieces(int color)
+	public void displayMoves(IntPiece piece)
 	{
-		IntPiece[] pieces = new IntPiece[2];
-		for (IntPiece[] rows: board)
-		{
-			for (IntPiece piece: rows)
-			{
-				if (piece.color == color)
-				{
+		ArrayList<Point> arrrayList = new ArrayList<>();
+		arrrayList = getLegalMoves(piece);
+		//board.displayMoves(getLegalMoves(piece));
+	}
 
+	private ArrayList<IntPiece> getPieces(int color)
+	{
+		ArrayList<IntPiece> pieces = new ArrayList<>();
+		for (int y = 0; y < gridHeight; y ++)
+		{
+			for (int x = 0; x < gridWidth; x ++)
+			{
+				if (spots[x][y].color == color)
+				{
+					pieces.add(spots[x][y]);
 				}
 			}
 		}
+		return pieces;
 	}
 
-	private Point[] getLegalMoves(IntPiece piece, Point spot)
+	private ArrayList<Point> getLegalMoves(IntPiece piece)
 	{
-		Point[] moves = new Point[7];
+		ArrayList<Point> moves = new ArrayList<>();
 
 		switch (piece.type)
 		{
 			case Piece.KING:
+				moves = getSurrondingSpots(piece.location);
 				break;
 			case Piece.QUEEN:
 				break;
@@ -54,14 +68,36 @@ public class IntBoard
 			default:
 				break;
 		}
+		moves.add(new Point(0,0));
 		return moves;
 	}
 
-
-	private Point[] getSurrondingSpots(Point point)
+	private ArrayList<Point> getSurrondingSpots(Point point)
 	{
-		Point[] spots = new Point[8];
+		ArrayList<Point> spots = new ArrayList<>();
+		//ArrayList.add(getSpot(point.x - 1, point.y - 1).location);
+		/*
+		ArrayList.add(getSpot(point.x, point.y - 1).location);
+		ArrayList.add(getSpot(point.x + 1, point.y - 1).location);
+		ArrayList.add(getSpot(point.x - 1, point.y).location);
+		ArrayList.add(getSpot(point.x + 1, point.y).location);
+		ArrayList.add(getSpot(point.x - 1, point.y + 1).location);
+		ArrayList.add(getSpot(point.x, point.y + 1).location);
+		ArrayList.add(getSpot(point.x + 1, point.y + 1).location);
+		*/
 		return spots;
+	}
+
+	private IntPiece getSpot(int x, int y)
+	{
+		if (x >= 0 && x < gridWidth)
+		{
+			if (y >= 0 && y < gridHeight)
+			{
+				return spots[x][y];
+			}
+		}
+		return null;
 	}
 
 	public String toString()
@@ -72,7 +108,7 @@ public class IntBoard
 			for (int x = 0; x < gridWidth; x ++)
 			{
 				string = string + ", ";
-				string = string + Integer.toString(board[x][y].toInt());
+				string = string + Integer.toString(spots[x][y].toInt());
 			}
 		}
 		return string;
@@ -85,8 +121,8 @@ public class IntBoard
 		{
 			for (int x = 0; x < gridWidth; x ++)
 			{
-				string = string + Integer.toString(board[x][y].toInt());
-				if (board[x][y].toInt() == 0)
+				string = string + Integer.toString(spots[x][y].toInt());
+				if (spots[x][y].toInt() == 0)
 				{
 					string = string + "0";
 				}

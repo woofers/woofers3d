@@ -2,7 +2,8 @@ package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
 import java.awt.Dimension;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 

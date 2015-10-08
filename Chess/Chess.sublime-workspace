@@ -4,6 +4,94 @@
 		"selected_items":
 		[
 			[
+				"IN",
+				"IntPiece"
+			],
+			[
+				"Int",
+				"IntPiece"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"to",
+				"toIntBoard"
+			],
+			[
+				"int",
+				"intBoard"
+			],
+			[
+				"is",
+				"isEmpty"
+			],
+			[
+				"gri",
+				"gridHeight"
+			],
+			[
+				"grid",
+				"gridHeight"
+			],
+			[
+				"getTop",
+				"getTopMiddle"
+			],
+			[
+				"le",
+				"legalMoves"
+			],
+			[
+				"get",
+				"getMiddleLeft"
+			],
+			[
+				"bot",
+				"bottomRight"
+			],
+			[
+				"de",
+				"deselect"
+			],
+			[
+				"hold",
+				"holdSelect"
+			],
+			[
+				"move",
+				"holdMoveColor"
+			],
+			[
+				"mov",
+				"moveColor"
+			],
+			[
+				"se",
+				"selectedColor"
+			],
+			[
+				"on",
+				"onRelease"
+			],
+			[
+				"g",
+				"getLegalMoves"
+			],
+			[
+				"gir",
+				"gridWidth"
+			],
+			[
+				"gr",
+				"gridWidth"
+			],
+			[
+				"add",
+				"addPieces"
+			],
+			[
 				"row",
 				"rowSize"
 			],
@@ -83,10 +171,38 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 299.0,
-		"last_filter": "conv",
+		"height": 101.0,
+		"last_filter": "git pull",
 		"selected_items":
 		[
+			[
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"git pus",
+				"Git: Push"
+			],
+			[
+				"git ",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
 			[
 				"conv",
 				"Indentation: Convert to Tabs"
@@ -121,10 +237,30 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess"
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers"
 	],
 	"file_history":
 	[
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Board.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Spot.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntBoard.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/Point.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Piece.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Options.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/ScaleContainer.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Window.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Panel.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/Main.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/GameWindow.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/WindowStarter.java",
+		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Documents and Settings/Peter/Application Data/Microsoft/Internet Explorer/Quick Launch/Google Chrome.lnk",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/Board.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/GameWindow.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/ui/Window.java",
@@ -135,7 +271,6 @@
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/Linked Lists.sublime-project",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/make.bat",
 		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
-		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/build.xml",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/ui/Window.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/clean.bat",
@@ -163,7 +298,7 @@
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
@@ -174,9 +309,18 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"getType",
+			"IntPiece",
+			"size",
+			"dark",
+			"darkn",
+			"light",
+			"getSurrondingSpots",
+			"holdColor",
+			"BLACK",
 			"RtoL",
 			"setMinimumSize ",
 			"compsToExperiment",
@@ -189,11 +333,16 @@
 		"regex": false,
 		"replace_history":
 		[
+			"SIZE",
+			"DARK",
+			"LIGHT",
+			"holdSelectedColor",
+			"WHITE"
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
@@ -206,11 +355,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 24.0
+		"height": 23.0
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -237,17 +386,21 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 205.0
+		"height": 553.0
 	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
+	"output.git":
+	{
+		"height": 104.0
+	},
 	"pinned_build_system": "Packages/User/myjava.sublime-build",
 	"project": "Chess.sublime-project",
 	"replace":
 	{
-		"height": 44.0
+		"height": 68.0
 	},
 	"save_all_on_build": true,
 	"select_file":
