@@ -15,4 +15,9 @@ public class IntPiece
 		this.color = color;
 		this.type = type;
 	}
+
+	public int toInt()
+	{
+		return Integer.parseInt(Integer.toString(color) + Integer.toString(type));
+	}
 }

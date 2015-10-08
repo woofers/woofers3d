@@ -18,31 +18,32 @@ public class IntBoard
 		this.board = board;
 	}
 
-	private int getColor(int piece)
+	private void getPieces(int color)
 	{
-		String string = Integer.toString(piece);
-		return Integer.parseInt(string.substring(0, 1));
+		IntPiece[] pieces = new IntPiece[2];
+		for (IntPiece[] rows: board)
+		{
+			for (IntPiece piece: rows)
+			{
+				if (piece.color == color)
+				{
+
+				}
+			}
+		}
 	}
 
-	private int getType(int piece)
-	{
-		String string = Integer.toString(piece);
-		return Integer.parseInt(string.substring(1, 2));
-	}
-
-	public void getLegalMoves(int piece)
+	private Point[] getLegalMoves(IntPiece piece, Point spot)
 	{
 		Point[] moves = new Point[7];
 
 		switch (piece.type)
 		{
 			case Piece.KING:
-				moves = getSurrondingSpots();
 				break;
 			case Piece.QUEEN:
 				break;
 			case Piece.ROOK:
-
 				break;
 			case Piece.BISHOP:
 				break;
@@ -56,6 +57,13 @@ public class IntBoard
 		return moves;
 	}
 
+
+	private Point[] getSurrondingSpots(Point point)
+	{
+		Point[] spots = new Point[8];
+		return spots;
+	}
+
 	public String toString()
 	{
 		String string = "";
@@ -64,9 +72,10 @@ public class IntBoard
 			for (int x = 0; x < gridWidth; x ++)
 			{
 				string = string + ", ";
-				string = string + Integer.toString(board[x][y].color) + Integer.toString(board[x][y].type);
+				string = string + Integer.toString(board[x][y].toInt());
 			}
 		}
+		return string;
 	}
 
 	public void print()
@@ -76,8 +85,8 @@ public class IntBoard
 		{
 			for (int x = 0; x < gridWidth; x ++)
 			{
-				string = string + Integer.toString(board[x][y]);
-				if (board[x][y] == 0)
+				string = string + Integer.toString(board[x][y].toInt());
+				if (board[x][y].toInt() == 0)
 				{
 					string = string + "0";
 				}
