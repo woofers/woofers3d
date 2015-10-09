@@ -4,11 +4,35 @@
 		"selected_items":
 		[
 			[
-				"IN",
+				"Int",
 				"IntPiece"
 			],
 			[
-				"Int",
+				"in",
+				"IntBoard"
+			],
+			[
+				"get",
+				"getLegalMoves"
+			],
+			[
+				"gr",
+				"gridHeight"
+			],
+			[
+				"gri",
+				"gridWidth"
+			],
+			[
+				"int",
+				"IntPiece"
+			],
+			[
+				"INT",
+				"IntPiece"
+			],
+			[
+				"IN",
 				"IntPiece"
 			],
 			[
@@ -20,16 +44,8 @@
 				"toIntBoard"
 			],
 			[
-				"int",
-				"intBoard"
-			],
-			[
 				"is",
 				"isEmpty"
-			],
-			[
-				"gri",
-				"gridHeight"
 			],
 			[
 				"grid",
@@ -42,10 +58,6 @@
 			[
 				"le",
 				"legalMoves"
-			],
-			[
-				"get",
-				"getMiddleLeft"
 			],
 			[
 				"bot",
@@ -84,10 +96,6 @@
 				"gridWidth"
 			],
 			[
-				"gr",
-				"gridWidth"
-			],
-			[
 				"add",
 				"addPieces"
 			],
@@ -108,10 +116,6 @@
 				"setLayout"
 			],
 			[
-				"in",
-				"insertAfter"
-			],
-			[
 				"ins",
 				"insertAfter"
 			],
@@ -127,6 +131,30 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/com/jaxson/board/IntBoard.java",
+			"settings":
+			{
+				"buffer_size": 2829,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/board/Board.java",
+			"settings":
+			{
+				"buffer_size": 3094,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/board/Spot.java",
+			"settings":
+			{
+				"buffer_size": 3238,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -180,6 +208,18 @@
 				"Git: Pull"
 			],
 			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
 				"git pus",
 				"Git: Push"
 			],
@@ -190,18 +230,6 @@
 			[
 				"git ad",
 				"Git: Add..."
-			],
-			[
-				"git add",
-				"Git: Add..."
-			],
-			[
-				"git push",
-				"Git: Push"
-			],
-			[
-				"git com",
-				"Git: Commit"
 			],
 			[
 				"conv",
@@ -246,19 +274,19 @@
 	],
 	"file_history":
 	[
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Board.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Spot.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntBoard.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/Point.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Piece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Options.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/ScaleContainer.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Window.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Panel.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/Main.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/GameWindow.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Options.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/WindowStarter.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Window.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/ScaleContainer.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Panel.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/Point.java",
 		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Documents and Settings/Peter/Application Data/Microsoft/Internet Explorer/Quick Launch/Google Chrome.lnk",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/Board.java",
@@ -312,6 +340,12 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"board",
+			"location",
+			"board",
+			"{\n",
+			"LIGHT",
+			"DARK",
 			"getType",
 			"IntPiece",
 			"size",
@@ -333,6 +367,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"spots",
+			"LIGHTCOLOR",
+			"DARKCOLOR",
 			"SIZE",
 			"DARK",
 			"LIGHT",
@@ -348,8 +385,96 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/com/jaxson/board/IntBoard.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2829,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								599,
+								599
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 303.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/com/jaxson/board/Board.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3094,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								410,
+								410
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/com/jaxson/board/Spot.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3238,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2067,
+								2067
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1116.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -386,7 +511,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 553.0
+		"height": 405.0
 	},
 	"output.find_results":
 	{

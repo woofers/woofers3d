@@ -67,9 +67,7 @@ public class Board extends Panel
 		createBottomRow(gridHeight - 1, Piece.WHITE);
 		createPawns(1, Piece.BLACK);
 		createPawns(gridHeight - 2, Piece.WHITE);
-
-		IntBoard intBoard = toIntBoard();
-		intBoard.print();
+		spots[3][3].createPiece(Piece.QUEEN, Piece.WHITE);
 	}
 
 	private void createPawns(int row, int color)
@@ -138,7 +136,7 @@ public class Board extends Panel
 		return i - 1;
 	}
 
-	private IntBoard toIntBoard()
+	public IntBoard toIntBoard()
 	{
 		IntBoard intBoard = new IntBoard(this);
 		IntPiece[][] spots = new IntPiece[gridWidth][gridHeight];

@@ -101,7 +101,7 @@ public class Spot extends Panel
 
 	private void displayMoves()
 	{
-		IntBoard intBoard = new IntBoard(board);
+		IntBoard intBoard = board.toIntBoard();
 		intBoard.displayMoves(toIntPiece());
 	}
 

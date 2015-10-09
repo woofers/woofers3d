@@ -18,16 +18,14 @@ public class IntBoard
 		gridHeight = board.gridHeight;
 	}
 
-	public void setBoard(IntPiece[][] board)
+	public void setBoard(IntPiece[][] spots)
 	{
-		this.spots = board;
+		this.spots = spots;
 	}
 
 	public void displayMoves(IntPiece piece)
 	{
-		ArrayList<Point> test = new ArrayList<>();
-		test = getLegalMoves(piece);
-		// /board.displayMoves(test);
+		board.displayMoves(getLegalMoves(piece));
 	}
 
 	private ArrayList<IntPiece> getPieces(int color)
@@ -56,6 +54,7 @@ public class IntBoard
 				moves = getSurrondingSpots(piece.location);
 				break;
 			case Piece.QUEEN:
+				moves = getAllAbove(piece.location);
 				break;
 			case Piece.ROOK:
 				break;
@@ -85,6 +84,18 @@ public class IntBoard
 		return spots;
 	}
 
+	private ArrayList<Point> getAllAbove(Point point)
+	{
+		ArrayList<Point> spots = new ArrayList<>();
+		IntPiece spot = getSpot(point.x - 1, point.y);
+		while (spot.type == 0)
+		{
+			//spots.add(spot.location);
+			//spot = getSpot(spot.location.x - 1, spot.location.y);
+		}
+		return spots;
+	}
+
 	private Point getLocation(int x, int y)
 	{
 		IntPiece piece = getSpot(x, y);
@@ -101,7 +112,6 @@ public class IntBoard
 		{
 			if (y >= 0 && y < gridHeight)
 			{
-				System.out.println(x);
 				return spots[x][y];
 			}
 		}
