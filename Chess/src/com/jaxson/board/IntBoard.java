@@ -11,11 +11,11 @@ public class IntBoard
 	private Board board;
 	private IntPiece[][] spots;
 
-	public IntBoard(Board spots)
+	public IntBoard(Board board)
 	{
 		this.board = board;
-		gridWidth = spots.gridWidth;
-		gridHeight = spots.gridHeight;
+		gridWidth = board.gridWidth;
+		gridHeight = board.gridHeight;
 	}
 
 	public void setBoard(IntPiece[][] board)
@@ -25,9 +25,9 @@ public class IntBoard
 
 	public void displayMoves(IntPiece piece)
 	{
-		ArrayList<Point> arrrayList = new ArrayList<>();
-		arrrayList = getLegalMoves(piece);
-		//board.displayMoves(getLegalMoves(piece));
+		ArrayList<Point> test = new ArrayList<>();
+		test = getLegalMoves(piece);
+		// /board.displayMoves(test);
 	}
 
 	private ArrayList<IntPiece> getPieces(int color)
@@ -68,24 +68,31 @@ public class IntBoard
 			default:
 				break;
 		}
-		moves.add(new Point(0,0));
 		return moves;
 	}
 
 	private ArrayList<Point> getSurrondingSpots(Point point)
 	{
 		ArrayList<Point> spots = new ArrayList<>();
-		//ArrayList.add(getSpot(point.x - 1, point.y - 1).location);
-		/*
-		ArrayList.add(getSpot(point.x, point.y - 1).location);
-		ArrayList.add(getSpot(point.x + 1, point.y - 1).location);
-		ArrayList.add(getSpot(point.x - 1, point.y).location);
-		ArrayList.add(getSpot(point.x + 1, point.y).location);
-		ArrayList.add(getSpot(point.x - 1, point.y + 1).location);
-		ArrayList.add(getSpot(point.x, point.y + 1).location);
-		ArrayList.add(getSpot(point.x + 1, point.y + 1).location);
-		*/
+		spots.add(getLocation(point.x - 1, point.y - 1));
+		spots.add(getLocation(point.x, point.y - 1));
+		spots.add(getLocation(point.x + 1, point.y - 1));
+		spots.add(getLocation(point.x - 1, point.y));
+		spots.add(getLocation(point.x + 1, point.y));
+		spots.add(getLocation(point.x - 1, point.y + 1));
+		spots.add(getLocation(point.x, point.y + 1));
+		spots.add(getLocation(point.x + 1, point.y + 1));
 		return spots;
+	}
+
+	private Point getLocation(int x, int y)
+	{
+		IntPiece piece = getSpot(x, y);
+		if (piece != null)
+		{
+			return piece.location;
+		}
+		return null;
 	}
 
 	private IntPiece getSpot(int x, int y)
@@ -94,6 +101,7 @@ public class IntBoard
 		{
 			if (y >= 0 && y < gridHeight)
 			{
+				System.out.println(x);
 				return spots[x][y];
 			}
 		}

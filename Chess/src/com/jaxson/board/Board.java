@@ -49,16 +49,16 @@ public class Board extends Panel
 		draw();
 	}
 
-	private Spot getSpot(int x, int y)
+	private Boolean spotExist(int x, int y)
 	{
 		if (x >= 0 && x < gridWidth)
 		{
 			if (y >= 0 && y < gridHeight)
 			{
-				return spots[x][y];
+				return true;
 			}
 		}
-		return null;
+		return false;
 	}
 
 	private void addPieces()
@@ -108,7 +108,13 @@ public class Board extends Panel
 	{
 		for (Point spot: spots)
 		{
-			getSpot(spot.x, spot.y).moveSelect();
+			if (spot != null)
+			{
+				if (spotExist(spot.x, spot.y))
+				{
+					this.spots[spot.x][spot.y].moveSelect();
+				}
+			}
 		}
 	}
 
