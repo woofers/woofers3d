@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class Spot extends Panel
 {
@@ -22,6 +23,8 @@ public class Spot extends Panel
 	private Piece piece;
 	private Point location;
 	private Color color;
+	private Spot transferSpot;
+	private Boolean hasMoved = false;
 
 	public Spot(Point location, Board board)
 	{
@@ -29,7 +32,7 @@ public class Spot extends Panel
 		this.board = board;
 		this.location = location;
 		color = getColor(location);
-		setBackground(color);
+		deselect();
 		addMouseListener(new MyMouseAdapter(this));
 	}
 
@@ -50,7 +53,7 @@ public class Spot extends Panel
 		return DARKCOLOR;
 	}
 
-	private boolean isEven(int i)
+	private Boolean isEven(int i)
 	{
 		return i % 2 == 0;
 	}
@@ -80,11 +83,19 @@ public class Spot extends Panel
 	public void holdMoveSelect()
 	{
 		setBackground(HOLDMOVECOLOR);
+		hasMoved = true;
+	}
+
+	public void move()
+	{
+		setPiece(transferSpot.getPiece());
+		transferSpot.removePiece();
 	}
 
 	public void deselect()
 	{
 		setBackground(color);
+		transferSpot = null;
 	}
 
 	public Boolean isSelected()
@@ -102,12 +113,19 @@ public class Spot extends Panel
 	private void displayMoves()
 	{
 		IntBoard intBoard = board.toIntBoard();
-		intBoard.displayMoves(toIntPiece());
-	}
-
-	private void hideMoves()
-	{
-
+		ArrayList<Point> moves = new ArrayList<>();
+		Spot spot;
+		moves = intBoard.getLegalMoves(toIntPiece());
+		for (Point move: moves)
+		{
+			if (move == null)
+			{
+				continue;
+			}
+			spot = board.getSpot(move.x, move.y);
+			spot.setTransferSpot(this);
+			spot.moveSelect();
+		}
 	}
 
 	public void createPiece(int type, int color)
@@ -122,6 +140,16 @@ public class Spot extends Panel
 		removePiece();
 		this.piece = piece;
 		add(piece);
+	}
+
+	public Piece getPiece()
+	{
+		return piece;
+	}
+
+	public void setTransferSpot(Spot spot)
+	{
+		transferSpot = spot;
 	}
 
 	public void removePiece()
@@ -143,9 +171,9 @@ public class Spot extends Panel
 	{
 		if (isEmpty())
 		{
-			return new IntPiece();
+			return new IntPiece(location);
 		}
-		return new IntPiece(piece.color, piece.type, location);
+		return new IntPiece(piece.color, piece.type, location, hasMoved);
 	}
 
 	public void onCick()
@@ -173,7 +201,8 @@ public class Spot extends Panel
 		}
 		else if (isMoveSelected())
 		{
-			moveSelect();
+			move();
+			board.deselect();
 		}
 	}
 }

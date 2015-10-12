@@ -61,13 +61,21 @@ public class Board extends Panel
 		return false;
 	}
 
+	public Spot getSpot(int x, int y)
+	{
+		if (spotExist(x, y))
+		{
+			return spots[x][y];
+		}
+		return null;
+	}
+
 	private void addPieces()
 	{
 		createBottomRow(0, Piece.BLACK);
 		createBottomRow(gridHeight - 1, Piece.WHITE);
 		createPawns(1, Piece.BLACK);
 		createPawns(gridHeight - 2, Piece.WHITE);
-		spots[3][3].createPiece(Piece.QUEEN, Piece.WHITE);
 	}
 
 	private void createPawns(int row, int color)
@@ -100,20 +108,6 @@ public class Board extends Panel
 		spots[king + 1][row].createPiece(Piece.BISHOP, color);
 		spots[king + 2][row].createPiece(Piece.KNIGHT, color);
 		spots[king + 3][row].createPiece(Piece.ROOK, color);
-	}
-
-	public void displayMoves(ArrayList<Point> spots)
-	{
-		for (Point spot: spots)
-		{
-			if (spot != null)
-			{
-				if (spotExist(spot.x, spot.y))
-				{
-					this.spots[spot.x][spot.y].moveSelect();
-				}
-			}
-		}
 	}
 
 	public void deselect()

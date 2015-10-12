@@ -39,6 +39,7 @@ public class Piece extends Panel
 		}
 		catch (IOException ex)
 		{
+
 		}
 	}
 

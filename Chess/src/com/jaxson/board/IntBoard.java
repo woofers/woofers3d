@@ -23,11 +23,6 @@ public class IntBoard
 		this.spots = spots;
 	}
 
-	public void displayMoves(IntPiece piece)
-	{
-		board.displayMoves(getLegalMoves(piece));
-	}
-
 	private ArrayList<IntPiece> getPieces(int color)
 	{
 		ArrayList<IntPiece> pieces = new ArrayList<>();
@@ -44,54 +39,193 @@ public class IntBoard
 		return pieces;
 	}
 
-	private ArrayList<Point> getLegalMoves(IntPiece piece)
+	public ArrayList<Point> getLegalMoves(IntPiece piece)
 	{
 		ArrayList<Point> moves = new ArrayList<>();
 
 		switch (piece.type)
 		{
 			case Piece.KING:
-				moves = getSurrondingSpots(piece.location);
+				moves = getSurrondingSpots(piece);
 				break;
 			case Piece.QUEEN:
-				moves = getAllAbove(piece.location);
+				moves.addAll(getAllAbove(piece));
+				moves.addAll(getAllBelow(piece));
+				moves.addAll(getAllLeft(piece));
+				moves.addAll(getAllRight(piece));
+				moves.addAll(getAllDiagonal(piece));
 				break;
 			case Piece.ROOK:
+				moves.addAll(getAllAbove(piece));
+				moves.addAll(getAllBelow(piece));
+				moves.addAll(getAllLeft(piece));
+				moves.addAll(getAllRight(piece));
 				break;
 			case Piece.BISHOP:
+				moves = getAllDiagonal(piece);
 				break;
 			case Piece.KNIGHT:
+				moves = getKnight(piece);
 				break;
 			case Piece.PAWN:
-				break;
-			default:
+				moves = getPawn(piece);
 				break;
 		}
 		return moves;
 	}
 
-	private ArrayList<Point> getSurrondingSpots(Point point)
+	private ArrayList<Point> getAllAbove(IntPiece piece)
+	{
+		return getAllByIncrement(piece, 0, -1);
+	}
+
+
+	private ArrayList<Point> getAllBelow(IntPiece piece)
+	{
+		return getAllByIncrement(piece, 0, +1);
+	}
+
+	private ArrayList<Point> getAllLeft(IntPiece piece)
+	{
+		return getAllByIncrement(piece, -1, 0);
+	}
+
+	private ArrayList<Point> getAllRight(IntPiece piece)
+	{
+		return getAllByIncrement(piece, +1, 0);
+	}
+
+	private ArrayList<Point> getAllDiagonalTopLeft(IntPiece piece)
+	{
+		return getAllByIncrement(piece, -1, -1);
+	}
+
+	private ArrayList<Point> getAllDiagonalTopRight(IntPiece piece)
+	{
+		return getAllByIncrement(piece, +1, -1);
+	}
+
+	private ArrayList<Point> getAllDiagonalBottomLeft(IntPiece piece)
+	{
+		return getAllByIncrement(piece, -1, +1);
+	}
+
+	private ArrayList<Point> getAllDiagonalBottomRight(IntPiece piece)
+	{
+		return getAllByIncrement(piece, +1, +1);
+	}
+
+	private ArrayList<Point> getAllDiagonal(IntPiece piece)
 	{
 		ArrayList<Point> spots = new ArrayList<>();
-		spots.add(getLocation(point.x - 1, point.y - 1));
-		spots.add(getLocation(point.x, point.y - 1));
-		spots.add(getLocation(point.x + 1, point.y - 1));
-		spots.add(getLocation(point.x - 1, point.y));
-		spots.add(getLocation(point.x + 1, point.y));
-		spots.add(getLocation(point.x - 1, point.y + 1));
-		spots.add(getLocation(point.x, point.y + 1));
-		spots.add(getLocation(point.x + 1, point.y + 1));
+		spots.addAll(getAllDiagonalTopLeft(piece));
+		spots.addAll(getAllDiagonalTopRight(piece));
+		spots.addAll(getAllDiagonalBottomLeft(piece));
+		spots.addAll(getAllDiagonalBottomRight(piece));
 		return spots;
 	}
 
-	private ArrayList<Point> getAllAbove(Point point)
+	private ArrayList<Point> getSurrondingSpots(IntPiece piece)
 	{
 		ArrayList<Point> spots = new ArrayList<>();
-		IntPiece spot = getSpot(point.x - 1, point.y);
+		spots.add(getLocation(piece.location.x - 1, piece.location.y - 1));
+		spots.add(getLocation(piece.location.x, piece.location.y - 1));
+		spots.add(getLocation(piece.location.x + 1, piece.location.y - 1));
+		spots.add(getLocation(piece.location.x - 1, piece.location.y));
+		spots.add(getLocation(piece.location.x + 1, piece.location.y));
+		spots.add(getLocation(piece.location.x - 1, piece.location.y + 1));
+		spots.add(getLocation(piece.location.x, piece.location.y + 1));
+		spots.add(getLocation(piece.location.x + 1, piece.location.y + 1));
+		spots = filterMoves(spots);
+		return spots;
+	}
+
+	private ArrayList<Point> getKnight(IntPiece piece)
+	{
+		ArrayList<Point> spots = new ArrayList<>();
+		spots.add(getLocation(piece.location.x - 1, piece.location.y - 2));
+		spots.add(getLocation(piece.location.x + 1, piece.location.y - 2));
+		spots.add(getLocation(piece.location.x - 1, piece.location.y + 2));
+		spots.add(getLocation(piece.location.x + 1, piece.location.y + 2));
+		spots.add(getLocation(piece.location.x - 2, piece.location.y - 1));
+		spots.add(getLocation(piece.location.x - 2, piece.location.y + 1));
+		spots.add(getLocation(piece.location.x + 2, piece.location.y - 1));
+		spots.add(getLocation(piece.location.x + 2, piece.location.y + 1));
+		spots = filterMoves(spots);
+		return spots;
+	}
+
+	private ArrayList<Point> getPawn(IntPiece piece)
+	{
+		ArrayList<Point> spots = new ArrayList<>();
+		Point spot;
+		int increment;
+		if (piece.color == Piece.BLACK)
+		{
+			increment = +1;
+		}
+		else
+		{
+			increment = -1;
+		}
+		spot = getLocation(piece.location.x, piece.location.y + increment);
+		if (this.spots[spot.x][spot.y].type != 0)
+		{
+			return spots;
+		}
+		spots.add(spot);
+		if (!piece.hasMoved)
+		{
+			spot = getLocation(piece.location.x, piece.location.y + increment + increment);
+			if (this.spots[spot.x][spot.y].type == 0)
+			{
+				spots.add(spot);
+			}
+		}
+		return spots;
+	}
+
+	private ArrayList<Point> filterMoves(ArrayList<Point> spots)
+	{
+		Point spot;
+		for (int i = 0; i < spots.size(); i ++)
+		{
+			spot = spots.get(i);
+			if (spot == null)
+			{
+				continue;
+			}
+			if (getSpot(spot.x, spot.y).color != 0)
+			{
+				spots.remove(i);
+			}
+		}
+		return spots;
+	}
+
+	private ArrayList<Point> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
+	{
+		ArrayList<Point> spots = new ArrayList<>();
+		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);
+		if (spot == null)
+		{
+			return spots;
+		}
 		while (spot.type == 0)
 		{
-			//spots.add(spot.location);
-			//spot = getSpot(spot.location.x - 1, spot.location.y);
+			spots.add(spot.location);
+			spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
+			if (spot == null)
+			{
+				break;
+			}
+		}
+		if (spot != null)
+		{
+			if (spot.color != piece.color)
+			{
+				spots.add(spot.location);
+			}
 		}
 		return spots;
 	}
