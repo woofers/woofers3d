@@ -1,9 +1,9 @@
 package com.jaxson;
 
-import com.jaxson.ui.*;
 import com.jaxson.board.*;
-import java.awt.Dimension;
+import com.jaxson.ui.*;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class GameWindow extends Window
 {

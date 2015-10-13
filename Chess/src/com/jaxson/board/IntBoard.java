@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class IntBoard
 {
-	private int gridWidth, gridHeight = 0;
+	private int gridWidth, gridHeight;
 	private int currentColor;
 	private Board board;
 	private IntPiece[][] spots;
@@ -136,7 +136,7 @@ public class IntBoard
 		spots.add(getLocation(piece.location.x - 1, piece.location.y + 1));
 		spots.add(getLocation(piece.location.x, piece.location.y + 1));
 		spots.add(getLocation(piece.location.x + 1, piece.location.y + 1));
-		spots = filterMoves(spots);
+		spots = filterMoves(spots, piece);
 		return spots;
 	}
 
@@ -151,7 +151,7 @@ public class IntBoard
 		spots.add(getLocation(piece.location.x - 2, piece.location.y + 1));
 		spots.add(getLocation(piece.location.x + 2, piece.location.y - 1));
 		spots.add(getLocation(piece.location.x + 2, piece.location.y + 1));
-		spots = filterMoves(spots);
+		spots = filterMoves(spots, piece);
 		return spots;
 	}
 
@@ -185,20 +185,22 @@ public class IntBoard
 		return spots;
 	}
 
-	private ArrayList<Point> filterMoves(ArrayList<Point> spots)
+	private ArrayList<Point> filterMoves(ArrayList<Point> spots, IntPiece piece)
 	{
 		Point spot;
-		for (int i = 0; i < spots.size(); i ++)
+		int index = 0;
+		while (index < spots.size())
 		{
-			spot = spots.get(i);
-			if (spot == null)
+			spot = spots.get(index);
+			if (spot != null)
 			{
-				continue;
+				if (getSpot(spot.x, spot.y).color == piece.color)
+				{
+					spots.remove(index);
+					continue;
+				}
 			}
-			if (getSpot(spot.x, spot.y).color != 0)
-			{
-				spots.remove(i);
-			}
+			index ++;
 		}
 		return spots;
 	}

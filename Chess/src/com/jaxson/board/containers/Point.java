@@ -15,4 +15,9 @@ public class Point
 		this.x = x;
 		this.y = y;
 	}
+
+	public String toString()
+	{
+		return "X: " + Integer.toString(x) + ", Y: " + Integer.toString(y);
+	}
 }

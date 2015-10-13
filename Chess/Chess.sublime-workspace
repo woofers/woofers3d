@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"de",
+				"deselectAll"
+			],
+			[
+				"del",
+				"deselectAll"
+			],
+			[
 				"Int",
 				"IntPiece"
 			],
@@ -62,10 +70,6 @@
 			[
 				"bot",
 				"bottomRight"
-			],
-			[
-				"de",
-				"deselect"
 			],
 			[
 				"hold",
@@ -135,23 +139,7 @@
 			"file": "src/com/jaxson/board/IntBoard.java",
 			"settings":
 			{
-				"buffer_size": 2829,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/com/jaxson/board/Board.java",
-			"settings":
-			{
-				"buffer_size": 3094,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/com/jaxson/board/Spot.java",
-			"settings":
-			{
-				"buffer_size": 3238,
+				"buffer_size": 6591,
 				"line_ending": "Windows"
 			}
 		}
@@ -265,15 +253,22 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers"
+		"/D/Documents/Development/School/JavaProjects/Chess",
+		"/D/Documents/Development/School/JavaProjects/Chess/src",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui"
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Spot.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Board.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Options.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Piece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/IntPiece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/Point.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Board.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Spot.java",
@@ -385,7 +380,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -394,15 +389,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2829,
+						"buffer_size": 6591,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								599,
-								599
+								95,
+								95
 							]
 						],
 						"settings":
@@ -411,68 +406,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 303.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/com/jaxson/board/Board.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3094,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								410,
-								410
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 51.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/com/jaxson/board/Spot.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3238,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2067,
-								2067
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1116.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -521,7 +458,7 @@
 	{
 		"height": 104.0
 	},
-	"pinned_build_system": "Packages/User/myjava.sublime-build",
+	"pinned_build_system": "Packages/User/ant.sublime-build",
 	"project": "Chess.sublime-project",
 	"replace":
 	{

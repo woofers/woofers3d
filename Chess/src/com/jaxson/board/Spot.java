@@ -1,23 +1,23 @@
 package com.jaxson.board;
 
-import com.jaxson.ui.Panel;
 import com.jaxson.board.containers.*;
+import com.jaxson.ui.Panel;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Spot extends Panel
 {
-	private static final Color LIGHTCOLOR = new Color(209, 139, 71);
-	private static final Color DARKCOLOR  = new Color(255, 206, 158);
-	private static final Color SELECTEDCOLOR = new Color(43, 177, 94);
+	private static final Color LIGHTCOLOR        = new Color(209, 139, 71);
+	private static final Color DARKCOLOR         = new Color(255, 206, 158);
+	private static final Color SELECTEDCOLOR     = new Color(43, 177, 94);
+	private static final Color MOVECOLOR         = new Color(224, 65, 100);
 	private static final Color HOLDSELECTEDCOLOR = SELECTEDCOLOR.darker();
-	private static final Color MOVECOLOR = new Color(224, 65, 100);
-	private static final Color HOLDMOVECOLOR = MOVECOLOR.darker();
+	private static final Color HOLDMOVECOLOR     = MOVECOLOR.darker();
 
 	private Board board;
 	private Piece piece;
@@ -58,7 +58,7 @@ public class Spot extends Panel
 		return i % 2 == 0;
 	}
 
-	public void select()
+	private void select()
 	{
 		if (!isEmpty())
 		{
@@ -67,7 +67,7 @@ public class Spot extends Panel
 		}
 	}
 
-	public void holdSelect()
+	private void holdSelect()
 	{
 		if (!isEmpty())
 		{
@@ -75,18 +75,18 @@ public class Spot extends Panel
 		}
 	}
 
-	public void moveSelect()
+	private void moveSelect()
 	{
 		setBackground(MOVECOLOR);
 	}
 
-	public void holdMoveSelect()
+	private void holdMoveSelect()
 	{
 		setBackground(HOLDMOVECOLOR);
 		hasMoved = true;
 	}
 
-	public void move()
+	private void move()
 	{
 		setPiece(transferSpot.getPiece());
 		transferSpot.removePiece();
@@ -98,13 +98,18 @@ public class Spot extends Panel
 		transferSpot = null;
 	}
 
-	public Boolean isSelected()
+	private void deselectAll()
+	{
+		board.deselect();
+	}
+
+	private Boolean isSelected()
 	{
 		Color color = getBackground();
 		return color == SELECTEDCOLOR || color == HOLDSELECTEDCOLOR;
 	}
 
-	public Boolean isMoveSelected()
+	private Boolean isMoveSelected()
 	{
 		Color color = getBackground();
 		return color == MOVECOLOR || color == HOLDMOVECOLOR;
@@ -135,16 +140,16 @@ public class Spot extends Panel
 		add(piece);
 	}
 
+	public Piece getPiece()
+	{
+		return piece;
+	}
+
 	public void setPiece(Piece piece)
 	{
 		removePiece();
 		this.piece = piece;
 		add(piece);
-	}
-
-	public Piece getPiece()
-	{
-		return piece;
 	}
 
 	public void setTransferSpot(Spot spot)
@@ -162,7 +167,7 @@ public class Spot extends Panel
 		piece = null;
 	}
 
-	public Boolean isEmpty()
+	private Boolean isEmpty()
 	{
 		return piece == null;
 	}
@@ -180,7 +185,7 @@ public class Spot extends Panel
 	{
 		if (isSelected())
 		{
-			board.deselect();
+			deselectAll();
 		}
 		else if (isMoveSelected())
 		{
@@ -188,7 +193,7 @@ public class Spot extends Panel
 		}
 		else
 		{
-			board.deselect();
+			deselectAll();
 			holdSelect();
 		}
 	}
@@ -202,7 +207,7 @@ public class Spot extends Panel
 		else if (isMoveSelected())
 		{
 			move();
-			board.deselect();
+			deselectAll();
 		}
 	}
 }

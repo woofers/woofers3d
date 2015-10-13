@@ -1,9 +1,9 @@
 package com.jaxson.ui;
 
-import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import javax.swing.JPanel;
 
 public class Panel extends JPanel
 {

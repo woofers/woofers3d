@@ -2,8 +2,8 @@ package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;

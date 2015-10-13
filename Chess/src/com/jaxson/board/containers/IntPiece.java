@@ -30,6 +30,11 @@ public class IntPiece
 		this.hasMoved = hasMoved;
 	}
 
+	public Boolean isFriendly(int color)
+	{
+		return this.color == color;
+	}
+
 	public int toInt()
 	{
 		return Integer.parseInt(Integer.toString(color) + Integer.toString(type));
