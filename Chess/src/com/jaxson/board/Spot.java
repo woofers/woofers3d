@@ -117,19 +117,19 @@ public class Spot extends Panel
 
 	private void displayMoves()
 	{
+		ArrayList<IntPiece> moves = new ArrayList<>();
 		IntBoard intBoard = board.toIntBoard();
-		ArrayList<Point> moves = new ArrayList<>();
 		Spot spot;
 		moves = intBoard.getLegalMoves(toIntPiece());
-		for (Point move: moves)
+		for (IntPiece move: moves)
 		{
-			if (move == null)
-			{
-				continue;
-			}
-			spot = board.getSpot(move.x, move.y);
+			spot = board.getSpot(move.location.x, move.location.y);
 			spot.setTransferSpot(this);
 			spot.moveSelect();
+		}
+		if (moves.isEmpty())
+		{
+			deselect();
 		}
 	}
 

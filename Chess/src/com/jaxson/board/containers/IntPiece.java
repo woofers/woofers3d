@@ -37,6 +37,11 @@ public class IntPiece
 
 	public int toInt()
 	{
-		return Integer.parseInt(Integer.toString(color) + Integer.toString(type));
+		return Integer.parseInt(toString());
+	}
+
+	public String toString()
+	{
+		return Integer.toString(color) + Integer.toString(type);
 	}
 }

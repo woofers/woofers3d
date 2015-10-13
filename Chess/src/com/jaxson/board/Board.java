@@ -10,7 +10,7 @@ public class Board extends Panel
 {
 	private static final int SIZE = 8;
 
-	public int gridWidth, gridHeight = 0;
+	public int gridWidth, gridHeight;
 	private Spot[][] spots;
 
 	public Board()

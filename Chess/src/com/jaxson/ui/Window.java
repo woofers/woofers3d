@@ -29,6 +29,23 @@ public class Window extends JFrame
 		getContentPane().repaint();
 	}
 
+	public void dynamicResize(double scale)
+	{
+		double aspectRatio = getAspectRatio();
+		Dimension screenSize = getScreenSize();
+		setSize((int)(screenSize.width * scale), (int)(screenSize.width * scale / aspectRatio));
+	}
+
+	private double getAspectRatio()
+	{
+		Dimension size = getPreferredSize();
+		if (size.height == 0)
+		{
+			return 1;
+		}
+		return size.width / size.height;
+	}
+
 	public void setWindowSize(int width, int height)
 	{
 		setSize(width, height);

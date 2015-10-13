@@ -4,8 +4,40 @@
 		"selected_items":
 		[
 			[
+				"FIle",
+				"FileNotFoundException"
+			],
+			[
+				"File",
+				"FileNotFoundException"
+			],
+			[
 				"de",
-				"deselectAll"
+				"deselect"
+			],
+			[
+				"mov",
+				"move"
+			],
+			[
+				"spot",
+				"spots"
+			],
+			[
+				"get",
+				"getScreenSize"
+			],
+			[
+				"INt",
+				"IntPiece"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
+				"print",
+				"println"
 			],
 			[
 				"del",
@@ -14,14 +46,6 @@
 			[
 				"Int",
 				"IntPiece"
-			],
-			[
-				"in",
-				"IntBoard"
-			],
-			[
-				"get",
-				"getLegalMoves"
 			],
 			[
 				"gr",
@@ -80,10 +104,6 @@
 				"holdMoveColor"
 			],
 			[
-				"mov",
-				"moveColor"
-			],
-			[
 				"se",
 				"selectedColor"
 			],
@@ -139,7 +159,7 @@
 			"file": "src/com/jaxson/board/IntBoard.java",
 			"settings":
 			{
-				"buffer_size": 6591,
+				"buffer_size": 6525,
 				"line_ending": "Windows"
 			}
 		}
@@ -187,14 +207,10 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 101.0,
-		"last_filter": "git pull",
+		"height": 113.0,
+		"last_filter": "git push",
 		"selected_items":
 		[
-			[
-				"git pull",
-				"Git: Pull"
-			],
 			[
 				"git push",
 				"Git: Push"
@@ -206,6 +222,10 @@
 			[
 				"git add",
 				"Git: Add..."
+			],
+			[
+				"git pull",
+				"Git: Pull"
 			],
 			[
 				"git pus",
@@ -258,17 +278,27 @@
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui"
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers"
 	],
 	"file_history":
 	[
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Spot.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Board.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Options.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Piece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Spot.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/IntPiece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Board.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/GameWindow.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Window.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/ScaleContainer.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/Point.java",
+		"/C/Users/Jaxson/Desktop/qlfilter.c",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zEA85C.tmp/qlfilter.c",
+		"/D/Documents/Development/School/JavaProjects/Chess/run.bat",
+		"/D/Documents/Development/School/JavaProjects/Chess/make.bat",
+		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/ant.sublime-build",
+		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/C.sublime-settings",
+		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/vbdotnet.sublime-settings",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Board.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Spot.java",
@@ -335,6 +365,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"filterMoves",
+			"Point",
 			"board",
 			"location",
 			"board",
@@ -362,6 +394,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"filterFriendly",
 			"spots",
 			"LIGHTCOLOR",
 			"DARKCOLOR",
@@ -389,15 +422,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6591,
+						"buffer_size": 6525,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								95,
-								95
+								0,
+								0
 							]
 						],
 						"settings":
@@ -406,7 +439,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 51.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -458,7 +491,7 @@
 	{
 		"height": 104.0
 	},
-	"pinned_build_system": "Packages/User/ant.sublime-build",
+	"pinned_build_system": "Packages/Java/Ant.sublime-build",
 	"project": "Chess.sublime-project",
 	"replace":
 	{
