@@ -22,7 +22,6 @@ public class Spot extends Panel
 	private Board board;
 	private Piece piece;
 	private Point location;
-	private Color color;
 	private Spot transferSpot;
 	private Boolean hasMoved = false;
 
@@ -31,22 +30,21 @@ public class Spot extends Panel
 		super(new BorderLayout());
 		this.board = board;
 		this.location = location;
-		color = getColor(location);
 		deselect();
 		addMouseListener(new MyMouseAdapter(this));
 	}
 
-	private Color getColor(Point spot)
+	private Color getColor()
 	{
-		if (isEven(spot.y))
+		if (isEven(location.y))
 		{
-			if (isEven(spot.x))
+			if (isEven(location.x))
 			{
 				return DARKCOLOR;
 			}
 			return LIGHTCOLOR;
 		}
-		if (isEven(spot.x))
+		if (isEven(location.x))
 		{
 			return LIGHTCOLOR;
 		}
@@ -94,7 +92,7 @@ public class Spot extends Panel
 
 	public void deselect()
 	{
-		setBackground(color);
+		setBackground(getColor());
 		transferSpot = null;
 	}
 
@@ -178,7 +176,7 @@ public class Spot extends Panel
 		{
 			return new IntPiece(location);
 		}
-		return new IntPiece(piece.color, piece.type, location, hasMoved);
+		return new IntPiece(piece.color, piece.type, location, piece.direction, hasMoved);
 	}
 
 	public void onCick()

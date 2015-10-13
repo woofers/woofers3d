@@ -155,56 +155,48 @@ public class IntBoard
 	private ArrayList<IntPiece> getPawn(IntPiece piece)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
-		IntPiece spot;
-		int increment;
-		if (piece.color == Piece.BLACK)
+		IntPiece spot = piece;
+		for (int i = 0; i < 2; i ++)
 		{
-			increment = +1;
-		}
-		else
-		{
-			increment = -1;
-		}
-		spot = getSpot(piece.location.x, piece.location.y + increment);
-		if (spot.type != 0)
-		{
-			return spots;
-		}
-		spots.add(spot);
-		if (!piece.hasMoved)
-		{
-			spot = getSpot(piece.location.x, piece.location.y + increment + increment);
-			if (spot.type == 0)
+			spot = getSpot(spot.location.x, spot.location.y + piece.direction);
+			if (spot != null)
 			{
-				spots.add(spot);
+				if (spot.isEmpty())
+				{
+					spots.add(spot);
+					if (piece.hasMoved)
+					{
+						break;
+					}
+					continue;
+				}
 			}
+			break;
 		}
 		return spots;
 	}
 
+	// needs work
 	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
-		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);
-		if (spot == null)
+		IntPiece spot = piece;
+		while (spot != null)
 		{
-			return spots;
-		}
-		while (spot.type == 0)
-		{
-			spots.add(spot);
 			spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
-			if (spot == null)
+			if (spot != null)
 			{
-				break;
+				if (!spot.isFriendly(piece.color))
+				{
+					spots.add(spot);
+					if (!spot.isEmpty())
+					{
+						break;
+					}
+					continue;
+				}
 			}
-		}
-		if (spot != null)
-		{
-			if (spot.color != piece.color)
-			{
-				spots.add(spot);
-			}
+			return spots;
 		}
 		return spots;
 	}

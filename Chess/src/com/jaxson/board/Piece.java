@@ -24,6 +24,7 @@ public class Piece extends Panel
 
 	public int color;
 	public int type;
+	public int direction;
 	private Image image;
 
 	public Piece(int type, int color)
@@ -31,6 +32,7 @@ public class Piece extends Panel
 		super();
 		this.type = type;
 		this.color = color;
+		this.direction = getStartDirection();
 		setOpaque(false);
 
 		String path = "assets/images/pieces/" + color + "_" + type + ".png";
@@ -42,6 +44,15 @@ public class Piece extends Panel
 		{
 
 		}
+	}
+
+	private int getStartDirection()
+	{
+		if (color == Piece.BLACK)
+		{
+			return +1;
+		}
+		return -1;
 	}
 
 	private int toInt(double i)
