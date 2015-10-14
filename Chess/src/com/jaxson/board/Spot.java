@@ -56,6 +56,46 @@ public class Spot extends Panel
 		return i % 2 == 0;
 	}
 
+	public Boolean isPromotable()
+	{
+		if (!isEmpty())
+		{
+			if (isEnd())
+			{
+				if (piece.type == Piece.PAWN)
+				{
+					if (hasMoved)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private Boolean isEnd()
+	{
+		if (!isEmpty())
+		{
+			if (piece.color == Piece.BLACK)
+			{
+				if (location.y == board.gridHeight - 1)
+				{
+					return true;
+				}
+			}
+			else
+			{
+				if (location.y == 0)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private void select()
 	{
 		if (!isEmpty())
@@ -148,6 +188,11 @@ public class Spot extends Panel
 		removePiece();
 		this.piece = piece;
 		add(piece);
+		if (isPromotable())
+		{
+			this.piece = piece.promote();
+			add(piece);
+		}
 	}
 
 	public void setTransferSpot(Spot spot)

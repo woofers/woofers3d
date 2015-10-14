@@ -187,10 +187,13 @@ public class IntBoard
 		while (index < spots.size())
 		{
 			spot = spots.get(index);
-			if (spot.color == piece.color || spot.isEmpty())
+			if (spot != null)
 			{
-					spots.remove(index);
-					continue;
+				if (spot.color == piece.color || spot.isEmpty())
+				{
+						spots.remove(index);
+						continue;
+				}
 			}
 			index ++;
 		}

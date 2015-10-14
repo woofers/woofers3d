@@ -55,6 +55,13 @@ public class Piece extends Panel
 		return -1;
 	}
 
+	public Piece promote()
+	{
+		PromotionWindow window = new PromotionWindow(300, 300, color);
+		int result = window.getResult();
+		return this;
+	}
+
 	private int toInt(double i)
 	{
 		return (int)(Math.floor(i));

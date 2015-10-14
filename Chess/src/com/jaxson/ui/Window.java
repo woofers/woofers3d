@@ -12,6 +12,7 @@ public class Window extends JFrame
 		super("Window");
 		setWindowSize(width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// /dynamicResize(0.5);
 		center();
 		setVisible(true);
 		setLayout(new BorderLayout());
@@ -33,7 +34,7 @@ public class Window extends JFrame
 	{
 		double aspectRatio = getAspectRatio();
 		Dimension screenSize = getScreenSize();
-		setSize((int)(screenSize.width * scale), (int)(screenSize.width * scale / aspectRatio));
+		setWindowSize((int)(screenSize.height * scale * aspectRatio), (int)(screenSize.height * scale));
 	}
 
 	private double getAspectRatio()
