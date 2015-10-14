@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"get",
+				"getPawnCapture"
+			],
+			[
+				"add",
+				"addAll"
+			],
+			[
 				"FIle",
 				"FileNotFoundException"
 			],
@@ -22,10 +30,6 @@
 			[
 				"spot",
 				"spots"
-			],
-			[
-				"get",
-				"getScreenSize"
 			],
 			[
 				"INt",
@@ -120,10 +124,6 @@
 				"gridWidth"
 			],
 			[
-				"add",
-				"addPieces"
-			],
-			[
 				"row",
 				"rowSize"
 			],
@@ -159,7 +159,7 @@
 			"file": "src/com/jaxson/board/IntBoard.java",
 			"settings":
 			{
-				"buffer_size": 6525,
+				"buffer_size": 6872,
 				"line_ending": "Windows"
 			}
 		}
@@ -208,15 +208,19 @@
 	"command_palette":
 	{
 		"height": 113.0,
-		"last_filter": "git push",
+		"last_filter": "git pull",
 		"selected_items":
 		[
+			[
+				"git pull",
+				"Git: Pull"
+			],
 			[
 				"git push",
 				"Git: Push"
 			],
 			[
-				"git com",
+				"git c",
 				"Git: Commit"
 			],
 			[
@@ -224,8 +228,8 @@
 				"Git: Add..."
 			],
 			[
-				"git pull",
-				"Git: Pull"
+				"git com",
+				"Git: Commit"
 			],
 			[
 				"git pus",
@@ -273,15 +277,13 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Documents/Development/School/JavaProjects/Chess",
-		"/D/Documents/Development/School/JavaProjects/Chess/src",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers"
+		"/D/Documents/Development/School/JavaProjects/Chess"
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/School/JavaProjects/Chess/bin/jar/MANIFEST.MF",
+		"/D/Documents/Development/School/JavaProjects/Chess/build.xml",
+		"/D/Documents/Development/School/JavaProjects/Chess/bin/jar/assets/images/pieces/ToPNG.jsx",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Options.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Piece.java",
@@ -422,15 +424,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6525,
+						"buffer_size": 6872,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								4807,
+								4807
 							]
 						],
 						"settings":
@@ -439,7 +441,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2846.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

@@ -173,10 +173,30 @@ public class IntBoard
 			}
 			break;
 		}
+		spots.addAll(getPawnCapture(piece));
 		return spots;
 	}
 
-	// needs work
+	private ArrayList<IntPiece> getPawnCapture(IntPiece piece)
+	{
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		spots.add(getSpot(piece.location.x + 1, piece.location.y + piece.direction));
+		spots.add(getSpot(piece.location.x - 1, piece.location.y + piece.direction));
+		IntPiece spot;
+		int index = 0;
+		while (index < spots.size())
+		{
+			spot = spots.get(index);
+			if (spot.color == piece.color || spot.isEmpty())
+			{
+					spots.remove(index);
+					continue;
+			}
+			index ++;
+		}
+		return spots;
+	}
+
 	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
