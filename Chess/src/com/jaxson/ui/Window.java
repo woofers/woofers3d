@@ -11,7 +11,7 @@ public class Window extends JFrame
 	{
 		super("Window");
 		setWindowSize(width, height);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		// /dynamicResize(0.5);
 		center();
 		setVisible(true);

@@ -4,6 +4,8 @@ import com.jaxson.board.*;
 import com.jaxson.ui.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.Dialog.ModalityType;
 
 public class GameWindow extends Window
 {
@@ -16,13 +18,20 @@ public class GameWindow extends Window
 		super(width, height);
 		setTitle("Chess");
 
-		board = new Board();
-		scaleContainer = new ScaleContainer<>(board);
+		board = new Board(this);
+		scaleContainer = new ScaleContainer(board);
 		add(scaleContainer, BorderLayout.CENTER);
 
 		options = new Options(board);
 		options.setPreferredSize(new Dimension(100, 100));
 		add(options, BorderLayout.LINE_END);
+
+
+		JFrame frame = new JFrame("test");
+		JDialog window = new JDialog(frame);
+		window.setVisible(true);
+		window.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		frame.setVisible(true);
 
 		draw();
 	}

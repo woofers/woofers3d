@@ -2,6 +2,7 @@ package com.jaxson.board;
 
 import com.jaxson.board.containers.*;
 import com.jaxson.ui.Panel;
+import com.jaxson.ui.Window;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-public class Spot extends Panel
+public class Spot<T extends Window> extends Panel
 {
 	private static final Color LIGHTCOLOR        = new Color(209, 139, 71);
 	private static final Color DARKCOLOR         = new Color(255, 206, 158);
@@ -24,6 +25,12 @@ public class Spot extends Panel
 	private Point location;
 	private Spot transferSpot;
 	private Boolean hasMoved = false;
+	private T window;
+
+	public Spot(Point location)
+	{
+		this(location, null);
+	}
 
 	public Spot(Point location, Board board)
 	{
@@ -31,7 +38,10 @@ public class Spot extends Panel
 		this.board = board;
 		this.location = location;
 		deselect();
-		addMouseListener(new MyMouseAdapter(this));
+		if (board != null)
+		{
+			addMouseListener(new MyMouseAdapter(this));
+		}
 	}
 
 	private Color getColor()
@@ -96,16 +106,20 @@ public class Spot extends Panel
 		return false;
 	}
 
-	private void select()
+	public Boolean isPossibleEnd()
+	{
+		return location.y == board.gridHeight - 1 || location.y == 0;
+	}
+
+	public void select()
 	{
 		if (!isEmpty())
 		{
 			setBackground(SELECTEDCOLOR);
-			displayMoves();
 		}
 	}
 
-	private void holdSelect()
+	public void holdSelect()
 	{
 		if (!isEmpty())
 		{
@@ -171,6 +185,11 @@ public class Spot extends Panel
 		}
 	}
 
+	public void setWindow(T window)
+	{
+		this.window = window;
+	}
+
 	public void createPiece(int type, int color)
 	{
 		removePiece();
@@ -190,7 +209,7 @@ public class Spot extends Panel
 		add(piece);
 		if (isPromotable())
 		{
-			this.piece = piece.promote();
+			this.piece = piece.promote(window);
 			add(piece);
 		}
 	}
@@ -246,6 +265,7 @@ public class Spot extends Panel
 		if (isSelected())
 		{
 			select();
+			displayMoves();
 		}
 		else if (isMoveSelected())
 		{

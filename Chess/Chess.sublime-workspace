@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"th",
+				"threadEvent"
+			],
+			[
+				"thread",
+				"ThreadEvent"
+			],
+			[
+				"x",
+				"xClose"
+			],
+			[
+				"se",
+				"setResult"
+			],
+			[
+				"J",
+				"JFrame"
+			],
+			[
 				"get",
 				"getPawnCapture"
 			],
@@ -108,10 +128,6 @@
 				"holdMoveColor"
 			],
 			[
-				"se",
-				"selectedColor"
-			],
-			[
 				"on",
 				"onRelease"
 			],
@@ -156,10 +172,34 @@
 	"buffers":
 	[
 		{
-			"file": "src/com/jaxson/board/IntBoard.java",
+			"file": "src/com/jaxson/board/PromotionWindow.java",
 			"settings":
 			{
-				"buffer_size": 6872,
+				"buffer_size": 2770,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/board/Piece.java",
+			"settings":
+			{
+				"buffer_size": 1824,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/GameWindow.java",
+			"settings":
+			{
+				"buffer_size": 605,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/threading/ThreadEvent.java",
+			"settings":
+			{
+				"buffer_size": 358,
 				"line_ending": "Windows"
 			}
 		}
@@ -207,10 +247,34 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 113.0,
-		"last_filter": "git pull",
+		"height": 338.0,
+		"last_filter": "conv",
 		"selected_items":
 		[
+			[
+				"conv",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"git pul",
+				"Git: Pull"
+			],
+			[
+				"git p",
+				"Git: Push"
+			],
+			[
+				"git ",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
 			[
 				"git pull",
 				"Git: Pull"
@@ -224,28 +288,12 @@
 				"Git: Commit"
 			],
 			[
-				"git add",
-				"Git: Add..."
-			],
-			[
-				"git com",
-				"Git: Commit"
-			],
-			[
 				"git pus",
 				"Git: Push"
 			],
 			[
-				"git ",
-				"Git: Commit"
-			],
-			[
 				"git ad",
 				"Git: Add..."
-			],
-			[
-				"conv",
-				"Indentation: Convert to Tabs"
 			],
 			[
 				"list",
@@ -277,21 +325,33 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Documents/Development/School/JavaProjects/Chess"
+		"/D/Documents/Development/School/JavaProjects/Chess",
+		"/D/Documents/Development/School/JavaProjects/Chess/src",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui"
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Spot.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Dialog.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/threading/ThreadEvent.as",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Piece.java",
+		"/C/Program Files/Java/jdk1.8.0_60/JOptionPane.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/GameWindow.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/PromotionWindow.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Window.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Panel.java",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
+		"/C/Users/Jaxson/Desktop/ModalityDemo.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/bin/jar/MANIFEST.MF",
 		"/D/Documents/Development/School/JavaProjects/Chess/build.xml",
 		"/D/Documents/Development/School/JavaProjects/Chess/bin/jar/assets/images/pieces/ToPNG.jsx",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Options.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Piece.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Spot.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/IntPiece.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Board.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/GameWindow.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Window.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/ScaleContainer.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/Point.java",
 		"/C/Users/Jaxson/Desktop/qlfilter.c",
@@ -415,24 +475,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/com/jaxson/board/IntBoard.java",
+					"file": "src/com/jaxson/board/PromotionWindow.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6872,
+						"buffer_size": 2770,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4807,
-								4807
+								1873,
+								1873
 							]
 						],
 						"settings":
@@ -441,7 +501,95 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2846.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/com/jaxson/board/Piece.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1824,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1374,
+								1374
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/com/jaxson/GameWindow.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 605,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								496,
+								496
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/com/jaxson/threading/ThreadEvent.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 358,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								357,
+								357
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

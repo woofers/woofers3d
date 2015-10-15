@@ -1,6 +1,8 @@
 package com.jaxson.board;
 
 import com.jaxson.ui.Panel;
+import com.jaxson.ui.Window;
+import com.jaxson.threading.ThreadEvent;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Piece extends Panel
+public class Piece<T extends Window> extends Panel
 {
 	public static final int KING   = 1;
 	public static final int QUEEN  = 2;
@@ -42,7 +44,7 @@ public class Piece extends Panel
 		}
 		catch (IOException ex)
 		{
-
+			ex.printStackTrace();
 		}
 	}
 
@@ -55,10 +57,10 @@ public class Piece extends Panel
 		return -1;
 	}
 
-	public Piece promote()
+	public Piece promote(T window)
 	{
-		PromotionWindow window = new PromotionWindow(300, 300, color);
-		int result = window.getResult();
+		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
+		int result = promotionWindow.getResult();
 		return this;
 	}
 
