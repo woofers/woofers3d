@@ -11,13 +11,14 @@ public class Dialog<T extends Window> extends JDialog
 {
 	public Dialog(int width, int height, T window)
 	{
-		super(window);
+		super(window, false);
 		setDialogSize(width, height);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setModalityType(DEFAULT_MODALITY_TYPE);
 		center();
+		pack();
 		setResizable(false);
 		setVisible(true);
-		setModalityType(DEFAULT_MODALITY_TYPE);
 		setLayout(new BorderLayout());
 		draw();
 	}

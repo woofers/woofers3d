@@ -1,4 +1,4 @@
-package com.jaxson;
+package com.jaxson.ui.board;
 
 import com.jaxson.board.*;
 import com.jaxson.ui.*;
@@ -25,13 +25,6 @@ public class GameWindow extends Window
 		options = new Options(board);
 		options.setPreferredSize(new Dimension(100, 100));
 		add(options, BorderLayout.LINE_END);
-
-
-		JFrame frame = new JFrame("test");
-		JDialog window = new JDialog(frame);
-		window.setVisible(true);
-		window.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		frame.setVisible(true);
 
 		draw();
 	}

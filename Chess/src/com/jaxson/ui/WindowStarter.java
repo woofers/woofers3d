@@ -1,6 +1,6 @@
 package com.jaxson.ui;
 
-import com.jaxson.GameWindow;
+import com.jaxson.ui.board.*;
 
 public class WindowStarter<T extends Window>
 {

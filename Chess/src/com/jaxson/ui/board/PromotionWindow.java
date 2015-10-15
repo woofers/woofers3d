@@ -1,5 +1,6 @@
-package com.jaxson.board;
+package com.jaxson.ui.board;
 
+import com.jaxson.board.*;
 import com.jaxson.board.containers.Point;
 import com.jaxson.ui.*;
 import java.awt.BorderLayout;
@@ -53,6 +54,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 		spots[1][0].createPiece(Piece.ROOK, color);
 		spots[0][1].createPiece(Piece.BISHOP, color);
 		spots[1][1].createPiece(Piece.KNIGHT, color);
+		draw();
 	}
 
 	public void setResult(int value)
