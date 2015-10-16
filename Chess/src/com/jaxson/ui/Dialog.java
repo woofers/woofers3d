@@ -1,25 +1,22 @@
 package com.jaxson.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import java.awt.Dialog.ModalityType;
 
 public class Dialog<T extends Window> extends JDialog
 {
 	public Dialog(int width, int height, T window)
 	{
-		super(window, false);
+		super(window);
 		setDialogSize(width, height);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setModalityType(DEFAULT_MODALITY_TYPE);
-		center();
-		pack();
 		setResizable(false);
-		setVisible(true);
 		setLayout(new BorderLayout());
+		center();
 		draw();
 	}
 

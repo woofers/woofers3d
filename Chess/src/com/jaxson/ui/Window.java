@@ -12,10 +12,9 @@ public class Window extends JFrame
 		super("Window");
 		setWindowSize(width, height);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		// /dynamicResize(0.5);
-		center();
 		setVisible(true);
 		setLayout(new BorderLayout());
+		center();
 		draw();
 	}
 

@@ -1,6 +1,7 @@
 package com.jaxson.board;
 
-import com.jaxson.board.containers.*;
+import com.jaxson.board.containers.IntPiece;
+import com.jaxson.board.containers.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 import java.awt.Color;

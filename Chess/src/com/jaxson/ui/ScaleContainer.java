@@ -11,9 +11,9 @@ public class ScaleContainer<T extends Panel> extends Panel
 	public ScaleContainer(T panel)
 	{
 		super();
-		setOpaque(false);
-		add(panel);
 		this.panel = panel;
+		add(panel);
+		setOpaque(false);
 		addComponentListener(new MyComponentAdapter(this));
 	}
 

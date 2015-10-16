@@ -2,8 +2,7 @@ package com.jaxson.board.containers;
 
 public class Point
 {
-	public int x;
-	public int y;
+	public int x, y;
 
 	public Point()
 	{

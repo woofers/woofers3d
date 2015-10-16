@@ -1,8 +1,8 @@
 package com.jaxson.board;
 
+import com.jaxson.ui.board.PromotionWindow;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
-import com.jaxson.threading.ThreadEvent;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,9 +24,8 @@ public class Piece<T extends Window> extends Panel
 
 	private static final double SCALE = 0.8;
 
-	public int color;
-	public int type;
-	public int direction;
+	public int color, type, direction;
+	public Boolean hasMoved = false;
 	private Image image;
 
 	public Piece(int type, int color)
@@ -61,7 +60,7 @@ public class Piece<T extends Window> extends Panel
 	{
 		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
 		int result = promotionWindow.getResult();
-		return this;
+		return new Piece(result, color);
 	}
 
 	private int toInt(double i)

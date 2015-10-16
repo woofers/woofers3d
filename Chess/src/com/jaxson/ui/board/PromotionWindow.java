@@ -1,8 +1,12 @@
 package com.jaxson.ui.board;
 
-import com.jaxson.board.*;
 import com.jaxson.board.containers.Point;
-import com.jaxson.ui.*;
+import com.jaxson.board.Piece;
+import com.jaxson.board.Spot;
+import com.jaxson.ui.Dialog;
+import com.jaxson.ui.Panel;
+import com.jaxson.ui.ScaleContainer;
+import com.jaxson.ui.Window;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,13 +30,13 @@ public class PromotionWindow<T extends Window> extends Dialog
 
 	public PromotionWindow(int width, int height, int color, T window)
 	{
+
 		super(width, height, window);
-		System.out.println(window.toString());
 		setTitle("Chess");
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(new MyWindowAdapter(this));
+		addWindowListener(new PromotionWindowAdapter(this));
 
-		label = new JLabel("Upgrade your pawn", SwingConstants.CENTER);
+		label = new JLabel("Promote your pawn", SwingConstants.CENTER);
 		label.setFont(new Font(label.getName(), Font.PLAIN, 30));
 		add(label, BorderLayout.PAGE_END);
 
@@ -46,7 +50,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 			for (int x = 0; x < SIZE; x ++)
 			{
 				spots[x][y] = new Spot(new Point(x, y));
-				spots[x][y].addMouseListener(new MyMouseAdapter2(spots[x][y], this));
+				spots[x][y].addMouseListener(new PromotionWindowMouseAdapter(spots[x][y], this));
 				panel.add(spots[x][y]);
 			}
 		}
@@ -54,17 +58,19 @@ public class PromotionWindow<T extends Window> extends Dialog
 		spots[1][0].createPiece(Piece.ROOK, color);
 		spots[0][1].createPiece(Piece.BISHOP, color);
 		spots[1][1].createPiece(Piece.KNIGHT, color);
-		draw();
-	}
 
-	public void setResult(int value)
-	{
-		result = value;
+		setVisible(true);
+		draw();
 	}
 
 	public int getResult()
 	{
 		return result;
+	}
+
+	public void setResult(int value)
+	{
+		result = value;
 	}
 
 	public void close()
@@ -74,7 +80,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 
 	public void xClose()
 	{
-		setResult(rand(Piece.QUEEN, Piece.KNIGHT));
+		setResult(2);
 		close();
 	}
 
@@ -85,12 +91,12 @@ public class PromotionWindow<T extends Window> extends Dialog
 	}
 }
 
-class MyMouseAdapter2 extends MouseAdapter
+class PromotionWindowMouseAdapter extends MouseAdapter
 {
 	private Spot object;
 	private PromotionWindow window;
 
-	public MyMouseAdapter2(Spot object, PromotionWindow window)
+	public PromotionWindowMouseAdapter(Spot object, PromotionWindow window)
 	{
 		this.object = object;
 		this.window = window;
@@ -111,11 +117,11 @@ class MyMouseAdapter2 extends MouseAdapter
 	}
 }
 
-class MyWindowAdapter extends WindowAdapter
+class PromotionWindowAdapter extends WindowAdapter
 {
 	private PromotionWindow window;
 
-	public MyWindowAdapter(PromotionWindow window)
+	public PromotionWindowAdapter(PromotionWindow window)
 	{
 		this.window = window;
 	}

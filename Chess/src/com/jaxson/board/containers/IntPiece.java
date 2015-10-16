@@ -2,10 +2,8 @@ package com.jaxson.board.containers;
 
 public class IntPiece
 {
-	public int color;
-	public int type;
+	public int color, type, direction;
 	public Point location;
-	public int direction;
 	public Boolean hasMoved;
 
 	public IntPiece()

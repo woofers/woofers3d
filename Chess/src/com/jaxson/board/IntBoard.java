@@ -1,7 +1,8 @@
 package com.jaxson.board;
 
 import com.jaxson.board.Board;
-import com.jaxson.board.containers.*;
+import com.jaxson.board.containers.IntPiece;
+import com.jaxson.board.containers.Point;
 import java.util.ArrayList;
 
 public class IntBoard

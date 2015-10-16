@@ -1,6 +1,7 @@
 package com.jaxson.board;
 
-import com.jaxson.board.containers.*;
+import com.jaxson.board.containers.IntPiece;
+import com.jaxson.board.containers.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 import java.awt.BorderLayout;
@@ -24,7 +25,6 @@ public class Spot<T extends Window> extends Panel
 	private Piece piece;
 	private Point location;
 	private Spot transferSpot;
-	private Boolean hasMoved = false;
 	private T window;
 
 	public Spot(Point location)
@@ -40,7 +40,7 @@ public class Spot<T extends Window> extends Panel
 		deselect();
 		if (board != null)
 		{
-			addMouseListener(new MyMouseAdapter(this));
+			addMouseListener(new SpotMouseAdapter(this));
 		}
 	}
 
@@ -66,7 +66,7 @@ public class Spot<T extends Window> extends Panel
 		return i % 2 == 0;
 	}
 
-	public Boolean isPromotable()
+	private Boolean isPromotable()
 	{
 		if (!isEmpty())
 		{
@@ -74,7 +74,7 @@ public class Spot<T extends Window> extends Panel
 			{
 				if (piece.type == Piece.PAWN)
 				{
-					if (hasMoved)
+					if (piece.hasMoved)
 					{
 						return true;
 					}
@@ -135,7 +135,6 @@ public class Spot<T extends Window> extends Panel
 	private void holdMoveSelect()
 	{
 		setBackground(HOLDMOVECOLOR);
-		hasMoved = true;
 	}
 
 	private void move()
@@ -202,16 +201,19 @@ public class Spot<T extends Window> extends Panel
 		return piece;
 	}
 
-	public void setPiece(Piece piece)
+	public void setPiece(Piece newPiece)
 	{
 		removePiece();
-		this.piece = piece;
+		piece = newPiece;
+		piece.hasMoved = true;
 		add(piece);
 		if (isPromotable())
 		{
-			this.piece = piece.promote(window);
+			removePiece();
+			piece = newPiece.promote(window);
 			add(piece);
 		}
+		draw();
 	}
 
 	public void setTransferSpot(Spot spot)
@@ -240,7 +242,7 @@ public class Spot<T extends Window> extends Panel
 		{
 			return new IntPiece(location);
 		}
-		return new IntPiece(piece.color, piece.type, location, piece.direction, hasMoved);
+		return new IntPiece(piece.color, piece.type, location, piece.direction, piece.hasMoved);
 	}
 
 	public void onCick()
@@ -275,11 +277,11 @@ public class Spot<T extends Window> extends Panel
 	}
 }
 
-class MyMouseAdapter extends MouseAdapter
+class SpotMouseAdapter extends MouseAdapter
 {
 	private Spot object;
 
-	public MyMouseAdapter(Spot object)
+	public SpotMouseAdapter(Spot object)
 	{
 		this.object = object;
 	}

@@ -10,10 +10,8 @@ import javax.swing.JComboBox;
 public class Options extends Panel
 {
 	private Board board;
-	private JComboBox playerMode;
-	private JComboBox difficulty;
-	private JComboBox gridSize;
 	private JButton reset;
+	private JComboBox playerMode, difficulty, gridSize;
 
 	public Options(Board board)
 	{

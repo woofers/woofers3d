@@ -1,22 +1,26 @@
 package com.jaxson.ui.board;
 
-import com.jaxson.board.*;
-import com.jaxson.ui.*;
+import com.jaxson.board.Board;
+import com.jaxson.board.Options;
+import com.jaxson.ui.ScaleContainer;
+import com.jaxson.ui.Window;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.*;
 import java.awt.Dialog.ModalityType;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
 
 public class GameWindow extends Window
 {
-	private ScaleContainer scaleContainer;
 	private Board board;
+	private ScaleContainer scaleContainer;
 	private Options options;
 
 	public GameWindow(int width, int height)
 	{
 		super(width, height);
 		setTitle("Chess");
+		ImageIcon icon = new ImageIcon("assets/images/icon.png");
+		setIconImage(icon.getImage());
 
 		board = new Board(this);
 		scaleContainer = new ScaleContainer(board);
