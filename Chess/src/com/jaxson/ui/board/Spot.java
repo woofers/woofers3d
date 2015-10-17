@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
-import com.jaxson.board.Point;
+import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 
@@ -166,10 +166,7 @@ public class Spot<T extends Window> extends Panel
 			{
 				if (piece.type == Piece.PAWN)
 				{
-					if (piece.hasMoved)
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 		}
@@ -247,24 +244,22 @@ public class Spot<T extends Window> extends Panel
 		removePiece();
 		piece = newPiece;
 		piece.hasMoved = true;
-		add(piece);
 		if (isPromotable())
 		{
-			removePiece();
 			piece = newPiece.promote(window);
-			add(piece);
 		}
+		add(piece);
 		draw();
 	}
 
-	public void setTransferSpot(Spot spot)
+	public void setTransferSpot(Spot value)
 	{
-		transferSpot = spot;
+		transferSpot = value;
 	}
 
-	public void setWindow(T window)
+	public void setWindow(T value)
 	{
-		this.window = window;
+		window = value;
 	}
 
 	public IntPiece toIntPiece()

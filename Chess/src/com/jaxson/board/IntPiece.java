@@ -1,5 +1,7 @@
 package com.jaxson.board;
 
+import com.jaxson.geom.Point;
+
 public class IntPiece
 {
 	public int color, type, direction;
@@ -30,14 +32,15 @@ public class IntPiece
 		this.hasMoved = hasMoved;
 	}
 
-	public Boolean isFriendly(int color)
-	{
-		return this.color == color;
-	}
 
 	public Boolean isEmpty()
 	{
 		return type == 0;
+	}
+
+	public Boolean isFriendly(int color)
+	{
+		return this.color == color;
 	}
 
 	public int toInt()

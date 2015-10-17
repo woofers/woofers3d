@@ -17,13 +17,6 @@ public class ScaleContainer<T extends Panel> extends Panel
 		addComponentListener(new MyComponentAdapter(this));
 	}
 
-	public void keepAspectRatio()
-	{
-		int size =  Math.min(getWidth(), getHeight());
-		panel.setPanelSize(size, (int)(size / getAspectRatio(panel)));
-		draw();
-	}
-
 	private double getAspectRatio(T panel)
 	{
 		Dimension size = panel.getPreferredSize();
@@ -33,9 +26,16 @@ public class ScaleContainer<T extends Panel> extends Panel
 		}
 		return size.width / size.height;
 	}
+
+	public void keepAspectRatio()
+	{
+		int size =  Math.min(getWidth(), getHeight());
+		panel.setPanelSize(size, (int)(size / getAspectRatio(panel)));
+		draw();
+	}
 }
 
-class ComponentAdapter extends ComponentAdapter
+class MyComponentAdapter extends ComponentAdapter
 {
 	private ScaleContainer object;
 

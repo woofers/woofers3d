@@ -12,7 +12,7 @@ import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import com.jaxson.board.Point;
+import com.jaxson.geom.Point;
 import com.jaxson.ui.Dialog;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.ScaleContainer;
@@ -41,7 +41,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 		add(label, BorderLayout.PAGE_END);
 
 		panel = new Panel(new GridLayout(SIZE, SIZE));
-		scaleContainer = new ScaleContainer(panel);
+		scaleContainer = new ScaleContainer<>(panel);
 		add(scaleContainer, BorderLayout.CENTER);
 
 		spots = new Spot[SIZE][SIZE];
@@ -63,31 +63,41 @@ public class PromotionWindow<T extends Window> extends Dialog
 		draw();
 	}
 
-	public int getResult()
-	{
-		return result;
-	}
-
-	public void setResult(int value)
-	{
-		result = value;
-	}
-
 	public void close()
 	{
+		setResult(Piece.QUEEN);
 		dispose();
 	}
 
-	public void xClose()
+	public int getResult()
 	{
-		setResult(2);
-		close();
+		return result;
 	}
 
 	private int rand(int min, int max)
 	{
 		Random random = new Random();
 		return random.nextInt((max - min) + 1) + min;
+	}
+
+	public void setResult(int value)
+	{
+		result = value;
+	}
+}
+
+class PromotionWindowAdapter extends WindowAdapter
+{
+	private PromotionWindow window;
+
+	public PromotionWindowAdapter(PromotionWindow window)
+	{
+		this.window = window;
+	}
+
+	public void windowClosing(WindowEvent e)
+	{
+		window.close();
 	}
 }
 
@@ -113,21 +123,6 @@ class PromotionWindowMouseAdapter extends MouseAdapter
 	{
 		object.select();
 		window.setResult(object.getPiece().type);
-		window.close();
-	}
-}
-
-class PromotionWindowAdapter extends WindowAdapter
-{
-	private PromotionWindow window;
-
-	public PromotionWindowAdapter(PromotionWindow window)
-	{
-		this.window = window;
-	}
-
-	public void windowClosing(WindowEvent e)
-	{
-		window.xClose();
+		window.dispose();
 	}
 }

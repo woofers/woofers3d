@@ -2,6 +2,7 @@ package com.jaxson.board;
 
 import java.util.ArrayList;
 
+import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
 
@@ -61,23 +62,19 @@ public class IntBoard
 	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
-		IntPiece spot = piece;
+		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);;
 		while (spot != null)
 		{
-			spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
-			if (spot != null)
+			if (!spot.isFriendly(piece.color))
 			{
-				if (!spot.isFriendly(piece.color))
+				spots.add(spot);
+				if (spot.isEmpty())
 				{
-					spots.add(spot);
-					if (!spot.isEmpty())
-					{
-						break;
-					}
+					spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
 					continue;
 				}
 			}
-			return spots;
+			break;
 		}
 		return spots;
 	}
@@ -273,9 +270,9 @@ public class IntBoard
 		System.out.println(toString());
 	}
 
-	public void setBoard(IntPiece[][] spots)
+	public void setSpots(IntPiece[][] value)
 	{
-		this.spots = spots;
+		spots = value;
 	}
 
 	private Boolean spotExist(int x, int y)

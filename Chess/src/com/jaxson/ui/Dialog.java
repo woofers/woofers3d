@@ -31,15 +31,15 @@ public class Dialog<T extends Window> extends JDialog
 		getContentPane().repaint();
 	}
 
+	private Dimension getScreenSize()
+	{
+		return Toolkit.getDefaultToolkit().getScreenSize();
+	}
+
 	public void setDialogSize(int width, int height)
 	{
 		setSize(width, height);
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(getScreenSize());
-	}
-
-	private Dimension getScreenSize()
-	{
-		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 }

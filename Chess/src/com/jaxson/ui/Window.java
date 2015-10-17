@@ -47,15 +47,15 @@ public class Window extends JFrame
 		return size.width / size.height;
 	}
 
+	private Dimension getScreenSize()
+	{
+		return Toolkit.getDefaultToolkit().getScreenSize();
+	}
+
 	public void setWindowSize(int width, int height)
 	{
 		setSize(width, height);
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(getScreenSize());
-	}
-
-	private Dimension getScreenSize()
-	{
-		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 }

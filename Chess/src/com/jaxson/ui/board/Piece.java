@@ -23,7 +23,7 @@ public class Piece<T extends Window> extends Panel
 
 	private static final double SCALE = 0.8;
 
-	public int color, type, direction;
+	public int type, color, direction;
 	public Boolean hasMoved = false;
 	private Image image;
 
@@ -69,8 +69,7 @@ public class Piece<T extends Window> extends Panel
 	public Piece promote(T window)
 	{
 		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
-		int result = promotionWindow.getResult();
-		return new Piece(result, color);
+		return new Piece(promotionWindow.getResult(), color);
 	}
 
 	private int toInt(double i)

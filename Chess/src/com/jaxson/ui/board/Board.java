@@ -4,7 +4,7 @@ import java.awt.GridLayout;
 
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
-import com.jaxson.board.Point;
+import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 
@@ -13,8 +13,8 @@ public class Board<T extends Window> extends Panel
 	private static final int SIZE = 8;
 
 	public int gridWidth, gridHeight;
-	private Spot[][] spots;
 	private T window;
+	private Spot[][] spots;
 
 	public Board(T window)
 	{
@@ -140,7 +140,7 @@ public class Board<T extends Window> extends Panel
 				spots[x][y] = this.spots[x][y].toIntPiece();
 			}
 		}
-		intBoard.setBoard(spots);
+		intBoard.setSpots(spots);
 		return intBoard;
 	}
 

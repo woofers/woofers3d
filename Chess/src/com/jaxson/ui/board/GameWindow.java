@@ -21,8 +21,8 @@ public class GameWindow extends Window
 		ImageIcon icon = new ImageIcon("assets/images/icon.png");
 		setIconImage(icon.getImage());
 
-		board = new Board(this);
-		scaleContainer = new ScaleContainer(board);
+		board = new Board<>(this);
+		scaleContainer = new ScaleContainer<>(board);
 		add(scaleContainer, BorderLayout.CENTER);
 
 		options = new Options(board);

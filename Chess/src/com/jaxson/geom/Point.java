@@ -1,4 +1,4 @@
-package com.jaxson.board;
+package com.jaxson.geom;
 
 public class Point
 {

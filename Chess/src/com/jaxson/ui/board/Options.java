@@ -9,23 +9,10 @@ import javax.swing.JComboBox;
 
 import com.jaxson.ui.Panel;
 
-class MyActionListener implements ActionListener
-{
-	private Options object;
-
-	public MyActionListener(Options object)
-	{
-		this.object = object;
-	}
-
-	public void actionPerformed(ActionEvent e)
-	{
-		object.resizeGrid(object.getGridWidth(), object.getGridHeight());
-	}
-}
-
 public class Options extends Panel
 {
+	private static final Dimension COMBOSIZE = new Dimension(80, 20);
+
 	private Board board;
 	private JButton reset;
 	private JComboBox playerMode, difficulty, gridSize;
@@ -38,13 +25,13 @@ public class Options extends Panel
 		playerMode = new JComboBox();
 		playerMode.addItem("1 Player");
 		playerMode.addItem("2 Player");
-		playerMode.setPreferredSize(new Dimension(80, 20));
+		playerMode.setPreferredSize(COMBOSIZE);
 		add(playerMode);
 
 		difficulty = new JComboBox();
 		difficulty.addItem("Easy");
 		difficulty.addItem("Hard");
-		difficulty.setPreferredSize(new Dimension(80, 20));
+		difficulty.setPreferredSize(COMBOSIZE);
 		add(difficulty);
 
 		gridSize = new JComboBox();
@@ -53,7 +40,7 @@ public class Options extends Panel
 		gridSize.addItem("12 x 12");
 		gridSize.addItem("14 x 14");
 		gridSize.addItem("16 x 16");
-		gridSize.setPreferredSize(new Dimension(80, 20));
+		gridSize.setPreferredSize(COMBOSIZE);
 		add(gridSize);
 
 		reset = new JButton("Reset");
@@ -90,5 +77,20 @@ public class Options extends Panel
 	{
 		board.removeGrid();
 		board.createGrid(width, height);
+	}
+}
+
+class MyActionListener implements ActionListener
+{
+	private Options object;
+
+	public MyActionListener(Options object)
+	{
+		this.object = object;
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		object.resizeGrid(object.getGridWidth(), object.getGridHeight());
 	}
 }
