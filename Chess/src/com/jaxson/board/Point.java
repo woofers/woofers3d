@@ -1,4 +1,4 @@
-package com.jaxson.board.containers;
+package com.jaxson.board;
 
 public class Point
 {
@@ -15,6 +15,7 @@ public class Point
 		this.y = y;
 	}
 
+	@Override
 	public String toString()
 	{
 		return "X: " + Integer.toString(x) + ", Y: " + Integer.toString(y);

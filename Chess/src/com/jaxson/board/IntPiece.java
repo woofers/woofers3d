@@ -1,4 +1,4 @@
-package com.jaxson.board.containers;
+package com.jaxson.board;
 
 public class IntPiece
 {
@@ -45,6 +45,7 @@ public class IntPiece
 		return Integer.parseInt(toString());
 	}
 
+	@Override
 	public String toString()
 	{
 		return Integer.toString(color) + Integer.toString(type);

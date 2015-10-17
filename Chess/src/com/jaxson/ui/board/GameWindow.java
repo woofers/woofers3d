@@ -1,13 +1,12 @@
 package com.jaxson.ui.board;
 
-import com.jaxson.board.Board;
-import com.jaxson.board.Options;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
+
 import com.jaxson.ui.ScaleContainer;
 import com.jaxson.ui.Window;
-import java.awt.BorderLayout;
-import java.awt.Dialog.ModalityType;
-import java.awt.Dimension;
-import javax.swing.ImageIcon;
 
 public class GameWindow extends Window
 {

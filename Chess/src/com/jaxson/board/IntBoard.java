@@ -1,9 +1,9 @@
 package com.jaxson.board;
 
-import com.jaxson.board.Board;
-import com.jaxson.board.containers.IntPiece;
-import com.jaxson.board.containers.Point;
 import java.util.ArrayList;
+
+import com.jaxson.ui.board.Board;
+import com.jaxson.ui.board.Piece;
 
 public class IntBoard
 {
@@ -19,25 +19,121 @@ public class IntBoard
 		gridHeight = board.gridHeight;
 	}
 
-	public void setBoard(IntPiece[][] spots)
+	private ArrayList<IntPiece> filterFriendly(ArrayList<IntPiece> spots, IntPiece piece)
 	{
-		this.spots = spots;
-	}
-
-	private ArrayList<IntPiece> getPieces(int color)
-	{
-		ArrayList<IntPiece> pieces = new ArrayList<>();
-		for (int y = 0; y < gridHeight; y ++)
+		IntPiece spot;
+		int index = 0;
+		while (index < spots.size())
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			spot = spots.get(index);
+			if (spot != null)
 			{
-				if (spots[x][y].color == color)
+				if (spot.color == piece.color)
 				{
-					pieces.add(spots[x][y]);
+					spots.remove(index);
+					continue;
 				}
 			}
+			index ++;
 		}
-		return pieces;
+		return spots;
+	}
+
+	private ArrayList<IntPiece> filterNull(ArrayList<IntPiece> spots)
+	{
+		if (spots.remove(null))
+		{
+			return filterNull(spots);
+		}
+		return spots;
+	}
+
+	private ArrayList<IntPiece> getAllAbove(IntPiece piece)
+	{
+		return getAllByIncrement(piece, 0, -1);
+	}
+
+	private ArrayList<IntPiece> getAllBelow(IntPiece piece)
+	{
+		return getAllByIncrement(piece, 0, +1);
+	}
+
+	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
+	{
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		IntPiece spot = piece;
+		while (spot != null)
+		{
+			spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
+			if (spot != null)
+			{
+				if (!spot.isFriendly(piece.color))
+				{
+					spots.add(spot);
+					if (!spot.isEmpty())
+					{
+						break;
+					}
+					continue;
+				}
+			}
+			return spots;
+		}
+		return spots;
+	}
+
+	private ArrayList<IntPiece> getAllDiagonal(IntPiece piece)
+	{
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		spots.addAll(getAllDiagonalTopLeft(piece));
+		spots.addAll(getAllDiagonalTopRight(piece));
+		spots.addAll(getAllDiagonalBottomLeft(piece));
+		spots.addAll(getAllDiagonalBottomRight(piece));
+		return spots;
+	}
+
+	private ArrayList<IntPiece> getAllDiagonalBottomLeft(IntPiece piece)
+	{
+		return getAllByIncrement(piece, -1, +1);
+	}
+
+	private ArrayList<IntPiece> getAllDiagonalBottomRight(IntPiece piece)
+	{
+		return getAllByIncrement(piece, +1, +1);
+	}
+
+	private ArrayList<IntPiece> getAllDiagonalTopLeft(IntPiece piece)
+	{
+		return getAllByIncrement(piece, -1, -1);
+	}
+
+	private ArrayList<IntPiece> getAllDiagonalTopRight(IntPiece piece)
+	{
+		return getAllByIncrement(piece, +1, -1);
+	}
+
+	private ArrayList<IntPiece> getAllLeft(IntPiece piece)
+	{
+		return getAllByIncrement(piece, -1, 0);
+	}
+
+	private ArrayList<IntPiece> getAllRight(IntPiece piece)
+	{
+		return getAllByIncrement(piece, +1, 0);
+	}
+
+	private ArrayList<IntPiece> getKnight(IntPiece piece)
+	{
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		spots.add(getSpot(piece.location.x - 1, piece.location.y - 2));
+		spots.add(getSpot(piece.location.x + 1, piece.location.y - 2));
+		spots.add(getSpot(piece.location.x - 1, piece.location.y + 2));
+		spots.add(getSpot(piece.location.x + 1, piece.location.y + 2));
+		spots.add(getSpot(piece.location.x - 2, piece.location.y - 1));
+		spots.add(getSpot(piece.location.x - 2, piece.location.y + 1));
+		spots.add(getSpot(piece.location.x + 2, piece.location.y - 1));
+		spots.add(getSpot(piece.location.x + 2, piece.location.y + 1));
+		return filterFriendly(spots, piece);
 	}
 
 	public ArrayList<IntPiece> getLegalMoves(IntPiece piece)
@@ -75,82 +171,14 @@ public class IntBoard
 		return filterNull(moves);
 	}
 
-	private ArrayList<IntPiece> getAllAbove(IntPiece piece)
+	private Point getLocation(int x, int y)
 	{
-		return getAllByIncrement(piece, 0, -1);
-	}
-
-	private ArrayList<IntPiece> getAllBelow(IntPiece piece)
-	{
-		return getAllByIncrement(piece, 0, +1);
-	}
-
-	private ArrayList<IntPiece> getAllLeft(IntPiece piece)
-	{
-		return getAllByIncrement(piece, -1, 0);
-	}
-
-	private ArrayList<IntPiece> getAllRight(IntPiece piece)
-	{
-		return getAllByIncrement(piece, +1, 0);
-	}
-
-	private ArrayList<IntPiece> getAllDiagonalTopLeft(IntPiece piece)
-	{
-		return getAllByIncrement(piece, -1, -1);
-	}
-
-	private ArrayList<IntPiece> getAllDiagonalTopRight(IntPiece piece)
-	{
-		return getAllByIncrement(piece, +1, -1);
-	}
-
-	private ArrayList<IntPiece> getAllDiagonalBottomLeft(IntPiece piece)
-	{
-		return getAllByIncrement(piece, -1, +1);
-	}
-
-	private ArrayList<IntPiece> getAllDiagonalBottomRight(IntPiece piece)
-	{
-		return getAllByIncrement(piece, +1, +1);
-	}
-
-	private ArrayList<IntPiece> getAllDiagonal(IntPiece piece)
-	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		spots.addAll(getAllDiagonalTopLeft(piece));
-		spots.addAll(getAllDiagonalTopRight(piece));
-		spots.addAll(getAllDiagonalBottomLeft(piece));
-		spots.addAll(getAllDiagonalBottomRight(piece));
-		return spots;
-	}
-
-	private ArrayList<IntPiece> getSurrondingSpots(IntPiece piece)
-	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		spots.add(getSpot(piece.location.x - 1, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y + 1));
-		spots.add(getSpot(piece.location.x, piece.location.y + 1));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y + 1));;
-		return filterFriendly(spots, piece);
-	}
-
-	private ArrayList<IntPiece> getKnight(IntPiece piece)
-	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		spots.add(getSpot(piece.location.x - 1, piece.location.y - 2));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y - 2));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y + 2));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y + 2));
-		spots.add(getSpot(piece.location.x - 2, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x - 2, piece.location.y + 1));
-		spots.add(getSpot(piece.location.x + 2, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x + 2, piece.location.y + 1));
-		return filterFriendly(spots, piece);
+		IntPiece piece = getSpot(x, y);
+		if (piece != null)
+		{
+			return piece.location;
+		}
+		return null;
 	}
 
 	private ArrayList<IntPiece> getPawn(IntPiece piece)
@@ -201,67 +229,20 @@ public class IntBoard
 		return spots;
 	}
 
-	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
+	private ArrayList<IntPiece> getPieces(int color)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		IntPiece spot = piece;
-		while (spot != null)
+		ArrayList<IntPiece> pieces = new ArrayList<>();
+		for (int y = 0; y < gridHeight; y ++)
 		{
-			spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
-			if (spot != null)
+			for (int x = 0; x < gridWidth; x ++)
 			{
-				if (!spot.isFriendly(piece.color))
+				if (spots[x][y].color == color)
 				{
-					spots.add(spot);
-					if (!spot.isEmpty())
-					{
-						break;
-					}
-					continue;
+					pieces.add(spots[x][y]);
 				}
 			}
-			return spots;
 		}
-		return spots;
-	}
-
-	private ArrayList<IntPiece> filterFriendly(ArrayList<IntPiece> spots, IntPiece piece)
-	{
-		IntPiece spot;
-		int index = 0;
-		while (index < spots.size())
-		{
-			spot = spots.get(index);
-			if (spot != null)
-			{
-				if (spot.color == piece.color)
-				{
-					spots.remove(index);
-					continue;
-				}
-			}
-			index ++;
-		}
-		return spots;
-	}
-
-	private ArrayList<IntPiece> filterNull(ArrayList<IntPiece> spots)
-	{
-		if (spots.remove(null))
-		{
-			return filterNull(spots);
-		}
-		return spots;
-	}
-
-	private Point getLocation(int x, int y)
-	{
-		IntPiece piece = getSpot(x, y);
-		if (piece != null)
-		{
-			return piece.location;
-		}
-		return null;
+		return pieces;
 	}
 
 	private IntPiece getSpot(int x, int y)
@@ -271,6 +252,30 @@ public class IntBoard
 			return spots[x][y];
 		}
 		return null;
+	}
+
+	private ArrayList<IntPiece> getSurrondingSpots(IntPiece piece)
+	{
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		spots.add(getSpot(piece.location.x - 1, piece.location.y - 1));
+		spots.add(getSpot(piece.location.x, piece.location.y - 1));
+		spots.add(getSpot(piece.location.x + 1, piece.location.y - 1));
+		spots.add(getSpot(piece.location.x - 1, piece.location.y));
+		spots.add(getSpot(piece.location.x + 1, piece.location.y));
+		spots.add(getSpot(piece.location.x - 1, piece.location.y + 1));
+		spots.add(getSpot(piece.location.x, piece.location.y + 1));
+		spots.add(getSpot(piece.location.x + 1, piece.location.y + 1));;
+		return filterFriendly(spots, piece);
+	}
+
+	public void print()
+	{
+		System.out.println(toString());
+	}
+
+	public void setBoard(IntPiece[][] spots)
+	{
+		this.spots = spots;
 	}
 
 	private Boolean spotExist(int x, int y)
@@ -285,6 +290,7 @@ public class IntBoard
 		return false;
 	}
 
+	@Override
 	public String toString()
 	{
 		String string = "";
@@ -298,10 +304,5 @@ public class IntBoard
 			string += "\n";
 		}
 		return string;
-	}
-
-	public void print()
-	{
-		System.out.println(toString());
 	}
 }

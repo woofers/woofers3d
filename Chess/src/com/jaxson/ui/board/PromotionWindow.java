@@ -1,22 +1,22 @@
 package com.jaxson.ui.board;
 
-import com.jaxson.board.containers.Point;
-import com.jaxson.board.Piece;
-import com.jaxson.board.Spot;
-import com.jaxson.ui.Dialog;
-import com.jaxson.ui.Panel;
-import com.jaxson.ui.ScaleContainer;
-import com.jaxson.ui.Window;
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.util.Random;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import com.jaxson.board.Point;
+import com.jaxson.ui.Dialog;
+import com.jaxson.ui.Panel;
+import com.jaxson.ui.ScaleContainer;
+import com.jaxson.ui.Window;
 
 public class PromotionWindow<T extends Window> extends Dialog
 {

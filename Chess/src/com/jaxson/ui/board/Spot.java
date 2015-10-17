@@ -1,16 +1,16 @@
-package com.jaxson.board;
+package com.jaxson.ui.board;
 
-import com.jaxson.board.containers.IntPiece;
-import com.jaxson.board.containers.Point;
-import com.jaxson.ui.Panel;
-import com.jaxson.ui.Window;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.Graphics;
 import java.util.ArrayList;
+
+import com.jaxson.board.IntBoard;
+import com.jaxson.board.IntPiece;
+import com.jaxson.board.Point;
+import com.jaxson.ui.Panel;
+import com.jaxson.ui.Window;
 
 public class Spot<T extends Window> extends Panel
 {
@@ -44,6 +44,42 @@ public class Spot<T extends Window> extends Panel
 		}
 	}
 
+	public void createPiece(int type, int color)
+	{
+		removePiece();
+		piece = new Piece(type, color);
+		add(piece);
+	}
+
+	public void deselect()
+	{
+		setBackground(getColor());
+		transferSpot = null;
+	}
+
+	private void deselectAll()
+	{
+		board.deselect();
+	}
+
+	private void displayMoves()
+	{
+		ArrayList<IntPiece> moves = new ArrayList<>();
+		IntBoard intBoard = board.toIntBoard();
+		Spot spot;
+		moves = intBoard.getLegalMoves(toIntPiece());
+		for (IntPiece move: moves)
+		{
+			spot = board.getSpot(move.location.x, move.location.y);
+			spot.setTransferSpot(this);
+			spot.moveSelect();
+		}
+		if (moves.isEmpty())
+		{
+			deselect();
+		}
+	}
+
 	private Color getColor()
 	{
 		if (isEven(location.y))
@@ -61,27 +97,27 @@ public class Spot<T extends Window> extends Panel
 		return DARKCOLOR;
 	}
 
-	private Boolean isEven(int i)
+	public Piece getPiece()
 	{
-		return i % 2 == 0;
+		return piece;
 	}
 
-	private Boolean isPromotable()
+	private void holdMoveSelect()
+	{
+		setBackground(HOLDMOVECOLOR);
+	}
+
+	public void holdSelect()
 	{
 		if (!isEmpty())
 		{
-			if (isEnd())
-			{
-				if (piece.type == Piece.PAWN)
-				{
-					if (piece.hasMoved)
-					{
-						return true;
-					}
-				}
-			}
+			setBackground(HOLDSELECTEDCOLOR);
 		}
-		return false;
+	}
+
+	private Boolean isEmpty()
+	{
+		return piece == null;
 	}
 
 	private Boolean isEnd()
@@ -106,58 +142,9 @@ public class Spot<T extends Window> extends Panel
 		return false;
 	}
 
-	public Boolean isPossibleEnd()
+	private Boolean isEven(int i)
 	{
-		return location.y == board.gridHeight - 1 || location.y == 0;
-	}
-
-	public void select()
-	{
-		if (!isEmpty())
-		{
-			setBackground(SELECTEDCOLOR);
-		}
-	}
-
-	public void holdSelect()
-	{
-		if (!isEmpty())
-		{
-			setBackground(HOLDSELECTEDCOLOR);
-		}
-	}
-
-	private void moveSelect()
-	{
-		setBackground(MOVECOLOR);
-	}
-
-	private void holdMoveSelect()
-	{
-		setBackground(HOLDMOVECOLOR);
-	}
-
-	private void move()
-	{
-		setPiece(transferSpot.getPiece());
-		transferSpot.removePiece();
-	}
-
-	public void deselect()
-	{
-		setBackground(getColor());
-		transferSpot = null;
-	}
-
-	private void deselectAll()
-	{
-		board.deselect();
-	}
-
-	private Boolean isSelected()
-	{
-		Color color = getBackground();
-		return color == SELECTEDCOLOR || color == HOLDSELECTEDCOLOR;
+		return i % 2 == 0;
 	}
 
 	private Boolean isMoveSelected()
@@ -166,83 +153,44 @@ public class Spot<T extends Window> extends Panel
 		return color == MOVECOLOR || color == HOLDMOVECOLOR;
 	}
 
-	private void displayMoves()
+	public Boolean isPossibleEnd()
 	{
-		ArrayList<IntPiece> moves = new ArrayList<>();
-		IntBoard intBoard = board.toIntBoard();
-		Spot spot;
-		moves = intBoard.getLegalMoves(toIntPiece());
-		for (IntPiece move: moves)
+		return location.y == board.gridHeight - 1 || location.y == 0;
+	}
+
+	private Boolean isPromotable()
+	{
+		if (!isEmpty())
 		{
-			spot = board.getSpot(move.location.x, move.location.y);
-			spot.setTransferSpot(this);
-			spot.moveSelect();
+			if (isEnd())
+			{
+				if (piece.type == Piece.PAWN)
+				{
+					if (piece.hasMoved)
+					{
+						return true;
+					}
+				}
+			}
 		}
-		if (moves.isEmpty())
-		{
-			deselect();
-		}
+		return false;
 	}
 
-	public void setWindow(T window)
+	private Boolean isSelected()
 	{
-		this.window = window;
+		Color color = getBackground();
+		return color == SELECTEDCOLOR || color == HOLDSELECTEDCOLOR;
 	}
 
-	public void createPiece(int type, int color)
+	private void move()
 	{
-		removePiece();
-		piece = new Piece(type, color);
-		add(piece);
+		setPiece(transferSpot.getPiece());
+		transferSpot.removePiece();
 	}
 
-	public Piece getPiece()
+	private void moveSelect()
 	{
-		return piece;
-	}
-
-	public void setPiece(Piece newPiece)
-	{
-		removePiece();
-		piece = newPiece;
-		piece.hasMoved = true;
-		add(piece);
-		if (isPromotable())
-		{
-			removePiece();
-			piece = newPiece.promote(window);
-			add(piece);
-		}
-		draw();
-	}
-
-	public void setTransferSpot(Spot spot)
-	{
-		transferSpot = spot;
-	}
-
-	public void removePiece()
-	{
-		if (isEmpty())
-		{
-			return;
-		}
-		remove(piece);
-		piece = null;
-	}
-
-	private Boolean isEmpty()
-	{
-		return piece == null;
-	}
-
-	public IntPiece toIntPiece()
-	{
-		if (isEmpty())
-		{
-			return new IntPiece(location);
-		}
-		return new IntPiece(piece.color, piece.type, location, piece.direction, piece.hasMoved);
+		setBackground(MOVECOLOR);
 	}
 
 	public void onCick()
@@ -274,6 +222,58 @@ public class Spot<T extends Window> extends Panel
 			move();
 			deselectAll();
 		}
+	}
+
+	public void removePiece()
+	{
+		if (isEmpty())
+		{
+			return;
+		}
+		remove(piece);
+		piece = null;
+	}
+
+	public void select()
+	{
+		if (!isEmpty())
+		{
+			setBackground(SELECTEDCOLOR);
+		}
+	}
+
+	public void setPiece(Piece newPiece)
+	{
+		removePiece();
+		piece = newPiece;
+		piece.hasMoved = true;
+		add(piece);
+		if (isPromotable())
+		{
+			removePiece();
+			piece = newPiece.promote(window);
+			add(piece);
+		}
+		draw();
+	}
+
+	public void setTransferSpot(Spot spot)
+	{
+		transferSpot = spot;
+	}
+
+	public void setWindow(T window)
+	{
+		this.window = window;
+	}
+
+	public IntPiece toIntPiece()
+	{
+		if (isEmpty())
+		{
+			return new IntPiece(location);
+		}
+		return new IntPiece(piece.color, piece.type, location, piece.direction, piece.hasMoved);
 	}
 }
 

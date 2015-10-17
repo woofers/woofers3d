@@ -1,9 +1,9 @@
 package com.jaxson.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
 import javax.swing.JDialog;
 
 public class Dialog<T extends Window> extends JDialog

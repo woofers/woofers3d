@@ -1,15 +1,14 @@
-package com.jaxson.board;
+package com.jaxson.ui.board;
 
-import com.jaxson.ui.board.PromotionWindow;
-import com.jaxson.ui.Panel;
-import com.jaxson.ui.Window;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+
+import com.jaxson.ui.Panel;
+import com.jaxson.ui.Window;
 
 public class Piece<T extends Window> extends Panel
 {
@@ -56,6 +55,17 @@ public class Piece<T extends Window> extends Panel
 		return -1;
 	}
 
+	@Override
+	public void paint(Graphics g)
+	{
+		int width, height, x, y;
+		width = toInt(getWidth() * SCALE);
+		height = toInt(getHeight() * SCALE);
+		x = toInt((getWidth() - width) / 2);
+		y = toInt((getHeight() - height) / 2);
+		g.drawImage(image, x, y, width, height, null);
+	}
+
 	public Piece promote(T window)
 	{
 		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
@@ -66,16 +76,5 @@ public class Piece<T extends Window> extends Panel
 	private int toInt(double i)
 	{
 		return (int)(Math.floor(i));
-	}
-
-	@Override
-	public void paint(Graphics g)
-	{
-		int width, height, x, y;
-		width = toInt(getWidth() * SCALE);
-		height = toInt(getHeight() * SCALE);
-		x = toInt((getWidth() - width) / 2);
-		y = toInt((getHeight() - height) / 2);
-		g.drawImage(image, x, y, width, height, null);
 	}
 }

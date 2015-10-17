@@ -35,7 +35,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 	}
 }
 
-class MyComponentAdapter extends ComponentAdapter
+class ComponentAdapter extends ComponentAdapter
 {
 	private ScaleContainer object;
 

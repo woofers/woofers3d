@@ -1,11 +1,28 @@
-package com.jaxson.board;
+package com.jaxson.ui.board;
 
-import com.jaxson.ui.Panel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+
+import com.jaxson.ui.Panel;
+
+class MyActionListener implements ActionListener
+{
+	private Options object;
+
+	public MyActionListener(Options object)
+	{
+		this.object = object;
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		object.resizeGrid(object.getGridWidth(), object.getGridHeight());
+	}
+}
 
 public class Options extends Panel
 {
@@ -46,6 +63,11 @@ public class Options extends Panel
 		resizeGrid(getGridWidth(), getGridHeight());
 	}
 
+	public int getGridHeight()
+	{
+		return getGridSize(1);
+	}
+
 	private int getGridSize(int dimension)
 	{
 		String[] string = new String[2];
@@ -59,11 +81,6 @@ public class Options extends Panel
 		return getGridSize(0);
 	}
 
-	public int getGridHeight()
-	{
-		return getGridSize(1);
-	}
-
 	public Boolean isHard()
 	{
 		return difficulty.getSelectedItem() == difficulty.getItemAt(1);
@@ -73,20 +90,5 @@ public class Options extends Panel
 	{
 		board.removeGrid();
 		board.createGrid(width, height);
-	}
-}
-
-class MyActionListener implements ActionListener
-{
-	private Options object;
-
-	public MyActionListener(Options object)
-	{
-		this.object = object;
-	}
-
-	public void actionPerformed(ActionEvent e)
-	{
-		object.resizeGrid(object.getGridWidth(), object.getGridHeight());
 	}
 }
