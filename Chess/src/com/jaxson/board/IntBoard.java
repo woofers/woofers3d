@@ -119,6 +119,41 @@ public class IntBoard
 		return getAllByIncrement(piece, +1, 0);
 	}
 
+	private ArrayList<IntPiece> getCastling(IntPiece piece)
+	{
+
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		if (piece.hasMoved)
+		{
+			return spots;
+		}
+		spots.add(getCastlingSpot(piece, +1));
+		spots.add(getCastlingSpot(piece, -1));
+		return spots;
+	}
+
+	private IntPiece getCastlingSpot(IntPiece piece, int direction)
+	{
+		IntPiece spot = piece;
+		spot = getSpot(spot.location.x + direction, spot.location.y);
+		while (spot.isEmpty())
+		{
+			if (spot == null)
+			{
+				break;
+			}
+			spot = getSpot(spot.location.x + direction, spot.location.y);
+		}
+		if (spot.type == Piece.ROOK)
+		{
+			if (!spot.hasMoved)
+			{
+				return spot;
+			}
+		}
+		return null;
+	}
+
 	private ArrayList<IntPiece> getKnight(IntPiece piece)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
@@ -140,7 +175,8 @@ public class IntBoard
 		switch (piece.type)
 		{
 			case Piece.KING:
-				moves = getSurrondingSpots(piece);
+				moves.addAll(getSurrondingSpots(piece));
+				moves.addAll(getCastling(piece));
 				break;
 			case Piece.QUEEN:
 				moves.addAll(getAllAbove(piece));
@@ -223,6 +259,13 @@ public class IntBoard
 			}
 			index ++;
 		}
+		return spots;
+	}
+
+	private ArrayList<IntPiece> getPawnPassing(IntPiece piece)
+	{
+		ArrayList<IntPiece> spots = new ArrayList<>();
+		IntPiece spot;
 		return spots;
 	}
 

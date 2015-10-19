@@ -181,8 +181,33 @@ public class Spot<T extends Window> extends Panel
 
 	private void move()
 	{
+		Piece newPiece = transferSpot.getPiece();
+		if (piece == null)
+		{
+			overwrite();
+			return;
+		}
+		if (newPiece.isFriendly(piece.color))
+		{
+			swap();
+		}
+		else
+		{
+			overwrite();
+		}
+	}
+
+	private void overwrite()
+	{
 		setPiece(transferSpot.getPiece());
 		transferSpot.removePiece();
+	}
+
+	private void swap()
+	{
+		Piece swapPiece = transferSpot.getPiece();
+		transferSpot.setPiece(piece);
+		setPiece(swapPiece);
 	}
 
 	private void moveSelect()

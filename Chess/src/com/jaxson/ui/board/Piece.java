@@ -55,6 +55,11 @@ public class Piece<T extends Window> extends Panel
 		return -1;
 	}
 
+	public Boolean isFriendly(int color)
+	{
+		return this.color == color;
+	}
+
 	@Override
 	public void paint(Graphics g)
 	{
