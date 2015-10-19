@@ -50,7 +50,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 			for (int x = 0; x < SIZE; x ++)
 			{
 				spots[x][y] = new Spot(new Point(x, y));
-				spots[x][y].addMouseListener(new PromotionWindowMouseAdapter(spots[x][y], this));
+				spots[x][y].addMouseListener(new SpotPromotionMouseAdapter(spots[x][y], this));
 				panel.add(spots[x][y]);
 			}
 		}
@@ -59,8 +59,8 @@ public class PromotionWindow<T extends Window> extends Dialog
 		spots[0][1].createPiece(Piece.BISHOP, color);
 		spots[1][1].createPiece(Piece.KNIGHT, color);
 
-		setVisible(true);
 		draw();
+		setVisible(true);
 	}
 
 	public void close()
@@ -101,12 +101,12 @@ class PromotionWindowAdapter extends WindowAdapter
 	}
 }
 
-class PromotionWindowMouseAdapter extends MouseAdapter
+class SpotPromotionMouseAdapter extends MouseAdapter
 {
 	private Spot object;
 	private PromotionWindow window;
 
-	public PromotionWindowMouseAdapter(Spot object, PromotionWindow window)
+	public SpotPromotionMouseAdapter(Spot object, PromotionWindow window)
 	{
 		this.object = object;
 		this.window = window;

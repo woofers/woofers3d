@@ -13,10 +13,8 @@ public class Window extends JFrame
 		super("Window");
 		setWindowSize(width, height);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
 		setLayout(new BorderLayout());
 		center();
-		draw();
 	}
 
 	public void center()
@@ -28,6 +26,7 @@ public class Window extends JFrame
 	{
 		getContentPane().revalidate();
 		getContentPane().repaint();
+		setVisible(true);
 	}
 
 	public void dynamicResize(double scale)

@@ -44,6 +44,26 @@ public class Spot<T extends Window> extends Panel
 		}
 	}
 
+	private void castle()
+	{
+		int kingDirection;
+		if (location.x == 0)
+		{
+			kingDirection = -1;
+		}
+		else
+		{
+			kingDirection = +1;
+		}
+		Spot king = transferSpot;
+		Spot newKingSpot = board.getSpot(king.location.x + 2 * kingDirection, location.y);
+		Spot newRookSpot = board.getSpot(newKingSpot.location.x - kingDirection, location.y);
+		newRookSpot.setPiece(piece);
+		newKingSpot.setPiece(king.getPiece());
+		removePiece();
+		king.removePiece();
+	}
+
 	public void createPiece(int type, int color)
 	{
 		removePiece();
@@ -97,10 +117,18 @@ public class Spot<T extends Window> extends Panel
 		return DARKCOLOR;
 	}
 
+	private Spot getKingCastleSpot(int direction)
+	{
+		IntBoard intBoard = board.toIntBoard();
+		Spot spot = board.getSpot(location.x + 2, location.y);
+		return spot;
+	}
+
 	public Piece getPiece()
 	{
 		return piece;
 	}
+
 
 	private void holdMoveSelect()
 	{
@@ -189,7 +217,7 @@ public class Spot<T extends Window> extends Panel
 		}
 		if (newPiece.isFriendly(piece.color))
 		{
-			swap();
+			castle();
 		}
 		else
 		{
@@ -201,13 +229,6 @@ public class Spot<T extends Window> extends Panel
 	{
 		setPiece(transferSpot.getPiece());
 		transferSpot.removePiece();
-	}
-
-	private void swap()
-	{
-		Piece swapPiece = transferSpot.getPiece();
-		transferSpot.setPiece(piece);
-		setPiece(swapPiece);
 	}
 
 	private void moveSelect()
@@ -293,7 +314,7 @@ public class Spot<T extends Window> extends Panel
 		{
 			return new IntPiece(location);
 		}
-		return new IntPiece(piece.color, piece.type, location, piece.direction, piece.hasMoved);
+		return new IntPiece(piece.type, piece.color, location, piece.direction, piece.hasMoved);
 	}
 }
 

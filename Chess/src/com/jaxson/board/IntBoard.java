@@ -62,7 +62,7 @@ public class IntBoard
 	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
-		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);;
+		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);
 		while (spot != null)
 		{
 			if (!spot.isFriendly(piece.color))
@@ -121,7 +121,6 @@ public class IntBoard
 
 	private ArrayList<IntPiece> getCastling(IntPiece piece)
 	{
-
 		ArrayList<IntPiece> spots = new ArrayList<>();
 		if (piece.hasMoved)
 		{
@@ -146,10 +145,7 @@ public class IntBoard
 		}
 		if (spot.type == Piece.ROOK)
 		{
-			if (!spot.hasMoved)
-			{
-				return spot;
-			}
+			return spot;
 		}
 		return null;
 	}
@@ -226,11 +222,10 @@ public class IntBoard
 				if (spot.isEmpty())
 				{
 					spots.add(spot);
-					if (piece.hasMoved)
+					if (!piece.hasMoved)
 					{
-						break;
+						continue;
 					}
-					continue;
 				}
 			}
 			break;
@@ -251,7 +246,7 @@ public class IntBoard
 			spot = spots.get(index);
 			if (spot != null)
 			{
-				if (spot.color == piece.color || spot.isEmpty())
+				if (!spot.isEnemey(piece.color))
 				{
 						spots.remove(index);
 						continue;
