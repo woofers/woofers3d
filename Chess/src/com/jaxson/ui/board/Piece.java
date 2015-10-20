@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.jaxson.board.IntPiece;
+import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 
@@ -23,18 +25,24 @@ public class Piece<T extends Window> extends Panel
 
 	private static final double SCALE = 0.8;
 
-	public int type, color, direction;
-	public Boolean hasMoved = false;
+	public int type, color, direction, turn;
+	public int passingIndex;
 	private Image image;
 
 	public Piece(int type, int color)
+	{
+		this(type, color, 0);
+	}
+
+	public Piece(int type, int color, int turn)
 	{
 		super();
 		this.type = type;
 		this.color = color;
 		this.direction = getStartDirection();
+		this.turn = turn;
+		passingIndex = 0;
 		setOpaque(false);
-
 		String path = "assets/images/pieces/" + color + "_" + type + ".png";
 		try
 		{
@@ -80,5 +88,10 @@ public class Piece<T extends Window> extends Panel
 	private int toInt(double i)
 	{
 		return (int)(Math.floor(i));
+	}
+
+	public IntPiece toIntPiece(Point location)
+	{
+		return new IntPiece(type, color, location, direction, turn);
 	}
 }

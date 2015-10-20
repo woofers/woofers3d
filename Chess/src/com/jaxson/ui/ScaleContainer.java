@@ -14,7 +14,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 		this.panel = panel;
 		add(panel);
 		setOpaque(false);
-		addComponentListener(new MyComponentAdapter(this));
+		addComponentListener(new ResizeAdapter(this));
 	}
 
 	private double getAspectRatio(T panel)
@@ -35,11 +35,11 @@ public class ScaleContainer<T extends Panel> extends Panel
 	}
 }
 
-class MyComponentAdapter extends ComponentAdapter
+class ResizeAdapter extends ComponentAdapter
 {
 	private ScaleContainer object;
 
-	public MyComponentAdapter(ScaleContainer object)
+	public ResizeAdapter(ScaleContainer object)
 	{
 		this.object = object;
 	}

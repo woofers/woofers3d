@@ -7,7 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -34,9 +33,9 @@ public class PromotionWindow<T extends Window> extends Dialog
 		super(width, height, window);
 		setTitle("Chess");
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(new PromotionWindowAdapter(this));
+		addWindowListener(new CloseAdapter(this));
 
-		label = new JLabel("Promote your pawn", SwingConstants.CENTER);
+		label = new JLabel("Promote your pawn.", SwingConstants.CENTER);
 		label.setFont(new Font(label.getName(), Font.PLAIN, 30));
 		add(label, BorderLayout.PAGE_END);
 
@@ -50,7 +49,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 			for (int x = 0; x < SIZE; x ++)
 			{
 				spots[x][y] = new Spot(new Point(x, y));
-				spots[x][y].addMouseListener(new SpotPromotionMouseAdapter(spots[x][y], this));
+				spots[x][y].addMouseListener(new PieceAdapter(spots[x][y], this));
 				panel.add(spots[x][y]);
 			}
 		}
@@ -74,10 +73,10 @@ public class PromotionWindow<T extends Window> extends Dialog
 		return result;
 	}
 
-	private int rand(int min, int max)
+	public void onSelect(Spot spot)
 	{
-		Random random = new Random();
-		return random.nextInt((max - min) + 1) + min;
+		setResult(spot.getPiece().type);
+		dispose();
 	}
 
 	public void setResult(int value)
@@ -86,11 +85,11 @@ public class PromotionWindow<T extends Window> extends Dialog
 	}
 }
 
-class PromotionWindowAdapter extends WindowAdapter
+class CloseAdapter extends WindowAdapter
 {
 	private PromotionWindow window;
 
-	public PromotionWindowAdapter(PromotionWindow window)
+	public CloseAdapter(PromotionWindow window)
 	{
 		this.window = window;
 	}
@@ -101,12 +100,12 @@ class PromotionWindowAdapter extends WindowAdapter
 	}
 }
 
-class SpotPromotionMouseAdapter extends MouseAdapter
+class PieceAdapter extends MouseAdapter
 {
 	private Spot object;
 	private PromotionWindow window;
 
-	public SpotPromotionMouseAdapter(Spot object, PromotionWindow window)
+	public PieceAdapter(Spot object, PromotionWindow window)
 	{
 		this.object = object;
 		this.window = window;
@@ -122,7 +121,6 @@ class SpotPromotionMouseAdapter extends MouseAdapter
 	public void mouseReleased(MouseEvent e)
 	{
 		object.select();
-		window.setResult(object.getPiece().type);
-		window.dispose();
+		window.onSelect(object);
 	}
 }

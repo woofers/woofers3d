@@ -4,9 +4,8 @@ import com.jaxson.geom.Point;
 
 public class IntPiece
 {
-	public int type, color, direction;
+	public int type, color, direction, turn;
 	public Point location;
-	public Boolean hasMoved;
 
 	public IntPiece()
 	{
@@ -20,16 +19,21 @@ public class IntPiece
 
 	public IntPiece(int type, int color, Point location, int direction)
 	{
-		this(type, color, location, direction, false);
+		this(type, color, location, direction, 0);
 	}
 
-	public IntPiece(int type, int color, Point location, int direction, Boolean hasMoved)
+	public IntPiece(int type, int color, Point location, int direction, int turn)
 	{
 		this.type = type;
 		this.color = color;
 		this.location = location;
 		this.direction = direction;
-		this.hasMoved = hasMoved;
+		this.turn = turn;
+	}
+
+	public Boolean hasMoved()
+	{
+		return turn != 0;
 	}
 
 	public Boolean isEmpty()

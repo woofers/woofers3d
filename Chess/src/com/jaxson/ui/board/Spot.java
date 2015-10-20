@@ -119,7 +119,6 @@ public class Spot<T extends Window> extends Panel
 
 	private Spot getKingCastleSpot(int direction)
 	{
-		IntBoard intBoard = board.toIntBoard();
 		Spot spot = board.getSpot(location.x + 2, location.y);
 		return spot;
 	}
@@ -209,19 +208,27 @@ public class Spot<T extends Window> extends Panel
 
 	private void move()
 	{
+		board.turn ++;
 		Piece newPiece = transferSpot.getPiece();
-		if (piece == null)
+		if (newPiece.type == Piece.PAWN)
+		{
+			int deltaY = Math.abs(transferSpot.location.y - location.y);
+			if (deltaY == 2)
+			{
+				newPiece.passingIndex = board.turn;
+			}
+		}
+		if (isEmpty())
 		{
 			overwrite();
-			return;
 		}
-		if (newPiece.isFriendly(piece.color))
+		else if (!newPiece.isFriendly(piece.color))
 		{
-			castle();
+			overwrite();
 		}
 		else
 		{
-			overwrite();
+			castle();
 		}
 	}
 
@@ -289,7 +296,7 @@ public class Spot<T extends Window> extends Panel
 	{
 		removePiece();
 		piece = newPiece;
-		piece.hasMoved = true;
+		piece.turn ++;
 		if (isPromotable())
 		{
 			piece = newPiece.promote(window);
@@ -314,7 +321,7 @@ public class Spot<T extends Window> extends Panel
 		{
 			return new IntPiece(location);
 		}
-		return new IntPiece(piece.type, piece.color, location, piece.direction, piece.hasMoved);
+		return piece.toIntPiece(location);
 	}
 }
 

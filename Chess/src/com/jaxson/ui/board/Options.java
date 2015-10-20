@@ -50,7 +50,7 @@ public class Options extends Panel
 		resizeGrid(getGridWidth(), getGridHeight());
 	}
 
-	public int getGridHeight()
+	private int getGridHeight()
 	{
 		return getGridSize(1);
 	}
@@ -63,7 +63,7 @@ public class Options extends Panel
 		return Integer.parseInt(string[dimension].trim());
 	}
 
-	public int getGridWidth()
+	private int getGridWidth()
 	{
 		return getGridSize(0);
 	}
@@ -73,7 +73,12 @@ public class Options extends Panel
 		return difficulty.getSelectedItem() == difficulty.getItemAt(1);
 	}
 
-	public void resizeGrid(int width, int height)
+	public void onReset()
+	{
+		resizeGrid(getGridWidth(), getGridHeight());
+	}
+
+	private void resizeGrid(int width, int height)
 	{
 		board.removeGrid();
 		board.createGrid(width, height);
@@ -91,6 +96,6 @@ class MyActionListener implements ActionListener
 
 	public void actionPerformed(ActionEvent e)
 	{
-		object.resizeGrid(object.getGridWidth(), object.getGridHeight());
+		object.onReset();
 	}
 }

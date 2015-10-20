@@ -122,7 +122,7 @@ public class IntBoard
 	private ArrayList<IntPiece> getCastling(IntPiece piece)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
-		if (piece.hasMoved)
+		if (piece.hasMoved())
 		{
 			return spots;
 		}
@@ -134,14 +134,15 @@ public class IntBoard
 	private IntPiece getCastlingSpot(IntPiece piece, int direction)
 	{
 		IntPiece spot = piece;
-		spot = getSpot(spot.location.x + direction, spot.location.y);
-		while (spot.isEmpty())
+		IntPiece nextSpot = spot;
+		for (int i = 0; i < 4; i ++)
 		{
-			if (spot == null)
+			if (nextSpot == null)
 			{
 				break;
 			}
-			spot = getSpot(spot.location.x + direction, spot.location.y);
+			spot = nextSpot;
+			nextSpot = getSpot(nextSpot.location.x + direction, nextSpot.location.y);
 		}
 		if (spot.type == Piece.ROOK)
 		{
@@ -167,7 +168,6 @@ public class IntBoard
 	public ArrayList<IntPiece> getLegalMoves(IntPiece piece)
 	{
 		ArrayList<IntPiece> moves = new ArrayList<>();
-
 		switch (piece.type)
 		{
 			case Piece.KING:
@@ -222,7 +222,7 @@ public class IntBoard
 				if (spot.isEmpty())
 				{
 					spots.add(spot);
-					if (!piece.hasMoved)
+					if (!piece.hasMoved())
 					{
 						continue;
 					}
@@ -231,6 +231,7 @@ public class IntBoard
 			break;
 		}
 		spots.addAll(getPawnCapture(piece));
+		spots.addAll(getPawnPassing(piece));
 		return spots;
 	}
 

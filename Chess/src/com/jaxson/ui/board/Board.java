@@ -2,6 +2,8 @@ package com.jaxson.ui.board;
 
 import java.awt.GridLayout;
 
+import com.jaxson.ai.EasyPlayer;
+import com.jaxson.ai.HardPlayer;
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
 import com.jaxson.geom.Point;
@@ -12,7 +14,7 @@ public class Board<T extends Window> extends Panel
 {
 	private static final int SIZE = 8;
 
-	public int gridWidth, gridHeight;
+	public int gridWidth, gridHeight, turn;
 	private T window;
 	private Spot[][] spots;
 
@@ -20,6 +22,7 @@ public class Board<T extends Window> extends Panel
 	{
 		super();
 		this.window = window;
+		turn = 0;
 	}
 
 	private void addPieces()
@@ -102,6 +105,11 @@ public class Board<T extends Window> extends Panel
 			return spots[x][y];
 		}
 		return null;
+	}
+
+	public void move()
+	{
+
 	}
 
 	public void removeGrid()
