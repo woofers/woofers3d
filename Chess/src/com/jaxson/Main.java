@@ -6,6 +6,6 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		new WindowStarter(733, 550);
+		new WindowStarter(800, 600);
 	}
 }

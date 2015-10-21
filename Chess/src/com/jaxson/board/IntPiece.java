@@ -1,10 +1,12 @@
 package com.jaxson.board;
 
 import com.jaxson.geom.Point;
+import com.jaxson.ui.board.Piece;
 
 public class IntPiece
 {
 	public int type, color, direction, turn;
+	public int passingIndex;
 	public Point location;
 
 	public IntPiece()
@@ -29,6 +31,19 @@ public class IntPiece
 		this.location = location;
 		this.direction = direction;
 		this.turn = turn;
+		this.passingIndex = -1;
+	}
+
+	public Boolean canPass(int turn)
+	{
+		System.out.println("Trun " + turn);
+		System.out.println("Index " + passingIndex);
+		return type == Piece.PAWN && passingIndex == turn;
+	}
+
+	public IntPiece clone()
+	{
+		return new IntPiece(type, color, location, direction, turn);
 	}
 
 	public Boolean hasMoved()

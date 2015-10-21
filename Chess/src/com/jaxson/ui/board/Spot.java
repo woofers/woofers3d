@@ -47,7 +47,7 @@ public class Spot<T extends Window> extends Panel
 	private void castle()
 	{
 		int kingDirection;
-		if (location.x == 0)
+		if (location.x < (board.gridWidth - 1) / 2)
 		{
 			kingDirection = -1;
 		}
@@ -209,13 +209,28 @@ public class Spot<T extends Window> extends Panel
 	private void move()
 	{
 		board.turn ++;
+		System.out.println(board.turn);
 		Piece newPiece = transferSpot.getPiece();
 		if (newPiece.type == Piece.PAWN)
 		{
 			int deltaY = Math.abs(transferSpot.location.y - location.y);
 			if (deltaY == 2)
 			{
-				newPiece.passingIndex = board.turn;
+				Piece spot;
+				spot = board.getSpot(location.x - 1, location.y).getPiece();
+				if (spot != null)
+				{
+					spot.passingIndex = board.turn;
+				}
+				spot = board.getSpot(location.x + 1, transferSpot.location.y).getPiece();
+				if (spot != null)
+				{
+					spot.passingIndex = board.turn;
+				}
+				if (spot != null)
+				{
+					spot.passingIndex = board.turn;
+				}
 			}
 		}
 		if (isEmpty())
@@ -272,6 +287,11 @@ public class Spot<T extends Window> extends Panel
 			move();
 			deselectAll();
 		}
+	}
+
+	private void pass()
+	{
+
 	}
 
 	public void removePiece()

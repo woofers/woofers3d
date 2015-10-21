@@ -41,7 +41,7 @@ public class Piece<T extends Window> extends Panel
 		this.color = color;
 		this.direction = getStartDirection();
 		this.turn = turn;
-		passingIndex = 0;
+		passingIndex = -1;
 		setOpaque(false);
 		String path = "assets/images/pieces/" + color + "_" + type + ".png";
 		try
@@ -92,6 +92,8 @@ public class Piece<T extends Window> extends Panel
 
 	public IntPiece toIntPiece(Point location)
 	{
-		return new IntPiece(type, color, location, direction, turn);
+		IntPiece newIntPiece = new IntPiece(type, color, location, direction, turn);
+		newIntPiece.passingIndex = passingIndex;
+		return newIntPiece;
 	}
 }

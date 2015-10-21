@@ -8,16 +8,41 @@ import com.jaxson.ui.board.Piece;
 
 public class IntBoard
 {
-	private int gridWidth, gridHeight;
-	private int currentColor;
-	private Board board;
+	private int width, height, turn;
+	private int color;
 	private IntPiece[][] spots;
 
 	public IntBoard(Board board)
 	{
-		this.board = board;
-		gridWidth = board.gridWidth;
-		gridHeight = board.gridHeight;
+		this(board.gridWidth, board.gridHeight, board.turn);
+	}
+
+	public IntBoard(int width, int height, int turn)
+	{
+		this(width, height, turn, 0);
+	}
+
+	public IntBoard(int width, int height, int turn, int color)
+	{
+		this.width = width;
+		this.height = height;
+		this.turn = turn;
+		this.color = color;
+	}
+
+	public IntBoard clone()
+	{
+		IntBoard newBoard = new IntBoard(width, height, color);
+		IntPiece[][] newSpots = new IntPiece[width][height];
+		for (int y = 0; y < height; y ++)
+		{
+			for (int x = 0; x < width; x ++)
+			{
+				newSpots[x][y] = spots[x][y].clone();
+			}
+		}
+		newBoard.setSpots(newSpots);
+		return newBoard;
 	}
 
 	private ArrayList<IntPiece> filterFriendly(ArrayList<IntPiece> spots, IntPiece piece)
@@ -134,19 +159,24 @@ public class IntBoard
 	private IntPiece getCastlingSpot(IntPiece piece, int direction)
 	{
 		IntPiece spot = piece;
-		IntPiece nextSpot = spot;
-		for (int i = 0; i < 4; i ++)
+		while (true)
 		{
-			if (nextSpot == null)
+			spot = getSpot(spot.location.x + direction, spot.location.y);
+			if (spot == null)
+			{
+				return null;
+			}
+			if (!spot.isEmpty())
 			{
 				break;
 			}
-			spot = nextSpot;
-			nextSpot = getSpot(nextSpot.location.x + direction, nextSpot.location.y);
 		}
 		if (spot.type == Piece.ROOK)
 		{
-			return spot;
+			if (!spot.hasMoved())
+			{
+				return spot;
+			}
 		}
 		return null;
 	}
@@ -249,8 +279,8 @@ public class IntBoard
 			{
 				if (!spot.isEnemey(piece.color))
 				{
-						spots.remove(index);
-						continue;
+					spots.remove(index);
+					continue;
 				}
 			}
 			index ++;
@@ -261,16 +291,35 @@ public class IntBoard
 	private ArrayList<IntPiece> getPawnPassing(IntPiece piece)
 	{
 		ArrayList<IntPiece> spots = new ArrayList<>();
-		IntPiece spot;
+		if (piece.canPass(turn))
+		{
+			IntPiece spot;
+			spot = getSpot(piece.location.x - 1, piece.location.y);
+			if (spot != null)
+			{
+				if (spot.isEnemey(piece.color))
+				{
+					spots.add(getSpot(piece.location.x - 1, piece.location.y + piece.direction));
+				}
+			}
+			spot = getSpot(piece.location.x + 1, piece.location.y);
+			if (spot != null)
+			{
+				if (spot.isEnemey(piece.color))
+				{
+					spots.add(getSpot(piece.location.x + 1, piece.location.y + piece.direction));
+				}
+			}
+		}
 		return spots;
 	}
 
 	private ArrayList<IntPiece> getPieces(int color)
 	{
 		ArrayList<IntPiece> pieces = new ArrayList<>();
-		for (int y = 0; y < gridHeight; y ++)
+		for (int y = 0; y < height; y ++)
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			for (int x = 0; x < width; x ++)
 			{
 				if (spots[x][y].color == color)
 				{
@@ -316,9 +365,9 @@ public class IntBoard
 
 	private Boolean spotExist(int x, int y)
 	{
-		if (x >= 0 && x < gridWidth)
+		if (x >= 0 && x < width)
 		{
-			if (y >= 0 && y < gridHeight)
+			if (y >= 0 && y < height)
 			{
 				return true;
 			}
@@ -330,9 +379,9 @@ public class IntBoard
 	public String toString()
 	{
 		String string = "";
-		for (int y = 0; y < gridHeight; y ++)
+		for (int y = 0; y < height; y ++)
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			for (int x = 0; x < width; x ++)
 			{
 				string += spots[x][y].toString();
 				string += ", ";
