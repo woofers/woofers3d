@@ -2,6 +2,7 @@ package com.jaxson.board;
 
 import java.util.ArrayList;
 
+import com.jaxson.board.move.Move;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
@@ -45,27 +46,24 @@ public class IntBoard
 		return newBoard;
 	}
 
-	private ArrayList<IntPiece> filterFriendly(ArrayList<IntPiece> spots, IntPiece piece)
+	private ArrayList<Move> filterFriendly(ArrayList<Move> moves, IntPiece piece)
 	{
-		IntPiece spot;
+		Move move;
 		int index = 0;
-		while (index < spots.size())
+		while (index < moves.size())
 		{
-			spot = spots.get(index);
-			if (spot != null)
+			move = moves.get(index);
+			if (move.overwritesFriendly(piece.color))
 			{
-				if (spot.color == piece.color)
-				{
-					spots.remove(index);
-					continue;
-				}
+				moves.remove(index);
+				continue;
 			}
 			index ++;
 		}
-		return spots;
+		return moves;
 	}
 
-	private ArrayList<IntPiece> filterNull(ArrayList<IntPiece> spots)
+	private ArrayList<Move> filterNull(ArrayList<Move> spots)
 	{
 		if (spots.remove(null))
 		{
@@ -74,25 +72,25 @@ public class IntBoard
 		return spots;
 	}
 
-	private ArrayList<IntPiece> getAllAbove(IntPiece piece)
+	private ArrayList<Move> getAllAbove(IntPiece piece)
 	{
 		return getAllByIncrement(piece, 0, -1);
 	}
 
-	private ArrayList<IntPiece> getAllBelow(IntPiece piece)
+	private ArrayList<Move> getAllBelow(IntPiece piece)
 	{
 		return getAllByIncrement(piece, 0, +1);
 	}
 
-	private ArrayList<IntPiece> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
+	private ArrayList<Move> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
+		ArrayList<Move> moves = new ArrayList<>();
 		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);
 		while (spot != null)
 		{
 			if (!spot.isFriendly(piece.color))
 			{
-				spots.add(spot);
+				moves.add(new Move(spot, piece));
 				if (spot.isEmpty())
 				{
 					spot = getSpot(spot.location.x + xIncrement, spot.location.y + yIncrement);
@@ -101,45 +99,45 @@ public class IntBoard
 			}
 			break;
 		}
-		return spots;
+		return moves;
 	}
 
-	private ArrayList<IntPiece> getAllDiagonal(IntPiece piece)
+	private ArrayList<Move> getAllDiagonal(IntPiece piece)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		spots.addAll(getAllDiagonalTopLeft(piece));
-		spots.addAll(getAllDiagonalTopRight(piece));
-		spots.addAll(getAllDiagonalBottomLeft(piece));
-		spots.addAll(getAllDiagonalBottomRight(piece));
-		return spots;
+		ArrayList<Move> moves = new ArrayList<>();
+		moves.addAll(getAllDiagonalTopLeft(piece));
+		moves.addAll(getAllDiagonalTopRight(piece));
+		moves.addAll(getAllDiagonalBottomLeft(piece));
+		moves.addAll(getAllDiagonalBottomRight(piece));
+		return moves;
 	}
 
-	private ArrayList<IntPiece> getAllDiagonalBottomLeft(IntPiece piece)
+	private ArrayList<Move> getAllDiagonalBottomLeft(IntPiece piece)
 	{
 		return getAllByIncrement(piece, -1, +1);
 	}
 
-	private ArrayList<IntPiece> getAllDiagonalBottomRight(IntPiece piece)
+	private ArrayList<Move> getAllDiagonalBottomRight(IntPiece piece)
 	{
 		return getAllByIncrement(piece, +1, +1);
 	}
 
-	private ArrayList<IntPiece> getAllDiagonalTopLeft(IntPiece piece)
+	private ArrayList<Move> getAllDiagonalTopLeft(IntPiece piece)
 	{
 		return getAllByIncrement(piece, -1, -1);
 	}
 
-	private ArrayList<IntPiece> getAllDiagonalTopRight(IntPiece piece)
+	private ArrayList<Move> getAllDiagonalTopRight(IntPiece piece)
 	{
 		return getAllByIncrement(piece, +1, -1);
 	}
 
-	private ArrayList<IntPiece> getAllLeft(IntPiece piece)
+	private ArrayList<Move> getAllLeft(IntPiece piece)
 	{
 		return getAllByIncrement(piece, -1, 0);
 	}
 
-	private ArrayList<IntPiece> getAllRight(IntPiece piece)
+	private ArrayList<Move> getAllRight(IntPiece piece)
 	{
 		return getAllByIncrement(piece, +1, 0);
 	}
@@ -181,23 +179,23 @@ public class IntBoard
 		return null;
 	}
 
-	private ArrayList<IntPiece> getKnight(IntPiece piece)
+	private ArrayList<Move> getKnight(IntPiece piece)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		spots.add(getSpot(piece.location.x - 1, piece.location.y - 2));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y - 2));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y + 2));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y + 2));
-		spots.add(getSpot(piece.location.x - 2, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x - 2, piece.location.y + 1));
-		spots.add(getSpot(piece.location.x + 2, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x + 2, piece.location.y + 1));
-		return filterFriendly(spots, piece);
+		ArrayList<Move> moves = new ArrayList<>();
+		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y - 2), piece));
+		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y - 2), piece));
+		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + 2), piece));
+		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + 2), piece));
+		moves.add(new Move(getSpot(piece.location.x - 2, piece.location.y - 1), piece));
+		moves.add(new Move(getSpot(piece.location.x - 2, piece.location.y + 1), piece));
+		moves.add(new Move(getSpot(piece.location.x + 2, piece.location.y - 1), piece));
+		moves.add(new Move(getSpot(piece.location.x + 2, piece.location.y + 1), piece));
+		return filterFriendly(moves, piece);
 	}
 
-	public ArrayList<IntPiece> getLegalMoves(IntPiece piece)
+	public ArrayList<Move> getLegalMoves(IntPiece piece)
 	{
-		ArrayList<IntPiece> moves = new ArrayList<>();
+		ArrayList<Move> moves = new ArrayList<>();
 		switch (piece.type)
 		{
 			case Piece.KING:
@@ -210,18 +208,22 @@ public class IntBoard
 				moves.addAll(getAllLeft(piece));
 				moves.addAll(getAllRight(piece));
 				moves.addAll(getAllDiagonal(piece));
+				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.ROOK:
 				moves.addAll(getAllAbove(piece));
 				moves.addAll(getAllBelow(piece));
 				moves.addAll(getAllLeft(piece));
 				moves.addAll(getAllRight(piece));
+				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.BISHOP:
 				moves = getAllDiagonal(piece);
+				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.KNIGHT:
 				moves = getKnight(piece);
+				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.PAWN:
 				moves = getPawn(piece);
@@ -240,9 +242,9 @@ public class IntBoard
 		return null;
 	}
 
-	private ArrayList<IntPiece> getPawn(IntPiece piece)
+	private ArrayList<Move> getPawn(IntPiece piece)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
+		ArrayList<Move> moves = new ArrayList<>();
 		IntPiece spot = piece;
 		for (int i = 0; i < 2; i ++)
 		{
@@ -251,7 +253,7 @@ public class IntBoard
 			{
 				if (spot.isEmpty())
 				{
-					spots.add(spot);
+					moves.add(new Move(spot, piece));
 					if (!piece.hasMoved())
 					{
 						continue;
@@ -265,9 +267,9 @@ public class IntBoard
 		return spots;
 	}
 
-	private ArrayList<IntPiece> getPawnCapture(IntPiece piece)
+	private ArrayList<Move> getPawnCapture(IntPiece piece)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
+		ArrayList<Move> spots = new ArrayList<>();
 		spots.add(getSpot(piece.location.x + 1, piece.location.y + piece.direction));
 		spots.add(getSpot(piece.location.x - 1, piece.location.y + piece.direction));
 		IntPiece spot;
@@ -330,7 +332,12 @@ public class IntBoard
 		return pieces;
 	}
 
-	private IntPiece getSpot(int x, int y)
+	public IntPiece getSpot(Point location)
+	{
+		return getSpot(location.x, location.y);
+	}
+
+	public IntPiece getSpot(int x, int y)
 	{
 		if (spotExist(x, y))
 		{
@@ -358,9 +365,33 @@ public class IntBoard
 		System.out.println(toString());
 	}
 
+	private ArrayList<Move> setOverwrite(ArrayList<Move> moves, IntPiece piece)
+	{
+		for (Move move: moves)
+		{
+			move.add(new PieceMove(piece));
+		}
+		return moves;
+	}
+
 	public void setSpots(IntPiece[][] value)
 	{
 		spots = value;
+	}
+
+	public void setSpot(IntPiece value)
+	{
+		setSpot(value, value.location);
+	}
+
+	public void setSpot(IntPiece value, Point location)
+	{
+		setSpot(value, location.x, location.y);
+	}
+
+	public void setSpot(IntPiece value, int x, int y)
+	{
+		spots[x][y] = value;
 	}
 
 	private Boolean spotExist(int x, int y)

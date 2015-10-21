@@ -209,7 +209,6 @@ public class Spot<T extends Window> extends Panel
 	private void move()
 	{
 		board.turn ++;
-		System.out.println(board.turn);
 		Piece newPiece = transferSpot.getPiece();
 		if (newPiece.type == Piece.PAWN)
 		{
