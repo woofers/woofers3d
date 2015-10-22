@@ -41,11 +41,13 @@ public class PieceMove
 		newSpot = board.getSpot(this.newSpot.location);
 		newPiece = newSpot.getPiece();
 		newSpot.setPiece(oldSpot.getPiece());
-		oldSpot.setPiece(newPiece);
+		if (newPiece != null) oldSpot.setPiece(newPiece);
 	}
 
 	public void move(IntBoard board)
 	{
+		if (isEmpty()) return;
+
 		if (oldSpot == null)
 		{
 			board.setSpot(new IntPiece(newSpot.location));
@@ -58,6 +60,14 @@ public class PieceMove
 
 	public Boolean overwritesFriendly(int color)
 	{
+		if (newSpot == null) return false;
 		return color == newSpot.color;
+	}
+
+	@Override
+	public String toString()
+	{
+		if (oldSpot == null) return "Removed: " + oldSpot.location.toString();
+		return "Moved: " + oldSpot.location.toString() + " to " + newSpot.location.toString();
 	}
 }

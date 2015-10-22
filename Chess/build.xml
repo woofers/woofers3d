@@ -1,35 +1,43 @@
 <project name="Chess" basedir="." default="main">
 
-    <property name="build.dir"   value="bin"/>
-    <property name="classes.dir" value="${build.dir}/classes"/>
-    <property name="jar.dir"     value="${build.dir}/jar"/>
-    <property name="src.dir"     value="src"/>
-    <property name="main-class"  value="com.jaxson.Main"/>
+	<property name="build.dir"   value="bin"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir"     value="${build.dir}/jar"/>
+	<property name="lib.dir"     value="lib"/>
+	<property name="src.dir"     value="src"/>
+	<property name="main-class"  value="com.jaxson.Main"/>
 
-    <target name="clean">
-        <delete dir="${build.dir}"/>
-    </target>
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
 
-    <target name="compile">
-        <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
-    </target>
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+	</target>
 
-    <target name="jar" depends="compile">
-        <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
-            </manifest>
-        </jar>
-    </target>
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
 
-    <target name="run" depends="jar">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
-    </target>
+	<target name="run" depends="jar">
+		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+		<classpath>
+			<pathelement location="${jar.dir}/${ant.project.name}.jar"/>
+			<pathelement location="bin/jar/Chess.jar"/>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</classpath>
+	</target>
 
-    <target name="clean-build" depends="clean,jar"/>
+	<target name="clean-build" depends="clean,jar"/>
 
-    <target name="main" depends="clean,run"/>
+	<target name="main" depends="clean,run"/>
 
 </project>

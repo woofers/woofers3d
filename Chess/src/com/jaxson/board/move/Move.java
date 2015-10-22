@@ -8,6 +8,7 @@ import com.jaxson.ui.board.Board;
 
 public class Move
 {
+	private IntPiece origin;
 	private ArrayList<PieceMove> pieceMoves;
 
 	public Move(IntPiece spot)
@@ -17,6 +18,7 @@ public class Move
 
 	public Move(IntPiece newSpot, IntPiece oldSpot)
 	{
+		origin = newSpot;
 		pieceMoves = new ArrayList<>();
 		add(new PieceMove(newSpot, oldSpot));
 	}
@@ -27,6 +29,11 @@ public class Move
 		pieceMoves.add(move);
 	}
 
+	public IntPiece getOrigin()
+	{
+		return origin;
+	}
+
 	public Boolean isEmpty()
 	{
 		return pieceMoves.isEmpty();
@@ -34,9 +41,11 @@ public class Move
 
 	public void move(Board board)
 	{
-		for (PieceMove piece: pieceMoves)
+		System.out.println("----------");
+		for (PieceMove move: pieceMoves)
 		{
-			piece.move(board);
+			System.out.println(move.toString());
+			move.move(board);
 		}
 	}
 
@@ -57,7 +66,7 @@ public class Move
 				return true;
 			}
 		}
-		return false;;
+		return false;
 	}
 
 	public void remove(int index)

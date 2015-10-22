@@ -4,8 +4,40 @@
 		"selected_items":
 		[
 			[
+				"set",
+				"setPiece"
+			],
+			[
+				"Pie",
+				"PieceMove"
+			],
+			[
 				"new",
-				"newPiece"
+				"newSpot"
+			],
+			[
+				"Bo",
+				"Boolean"
+			],
+			[
+				"pie",
+				"pieceMoves"
+			],
+			[
+				"get",
+				"getSpot"
+			],
+			[
+				"Int",
+				"IntPiece"
+			],
+			[
+				"pi",
+				"pieceMoves"
+			],
+			[
+				"old",
+				"oldPiece"
 			],
 			[
 				"de",
@@ -28,14 +60,6 @@
 				"removePiece"
 			],
 			[
-				"get",
-				"getPiece"
-			],
-			[
-				"set",
-				"setPiece"
-			],
-			[
 				"king",
 				"kingDirection"
 			],
@@ -46,10 +70,6 @@
 			[
 				"grid",
 				"gridWidth"
-			],
-			[
-				"Int",
-				"IntPiece"
 			],
 			[
 				"int",
@@ -175,6 +195,38 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/com/jaxson/board/move/MoveHandler.java",
+			"settings":
+			{
+				"buffer_size": 341,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/board/move/Move.java",
+			"settings":
+			{
+				"buffer_size": 1218,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/board/IntBoard.java",
+			"settings":
+			{
+				"buffer_size": 9521,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/ui/board/Spot.java",
+			"settings":
+			{
+				"buffer_size": 6046,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -220,13 +272,9 @@
 	"command_palette":
 	{
 		"height": 101.0,
-		"last_filter": "git pull",
+		"last_filter": "git push",
 		"selected_items":
 		[
-			[
-				"git pull",
-				"Git: Pull"
-			],
 			[
 				"git push",
 				"Git: Push"
@@ -238,6 +286,10 @@
 			[
 				"git add",
 				"Git: Add..."
+			],
+			[
+				"git pull",
+				"Git: Pull"
 			],
 			[
 				"git pul",
@@ -299,23 +351,25 @@
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board"
 	],
 	"file_history":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/geom/Point.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/MoveHandler.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/PieceMove.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntPiece.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntBoard.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/GameWindow.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/MoveHandler.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/Move.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Spot.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntBoard.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Board.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/geom/Point.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Piece.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/Player.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/HardPlayer.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/EasyPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntPiece.java",
 		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/Player.java",
 		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/SimplePlayer.java",
 		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/HumanPlayer.java",
@@ -329,7 +383,6 @@
 		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/BorderPanel.java",
 		"/C/Documents and Settings/Peter/My Documents/new/pom.xml",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Options.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/GameWindow.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/ScaleContainer.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Dialog.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Panel.java",
@@ -405,6 +458,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"new Move",
+			"IntPiece",
 			"hasMoved",
 			"125",
 			"getLegalMove",
@@ -445,6 +500,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Move",
 			"spots",
 			"LIGHTCOLOR",
 			"DARKCOLOR",
@@ -463,8 +519,124 @@
 	"groups":
 	[
 		{
+			"selected": 3,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/com/jaxson/board/move/MoveHandler.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 341,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								30,
+								30
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/com/jaxson/board/move/Move.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								620,
+								620
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/com/jaxson/board/IntBoard.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3126,
+								3126
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 309.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/com/jaxson/ui/board/Spot.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2196,
+								2196
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 787.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

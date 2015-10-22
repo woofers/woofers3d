@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
+import com.jaxson.board.move.Move;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
@@ -24,7 +25,7 @@ public class Spot<T extends Window> extends Panel
 	private Board board;
 	private Piece piece;
 	private Point location;
-	private Spot transferSpot;
+	private Move move;
 	private T window;
 
 	public Spot(Point location)
@@ -44,26 +45,6 @@ public class Spot<T extends Window> extends Panel
 		}
 	}
 
-	private void castle()
-	{
-		int kingDirection;
-		if (location.x < (board.gridWidth - 1) / 2)
-		{
-			kingDirection = -1;
-		}
-		else
-		{
-			kingDirection = +1;
-		}
-		Spot king = transferSpot;
-		Spot newKingSpot = board.getSpot(king.location.x + 2 * kingDirection, location.y);
-		Spot newRookSpot = board.getSpot(newKingSpot.location.x - kingDirection, location.y);
-		newRookSpot.setPiece(piece);
-		newKingSpot.setPiece(king.getPiece());
-		removePiece();
-		king.removePiece();
-	}
-
 	public void createPiece(int type, int color)
 	{
 		removePiece();
@@ -74,7 +55,7 @@ public class Spot<T extends Window> extends Panel
 	public void deselect()
 	{
 		setBackground(getColor());
-		transferSpot = null;
+		move = null;
 	}
 
 	private void deselectAll()
@@ -84,14 +65,14 @@ public class Spot<T extends Window> extends Panel
 
 	private void displayMoves()
 	{
-		ArrayList<IntPiece> moves = new ArrayList<>();
+		ArrayList<Move> moves = new ArrayList<>();
 		IntBoard intBoard = board.toIntBoard();
 		Spot spot;
 		moves = intBoard.getLegalMoves(toIntPiece());
-		for (IntPiece move: moves)
+		for (Move move: moves)
 		{
-			spot = board.getSpot(move.location.x, move.location.y);
-			spot.setTransferSpot(this);
+			spot = board.getSpot(move.getOrigin());
+			spot.setMove(move);
 			spot.moveSelect();
 		}
 		if (moves.isEmpty())
@@ -209,47 +190,7 @@ public class Spot<T extends Window> extends Panel
 	private void move()
 	{
 		board.turn ++;
-		Piece newPiece = transferSpot.getPiece();
-		if (newPiece.type == Piece.PAWN)
-		{
-			int deltaY = Math.abs(transferSpot.location.y - location.y);
-			if (deltaY == 2)
-			{
-				Piece spot;
-				spot = board.getSpot(location.x - 1, location.y).getPiece();
-				if (spot != null)
-				{
-					spot.passingIndex = board.turn;
-				}
-				spot = board.getSpot(location.x + 1, transferSpot.location.y).getPiece();
-				if (spot != null)
-				{
-					spot.passingIndex = board.turn;
-				}
-				if (spot != null)
-				{
-					spot.passingIndex = board.turn;
-				}
-			}
-		}
-		if (isEmpty())
-		{
-			overwrite();
-		}
-		else if (!newPiece.isFriendly(piece.color))
-		{
-			overwrite();
-		}
-		else
-		{
-			castle();
-		}
-	}
-
-	private void overwrite()
-	{
-		setPiece(transferSpot.getPiece());
-		transferSpot.removePiece();
+		move.move(board);
 	}
 
 	private void moveSelect()
@@ -324,9 +265,9 @@ public class Spot<T extends Window> extends Panel
 		draw();
 	}
 
-	public void setTransferSpot(Spot value)
+	public void setMove(Move value)
 	{
-		transferSpot = value;
+		move = value;
 	}
 
 	public void setWindow(T value)

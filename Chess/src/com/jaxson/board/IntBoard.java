@@ -3,6 +3,7 @@ package com.jaxson.board;
 import java.util.ArrayList;
 
 import com.jaxson.board.move.Move;
+import com.jaxson.board.move.PieceMove;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
@@ -142,19 +143,19 @@ public class IntBoard
 		return getAllByIncrement(piece, +1, 0);
 	}
 
-	private ArrayList<IntPiece> getCastling(IntPiece piece)
+	private ArrayList<Move> getCastling(IntPiece piece)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
+		ArrayList<Move> moves = new ArrayList<>();
 		if (piece.hasMoved())
 		{
-			return spots;
+			return moves;
 		}
-		spots.add(getCastlingSpot(piece, +1));
-		spots.add(getCastlingSpot(piece, -1));
-		return spots;
+		moves.add(getCastlingMove(piece, +1));
+		moves.add(getCastlingMove(piece, -1));
+		return moves;
 	}
 
-	private IntPiece getCastlingSpot(IntPiece piece, int direction)
+	private Move getCastlingMove(IntPiece piece, int direction)
 	{
 		IntPiece spot = piece;
 		while (true)
@@ -173,7 +174,14 @@ public class IntBoard
 		{
 			if (!spot.hasMoved())
 			{
-				return spot;
+				Move move;
+				PieceMove pieceMove;
+				IntPiece newKingSpot;
+				newKingSpot = getSpot(piece.location.x + direction * 2, piece.location.y);
+				pieceMove = new PieceMove(newKingSpot, piece);
+			move = new Move(spot, getSpot(newKingSpot.location.x, newKingSpot.location.y + direction * 2));
+				move.add(pieceMove);
+				return move;
 			}
 		}
 		return null;
@@ -227,6 +235,7 @@ public class IntBoard
 				break;
 			case Piece.PAWN:
 				moves = getPawn(piece);
+				moves = setOverwrite(moves, piece);
 				break;
 		}
 		return filterNull(moves);
@@ -262,58 +271,31 @@ public class IntBoard
 			}
 			break;
 		}
-		spots.addAll(getPawnCapture(piece));
-		spots.addAll(getPawnPassing(piece));
-		return spots;
+		moves.addAll(getPawnCapture(piece));
+		return moves;
 	}
 
 	private ArrayList<Move> getPawnCapture(IntPiece piece)
 	{
-		ArrayList<Move> spots = new ArrayList<>();
-		spots.add(getSpot(piece.location.x + 1, piece.location.y + piece.direction));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y + piece.direction));
-		IntPiece spot;
+		ArrayList<Move> moves = new ArrayList<>();
+		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + piece.direction), piece));
+		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + piece.direction), piece));
+		Move move;
 		int index = 0;
-		while (index < spots.size())
+		while (index < moves.size())
 		{
-			spot = spots.get(index);
-			if (spot != null)
+			move = moves.get(index);
+			if (move != null)
 			{
-				if (!spot.isEnemey(piece.color))
+				if (!move.getOrigin().isEnemey(piece.color))
 				{
-					spots.remove(index);
+					moves.remove(index);
 					continue;
 				}
 			}
 			index ++;
 		}
-		return spots;
-	}
-
-	private ArrayList<IntPiece> getPawnPassing(IntPiece piece)
-	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		if (piece.canPass(turn))
-		{
-			IntPiece spot;
-			spot = getSpot(piece.location.x - 1, piece.location.y);
-			if (spot != null)
-			{
-				if (spot.isEnemey(piece.color))
-				{
-					spots.add(getSpot(piece.location.x - 1, piece.location.y + piece.direction));
-				}
-			}
-			spot = getSpot(piece.location.x + 1, piece.location.y);
-			if (spot != null)
-			{
-				if (spot.isEnemey(piece.color))
-				{
-					spots.add(getSpot(piece.location.x + 1, piece.location.y + piece.direction));
-				}
-			}
-		}
-		return spots;
+		return moves;
 	}
 
 	private ArrayList<IntPiece> getPieces(int color)
@@ -346,18 +328,18 @@ public class IntBoard
 		return null;
 	}
 
-	private ArrayList<IntPiece> getSurrondingSpots(IntPiece piece)
+	private ArrayList<Move> getSurrondingSpots(IntPiece piece)
 	{
-		ArrayList<IntPiece> spots = new ArrayList<>();
-		spots.add(getSpot(piece.location.x - 1, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y - 1));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y));
-		spots.add(getSpot(piece.location.x - 1, piece.location.y + 1));
-		spots.add(getSpot(piece.location.x, piece.location.y + 1));
-		spots.add(getSpot(piece.location.x + 1, piece.location.y + 1));;
-		return filterFriendly(spots, piece);
+		ArrayList<Move> moves = new ArrayList<>();
+		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y - 1), piece));
+		moves.add(new Move(getSpot(piece.location.x, piece.location.y - 1), piece));
+		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y - 1), piece));
+		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y), piece));
+		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y), piece));
+		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + 1), piece));
+		moves.add(new Move(getSpot(piece.location.x, piece.location.y + 1), piece));
+		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + 1), piece));;
+		return filterFriendly(moves, piece);
 	}
 
 	public void print()
@@ -369,7 +351,7 @@ public class IntBoard
 	{
 		for (Move move: moves)
 		{
-			move.add(new PieceMove(piece));
+			//move.add(new PieceMove(piece));
 		}
 		return moves;
 	}

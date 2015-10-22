@@ -98,6 +98,11 @@ public class Board<T extends Window> extends Panel
 		}
 	}
 
+	public Spot getSpot(IntPiece spot)
+	{
+		return getSpot(spot.location);
+	}
+
 	public Spot getSpot(Point location)
 	{
 		return getSpot(location.x, location.y);
