@@ -20,7 +20,7 @@ public class Move
 	{
 		origin = newSpot;
 		pieceMoves = new ArrayList<>();
-		add(new PieceMove(newSpot, oldSpot));
+		if (newSpot != null) add(new PieceMove(newSpot, oldSpot));
 	}
 
 	public void add(PieceMove move)
@@ -36,7 +36,14 @@ public class Move
 
 	public Boolean isEmpty()
 	{
-		return pieceMoves.isEmpty();
+		for (PieceMove piece: pieceMoves)
+		{
+			if (!piece.isEmpty())
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void move(Board board)
@@ -77,5 +84,25 @@ public class Move
 	public void remove(PieceMove move)
 	{
 		pieceMoves.remove(move);
+	}
+
+	public void setOrigin(IntPiece value)
+	{
+		origin = value;
+	}
+
+	@Override
+	public String toString()
+	{
+		String string = "";
+		string += "----Move----";
+		string += "\n";
+		for (PieceMove piece: pieceMoves)
+		{
+			string += piece.toString();
+			string += "\n";
+		}
+		string += "-----------";
+		return string;
 	}
 }

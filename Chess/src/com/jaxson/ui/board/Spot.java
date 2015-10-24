@@ -71,7 +71,9 @@ public class Spot<T extends Window> extends Panel
 		moves = intBoard.getLegalMoves(toIntPiece());
 		for (Move move: moves)
 		{
+			System.out.println(move.toString());
 			spot = board.getSpot(move.getOrigin());
+			if (spot == null) continue;
 			spot.setMove(move);
 			spot.moveSelect();
 		}
@@ -191,6 +193,7 @@ public class Spot<T extends Window> extends Panel
 	{
 		board.turn ++;
 		move.move(board);
+		move = null;
 	}
 
 	private void moveSelect()

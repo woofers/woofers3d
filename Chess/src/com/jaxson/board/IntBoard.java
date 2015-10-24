@@ -64,13 +64,10 @@ public class IntBoard
 		return moves;
 	}
 
-	private ArrayList<Move> filterNull(ArrayList<Move> spots)
+	private ArrayList<Move> filterNull(ArrayList<Move> moves)
 	{
-		if (spots.remove(null))
-		{
-			return filterNull(spots);
-		}
-		return spots;
+		if (moves.remove(null)) return filterNull(moves);
+		return moves;
 	}
 
 	private ArrayList<Move> getAllAbove(IntPiece piece)
@@ -176,10 +173,12 @@ public class IntBoard
 			{
 				Move move;
 				PieceMove pieceMove;
-				IntPiece newKingSpot;
+				IntPiece newKingSpot, newRookSpot;
 				newKingSpot = getSpot(piece.location.x + direction * 2, piece.location.y);
+				newRookSpot = getSpot(newKingSpot.location.x - direction, newKingSpot.location.y);
 				pieceMove = new PieceMove(newKingSpot, piece);
-			move = new Move(spot, getSpot(newKingSpot.location.x, newKingSpot.location.y + direction * 2));
+				move = new Move(newRookSpot, spot);
+				move.setOrigin(spot);
 				move.add(pieceMove);
 				return move;
 			}
@@ -209,6 +208,7 @@ public class IntBoard
 			case Piece.KING:
 				moves.addAll(getSurrondingSpots(piece));
 				moves.addAll(getCastling(piece));
+				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.QUEEN:
 				moves.addAll(getAllAbove(piece));
@@ -281,16 +281,21 @@ public class IntBoard
 		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + piece.direction), piece));
 		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + piece.direction), piece));
 		Move move;
+		IntPiece spot;
 		int index = 0;
 		while (index < moves.size())
 		{
 			move = moves.get(index);
 			if (move != null)
 			{
-				if (!move.getOrigin().isEnemey(piece.color))
+				spot = move.getOrigin();
+				if (spot != null)
 				{
-					moves.remove(index);
-					continue;
+					if (!spot.isEnemey(piece.color))
+					{
+						moves.remove(index);
+						continue;
+					}
 				}
 			}
 			index ++;
@@ -351,7 +356,8 @@ public class IntBoard
 	{
 		for (Move move: moves)
 		{
-			//move.add(new PieceMove(piece));
+			if (move == null) continue;
+			move.add(new PieceMove(piece));
 		}
 		return moves;
 	}

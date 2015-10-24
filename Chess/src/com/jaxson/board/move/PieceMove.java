@@ -24,12 +24,17 @@ public class PieceMove
 
 	public Boolean isEmpty()
 	{
-		return oldSpot == null && newSpot == null;
+		return newSpot == null;
+	}
+
+	private Boolean isRemove()
+	{
+		return oldSpot == null;
 	}
 
 	public void move(Board board)
 	{
-		if (oldSpot == null)
+		if (isRemove())
 		{
 			board.getSpot(this.newSpot.location).removePiece();
 			return;
@@ -38,17 +43,17 @@ public class PieceMove
 		Spot oldSpot, newSpot;
 		Piece newPiece;
 		oldSpot = board.getSpot(this.oldSpot.location);
+		//oldSpot.removePiece();
 		newSpot = board.getSpot(this.newSpot.location);
 		newPiece = newSpot.getPiece();
 		newSpot.setPiece(oldSpot.getPiece());
-		if (newPiece != null) oldSpot.setPiece(newPiece);
+		//if (!isEmpty()) oldSpot.setPiece(newPiece);
 	}
 
 	public void move(IntBoard board)
 	{
 		if (isEmpty()) return;
-
-		if (oldSpot == null)
+		if (isRemove())
 		{
 			board.setSpot(new IntPiece(newSpot.location));
 			return;
@@ -60,14 +65,15 @@ public class PieceMove
 
 	public Boolean overwritesFriendly(int color)
 	{
-		if (newSpot == null) return false;
+		if (isEmpty()) return false;
 		return color == newSpot.color;
 	}
 
 	@Override
 	public String toString()
 	{
-		if (oldSpot == null) return "Removed: " + oldSpot.location.toString();
+		if (isEmpty()) return "Empty Move";
+		if (oldSpot == null) return "Removed: " + newSpot.location.toString();
 		return "Moved: " + oldSpot.location.toString() + " to " + newSpot.location.toString();
 	}
 }

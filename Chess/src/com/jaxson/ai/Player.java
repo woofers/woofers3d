@@ -1,6 +1,8 @@
 package com.jaxson.ai;
 
-public class Player
+import com.jaxson.geom.Point;
+
+public abstract class Player
 {
 	private int color;
 	private String name;
@@ -15,6 +17,8 @@ public class Player
 		this.color = color;
 		this.name = name;
 	}
+
+	public abstract void move(Point location);
 
 	public int getColor()
 	{

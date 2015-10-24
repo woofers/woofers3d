@@ -100,11 +100,13 @@ public class Board<T extends Window> extends Panel
 
 	public Spot getSpot(IntPiece spot)
 	{
+		if (spot == null) return null;
 		return getSpot(spot.location);
 	}
 
 	public Spot getSpot(Point location)
 	{
+		if (location == null) return null;
 		return getSpot(location.x, location.y);
 	}
 

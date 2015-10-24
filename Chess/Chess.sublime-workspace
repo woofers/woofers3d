@@ -4,116 +4,112 @@
 		"selected_items":
 		[
 			[
-				"set",
-				"setPiece"
-			],
-			[
-				"Pie",
-				"PieceMove"
-			],
-			[
-				"new",
-				"newSpot"
-			],
-			[
-				"Bo",
-				"Boolean"
-			],
-			[
-				"pie",
-				"pieceMoves"
-			],
-			[
 				"get",
-				"getSpot"
-			],
-			[
-				"Int",
-				"IntPiece"
-			],
-			[
-				"pi",
-				"pieceMoves"
-			],
-			[
-				"old",
-				"oldPiece"
-			],
-			[
-				"de",
-				"deltaY"
-			],
-			[
-				"to",
-				"toIntPiece"
-			],
-			[
-				"ism",
-				"isEmpty"
-			],
-			[
-				"ne",
-				"nextSpot"
-			],
-			[
-				"remo",
-				"removePiece"
-			],
-			[
-				"king",
-				"kingDirection"
-			],
-			[
-				"rok",
-				"rookPiece"
-			],
-			[
-				"grid",
-				"gridWidth"
-			],
-			[
-				"int",
-				"intPiece"
-			],
-			[
-				"in",
-				"intPiece"
+				"getOrigin"
 			],
 			[
 				"is",
 				"isEmpty"
 			],
 			[
+				"new",
+				"newSpot"
+			],
+			[
+				"mov",
+				"moves"
+			],
+			[
+				"pas",
+				"passingIndex"
+			],
+			[
+				"int",
+				"IntPiece"
+			],
+			[
+				"pa",
+				"pasingIndex"
+			],
+			[
+				"INT",
+				"IntPiece"
+			],
+			[
+				"INt",
+				"IntPiece"
+			],
+			[
+				"grid",
+				"gridWidth"
+			],
+			[
+				"IN",
+				"IntBoard"
+			],
+			[
+				"ne",
+				"nextSpot"
+			],
+			[
+				"in",
+				"increment"
+			],
+			[
+				"getCa",
+				"getCastlingSpot"
+			],
+			[
+				"spot",
+				"spot"
+			],
+			[
+				"add",
+				"add"
+			],
+			[
+				"th",
+				"threadEvent"
+			],
+			[
+				"thread",
+				"ThreadEvent"
+			],
+			[
+				"x",
+				"xClose"
+			],
+			[
+				"se",
+				"setResult"
+			],
+			[
 				"J",
 				"JFrame"
 			],
 			[
-				"re",
-				"return"
+				"FIle",
+				"FileNotFoundException"
 			],
 			[
-				"pri",
+				"File",
+				"FileNotFoundException"
+			],
+			[
+				"de",
+				"deselect"
+			],
+			[
+				"print",
 				"println"
 			],
 			[
-				"br",
-				"break"
+				"del",
+				"deselectAll"
 			],
 			[
-				"g",
-				"getColor"
-			],
-			[
-				"spo",
-				"spots"
-			],
-			[
-				"po",
-				"point"
-			],
-			[
-				"IN",
-				"Integer"
+				"Int",
+				"IntPiece"
 			],
 			[
 				"gr",
@@ -124,12 +120,12 @@
 				"gridWidth"
 			],
 			[
-				"INT",
-				"IntPiece"
-			],
-			[
 				"pu",
 				"public"
+			],
+			[
+				"to",
+				"toIntBoard"
 			],
 			[
 				"getTop",
@@ -152,24 +148,16 @@
 				"holdMoveColor"
 			],
 			[
-				"mov",
-				"moveColor"
-			],
-			[
-				"se",
-				"selectedColor"
-			],
-			[
 				"on",
 				"onRelease"
 			],
 			[
-				"gir",
-				"gridWidth"
+				"g",
+				"getLegalMoves"
 			],
 			[
-				"add",
-				"addPieces"
+				"gir",
+				"gridWidth"
 			],
 			[
 				"row",
@@ -182,6 +170,10 @@
 			[
 				"colo",
 				"colorIndex"
+			],
+			[
+				"set",
+				"setLayout"
 			],
 			[
 				"ins",
@@ -204,26 +196,10 @@
 			}
 		},
 		{
-			"file": "src/com/jaxson/board/move/Move.java",
-			"settings":
-			{
-				"buffer_size": 1218,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "src/com/jaxson/board/IntBoard.java",
 			"settings":
 			{
-				"buffer_size": 9521,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/com/jaxson/ui/board/Spot.java",
-			"settings":
-			{
-				"buffer_size": 6046,
+				"buffer_size": 9641,
 				"line_ending": "Windows"
 			}
 		}
@@ -271,10 +247,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 101.0,
-		"last_filter": "git push",
+		"height": 113.0,
+		"last_filter": "git pull",
 		"selected_items":
 		[
+			[
+				"git pull",
+				"Git: Pull"
+			],
 			[
 				"git push",
 				"Git: Push"
@@ -284,36 +264,44 @@
 				"Git: Commit"
 			],
 			[
-				"git add",
+				"git ad",
 				"Git: Add..."
 			],
 			[
-				"git pull",
-				"Git: Pull"
+				"git comm",
+				"Git: Commit"
 			],
 			[
-				"git pul",
-				"Git: Pull"
+				"git add",
+				"Git: Add..."
 			],
 			[
 				"git c",
 				"Git: Commit"
 			],
 			[
-				"git ",
-				"Git: Commit"
+				"conv",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"git pu",
+				"Git: Pull"
 			],
 			[
 				"git pus",
 				"Git: Push"
 			],
 			[
-				"git ad",
-				"Git: Add..."
+				"git pul",
+				"Git: Pull"
 			],
 			[
-				"conv",
-				"Indentation: Convert to Tabs"
+				"git p",
+				"Git: Push"
+			],
+			[
+				"git ",
+				"Git: Commit"
 			],
 			[
 				"list",
@@ -345,68 +333,88 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board"
+		"/D/Documents/Development/School/JavaProjects/Chess",
+		"/D/Documents/Development/School/JavaProjects/Chess/src",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move"
 	],
 	"file_history":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/PieceMove.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntPiece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/PieceMove.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/Move.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Board.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveHandler.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/NoDestinationException.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Spot.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/build.xml",
+		"/C/Users/Jaxson/Desktop/qlfilter.c",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/geom/Point.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/Player.java",
+		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
+		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/old/orange dot.cfg",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO8ABF.tmp/practice.cfg",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO1AA.tmp/autoexec.cfg",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO2E78.tmp/edzie.cfg",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Piece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntPiece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/Main.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/EasyPlayer.java",
+		"/D/Documents/Development/School/Programming 12/ConnectFour/ConnectFour/ConnectFour.vb",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/HardPlayer.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/WindowStarter.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Dialog.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
+		"/D/Documents/Development/School/JavaProjects/.git/info/exclude",
+		"/D/Documents/Development/School/JavaProjects/Chess/.gitignore",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Panel.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/ScaleContainer.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Window.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Options.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/GameWindow.java",
+		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Team Fortress 2/autoexec.cfg",
+		"/C/Users/Jaxson/Desktop/Assignment 3/Calc.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Point.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/.project",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Spot.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/.classpath",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Piece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/IntPiece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Options.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Board.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/containers/Point.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/threading/ThreadEvent.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/GameWindow.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO34C0.tmp/Calculator.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/PromotionWindow.java",
+		"/C/Users/Jaxson/Desktop/ModalityDemo.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/threading/ThreadEvent.as",
+		"/C/Program Files/Java/jdk1.8.0_60/JOptionPane.java",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/bin/jar/MANIFEST.MF",
+		"/D/Documents/Development/School/JavaProjects/Chess/bin/jar/assets/images/pieces/ToPNG.jsx",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zEA85C.tmp/qlfilter.c",
+		"/D/Documents/Development/School/JavaProjects/Chess/run.bat",
+		"/D/Documents/Development/School/JavaProjects/Chess/make.bat",
+		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/ant.sublime-build",
+		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/C.sublime-settings",
+		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/vbdotnet.sublime-settings",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Board.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Spot.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntBoard.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/GameWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/MoveHandler.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/Move.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Spot.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Board.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/geom/Point.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Piece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/Player.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/HardPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/EasyPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/Player.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/SimplePlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/HumanPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/Move.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/CounterColor.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/MD5Util.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/BoardFactory.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/ConnectFourGame.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/RankingPanel.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/Launcher.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/BorderPanel.java",
-		"/C/Documents and Settings/Peter/My Documents/new/pom.xml",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Options.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/ScaleContainer.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Dialog.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Panel.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Piece.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/Main.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/GameWindow.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Options.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/WindowStarter.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Window.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/build.xml",
-		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/Main.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Board.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/GameWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Generic.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/PromotionWindow.java",
-		"/C/Program Files/Java/jdk1.8.0_60/JDialog.java",
-		"/C/Program Files/Java/jdk1.8.0_60/Dialog.java",
-		"/C/Program Files/Java/jdk1.8.0_60/Robot.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Spot.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Piece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Test/build.xml",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/ScaleContainer.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/Panel.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/Point.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/PromotionWindow.txt",
-		"/C/Program Files/Java/jdk1.8.0_60/JOptionPane.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Options.java",
+		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Documents and Settings/Peter/Application Data/Microsoft/Internet Explorer/Quick Launch/Google Chrome.lnk",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/Board.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/GameWindow.java",
@@ -423,6 +431,7 @@
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/clean.bat",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/kill.bat",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/linkedlist/Node.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/LinkedListTester.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/LinkedListContainer.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/Node.java",
@@ -444,7 +453,7 @@
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -458,21 +467,19 @@
 		"case_sensitive": true,
 		"find_history":
 		[
-			"new Move",
-			"IntPiece",
+			"setOverwrite",
+			";\n",
+			"javac",
+			"Public Class",
+			"Grid",
+			"gridHeight",
+			"gridWidth",
+			"board",
+			"IntBoard",
+			"piece",
 			"hasMoved",
-			"125",
-			"getLegalMove",
-			"getLegal",
-			"null",
-			"for",
-			"		\n",
-			"modal",
-			"getColor",
-			"needs work",
-			"need",
-			"color",
-			"toIntBoard",
+			"filterMoves",
+			"Point",
 			"board",
 			"location",
 			"board",
@@ -500,7 +507,9 @@
 		"regex": false,
 		"replace_history":
 		[
-			"Move",
+			"height",
+			"width",
+			"filterFriendly",
 			"spots",
 			"LIGHTCOLOR",
 			"DARKCOLOR",
@@ -519,7 +528,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -535,8 +544,8 @@
 						"selection":
 						[
 							[
-								30,
-								30
+								279,
+								279
 							]
 						],
 						"settings":
@@ -546,83 +555,26 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/com/jaxson/board/move/Move.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1218,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								620,
-								620
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/com/jaxson/board/IntBoard.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9521,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3126,
-								3126
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 309.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "src/com/jaxson/ui/board/Spot.java",
+					"buffer": 1,
+					"file": "src/com/jaxson/board/IntBoard.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6046,
+						"buffer_size": 9641,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2196,
-								2196
+								8061,
+								8062
 							]
 						],
 						"settings":
@@ -631,7 +583,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 787.0,
+						"translation.y": 6460.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -642,7 +594,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 21.0
+		"height": 37.0
 	},
 	"input":
 	{
@@ -673,7 +625,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 642.0
+		"height": 405.0
 	},
 	"output.find_results":
 	{
@@ -683,11 +635,11 @@
 	{
 		"height": 104.0
 	},
-	"pinned_build_system": "Packages/User/myjava.sublime-build",
+	"pinned_build_system": "Packages/Java/Ant.sublime-build",
 	"project": "Chess.sublime-project",
 	"replace":
 	{
-		"height": 68.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -725,7 +677,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 220.0,
+	"side_bar_width": 273.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

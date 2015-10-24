@@ -8,6 +8,7 @@ public class NoDestinationException extends Exception
 	{
 		super();
 	}
+
 	public NoDestinationException(String message)
 	{
 		super(message);

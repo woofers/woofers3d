@@ -13,7 +13,7 @@
 
 	<target name="compile">
 		<mkdir dir="${classes.dir}"/>
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" debug="true" debuglevel="lines,vars,source"/>
 	</target>
 
 	<target name="jar" depends="compile">
@@ -27,13 +27,6 @@
 
 	<target name="run" depends="jar">
 		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
-		<classpath>
-			<pathelement location="${jar.dir}/${ant.project.name}.jar"/>
-			<pathelement location="bin/jar/Chess.jar"/>
-			<fileset dir="${lib.dir}">
-				<include name="**/*.jar" />
-			</fileset>
-		</classpath>
 	</target>
 
 	<target name="clean-build" depends="clean,jar"/>
