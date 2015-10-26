@@ -4,14 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
 import com.jaxson.board.move.Move;
+import com.jaxson.board.move.MoveList;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
+import com.jaxson.util.MyArrayList;
 
 public class Spot<T extends Window> extends Panel
 {
@@ -65,13 +66,13 @@ public class Spot<T extends Window> extends Panel
 
 	private void displayMoves()
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		IntBoard intBoard = board.toIntBoard();
 		Spot spot;
 		moves = intBoard.getLegalMoves(toIntPiece());
+		System.out.println(moves.toString());
 		for (Move move: moves)
 		{
-			System.out.println(move.toString());
 			spot = board.getSpot(move.getOrigin());
 			if (spot == null) continue;
 			spot.setMove(move);

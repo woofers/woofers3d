@@ -2,6 +2,7 @@ package com.jaxson.board.move;
 
 import com.jaxson.board.IntPiece;
 import com.jaxson.board.IntBoard;
+import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
 import com.jaxson.ui.board.Spot;
@@ -10,6 +11,7 @@ public class PieceMove
 {
 	private IntPiece newSpot;
 	private IntPiece oldSpot;
+	private Piece removedPiece;
 
 	public PieceMove(IntPiece spot)
 	{
@@ -41,13 +43,11 @@ public class PieceMove
 		}
 
 		Spot oldSpot, newSpot;
-		Piece newPiece;
 		oldSpot = board.getSpot(this.oldSpot.location);
-		//oldSpot.removePiece();
 		newSpot = board.getSpot(this.newSpot.location);
-		newPiece = newSpot.getPiece();
+		removedPiece = newSpot.getPiece();
 		newSpot.setPiece(oldSpot.getPiece());
-		//if (!isEmpty()) oldSpot.setPiece(newPiece);
+		oldSpot.removePiece();
 	}
 
 	public void move(IntBoard board)

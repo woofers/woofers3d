@@ -1,1 +1,1 @@
-ant run -verbose 
+ant run

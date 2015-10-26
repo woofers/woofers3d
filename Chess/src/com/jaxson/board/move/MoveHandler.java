@@ -1,16 +1,16 @@
 package com.jaxson.board.move;
 
-import java.util.ArrayList;
+import com.jaxson.util.MyArrayList;
 
 public class MoveHandler
 {
-	private ArrayList<Move> moves;
-	private ArrayList<Move> history;
+	private MyArrayList<Move> moves;
+	private MyArrayList<Move> history;
 
 	public MoveHandler()
 	{
-		moves = new ArrayList<>();
-		history = new ArrayList<>();
+		moves = new MyArrayList<>();
+		history = new MyArrayList<>();
 	}
 
 	public void move(Object board)

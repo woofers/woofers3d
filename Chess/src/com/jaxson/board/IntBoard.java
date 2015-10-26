@@ -1,12 +1,12 @@
 package com.jaxson.board;
 
-import java.util.ArrayList;
-
 import com.jaxson.board.move.Move;
+import com.jaxson.board.move.MoveList;
 import com.jaxson.board.move.PieceMove;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
+import com.jaxson.util.MyArrayList;
 
 public class IntBoard
 {
@@ -47,7 +47,7 @@ public class IntBoard
 		return newBoard;
 	}
 
-	private ArrayList<Move> filterFriendly(ArrayList<Move> moves, IntPiece piece)
+	private MoveList filterFriendly(MoveList moves, IntPiece piece)
 	{
 		Move move;
 		int index = 0;
@@ -64,25 +64,19 @@ public class IntBoard
 		return moves;
 	}
 
-	private ArrayList<Move> filterNull(ArrayList<Move> moves)
-	{
-		if (moves.remove(null)) return filterNull(moves);
-		return moves;
-	}
-
-	private ArrayList<Move> getAllAbove(IntPiece piece)
+	private MoveList getAllAbove(IntPiece piece)
 	{
 		return getAllByIncrement(piece, 0, -1);
 	}
 
-	private ArrayList<Move> getAllBelow(IntPiece piece)
+	private MoveList getAllBelow(IntPiece piece)
 	{
 		return getAllByIncrement(piece, 0, +1);
 	}
 
-	private ArrayList<Move> getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
+	private MoveList getAllByIncrement(IntPiece piece, int xIncrement, int yIncrement)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		IntPiece spot = getSpot(piece.location.x + xIncrement, piece.location.y + yIncrement);
 		while (spot != null)
 		{
@@ -100,9 +94,9 @@ public class IntBoard
 		return moves;
 	}
 
-	private ArrayList<Move> getAllDiagonal(IntPiece piece)
+	private MoveList getAllDiagonal(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		moves.addAll(getAllDiagonalTopLeft(piece));
 		moves.addAll(getAllDiagonalTopRight(piece));
 		moves.addAll(getAllDiagonalBottomLeft(piece));
@@ -110,39 +104,39 @@ public class IntBoard
 		return moves;
 	}
 
-	private ArrayList<Move> getAllDiagonalBottomLeft(IntPiece piece)
+	private MoveList getAllDiagonalBottomLeft(IntPiece piece)
 	{
 		return getAllByIncrement(piece, -1, +1);
 	}
 
-	private ArrayList<Move> getAllDiagonalBottomRight(IntPiece piece)
+	private MoveList getAllDiagonalBottomRight(IntPiece piece)
 	{
 		return getAllByIncrement(piece, +1, +1);
 	}
 
-	private ArrayList<Move> getAllDiagonalTopLeft(IntPiece piece)
+	private MoveList getAllDiagonalTopLeft(IntPiece piece)
 	{
 		return getAllByIncrement(piece, -1, -1);
 	}
 
-	private ArrayList<Move> getAllDiagonalTopRight(IntPiece piece)
+	private MoveList getAllDiagonalTopRight(IntPiece piece)
 	{
 		return getAllByIncrement(piece, +1, -1);
 	}
 
-	private ArrayList<Move> getAllLeft(IntPiece piece)
+	private MoveList getAllLeft(IntPiece piece)
 	{
 		return getAllByIncrement(piece, -1, 0);
 	}
 
-	private ArrayList<Move> getAllRight(IntPiece piece)
+	private MoveList getAllRight(IntPiece piece)
 	{
 		return getAllByIncrement(piece, +1, 0);
 	}
 
-	private ArrayList<Move> getCastling(IntPiece piece)
+	private MoveList getCastling(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		if (piece.hasMoved())
 		{
 			return moves;
@@ -186,9 +180,9 @@ public class IntBoard
 		return null;
 	}
 
-	private ArrayList<Move> getKnight(IntPiece piece)
+	private MoveList getKnight(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y - 2), piece));
 		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y - 2), piece));
 		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + 2), piece));
@@ -200,9 +194,9 @@ public class IntBoard
 		return filterFriendly(moves, piece);
 	}
 
-	public ArrayList<Move> getLegalMoves(IntPiece piece)
+	public MoveList getLegalMoves(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		switch (piece.type)
 		{
 			case Piece.KING:
@@ -238,7 +232,7 @@ public class IntBoard
 				moves = setOverwrite(moves, piece);
 				break;
 		}
-		return filterNull(moves);
+		return moves;
 	}
 
 	private Point getLocation(int x, int y)
@@ -251,9 +245,9 @@ public class IntBoard
 		return null;
 	}
 
-	private ArrayList<Move> getPawn(IntPiece piece)
+	private MoveList getPawn(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		IntPiece spot = piece;
 		for (int i = 0; i < 2; i ++)
 		{
@@ -275,9 +269,9 @@ public class IntBoard
 		return moves;
 	}
 
-	private ArrayList<Move> getPawnCapture(IntPiece piece)
+	private MoveList getPawnCapture(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + piece.direction), piece));
 		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + piece.direction), piece));
 		Move move;
@@ -303,9 +297,9 @@ public class IntBoard
 		return moves;
 	}
 
-	private ArrayList<IntPiece> getPieces(int color)
+	private MyArrayList<IntPiece> getPieces(int color)
 	{
-		ArrayList<IntPiece> pieces = new ArrayList<>();
+		MyArrayList<IntPiece> pieces = new MyArrayList<>();
 		for (int y = 0; y < height; y ++)
 		{
 			for (int x = 0; x < width; x ++)
@@ -333,9 +327,9 @@ public class IntBoard
 		return null;
 	}
 
-	private ArrayList<Move> getSurrondingSpots(IntPiece piece)
+	private MoveList getSurrondingSpots(IntPiece piece)
 	{
-		ArrayList<Move> moves = new ArrayList<>();
+		MoveList moves = new MoveList();
 		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y - 1), piece));
 		moves.add(new Move(getSpot(piece.location.x, piece.location.y - 1), piece));
 		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y - 1), piece));
@@ -352,7 +346,7 @@ public class IntBoard
 		System.out.println(toString());
 	}
 
-	private ArrayList<Move> setOverwrite(ArrayList<Move> moves, IntPiece piece)
+	private MoveList setOverwrite(MoveList moves, IntPiece piece)
 	{
 		for (Move move: moves)
 		{

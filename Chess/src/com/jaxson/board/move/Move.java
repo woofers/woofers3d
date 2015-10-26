@@ -1,15 +1,16 @@
 package com.jaxson.board.move;
 
-import java.util.ArrayList;
-
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
 import com.jaxson.ui.board.Board;
+import com.jaxson.util.MyArrayList;
 
 public class Move
 {
+	private static final String line = "----";
+	private static final String doubleLine = line + line;
 	private IntPiece origin;
-	private ArrayList<PieceMove> pieceMoves;
+	private MyArrayList<PieceMove> pieceMoves;
 
 	public Move(IntPiece spot)
 	{
@@ -19,12 +20,13 @@ public class Move
 	public Move(IntPiece newSpot, IntPiece oldSpot)
 	{
 		origin = newSpot;
-		pieceMoves = new ArrayList<>();
-		if (newSpot != null) add(new PieceMove(newSpot, oldSpot));
+		pieceMoves = new MyArrayList<>();
+		add(new PieceMove(newSpot, oldSpot));
 	}
 
 	public void add(PieceMove move)
 	{
+		if (move == null) return;
 		if (move.isEmpty()) return;
 		pieceMoves.add(move);
 	}
@@ -38,20 +40,15 @@ public class Move
 	{
 		for (PieceMove piece: pieceMoves)
 		{
-			if (!piece.isEmpty())
-			{
-				return false;
-			}
+			if (!piece.isEmpty()) return false;
 		}
 		return true;
 	}
 
 	public void move(Board board)
 	{
-		System.out.println("----------");
 		for (PieceMove move: pieceMoves)
 		{
-			System.out.println(move.toString());
 			move.move(board);
 		}
 	}
@@ -94,15 +91,13 @@ public class Move
 	@Override
 	public String toString()
 	{
-		String string = "";
-		string += "----Move----";
-		string += "\n";
-		for (PieceMove piece: pieceMoves)
+		String string = "\n";
+		string += "MOVE: " + origin.location.x + ", " + origin.location.y;
+		for (PieceMove move: pieceMoves)
 		{
-			string += piece.toString();
 			string += "\n";
+			string += move.toString();
 		}
-		string += "-----------";
 		return string;
 	}
 }
