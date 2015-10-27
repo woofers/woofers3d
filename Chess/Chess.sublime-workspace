@@ -4,16 +4,32 @@
 		"selected_items":
 		[
 			[
+				"ab",
+				"abstract"
+			],
+			[
+				"pie",
+				"piece"
+			],
+			[
+				"mo",
+				"move"
+			],
+			[
+				"ism",
+				"isRemove"
+			],
+			[
+				"new",
+				"newKingSpot"
+			],
+			[
 				"get",
 				"getOrigin"
 			],
 			[
 				"is",
 				"isEmpty"
-			],
-			[
-				"new",
-				"newSpot"
 			],
 			[
 				"mov",
@@ -188,19 +204,27 @@
 	"buffers":
 	[
 		{
-			"file": "src/com/jaxson/board/move/MoveHandler.java",
+			"file": "/C/Users/Jaxson/Desktop/Assignment 3/Stack.java",
 			"settings":
 			{
-				"buffer_size": 341,
+				"buffer_size": 815,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Jaxson/Desktop/Assignment 3/LLStack.java",
+			"settings":
+			{
+				"buffer_size": 1626,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/com/jaxson/board/IntBoard.java",
+			"file": "/C/Users/Jaxson/Desktop/Assignment 3/StackTester.java",
 			"settings":
 			{
-				"buffer_size": 9641,
-				"line_ending": "Windows"
+				"buffer_size": 1230,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -256,11 +280,27 @@
 				"Git: Pull"
 			],
 			[
+				"git pu",
+				"Git: Pull"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"conv",
+				"Indentation: Convert to Tabs"
+			],
+			[
 				"git push",
 				"Git: Push"
 			],
 			[
-				"git com",
+				"git ",
 				"Git: Commit"
 			],
 			[
@@ -272,20 +312,8 @@
 				"Git: Commit"
 			],
 			[
-				"git add",
-				"Git: Add..."
-			],
-			[
 				"git c",
 				"Git: Commit"
-			],
-			[
-				"conv",
-				"Indentation: Convert to Tabs"
-			],
-			[
-				"git pu",
-				"Git: Pull"
 			],
 			[
 				"git pus",
@@ -298,10 +326,6 @@
 			[
 				"git p",
 				"Git: Push"
-			],
-			[
-				"git ",
-				"Git: Commit"
 			],
 			[
 				"list",
@@ -342,38 +366,49 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Jaxson/Desktop/duckhunt.bat",
+		"/C/Users/Jaxson/Desktop/Assignment 3/Node.java",
+		"/C/Users/Jaxson/Desktop/Assignment 3/StackEmptyException.java",
+		"/C/Users/Jaxson/Desktop/project/Character.java",
+		"/C/Users/Jaxson/Desktop/project/Enemy.java",
+		"/C/Users/Jaxson/Desktop/project/Person.java",
+		"/C/Users/Jaxson/Desktop/project/Main.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveHandler.java",
+		"/C/Users/Jaxson/Desktop/project/DogHunt.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Spot.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/PieceMove.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/Move.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Board.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveHandler.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/NoDestinationException.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveList.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Spot.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/build.xml",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Piece.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntPiece.java",
 		"/C/Users/Jaxson/Desktop/qlfilter.c",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/geom/Point.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/util/MyArrayList.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/Player.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Panel.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Dialog.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/HardPlayer.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/GameWindow.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/EasyPlayer.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/geom/Point.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/Main.java",
+		"/C/Users/Jaxson/Desktop/dog hunt.bat",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/NoDestinationException.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Board.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/build.xml",
 		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
 		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/old/orange dot.cfg",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zO8ABF.tmp/practice.cfg",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zO1AA.tmp/autoexec.cfg",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zO2E78.tmp/edzie.cfg",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Piece.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntPiece.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/Main.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/EasyPlayer.java",
 		"/D/Documents/Development/School/Programming 12/ConnectFour/ConnectFour/ConnectFour.vb",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/HardPlayer.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/WindowStarter.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Dialog.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
 		"/D/Documents/Development/School/JavaProjects/.git/info/exclude",
 		"/D/Documents/Development/School/JavaProjects/Chess/.gitignore",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Panel.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/ScaleContainer.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Window.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Options.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/GameWindow.java",
 		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Team Fortress 2/autoexec.cfg",
 		"/C/Users/Jaxson/Desktop/Assignment 3/Calc.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/Point.java",
@@ -467,6 +502,12 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"filterFriendly",
+			"passing",
+			"passingIndex",
+			"null",
+			"setOverwrite",
+			"setOver",
 			"setOverwrite",
 			";\n",
 			"javac",
@@ -522,30 +563,58 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/com/jaxson/board/move/MoveHandler.java",
+					"file": "/C/Users/Jaxson/Desktop/Assignment 3/Stack.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 341,
+						"buffer_size": 815,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								279,
-								279
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/Jaxson/Desktop/Assignment 3/LLStack.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1626,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -554,36 +623,35 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 840.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "src/com/jaxson/board/IntBoard.java",
+					"buffer": 2,
+					"file": "/C/Users/Jaxson/Desktop/Assignment 3/StackTester.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9641,
+						"buffer_size": 1230,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8061,
-								8062
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Java/Java.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 6460.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

@@ -28,6 +28,7 @@ public class Move
 	{
 		if (move == null) return;
 		if (move.isEmpty()) return;
+		if (move.overwritesFriendly()) return;
 		pieceMoves.add(move);
 	}
 
@@ -61,16 +62,13 @@ public class Move
 		}
 	}
 
-	public Boolean overwritesFriendly(int color)
+	public Boolean overwritesFriendly()
 	{
 		for (PieceMove piece: pieceMoves)
 		{
-			if (piece.overwritesFriendly(color))
-			{
-				return true;
-			}
+			if (!piece.overwritesFriendly()) return false;
 		}
-		return false;
+		return true;
 	}
 
 	public void remove(int index)

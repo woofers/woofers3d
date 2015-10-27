@@ -14,6 +14,7 @@ public class MoveList extends MyArrayList<Move>
 	{
 		if (move == null) return true;
 		if (move.isEmpty()) return true;
+		if (move.overwritesFriendly()) return true;
 		super.add(move);
 		return true;
 	}

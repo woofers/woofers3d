@@ -47,23 +47,6 @@ public class IntBoard
 		return newBoard;
 	}
 
-	private MoveList filterFriendly(MoveList moves, IntPiece piece)
-	{
-		Move move;
-		int index = 0;
-		while (index < moves.size())
-		{
-			move = moves.get(index);
-			if (move.overwritesFriendly(piece.color))
-			{
-				moves.remove(index);
-				continue;
-			}
-			index ++;
-		}
-		return moves;
-	}
-
 	private MoveList getAllAbove(IntPiece piece)
 	{
 		return getAllByIncrement(piece, 0, -1);
@@ -191,7 +174,7 @@ public class IntBoard
 		moves.add(new Move(getSpot(piece.location.x - 2, piece.location.y + 1), piece));
 		moves.add(new Move(getSpot(piece.location.x + 2, piece.location.y - 1), piece));
 		moves.add(new Move(getSpot(piece.location.x + 2, piece.location.y + 1), piece));
-		return filterFriendly(moves, piece);
+		return moves;
 	}
 
 	public MoveList getLegalMoves(IntPiece piece)
@@ -202,7 +185,6 @@ public class IntBoard
 			case Piece.KING:
 				moves.addAll(getSurrondingSpots(piece));
 				moves.addAll(getCastling(piece));
-				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.QUEEN:
 				moves.addAll(getAllAbove(piece));
@@ -210,26 +192,21 @@ public class IntBoard
 				moves.addAll(getAllLeft(piece));
 				moves.addAll(getAllRight(piece));
 				moves.addAll(getAllDiagonal(piece));
-				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.ROOK:
 				moves.addAll(getAllAbove(piece));
 				moves.addAll(getAllBelow(piece));
 				moves.addAll(getAllLeft(piece));
 				moves.addAll(getAllRight(piece));
-				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.BISHOP:
 				moves = getAllDiagonal(piece);
-				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.KNIGHT:
 				moves = getKnight(piece);
-				moves = setOverwrite(moves, piece);
 				break;
 			case Piece.PAWN:
 				moves = getPawn(piece);
-				moves = setOverwrite(moves, piece);
 				break;
 		}
 		return moves;
@@ -280,17 +257,11 @@ public class IntBoard
 		while (index < moves.size())
 		{
 			move = moves.get(index);
-			if (move != null)
+			spot = move.getOrigin();
+			if (!spot.isEnemey(piece.color))
 			{
-				spot = move.getOrigin();
-				if (spot != null)
-				{
-					if (!spot.isEnemey(piece.color))
-					{
-						moves.remove(index);
-						continue;
-					}
-				}
+				moves.remove(index);
+				continue;
 			}
 			index ++;
 		}
@@ -338,22 +309,12 @@ public class IntBoard
 		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + 1), piece));
 		moves.add(new Move(getSpot(piece.location.x, piece.location.y + 1), piece));
 		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + 1), piece));;
-		return filterFriendly(moves, piece);
+		return moves;
 	}
 
 	public void print()
 	{
 		System.out.println(toString());
-	}
-
-	private MoveList setOverwrite(MoveList moves, IntPiece piece)
-	{
-		for (Move move: moves)
-		{
-			if (move == null) continue;
-			move.add(new PieceMove(piece));
-		}
-		return moves;
 	}
 
 	public void setSpots(IntPiece[][] value)

@@ -74,7 +74,6 @@ public class Spot<T extends Window> extends Panel
 		for (Move move: moves)
 		{
 			spot = board.getSpot(move.getOrigin());
-			if (spot == null) continue;
 			spot.setMove(move);
 			spot.moveSelect();
 		}
@@ -231,11 +230,6 @@ public class Spot<T extends Window> extends Panel
 			move();
 			deselectAll();
 		}
-	}
-
-	private void pass()
-	{
-
 	}
 
 	public void removePiece()
