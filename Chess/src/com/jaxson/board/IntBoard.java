@@ -120,10 +120,7 @@ public class IntBoard
 	private MoveList getCastling(IntPiece piece)
 	{
 		MoveList moves = new MoveList();
-		if (piece.hasMoved())
-		{
-			return moves;
-		}
+		if (piece.hasMoved()) return moves;
 		moves.add(getCastlingMove(piece, +1));
 		moves.add(getCastlingMove(piece, -1));
 		return moves;
@@ -135,14 +132,8 @@ public class IntBoard
 		while (true)
 		{
 			spot = getSpot(spot.location.x + direction, spot.location.y);
-			if (spot == null)
-			{
-				return null;
-			}
-			if (!spot.isEmpty())
-			{
-				break;
-			}
+			if (spot == null) return null;
+			if (!spot.isEmpty()) break;
 		}
 		if (spot.type == Piece.ROOK)
 		{
@@ -215,10 +206,7 @@ public class IntBoard
 	private Point getLocation(int x, int y)
 	{
 		IntPiece piece = getSpot(x, y);
-		if (piece != null)
-		{
-			return piece.location;
-		}
+		if (piece != null) return piece.location;
 		return null;
 	}
 
@@ -234,10 +222,7 @@ public class IntBoard
 				if (spot.isEmpty())
 				{
 					moves.add(new Move(spot, piece));
-					if (!piece.hasMoved())
-					{
-						continue;
-					}
+					if (!piece.hasMoved()) continue;
 				}
 			}
 			break;
@@ -275,10 +260,7 @@ public class IntBoard
 		{
 			for (int x = 0; x < width; x ++)
 			{
-				if (spots[x][y].color == color)
-				{
-					pieces.add(spots[x][y]);
-				}
+				if (spots[x][y].color == color) pieces.add(spots[x][y]);
 			}
 		}
 		return pieces;
@@ -334,6 +316,7 @@ public class IntBoard
 
 	public void setSpot(IntPiece value, int x, int y)
 	{
+		value.location = new Point(x, y);
 		spots[x][y] = value;
 	}
 

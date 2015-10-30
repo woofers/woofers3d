@@ -29,6 +29,7 @@ public class PieceMove
 		Spot oldSpot, newSpot;
 		oldSpot = board.getSpot(this.oldSpot.location);
 		newSpot = board.getSpot(this.newSpot.location);
+
 		removedPiece = newSpot.getPiece();
 		newSpot.setPiece(oldSpot.getPiece());
 		oldSpot.removePiece();
@@ -36,8 +37,19 @@ public class PieceMove
 
 	public void move(IntBoard board)
 	{
+		Point oldLocation = oldSpot.location;
 		board.setSpot(oldSpot, newSpot.location);
-		board.setSpot(newSpot, oldSpot.location);
+		board.setSpot(newSpot, oldLocation);
+	}
+
+	public void undo(Board board)
+	{
+		Spot oldSpot, newSpot;
+		oldSpot = board.getSpot(this.oldSpot.location);
+		newSpot = board.getSpot(this.newSpot.location);
+
+		oldSpot.setPiece(newSpot.getPiece());
+		newSpot.setPiece(removedPiece);
 	}
 
 	public Boolean overwritesFriendly()

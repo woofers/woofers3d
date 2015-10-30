@@ -14,7 +14,7 @@ public class Options extends Panel
 	private static final Dimension COMBOSIZE = new Dimension(80, 20);
 
 	private Board board;
-	private JButton reset;
+	private JButton reset, undo, redo;
 	private JComboBox playerMode, difficulty, gridSize;
 
 	public Options(Board board)
@@ -44,8 +44,16 @@ public class Options extends Panel
 		add(gridSize);
 
 		reset = new JButton("Reset");
-		reset.addActionListener(new MyActionListener(this));
+		reset.addActionListener(new ResetListener(this));
 		add(reset);
+
+		undo = new JButton("Undo");
+		undo.addActionListener(new UndoListener(this));
+		add(undo);
+
+		redo = new JButton("Redo");
+		redo.addActionListener(new RedoListener(this));
+		add(redo);
 
 		resizeGrid(getGridWidth(), getGridHeight());
 	}
@@ -73,9 +81,19 @@ public class Options extends Panel
 		return difficulty.getSelectedItem() == difficulty.getItemAt(1);
 	}
 
+	public void onRedo()
+	{
+
+	}
+
 	public void onReset()
 	{
 		resizeGrid(getGridWidth(), getGridHeight());
+	}
+
+	public void onUndo()
+	{
+		board.undo();
 	}
 
 	private void resizeGrid(int width, int height)
@@ -85,17 +103,55 @@ public class Options extends Panel
 	}
 }
 
-class MyActionListener implements ActionListener
+class ButtonListener implements ActionListener
 {
-	private Options object;
+	protected Options object;
 
-	public MyActionListener(Options object)
+	public ButtonListener(Options object)
 	{
 		this.object = object;
 	}
 
 	public void actionPerformed(ActionEvent e)
 	{
+	}
+}
+
+class ResetListener extends ButtonListener
+{
+	public ResetListener(Options object)
+	{
+		super(object);
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
 		object.onReset();
+	}
+}
+
+class UndoListener extends ButtonListener
+{
+	public UndoListener(Options object)
+	{
+		super(object);
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		object.onUndo();
+	}
+}
+
+class RedoListener extends ButtonListener
+{
+	public RedoListener(Options object)
+	{
+		super(object);
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		object.onRedo();
 	}
 }

@@ -29,7 +29,6 @@ public class PromotionWindow<T extends Window> extends Dialog
 
 	public PromotionWindow(int width, int height, int color, T window)
 	{
-
 		super(width, height, window);
 		setTitle("Chess");
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

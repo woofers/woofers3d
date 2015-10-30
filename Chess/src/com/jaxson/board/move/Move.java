@@ -7,8 +7,6 @@ import com.jaxson.util.MyArrayList;
 
 public class Move
 {
-	private static final String line = "----";
-	private static final String doubleLine = line + line;
 	private IntPiece origin;
 	private MyArrayList<PieceMove> pieceMoves;
 
@@ -39,9 +37,9 @@ public class Move
 
 	public Boolean isEmpty()
 	{
-		for (PieceMove piece: pieceMoves)
+		for (PieceMove move: pieceMoves)
 		{
-			if (!piece.isEmpty()) return false;
+			if (!move.isEmpty()) return false;
 		}
 		return true;
 	}
@@ -56,17 +54,17 @@ public class Move
 
 	public void move(IntBoard board)
 	{
-		for (PieceMove piece: pieceMoves)
+		for (PieceMove move: pieceMoves)
 		{
-			piece.move(board);
+			move.move(board);
 		}
 	}
 
 	public Boolean overwritesFriendly()
 	{
-		for (PieceMove piece: pieceMoves)
+		for (PieceMove move: pieceMoves)
 		{
-			if (!piece.overwritesFriendly()) return false;
+			if (!move.overwritesFriendly()) return false;
 		}
 		return true;
 	}
@@ -97,5 +95,13 @@ public class Move
 			string += move.toString();
 		}
 		return string;
+	}
+
+	public void undo(Board board)
+	{
+		for (PieceMove move: pieceMoves)
+		{
+			move.undo(board);
+		}
 	}
 }

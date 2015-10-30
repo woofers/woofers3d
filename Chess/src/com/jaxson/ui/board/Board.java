@@ -6,6 +6,7 @@ import com.jaxson.ai.EasyPlayer;
 import com.jaxson.ai.HardPlayer;
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
+import com.jaxson.board.move.MoveHandler;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
@@ -16,12 +17,14 @@ public class Board<T extends Window> extends Panel
 
 	public int gridWidth, gridHeight, turn;
 	private T window;
+	private MoveHandler moveHistory;
 	private Spot[][] spots;
 
 	public Board(T window)
 	{
 		super();
 		this.window = window;
+		moveHistory = new MoveHandler();
 		turn = 0;
 	}
 
@@ -98,6 +101,11 @@ public class Board<T extends Window> extends Panel
 		}
 	}
 
+	public MoveHandler getMoveHistory()
+	{
+		return moveHistory;
+	}
+
 	public Spot getSpot(IntPiece spot)
 	{
 		if (spot == null) return null;
@@ -119,7 +127,12 @@ public class Board<T extends Window> extends Panel
 		return null;
 	}
 
-	public void move()
+	public void undo()
+	{
+		moveHistory.undo(this);
+	}
+
+	public void redo()
 	{
 
 	}
@@ -166,10 +179,7 @@ public class Board<T extends Window> extends Panel
 
 	private int zero(int i)
 	{
-		if (i <= 0)
-		{
-			return 0;
-		}
+		if (i <= 0) return 0;
 		return i - 1;
 	}
 }
