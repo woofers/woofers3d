@@ -8,13 +8,13 @@ import javax.swing.ImageIcon;
 import com.jaxson.ui.ScaleContainer;
 import com.jaxson.ui.Window;
 
-public class GameWindow extends Window
+public class ChessWindow extends Window
 {
 	private Board board;
 	private ScaleContainer scaleContainer;
 	private Options options;
 
-	public GameWindow(int width, int height)
+	public ChessWindow(int width, int height)
 	{
 		super(width, height);
 		setTitle("Chess");

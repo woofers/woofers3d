@@ -60,6 +60,6 @@ public class PieceMove
 	@Override
 	public String toString()
 	{
-		return "Moved: " + oldSpot.location.toString() + " to " + newSpot.location.toString();
+		return "Move: " + oldSpot.location.toString() + " to " + newSpot.location.toString();
 	}
 }

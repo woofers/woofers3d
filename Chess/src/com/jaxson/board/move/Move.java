@@ -10,9 +10,9 @@ public class Move
 	private IntPiece origin;
 	private MyArrayList<PieceMove> pieceMoves;
 
-	public Move(IntPiece spot)
+	public Move(IntPiece origin)
 	{
-		this(spot, null);
+		this(origin, null);
 	}
 
 	public Move(IntPiece newSpot, IntPiece oldSpot)
@@ -37,11 +37,7 @@ public class Move
 
 	public Boolean isEmpty()
 	{
-		for (PieceMove move: pieceMoves)
-		{
-			if (!move.isEmpty()) return false;
-		}
-		return true;
+		return pieceMoves.isEmpty();
 	}
 
 	public void move(Board board)
@@ -58,15 +54,6 @@ public class Move
 		{
 			move.move(board);
 		}
-	}
-
-	public Boolean overwritesFriendly()
-	{
-		for (PieceMove move: pieceMoves)
-		{
-			if (!move.overwritesFriendly()) return false;
-		}
-		return true;
 	}
 
 	public void remove(int index)
@@ -88,7 +75,7 @@ public class Move
 	public String toString()
 	{
 		String string = "\n";
-		string += "MOVE: " + origin.location.x + ", " + origin.location.y;
+		string += "MOVE: " + origin.location.toString();
 		for (PieceMove move: pieceMoves)
 		{
 			string += "\n";

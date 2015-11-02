@@ -6,7 +6,7 @@ import com.jaxson.ai.EasyPlayer;
 import com.jaxson.ai.HardPlayer;
 import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
-import com.jaxson.board.move.MoveHandler;
+import com.jaxson.board.move.MoveHistory;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
@@ -17,14 +17,14 @@ public class Board<T extends Window> extends Panel
 
 	public int gridWidth, gridHeight, turn;
 	private T window;
-	private MoveHandler moveHistory;
+	private MoveHistory moveHistory;
 	private Spot[][] spots;
 
 	public Board(T window)
 	{
 		super();
 		this.window = window;
-		moveHistory = new MoveHandler();
+		moveHistory = new MoveHistory();
 		turn = 0;
 	}
 
@@ -101,7 +101,7 @@ public class Board<T extends Window> extends Panel
 		}
 	}
 
-	public MoveHandler getMoveHistory()
+	public MoveHistory getMoveHistory()
 	{
 		return moveHistory;
 	}
@@ -127,6 +127,16 @@ public class Board<T extends Window> extends Panel
 		return null;
 	}
 
+	public Boolean hasUndo()
+	{
+		return moveHistory.hasUndo();
+	}
+
+	public Boolean hasRedo()
+	{
+		return moveHistory.hasRedo();
+	}
+
 	public void undo()
 	{
 		moveHistory.undo(this);
@@ -134,7 +144,7 @@ public class Board<T extends Window> extends Panel
 
 	public void redo()
 	{
-
+		moveHistory.undo(this);
 	}
 
 	public void removeGrid()
@@ -148,6 +158,12 @@ public class Board<T extends Window> extends Panel
 			}
 		}
 		draw();
+	}
+
+	public void resizeGrid(int width, int height)
+	{
+		removeGrid();
+		createGrid(width, height);
 	}
 
 	private Boolean spotExist(int x, int y)

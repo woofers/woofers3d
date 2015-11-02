@@ -1,6 +1,6 @@
 package com.jaxson.ui;
 
-import com.jaxson.ui.board.GameWindow;
+import com.jaxson.ui.board.ChessWindow;
 
 public class WindowStarter
 {
@@ -22,6 +22,6 @@ class WindowStarterRunnable implements Runnable
 
 	public void run()
 	{
-		GameWindow window = new GameWindow(width, height);
+		new ChessWindow(width, height);
 	}
 }

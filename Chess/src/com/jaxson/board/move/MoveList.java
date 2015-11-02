@@ -12,9 +12,8 @@ public class MoveList extends MyArrayList<Move>
 	@Override
 	public boolean add(Move move)
 	{
-		if (move == null) return true;
-		if (move.isEmpty()) return true;
-		if (move.overwritesFriendly()) return true;
+		if (move == null) return false;
+		if (move.isEmpty()) return false;
 		super.add(move);
 		return true;
 	}

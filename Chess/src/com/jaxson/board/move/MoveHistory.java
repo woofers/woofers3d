@@ -3,12 +3,12 @@ package com.jaxson.board.move;
 import com.jaxson.util.MyArrayList;
 import com.jaxson.ui.board.Board;
 
-public class MoveHandler
+public class MoveHistory
 {
 	private MoveList history;
 	private int index;
 
-	public MoveHandler()
+	public MoveHistory()
 	{
 		history = new MoveList();
 		index = -1;
@@ -20,6 +20,21 @@ public class MoveHandler
 		index = history.size() - 1;
 	}
 
+	public Boolean hasUndo()
+	{
+		return !isEmpty();
+	}
+
+	public Boolean hasRedo()
+	{
+		return index < history.size();
+	}
+
+	public Move get(int index)
+	{
+		return history.get(index);
+	}
+
 	public Boolean isEmpty()
 	{
 		return index == -1;
@@ -27,22 +42,25 @@ public class MoveHandler
 
 	public void silce()
 	{
-		//history = history.subList(0, index - 1);
+		for (int i = index - 1; i < history.size(); i ++)
+		{
+			history.remove(i);
+		}
 	}
 
 	public void redo(Board board)
 	{
 		if (isEmpty()) return;
-		Move move = history.get(index);
+		index ++;
+		Move move = get(index);
 		move.move(board);
 	}
 
 	public void undo(Board board)
 	{
 		if (isEmpty()) return;
-		Move move = history.get(index);
+		Move move = get(index);
 		move.undo(board);
-		history.remove(move);
 		index --;
 	}
 }

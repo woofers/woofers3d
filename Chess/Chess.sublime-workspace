@@ -207,7 +207,7 @@
 			"file": "src/com/jaxson/board/IntBoard.java",
 			"settings":
 			{
-				"buffer_size": 8460,
+				"buffer_size": 8409,
 				"line_ending": "Windows"
 			}
 		}
@@ -329,13 +329,7 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board"
+		"/D/Documents/Development/School/JavaProjects/Chess"
 	],
 	"file_history":
 	[
@@ -527,15 +521,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8460,
+						"buffer_size": 8409,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5070,
-								5070
+								1761,
+								1761
 							]
 						],
 						"settings":
@@ -544,7 +538,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2273.0,
+						"translation.y": 1313.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -596,7 +590,7 @@
 	{
 		"height": 104.0
 	},
-	"pinned_build_system": "Packages/User/myjava.sublime-build",
+	"pinned_build_system": "Packages/User/ant.sublime-build",
 	"project": "Chess.sublime-project",
 	"replace":
 	{

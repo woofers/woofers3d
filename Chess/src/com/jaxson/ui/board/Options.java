@@ -2,16 +2,17 @@ package com.jaxson.ui.board;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
+import com.jaxson.event.ButtonListener;
 import com.jaxson.ui.Panel;
 
 public class Options extends Panel
 {
 	private static final Dimension COMBOSIZE = new Dimension(80, 20);
+	private static final Dimension UNDOOSIZE = new Dimension(50, 20);
 
 	private Board board;
 	private JButton reset, undo, redo;
@@ -47,15 +48,17 @@ public class Options extends Panel
 		reset.addActionListener(new ResetListener(this));
 		add(reset);
 
-		undo = new JButton("Undo");
+		undo = new JButton("<--");
+		undo.setPreferredSize(UNDOOSIZE);
 		undo.addActionListener(new UndoListener(this));
 		add(undo);
 
-		redo = new JButton("Redo");
+		redo = new JButton("-->");
+		redo.setPreferredSize(UNDOOSIZE);
 		redo.addActionListener(new RedoListener(this));
 		add(redo);
 
-		resizeGrid(getGridWidth(), getGridHeight());
+		board.resizeGrid(getGridWidth(), getGridHeight());
 	}
 
 	private int getGridHeight()
@@ -81,43 +84,44 @@ public class Options extends Panel
 		return difficulty.getSelectedItem() == difficulty.getItemAt(1);
 	}
 
-	public void onRedo()
+	private void reset()
 	{
 
 	}
 
+	public void onRedo()
+	{
+		board.redo();
+		if (!board.hasRedo())
+		{
+			redo.setEnabled(false);
+		}
+		else
+		{
+			redo.setEnabled(true);
+		}
+	}
+
 	public void onReset()
 	{
-		resizeGrid(getGridWidth(), getGridHeight());
+		board.resizeGrid(getGridWidth(), getGridHeight());
 	}
 
 	public void onUndo()
 	{
 		board.undo();
-	}
-
-	private void resizeGrid(int width, int height)
-	{
-		board.removeGrid();
-		board.createGrid(width, height);
-	}
-}
-
-class ButtonListener implements ActionListener
-{
-	protected Options object;
-
-	public ButtonListener(Options object)
-	{
-		this.object = object;
-	}
-
-	public void actionPerformed(ActionEvent e)
-	{
+		if (!board.hasUndo())
+		{
+			undo.setEnabled(false);
+		}
+		else
+		{
+			undo.setEnabled(true);
+		}
 	}
 }
 
-class ResetListener extends ButtonListener
+class ResetListener extends ButtonListener<Options>
 {
 	public ResetListener(Options object)
 	{
@@ -130,7 +134,7 @@ class ResetListener extends ButtonListener
 	}
 }
 
-class UndoListener extends ButtonListener
+class UndoListener extends ButtonListener<Options>
 {
 	public UndoListener(Options object)
 	{
@@ -143,7 +147,7 @@ class UndoListener extends ButtonListener
 	}
 }
 
-class RedoListener extends ButtonListener
+class RedoListener extends ButtonListener<Options>
 {
 	public RedoListener(Options object)
 	{
