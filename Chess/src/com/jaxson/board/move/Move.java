@@ -8,7 +8,7 @@ import com.jaxson.util.MyArrayList;
 public class Move
 {
 	private IntPiece origin;
-	private MyArrayList<PieceMove> pieceMoves;
+	private MyArrayList<MoveType> moveTypes;
 
 	public Move(IntPiece origin)
 	{
@@ -18,16 +18,16 @@ public class Move
 	public Move(IntPiece newSpot, IntPiece oldSpot)
 	{
 		origin = newSpot;
-		pieceMoves = new MyArrayList<>();
+		moveTypes = new MyArrayList<>();
 		add(new PieceMove(newSpot, oldSpot));
 	}
 
-	public void add(PieceMove move)
+	public void add(MoveType move)
 	{
 		if (move == null) return;
 		if (move.isEmpty()) return;
 		if (move.overwritesFriendly()) return;
-		pieceMoves.add(move);
+		moveTypes.add(move);
 	}
 
 	public IntPiece getOrigin()
@@ -37,20 +37,21 @@ public class Move
 
 	public Boolean isEmpty()
 	{
-		return pieceMoves.isEmpty();
+		return moveTypes.isEmpty();
 	}
 
 	public void move(Board board)
 	{
-		for (PieceMove move: pieceMoves)
+		for (MoveType move: moveTypes)
 		{
 			move.move(board);
 		}
+		board.draw();
 	}
 
 	public void move(IntBoard board)
 	{
-		for (PieceMove move: pieceMoves)
+		for (MoveType move: moveTypes)
 		{
 			move.move(board);
 		}
@@ -58,12 +59,12 @@ public class Move
 
 	public void remove(int index)
 	{
-		pieceMoves.remove(index);
+		moveTypes.remove(index);
 	}
 
 	public void remove(PieceMove move)
 	{
-		pieceMoves.remove(move);
+		moveTypes.remove(move);
 	}
 
 	public void setOrigin(IntPiece value)
@@ -76,7 +77,7 @@ public class Move
 	{
 		String string = "\n";
 		string += "MOVE: " + origin.location.toString();
-		for (PieceMove move: pieceMoves)
+		for (MoveType move: moveTypes)
 		{
 			string += "\n";
 			string += move.toString();
@@ -86,7 +87,8 @@ public class Move
 
 	public void undo(Board board)
 	{
-		for (PieceMove move: pieceMoves)
+		System.out.println("2525");
+		for (MoveType move: moveTypes)
 		{
 			move.undo(board);
 		}

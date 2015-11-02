@@ -17,17 +17,18 @@ public class MoveHistory
 	public void add(Move move)
 	{
 		history.add(move);
-		index = history.size() - 1;
+		index = size() - 1;
+		silce();
 	}
 
 	public Boolean hasUndo()
 	{
-		return !isEmpty();
+		return index > -1;
 	}
 
 	public Boolean hasRedo()
 	{
-		return index < history.size();
+		return index < size() - 1 && size() > 0;
 	}
 
 	public Move get(int index)
@@ -37,15 +38,20 @@ public class MoveHistory
 
 	public Boolean isEmpty()
 	{
-		return index == -1;
+		return history.isEmpty();
 	}
 
 	public void silce()
 	{
-		for (int i = index - 1; i < history.size(); i ++)
+		for (int i = index + 1; i < size(); i ++)
 		{
 			history.remove(i);
 		}
+	}
+
+	public int size()
+	{
+		return history.size();
 	}
 
 	public void redo(Board board)

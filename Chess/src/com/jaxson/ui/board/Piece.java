@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.jaxson.board.IntPiece;
+import com.jaxson.board.move.Promotion;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
@@ -54,6 +55,12 @@ public class Piece<T extends Window> extends Panel
 		}
 	}
 
+	public Promotion getPromotion(T window, IntPiece spot)
+	{
+		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
+		return new Promotion(spot, promotionWindow.getResult());
+	}
+
 	private int getStartDirection()
 	{
 		if (color == Piece.BLACK)
@@ -77,12 +84,6 @@ public class Piece<T extends Window> extends Panel
 		x = toInt((getWidth() - width) / 2);
 		y = toInt((getHeight() - height) / 2);
 		g.drawImage(image, x, y, width, height, null);
-	}
-
-	public Piece promote(T window)
-	{
-		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
-		return new Piece(promotionWindow.getResult(), color);
 	}
 
 	private int toInt(double i)

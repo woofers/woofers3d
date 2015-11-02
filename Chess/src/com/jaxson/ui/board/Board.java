@@ -19,6 +19,7 @@ public class Board<T extends Window> extends Panel
 	private T window;
 	private MoveHistory moveHistory;
 	private Spot[][] spots;
+	private Options options;
 
 	public Board(T window)
 	{
@@ -139,12 +140,19 @@ public class Board<T extends Window> extends Panel
 
 	public void undo()
 	{
+		deselect();
 		moveHistory.undo(this);
+	}
+
+	public void updateControls()
+	{
+		options.updateControls();
 	}
 
 	public void redo()
 	{
-		moveHistory.undo(this);
+		deselect();
+		moveHistory.redo(this);
 	}
 
 	public void removeGrid()
@@ -160,10 +168,22 @@ public class Board<T extends Window> extends Panel
 		draw();
 	}
 
-	public void resizeGrid(int width, int height)
+	public void reset()
+	{
+		reset(gridWidth, gridHeight);
+	}
+
+	public void reset(int width, int height)
 	{
 		removeGrid();
 		createGrid(width, height);
+		moveHistory = new MoveHistory();
+		turn = 0;
+	}
+
+	public void setOptions(Options value)
+	{
+		options = value;
 	}
 
 	private Boolean spotExist(int x, int y)

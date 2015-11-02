@@ -7,7 +7,7 @@ import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
 import com.jaxson.ui.board.Spot;
 
-public class PieceMove
+public class PieceMove implements MoveType
 {
 	private IntPiece newSpot;
 	private IntPiece oldSpot;

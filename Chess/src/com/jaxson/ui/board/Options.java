@@ -58,7 +58,7 @@ public class Options extends Panel
 		redo.addActionListener(new RedoListener(this));
 		add(redo);
 
-		board.resizeGrid(getGridWidth(), getGridHeight());
+		reset();
 	}
 
 	private int getGridHeight()
@@ -86,37 +86,59 @@ public class Options extends Panel
 
 	private void reset()
 	{
+		resetGrid();
+		updateControls();
+	}
 
+	private void resetGrid()
+	{
+		board.reset(getGridWidth(), getGridHeight());
 	}
 
 	public void onRedo()
 	{
 		board.redo();
-		if (!board.hasRedo())
-		{
-			redo.setEnabled(false);
-		}
-		else
-		{
-			redo.setEnabled(true);
-		}
+		updateControls();
 	}
 
 	public void onReset()
 	{
-		board.resizeGrid(getGridWidth(), getGridHeight());
+		reset();
 	}
 
 	public void onUndo()
 	{
 		board.undo();
-		if (!board.hasUndo())
+		updateControls();
+	}
+
+	public void updateControls()
+	{
+		updateRedo();
+		updateUndo();
+	}
+
+	private void updateRedo()
+	{
+		if (board.hasRedo())
 		{
-			undo.setEnabled(false);
+			redo.setEnabled(true);
 		}
 		else
 		{
+			redo.setEnabled(false);
+		}
+	}
+
+	private void updateUndo()
+	{
+		if (board.hasUndo())
+		{
 			undo.setEnabled(true);
+		}
+		else
+		{
+			undo.setEnabled(false);
 		}
 	}
 }

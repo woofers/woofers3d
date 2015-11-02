@@ -27,6 +27,7 @@ public class ChessWindow extends Window
 
 		options = new Options(board);
 		options.setPreferredSize(new Dimension(100, 100));
+		board.setOptions(options);
 		add(options, BorderLayout.LINE_END);
 
 		draw();

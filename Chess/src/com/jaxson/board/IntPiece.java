@@ -36,8 +36,6 @@ public class IntPiece
 
 	public Boolean canPass(int turn)
 	{
-		System.out.println("Trun " + turn);
-		System.out.println("Index " + passingIndex);
 		return type == Piece.PAWN && passingIndex == turn;
 	}
 
