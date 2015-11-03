@@ -16,14 +16,14 @@ public class MoveHistory
 
 	public void add(Move move)
 	{
+		silce(index + 1);
 		history.add(move);
 		index = size() - 1;
-		silce();
 	}
 
 	public Boolean hasUndo()
 	{
-		return index > -1;
+		return index >= 0 && size() >= index;
 	}
 
 	public Boolean hasRedo()
@@ -41,9 +41,9 @@ public class MoveHistory
 		return history.isEmpty();
 	}
 
-	public void silce()
+	public void silce(int index)
 	{
-		for (int i = index + 1; i < size(); i ++)
+		for (int i = index; i < size(); i ++)
 		{
 			history.remove(i);
 		}

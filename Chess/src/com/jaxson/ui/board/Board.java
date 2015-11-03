@@ -58,7 +58,7 @@ public class Board<T extends Window> extends Panel
 		gridWidth = width;
 		gridHeight = height;
 
-		setLayout(new GridLayout(gridWidth, gridHeight));
+		setLayout(new GridLayout(gridHeight, gridWidth));
 		spots = new Spot[gridWidth][gridHeight];
 		for (int y = 0; y < gridHeight; y ++)
 		{

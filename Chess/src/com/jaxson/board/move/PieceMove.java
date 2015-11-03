@@ -27,11 +27,15 @@ public class PieceMove implements MoveType
 	public void move(Board board)
 	{
 		Spot oldSpot, newSpot;
+		Piece piece;
 		oldSpot = board.getSpot(this.oldSpot.location);
 		newSpot = board.getSpot(this.newSpot.location);
 
 		removedPiece = newSpot.getPiece();
-		newSpot.setPiece(oldSpot.getPiece());
+		piece = oldSpot.getPiece();
+		piece.turn ++;
+
+		newSpot.setPiece(piece);
 		oldSpot.removePiece();
 	}
 
@@ -45,15 +49,23 @@ public class PieceMove implements MoveType
 	public void undo(Board board)
 	{
 		Spot oldSpot, newSpot;
+		Piece newPiece;
 		oldSpot = board.getSpot(this.oldSpot.location);
 		newSpot = board.getSpot(this.newSpot.location);
 
-		oldSpot.setPiece(newSpot.getPiece());
+		newPiece = newSpot.getPiece();
+		if (newPiece != null)
+		{
+			newPiece.turn --;
+		}
+
+		oldSpot.setPiece(newPiece);
 		newSpot.setPiece(removedPiece);
 	}
 
 	public Boolean overwritesFriendly()
 	{
+		if (oldSpot == null) return false;
 		return newSpot.color == oldSpot.color;
 	}
 

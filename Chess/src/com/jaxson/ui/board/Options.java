@@ -2,6 +2,8 @@ package com.jaxson.ui.board;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,10 +14,12 @@ import com.jaxson.ui.Panel;
 public class Options extends Panel
 {
 	private static final Dimension COMBOSIZE = new Dimension(80, 20);
-	private static final Dimension UNDOOSIZE = new Dimension(50, 20);
+	private static final Dimension UNDOOSIZE = new Dimension(30, 26);
+	private static final Dimension PANELSIZE = new Dimension(100, 30);
 
 	private Board board;
 	private JButton reset, undo, redo;
+	private Panel undoPanel;
 	private JComboBox playerMode, difficulty, gridSize;
 
 	public Options(Board board)
@@ -44,19 +48,23 @@ public class Options extends Panel
 		gridSize.setPreferredSize(COMBOSIZE);
 		add(gridSize);
 
+		undoPanel = new Panel(new GridLayout(1, 2));
+		undoPanel.setPreferredSize(PANELSIZE);
+		add(undoPanel);
+
+		undo = new JButton("<<");
+		undo.setPreferredSize(UNDOOSIZE);
+		undo.addActionListener(new UndoListener(this));
+		undoPanel.add(undo);
+
+		redo = new JButton(">>");
+		redo.setPreferredSize(UNDOOSIZE);
+		redo.addActionListener(new RedoListener(this));
+		undoPanel.add(redo);
+
 		reset = new JButton("Reset");
 		reset.addActionListener(new ResetListener(this));
 		add(reset);
-
-		undo = new JButton("<--");
-		undo.setPreferredSize(UNDOOSIZE);
-		undo.addActionListener(new UndoListener(this));
-		add(undo);
-
-		redo = new JButton("-->");
-		redo.setPreferredSize(UNDOOSIZE);
-		redo.addActionListener(new RedoListener(this));
-		add(redo);
 
 		reset();
 	}

@@ -12,14 +12,19 @@ public class Move
 
 	public Move(IntPiece origin)
 	{
-		this(origin, null);
+		this(origin, new PieceMove(origin, null));
 	}
 
 	public Move(IntPiece newSpot, IntPiece oldSpot)
 	{
-		origin = newSpot;
+		this(newSpot, new PieceMove(newSpot, oldSpot));
+	}
+
+	public Move(IntPiece origin, MoveType move)
+	{
+		this.origin = origin;
 		moveTypes = new MyArrayList<>();
-		add(new PieceMove(newSpot, oldSpot));
+		add(move);
 	}
 
 	public void add(MoveType move)
@@ -87,7 +92,6 @@ public class Move
 
 	public void undo(Board board)
 	{
-		System.out.println("2525");
 		for (MoveType move: moveTypes)
 		{
 			move.undo(board);

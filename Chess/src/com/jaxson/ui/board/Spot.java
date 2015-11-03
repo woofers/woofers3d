@@ -196,8 +196,7 @@ public class Spot<T extends Window> extends Panel
 		board.getMoveHistory().add(move);
 		if (isPromotable())
 		{
-			move = new Move(toIntPiece());
-			move.add(piece.getPromotion(window, toIntPiece()));
+			move = new Move(toIntPiece(), piece.getPromotion(window, toIntPiece()));
 			move.move(board);
 			board.getMoveHistory().add(move);
 		}
@@ -265,7 +264,6 @@ public class Spot<T extends Window> extends Panel
 		piece = newPiece;
 		if (piece != null)
 		{
-			piece.turn ++;
 			add(piece);
 		}
 		draw();
