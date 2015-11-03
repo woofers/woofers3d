@@ -191,7 +191,6 @@ public class Spot<T extends Window> extends Panel
 
 	private void move()
 	{
-		board.turn ++;
 		move.move(board);
 		board.getMoveHistory().add(move);
 		if (isPromotable())

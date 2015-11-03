@@ -47,6 +47,7 @@ public class Move
 
 	public void move(Board board)
 	{
+		board.turn ++;
 		for (MoveType move: moveTypes)
 		{
 			move.move(board);
@@ -91,6 +92,15 @@ public class Move
 	}
 
 	public void undo(Board board)
+	{
+		board.turn --;
+		for (MoveType move: moveTypes)
+		{
+			move.undo(board);
+		}
+	}
+
+	public void undo(IntBoard board)
 	{
 		for (MoveType move: moveTypes)
 		{

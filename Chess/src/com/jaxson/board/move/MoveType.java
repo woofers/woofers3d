@@ -13,6 +13,8 @@ public interface MoveType
 
 	public void undo(Board board);
 
+	public void undo(IntBoard board);
+
 	public Boolean overwritesFriendly();
 
 	public String toString();

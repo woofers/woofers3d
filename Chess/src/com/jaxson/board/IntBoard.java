@@ -3,6 +3,7 @@ package com.jaxson.board;
 import com.jaxson.board.move.Move;
 import com.jaxson.board.move.MoveList;
 import com.jaxson.board.move.PieceMove;
+import com.jaxson.board.move.Remove;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
@@ -228,6 +229,7 @@ public class IntBoard
 			break;
 		}
 		moves.addAll(getPawnCapture(piece));
+		moves.addAll(getPawnPass(piece));
 		return moves;
 	}
 
@@ -251,6 +253,40 @@ public class IntBoard
 			index ++;
 		}
 		return moves;
+	}
+
+	private MoveList getPawnPass(IntPiece piece)
+	{
+		MoveList moves = new MoveList();
+		IntPiece leftPawn, rightPawn;
+		leftPawn = getSpot(piece.location.x - 1, piece.location.y);
+		rightPawn = getSpot(piece.location.x + 1, piece.location.y);
+		moves.add(getPawnPassMove(piece, leftPawn));
+		moves.add(getPawnPassMove(piece, rightPawn));
+		return moves;
+	}
+
+	private Move getPawnPassMove(IntPiece piece, IntPiece capture)
+	{
+		if (capture == null) return null;
+		if (capture.type == Piece.PAWN)
+		{
+			if (capture.isEnemey(piece.color))
+			{
+				if (capture.passingIndex == turn)
+				{
+					IntPiece pass;
+					pass = getSpot(capture.location.x, capture.location.y + piece.direction);
+					if (pass != null)
+					{
+						Move move = new Move(pass, piece);
+						move.add(new Remove(capture));
+						return move;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private MyArrayList<IntPiece> getPieces(int color)

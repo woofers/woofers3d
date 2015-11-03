@@ -7,16 +7,14 @@ import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
 import com.jaxson.ui.board.Spot;
 
-public class Promotion implements MoveType
+public class Remove implements MoveType
 {
-	private int type;
 	private IntPiece spot;
-	private Piece oldPiece;
+	private Piece piece;
 
-	public Promotion(IntPiece spot, int type)
+	public Remove(IntPiece spot)
 	{
 		this.spot = spot;
-		this.type = type;
 	}
 
 	public Boolean isEmpty()
@@ -26,21 +24,20 @@ public class Promotion implements MoveType
 
 	public void move(Board board)
 	{
-		Piece piece = new Piece(type, spot.color);
-		Spot spot = board.getSpot(this.spot.location);
-		oldPiece = spot.getPiece();
-		spot.setPiece(piece);
+		//Spot spot = board.getSpot(this.spot);
+		//piece = spot.getPiece();
+		//spot.removePiece();
 	}
 
 	public void move(IntBoard board)
 	{
-		spot.type = type;
+
 	}
 
 	public void undo(Board board)
 	{
-		Spot spot = board.getSpot(this.spot.location);
-		spot.setPiece(oldPiece);
+		//Spot spot = board.getSpot(this.spot);
+		//spot.setPiece(piece);
 	}
 
 	public void undo(IntBoard board)
@@ -56,6 +53,6 @@ public class Promotion implements MoveType
 	@Override
 	public String toString()
 	{
-		return "Promote: " + spot.location.toString() + " to " + type;
+		return "Removed: " + spot.location.toString();
 	}
 }

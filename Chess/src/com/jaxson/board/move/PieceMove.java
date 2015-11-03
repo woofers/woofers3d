@@ -33,8 +33,18 @@ public class PieceMove implements MoveType
 
 		removedPiece = newSpot.getPiece();
 		piece = oldSpot.getPiece();
-		piece.turn ++;
-
+		if (piece != null)
+		{
+			piece.passingIndex = -1;
+			piece.turn ++;
+			if (piece.type == Piece.PAWN)
+			{
+				if (Math.abs(this.oldSpot.location.y - this.newSpot.location.y) == 2)
+				{
+					piece.passingIndex = board.turn;
+				}
+			}
+		}
 		newSpot.setPiece(piece);
 		oldSpot.removePiece();
 	}
@@ -61,6 +71,11 @@ public class PieceMove implements MoveType
 
 		oldSpot.setPiece(newPiece);
 		newSpot.setPiece(removedPiece);
+	}
+
+	public void undo(IntBoard board)
+	{
+
 	}
 
 	public Boolean overwritesFriendly()
