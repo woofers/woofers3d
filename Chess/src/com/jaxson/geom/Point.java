@@ -15,6 +15,11 @@ public class Point
 		this.y = y;
 	}
 
+	public Point clone()
+	{
+		return new Point(x, y);
+	}
+
 	@Override
 	public String toString()
 	{

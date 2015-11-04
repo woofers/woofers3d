@@ -98,6 +98,7 @@ public class Move
 		{
 			move.undo(board);
 		}
+		board.draw();
 	}
 
 	public void undo(IntBoard board)

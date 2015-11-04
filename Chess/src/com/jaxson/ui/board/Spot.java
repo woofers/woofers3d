@@ -70,7 +70,7 @@ public class Spot<T extends Window> extends Panel
 		IntBoard intBoard = board.toIntBoard();
 		Spot spot;
 		moves = intBoard.getLegalMoves(toIntPiece());
-		System.out.println(moves.toString());
+		// /System.out.println(moves.toString());
 		for (Move move: moves)
 		{
 			spot = board.getSpot(move.getOrigin());
@@ -81,6 +81,13 @@ public class Spot<T extends Window> extends Panel
 		{
 			deselect();
 		}
+	}
+
+	@Override
+	public void draw()
+	{
+		if (piece != null) piece.draw();
+		super.draw();
 	}
 
 	private Color getColor()
@@ -247,6 +254,7 @@ public class Spot<T extends Window> extends Panel
 		}
 		remove(piece);
 		piece = null;
+		draw();
 	}
 
 	public void select()

@@ -229,7 +229,7 @@ public class IntBoard
 			break;
 		}
 		moves.addAll(getPawnCapture(piece));
-		moves.addAll(getPawnPass(piece));
+		//moves.addAll(getPawnPass(piece));
 		return moves;
 	}
 

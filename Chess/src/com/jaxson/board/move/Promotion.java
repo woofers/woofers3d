@@ -11,12 +11,14 @@ public class Promotion implements MoveType
 {
 	private int type;
 	private IntPiece spot;
+	private Point location;
 	private Piece oldPiece;
 
 	public Promotion(IntPiece spot, int type)
 	{
 		this.spot = spot;
 		this.type = type;
+		this.location = spot.location.clone();
 	}
 
 	public Boolean isEmpty()
@@ -27,7 +29,7 @@ public class Promotion implements MoveType
 	public void move(Board board)
 	{
 		Piece piece = new Piece(type, spot.color);
-		Spot spot = board.getSpot(this.spot.location);
+		Spot spot = board.getSpot(location);
 		oldPiece = spot.getPiece();
 		spot.setPiece(piece);
 	}
@@ -39,7 +41,7 @@ public class Promotion implements MoveType
 
 	public void undo(Board board)
 	{
-		Spot spot = board.getSpot(this.spot.location);
+		Spot spot = board.getSpot(location);
 		spot.setPiece(oldPiece);
 	}
 
