@@ -24,9 +24,9 @@ public class Remove implements MoveType
 
 	public void move(Board board)
 	{
-		//Spot spot = board.getSpot(this.spot);
-		//piece = spot.getPiece();
-		//spot.removePiece();
+		Spot spot = board.getSpot(this.spot);
+		piece = spot.getPiece();
+		spot.removePiece();
 	}
 
 	public void move(IntBoard board)
@@ -36,8 +36,8 @@ public class Remove implements MoveType
 
 	public void undo(Board board)
 	{
-		//Spot spot = board.getSpot(this.spot);
-		//spot.setPiece(piece);
+		Spot spot = board.getSpot(this.spot);
+		spot.setPiece(piece);
 	}
 
 	public void undo(IntBoard board)

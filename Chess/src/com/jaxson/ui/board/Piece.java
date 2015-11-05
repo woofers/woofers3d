@@ -10,10 +10,11 @@ import javax.imageio.ImageIO;
 import com.jaxson.board.IntPiece;
 import com.jaxson.board.move.Promotion;
 import com.jaxson.geom.Point;
+import com.jaxson.ui.board.ChessWindow;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 
-public class Piece<T extends Window> extends Panel
+public class Piece extends Panel
 {
 	public static final int KING   = 1;
 	public static final int QUEEN  = 2;
@@ -25,6 +26,9 @@ public class Piece<T extends Window> extends Panel
 	public static final int BLACK  = 2;
 
 	private static final double SCALE = 0.8;
+	private static final String SEPARATOR = "_";
+	private static final String IMAGEPATH = "assets/images/pieces/";
+	private static final String IMAGETYPE = ".png";
 
 	public int type, color, direction, turn;
 	public int passingIndex;
@@ -44,18 +48,10 @@ public class Piece<T extends Window> extends Panel
 		this.turn = turn;
 		passingIndex = -1;
 		setOpaque(false);
-		String path = "assets/images/pieces/" + color + "_" + type + ".png";
-		try
-		{
-		  image = ImageIO.read(new File(path));
-		}
-		catch (IOException ex)
-		{
-			ex.printStackTrace();
-		}
+		setImage(IMAGEPATH + color + SEPARATOR + type + IMAGETYPE);
 	}
 
-	public Promotion getPromotion(T window, IntPiece spot)
+	public Promotion getPromotion(ChessWindow window, IntPiece spot)
 	{
 		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
 		return new Promotion(spot, promotionWindow.getResult());
@@ -84,6 +80,18 @@ public class Piece<T extends Window> extends Panel
 		x = toInt((getWidth() - width) / 2);
 		y = toInt((getHeight() - height) / 2);
 		g.drawImage(image, x, y, width, height, null);
+	}
+
+	private void setImage(String imagePath)
+	{
+		try
+		{
+			image = ImageIO.read(new File(imagePath));
+		}
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 
 	private int toInt(double i)

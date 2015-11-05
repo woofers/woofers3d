@@ -10,6 +10,9 @@ import com.jaxson.ui.Window;
 
 public class ChessWindow extends Window
 {
+	public static final String TITLE = "Chess";
+	private static final String ICONPATH = "assets/images/icon.png";
+
 	private Board board;
 	private ScaleContainer scaleContainer;
 	private Options options;
@@ -17,11 +20,11 @@ public class ChessWindow extends Window
 	public ChessWindow(int width, int height)
 	{
 		super(width, height);
-		setTitle("Chess");
-		ImageIcon icon = new ImageIcon("assets/images/icon.png");
+		setTitle(TITLE);
+		ImageIcon icon = new ImageIcon(ICONPATH);
 		setIconImage(icon.getImage());
 
-		board = new Board<>(this);
+		board = new Board(this);
 		scaleContainer = new ScaleContainer<>(board);
 		add(scaleContainer, BorderLayout.CENTER);
 
@@ -30,6 +33,7 @@ public class ChessWindow extends Window
 		board.setOptions(options);
 		add(options, BorderLayout.LINE_END);
 
+		showWindow();
 		draw();
 	}
 }

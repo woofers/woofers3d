@@ -11,15 +11,18 @@ import java.awt.event.WindowEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.jaxson.board.move.Promotion;
 import com.jaxson.geom.Point;
+import com.jaxson.ui.board.ChessWindow;
 import com.jaxson.ui.Dialog;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.ScaleContainer;
 import com.jaxson.ui.Window;
 
-public class PromotionWindow<T extends Window> extends Dialog
+public class PromotionWindow extends Dialog
 {
 	private static final int SIZE = 2;
+	private static final String MESSAGE = "Promote your pawn.";
 
 	private Spot[][] spots;
 	private ScaleContainer scaleContainer;
@@ -27,14 +30,14 @@ public class PromotionWindow<T extends Window> extends Dialog
 	private JLabel label;
 	private int result;
 
-	public PromotionWindow(int width, int height, int color, T window)
+	public PromotionWindow(int width, int height, int color, ChessWindow window)
 	{
 		super(width, height, window);
-		setTitle("Chess");
+		setTitle(ChessWindow.TITLE);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		addWindowListener(new CloseAdapter(this));
 
-		label = new JLabel("Promote your pawn.", SwingConstants.CENTER);
+		label = new JLabel(MESSAGE, SwingConstants.CENTER);
 		label.setFont(new Font(label.getName(), Font.PLAIN, 30));
 		add(label, BorderLayout.PAGE_END);
 
@@ -63,7 +66,7 @@ public class PromotionWindow<T extends Window> extends Dialog
 
 	public void close()
 	{
-		setResult(Piece.QUEEN);
+		result = Piece.QUEEN;
 		dispose();
 	}
 
@@ -74,13 +77,9 @@ public class PromotionWindow<T extends Window> extends Dialog
 
 	public void onSelect(Spot spot)
 	{
-		setResult(spot.getPiece().type);
+		spot.select();
+		result = spot.getPiece().type;
 		dispose();
-	}
-
-	public void setResult(int value)
-	{
-		result = value;
 	}
 }
 
@@ -119,7 +118,6 @@ class PieceAdapter extends MouseAdapter
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		object.select();
 		window.onSelect(object);
 	}
 }

@@ -10,6 +10,7 @@ import com.jaxson.board.IntPiece;
 import com.jaxson.board.move.Move;
 import com.jaxson.board.move.MoveList;
 import com.jaxson.geom.Point;
+import com.jaxson.ui.board.ChessWindow;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 import com.jaxson.util.MyArrayList;
@@ -27,7 +28,7 @@ public class Spot<T extends Window> extends Panel
 	private Piece piece;
 	private Point location;
 	private Move move;
-	private T window;
+	private ChessWindow window;
 
 	public Spot(Point location)
 	{
@@ -281,7 +282,7 @@ public class Spot<T extends Window> extends Panel
 		move = value;
 	}
 
-	public void setWindow(T value)
+	public void setWindow(ChessWindow value)
 	{
 		window = value;
 	}

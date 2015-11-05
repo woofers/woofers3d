@@ -8,9 +8,11 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame
 {
+	private static final String TITLE = "Window";
+
 	public Window(int width, int height)
 	{
-		super("Window");
+		super(TITLE);
 		setWindowSize(width, height);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -26,7 +28,6 @@ public class Window extends JFrame
 	{
 		getContentPane().revalidate();
 		getContentPane().repaint();
-		setVisible(true);
 	}
 
 	public void dynamicResize(double scale)
@@ -51,10 +52,16 @@ public class Window extends JFrame
 		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 
+
 	public void setWindowSize(int width, int height)
 	{
 		setSize(width, height);
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(getScreenSize());
+	}
+
+	public void showWindow()
+	{
+		setVisible(true);
 	}
 }

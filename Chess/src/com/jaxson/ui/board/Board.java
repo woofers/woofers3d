@@ -11,17 +11,17 @@ import com.jaxson.geom.Point;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 
-public class Board<T extends Window> extends Panel
+public class Board extends Panel
 {
-	private static final int SIZE = 8;
+	private static final int REGULARSIZE = 8;
 
 	public int gridWidth, gridHeight, turn;
-	private T window;
+	private ChessWindow window;
 	private MoveHistory moveHistory;
 	private Spot[][] spots;
 	private Options options;
 
-	public Board(T window)
+	public Board(ChessWindow window)
 	{
 		super();
 		this.window = window;
@@ -40,8 +40,8 @@ public class Board<T extends Window> extends Panel
 	private void createBottomRow(int row, int color)
 	{
 		int delta, queen, king;
-		delta = gridWidth - SIZE;
-		queen = zero(SIZE / 2 + delta / 2);
+		delta = gridWidth - REGULARSIZE;
+		queen = zero(REGULARSIZE / 2 + delta / 2);
 		king = queen + 1;
 		spots[queen - 3][row].createPiece(Piece.ROOK, color);
 		spots[queen - 2][row].createPiece(Piece.KNIGHT, color);
@@ -66,10 +66,7 @@ public class Board<T extends Window> extends Panel
 			{
 				spots[x][y] = new Spot(new Point(x, y), this);
 				add(spots[x][y]);
-				if (spots[x][y].isPossibleEnd())
-				{
-					spots[x][y].setWindow(window);
-				}
+				if (spots[x][y].isPossibleEnd()) spots[x][y].setWindow(window);
 			}
 		}
 		addPieces();
@@ -78,14 +75,14 @@ public class Board<T extends Window> extends Panel
 	private void createPawns(int row, int color)
 	{
 		int delta, start;
-		delta = gridWidth - SIZE;
-		start = zero(SIZE / 2 + delta / 2);
-		for (int x = start; x > start - SIZE / 2; x --)
+		delta = gridWidth - REGULARSIZE;
+		start = zero(REGULARSIZE / 2 + delta / 2);
+		for (int x = start; x > start - REGULARSIZE / 2; x --)
 		{
 			spots[x][row].createPiece(Piece.PAWN, color);
 		}
 		start ++;
-		for (int x = start; x < start + SIZE / 2; x ++)
+		for (int x = start; x < start + REGULARSIZE / 2; x ++)
 		{
 			spots[x][row].createPiece(Piece.PAWN, color);
 		}
@@ -121,10 +118,7 @@ public class Board<T extends Window> extends Panel
 
 	public Spot getSpot(int x, int y)
 	{
-		if (spotExist(x, y))
-		{
-			return spots[x][y];
-		}
+		if (spotExist(x, y)) return spots[x][y];
 		return null;
 	}
 
@@ -188,14 +182,7 @@ public class Board<T extends Window> extends Panel
 
 	private Boolean spotExist(int x, int y)
 	{
-		if (x >= 0 && x < gridWidth)
-		{
-			if (y >= 0 && y < gridHeight)
-			{
-				return true;
-			}
-		}
-		return false;
+		return x >= 0 && x < gridWidth && y >= 0 && y < gridHeight;
 	}
 
 	public IntBoard toIntBoard()

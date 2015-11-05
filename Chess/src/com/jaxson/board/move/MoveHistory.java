@@ -19,7 +19,6 @@ public class MoveHistory
 		silce(index + 1);
 		history.add(move);
 		index = size() - 1;
-		print();
 	}
 
 	public Boolean hasUndo()
@@ -42,11 +41,11 @@ public class MoveHistory
 		return history.isEmpty();
 	}
 
-	public void silce(int index)
+	public void silce(int startIndex)
 	{
-		for (int i = index; i < size(); i ++)
+		while (startIndex < size())
 		{
-			history.remove(i);
+			history.remove(startIndex);
 		}
 	}
 
@@ -61,7 +60,6 @@ public class MoveHistory
 		index ++;
 		Move move = get(index);
 		move.move(board);
-		print();
 	}
 
 	public void undo(Board board)
@@ -70,19 +68,5 @@ public class MoveHistory
 		Move move = get(index);
 		move.undo(board);
 		index --;
-		print();
-	}
-
-	public void print()
-	{
-		int tmp = 0;
-		System.out.println("-----history------");
-		for (Move move: history)
-		{
-			System.out.println(move.toString() + "\nIndex " + tmp);
-			tmp ++;
-		}
-		System.out.println("Curretn index: " + index);
-
 	}
 }
