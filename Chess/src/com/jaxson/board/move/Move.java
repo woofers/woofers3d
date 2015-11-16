@@ -61,6 +61,7 @@ public class Move
 		{
 			move.move(board);
 		}
+		board.swapColors();
 	}
 
 	public void remove(int index)
@@ -107,5 +108,6 @@ public class Move
 		{
 			move.undo(board);
 		}
+		board.swapColors();
 	}
 }

@@ -9,13 +9,14 @@ import com.jaxson.board.IntBoard;
 import com.jaxson.board.IntPiece;
 import com.jaxson.board.move.Move;
 import com.jaxson.board.move.MoveList;
+import com.jaxson.board.move.MoveHistory;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.board.ChessWindow;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 import com.jaxson.util.MyArrayList;
 
-public class Spot<T extends Window> extends Panel
+public class Spot extends Panel
 {
 	private static final Color LIGHTCOLOR        = new Color(209, 139, 71);
 	private static final Color DARKCOLOR         = new Color(255, 206, 158);
@@ -67,11 +68,9 @@ public class Spot<T extends Window> extends Panel
 
 	private void displayMoves()
 	{
-		MoveList moves = new MoveList();
 		IntBoard intBoard = board.toIntBoard();
+		MoveList moves = intBoard.getLegalMoves(toIntPiece());
 		Spot spot;
-		moves = intBoard.getLegalMoves(toIntPiece());
-		// /System.out.println(moves.toString());
 		for (Move move: moves)
 		{
 			spot = board.getSpot(move.getOrigin());
@@ -144,14 +143,14 @@ public class Spot<T extends Window> extends Panel
 		{
 			if (piece.color == Piece.BLACK)
 			{
-				if (location.y == board.gridHeight - 1)
+				if (location.y == board.getBottomRow())
 				{
 					return true;
 				}
 			}
 			else
 			{
-				if (location.y == 0)
+				if (location.y == board.getTopRow())
 				{
 					return true;
 				}
@@ -173,7 +172,7 @@ public class Spot<T extends Window> extends Panel
 
 	public Boolean isPossibleEnd()
 	{
-		return location.y == board.gridHeight - 1 || location.y == 0;
+		return location.y == board.getBottomRow() || location.y == board.getTopRow();
 	}
 
 	private Boolean isPromotable()
@@ -199,13 +198,14 @@ public class Spot<T extends Window> extends Panel
 
 	private void move()
 	{
+		MoveHistory moveHistory = board.getMoveHistory();
 		move.move(board);
-		board.getMoveHistory().add(move);
+		moveHistory.add(move);
 		if (isPromotable())
 		{
 			move = new Move(toIntPiece(), piece.getPromotion(window, toIntPiece()));
 			move.move(board);
-			board.getMoveHistory().add(move);
+			moveHistory.add(move);
 		}
 		board.updateControls();
 		move = null;
@@ -289,11 +289,10 @@ public class Spot<T extends Window> extends Panel
 
 	public IntPiece toIntPiece()
 	{
-		if (isEmpty())
-		{
-			return new IntPiece(location);
-		}
-		return piece.toIntPiece(location);
+		if (isEmpty()) return new IntPiece(location);
+		IntPiece newPiece = piece.toIntPiece(location);
+		newPiece.boardHeight = board.getBottomRow();
+		return newPiece;
 	}
 }
 

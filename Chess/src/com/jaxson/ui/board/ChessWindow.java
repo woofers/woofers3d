@@ -11,7 +11,7 @@ import com.jaxson.ui.Window;
 public class ChessWindow extends Window
 {
 	public static final String TITLE = "Chess";
-	private static final String ICONPATH = "assets/images/icon.png";
+	private static final String ICON_PATH = "assets/images/icon.png";
 
 	private Board board;
 	private ScaleContainer scaleContainer;
@@ -21,7 +21,7 @@ public class ChessWindow extends Window
 	{
 		super(width, height);
 		setTitle(TITLE);
-		ImageIcon icon = new ImageIcon(ICONPATH);
+		ImageIcon icon = new ImageIcon(ICON_PATH);
 		setIconImage(icon.getImage());
 
 		board = new Board(this);

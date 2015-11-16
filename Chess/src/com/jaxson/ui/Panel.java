@@ -8,9 +8,11 @@ import javax.swing.JPanel;
 
 public class Panel extends JPanel
 {
+	private static final LayoutManager LAYOUT = new FlowLayout();
+
 	public Panel()
 	{
-		this(new FlowLayout());
+		this(LAYOUT);
 	}
 
 	public Panel(LayoutManager layout)

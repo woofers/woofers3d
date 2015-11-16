@@ -1,5 +1,6 @@
 package com.jaxson.ai;
 
+import com.jaxson.board.IntBoard;
 import com.jaxson.geom.Point;
 
 public abstract class Player
@@ -18,7 +19,7 @@ public abstract class Player
 		this.name = name;
 	}
 
-	public abstract void move(Point location);
+	public abstract int evaluateBoard(IntBoard board);
 
 	public int getColor()
 	{
@@ -29,6 +30,8 @@ public abstract class Player
 	{
 		return name;
 	}
+
+	public abstract void move(Point location);
 
 	@Override
 	public String toString()

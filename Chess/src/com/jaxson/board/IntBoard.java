@@ -1,8 +1,10 @@
 package com.jaxson.board;
 
+import com.jaxson.ai.Player;
 import com.jaxson.board.move.Move;
 import com.jaxson.board.move.MoveList;
 import com.jaxson.board.move.PieceMove;
+import com.jaxson.board.move.Promotion;
 import com.jaxson.board.move.Remove;
 import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
@@ -11,9 +13,12 @@ import com.jaxson.util.MyArrayList;
 
 public class IntBoard
 {
+	public static final int infinity = Integer.MAX_VALUE;
+
 	private int width, height, turn;
 	private int color;
 	private IntPiece[][] spots;
+	private Player player;
 
 	public IntBoard(Board board)
 	{
@@ -44,6 +49,7 @@ public class IntBoard
 				newSpots[x][y] = spots[x][y].clone();
 			}
 		}
+		newBoard.setPlayer(player);
 		newBoard.setSpots(newSpots);
 		return newBoard;
 	}
@@ -169,6 +175,17 @@ public class IntBoard
 		return moves;
 	}
 
+	public MoveList getLegalMoves(int color)
+	{
+		MoveList moves = new MoveList();
+		MyArrayList<IntPiece> pieces = getPieces(color);
+		for (IntPiece piece: pieces)
+		{
+			moves.addAll(getLegalMoves(piece));
+		}
+		return moves;
+	}
+
 	public MoveList getLegalMoves(IntPiece piece)
 	{
 		MoveList moves = new MoveList();
@@ -199,6 +216,7 @@ public class IntBoard
 				break;
 			case Piece.PAWN:
 				moves = getPawn(piece);
+				moves.addAll(getPromotion(piece));
 				break;
 		}
 		return moves;
@@ -302,6 +320,19 @@ public class IntBoard
 		return pieces;
 	}
 
+	private MoveList getPromotion(IntPiece piece)
+	{
+		MoveList moves = new MoveList();
+		if (piece.isPromotable())
+		{
+			moves.add(new Move(piece, new Promotion(piece, Piece.QUEEN)));
+			moves.add(new Move(piece, new Promotion(piece, Piece.ROOK)));
+			moves.add(new Move(piece, new Promotion(piece, Piece.BISHOP)));
+			moves.add(new Move(piece, new Promotion(piece, Piece.KNIGHT)));
+		}
+		return moves;
+	}
+
 	public IntPiece getSpot(Point location)
 	{
 		return getSpot(location.x, location.y);
@@ -309,10 +340,7 @@ public class IntBoard
 
 	public IntPiece getSpot(int x, int y)
 	{
-		if (spotExist(x, y))
-		{
-			return spots[x][y];
-		}
+		if (spotExist(x, y)) return spots[x][y];
 		return null;
 	}
 
@@ -330,9 +358,80 @@ public class IntBoard
 		return moves;
 	}
 
+	private Boolean hasWon(int color)
+	{
+		for (int y = 0; y < height; y ++)
+		{
+			for (int x = 0; x < width; x ++)
+			{
+				if (spots[x][y].isEnemey(color))
+				{
+					if (spots[x][y].type == Piece.KING) return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public int miniMax(int depth)
+	{
+		return min(depth, depth, -infinity, infinity);
+	}
+
+	private int min(int depth, int maxDepth, int alpha, int beta)
+	{
+		MoveList moves = getLegalMoves(color);
+		Move bestMove;
+		int bestValue, value, currentX;
+		bestValue = -infinity;
+		value = beta;
+		for (Move move: moves)
+		{
+			if (move.getOrigin().isFriendly(color))
+			{
+				move.move(this);
+				if (hasWon(color))
+				{
+					value = infinity - maxDepth + depth;
+				}
+				else if (depth == 0 || moves.isEmpty())
+				{
+					value = player.evaluateBoard(this);
+				}
+				else
+				{
+					value = max(depth, maxDepth, alpha, beta);
+				}
+				move.undo(this);
+
+				if (value < bestValue)
+				{
+					bestValue = value;
+					bestMove = move;
+				}
+				beta = Math.min(beta, bestValue);
+				if (alpha >= beta)
+				{
+					break;
+				}
+			}
+		}
+		return bestValue;
+	}
+
+	private int max(int depth, int maxDepth, int alpha, int beta)
+	{
+		return 0;
+	}
+
 	public void print()
 	{
 		System.out.println(toString());
+	}
+
+	public void setPlayer(Player value)
+	{
+		player = value;
 	}
 
 	public void setSpots(IntPiece[][] value)
@@ -366,6 +465,16 @@ public class IntBoard
 			}
 		}
 		return false;
+	}
+
+	public void swapColors()
+	{
+		if (color == Piece.BLACK)
+		{
+			color = Piece.WHITE;
+			return;
+		}
+		color = Piece.BLACK;
 	}
 
 	@Override

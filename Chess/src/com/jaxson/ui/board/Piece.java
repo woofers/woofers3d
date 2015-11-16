@@ -59,10 +59,7 @@ public class Piece extends Panel
 
 	private int getStartDirection()
 	{
-		if (color == Piece.BLACK)
-		{
-			return +1;
-		}
+		if (color == Piece.BLACK) return +1;
 		return -1;
 	}
 

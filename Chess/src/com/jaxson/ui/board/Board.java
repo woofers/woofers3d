@@ -13,7 +13,7 @@ import com.jaxson.ui.Window;
 
 public class Board extends Panel
 {
-	private static final int REGULARSIZE = 8;
+	private static final int REGULAR_SIZE = 8;
 
 	public int gridWidth, gridHeight, turn;
 	private ChessWindow window;
@@ -31,17 +31,20 @@ public class Board extends Panel
 
 	private void addPieces()
 	{
-		createBottomRow(0, Piece.BLACK);
-		createBottomRow(gridHeight - 1, Piece.WHITE);
-		createPawns(1, Piece.BLACK);
-		createPawns(gridHeight - 2, Piece.WHITE);
+		int topRow, bottomRow;
+		topRow = getTopRow();;
+		bottomRow = getBottomRow();
+		createBottomRow(topRow, Piece.BLACK);
+		createPawns(topRow + 1, Piece.BLACK);
+		createBottomRow(bottomRow, Piece.WHITE);
+		createPawns(bottomRow - 1, Piece.WHITE);
 	}
 
 	private void createBottomRow(int row, int color)
 	{
 		int delta, queen, king;
-		delta = gridWidth - REGULARSIZE;
-		queen = zero(REGULARSIZE / 2 + delta / 2);
+		delta = gridWidth - REGULAR_SIZE;
+		queen = zero(REGULAR_SIZE / 2 + delta / 2);
 		king = queen + 1;
 		spots[queen - 3][row].createPiece(Piece.ROOK, color);
 		spots[queen - 2][row].createPiece(Piece.KNIGHT, color);
@@ -75,14 +78,14 @@ public class Board extends Panel
 	private void createPawns(int row, int color)
 	{
 		int delta, start;
-		delta = gridWidth - REGULARSIZE;
-		start = zero(REGULARSIZE / 2 + delta / 2);
-		for (int x = start; x > start - REGULARSIZE / 2; x --)
+		delta = gridWidth - REGULAR_SIZE;
+		start = zero(REGULAR_SIZE / 2 + delta / 2);
+		for (int x = start; x > start - REGULAR_SIZE / 2; x --)
 		{
 			spots[x][row].createPiece(Piece.PAWN, color);
 		}
 		start ++;
-		for (int x = start; x < start + REGULARSIZE / 2; x ++)
+		for (int x = start; x < start + REGULAR_SIZE / 2; x ++)
 		{
 			spots[x][row].createPiece(Piece.PAWN, color);
 		}
@@ -97,6 +100,16 @@ public class Board extends Panel
 				spots[x][y].deselect();
 			}
 		}
+	}
+
+	public int getBottomRow()
+	{
+		return gridHeight - 1;
+	}
+
+	public int getTopRow()
+	{
+		return 0;
 	}
 
 	public MoveHistory getMoveHistory()
@@ -159,7 +172,6 @@ public class Board extends Panel
 				spots[x][y] = null;
 			}
 		}
-		draw();
 	}
 
 	public void reset()
@@ -173,6 +185,7 @@ public class Board extends Panel
 		createGrid(width, height);
 		moveHistory = new MoveHistory();
 		turn = 0;
+		draw();
 	}
 
 	public void setOptions(Options value)

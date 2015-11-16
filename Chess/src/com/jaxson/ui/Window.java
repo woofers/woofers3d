@@ -2,6 +2,7 @@ package com.jaxson.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -9,13 +10,31 @@ import javax.swing.JFrame;
 public class Window extends JFrame
 {
 	private static final String TITLE = "Window";
+	private static final int WIDTH = 400;
+	private static final int HEIGHT = 400;
+	private static final LayoutManager LAYOUT = new BorderLayout();
+
+	public Window()
+	{
+		this(LAYOUT);
+	}
+
+	public Window(LayoutManager layout)
+	{
+		this(WIDTH, HEIGHT, layout);
+	}
 
 	public Window(int width, int height)
+	{
+		this(width, height, LAYOUT);
+	}
+
+	public Window(int width, int height, LayoutManager layout)
 	{
 		super(TITLE);
 		setWindowSize(width, height);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+		setLayout(layout);
 		center();
 	}
 
@@ -40,10 +59,7 @@ public class Window extends JFrame
 	private double getAspectRatio()
 	{
 		Dimension size = getPreferredSize();
-		if (size.height == 0)
-		{
-			return 1;
-		}
+		if (size.height == 0) return 1;
 		return size.width / size.height;
 	}
 
@@ -51,7 +67,6 @@ public class Window extends JFrame
 	{
 		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
-
 
 	public void setWindowSize(int width, int height)
 	{

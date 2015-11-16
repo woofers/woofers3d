@@ -6,7 +6,7 @@ import com.jaxson.ui.board.Piece;
 public class IntPiece
 {
 	public int type, color, direction, turn;
-	public int passingIndex;
+	public int passingIndex, boardHeight;
 	public Point location;
 
 	public IntPiece()
@@ -41,7 +41,9 @@ public class IntPiece
 
 	public IntPiece clone()
 	{
-		return new IntPiece(type, color, location, direction, turn);
+		IntPiece newIntPiece = new IntPiece(type, color, location.clone(), direction, turn);
+		newIntPiece.passingIndex = passingIndex;
+		return newIntPiece;
 	}
 
 	public Boolean hasMoved()
@@ -62,6 +64,22 @@ public class IntPiece
 	public Boolean isFriendly(int color)
 	{
 		return this.color == color;
+	}
+
+	public Boolean isPromotable()
+	{
+		if (type == Piece.PAWN)
+		{
+			if (location.y == 0)
+			{
+				return color == Piece.BLACK;
+			}
+			if (location.y == boardHeight)
+			{
+				return color == Piece.WHITE;
+			}
+		}
+		return false;
 	}
 
 	public int toInt()
