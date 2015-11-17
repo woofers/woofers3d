@@ -2,11 +2,11 @@ package com.jaxson.util;
 
 import java.lang.Math;
 
-public class MyMath extends Math
+public class MyMath
 {
 	public static double log(double value, double base)
 	{
-		return log(value) / log(base);
+		return Math.log(value) / Math.log(base);
 	}
 
 	public static int toInt(float value)

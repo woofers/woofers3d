@@ -271,15 +271,23 @@
 			"file": "core/src/com/jaxson/Main.java",
 			"settings":
 			{
-				"buffer_size": 1478,
-				"line_ending": "Unix"
+				"buffer_size": 2322,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "core/src/com/jaxson/util/MyMath.java",
+			"file": "core/src/com/jaxson/states/State3D.java",
 			"settings":
 			{
-				"buffer_size": 186,
+				"buffer_size": 1005,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "desktop/src/com/jaxson/desktop/DesktopLauncher.java",
+			"settings":
+			{
+				"buffer_size": 470,
 				"line_ending": "Windows"
 			}
 		}
@@ -418,23 +426,35 @@
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/sprites",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/ui",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle"
 	],
 	"file_history":
 	[
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyArrayList.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyMath.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/PlayState.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State3D.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/Main.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/GameStateManager.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/PlayState.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/GameStateManager.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State3D.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State2D.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyArrayList.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyMath.java",
+		"/C/Program Files/Java/jdk1.8.0_60/JOptionPane.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO403B.tmp/Object.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO74C6.tmp/Math.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOE29C.tmp/BigDecimal.java",
+		"/D/Documents/Development/School/Programming 12/ConnectFour/ConnectFour/ConnectFour.vb",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedList.java",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
+		"/D/Documents/Development/School/Programming 12/Fox/src/com/jaxson/level/World.as",
+		"/D/Documents/Development/School/Programming 12/Fox/src/com/jaxson/level/MapLoader.as",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/Main.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/Main.gwt.xml",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/MenuState.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/3DState.java",
@@ -544,16 +564,7 @@
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/HardPlayer.java",
 		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/Player.java",
 		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/SimplePlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/HumanPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/Move.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/CounterColor.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/MD5Util.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/BoardFactory.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/ConnectFourGame.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/RankingPanel.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/Launcher.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/BorderPanel.java",
-		"/C/Documents and Settings/Peter/My Documents/new/pom.xml"
+		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/HumanPlayer.java"
 	],
 	"find":
 	{
@@ -683,15 +694,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1478,
+						"buffer_size": 2322,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1296,
-								1307
+								1571,
+								1571
 							]
 						],
 						"settings":
@@ -700,7 +711,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 360.0,
+						"translation.y": 760.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -708,19 +719,48 @@
 				},
 				{
 					"buffer": 1,
-					"file": "core/src/com/jaxson/util/MyMath.java",
+					"file": "core/src/com/jaxson/states/State3D.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 186,
+						"buffer_size": 1005,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								186,
-								186
+								579,
+								628
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "desktop/src/com/jaxson/desktop/DesktopLauncher.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								125,
+								154
 							]
 						],
 						"settings":
@@ -731,7 +771,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]

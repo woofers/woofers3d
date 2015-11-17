@@ -16,7 +16,7 @@ public abstract class State3D extends State
 	{
 		super(gameStateManager);
 
-		camera = new PerspectiveCamera(75,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(1f, 2f, 3f);
 		camera.lookAt(0f,0f,0f);
 		camera.near = 0.1f;
