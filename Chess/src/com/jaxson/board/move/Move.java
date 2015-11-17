@@ -52,6 +52,7 @@ public class Move
 		{
 			move.move(board);
 		}
+		board.swapColors();
 		board.draw();
 	}
 
@@ -99,6 +100,7 @@ public class Move
 		{
 			move.undo(board);
 		}
+		board.swapColors();
 		board.draw();
 	}
 

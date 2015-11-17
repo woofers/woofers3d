@@ -5,6 +5,9 @@ import com.jaxson.geom.Point;
 
 public abstract class Player
 {
+	protected static final int DEPTH = 4;
+	protected static final int INFINITY = 10000000;
+
 	private int color;
 	private String name;
 
@@ -24,6 +27,11 @@ public abstract class Player
 	public int getColor()
 	{
 		return color;
+	}
+
+	public int getDepth()
+	{
+		return DEPTH;
 	}
 
 	public String getName()

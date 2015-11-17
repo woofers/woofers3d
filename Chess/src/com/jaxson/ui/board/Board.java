@@ -14,8 +14,9 @@ import com.jaxson.ui.Window;
 public class Board extends Panel
 {
 	private static final int REGULAR_SIZE = 8;
+	private static final int DEFAULT_COLOR = Piece.WHITE;
 
-	public int gridWidth, gridHeight, turn;
+	public int gridWidth, gridHeight, turn, color;
 	private ChessWindow window;
 	private MoveHistory moveHistory;
 	private Spot[][] spots;
@@ -25,6 +26,7 @@ public class Board extends Panel
 	{
 		super();
 		this.window = window;
+		color = DEFAULT_COLOR;
 		moveHistory = new MoveHistory();
 		turn = 0;
 	}
@@ -185,12 +187,23 @@ public class Board extends Panel
 		createGrid(width, height);
 		moveHistory = new MoveHistory();
 		turn = 0;
+		color = DEFAULT_COLOR;
 		draw();
 	}
 
 	public void setOptions(Options value)
 	{
 		options = value;
+	}
+
+	public void swapColors()
+	{
+		if (color == Piece.BLACK)
+		{
+			color = Piece.WHITE;
+			return;
+		}
+		color = Piece.BLACK;
 	}
 
 	private Boolean spotExist(int x, int y)
@@ -210,6 +223,7 @@ public class Board extends Panel
 			}
 		}
 		intBoard.setSpots(spots);
+		intBoard.setColor(color);
 		return intBoard;
 	}
 

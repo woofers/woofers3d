@@ -1,6 +1,7 @@
 package com.jaxson.board;
 
 import com.jaxson.ai.Player;
+import com.jaxson.ai.HardPlayer;
 import com.jaxson.board.move.Move;
 import com.jaxson.board.move.MoveList;
 import com.jaxson.board.move.PieceMove;
@@ -10,6 +11,7 @@ import com.jaxson.geom.Point;
 import com.jaxson.ui.board.Board;
 import com.jaxson.ui.board.Piece;
 import com.jaxson.util.MyArrayList;
+import com.jaxson.util.MyMath;
 
 public class IntBoard
 {
@@ -36,6 +38,12 @@ public class IntBoard
 		this.height = height;
 		this.turn = turn;
 		this.color = color;
+		player = new HardPlayer(Piece.BLACK);
+	}
+
+	public Move aiMove()
+	{
+		return miniMax(player.getDepth());
 	}
 
 	public IntBoard clone()
@@ -52,6 +60,11 @@ public class IntBoard
 		newBoard.setPlayer(player);
 		newBoard.setSpots(newSpots);
 		return newBoard;
+	}
+
+	public int getColor()
+	{
+		return color;
 	}
 
 	private MoveList getAllAbove(IntPiece piece)
@@ -307,6 +320,14 @@ public class IntBoard
 		return null;
 	}
 
+	public MyArrayList<IntPiece> getPieces()
+	{
+		MyArrayList<IntPiece> pieces;
+		pieces = getPieces(Piece.WHITE);
+		pieces.addAll(getPieces(Piece.BLACK));
+		return pieces;
+	}
+
 	private MyArrayList<IntPiece> getPieces(int color)
 	{
 		MyArrayList<IntPiece> pieces = new MyArrayList<>();
@@ -319,6 +340,7 @@ public class IntBoard
 		}
 		return pieces;
 	}
+
 
 	private MoveList getPromotion(IntPiece piece)
 	{
@@ -373,21 +395,21 @@ public class IntBoard
 		return true;
 	}
 
-	public int miniMax(int depth)
+	public Move miniMax(int depth)
 	{
-		return min(depth, depth, -infinity, infinity);
-	}
+		int maxDepth, alpha, beta;
+		maxDepth = depth;
+		alpha = -infinity;
+		beta = infinity;
 
-	private int min(int depth, int maxDepth, int alpha, int beta)
-	{
 		MoveList moves = getLegalMoves(color);
-		Move bestMove;
+		Move bestMove = moves.get(0);
 		int bestValue, value, currentX;
-		bestValue = -infinity;
-		value = beta;
+		bestValue = alpha;
 		for (Move move: moves)
 		{
-			if (move.getOrigin().isFriendly(color))
+			System.out.println(move.getOrigin().color);
+			if (true)
 			{
 				move.move(this);
 				if (hasWon(color))
@@ -400,7 +422,46 @@ public class IntBoard
 				}
 				else
 				{
-					value = max(depth, maxDepth, alpha, beta);
+					value = min(depth - 1, maxDepth, alpha, beta);
+				}
+				move.undo(this);
+				if (value > bestValue)
+				{
+					bestValue = value;
+					bestMove = move;
+				}
+				beta = Math.max(beta, bestValue);
+				if (alpha >= beta)
+				{
+					break;
+				}
+			}
+		}
+		return bestMove;
+	}
+
+	private int min(int depth, int maxDepth, int alpha, int beta)
+	{
+		MoveList moves = getLegalMoves(color);
+		Move bestMove;
+		int bestValue, value, currentX;
+		bestValue = beta;
+		for (Move move: moves)
+		{
+			if (true)
+			{
+				move.move(this);
+				if (hasWon(color))
+				{
+					value = infinity - maxDepth + depth;
+				}
+				else if (depth == 0 || moves.isEmpty())
+				{
+					value = player.evaluateBoard(this);
+				}
+				else
+				{
+					value = max(depth - 1, maxDepth, alpha, beta);
 				}
 				move.undo(this);
 
@@ -421,12 +482,52 @@ public class IntBoard
 
 	private int max(int depth, int maxDepth, int alpha, int beta)
 	{
-		return 0;
+		MoveList moves = getLegalMoves(color);
+		Move bestMove;
+		int bestValue, value, currentX;
+		bestValue = alpha;
+		for (Move move: moves)
+		{
+			if (true)
+			{
+				move.move(this);
+				if (hasWon(color))
+				{
+					value = infinity - maxDepth + depth;
+				}
+				else if (depth == 0 || moves.isEmpty())
+				{
+					value = player.evaluateBoard(this);
+				}
+				else
+				{
+					value = min(depth - 1, maxDepth, alpha, beta);
+				}
+				move.undo(this);
+
+				if (value > bestValue)
+				{
+					bestValue = value;
+					bestMove = move;
+				}
+				beta = Math.max(beta, bestValue);
+				if (alpha >= beta)
+				{
+					break;
+				}
+			}
+		}
+		return bestValue;
 	}
 
 	public void print()
 	{
 		System.out.println(toString());
+	}
+
+	public void setColor(int value)
+	{
+		color = value;
 	}
 
 	public void setPlayer(Player value)

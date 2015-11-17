@@ -15,6 +15,7 @@ import com.jaxson.ui.board.ChessWindow;
 import com.jaxson.ui.Panel;
 import com.jaxson.ui.Window;
 import com.jaxson.util.MyArrayList;
+import com.jaxson.util.MyMath;
 
 public class Spot extends Panel
 {
@@ -92,15 +93,15 @@ public class Spot extends Panel
 
 	private Color getColor()
 	{
-		if (isEven(location.y))
+		if (MyMath.isEven(location.y))
 		{
-			if (isEven(location.x))
+			if (MyMath.isEven(location.x))
 			{
 				return DARKCOLOR;
 			}
 			return LIGHTCOLOR;
 		}
-		if (isEven(location.x))
+		if (MyMath.isEven(location.x))
 		{
 			return LIGHTCOLOR;
 		}
@@ -159,11 +160,6 @@ public class Spot extends Panel
 		return false;
 	}
 
-	private Boolean isEven(int i)
-	{
-		return i % 2 == 0;
-	}
-
 	private Boolean isMoveSelected()
 	{
 		Color color = getBackground();
@@ -209,6 +205,8 @@ public class Spot extends Panel
 		}
 		board.updateControls();
 		move = null;
+		IntBoard intBoard = board.toIntBoard();
+		//intBoard.aiMove().move(board);
 	}
 
 	private void moveSelect()
@@ -229,6 +227,8 @@ public class Spot extends Panel
 		else
 		{
 			deselectAll();
+			if (piece == null) return;
+			if (piece.color != board.color) return;
 			holdSelect();
 		}
 	}
