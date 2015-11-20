@@ -12,6 +12,8 @@ public class Dialog<T extends Window> extends JDialog
 	private static final String TITLE = "Dialog";
 	private static final int WIDTH = 200;
 	private static final int HEIGHT = 100;
+	private static final boolean RESIZEABLE = false;
+	private static final double MIN_SIZE = 0.4;
 	private static final LayoutManager LAYOUT = new BorderLayout();
 
 	public Dialog(LayoutManager layout)
@@ -41,7 +43,7 @@ public class Dialog<T extends Window> extends JDialog
 		setTitle(TITLE);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setModalityType(DEFAULT_MODALITY_TYPE);
-		setResizable(false);
+		setResizable(RESIZEABLE);
 		setLayout(layout);
 		center();
 		draw();
@@ -65,8 +67,12 @@ public class Dialog<T extends Window> extends JDialog
 
 	public void setDialogSize(int width, int height)
 	{
+		int minWidth, minHeight;
+		minWidth = (int)(width * MIN_SIZE);
+		minHeight = (int)(height * MIN_SIZE);
+
 		setSize(width, height);
-		setMinimumSize(new Dimension(width, height));
+		setMinimumSize(new Dimension(minWidth, minHeight));
 		setMaximumSize(getScreenSize());
 	}
 

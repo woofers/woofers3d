@@ -57,6 +57,12 @@ public class Piece extends Panel
 		return new Promotion(spot, promotionWindow.getResult());
 	}
 
+	public static int getOppositeColor(int color)
+	{
+		if (color == WHITE) return BLACK;
+		return WHITE;
+	}
+
 	private int getStartDirection()
 	{
 		if (color == Piece.BLACK) return +1;

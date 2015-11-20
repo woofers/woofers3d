@@ -16,6 +16,13 @@ public class Options extends Panel
 	private static final Dimension COMBOSIZE = new Dimension(80, 20);
 	private static final Dimension UNDOOSIZE = new Dimension(30, 26);
 	private static final Dimension PANELSIZE = new Dimension(100, 30);
+	private static final String EASY         = "Easy";
+	private static final String HARD         = "Hard";
+	private static final String PLAYER       = "Player";
+	private static final String SEPERATOR    = "x";
+	private static final String RESET        = "Reset";
+	private static final String UNDO         = "<<";
+	private static final String REDO         = ">>";
 
 	private Board board;
 	private JButton reset, undo, redo;
@@ -28,23 +35,23 @@ public class Options extends Panel
 		this.board = board;
 
 		playerMode = new JComboBox();
-		playerMode.addItem("1 Player");
-		playerMode.addItem("2 Player");
+		playerMode.addItem("1 " + PLAYER);
+		playerMode.addItem("2 " + PLAYER);
 		playerMode.setPreferredSize(COMBOSIZE);
 		add(playerMode);
 
 		difficulty = new JComboBox();
-		difficulty.addItem("Easy");
-		difficulty.addItem("Hard");
+		difficulty.addItem(EASY);
+		difficulty.addItem(HARD);
 		difficulty.setPreferredSize(COMBOSIZE);
 		add(difficulty);
 
 		gridSize = new JComboBox();
-		gridSize.addItem("8 x 8");
-		gridSize.addItem("10 x 10");
-		gridSize.addItem("12 x 12");
-		gridSize.addItem("14 x 14");
-		gridSize.addItem("16 x 16");
+		gridSize.addItem("8" + SEPERATOR + " 8");
+		gridSize.addItem("10 " + SEPERATOR + " 10");
+		gridSize.addItem("12 " + SEPERATOR + " 12");
+		gridSize.addItem("14 " + SEPERATOR + " 14");
+		gridSize.addItem("16 " + SEPERATOR + " 16");
 		gridSize.setPreferredSize(COMBOSIZE);
 		add(gridSize);
 
@@ -52,17 +59,17 @@ public class Options extends Panel
 		undoPanel.setPreferredSize(PANELSIZE);
 		add(undoPanel);
 
-		undo = new JButton("<<");
+		undo = new JButton(UNDO);
 		undo.setPreferredSize(UNDOOSIZE);
 		undo.addActionListener(new UndoListener(this));
 		undoPanel.add(undo);
 
-		redo = new JButton(">>");
+		redo = new JButton(REDO);
 		redo.setPreferredSize(UNDOOSIZE);
 		redo.addActionListener(new RedoListener(this));
 		undoPanel.add(redo);
 
-		reset = new JButton("Reset");
+		reset = new JButton(RESET);
 		reset.addActionListener(new ResetListener(this));
 		add(reset);
 
@@ -78,13 +85,18 @@ public class Options extends Panel
 	{
 		String[] string = new String[2];
 		string[0] = gridSize.getSelectedItem().toString().toLowerCase();
-		string = string[0].split("x");
+		string = string[0].split(SEPERATOR);
 		return Integer.parseInt(string[dimension].trim());
 	}
 
 	private int getGridWidth()
 	{
 		return getGridSize(0);
+	}
+
+	public Boolean hasComputer()
+	{
+		return playerMode.getSelectedItem() == playerMode.getItemAt(0);
 	}
 
 	public Boolean isHard()
@@ -128,26 +140,12 @@ public class Options extends Panel
 
 	private void updateRedo()
 	{
-		if (board.hasRedo())
-		{
-			redo.setEnabled(true);
-		}
-		else
-		{
-			redo.setEnabled(false);
-		}
+		redo.setEnabled(board.hasRedo());
 	}
 
 	private void updateUndo()
 	{
-		if (board.hasUndo())
-		{
-			undo.setEnabled(true);
-		}
-		else
-		{
-			undo.setEnabled(false);
-		}
+		undo.setEnabled(board.hasUndo());
 	}
 }
 

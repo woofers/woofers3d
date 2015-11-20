@@ -24,6 +24,11 @@ public class PieceMove implements MoveType
 		return newSpot == null;
 	}
 
+	public Boolean isPromotion()
+	{
+		return false;
+	}
+
 	public void move(Board board)
 	{
 		Spot oldSpot, newSpot;
@@ -51,9 +56,9 @@ public class PieceMove implements MoveType
 
 	public void move(IntBoard board)
 	{
-		Point oldLocation = oldSpot.location;
-		board.setSpot(oldSpot, newSpot.location);
-		board.setSpot(newSpot, oldLocation);
+		board.setSpot(oldSpot.clone(), newSpot.location);
+		board.setSpot(new IntPiece(), oldSpot.location);
+		newSpot.turn ++;
 	}
 
 	public void undo(Board board)
@@ -75,7 +80,9 @@ public class PieceMove implements MoveType
 
 	public void undo(IntBoard board)
 	{
-
+		board.setSpot(oldSpot, oldSpot.location);
+		board.setSpot(new IntPiece(), newSpot.location);
+		newSpot.turn --;
 	}
 
 	public Boolean overwritesFriendly()

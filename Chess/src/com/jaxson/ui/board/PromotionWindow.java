@@ -22,6 +22,7 @@ import com.jaxson.ui.Window;
 public class PromotionWindow extends Dialog
 {
 	private static final int SIZE = 2;
+	private static final int FONTSIZE = 30;
 	private static final String MESSAGE = "Promote your pawn.";
 
 	private Spot[][] spots;
@@ -38,7 +39,7 @@ public class PromotionWindow extends Dialog
 		addWindowListener(new CloseAdapter(this));
 
 		label = new JLabel(MESSAGE, SwingConstants.CENTER);
-		label.setFont(new Font(label.getName(), Font.PLAIN, 30));
+		label.setFont(new Font(label.getName(), Font.PLAIN, FONTSIZE));
 		add(label, BorderLayout.PAGE_END);
 
 		panel = new Panel(new GridLayout(SIZE, SIZE));
@@ -61,7 +62,7 @@ public class PromotionWindow extends Dialog
 		spots[1][1].createPiece(Piece.KNIGHT, color);
 
 		draw();
-		setVisible(true);
+		showWindow();
 	}
 
 	public void close()

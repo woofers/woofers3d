@@ -7,6 +7,8 @@ public interface MoveType
 {
 	public Boolean isEmpty();
 
+	public Boolean isPromotion();
+
 	public void move(Board board);
 
 	public void move(IntBoard board);

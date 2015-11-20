@@ -22,6 +22,11 @@ public class Remove implements MoveType
 		return spot == null;
 	}
 
+	public Boolean isPromotion()
+	{
+		return false;
+	}
+
 	public void move(Board board)
 	{
 		Spot spot = board.getSpot(this.spot);

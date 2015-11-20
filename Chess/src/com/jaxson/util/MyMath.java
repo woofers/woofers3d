@@ -4,7 +4,6 @@ import java.lang.Math;
 
 public class MyMath
 {
-
 	public static boolean isEven(int value)
 	{
 		return value % 2 == 0;

@@ -17,7 +17,7 @@ public class Main extends ApplicationAdapter
 	public static final String TITLE        = "Woofers 3D";
 	public static final int WIDTH           = 800;
 	public static final int HEIGHT          = 600;
-	private static final double ASPECTRATIO = (float)(WIDTH) /(float)(HEIGHT);
+	private static final double ASPECTRATIO = (float)(WIDTH) / (float)(HEIGHT);
 
 	private GameStateManager gameStateManager;
 	private ModelBatch modelBatch;

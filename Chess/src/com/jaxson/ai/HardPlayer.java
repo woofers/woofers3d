@@ -8,7 +8,7 @@ import com.jaxson.util.MyArrayList;
 
 public class HardPlayer extends Player
 {
-	public static final int DEPTH = 4;
+	private static final int DEPTH = 0;
 
 	private static final int KING   = INFINITY;
 	private static final int QUEEN  = 9;
@@ -19,7 +19,7 @@ public class HardPlayer extends Player
 
 	public HardPlayer(int color)
 	{
-		super(color, "Hard AI");
+		super(color, DEPTH, "Hard AI");
 	}
 
 	public int evaluateBoard(IntBoard board)
@@ -27,7 +27,7 @@ public class HardPlayer extends Player
 		MyArrayList<IntPiece> pieces = board.getPieces();
 		int color, totalValue, value;
 		totalValue = 0;
-		color = board.getColor();
+		color = Piece.getOppositeColor(board.getColor());
 		for (IntPiece piece: pieces)
 		{
 			if (piece.isFriendly(color))
@@ -39,6 +39,9 @@ public class HardPlayer extends Player
 				totalValue -= getValue(piece);
 			}
 		}
+		System.out.println("TOTAL VALUE: " + totalValue);
+		board.print();
+		System.out.println("----end value---");
 		return totalValue;
 	}
 

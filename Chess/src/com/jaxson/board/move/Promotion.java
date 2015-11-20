@@ -26,6 +26,11 @@ public class Promotion implements MoveType
 		return spot == null;
 	}
 
+	public Boolean isPromotion()
+	{
+		return true;
+	}
+
 	public void move(Board board)
 	{
 		Piece piece = new Piece(type, spot.color);

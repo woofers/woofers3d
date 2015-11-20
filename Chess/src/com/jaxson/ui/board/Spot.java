@@ -205,8 +205,14 @@ public class Spot extends Panel
 		}
 		board.updateControls();
 		move = null;
-		IntBoard intBoard = board.toIntBoard();
-		//intBoard.aiMove().move(board);
+		if (board.hasComputer())
+		{
+			Move newMove;
+			IntBoard intBoard = board.toIntBoard();
+			newMove = intBoard.aiMove();
+			newMove.move(board);
+			moveHistory.add(newMove);
+		}
 	}
 
 	private void moveSelect()

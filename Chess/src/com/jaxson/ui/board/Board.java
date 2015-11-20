@@ -137,6 +137,11 @@ public class Board extends Panel
 		return null;
 	}
 
+	public Boolean hasComputer()
+	{
+		return options.hasComputer();
+	}
+
 	public Boolean hasUndo()
 	{
 		return moveHistory.hasUndo();

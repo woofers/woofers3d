@@ -40,6 +40,15 @@ public class Move
 		return origin;
 	}
 
+	public Boolean hasPromotion()
+	{
+		for (MoveType move: moveTypes)
+		{
+			if (move.isPromotion()) return true;
+		}
+		return false;
+	}
+
 	public Boolean isEmpty()
 	{
 		return moveTypes.isEmpty();
@@ -52,7 +61,7 @@ public class Move
 		{
 			move.move(board);
 		}
-		board.swapColors();
+		if (!hasPromotion()) board.swapColors();
 		board.draw();
 	}
 
@@ -62,7 +71,7 @@ public class Move
 		{
 			move.move(board);
 		}
-		board.swapColors();
+		if (!hasPromotion()) board.swapColors();
 	}
 
 	public void remove(int index)
@@ -100,7 +109,7 @@ public class Move
 		{
 			move.undo(board);
 		}
-		board.swapColors();
+		if (!hasPromotion()) board.swapColors();
 		board.draw();
 	}
 
@@ -110,6 +119,6 @@ public class Move
 		{
 			move.undo(board);
 		}
-		board.swapColors();
+		if (!hasPromotion()) board.swapColors();
 	}
 }

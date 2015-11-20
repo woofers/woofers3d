@@ -268,10 +268,10 @@
 	"buffers":
 	[
 		{
-			"file": "core/src/com/jaxson/Main.java",
+			"file": "core/src/com/jaxson/states/PlayState.java",
 			"settings":
 			{
-				"buffer_size": 2322,
+				"buffer_size": 1400,
 				"line_ending": "Windows"
 			}
 		},
@@ -279,15 +279,7 @@
 			"file": "core/src/com/jaxson/states/State3D.java",
 			"settings":
 			{
-				"buffer_size": 1005,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "desktop/src/com/jaxson/desktop/DesktopLauncher.java",
-			"settings":
-			{
-				"buffer_size": 470,
+				"buffer_size": 1443,
 				"line_ending": "Windows"
 			}
 		}
@@ -335,10 +327,22 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 338.0,
-		"last_filter": "conv",
+		"height": 101.0,
+		"last_filter": "git push",
 		"selected_items":
 		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
 			[
 				"conv",
 				"Indentation: Convert to Tabs"
@@ -360,20 +364,8 @@
 				"Git: Commit"
 			],
 			[
-				"git add",
-				"Git: Add..."
-			],
-			[
 				"git p",
 				"Git: Pull"
-			],
-			[
-				"git push",
-				"Git: Push"
-			],
-			[
-				"git com",
-				"Git: Commit"
 			],
 			[
 				"git pul",
@@ -421,22 +413,23 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Documents/Development/School/JavaProjects/Woofers3D",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle"
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/states",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/ui"
 	],
 	"file_history":
 	[
+		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/states/State2D.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/states/GameStateManager.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/Main.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/util/MyMath.java",
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Woofers3D/core/src/com/jaxson/states/State3D.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/PlayState.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/GameStateManager.java",
@@ -557,14 +550,7 @@
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Board.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/NoDestinationException.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/GameWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/geom/Point.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Piece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/Player.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/HardPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/Player.java",
-		"/C/Documents and Settings/Peter/My Documents/new/connect4/src/main/java/com/xebia/xke/algo/minimax/connect4/SimplePlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/new/ui/src/main/java/com/xebia/xke/algo/minimax/ui/HumanPlayer.java"
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/PromotionWindow.java"
 	],
 	"find":
 	{
@@ -685,36 +671,35 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "core/src/com/jaxson/Main.java",
+					"file": "core/src/com/jaxson/states/PlayState.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2322,
+						"buffer_size": 1400,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1571,
-								1571
+								1023,
+								1023
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Java/Java.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 760.0,
+						"translation.y": 71.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -723,15 +708,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1005,
+						"buffer_size": 1443,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								579,
-								628
+								1019,
+								1018
 							]
 						],
 						"settings":
@@ -743,35 +728,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "desktop/src/com/jaxson/desktop/DesktopLauncher.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 470,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								125,
-								154
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -818,9 +775,9 @@
 	},
 	"output.git":
 	{
-		"height": 104.0
+		"height": 391.0
 	},
-	"pinned_build_system": "Packages/User/ant.sublime-build",
+	"pinned_build_system": "Packages/User/myjava.sublime-build",
 	"project": "Woofers3D.sublime-project",
 	"replace":
 	{

@@ -4,10 +4,14 @@ import java.lang.Math;
 
 public class MyMath
 {
-
 	public static boolean isEven(int value)
 	{
 		return value % 2 == 0;
+	}
+
+	public static double log(double value)
+	{
+		return log(value, E);
 	}
 
 	public static double log(double value, double base)

@@ -5,10 +5,10 @@ import com.jaxson.geom.Point;
 
 public abstract class Player
 {
-	protected static final int DEPTH = 4;
 	protected static final int INFINITY = 10000000;
+	protected static final int DEFAULT_DEPTH = 0;
 
-	private int color;
+	private int color, depth;
 	private String name;
 
 	public Player(int color)
@@ -18,9 +18,27 @@ public abstract class Player
 
 	public Player(int color, String name)
 	{
+		this(color, DEFAULT_DEPTH, name);
+	}
+
+	public Player(int color, int depth, String name)
+	{
 		this.color = color;
+		this.depth = depth;
 		this.name = name;
 	}
+
+	/*
+	 [java] TOTAL VALUE: 1
+     [java] 23, 25, 24, 22, 21, 24, 00, 23,
+     [java] 26, 26, 26, 26, 26, 26, 26, 26,
+     [java] 00, 00, 00, 00, 00, 00, 00, 00,
+     [java] 00, 00, 00, 00, 00, 00, 00, 25,
+     [java] 00, 00, 00, 00, 00, 00, 00, 00,
+     [java] 00, 00, 00, 00, 00, 00, 00, 00,
+     [java] 16, 16, 16, 00, 16, 16, 16, 16,
+     [java] 13, 15, 14, 12, 11, 14, 15, 13,
+	 */
 
 	public abstract int evaluateBoard(IntBoard board);
 
@@ -31,7 +49,7 @@ public abstract class Player
 
 	public int getDepth()
 	{
-		return DEPTH;
+		return depth;
 	}
 
 	public String getName()

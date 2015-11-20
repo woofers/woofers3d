@@ -395,7 +395,7 @@ public class IntBoard
 		return true;
 	}
 
-	public Move miniMax(int depth)
+	private Move miniMax(int depth)
 	{
 		int maxDepth, alpha, beta;
 		maxDepth = depth;
@@ -408,34 +408,27 @@ public class IntBoard
 		bestValue = alpha;
 		for (Move move: moves)
 		{
-			System.out.println(move.getOrigin().color);
-			if (true)
+			move.move(this);
+			if (hasWon(color))
 			{
-				move.move(this);
-				if (hasWon(color))
-				{
-					value = infinity - maxDepth + depth;
-				}
-				else if (depth == 0 || moves.isEmpty())
-				{
-					value = player.evaluateBoard(this);
-				}
-				else
-				{
-					value = min(depth - 1, maxDepth, alpha, beta);
-				}
-				move.undo(this);
-				if (value > bestValue)
-				{
-					bestValue = value;
-					bestMove = move;
-				}
-				beta = Math.max(beta, bestValue);
-				if (alpha >= beta)
-				{
-					break;
-				}
+				value = infinity - maxDepth + depth;
 			}
+			else if (depth == 0 || moves.isEmpty())
+			{
+				value = player.evaluateBoard(this);
+			}
+			else
+			{
+				value = min(depth - 1, maxDepth, alpha, beta);
+			}
+			move.undo(this);
+			if (value > bestValue)
+			{
+				bestValue = value;
+				bestMove = move;
+			}
+			alpha = Math.max(alpha, bestValue);
+			if (alpha >= beta) break;
 		}
 		return bestMove;
 	}
@@ -443,39 +436,31 @@ public class IntBoard
 	private int min(int depth, int maxDepth, int alpha, int beta)
 	{
 		MoveList moves = getLegalMoves(color);
-		Move bestMove;
 		int bestValue, value, currentX;
 		bestValue = beta;
 		for (Move move: moves)
 		{
-			if (true)
+			move.move(this);
+			if (hasWon(color))
 			{
-				move.move(this);
-				if (hasWon(color))
-				{
-					value = infinity - maxDepth + depth;
-				}
-				else if (depth == 0 || moves.isEmpty())
-				{
-					value = player.evaluateBoard(this);
-				}
-				else
-				{
-					value = max(depth - 1, maxDepth, alpha, beta);
-				}
-				move.undo(this);
-
-				if (value < bestValue)
-				{
-					bestValue = value;
-					bestMove = move;
-				}
-				beta = Math.min(beta, bestValue);
-				if (alpha >= beta)
-				{
-					break;
-				}
+				value = infinity - maxDepth + depth;
 			}
+			else if (depth == 0 || moves.isEmpty())
+			{
+				value = player.evaluateBoard(this);
+			}
+			else
+			{
+				value = max(depth - 1, maxDepth, alpha, beta);
+			}
+			move.undo(this);
+
+			if (value < bestValue)
+			{
+				bestValue = value;
+			}
+			beta = Math.min(beta, bestValue);
+			if (alpha >= beta) break;
 		}
 		return bestValue;
 	}
@@ -483,39 +468,31 @@ public class IntBoard
 	private int max(int depth, int maxDepth, int alpha, int beta)
 	{
 		MoveList moves = getLegalMoves(color);
-		Move bestMove;
 		int bestValue, value, currentX;
 		bestValue = alpha;
 		for (Move move: moves)
 		{
-			if (true)
+			move.move(this);
+			if (hasWon(color))
 			{
-				move.move(this);
-				if (hasWon(color))
-				{
-					value = infinity - maxDepth + depth;
-				}
-				else if (depth == 0 || moves.isEmpty())
-				{
-					value = player.evaluateBoard(this);
-				}
-				else
-				{
-					value = min(depth - 1, maxDepth, alpha, beta);
-				}
-				move.undo(this);
-
-				if (value > bestValue)
-				{
-					bestValue = value;
-					bestMove = move;
-				}
-				beta = Math.max(beta, bestValue);
-				if (alpha >= beta)
-				{
-					break;
-				}
+				value = infinity - maxDepth + depth;
 			}
+			else if (depth == 0 || moves.isEmpty())
+			{
+				value = player.evaluateBoard(this);
+			}
+			else
+			{
+				value = min(depth - 1, maxDepth, alpha, beta);
+			}
+			move.undo(this);
+
+			if (value > bestValue)
+			{
+				bestValue = value;
+			}
+			alpha = Math.max(alpha, bestValue);
+			if (alpha >= beta) break;
 		}
 		return bestValue;
 	}
@@ -538,6 +515,11 @@ public class IntBoard
 	public void setSpots(IntPiece[][] value)
 	{
 		spots = value;
+		//new Move(spots[3][6], spots[3][4]).move(this);
+		//new Move(spots[6][0], spots[5][2]).move(this);
+		//new Move(spots[3][4], spots[3][3]).move(this);
+		//new Move(spots[5][2], spots[7][3]).move(this);
+		print();
 	}
 
 	public void setSpot(IntPiece value)
