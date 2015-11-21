@@ -5,7 +5,7 @@
 	<property name="jar.dir"     value="${build.dir}/jar"/>
 	<property name="lib.dir"     value="lib"/>
 	<property name="src.dir"     value="src"/>
-	<property name="main-class"  value="com.jaxson.Main"/>
+	<property name="main-class"  value="com.jaxson.chess.Main"/>
 
 	<target name="clean">
 		<delete dir="${build.dir}"/>

@@ -3,7 +3,7 @@ package com.jaxson.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.jaxson.Main;
+import com.jaxson.woofers3d.Main;
 
 public class HtmlLauncher extends GwtApplication {
 
