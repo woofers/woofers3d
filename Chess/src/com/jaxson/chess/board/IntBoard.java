@@ -24,7 +24,7 @@ public class IntBoard
 
 	public IntBoard(Board board)
 	{
-		this(board.gridWidth, board.gridHeight, board.turn);
+		this(board.getBoardWidth(), board.getBoardHeight(), board.getTurn());
 	}
 
 	public IntBoard(int width, int height, int turn)

@@ -21,6 +21,11 @@ public class MoveHistory
 		index = size() - 1;
 	}
 
+	public void clear()
+	{
+		history.clear();
+	}
+
 	public Boolean hasUndo()
 	{
 		return index >= 0 && size() >= index;

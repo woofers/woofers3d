@@ -26,7 +26,8 @@ public class Board extends Panel
 	{
 		super();
 		this.window = window;
-		reset();
+		this.moveHistory = new MoveHistory();
+		reset(REGULAR_SIZE, REGULAR_SIZE, true);
 	}
 
 	private void addPieces()
@@ -58,9 +59,8 @@ public class Board extends Panel
 
 	private void createGrid(int width, int height)
 	{
-		width = width;
-		height = height;
-
+		this.width = width;
+		this.height = height;
 		setLayout(new GridLayout(height, width));
 		board = new Spot[width][height];
 		for (int y = 0; y < height; y ++)
@@ -73,6 +73,7 @@ public class Board extends Panel
 			}
 		}
 		addPieces();
+		draw();
 	}
 
 	private void createPawns(int row, int color)
@@ -117,6 +118,26 @@ public class Board extends Panel
 		return moveHistory;
 	}
 
+	public int getColor()
+	{
+		return color;
+	}
+
+	public int getBoardHeight()
+	{
+		return height;
+	}
+
+	public int getTurn()
+	{
+		return turn;
+	}
+
+	public int getBoardWidth()
+	{
+		return width;
+	}
+
 	public Spot getSpot(IntPiece spot)
 	{
 		if (spot == null) return null;
@@ -150,11 +171,6 @@ public class Board extends Panel
 		return moveHistory.hasRedo();
 	}
 
-	private Boolean isEmpty()
-	{
-		return width <= 0 || height <= 0;
-	}
-
 	public void undo()
 	{
 		deselect();
@@ -174,7 +190,6 @@ public class Board extends Panel
 
 	public void removeGrid()
 	{
-		if (isEmpty()) return;
 		for (int y = 0; y < height; y ++)
 		{
 			for (int x = 0; x < width; x ++)
@@ -183,6 +198,7 @@ public class Board extends Panel
 				board[x][y] = null;
 			}
 		}
+		draw();
 	}
 
 	public void reset()
@@ -192,17 +208,16 @@ public class Board extends Panel
 
 	public void reset(int width, int height)
 	{
-		this.width = width;
-		this.height = height;
-		if (!isEmpty())
-		{
-			removeGrid();
-			createGrid(width, height);
-		}
-		moveHistory = new MoveHistory();
-		turn = 0;
+		reset(width, height, false);
+	}
+
+	public void reset(int width, int height, Boolean isInit)
+	{
 		color = DEFAULT_COLOR;
-		draw();
+		turn = 0;
+		moveHistory.clear();
+		if (!isInit) removeGrid();
+		if (width > 0 && height > 0) createGrid(width, height);
 	}
 
 	public void setOptions(Options value)
@@ -212,12 +227,7 @@ public class Board extends Panel
 
 	public void swapColors()
 	{
-		if (color == Piece.BLACK)
-		{
-			color = Piece.WHITE;
-			return;
-		}
-		color = Piece.BLACK;
+		color = Piece.getOppositeColor(color);
 	}
 
 	private Boolean spotExist(int x, int y)

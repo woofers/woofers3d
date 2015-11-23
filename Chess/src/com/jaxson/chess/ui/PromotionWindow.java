@@ -61,7 +61,6 @@ public class PromotionWindow extends Dialog
 		spots[0][1].createPiece(Piece.BISHOP, color);
 		spots[1][1].createPiece(Piece.KNIGHT, color);
 
-		draw();
 		showWindow();
 	}
 

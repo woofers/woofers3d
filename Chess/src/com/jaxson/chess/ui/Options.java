@@ -13,65 +13,71 @@ import com.jaxson.lib.ui.Panel;
 
 public class Options extends Panel
 {
-	private static final Dimension COMBOSIZE = new Dimension(80, 20);
-	private static final Dimension UNDOOSIZE = new Dimension(30, 26);
-	private static final Dimension PANELSIZE = new Dimension(100, 30);
-	private static final String EASY         = "Easy";
-	private static final String HARD         = "Hard";
-	private static final String PLAYER       = "Player";
-	private static final String SEPERATOR    = "x";
-	private static final String RESET        = "Reset";
-	private static final String UNDO         = "<<";
-	private static final String REDO         = ">>";
+	private static final Dimension COMBO_SIZE = new Dimension(80, 20);
+	private static final Dimension UNDOO_SIZE = new Dimension(30, 26);
+	private static final Dimension PANEL_SIZE = new Dimension(100, 30);
+	private static final int UNDOPANEL_WIDTH  = 2;
+	private static final int UNDOPANEL_HEIGHT = 1;
+	private static final int[] GRID_SIZES     = {8, 10, 12, 14, 16};
+	private static final int[] PLAYERMODES    = {1, 2};
+	private static final String EASY          = "Easy";
+	private static final String HARD          = "Hard";
+	private static final String PLAYER        = "Player";
+	private static final String RESET         = "Reset";
+	private static final String UNDO          = "<<";
+	private static final String REDO          = ">>";
+	private static final String SEPERATOR     = "x";
+	private static final String SPACE         = " ";
 
 	private Board board;
-	private JButton reset, undo, redo;
 	private Panel undoPanel;
-	private JComboBox playerMode, difficulty, gridSize;
+	private JButton restButton, undoButton, redoButton;
+	private JComboBox playerModeBox, difficultyBox, gridSizeBox;
 
 	public Options(Board board)
 	{
 		super();
 		this.board = board;
 
-		playerMode = new JComboBox();
-		playerMode.addItem("1 " + PLAYER);
-		playerMode.addItem("2 " + PLAYER);
-		playerMode.setPreferredSize(COMBOSIZE);
-		add(playerMode);
+		playerModeBox = new JComboBox();
+		for (int mode: PLAYERMODES)
+		{
+			playerModeBox.addItem(mode + SPACE + PLAYER);
+		}
+		playerModeBox.setPreferredSize(COMBO_SIZE);
+		add(playerModeBox);
 
-		difficulty = new JComboBox();
-		difficulty.addItem(EASY);
-		difficulty.addItem(HARD);
-		difficulty.setPreferredSize(COMBOSIZE);
-		add(difficulty);
+		difficultyBox = new JComboBox();
+		difficultyBox.addItem(EASY);
+		difficultyBox.addItem(HARD);
+		difficultyBox.setPreferredSize(COMBO_SIZE);
+		add(difficultyBox);
 
-		gridSize = new JComboBox();
-		gridSize.addItem("8" + SEPERATOR + " 8");
-		gridSize.addItem("10 " + SEPERATOR + " 10");
-		gridSize.addItem("12 " + SEPERATOR + " 12");
-		gridSize.addItem("14 " + SEPERATOR + " 14");
-		gridSize.addItem("16 " + SEPERATOR + " 16");
-		gridSize.setPreferredSize(COMBOSIZE);
-		add(gridSize);
+		gridSizeBox = new JComboBox();
+		for (int size: GRID_SIZES)
+		{
+			gridSizeBox.addItem(size + SEPERATOR + size);
+		}
+		gridSizeBox.setPreferredSize(COMBO_SIZE);
+		add(gridSizeBox);
 
-		undoPanel = new Panel(new GridLayout(1, 2));
-		undoPanel.setPreferredSize(PANELSIZE);
+		undoPanel = new Panel(new GridLayout(UNDOPANEL_HEIGHT, UNDOPANEL_WIDTH));
+		undoPanel.setPreferredSize(PANEL_SIZE);
 		add(undoPanel);
 
-		undo = new JButton(UNDO);
-		undo.setPreferredSize(UNDOOSIZE);
-		undo.addActionListener(new UndoListener(this));
-		undoPanel.add(undo);
+		undoButton = new JButton(UNDO);
+		undoButton.setPreferredSize(UNDOO_SIZE);
+		undoButton.addActionListener(new UndoListener(this));
+		undoPanel.add(undoButton);
 
-		redo = new JButton(REDO);
-		redo.setPreferredSize(UNDOOSIZE);
-		redo.addActionListener(new RedoListener(this));
-		undoPanel.add(redo);
+		redoButton = new JButton(REDO);
+		redoButton.setPreferredSize(UNDOO_SIZE);
+		redoButton.addActionListener(new RedoListener(this));
+		undoPanel.add(redoButton);
 
-		reset = new JButton(RESET);
-		reset.addActionListener(new ResetListener(this));
-		add(reset);
+		restButton = new JButton(RESET);
+		restButton.addActionListener(new ResetListener(this));
+		add(restButton);
 
 		reset();
 	}
@@ -84,8 +90,7 @@ public class Options extends Panel
 	private int getGridSize(int dimension)
 	{
 		String[] string = new String[2];
-		string[0] = gridSize.getSelectedItem().toString().toLowerCase();
-		string = string[0].split(SEPERATOR);
+		string = gridSizeBox.getSelectedItem().toString().toLowerCase().split(SEPERATOR);
 		return Integer.parseInt(string[dimension].trim());
 	}
 
@@ -96,21 +101,21 @@ public class Options extends Panel
 
 	public Boolean hasComputer()
 	{
-		return playerMode.getSelectedItem() == playerMode.getItemAt(0);
+		return playerModeBox.getSelectedItem() == playerModeBox.getItemAt(0);
 	}
 
 	public Boolean isHard()
 	{
-		return difficulty.getSelectedItem() == difficulty.getItemAt(1);
+		return difficultyBox.getSelectedItem() == difficultyBox.getItemAt(1);
 	}
 
 	private void reset()
 	{
-		resetGrid();
+		restGrid();
 		updateControls();
 	}
 
-	private void resetGrid()
+	private void restGrid()
 	{
 		board.reset(getGridWidth(), getGridHeight());
 	}
@@ -140,12 +145,12 @@ public class Options extends Panel
 
 	private void updateRedo()
 	{
-		redo.setEnabled(board.hasRedo());
+		redoButton.setEnabled(board.hasRedo());
 	}
 
 	private void updateUndo()
 	{
-		undo.setEnabled(board.hasUndo());
+		undoButton.setEnabled(board.hasUndo());
 	}
 }
 
