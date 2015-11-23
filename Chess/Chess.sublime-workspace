@@ -4,20 +4,48 @@
 		"selected_items":
 		[
 			[
+				"hea",
+				"heap"
+			],
+			[
+				"is",
+				"isEmpty"
+			],
+			[
+				"get",
+				"getPriority"
+			],
+			[
+				"shi",
+				"shiftDown"
+			],
+			[
+				"new",
+				"newArray"
+			],
+			[
+				"if",
+				"isFull"
+			],
+			[
+				"pa",
+				"patient"
+			],
+			[
+				"che",
+				"checkleftcolor"
+			],
+			[
+				"color",
+				"colormoveleft"
+			],
+			[
 				"LA",
 				"LayoutManager"
 			],
 			[
 				"getW",
 				"getWindowHeight"
-			],
-			[
-				"get",
-				"getHeight"
-			],
-			[
-				"new",
-				"newHeight"
 			],
 			[
 				"sc",
@@ -90,10 +118,6 @@
 			[
 				"Pie",
 				"Piece"
-			],
-			[
-				"is",
-				"isEnemey"
 			],
 			[
 				"max",
@@ -174,10 +198,6 @@
 			[
 				"up",
 				"updateControls"
-			],
-			[
-				"che",
-				"checkButtons"
 			],
 			[
 				"un",
@@ -343,6 +363,29 @@
 	},
 	"buffers":
 	[
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/com/jaxson/lib/ui/ScaleContainer.java",
+			"settings":
+			{
+				"buffer_size": 945,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/com/jaxson/chess/Main.java",
+			"settings":
+			{
+				"buffer_size": 370,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -387,10 +430,30 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 338.0,
-		"last_filter": "conv",
+		"height": 113.0,
+		"last_filter": "git push",
 		"selected_items":
 		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git comit ",
+				"Git: Commit"
+			],
 			[
 				"conv",
 				"Indentation: Convert to Tabs"
@@ -406,18 +469,6 @@
 			[
 				"git pull",
 				"Git: Pull"
-			],
-			[
-				"git push",
-				"Git: Push"
-			],
-			[
-				"git com",
-				"Git: Commit"
-			],
-			[
-				"git add",
-				"Git: Add..."
 			],
 			[
 				"git pus",
@@ -489,28 +540,39 @@
 		"/D/Documents/Development/School/JavaProjects/Chess/src",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/util"
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/chess",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/ui"
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/School/Programming 12/Binary Search Tree/Binary Search Tree/BinarySearchTree.vb",
+		"/D/Documents/Development/School/Programming 12/Binary Search Tree/Binary Search Tree/BooleanTree.vb",
+		"/D/Documents/Development/School/CS 115/Assignment 5/Heap.java",
+		"/D/Documents/Development/School/CS 115/Assignment 5/ER_Patient.java",
+		"/D/Documents/Development/School/CS 115/Assignment 5/PriorityQueue.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/ui/Dialog.java",
+		"/D/Documents/Development/School/CS 115/Assignment 5/NoSuchCategoryException.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Main.java",
+		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
+		"/D/Program Files (x86)/Steam/steamapps/common/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
+		"/D/Program Files (x86)/Steam/steamapps/common/Counter-Strike Global Offensive/csgo/cfg/ch.cfg",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyMath.java",
+		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/util/MyMath.java",
+		"/C/Users/Jaxson/Desktop/ch.cfg",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
 		"/D/Documents/Development/School/JavaProjects/.gitignore",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/Main.gwt.xml",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Main.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/GameStateManager.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/MenuState.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/State.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/State2D.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/State3D.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyMath.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/settings.gradle",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradlew",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle.properties",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/build.gradle",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyMath.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/util/MyMath.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/util/MyArrayList.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/chess/ui/ChessWindow.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/ui/Window.java",
@@ -527,7 +589,6 @@
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/ui/WindowFactory.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/AbstractList.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/chess/ai/EasyPlayer.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/lib/ui/Dialog.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/chess/ui/Board.java",
 		"/D/Documents/Development/School/JavaProjects/Chess/build.xml",
 		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/Window.java",
@@ -611,17 +672,7 @@
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Piece.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Test/build.xml",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/IntPiece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/Point.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/PromotionWindow.txt",
-		"/C/Program Files/Java/jdk1.8.0_60/JOptionPane.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/Options.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/Board.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/GameWindow.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Checkers/src/com/jaxson/ui/Window.java",
-		"/C/Documents and Settings/Peter/Local Settings/Temp/7zO84A98C36/JFrame.java",
-		"/C/Documents and Settings/Peter/Application Data/Sublime Text 3/Packages/User/myjava.sublime-build",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/Linked Lists.sublime-workspace",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/run.bat"
+		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/containers/Point.java"
 	],
 	"find":
 	{
@@ -639,6 +690,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"checkcolor;",
+			"bin/",
 			"static",
 			"multiNewArray",
 			"		new ChessWindow(width, height);\nnewArray",
@@ -716,6 +769,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"",
+			"checkfowardcolor; checkbackcolor; checkleftcolor; checkrightcolor;",
 			"ICON_PATH",
 			"REGULAR_SIZE",
 			"REGULARSIZE",
@@ -744,8 +799,94 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/com/jaxson/lib/ui/ScaleContainer.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 945,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								202,
+								201
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/com/jaxson/chess/Main.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 370,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								290,
+								290
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -796,7 +937,7 @@
 	"project": "Chess.sublime-project",
 	"replace":
 	{
-		"height": 68.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":

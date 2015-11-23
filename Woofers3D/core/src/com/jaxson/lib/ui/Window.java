@@ -5,53 +5,42 @@ import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
 
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
-public class Dialog<T extends Window> extends JDialog
+public class Window extends JFrame
 {
-	private static final String TITLE          = "Dialog";
-	private static final int WIDTH             = 200;
-	private static final int HEIGHT            = 100;
-	private static final int CLOSE_OPERATION   = DISPOSE_ON_CLOSE;
-	private static final boolean RESIZEABLE    = false;
-	private static final ModalityType MODALITY = DEFAULT_MODALITY_TYPE;
-	private static final double MIN_SIZE       = 0.4;
-	private static final LayoutManager LAYOUT  = new BorderLayout();
+	private static final String TITLE         = "Window";
+	private static final int WIDTH            = 800;
+	private static final int HEIGHT           = 600;
+	private static final double MIN_SIZE      = 0.4;
+	private static final int CLOSE_OPERATION  = EXIT_ON_CLOSE;
+	private static final LayoutManager LAYOUT = new BorderLayout();
 
 	private int width, height;
 
-	public Dialog(LayoutManager layout)
+	public Window()
 	{
-		this(null, layout);
+		this(LAYOUT);
 	}
 
-	public Dialog(T window)
+	public Window(LayoutManager layout)
 	{
-		this(window, LAYOUT);
+		this(WIDTH, HEIGHT, layout);
 	}
 
-	public Dialog(T window, LayoutManager layout)
+	public Window(int width, int height)
 	{
-		this(WIDTH, HEIGHT, window, layout);
+		this(width, height, LAYOUT);
 	}
 
-	public Dialog(int width, int height, T window)
+	public Window(int width, int height, LayoutManager layout)
 	{
-		this(width, height, window, LAYOUT);
-	}
-
-	public Dialog(int width, int height, T window, LayoutManager layout)
-	{
-		super(window);
-		setDialogSize(width, height);
-		setTitle(TITLE);
+		super(TITLE);
+		setWindowSize(width, height);
 		setDefaultCloseOperation(CLOSE_OPERATION);
-		setModalityType(DEFAULT_MODALITY_TYPE);
-		setResizable(RESIZEABLE);
 		setLayout(layout);
-		setScreenRatio(0.5);
 		center();
-		draw();
 	}
 
 	public void center()
@@ -101,22 +90,27 @@ public class Dialog<T extends Window> extends JDialog
 		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 
+	public void setIcon(String iconPath)
+	{
+		setIconImage(new ImageIcon(iconPath).getImage());
+	}
+
 	public void setScreenRatio(double scale)
 	{
-		setDialogSize(getWindowWidth(scale), getWindowHeight(scale));
+		setWindowSize(getWindowWidth(scale), getWindowHeight(scale));
 	}
 
 	public void setWindowHeight(int height)
 	{
-		setDialogSize(width, height);
+		setWindowSize(width, height);
 	}
 
 	public void setWindowWidth(int width)
 	{
-		setDialogSize(width, height);
+		setWindowSize(width, height);
 	}
 
-	public void setDialogSize(int width, int height)
+	public void setWindowSize(int width, int height)
 	{
 		int minWidth  = (int)(width * MIN_SIZE);
 		int minHeight = (int)(height * MIN_SIZE);

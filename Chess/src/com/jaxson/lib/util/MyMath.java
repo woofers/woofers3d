@@ -1,4 +1,4 @@
-package com.jaxson.util;
+package com.jaxson.lib.util;
 
 import java.lang.Math;
 

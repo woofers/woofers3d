@@ -31,38 +31,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "src/com/jaxson/Main.java",
-			"settings":
-			{
-				"buffer_size": 222,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/com/jaxson/linkedlist/LinkedListTester.java",
-			"settings":
-			{
-				"buffer_size": 833,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/com/jaxson/linkedlist/LinkedList.java",
-			"settings":
-			{
-				"buffer_size": 656,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/com/jaxson/linkedlist/Node.java",
-			"settings":
-			{
-				"buffer_size": 1208,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -149,14 +117,14 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/src/com/jaxson/linkedlist"
+		"/D/Documents/Development/School/JavaProjects/Linked Lists"
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/Main.java",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/Node.java",
+		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedList.java",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/build.xml",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/clean.bat",
 		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Linked Lists/kill.bat",
@@ -231,124 +199,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "src/com/jaxson/Main.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 222,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								45,
-								45
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/com/jaxson/linkedlist/LinkedListTester.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 833,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								653,
-								649
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/com/jaxson/linkedlist/LinkedList.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 656,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								656,
-								656
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 193.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/com/jaxson/linkedlist/Node.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1208,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								848,
-								848
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 712.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
