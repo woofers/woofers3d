@@ -7,7 +7,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
-public class Dialog<T extends Window> extends JDialog
+public class Dialog<T extends Window> extends JDialog implements AdvancedWindow
 {
 	private static final String TITLE          = "Dialog";
 	private static final int WIDTH             = 200;
@@ -15,8 +15,8 @@ public class Dialog<T extends Window> extends JDialog
 	private static final int CLOSE_OPERATION   = DISPOSE_ON_CLOSE;
 	private static final boolean RESIZEABLE    = false;
 	private static final ModalityType MODALITY = DEFAULT_MODALITY_TYPE;
-	private static final double MIN_SIZE       = 0.4;
-	private static final LayoutManager LAYOUT  = new BorderLayout();
+	private static final double MIN_SIZE       = AdvancedWindow.MIN_SIZE;
+	private static final LayoutManager LAYOUT  = AdvancedWindow.LAYOUT;
 
 	private int width, height;
 
@@ -43,13 +43,12 @@ public class Dialog<T extends Window> extends JDialog
 	public Dialog(int width, int height, T window, LayoutManager layout)
 	{
 		super(window);
-		setDialogSize(width, height);
+		setWindowSize(width, height);
 		setTitle(TITLE);
 		setDefaultCloseOperation(CLOSE_OPERATION);
 		setModalityType(DEFAULT_MODALITY_TYPE);
 		setResizable(RESIZEABLE);
 		setLayout(layout);
-		setScreenRatio(0.5);
 		center();
 		draw();
 	}
@@ -103,20 +102,20 @@ public class Dialog<T extends Window> extends JDialog
 
 	public void setScreenRatio(double scale)
 	{
-		setDialogSize(getWindowWidth(scale), getWindowHeight(scale));
+		setWindowSize(getWindowWidth(scale), getWindowHeight(scale));
 	}
 
 	public void setWindowHeight(int height)
 	{
-		setDialogSize(width, height);
+		setWindowSize(width, height);
 	}
 
 	public void setWindowWidth(int width)
 	{
-		setDialogSize(width, height);
+		setWindowSize(width, height);
 	}
 
-	public void setDialogSize(int width, int height)
+	public void setWindowSize(int width, int height)
 	{
 		int minWidth  = (int)(width * MIN_SIZE);
 		int minHeight = (int)(height * MIN_SIZE);

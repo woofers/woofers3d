@@ -16,19 +16,17 @@ public class Board extends Panel
 	private static final int REGULAR_SIZE = 8;
 	private static final int DEFAULT_COLOR = Piece.WHITE;
 
-	public int gridWidth, gridHeight, turn, color;
+	public int width, height, turn, color;
 	private ChessWindow window;
 	private MoveHistory moveHistory;
-	private Spot[][] spots;
+	private Spot[][] board;
 	private Options options;
 
 	public Board(ChessWindow window)
 	{
 		super();
 		this.window = window;
-		color = DEFAULT_COLOR;
-		moveHistory = new MoveHistory();
-		turn = 0;
+		reset();
 	}
 
 	private void addPieces()
@@ -45,33 +43,33 @@ public class Board extends Panel
 	private void createBottomRow(int row, int color)
 	{
 		int delta, queen, king;
-		delta = gridWidth - REGULAR_SIZE;
+		delta = width - REGULAR_SIZE;
 		queen = zero(REGULAR_SIZE / 2 + delta / 2);
 		king = queen + 1;
-		spots[queen - 3][row].createPiece(Piece.ROOK, color);
-		spots[queen - 2][row].createPiece(Piece.KNIGHT, color);
-		spots[queen - 1][row].createPiece(Piece.BISHOP, color);
-		spots[queen][row].createPiece(Piece.QUEEN, color);
-		spots[king][row].createPiece(Piece.KING, color);
-		spots[king + 1][row].createPiece(Piece.BISHOP, color);
-		spots[king + 2][row].createPiece(Piece.KNIGHT, color);
-		spots[king + 3][row].createPiece(Piece.ROOK, color);
+		board[queen - 3][row].createPiece(Piece.ROOK, color);
+		board[queen - 2][row].createPiece(Piece.KNIGHT, color);
+		board[queen - 1][row].createPiece(Piece.BISHOP, color);
+		board[queen][row].createPiece(Piece.QUEEN, color);
+		board[king][row].createPiece(Piece.KING, color);
+		board[king + 1][row].createPiece(Piece.BISHOP, color);
+		board[king + 2][row].createPiece(Piece.KNIGHT, color);
+		board[king + 3][row].createPiece(Piece.ROOK, color);
 	}
 
-	public void createGrid(int width, int height)
+	private void createGrid(int width, int height)
 	{
-		gridWidth = width;
-		gridHeight = height;
+		width = width;
+		height = height;
 
-		setLayout(new GridLayout(gridHeight, gridWidth));
-		spots = new Spot[gridWidth][gridHeight];
-		for (int y = 0; y < gridHeight; y ++)
+		setLayout(new GridLayout(height, width));
+		board = new Spot[width][height];
+		for (int y = 0; y < height; y ++)
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			for (int x = 0; x < width; x ++)
 			{
-				spots[x][y] = new Spot(new Point(x, y), this);
-				add(spots[x][y]);
-				if (spots[x][y].isPossibleEnd()) spots[x][y].setWindow(window);
+				board[x][y] = new Spot(new Point(x, y), this);
+				add(board[x][y]);
+				if (board[x][y].isPossibleEnd()) board[x][y].setWindow(window);
 			}
 		}
 		addPieces();
@@ -80,33 +78,33 @@ public class Board extends Panel
 	private void createPawns(int row, int color)
 	{
 		int delta, start;
-		delta = gridWidth - REGULAR_SIZE;
+		delta = width - REGULAR_SIZE;
 		start = zero(REGULAR_SIZE / 2 + delta / 2);
 		for (int x = start; x > start - REGULAR_SIZE / 2; x --)
 		{
-			spots[x][row].createPiece(Piece.PAWN, color);
+			board[x][row].createPiece(Piece.PAWN, color);
 		}
 		start ++;
 		for (int x = start; x < start + REGULAR_SIZE / 2; x ++)
 		{
-			spots[x][row].createPiece(Piece.PAWN, color);
+			board[x][row].createPiece(Piece.PAWN, color);
 		}
 	}
 
 	public void deselect()
 	{
-		for (int y = 0; y < gridHeight; y ++)
+		for (Spot[] row: board)
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			for (Spot spot: row)
 			{
-				spots[x][y].deselect();
+				spot.deselect();
 			}
 		}
 	}
 
 	public int getBottomRow()
 	{
-		return gridHeight - 1;
+		return height - 1;
 	}
 
 	public int getTopRow()
@@ -133,7 +131,7 @@ public class Board extends Panel
 
 	public Spot getSpot(int x, int y)
 	{
-		if (spotExist(x, y)) return spots[x][y];
+		if (spotExist(x, y)) return board[x][y];
 		return null;
 	}
 
@@ -150,6 +148,11 @@ public class Board extends Panel
 	public Boolean hasRedo()
 	{
 		return moveHistory.hasRedo();
+	}
+
+	private Boolean isEmpty()
+	{
+		return width <= 0 || height <= 0;
 	}
 
 	public void undo()
@@ -171,25 +174,31 @@ public class Board extends Panel
 
 	public void removeGrid()
 	{
-		for (int y = 0; y < gridHeight; y ++)
+		if (isEmpty()) return;
+		for (int y = 0; y < height; y ++)
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			for (int x = 0; x < width; x ++)
 			{
-				remove(spots[x][y]);
-				spots[x][y] = null;
+				remove(board[x][y]);
+				board[x][y] = null;
 			}
 		}
 	}
 
 	public void reset()
 	{
-		reset(gridWidth, gridHeight);
+		reset(width, height);
 	}
 
 	public void reset(int width, int height)
 	{
-		removeGrid();
-		createGrid(width, height);
+		this.width = width;
+		this.height = height;
+		if (!isEmpty())
+		{
+			removeGrid();
+			createGrid(width, height);
+		}
 		moveHistory = new MoveHistory();
 		turn = 0;
 		color = DEFAULT_COLOR;
@@ -213,21 +222,21 @@ public class Board extends Panel
 
 	private Boolean spotExist(int x, int y)
 	{
-		return x >= 0 && x < gridWidth && y >= 0 && y < gridHeight;
+		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
 	public IntBoard toIntBoard()
 	{
 		IntBoard intBoard = new IntBoard(this);
-		IntPiece[][] spots = new IntPiece[gridWidth][gridHeight];
-		for (int y = 0; y < gridHeight; y ++)
+		IntPiece[][] board = new IntPiece[width][height];
+		for (int y = 0; y < height; y ++)
 		{
-			for (int x = 0; x < gridWidth; x ++)
+			for (int x = 0; x < width; x ++)
 			{
-				spots[x][y] = this.spots[x][y].toIntPiece();
+				board[x][y] = this.board[x][y].toIntPiece();
 			}
 		}
-		intBoard.setSpots(spots);
+		intBoard.setSpots(board);
 		intBoard.setColor(color);
 		return intBoard;
 	}

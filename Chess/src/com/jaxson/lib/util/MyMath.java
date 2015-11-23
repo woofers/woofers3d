@@ -24,13 +24,8 @@ public class MyMath
 		return Math.log10(value) / Math.log10(base);
 	}
 
-	public static int toInt(float value)
+	public static double log10(double value)
 	{
-		return (int)(value);
-	}
-
-	public static int toInt(double value)
-	{
-		return (int)(value);
+		return log(value, 10);
 	}
 }

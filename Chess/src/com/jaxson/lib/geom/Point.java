@@ -3,7 +3,8 @@ package com.jaxson.lib.geom;
 public class Point
 {
 	private static final String X_PREFIX = "X: ";
-	private static final String Y_PREFIX = ", Y: ";
+	private static final String Y_PREFIX = "Y: ";
+	private static final String SEPARATOR = ", ";
 
 	public int x, y;
 
@@ -31,6 +32,6 @@ public class Point
 	@Override
 	public String toString()
 	{
-		return X_PREFIX + Integer.toString(x) + Y_PREFIX + Integer.toString(y);
+		return X_PREFIX + Integer.toString(x) + SEPARATOR + Y_PREFIX + Integer.toString(y);
 	}
 }

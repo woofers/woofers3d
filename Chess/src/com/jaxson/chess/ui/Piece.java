@@ -25,10 +25,14 @@ public class Piece extends Panel
 	public static final int WHITE  = 1;
 	public static final int BLACK  = 2;
 
-	private static final double SCALE = 0.8;
-	private static final String SEPARATOR = "_";
-	private static final String IMAGEPATH = "assets/images/pieces/";
-	private static final String IMAGETYPE = ".png";
+	private static final String IMAGEPATH     = "assets/images/pieces/";
+	private static final String SEPARATOR     = "_";
+	private static final String IMAGETYPE     = ".png";
+
+	private static final double IMAGE_SCALE             = 0.8;
+	private static final int PROMOTION_WIDTH            = 300;
+	private static final int PROMOTION_HEIGHT           = 300;
+	private static final double PROMOTION_SCREEN_SCALE = 0.4;
 
 	public int type, color, direction, turn;
 	public int passingIndex;
@@ -53,7 +57,8 @@ public class Piece extends Panel
 
 	public Promotion getPromotion(ChessWindow window, IntPiece spot)
 	{
-		PromotionWindow promotionWindow = new PromotionWindow(300, 300, color, window);
+		PromotionWindow promotionWindow = new PromotionWindow(PROMOTION_WIDTH, PROMOTION_HEIGHT, color, window);
+		promotionWindow.setScreenRatio(PROMOTION_SCREEN_SCALE);
 		return new Promotion(spot, promotionWindow.getResult());
 	}
 
@@ -78,8 +83,8 @@ public class Piece extends Panel
 	public void paint(Graphics g)
 	{
 		int width, height, x, y;
-		width = toInt(getWidth() * SCALE);
-		height = toInt(getHeight() * SCALE);
+		width = toInt(getWidth() * IMAGE_SCALE);
+		height = toInt(getHeight() * IMAGE_SCALE);
 		x = toInt((getWidth() - width) / 2);
 		y = toInt((getHeight() - height) / 2);
 		g.drawImage(image, x, y, width, height, null);
