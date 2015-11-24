@@ -46,7 +46,7 @@ public class PieceMove implements MoveType
 			{
 				if (Math.abs(this.oldSpot.location.y - this.newSpot.location.y) == 2)
 				{
-					piece.passingIndex = board.turn;
+					piece.passingIndex = board.getTurn();
 				}
 			}
 		}

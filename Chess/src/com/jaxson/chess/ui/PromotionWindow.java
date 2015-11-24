@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -21,9 +19,10 @@ import com.jaxson.lib.ui.Window;
 
 public class PromotionWindow extends Dialog
 {
-	private static final int SIZE = 2;
-	private static final int FONTSIZE = 30;
-	private static final String MESSAGE = "Promote your pawn.";
+	private static final String MESSAGE    = "Promote your pawn.";
+	private static final int GRID_SIZE     = 2;
+	private static final int FONT_SIZE     = 30;
+	private static final int DEFAULT_PIECE = Piece.QUEEN;
 
 	private Spot[][] spots;
 	private ScaleContainer scaleContainer;
@@ -35,21 +34,19 @@ public class PromotionWindow extends Dialog
 	{
 		super(width, height, window);
 		setTitle(ChessWindow.TITLE);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(new CloseAdapter(this));
 
 		label = new JLabel(MESSAGE, SwingConstants.CENTER);
-		label.setFont(new Font(label.getName(), Font.PLAIN, FONTSIZE));
+		label.setFont(new Font(label.getName(), Font.PLAIN, FONT_SIZE));
 		add(label, BorderLayout.PAGE_END);
 
-		panel = new Panel(new GridLayout(SIZE, SIZE));
+		panel = new Panel(new GridLayout(GRID_SIZE, GRID_SIZE));
 		scaleContainer = new ScaleContainer<>(panel);
 		add(scaleContainer, BorderLayout.CENTER);
 
-		spots = new Spot[SIZE][SIZE];
-		for (int y = 0; y < SIZE; y ++)
+		spots = new Spot[GRID_SIZE][GRID_SIZE];
+		for (int y = 0; y < GRID_SIZE; y ++)
 		{
-			for (int x = 0; x < SIZE; x ++)
+			for (int x = 0; x < GRID_SIZE; x ++)
 			{
 				spots[x][y] = new Spot(new Point(x, y));
 				spots[x][y].addMouseListener(new PieceAdapter(spots[x][y], this));
@@ -60,14 +57,9 @@ public class PromotionWindow extends Dialog
 		spots[1][0].createPiece(Piece.ROOK, color);
 		spots[0][1].createPiece(Piece.BISHOP, color);
 		spots[1][1].createPiece(Piece.KNIGHT, color);
+		result = DEFAULT_PIECE;
 
 		showWindow();
-	}
-
-	public void close()
-	{
-		result = Piece.QUEEN;
-		dispose();
 	}
 
 	public int getResult()
@@ -80,21 +72,6 @@ public class PromotionWindow extends Dialog
 		spot.select();
 		result = spot.getPiece().type;
 		dispose();
-	}
-}
-
-class CloseAdapter extends WindowAdapter
-{
-	private PromotionWindow window;
-
-	public CloseAdapter(PromotionWindow window)
-	{
-		this.window = window;
-	}
-
-	public void windowClosing(WindowEvent e)
-	{
-		window.close();
 	}
 }
 

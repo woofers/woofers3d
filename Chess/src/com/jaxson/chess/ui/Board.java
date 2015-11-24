@@ -13,10 +13,10 @@ import com.jaxson.lib.ui.Window;
 
 public class Board extends Panel
 {
+	public static final int DEFAULT_COLOR = Piece.WHITE;
 	private static final int REGULAR_SIZE = 8;
-	private static final int DEFAULT_COLOR = Piece.WHITE;
 
-	public int width, height, turn, color;
+	private int width, height, turn, color;
 	private ChessWindow window;
 	private MoveHistory moveHistory;
 	private Spot[][] board;
@@ -59,6 +59,7 @@ public class Board extends Panel
 
 	private void createGrid(int width, int height)
 	{
+		if (width <= 0 && height <= 0) return;
 		this.width = width;
 		this.height = height;
 		setLayout(new GridLayout(height, width));
@@ -217,12 +218,17 @@ public class Board extends Panel
 		turn = 0;
 		moveHistory.clear();
 		if (!isInit) removeGrid();
-		if (width > 0 && height > 0) createGrid(width, height);
+		createGrid(width, height);
 	}
 
-	public void setOptions(Options value)
+	public void setTurn(int turn)
 	{
-		options = value;
+		this.turn = turn;
+	}
+
+	public void setOptions(Options options)
+	{
+		this.options = options;
 	}
 
 	public void swapColors()
@@ -237,18 +243,7 @@ public class Board extends Panel
 
 	public IntBoard toIntBoard()
 	{
-		IntBoard intBoard = new IntBoard(this);
-		IntPiece[][] board = new IntPiece[width][height];
-		for (int y = 0; y < height; y ++)
-		{
-			for (int x = 0; x < width; x ++)
-			{
-				board[x][y] = this.board[x][y].toIntPiece();
-			}
-		}
-		intBoard.setSpots(board);
-		intBoard.setColor(color);
-		return intBoard;
+		return new IntBoard(this);
 	}
 
 	private int zero(int i)

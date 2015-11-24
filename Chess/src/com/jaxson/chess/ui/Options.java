@@ -16,6 +16,7 @@ public class Options extends Panel
 	private static final Dimension COMBO_SIZE = new Dimension(80, 20);
 	private static final Dimension UNDOO_SIZE = new Dimension(30, 26);
 	private static final Dimension PANEL_SIZE = new Dimension(100, 30);
+	private static final Dimension SIZE       = new Dimension(100, 100);
 	private static final int UNDOPANEL_WIDTH  = 2;
 	private static final int UNDOPANEL_HEIGHT = 1;
 	private static final int[] GRID_SIZES     = {8, 10, 12, 14, 16};
@@ -38,6 +39,7 @@ public class Options extends Panel
 	{
 		super();
 		this.board = board;
+		setPreferredSize(SIZE);
 
 		playerModeBox = new JComboBox();
 		for (int mode: PLAYERMODES)

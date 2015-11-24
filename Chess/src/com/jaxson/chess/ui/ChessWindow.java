@@ -7,9 +7,12 @@ import com.jaxson.lib.ui.Window;
 
 public class ChessWindow extends Window
 {
-	public static final String TITLE         = "Chess";
-	private static final String ICON_PATH    = "assets/images/icon.png";
-	private static final double SCREEN_SCALE = 0.8;
+	public static final String TITLE          = "Chess";
+	private static final String ICON_PATH     = "assets/images/icon.png";
+	private static final double SCREEN_SCALE  = 0.8;
+
+	private static final String BOARD_LOCATION   = BorderLayout.CENTER;
+	private static final String OPTIONS_LOCATION = BorderLayout.LINE_END;
 
 	private Board board;
 	private ScaleContainer scaleContainer;
@@ -25,12 +28,11 @@ public class ChessWindow extends Window
 
 		board = new Board(this);
 		scaleContainer = new ScaleContainer<>(board);
-		add(scaleContainer, BorderLayout.CENTER);
+		add(scaleContainer, BOARD_LOCATION);
 
 		options = new Options(board);
-		options.setPreferredSize(new Dimension(100, 100));
 		board.setOptions(options);
-		add(options, BorderLayout.LINE_END);
+		add(options, OPTIONS_LOCATION);
 
 		showWindow();
 	}

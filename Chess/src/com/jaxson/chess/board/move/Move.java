@@ -56,7 +56,7 @@ public class Move
 
 	public void move(Board board)
 	{
-		board.turn ++;
+		board.setTurn(board.getTurn() + 1);
 		for (MoveType move: moveTypes)
 		{
 			move.move(board);
@@ -104,7 +104,7 @@ public class Move
 
 	public void undo(Board board)
 	{
-		board.turn --;
+		board.setTurn(board.getTurn() - 1);
 		for (MoveType move: moveTypes)
 		{
 			move.undo(board);

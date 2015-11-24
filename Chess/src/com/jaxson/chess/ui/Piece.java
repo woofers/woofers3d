@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
 
 import com.jaxson.chess.board.IntPiece;
 import com.jaxson.chess.board.move.Promotion;
@@ -29,9 +30,9 @@ public class Piece extends Panel
 	private static final String SEPARATOR     = "_";
 	private static final String IMAGETYPE     = ".png";
 
-	private static final double IMAGE_SCALE             = 0.8;
-	private static final int PROMOTION_WIDTH            = 300;
-	private static final int PROMOTION_HEIGHT           = 300;
+	private static final double IMAGE_SCALE            = 0.8;
+	private static final int PROMOTION_WIDTH           = 300;
+	private static final int PROMOTION_HEIGHT          = 300;
 	private static final double PROMOTION_SCREEN_SCALE = 0.4;
 
 	public int type, color, direction, turn;
@@ -48,8 +49,8 @@ public class Piece extends Panel
 		super();
 		this.type = type;
 		this.color = color;
-		this.direction = getStartDirection();
 		this.turn = turn;
+		this.direction = getStartDirection();
 		passingIndex = -1;
 		setOpaque(false);
 		setImage(IMAGEPATH + color + SEPARATOR + type + IMAGETYPE);
@@ -83,10 +84,10 @@ public class Piece extends Panel
 	public void paint(Graphics g)
 	{
 		int width, height, x, y;
-		width = toInt(getWidth() * IMAGE_SCALE);
-		height = toInt(getHeight() * IMAGE_SCALE);
-		x = toInt((getWidth() - width) / 2);
-		y = toInt((getHeight() - height) / 2);
+		width = (int)(getWidth() * IMAGE_SCALE);
+		height = (int)(getHeight() * IMAGE_SCALE);
+		x = (int)((getWidth() - width) / 2);
+		y = (int)((getHeight() - height) / 2);
 		g.drawImage(image, x, y, width, height, null);
 	}
 
@@ -102,15 +103,8 @@ public class Piece extends Panel
 		}
 	}
 
-	private int toInt(double i)
-	{
-		return (int)(Math.floor(i));
-	}
-
 	public IntPiece toIntPiece(Point location)
 	{
-		IntPiece newIntPiece = new IntPiece(type, color, location, direction, turn);
-		newIntPiece.passingIndex = passingIndex;
-		return newIntPiece;
+		return new IntPiece(this, location);
 	}
 }

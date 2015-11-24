@@ -43,10 +43,7 @@ public class Spot extends Panel
 		this.board = board;
 		this.location = location;
 		deselect();
-		if (board != null)
-		{
-			addMouseListener(new SpotMouseAdapter(this));
-		}
+		if (board != null) addMouseListener(new SpotMouseAdapter(this));
 	}
 
 	public void createPiece(int type, int color)
@@ -78,10 +75,7 @@ public class Spot extends Panel
 			spot.setMove(move);
 			spot.moveSelect();
 		}
-		if (moves.isEmpty())
-		{
-			deselect();
-		}
+		if (moves.isEmpty()) deselect();
 	}
 
 	@Override
@@ -89,6 +83,11 @@ public class Spot extends Panel
 	{
 		if (piece != null) piece.draw();
 		super.draw();
+	}
+
+	public int getBottomRow()
+	{
+		return board.getBottomRow();
 	}
 
 	private Color getColor()
@@ -108,17 +107,15 @@ public class Spot extends Panel
 		return DARKCOLOR;
 	}
 
-	private Spot getKingCastleSpot(int direction)
-	{
-		Spot spot = board.getSpot(location.x + 2, location.y);
-		return spot;
-	}
-
 	public Piece getPiece()
 	{
 		return piece;
 	}
 
+	public Point getPieceLocation()
+	{
+		return location;
+	}
 
 	private void holdMoveSelect()
 	{
@@ -129,7 +126,7 @@ public class Spot extends Panel
 	{
 		if (!isEmpty())
 		{
-			setBackground(HOLDSELECTEDCOLOR);
+			if (piece.color == board.getColor()) setBackground(HOLDSELECTEDCOLOR);
 		}
 	}
 
@@ -144,17 +141,11 @@ public class Spot extends Panel
 		{
 			if (piece.color == Piece.BLACK)
 			{
-				if (location.y == board.getBottomRow())
-				{
-					return true;
-				}
+				return location.y == board.getBottomRow();
 			}
 			else
 			{
-				if (location.y == board.getTopRow())
-				{
-					return true;
-				}
+				return location.y == board.getTopRow();
 			}
 		}
 		return false;
@@ -177,10 +168,7 @@ public class Spot extends Panel
 		{
 			if (isEnd())
 			{
-				if (piece.type == Piece.PAWN)
-				{
-					return true;
-				}
+				return piece.type == Piece.PAWN;
 			}
 		}
 		return false;
@@ -233,8 +221,6 @@ public class Spot extends Panel
 		else
 		{
 			deselectAll();
-			if (piece == null) return;
-			if (piece.color != board.color) return;
 			holdSelect();
 		}
 	}
@@ -255,10 +241,7 @@ public class Spot extends Panel
 
 	public void removePiece()
 	{
-		if (isEmpty())
-		{
-			return;
-		}
+		if (isEmpty()) return;
 		remove(piece);
 		piece = null;
 		draw();
@@ -266,39 +249,31 @@ public class Spot extends Panel
 
 	public void select()
 	{
-		if (!isEmpty())
-		{
-			setBackground(SELECTEDCOLOR);
-		}
+		if (!isEmpty()) setBackground(SELECTEDCOLOR);
 	}
 
-	public void setPiece(Piece newPiece)
+	public void setPiece(Piece piece)
 	{
 		removePiece();
-		piece = newPiece;
-		if (piece != null)
-		{
-			add(piece);
-		}
+		this.piece = piece;
+		if (piece != null) add(piece);
 		draw();
 	}
 
-	public void setMove(Move value)
+	public void setMove(Move move)
 	{
-		move = value;
+		this.move = move;
 	}
 
-	public void setWindow(ChessWindow value)
+	public void setWindow(ChessWindow window)
 	{
-		window = value;
+		this.window = window;
 	}
 
 	public IntPiece toIntPiece()
 	{
 		if (isEmpty()) return new IntPiece(location);
-		IntPiece newPiece = piece.toIntPiece(location);
-		newPiece.boardHeight = board.getBottomRow();
-		return newPiece;
+		return new IntPiece(this);
 	}
 }
 

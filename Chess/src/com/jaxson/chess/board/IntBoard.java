@@ -17,19 +17,25 @@ public class IntBoard
 {
 	public static final int infinity = Integer.MAX_VALUE;
 
-	private int width, height, turn;
-	private int color;
-	private IntPiece[][] spots;
+	private int width, height, turn, color;
 	private Player player;
+	private IntPiece[][] board;
 
 	public IntBoard(Board board)
 	{
-		this(board.getBoardWidth(), board.getBoardHeight(), board.getTurn());
+		this(board.getBoardWidth(), board.getBoardHeight(), board.getTurn(), board.getColor());
+		for (int y = 0; y < height; y ++)
+		{
+			for (int x = 0; x < width; x ++)
+			{
+				this.board[x][y] = board.getSpot(x, y).toIntPiece();
+			}
+		}
 	}
 
 	public IntBoard(int width, int height, int turn)
 	{
-		this(width, height, turn, 0);
+		this(width, height, turn, Board.DEFAULT_COLOR);
 	}
 
 	public IntBoard(int width, int height, int turn, int color)
@@ -38,7 +44,8 @@ public class IntBoard
 		this.height = height;
 		this.turn = turn;
 		this.color = color;
-		player = new HardPlayer(Piece.BLACK);
+		this.board = new IntPiece[width][height];
+		this.player = new HardPlayer(Piece.BLACK);
 	}
 
 	public Move aiMove()
@@ -46,25 +53,24 @@ public class IntBoard
 		return miniMax(player.getDepth());
 	}
 
-	public IntBoard clone()
-	{
-		IntBoard newBoard = new IntBoard(width, height, color);
-		IntPiece[][] newSpots = new IntPiece[width][height];
-		for (int y = 0; y < height; y ++)
-		{
-			for (int x = 0; x < width; x ++)
-			{
-				newSpots[x][y] = spots[x][y].clone();
-			}
-		}
-		newBoard.setPlayer(player);
-		newBoard.setSpots(newSpots);
-		return newBoard;
-	}
-
 	public int getColor()
 	{
 		return color;
+	}
+
+	public int getHeight()
+	{
+		return height;
+	}
+
+	public int getTurn()
+	{
+		return turn;
+	}
+
+	public int getWidth()
+	{
+		return width;
 	}
 
 	private MoveList getAllAbove(IntPiece piece)
@@ -228,18 +234,11 @@ public class IntBoard
 				moves = getKnight(piece);
 				break;
 			case Piece.PAWN:
-				moves = getPawn(piece);
+				moves.addAll(getPawn(piece));
 				moves.addAll(getPromotion(piece));
 				break;
 		}
 		return moves;
-	}
-
-	private Point getLocation(int x, int y)
-	{
-		IntPiece piece = getSpot(x, y);
-		if (piece != null) return piece.location;
-		return null;
 	}
 
 	private MoveList getPawn(IntPiece piece)
@@ -267,11 +266,21 @@ public class IntBoard
 	private MoveList getPawnCapture(IntPiece piece)
 	{
 		MoveList moves = new MoveList();
-		moves.add(new Move(getSpot(piece.location.x + 1, piece.location.y + piece.direction), piece));
-		moves.add(new Move(getSpot(piece.location.x - 1, piece.location.y + piece.direction), piece));
-		Move move;
 		IntPiece spot;
+		spot = getSpot(piece.location.x + 1, piece.location.y + piece.direction);
+		if (spot != null)
+		{
+			if (spot.isEnemey(piece.color)) moves.add(new Move(spot, piece));
+		}
+		spot = getSpot(piece.location.x - 1, piece.location.y + piece.direction);
+		if (spot != null)
+		{
+			if (spot.isEnemey(piece.color)) moves.add(new Move(spot, piece));
+		}
+
+		Move move;
 		int index = 0;
+		/*
 		while (index < moves.size())
 		{
 			move = moves.get(index);
@@ -283,6 +292,7 @@ public class IntBoard
 			}
 			index ++;
 		}
+		*/
 		return moves;
 	}
 
@@ -335,7 +345,7 @@ public class IntBoard
 		{
 			for (int x = 0; x < width; x ++)
 			{
-				if (spots[x][y].color == color) pieces.add(spots[x][y]);
+				if (board[x][y].color == color) pieces.add(board[x][y]);
 			}
 		}
 		return pieces;
@@ -362,7 +372,7 @@ public class IntBoard
 
 	public IntPiece getSpot(int x, int y)
 	{
-		if (spotExist(x, y)) return spots[x][y];
+		if (spotExist(x, y)) return board[x][y];
 		return null;
 	}
 
@@ -386,9 +396,9 @@ public class IntBoard
 		{
 			for (int x = 0; x < width; x ++)
 			{
-				if (spots[x][y].isEnemey(color))
+				if (board[x][y].isEnemey(color))
 				{
-					if (spots[x][y].type == Piece.KING) return false;
+					if (board[x][y].type == Piece.KING) return false;
 				}
 			}
 		}
@@ -512,16 +522,6 @@ public class IntBoard
 		player = value;
 	}
 
-	public void setSpots(IntPiece[][] value)
-	{
-		spots = value;
-		//new Move(spots[3][6], spots[3][4]).move(this);
-		//new Move(spots[6][0], spots[5][2]).move(this);
-		//new Move(spots[3][4], spots[3][3]).move(this);
-		//new Move(spots[5][2], spots[7][3]).move(this);
-		print();
-	}
-
 	public void setSpot(IntPiece value)
 	{
 		setSpot(value, value.location);
@@ -535,29 +535,17 @@ public class IntBoard
 	public void setSpot(IntPiece value, int x, int y)
 	{
 		value.location = new Point(x, y);
-		spots[x][y] = value;
+		board[x][y] = value;
 	}
 
 	private Boolean spotExist(int x, int y)
 	{
-		if (x >= 0 && x < width)
-		{
-			if (y >= 0 && y < height)
-			{
-				return true;
-			}
-		}
-		return false;
+		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
 	public void swapColors()
 	{
-		if (color == Piece.BLACK)
-		{
-			color = Piece.WHITE;
-			return;
-		}
-		color = Piece.BLACK;
+		color = Piece.getOppositeColor(color);
 	}
 
 	@Override
@@ -568,7 +556,7 @@ public class IntBoard
 		{
 			for (int x = 0; x < width; x ++)
 			{
-				string += spots[x][y].toString();
+				string += board[x][y].toString();
 				string += ", ";
 			}
 			string += "\n";

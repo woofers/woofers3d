@@ -1,6 +1,7 @@
 package com.jaxson.chess.board;
 
 import com.jaxson.chess.ui.Piece;
+import com.jaxson.chess.ui.Spot;
 import com.jaxson.lib.geom.Point;
 
 public class IntPiece
@@ -19,6 +20,24 @@ public class IntPiece
 		this(0, 0, location, 0);
 	}
 
+	public IntPiece(IntPiece piece)
+	{
+		this(piece.type, piece.color, piece.location, piece.direction, piece.turn);
+		passingIndex = piece.passingIndex;
+	}
+
+	public IntPiece(Spot spot)
+	{
+		this(spot.getPiece(), spot.getPieceLocation());
+		this.boardHeight = spot.getBottomRow();
+	}
+
+	public IntPiece(Piece piece, Point location)
+	{
+		this(piece.type, piece.color, location, piece.direction, piece.turn);
+		passingIndex = piece.passingIndex;
+	}
+
 	public IntPiece(int type, int color, Point location, int direction)
 	{
 		this(type, color, location, direction, 0);
@@ -28,7 +47,7 @@ public class IntPiece
 	{
 		this.type = type;
 		this.color = color;
-		this.location = location;
+		this.location = location.clone();
 		this.direction = direction;
 		this.turn = turn;
 		this.passingIndex = -1;
@@ -41,14 +60,12 @@ public class IntPiece
 
 	public IntPiece clone()
 	{
-		IntPiece newIntPiece = new IntPiece(type, color, location.clone(), direction, turn);
-		newIntPiece.passingIndex = passingIndex;
-		return newIntPiece;
+		return new IntPiece(this);
 	}
 
 	public Boolean hasMoved()
 	{
-		return turn != 0;
+		return turn > 0;
 	}
 
 	public Boolean isEmpty()
