@@ -1,37 +1,38 @@
 package com.jaxson.woofers3d.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Vector3;
+import com.jaxson.woofers3d.entities.Box;
+import com.jaxson.woofers3d.entities.Player;
 import com.jaxson.woofers3d.states.GameStateManager;
 import com.jaxson.woofers3d.states.State3D;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes;
 
 public class PlayState extends State3D
 {
-	protected Model box;
-	protected ModelInstance modelInstance;
+	private FPSLogger fps;
+	private Box box;
+	private Player player;
 
 	public PlayState(GameStateManager gameStateManager)
 	{
 		super(gameStateManager);
 
-        ModelBuilder modelBuilder = new ModelBuilder();
-        Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
-        box = modelBuilder.createBox(2f, 2f, 2f, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        modelInstance = new ModelInstance(box, 0, 0, 0);
+		fps = new FPSLogger();
+
+		box = new Box();
+		add(box);
+
+		player = new Player();
+		add(player);
 	}
 
 	@Override
 	public void dispose()
 	{
-		box.dispose();
+		super.dispose();
 	}
 
 	@Override
@@ -43,15 +44,14 @@ public class PlayState extends State3D
 	@Override
 	public void render(ModelBatch modelBatch)
 	{
-		camera.update();
-        modelBatch.begin(camera);
-        modelBatch.render(modelInstance, environment);
-        modelBatch.end();
+		super.render(modelBatch);
+		fps.log();
 	}
 
 	@Override
 	public void update(float dt)
 	{
+		camera.rotateAround(Vector3.Zero, new Vector3(0, 1, 0), 1f);
 		super.update(dt);
 	}
 }

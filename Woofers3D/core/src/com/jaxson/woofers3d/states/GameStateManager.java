@@ -33,10 +33,9 @@ public class GameStateManager
 
 	public void popAll()
 	{
-		while (!isEmpty())
-		{
-			pop();
-		}
+		if (isEmpty()) return;
+		pop();
+		popAll();
 	}
 
 	public void set(State3D state)

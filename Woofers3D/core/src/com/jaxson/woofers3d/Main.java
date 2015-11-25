@@ -18,18 +18,21 @@ public class Main extends ApplicationAdapter
 	public static final String TITLE        = "Woofers 3D";
 	public static final int WIDTH           = 800;
 	public static final int HEIGHT          = 600;
+	public static final int FPS             = 300;
+	public static final boolean VSYNC       = false;
+	private static final float STEP         = 1f / 120f;
+	private static final float CLAMP		= 1f / 4f;
 	private static final double ASPECTRATIO = (float)(WIDTH) / (float)(HEIGHT);
 
+	private float accumulator;
 	private GameStateManager gameStateManager;
 	private ModelBatch modelBatch;
-	private Rectangle viewport;
 
 	@Override
 	public void create()
 	{
 		gameStateManager = new GameStateManager();
 		modelBatch = new ModelBatch();
-		//viewport = new Rectangle(0, 0, WIDTH, HEIGHT);
 		gameStateManager.push(new PlayState(gameStateManager));
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
@@ -44,39 +47,22 @@ public class Main extends ApplicationAdapter
 	@Override
 	public void render()
 	{
-		//Gdx.gl.glViewport((int)viewport.x, (int)viewport.y, (int)viewport.width, (int)viewport.height);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		gameStateManager.update(Gdx.graphics.getDeltaTime());
+		float dt = Gdx.graphics.getDeltaTime();
+		if (dt > CLAMP) dt = CLAMP;
+		accumulator += dt;
+		while (accumulator >= STEP)
+		{
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+			gameStateManager.update(STEP);
+			accumulator -= STEP;
+		}
 		gameStateManager.render(modelBatch);
 	}
 
 	@Override
 	public void resize(int width, int height)
 	{
-		/*
-		float aspectRatio = (float)width / (float)height;
-		float scale = 1f;
-		Vector2 crop = new Vector2(0f, 0f);
 
-		if(aspectRatio > ASPECTRATIO)
-		{
-			scale = (float)(height) / (float)(HEIGHT);
-			crop.x = (width - WIDTH * scale) / 2f;
-		}
-		else if(aspectRatio < ASPECTRATIO)
-		{
-			scale = (float)(width) / (float)(WIDTH);
-			crop.y = (height - HEIGHT * scale) / 2f;
-		}
-		else
-		{
-			scale = (float)(width) / (float)(WIDTH);
-		}
-
-		int newWidth = MyMath.toInt(width * ASPECTRATIO * scale);
-		int newHeight = MyMath.toInt(height * scale);
-		viewport = new Rectangle(crop.x, crop.y, newWidth, newHeight);
-		*/
 	}
 
 	@Override

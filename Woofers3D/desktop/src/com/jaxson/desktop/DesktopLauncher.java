@@ -9,9 +9,12 @@ public class DesktopLauncher
 	public static void main(String[] arg)
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = Main.TITLE;
-		config.width = Main.WIDTH;
-		config.height = Main.HEIGHT;
+		config.title         = Main.TITLE;
+		config.width         = Main.WIDTH;
+		config.height        = Main.HEIGHT;
+		config.vSyncEnabled  = Main.VSYNC;
+		config.foregroundFPS = Main.FPS;
+		config.backgroundFPS = Main.FPS;
 		new LwjglApplication(new Main(), config);
 	}
 }
