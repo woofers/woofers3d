@@ -1,4 +1,4 @@
-package com.jaxson.woofers3d.entities;
+package com.jaxson.lib.gdx.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
@@ -32,13 +32,23 @@ public abstract class Entity extends ModelInstance
 
 	public void dispose()
 	{
-
+		model.dispose();
 	}
 
-	protected abstract void handleInput();
+	public Model getModel()
+	{
+		return model;
+	}
+
+	public Vector3 getLocation()
+	{
+		return transform.getTranslation(LOCATION);
+	}
+
+	protected abstract void input();
 
 	public void update(float dt)
 	{
-		handleInput();
+		input();
 	}
 }

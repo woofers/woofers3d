@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.woofers3d.entities.Box;
+import com.jaxson.lib.gdx.entities.Box;
+import com.jaxson.lib.gdx.graphics.MyPerspectiveCamera;
+import com.jaxson.lib.gdx.states.GameStateManager;
+import com.jaxson.lib.gdx.states.State;
 import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.woofers3d.states.GameStateManager;
-import com.jaxson.woofers3d.states.State3D;
 
-public class PlayState extends State3D
+public class PlayState extends State<MyPerspectiveCamera>
 {
 	private FPSLogger fps;
 	private Box box;
@@ -18,15 +19,16 @@ public class PlayState extends State3D
 
 	public PlayState(GameStateManager gameStateManager)
 	{
-		super(gameStateManager);
+		super(gameStateManager, new MyPerspectiveCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
 		fps = new FPSLogger();
 
 		box = new Box();
 		add(box);
 
-		player = new Player();
+		player = new Player(camera);
 		add(player);
+		camera.setTarget(player);
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class PlayState extends State3D
 	}
 
 	@Override
-	protected void handleInput()
+	public void input()
 	{
 
 	}
@@ -51,7 +53,6 @@ public class PlayState extends State3D
 	@Override
 	public void update(float dt)
 	{
-		camera.rotateAround(Vector3.Zero, new Vector3(0, 1, 0), 1f);
 		super.update(dt);
 	}
 }
