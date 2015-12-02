@@ -6,7 +6,6 @@ import java.awt.BorderLayout;
 public interface AdvancedWindow
 {
 	public static final double MIN_SIZE      = 0.4;
-	public static final LayoutManager LAYOUT = new BorderLayout();
 
 	public void center();
 

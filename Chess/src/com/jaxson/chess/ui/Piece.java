@@ -59,7 +59,7 @@ public class Piece extends Panel
 	public Promotion getPromotion(ChessWindow window, IntPiece spot)
 	{
 		PromotionWindow promotionWindow = new PromotionWindow(PROMOTION_WIDTH, PROMOTION_HEIGHT, color, window);
-		promotionWindow.setScreenRatio(PROMOTION_SCREEN_SCALE);
+		//promotionWindow.setScreenRatio(PROMOTION_SCREEN_SCALE);
 		return new Promotion(spot, promotionWindow.getResult());
 	}
 
@@ -71,7 +71,7 @@ public class Piece extends Panel
 
 	private int getStartDirection()
 	{
-		if (color == Piece.BLACK) return +1;
+		if (color == BLACK) return +1;
 		return -1;
 	}
 

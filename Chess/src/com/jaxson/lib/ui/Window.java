@@ -16,7 +16,7 @@ public class Window extends JFrame implements AdvancedWindow
 	private static final int CLOSE_OPERATION  = EXIT_ON_CLOSE;
 	private static final boolean RESIZEABLE   = true;
 	private static final double MIN_SIZE      = AdvancedWindow.MIN_SIZE;
-	private static final LayoutManager LAYOUT = AdvancedWindow.LAYOUT;
+	private static final LayoutManager LAYOUT = new BorderLayout();
 
 	private int width, height;
 

@@ -31,6 +31,13 @@ public class IntBoard
 				this.board[x][y] = board.getSpot(x, y).toIntPiece();
 			}
 		}
+
+		//print();
+		//new Move(this.board[3][5], this.board[3][6]).move(this);
+		//new Move(this.board[6][2], this.board[6][0]).move(this);
+		//new Move(this.board[3][4], this.board[3][5]).move(this);
+		//new Move(this.board[7][3], this.board[6][2]).move(this);
+		//print();
 	}
 
 	public IntBoard(int width, int height, int turn)
@@ -45,7 +52,8 @@ public class IntBoard
 		this.turn = turn;
 		this.color = color;
 		this.board = new IntPiece[width][height];
-		this.player = new HardPlayer(Piece.BLACK);
+		this.player = new HardPlayer(color);
+
 	}
 
 	public Move aiMove()
@@ -277,22 +285,6 @@ public class IntBoard
 		{
 			if (spot.isEnemey(piece.color)) moves.add(new Move(spot, piece));
 		}
-
-		Move move;
-		int index = 0;
-		/*
-		while (index < moves.size())
-		{
-			move = moves.get(index);
-			spot = move.getOrigin();
-			if (!spot.isEnemey(piece.color))
-			{
-				moves.remove(index);
-				continue;
-			}
-			index ++;
-		}
-		*/
 		return moves;
 	}
 
@@ -534,6 +526,7 @@ public class IntBoard
 
 	public void setSpot(IntPiece value, int x, int y)
 	{
+		value = value.clone();
 		value.location = new Point(x, y);
 		board[x][y] = value;
 	}

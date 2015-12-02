@@ -8,7 +8,7 @@ import com.jaxson.lib.util.MyArrayList;
 
 public class HardPlayer extends Player
 {
-	private static final int DEPTH = 0;
+	private static final int DEPTH = 2;
 
 	private static final int KING   = INFINITY;
 	private static final int QUEEN  = 9;
@@ -39,9 +39,9 @@ public class HardPlayer extends Player
 				totalValue -= getValue(piece);
 			}
 		}
-		System.out.println("TOTAL VALUE: " + totalValue);
-		board.print();
-		System.out.println("----end value---");
+		//System.out.println("TOTAL VALUE: " + totalValue);
+		//board.print();
+		//System.out.println("----end value---");
 		return totalValue;
 	}
 

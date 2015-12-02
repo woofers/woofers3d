@@ -5,12 +5,13 @@ public class Point
 	private static final String X_PREFIX  = "X: ";
 	private static final String Y_PREFIX  = "Y: ";
 	private static final String SEPARATOR = ", ";
+	private static final Point ZERO       = new Point(0, 0);
 
 	public int x, y;
 
 	public Point()
 	{
-		this(0, 0);
+		this(ZERO);
 	}
 
 	public Point(Point point)
