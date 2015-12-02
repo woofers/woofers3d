@@ -29,6 +29,11 @@ public class PieceMove implements MoveType
 		return false;
 	}
 
+	private Boolean hasMovedTwoUp()
+	{
+		return Math.abs(this.oldSpot.location.y - this.newSpot.location.y) == 2;
+	}
+
 	public void move(Board board)
 	{
 		Spot oldSpot, newSpot;
@@ -44,10 +49,7 @@ public class PieceMove implements MoveType
 			piece.turn ++;
 			if (piece.type == Piece.PAWN)
 			{
-				if (Math.abs(this.oldSpot.location.y - this.newSpot.location.y) == 2)
-				{
-					piece.passingIndex = board.getTurn();
-				}
+				if (hasMovedTwoUp()) piece.passingIndex = board.getTurn();
 			}
 		}
 		newSpot.setPiece(piece);
@@ -56,8 +58,14 @@ public class PieceMove implements MoveType
 
 	public void move(IntBoard board)
 	{
-		board.setSpot(oldSpot.clone(), newSpot.location);
+
+
+		board.setSpot(oldSpot, newSpot.location);
 		board.setSpot(new IntPiece(), oldSpot.location);
+
+		System.out.println(oldSpot.location.toString());
+		System.out.println(newSpot.location.toString());
+
 		newSpot.turn ++;
 	}
 

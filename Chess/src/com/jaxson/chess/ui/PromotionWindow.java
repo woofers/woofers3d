@@ -19,10 +19,13 @@ import com.jaxson.lib.ui.Window;
 
 public class PromotionWindow extends Dialog
 {
-	private static final String MESSAGE    = "Promote your pawn.";
-	private static final int GRID_SIZE     = 2;
-	private static final int FONT_SIZE     = 30;
-	private static final int DEFAULT_PIECE = Piece.QUEEN;
+	private static final String MESSAGE        = "Promote your pawn.";
+	private static final int GRID_SIZE         = 2;
+	private static final int FONT_SIZE         = 30;
+	private static final int DEFAULT_PIECE     = Piece.QUEEN;
+	private static final String GRID_LOCATION  = BorderLayout.CENTER;
+	private static final String LABEL_LOCATION = BorderLayout.PAGE_END;
+	private static final int TEXT_ALIGMENT     = SwingConstants.CENTER;
 
 	private Spot[][] spots;
 	private ScaleContainer scaleContainer;
@@ -35,13 +38,13 @@ public class PromotionWindow extends Dialog
 		super(width, height, window);
 		setTitle(ChessWindow.TITLE);
 
-		label = new JLabel(MESSAGE, SwingConstants.CENTER);
+		label = new JLabel(MESSAGE, TEXT_ALIGMENT);
 		label.setFont(new Font(label.getName(), Font.PLAIN, FONT_SIZE));
-		add(label, BorderLayout.PAGE_END);
+		add(label, LABEL_LOCATION);
 
 		panel = new Panel(new GridLayout(GRID_SIZE, GRID_SIZE));
 		scaleContainer = new ScaleContainer<>(panel);
-		add(scaleContainer, BorderLayout.CENTER);
+		add(scaleContainer, GRID_LOCATION);
 
 		spots = new Spot[GRID_SIZE][GRID_SIZE];
 		for (int y = 0; y < GRID_SIZE; y ++)

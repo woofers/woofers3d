@@ -16,7 +16,7 @@ public class Dialog<T extends Window> extends JDialog implements AdvancedWindow
 	private static final boolean RESIZEABLE    = false;
 	private static final ModalityType MODALITY = DEFAULT_MODALITY_TYPE;
 	private static final double MIN_SIZE       = AdvancedWindow.MIN_SIZE;
-	private static final LayoutManager LAYOUT  = AdvancedWindow.LAYOUT;
+	private static final LayoutManager LAYOUT  = new BorderLayout();
 
 	private int width, height;
 

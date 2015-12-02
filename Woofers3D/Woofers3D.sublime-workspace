@@ -4,6 +4,142 @@
 		"selected_items":
 		[
 			[
+				"Vec",
+				"Vector2"
+			],
+			[
+				"EN",
+				"Environment"
+			],
+			[
+				"Spr",
+				"SpriteBatch"
+			],
+			[
+				"STA",
+				"State"
+			],
+			[
+				"spr",
+				"sprites"
+			],
+			[
+				"set",
+				"setTarget"
+			],
+			[
+				"tra",
+				"target"
+			],
+			[
+				"view",
+				"viewportHeight"
+			],
+			[
+				"P",
+				"MyPerspectiveCamera"
+			],
+			[
+				"ca",
+				"camera"
+			],
+			[
+				"back",
+				"UNITS_BACK"
+			],
+			[
+				"V",
+				"Vector2"
+			],
+			[
+				"vec",
+				"Vector2"
+			],
+			[
+				"scr",
+				"screenX"
+			],
+			[
+				"el",
+				"element"
+			],
+			[
+				"PLAy",
+				"PlayState"
+			],
+			[
+				"cam",
+				"cameraLocation"
+			],
+			[
+				"Gam",
+				"GameStateManager"
+			],
+			[
+				"ke",
+				"keycode"
+			],
+			[
+				"int",
+				"input"
+			],
+			[
+				"INT",
+				"InputProcessor"
+			],
+			[
+				"mod",
+				"modelPath"
+			],
+			[
+				"key",
+				"key"
+			],
+			[
+				"KE",
+				"KEY_SIZE"
+			],
+			[
+				"IN",
+				"InputProcessor"
+			],
+			[
+				"in",
+				"inputMultiplexer"
+			],
+			[
+				"CLE",
+				"CLEAR_COLOR"
+			],
+			[
+				"ab",
+				"abstract"
+			],
+			[
+				"loca",
+				"location"
+			],
+			[
+				"st",
+				"static"
+			],
+			[
+				"MOD",
+				"ModelInstance"
+			],
+			[
+				"box",
+				"boxInstance"
+			],
+			[
+				"MO",
+				"ModelInstance"
+			],
+			[
+				"pop",
+				"popAll"
+			],
+			[
 				"MOde",
 				"modelBatch"
 			],
@@ -60,10 +196,6 @@
 				"getId"
 			],
 			[
-				"in",
-				"index"
-			],
-			[
 				"ret",
 				"retrieveItem"
 			],
@@ -74,10 +206,6 @@
 			[
 				"new",
 				"newPiece"
-			],
-			[
-				"set",
-				"setPreferredSize"
 			],
 			[
 				"und",
@@ -160,10 +288,6 @@
 				"gridWidth"
 			],
 			[
-				"int",
-				"intPiece"
-			],
-			[
 				"J",
 				"JFrame"
 			],
@@ -188,20 +312,12 @@
 				"point"
 			],
 			[
-				"IN",
-				"Integer"
-			],
-			[
 				"gr",
 				"gridHeight"
 			],
 			[
 				"gri",
 				"gridWidth"
-			],
-			[
-				"INT",
-				"IntPiece"
 			],
 			[
 				"pu",
@@ -268,18 +384,50 @@
 	"buffers":
 	[
 		{
-			"file": "core/src/com/jaxson/Main.java",
+			"file": "core/src/com/jaxson/woofers3d/states/MenuState.java",
 			"settings":
 			{
-				"buffer_size": 2219,
+				"buffer_size": 695,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "core/src/com/jaxson/states/GameStateManager.java",
+			"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
 			"settings":
 			{
-				"buffer_size": 786,
+				"buffer_size": 1248,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
+			"settings":
+			{
+				"buffer_size": 1752,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/entities/Box.java",
+			"settings":
+			{
+				"buffer_size": 1069,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/states/State.java",
+			"settings":
+			{
+				"buffer_size": 2909,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/entities/Entity.java",
+			"settings":
+			{
+				"buffer_size": 970,
 				"line_ending": "Windows"
 			}
 		}
@@ -336,20 +484,28 @@
 				"Indentation: Convert to Tabs"
 			],
 			[
-				"git p",
-				"Git: Pull"
-			],
-			[
 				"git push",
 				"Git: Push"
 			],
 			[
-				"git comm",
+				"git com",
 				"Git: Commit"
 			],
 			[
 				"git add",
 				"Git: Add..."
+			],
+			[
+				"conver",
+				"Convert Case: Upper Case"
+			],
+			[
+				"git p",
+				"Git: Pull"
+			],
+			[
+				"git comm",
+				"Git: Commit"
 			],
 			[
 				"upp",
@@ -362,10 +518,6 @@
 			[
 				"git pus",
 				"Git: Push"
-			],
-			[
-				"git com",
-				"Git: Commit"
 			],
 			[
 				"git pul",
@@ -413,151 +565,153 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Documents/Development/School/JavaProjects/Woofers3D",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle"
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states"
 	],
 	"file_history":
 	[
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyMath.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State3D.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/MenuState.java",
-		"/C/Users/Jaxson/Documents/My Games/Fallout4/Color.txt",
-		"/C/Users/Jaxson/Documents/My Games/Fallout4/Fallout4.ini",
-		"/C/Users/Jaxson/Documents/My Games/Fallout4/Fallout4Prefs.ini",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zOAF5A.tmp/Fallout4Custom.ini",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zOF870.tmp/INSTRUCTIONS.txt",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO947A.tmp/Readme.txt",
-		"/D/Program Files (x86)/Steam/steamapps/common/Fallout 4/Data/Mods/PipBoyShadows-281-0-3.zip.txt",
-		"/D/Program Files (x86)/Steam/steamapps/common/Fallout 4/Data/Mods/value-weight-ratio-334-0-2.zip.txt",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO6194.tmp/Controls.ini",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO3504.tmp/Fallout4.ini",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO6C07.tmp/Fallout4.ini",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/Main.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/PlayState.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/GameStateManager.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/State2D.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/util/MyArrayList.java",
-		"/C/Program Files/Java/jdk1.8.0_60/JOptionPane.java",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO403B.tmp/Object.java",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO74C6.tmp/Math.java",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zOE29C.tmp/BigDecimal.java",
-		"/D/Documents/Development/School/Programming 12/ConnectFour/ConnectFour/ConnectFour.vb",
-		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedList.java",
-		"/D/Documents/Development/School/JavaProjects/Linked Lists/src/com/jaxson/linkedlist/LinkedListTester.java",
-		"/D/Documents/Development/School/Programming 12/Fox/src/com/jaxson/level/World.as",
-		"/D/Documents/Development/School/Programming 12/Fox/src/com/jaxson/level/MapLoader.as",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/Main.gwt.xml",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/3DState.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/run.bat",
-		"/C/Users/Jaxson/Desktop/FlappyDemo-master/core/src/com/brentaureli/game/FlappyDemo.java",
-		"/C/Users/Jaxson/Desktop/FlappyDemo-master/core/src/com/brentaureli/game/states/PlayState.java",
-		"/C/Users/Jaxson/Desktop/FlappyDemo-master/core/src/com/brentaureli/game/states/GameStateManager.java",
-		"/C/Users/Jaxson/Desktop/FlappyDemo-master/core/src/com/brentaureli/flappybird/FlappyBird.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/InputEntity.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Main.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/MyInputProcessor.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/sprites/Sprite.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/MenuState.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/GameStateManager.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Entity.java",
+		"/C/Users/707021/AppData/Local/Temp/Temp1_Woofers3DNew.zip/Woofers3D/core/src/com/jaxson/lib/gdx/states/State3D.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State2D.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO56E3.tmp/GameLoop.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO8305.tmp/Renderer.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO3B2.tmp/Invaders.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/MyPerspectiveCamera.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/ChaseCamera.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State3D.java",
+		"/C/Users/Jaxson/Desktop/index.html",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO7E14.tmp/PerspectiveCamera.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOA0EF.tmp/Camera.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO46F5.tmp/GL20.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOEF9D.tmp/PerspectiveCamera.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Box.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Entity.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/ChaseCamera.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State.java",
+		"/C/Users/Jaxson/Desktop/ChaseCamera.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Main.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/GameStateManager.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/MyInputProcessor.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/InputEntity.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/MenuState.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State2D.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO7715.tmp/CameraInputController.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/event/ButtonListener.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/State.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/State2D.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/State3D.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Box.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/InputEntity.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Entity.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/util/MyInputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOE16C.tmp/Game.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOFB46.tmp/GameInputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOF8A5.tmp/GameKeys.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Simulation.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOB935.tmp/GameKeys.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOC9F4.tmp/GameInputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOBE8A.tmp/GameKeys.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOC8C7.tmp/GameInputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO55AB.tmp/Game.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO5807.tmp/Gdx.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO941D.tmp/Input.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/screens/GameLoop.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Shot.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Explosion.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Block.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Invader.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Ship.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/Renderer.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/Invaders.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO6E75.tmp/Input.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO980B.tmp/InputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO3D83.tmp/InputMultiplexer.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO3A77.tmp/Invader.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOF398.tmp/SimulationListener.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOBF53.tmp/Simulation.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO712.tmp/Ship.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/build.gradle",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/screens/InvadersScreen.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/GameStateManager.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/MarioBros.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Screens/PlayScreen.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Sprites/Mario.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Sprites/Enemies/Enemy.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Sprites/Items/Mushroom.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Sprites/Items/Item.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Sprites/Other/FireBall.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Scenes/Hud.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Tools/WorldContactListener.java",
+		"/C/Users/Jaxson/Desktop/SuperMario-master/core/src/com/brentaureli/mariobros/Tools/B2WorldCreator.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/sprites/Sprite.java",
+		"/C/Users/Jaxson/Desktop/libgdx-master/gdx/src/com/badlogic/gdx/graphics/g3d/attributes/ColorAttribute.java",
+		"/C/Users/Jaxson/Desktop/libgdx-master/gdx/src/com/badlogic/gdx/graphics/g3d/Attribute.java",
 		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/GameStateManager.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/states/Play.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/main/BlockBunnyDesktop.java",
 		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/main/Game.java",
 		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/states/GameState.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/main/BlockBunnyDesktop.java",
-		"/C/Users/Jaxson/Desktop/blog-master/tutorials/src/com/xoppa/blog/libgdx/g3d/behindscenes/step7/BehindTheScenesTest.java",
-		"/C/Users/Jaxson/Desktop/blog-master/tutorials/src/com/xoppa/blog/libgdx/Main.java",
-		"/C/Users/Jaxson/Desktop/BehindTheScenesTest.java",
-		"/D/Program Files (x86)/Steam/steamapps/common/Fallout 4/Fallout4/Fallout4Prefs.ini",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO4D42.tmp/video.txt",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/video.txt",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO4765.tmp/config.cfg",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO605.tmp/autoexec.cfg",
-		"/D/Program Files (x86)/Steam/steamapps/common/Fallout 4/Fallout4_Default.ini",
-		"/C/Users/Jaxson/Documents/My Games/Fallout4/ControlMap_Custom.txt",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
-		"/D/Downloads/config.cfg",
-		"/C/Users/Jaxson/Documents/My Games/Fallout4/Fallout4 - Old.ini",
-		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/ant2.sublime-build",
-		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/ant.sublime-build",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/ios/src/com/jaxson/IOSLauncher.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/html/src/com/jaxson/client/HtmlLauncher.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/Main.java",
-		"/D/Downloads/test/core/src/com/jaxson/Main.java",
-		"/D/Documents/Development/Android SDK/tools/ant/build.xml",
-		"/D/Documents/Development/Android SDK/sources/android-23/android/nfc/NfcActivityManager.java",
-		"/D/Documents/Development/Android SDK/sources/android-23/android/accounts/OperationCanceledException.java",
-		"/D/Documents/Development/Android SDK/sources/android-23/android/accounts/AccountAndUser.java",
-		"/D/Documents/Development/School/Programming 12/Binary Search Tree/Binary Search Tree/BinarySearchTree.Designer.vb",
-		"/D/Documents/Development/School/Programming 12/Binary Search Tree/Binary Search Tree/BooleanTree.vb",
-		"/D/Documents/Development/School/Programming 12/Binary Search Tree/Binary Search Tree/bin/Debug/data/tree.txt",
-		"/D/Documents/Development/School/Programming 12/Binary Search Tree/Binary Search Tree/Tree.vb",
-		"/D/Documents/Development/School/Programming 12/Binary Search Tree/tree.txt",
-		"/D/Documents/Development/School/CS 115/Assignment 4/BinarySearchTree.java",
-		"/D/Documents/Development/School/CS 115/Assignment 4/AbstractBinaryTree.java",
-		"/D/Documents/Development/School/CS 115/Assignment 4/BinaryTreeIterator.java",
-		"/D/Documents/Development/School/CS 115/Assignment 4/PatientMedRecord.java",
-		"/D/Documents/Development/School/CS 115/Assignment 4/TreeNode.java",
-		"/D/Documents/Development/School/CS 115/Assignment 4/DrawableBTree.java",
-		"/P/Users/Jaxson/autoexec.cfg",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveHistory.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/geom/Point.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/util/MyArrayList.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/Move.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntBoard.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveList.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/Promotion.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/Remove.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/PieceMove.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/MoveType.java",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/resource/csgo_woofers.txt",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/resource/ui/radiopanel.txt",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/boosts.cfg",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/dm.cfg",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/freeforall.cfg",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/give.cfg",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/nades.cfg",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/nobots.cfg",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/user/vmfinder.cfg",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Options.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Spot.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/IntPiece.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Board.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/Piece.java",
-		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/C.sublime-settings",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/ChessWindow.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ui/board/PromotionWindow.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/Player.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/HardPlayer.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/ai/EasyPlayer.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/event/ButtonListener.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/board/move/NoDestinationException.java",
-		"/D/Documents/Development/School/JavaProjects/Chess/src/com/jaxson/event/Button.txt",
-		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
-		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/Jaxson/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/Move.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Options.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Spot.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/MoveList.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/PieceMove.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntBoard.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/util/MyArrayList.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/MoveHandler.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/IntPiece.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/util/Empty.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/build.xml",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ai/EasyPlayer.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/Board.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/board/move/NoDestinationException.java",
-		"/C/Documents and Settings/Peter/My Documents/Programming IDS/Chess/src/com/jaxson/ui/board/GameWindow.java"
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/states/Play.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/Player.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/B2DSprite.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/android/src/com/jaxson/android/AndroidLauncher.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/android/AndroidManifest.xml",
+		"/D/Documents/README.md",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/SimulationListener.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/screens/GameOver.java",
+		"/C/Users/Jaxson/Desktop/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/screens/MainMenu.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOA2FC.tmp/Game.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOA411.tmp/BBContactListener.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO3529.tmp/Content.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOD1BB.tmp/BBInputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOB307.tmp/BBInput.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO74E4.tmp/BlockBunnyDesktop.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/Spike.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/HUD.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/Background.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/BBInput.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/BBInputProcessor.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/BBContactListener.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/GameButton.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/Animation.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/B2DVars.java",
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/states/LevelSelect.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Content.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/B2DVars.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/MyContactListener.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Animation.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/B2DSprite.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/MyInputProcessor.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/MyInput.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/GameState.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Game.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Player.java",
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/GameStateManager.java"
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
@@ -571,6 +725,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"direction",
+			"Vector3.tmp",
+			"cam",
+			"screenY",
+			"screenX",
+			"mouseY",
+			"mouseX",
+			"tmpV1 =",
+			"tmpV1",
 			"bEnableFileSelection=1",
 			"iNumHWThreads",
 			"PerspectiveCamera",
@@ -653,6 +816,12 @@
 		"regex": false,
 		"replace_history":
 		[
+			"temporary",
+			"camera",
+			"newMouse.y",
+			"newMouse.x",
+			"mouse.Y",
+			"mouse.x",
 			"MoveList",
 			"MoveList()",
 			"MoveList",
@@ -670,30 +839,30 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "core/src/com/jaxson/Main.java",
+					"file": "core/src/com/jaxson/woofers3d/states/MenuState.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2219,
+						"buffer_size": 695,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								664,
-								664
+								0,
+								0
 							]
 						],
 						"settings":
@@ -705,37 +874,152 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "core/src/com/jaxson/states/GameStateManager.java",
+					"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 786,
+						"buffer_size": 1248,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								786,
-								786
+								566,
+								566
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Java/Java.tmLanguage",
-							"tab_size": 4,
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 340.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1752,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								529,
+								529
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "core/src/com/jaxson/lib/gdx/entities/Box.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1069,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1014,
+								1014
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 102.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "core/src/com/jaxson/lib/gdx/states/State.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2909,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1495,
+								1495
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 408.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "core/src/com/jaxson/lib/gdx/entities/Entity.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 970,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								509,
+								509
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 51.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -784,11 +1068,11 @@
 	{
 		"height": 480.0
 	},
-	"pinned_build_system": "Packages/User/ant.sublime-build",
+	"pinned_build_system": "Packages/User/run.sublime-build",
 	"project": "Woofers3D.sublime-project",
 	"replace":
 	{
-		"height": 52.0
+		"height": 68.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -798,20 +1082,112 @@
 		"selected_items":
 		[
 			[
+				"sta",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State.java"
+			],
+			[
+				"box",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Box.java"
+			],
+			[
+				"pla",
+				"core\\src\\com\\jaxson\\woofers3d\\entities\\Player.java"
+			],
+			[
+				"en",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Entity.java"
+			],
+			[
+				"int",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\InputEntity.java"
+			],
+			[
+				"in",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\InputEntity.java"
+			],
+			[
 				"my",
-				"core\\src\\com\\jaxson\\util\\MyMath.java"
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\MyInputProcessor.java"
+			],
+			[
+				"sp",
+				"core\\src\\com\\jaxson\\lib\\gdx\\sprites\\Sprite.java"
+			],
+			[
+				"menu",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\MenuState.java"
 			],
 			[
 				"play",
-				"core\\src\\com\\jaxson\\states\\PlayState.java"
+				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
+			],
+			[
+				"stga",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State.java"
+			],
+			[
+				"ent",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Entity.java"
+			],
+			[
+				"mneu",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\MenuState.java"
+			],
+			[
+				"main",
+				"core\\src\\com\\jaxson\\woofers3d\\Main.java"
+			],
+			[
+				"gam",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameStateManager.java"
+			],
+			[
+				"myin",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\MyInputProcessor.java"
+			],
+			[
+				"sat",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
+			],
+			[
+				"staa",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
+			],
+			[
+				"stata",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
+			],
+			[
+				"stat",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
+			],
+			[
+				"sata",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
+			],
+			[
+				"state",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State.java"
+			],
+			[
+				"input",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\InputEntity.java"
+			],
+			[
+				"",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\MyInputProcessor.java"
+			],
+			[
+				"game",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\GameStateManager.java"
+			],
+			[
+				"des",
+				"desktop\\src\\com\\jaxson\\desktop\\DesktopLauncher.java"
 			],
 			[
 				"state3d",
 				"core\\src\\com\\jaxson\\states\\State3D.java"
-			],
-			[
-				"menu",
-				"core\\src\\com\\jaxson\\states\\MenuState.java"
 			],
 			[
 				"node",
@@ -840,10 +1216,6 @@
 			[
 				"spot",
 				"src\\com\\jaxson\\ui\\board\\Spot.java"
-			],
-			[
-				"int",
-				"src\\com\\jaxson\\board\\IntPiece.java"
 			],
 			[
 				"movety",

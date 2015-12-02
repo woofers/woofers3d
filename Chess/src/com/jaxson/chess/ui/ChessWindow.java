@@ -7,10 +7,9 @@ import com.jaxson.lib.ui.Window;
 
 public class ChessWindow extends Window
 {
-	public static final String TITLE          = "Chess";
-	private static final String ICON_PATH     = "assets/images/icon.png";
-	private static final double SCREEN_SCALE  = 0.8;
-
+	public static final String TITLE             = "Chess";
+	private static final String ICON_PATH        = "assets/images/icon.png";
+	private static final double SCREEN_SCALE     = 0.8;
 	private static final String BOARD_LOCATION   = BorderLayout.CENTER;
 	private static final String OPTIONS_LOCATION = BorderLayout.LINE_END;
 

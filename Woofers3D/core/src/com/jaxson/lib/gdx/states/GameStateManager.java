@@ -1,19 +1,19 @@
-package com.jaxson.woofers3d.states;
+package com.jaxson.lib.gdx.states;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.util.MyArrayList;
-import com.jaxson.woofers3d.states.State3D;
-
 import java.util.Stack;
 
 public class GameStateManager
 {
-	private Stack<State3D> states;
+	private Stack<State> states;
 
 	public GameStateManager()
 	{
-		states = new Stack<State3D>();
+		states = new Stack<State>();
 	}
 
 	public boolean isEmpty()
@@ -21,7 +21,7 @@ public class GameStateManager
 		return states.isEmpty();
 	}
 
-	public void push(State3D state)
+	public void push(State state)
 	{
 		states.push(state);
 	}
@@ -38,7 +38,7 @@ public class GameStateManager
 		popAll();
 	}
 
-	public void set(State3D state)
+	public void set(State state)
 	{
 		pop();
 		states.push(state);
@@ -49,7 +49,18 @@ public class GameStateManager
 		states.peek().update(dt);
 	}
 
-	public void render(ModelBatch modelBatch){
-		states.peek().render(modelBatch);
+	public void render(SpriteBatch spriteBatch)
+	{
+		render(spriteBatch, null);
+	}
+
+	public void render(ModelBatch modelBatch)
+	{
+		render(null, modelBatch);
+	}
+
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	{
+		states.peek().render(spriteBatch, modelBatch);
 	}
 }

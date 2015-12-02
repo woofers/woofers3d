@@ -84,9 +84,9 @@ public class Move
 		moveTypes.remove(move);
 	}
 
-	public void setOrigin(IntPiece value)
+	public void setOrigin(IntPiece origin)
 	{
-		origin = value;
+		this.origin = origin;
 	}
 
 	@Override

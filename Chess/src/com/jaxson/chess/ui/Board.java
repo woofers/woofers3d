@@ -28,6 +28,8 @@ public class Board extends Panel
 		this.window = window;
 		this.moveHistory = new MoveHistory();
 		reset(REGULAR_SIZE, REGULAR_SIZE, true);
+
+		toIntBoard();
 	}
 
 	private void addPieces()

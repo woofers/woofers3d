@@ -1,4 +1,4 @@
-package com.jaxson.woofers3d.entities;
+package com.jaxson.lib.gdx.entities;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -40,7 +40,7 @@ public class Box extends Entity
 	}
 
 	@Override
-	protected void handleInput()
+	public void input()
 	{
 
 	}
@@ -48,6 +48,6 @@ public class Box extends Entity
 	@Override
 	public void update(float dt)
 	{
-		super.update(dt);
+
 	}
 }
