@@ -14,7 +14,6 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	private static final float NEAR             = 0.1f;
 	private static final float FAR              = 300f;
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
-	private static final Vector3 LOCATION       = new Vector3(0f, 0f, -3f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
@@ -22,32 +21,32 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	public MyPerspectiveCamera(float width, float height)
 	{
-		this(width, height, LOCATION);
+		this(width, height, null);
 	}
 
 	public MyPerspectiveCamera(float width, float height, Entity target)
 	{
-		this(FOV, width, height, LOCATION, target);
+		this(FOV, width, height, OFFSET, target);
 	}
-
-	public MyPerspectiveCamera(float width, float height, Vector3 location)
+	public MyPerspectiveCamera(float fov, float width, float height, Vector3 offset)
 	{
-		this(FOV, width, height, location);
+		this(fov, width, height, offset, null);
 	}
 
-	public MyPerspectiveCamera(float fov, float width, float height, Vector3 location)
-	{
-		this(fov, width, height, location, null);
-	}
-
-	public MyPerspectiveCamera(float fov, float width, float height, Vector3 location, Entity target)
+	public MyPerspectiveCamera(float fov, float width, float height, Vector3 offset, Entity target)
 	{
 		super(fov, width, height);
 		this.target = target;
+		this.offset = offset;
 		this.near = NEAR;
 		this.far = FAR;
-		position.set(location);
+		position.set(offset);
 		lookAt(STAGE_LOCATION);
+	}
+
+	public Vector3 getOffset()
+	{
+		return offset;
 	}
 
 	public Entity getTarget()
@@ -57,8 +56,7 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	public Vector3 getTargetLocation()
 	{
-		float[] matrix = target.transform.getValues();
-		return new Vector3(matrix[12], matrix[13], matrix[14]);
+		return target.getLocation();
 	}
 
 	public boolean hasTarget()
@@ -68,12 +66,26 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	private void input()
 	{
-		//rotateAround(getTargetLocation(), new Vector3(0, 1, 0), 1f);
+
+		rotateAround(STAGE_LOCATION, new Vector3(0f, 1f, 0f), 1f);
+	}
+
+	public void rotate(float pitch, float yaw, float roll)
+	{
+	    //newQuat.setEulerAngles(-pitch, -yaw, roll);
+	    //rotationQuat.mulLeft(newQuat);
+	    //view.rotate(rotationQuat);
+		lookAt(getTargetLocation());
 	}
 
 	public void removeTarget()
 	{
 		setTarget(null);
+	}
+
+	public void setOffset(Vector3 offset)
+	{
+		this.offset = offset;
 	}
 
 	public void setTarget(Entity target)
@@ -87,7 +99,7 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		if (hasTarget())
 		{
 			Vector3 newLocation = getTargetLocation();
-			newLocation.add(OFFSET);
+			newLocation.add(offset);
 			position.set(newLocation);
 			input();
 		}

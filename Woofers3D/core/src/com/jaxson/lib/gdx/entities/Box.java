@@ -30,7 +30,7 @@ public class Box extends Entity
 
 	public Box(Color color, Vector3 location)
 	{
-		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.x, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES));
+		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES));
 	}
 
 	@Override

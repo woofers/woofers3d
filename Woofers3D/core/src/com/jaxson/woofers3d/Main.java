@@ -22,7 +22,7 @@ public class Main extends ApplicationAdapter
 	private static final float CLAMP        = 1f / 4f;
 	private static final double ASPECTRATIO = (float)(WIDTH) / (float)(HEIGHT);
 	private static final int CLEAR_MASK     = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
-	private static final Color CLEAR_COLOR  = new Color(0f, 0f, 0f, 1f);
+	private static final Color CLEAR_COLOR  = new Color(0f, 0f, 1f, 1f);
 
 	private float accumulator;
 	private GameStateManager gameStateManager;

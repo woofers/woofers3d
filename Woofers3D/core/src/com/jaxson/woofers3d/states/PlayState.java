@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.entities.Box;
 import com.jaxson.lib.gdx.graphics.MyPerspectiveCamera;
 import com.jaxson.lib.gdx.states.GameStateManager;
@@ -26,9 +25,8 @@ public class PlayState extends State<MyPerspectiveCamera>
 		box = new Box();
 		add(box);
 
-		player = new Player(camera);
+		player = new Player(getCamera());
 		add(player);
-		camera.setTarget(player);
 	}
 
 	@Override

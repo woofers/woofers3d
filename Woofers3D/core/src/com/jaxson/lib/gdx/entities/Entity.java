@@ -42,7 +42,8 @@ public abstract class Entity extends ModelInstance
 
 	public Vector3 getLocation()
 	{
-		return transform.getTranslation(LOCATION);
+		float[] matrix = transform.getValues();
+		return new Vector3(matrix[12], matrix[13], matrix[14]);
 	}
 
 	protected abstract void input();

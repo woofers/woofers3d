@@ -28,10 +28,9 @@ public class MyInputProcessor implements InputProcessor
 		prevMouse = new Vector2();
 	}
 
-
 	public static Vector2 getDeltaMouse()
 	{
-		return mouse.cpy().sub(prevMouse);
+		return getMouse().sub(prevMouse);
 	}
 
 	public static Vector2 getMouse()
