@@ -3,13 +3,12 @@ package com.jaxson.lib.gdx.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.entities.Entity;
+import com.jaxson.lib.gdx.graphics.MyEnvironment;
 import com.jaxson.lib.gdx.sprites.Sprite;
 import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.util.MyInputProcessor;
@@ -30,10 +29,7 @@ public abstract class State<C extends Camera>
 		this.camera = camera;
 		this.entities = new MyArrayList<Entity>();
 		this.sprites = new MyArrayList<Sprite>();
-
-		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		this.environment = new MyEnvironment();
 
 		setInputProcessor(new MyInputProcessor());
 	}
@@ -140,5 +136,6 @@ public abstract class State<C extends Camera>
 		{
 			sprite.update(dt);
 		}
+		MyInputProcessor.update(dt);
 	}
 }

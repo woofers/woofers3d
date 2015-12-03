@@ -2,6 +2,7 @@ package com.jaxson.woofers3d.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.jaxson.lib.gdx.entities.Box;
@@ -42,9 +43,9 @@ public class PlayState extends State<MyPerspectiveCamera>
 	}
 
 	@Override
-	public void render(ModelBatch modelBatch)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		super.render(modelBatch);
+		super.render(spriteBatch, modelBatch);
 		fps.log();
 	}
 

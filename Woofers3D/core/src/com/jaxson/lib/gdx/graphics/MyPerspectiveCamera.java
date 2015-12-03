@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.entities.Entity;
@@ -11,8 +12,10 @@ import com.jaxson.lib.gdx.util.MyInputProcessor;
 public class MyPerspectiveCamera extends PerspectiveCamera
 {
 	private static final int FOV                = 75;
-	private static final float NEAR             = 0.1f;
 	private static final float FAR              = 300f;
+	private static final float NEAR             = 1f / 10f;
+	private static final float MOUSE_SCALE      = 1f / 10f;
+	private static final float SENSITIVITY      = 1.05f;
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
@@ -40,6 +43,7 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		this.offset = offset;
 		this.near = NEAR;
 		this.far = FAR;
+
 		position.set(offset);
 		lookAt(STAGE_LOCATION);
 	}
@@ -56,6 +60,7 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	public Vector3 getTargetLocation()
 	{
+		if (!hasTarget()) return null;
 		return target.getLocation();
 	}
 
@@ -66,16 +71,20 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	private void input()
 	{
-
-		rotateAround(STAGE_LOCATION, new Vector3(0f, 1f, 0f), 1f);
+		Vector2 mouse = MyInputProcessor.getDeltaMouse();
+		float scale = MOUSE_SCALE * SENSITIVITY;
+		mouse.scl(scale, scale);
+		System.out.println(getTarget().getCenterLocation());
+		//rotateAround(getTarget().getCenterLocation(), Vector3.Y, 0.5f);
 	}
 
 	public void rotate(float pitch, float yaw, float roll)
 	{
-	    //newQuat.setEulerAngles(-pitch, -yaw, roll);
-	    //rotationQuat.mulLeft(newQuat);
-	    //view.rotate(rotationQuat);
-		lookAt(getTargetLocation());
+		Quaternion quaternion = new Quaternion();
+		Quaternion tempQuaterion = new Quaternion();
+		tempQuaterion.setEulerAngles(-pitch, -yaw, roll);
+		rotate(tempQuaterion);
+		//lookAt(getTargetLocation());
 	}
 
 	public void removeTarget()

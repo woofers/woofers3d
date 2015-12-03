@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.Vector3;
 
 public abstract class Entity extends ModelInstance
@@ -44,6 +45,17 @@ public abstract class Entity extends ModelInstance
 	{
 		float[] matrix = transform.getValues();
 		return new Vector3(matrix[12], matrix[13], matrix[14]);
+	}
+
+	public Vector3 getCenterLocation()
+	{
+		BoundingBox boundingBox = calculateBoundingBox(new BoundingBox());
+		return boundingBox.getCenter(new Vector3()).add(getLocation());
+	}
+
+	public Vector3 getRadius()
+	{
+		return new Vector3();
 	}
 
 	protected abstract void input();
