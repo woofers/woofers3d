@@ -16,11 +16,13 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	private static final float NEAR             = 1f / 10f;
 	private static final float MOUSE_SCALE      = 1f / 10f;
 	private static final float SENSITIVITY      = 1.05f;
+	private static final boolean INVERT_MOUSE   = false;
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
 	private Vector3 offset;
+	private float path = 0;
 
 	public MyPerspectiveCamera(float width, float height)
 	{
@@ -46,11 +48,31 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 		position.set(offset);
 		lookAt(STAGE_LOCATION);
+
+		if (hasTarget())
+		{
+			position.set(offset.cpy().add(getTargetLocation()));
+			lookAt(getTargetLocation());
+		}
 	}
 
 	public Vector3 getOffset()
 	{
 		return offset;
+	}
+
+	public Vector3 getInverseOffset()
+	{
+		return offset.cpy().scl(-1, -1, -1);
+	}
+
+	private Vector2 getMouse()
+	{
+		Vector2 mouse = MyInputProcessor.getDeltaMouse();
+		float scale = MOUSE_SCALE * SENSITIVITY;
+		mouse.scl(scale, -scale);
+		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
+		return mouse;
 	}
 
 	public Entity getTarget()
@@ -71,20 +93,10 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	private void input()
 	{
-		Vector2 mouse = MyInputProcessor.getDeltaMouse();
-		float scale = MOUSE_SCALE * SENSITIVITY;
-		mouse.scl(scale, scale);
-		System.out.println(getTarget().getCenterLocation());
-		//rotateAround(getTarget().getCenterLocation(), Vector3.Y, 0.5f);
-	}
-
-	public void rotate(float pitch, float yaw, float roll)
-	{
-		Quaternion quaternion = new Quaternion();
-		Quaternion tempQuaterion = new Quaternion();
-		tempQuaterion.setEulerAngles(-pitch, -yaw, roll);
-		rotate(tempQuaterion);
-		//lookAt(getTargetLocation());
+		if (!hasTarget()) return;
+		Vector2 mouse = getMouse();
+		rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+		rotateAround(getTargetLocation(), Vector3.X, mouse.y);
 	}
 
 	public void removeTarget()
@@ -105,13 +117,7 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	@Override
 	public void update()
 	{
-		if (hasTarget())
-		{
-			Vector3 newLocation = getTargetLocation();
-			newLocation.add(offset);
-			position.set(newLocation);
-			input();
-		}
+		input();
 		super.update();
 	}
 }

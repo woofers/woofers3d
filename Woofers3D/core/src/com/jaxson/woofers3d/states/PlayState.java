@@ -9,6 +9,7 @@ import com.jaxson.lib.gdx.entities.Box;
 import com.jaxson.lib.gdx.graphics.MyPerspectiveCamera;
 import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.State;
+import com.jaxson.lib.gdx.util.MyInputProcessor;
 import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends State<MyPerspectiveCamera>
@@ -37,9 +38,12 @@ public class PlayState extends State<MyPerspectiveCamera>
 	}
 
 	@Override
-	public void input()
+	protected void input()
 	{
-
+		if (MyInputProcessor.isReleased(MyInputProcessor.PAUSE))
+		{
+			toggleCursorCatched();
+		}
 	}
 
 	@Override

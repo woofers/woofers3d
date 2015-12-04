@@ -50,10 +50,6 @@ public class Player extends Entity
 		{
 			transform.trn(new Vector3(0f, 0f, -SPEED));
 		}
-		if (MyInputProcessor.isReleased(MyInputProcessor.PAUSE))
-		{
-			System.out.println("pause");
-		}
 		if (MyInputProcessor.isPressed(MyInputProcessor.SPACE))
 		{
 			System.out.println("jump");

@@ -71,7 +71,7 @@ public abstract class State<C extends Camera>
 		return Gdx.graphics.getWidth();
 	}
 
-	public abstract void input();
+	protected abstract void input();
 
 	public void remove(Entity entity)
 	{
@@ -118,16 +118,25 @@ public abstract class State<C extends Camera>
 		this.camera = camera;
 	}
 
+	public void setCursorCatched(boolean catched)
+	{
+		Gdx.input.setCursorCatched(catched);
+	}
+
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
 		this.input = inputProcessor;
 		Gdx.input.setInputProcessor(input);
 	}
 
+	public void toggleCursorCatched()
+	{
+		setCursorCatched(!Gdx.input.isCursorCatched());
+	}
+
 	public void update(float dt)
 	{
 		input();
-		camera.update();
 		for (Entity entity: entities)
 		{
 			entity.update(dt);
@@ -136,6 +145,7 @@ public abstract class State<C extends Camera>
 		{
 			sprite.update(dt);
 		}
+		camera.update();
 		MyInputProcessor.update(dt);
 	}
 }

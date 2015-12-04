@@ -9,11 +9,11 @@ import java.util.Stack;
 
 public class GameStateManager
 {
-	private Stack<State> states;
+	private Stack<State<?>> states;
 
 	public GameStateManager()
 	{
-		states = new Stack<State>();
+		states = new Stack<State<?>>();
 	}
 
 	public boolean isEmpty()
@@ -21,7 +21,7 @@ public class GameStateManager
 		return states.isEmpty();
 	}
 
-	public void push(State state)
+	public void push(State<?> state)
 	{
 		states.push(state);
 	}
@@ -38,7 +38,7 @@ public class GameStateManager
 		popAll();
 	}
 
-	public void set(State state)
+	public void set(State<?> state)
 	{
 		pop();
 		states.push(state);

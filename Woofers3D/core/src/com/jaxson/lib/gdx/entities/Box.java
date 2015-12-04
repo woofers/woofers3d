@@ -40,12 +40,6 @@ public class Box extends Entity
 	}
 
 	@Override
-	public void input()
-	{
-
-	}
-
-	@Override
 	public void update(float dt)
 	{
 

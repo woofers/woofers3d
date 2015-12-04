@@ -79,10 +79,10 @@ public class MyInputProcessor implements InputProcessor
 	}
 
 	@Override
-	public boolean mouseMoved(int screenX, int screenY)
+	public boolean mouseMoved(int x, int y)
 	{
-		mouse.x = screenX;
-		mouse.y = screenY;
+		mouse.x = x;
+		mouse.y = y;
 		return true;
 	}
 

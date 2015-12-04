@@ -20,7 +20,7 @@ public class MenuState extends State<PerspectiveCamera>
 	}
 
 	@Override
-	public void input()
+	protected void input()
 	{
 
 	}

@@ -49,16 +49,19 @@ public abstract class Entity extends ModelInstance
 
 	public Vector3 getCenterLocation()
 	{
-		BoundingBox boundingBox = calculateBoundingBox(new BoundingBox());
-		return boundingBox.getCenter(new Vector3()).add(getLocation());
+		return getRadius().add(getLocation());
 	}
 
 	public Vector3 getRadius()
 	{
-		return new Vector3();
+		BoundingBox boundingBox = calculateBoundingBox(new BoundingBox());
+		return boundingBox.getCenter(new Vector3());
 	}
 
-	protected abstract void input();
+	protected void input()
+	{
+
+	}
 
 	public void update(float dt)
 	{
