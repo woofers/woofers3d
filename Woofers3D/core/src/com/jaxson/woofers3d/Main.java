@@ -12,11 +12,12 @@ import com.jaxson.woofers3d.states.*;
 
 public class Main extends ApplicationAdapter
 {
-	public static final String TITLE        = "Woofers 3D";
-	public static final int WIDTH           = 1024;
-	public static final int HEIGHT          = 768;
-	public static final int FPS             = 300;
-	public static final boolean VSYNC       = false;
+	public static final String TITLE       = "Woofers 3D";
+	public static final int WIDTH          = 1024;
+	public static final int HEIGHT         = 768;
+	public static final int FPS            = 300;
+	public static final int BACKGROUND_FPS = -1;
+	public static final boolean VSYNC      = false;
 
 	private static final float STEP         = 1f / 120f;
 	private static final float CLAMP        = 1f / 4f;
@@ -71,13 +72,13 @@ public class Main extends ApplicationAdapter
 	@Override
 	public void resume()
 	{
-
+		System.out.println("resume");
 	}
 
 	@Override
 	public void pause()
 	{
-
+		System.out.println("paused");
 	}
 
 }

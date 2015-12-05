@@ -1,6 +1,7 @@
 package com.jaxson.woofers3d.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -16,6 +17,7 @@ public class PlayState extends State<MyPerspectiveCamera>
 {
 	private FPSLogger fps;
 	private Box box;
+	private Box box2;
 	private Player player;
 
 	public PlayState(GameStateManager gameStateManager)
@@ -40,17 +42,14 @@ public class PlayState extends State<MyPerspectiveCamera>
 	@Override
 	protected void input()
 	{
-		if (MyInputProcessor.isReleased(MyInputProcessor.PAUSE))
-		{
-			toggleCursorCatched();
-		}
+
 	}
 
 	@Override
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		fps.log();
+		//fps.log();
 	}
 
 	@Override

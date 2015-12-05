@@ -14,7 +14,7 @@ public class DesktopLauncher
 		config.height        = Main.HEIGHT;
 		config.vSyncEnabled  = Main.VSYNC;
 		config.foregroundFPS = Main.FPS;
-		config.backgroundFPS = Main.FPS;
+		config.backgroundFPS = Main.BACKGROUND_FPS;
 		new LwjglApplication(new Main(), config);
 	}
 }

@@ -93,19 +93,21 @@ public class MyInputProcessor implements InputProcessor
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button)
+	public boolean touchDown(int x, int y, int pointer, int button)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer)
+	public boolean touchDragged(int x, int y, int pointer)
 	{
+		mouse.x = x;
+		mouse.y = y;
 		return true;
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button)
+	public boolean touchUp(int x, int y, int pointer, int button)
 	{
 		return true;
 	}

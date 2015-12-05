@@ -16,6 +16,8 @@ import com.jaxson.lib.util.MyArrayList;
 
 public abstract class State<C extends Camera>
 {
+	private static final boolean CURSOR_CATCHED = true;
+
 	private C camera;
 	private GameStateManager gameStateManager;
 	private InputProcessor input;
@@ -31,6 +33,7 @@ public abstract class State<C extends Camera>
 		this.sprites = new MyArrayList<Sprite>();
 		this.environment = new MyEnvironment();
 
+		setCursorCatched(CURSOR_CATCHED);
 		setInputProcessor(new MyInputProcessor());
 	}
 
@@ -72,6 +75,11 @@ public abstract class State<C extends Camera>
 	}
 
 	protected abstract void input();
+
+	public boolean isCursorCatched()
+	{
+		return Gdx.input.isCursorCatched();
+	}
 
 	public void remove(Entity entity)
 	{
@@ -131,7 +139,7 @@ public abstract class State<C extends Camera>
 
 	public void toggleCursorCatched()
 	{
-		setCursorCatched(!Gdx.input.isCursorCatched());
+		setCursorCatched(!isCursorCatched());
 	}
 
 	public void update(float dt)

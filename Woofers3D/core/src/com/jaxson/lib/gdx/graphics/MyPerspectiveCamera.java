@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.entities.Entity;
 import com.jaxson.lib.gdx.util.MyInputProcessor;
+import java.lang.Math;
 
 public class MyPerspectiveCamera extends PerspectiveCamera
 {
@@ -16,13 +17,15 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	private static final float NEAR             = 1f / 10f;
 	private static final float MOUSE_SCALE      = 1f / 10f;
 	private static final float SENSITIVITY      = 1.05f;
-	private static final boolean INVERT_MOUSE   = false;
+	private static final boolean INVERT_MOUSE   = true;
+	private static final Vector3 MAX_CLAMP      = new Vector3(0.7f, 0f, 0f);
+	private static final Vector3 MIN_CLAMP      = new Vector3(-0.7f, -0.7f, 0f);
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
 	private Vector3 offset;
-	private float path = 0;
+	private Vector3 oldTargetLocation;
 
 	public MyPerspectiveCamera(float width, float height)
 	{
@@ -48,17 +51,19 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 		position.set(offset);
 		lookAt(STAGE_LOCATION);
+		oldTargetLocation = STAGE_LOCATION;
 
 		if (hasTarget())
 		{
 			position.set(offset.cpy().add(getTargetLocation()));
 			lookAt(getTargetLocation());
+			oldTargetLocation = getTargetLocation();
 		}
 	}
 
-	public Vector3 getOffset()
+	public Vector3 getDeltaLocation()
 	{
-		return offset;
+		return getTargetLocation().sub(oldTargetLocation);
 	}
 
 	public Vector3 getInverseOffset()
@@ -66,13 +71,28 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		return offset.cpy().scl(-1, -1, -1);
 	}
 
+	public Vector3 getLocation()
+	{
+		return position;
+	}
+
 	private Vector2 getMouse()
 	{
+		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = MyInputProcessor.getDeltaMouse();
-		float scale = MOUSE_SCALE * SENSITIVITY;
 		mouse.scl(scale, -scale);
 		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
 		return mouse;
+	}
+
+	public Vector3 getOffset()
+	{
+		return offset;
+	}
+
+	public Quaternion getRotation()
+	{
+		return view.getRotation(new Quaternion());
 	}
 
 	public Entity getTarget()
@@ -95,8 +115,37 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	{
 		if (!hasTarget()) return;
 		Vector2 mouse = getMouse();
-		rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-		rotateAround(getTargetLocation(), Vector3.X, mouse.y);
+		if (mouse.x > 0)
+		{
+			if (direction.x < MAX_CLAMP.x)
+			{
+				rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+			}
+		}
+		else
+		{
+			if (direction.x > MIN_CLAMP.x)
+			{
+				rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+			}
+		}
+		if (mouse.y > 0)
+		{
+			if (direction.y > MIN_CLAMP.y)
+			{
+				rotateAround(getTargetLocation(), Vector3.X, mouse.y);
+			}
+		}
+		else
+		{
+			if (direction.y < MAX_CLAMP.y)
+			{
+				rotateAround(getTargetLocation(), Vector3.X, mouse.y);
+			}
+		}
+		up.set(Vector3.Y);
+		position.add(getDeltaLocation());
+		oldTargetLocation = getTargetLocation();
 	}
 
 	public void removeTarget()
