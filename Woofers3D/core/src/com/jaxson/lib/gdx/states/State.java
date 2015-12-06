@@ -25,6 +25,11 @@ public abstract class State<C extends Camera>
 	private MyArrayList<Sprite> sprites;
 	private Environment environment;
 
+	public State(GameStateManager gameStateManager)
+	{
+		this(gameStateManager, null);
+	}
+
 	public State(GameStateManager gameStateManager, C camera)
 	{
 		this.gameStateManager = gameStateManager;

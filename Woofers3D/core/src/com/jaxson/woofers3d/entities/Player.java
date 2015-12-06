@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.entities.Entity;
+import com.jaxson.lib.gdx.entities.Box;
 import com.jaxson.lib.gdx.graphics.MyPerspectiveCamera;
 import com.jaxson.lib.gdx.util.MyInputProcessor;
 import java.lang.Math;
@@ -34,25 +35,26 @@ public class Player extends Entity
 	@Override
 	protected void input()
 	{
+		Vector3 rotation = getRotation();
 		if (MyInputProcessor.isDown(MyInputProcessor.LEFT))
 		{
-			transform.trn(new Vector3(SPEED, 0f, 0f));
+			translate(new Vector3(SPEED, 0f, 0f));
 		}
 		if (MyInputProcessor.isDown(MyInputProcessor.RIGHT))
 		{
-			transform.trn(new Vector3(-SPEED, 0f, 0f));
+			translate(new Vector3(-SPEED, 0f, 0f));
 		}
 		if (MyInputProcessor.isDown(MyInputProcessor.FORWARD))
 		{
-			transform.trn(new Vector3(0f, 0f, SPEED));
+			translate(new Vector3(0f, 0f, SPEED));
 		}
 		if (MyInputProcessor.isDown(MyInputProcessor.BACK))
 		{
-			transform.trn(new Vector3(0f, 0f, -SPEED));
+			translate(new Vector3(0f, 0f, -SPEED));
 		}
 		if (MyInputProcessor.isPressed(MyInputProcessor.SPACE))
 		{
-			System.out.println("jump");
+			camera.center();
 		}
 	}
 

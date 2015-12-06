@@ -10,7 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 public class Box extends Entity
 {
 	private static final Color COLOR = Color.ORANGE;
-	private static final Vector3 SIZE = new Vector3(2f, 2f, 2f);
+	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
+	private static final Vector3 SCALE = new Vector3(2f, 2f, 2f);
 	private static final long ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
 
 	public Box()
@@ -20,17 +21,28 @@ public class Box extends Entity
 
 	public Box(Color color)
 	{
-		this(color, LOCATION);
+		this(color, SCALE);
 	}
 
-	public Box(Vector3 location)
+	public Box(Color color, Vector3 scale)
 	{
-		this(COLOR, location);
+		this(color, scale, LOCATION);
 	}
 
-	public Box(Color color, Vector3 location)
+	public Box(Vector3 scale)
 	{
-		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES));
+		this(COLOR, scale);
+	}
+
+	public Box(Vector3 scale, Vector3 location)
+	{
+		this(COLOR, scale, location);
+	}
+
+	public Box(Color color, Vector3 scale, Vector3 location)
+	{
+		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES), location);
+		setScale(scale);
 	}
 
 	@Override

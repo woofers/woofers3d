@@ -16,6 +16,10 @@ public class MyInputProcessor implements InputProcessor
 	public static final int SPACE   = Keys.SPACE;
 	public static final int PAUSE   = Keys.ESCAPE;
 
+	private static final float MOUSE_SCALE      = 1f / 10f;
+	private static final float SENSITIVITY      = 1.05f;
+	private static final boolean INVERT_MOUSE   = true;
+
 	private static final int KEY_SIZE  = 256;
 	private static boolean[] keys, prevKeys;
 	private static Vector2 mouse, prevMouse;
@@ -36,6 +40,15 @@ public class MyInputProcessor implements InputProcessor
 	public static Vector2 getMouse()
 	{
 		return mouse.cpy();
+	}
+
+	public static Vector2 getScaledMouse()
+	{
+		final float scale = MOUSE_SCALE * SENSITIVITY;
+		Vector2 mouse = getDeltaMouse();
+		mouse.scl(scale, -scale);
+		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
+		return mouse;
 	}
 
 	public static Vector2 getPrevMouse()

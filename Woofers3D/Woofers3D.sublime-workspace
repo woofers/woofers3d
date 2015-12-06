@@ -4,8 +4,48 @@
 		"selected_items":
 		[
 			[
-				"get",
+				"ge",
+				"getRotation"
+			],
+			[
+				"VE",
+				"Vector3"
+			],
+			[
+				"fo",
+				"forward"
+			],
+			[
+				"pi",
+				"PITCH_MAX"
+			],
+			[
+				"sat",
+				"static"
+			],
+			[
+				"VEc",
+				"Vector2"
+			],
+			[
+				"geDe",
+				"getDeltaLocation"
+			],
+			[
+				"getLoca",
 				"getLocation"
+			],
+			[
+				"V",
+				"Vector3"
+			],
+			[
+				"get",
+				"getTargetLocation"
+			],
+			[
+				"MY",
+				"MyInputProcessor"
 			],
 			[
 				"set",
@@ -54,10 +94,6 @@
 			[
 				"back",
 				"UNITS_BACK"
-			],
-			[
-				"V",
-				"Vector2"
 			],
 			[
 				"vec",
@@ -256,10 +292,6 @@
 				"IntPiece"
 			],
 			[
-				"pi",
-				"pieceMoves"
-			],
-			[
 				"old",
 				"oldPiece"
 			],
@@ -384,26 +416,18 @@
 	"buffers":
 	[
 		{
-			"file": "core/src/com/jaxson/lib/gdx/states/State.java",
+			"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
 			"settings":
 			{
-				"buffer_size": 3223,
+				"buffer_size": 1555,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "core/src/com/jaxson/lib/gdx/graphics/MyPerspectiveCamera.java",
+			"file": "core/src/com/jaxson/lib/gdx/entities/Entity.java",
 			"settings":
 			{
-				"buffer_size": 2882,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
-			"settings":
-			{
-				"buffer_size": 1283,
+				"buffer_size": 2387,
 				"line_ending": "Windows"
 			}
 		}
@@ -451,13 +475,25 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 338.0,
-		"last_filter": "conv",
+		"height": 400.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
 				"conv",
 				"Convert Case: Swap Case"
+			],
+			[
+				"git pus",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
 			],
 			[
 				"git push",
@@ -480,14 +516,6 @@
 				"Git: Pull"
 			],
 			[
-				"git com",
-				"Git: Commit"
-			],
-			[
-				"git add",
-				"Git: Add..."
-			],
-			[
 				"conver",
 				"Convert Case: Upper Case"
 			],
@@ -502,10 +530,6 @@
 			[
 				"upp",
 				"Convert Case: Upper Case"
-			],
-			[
-				"git pus",
-				"Git: Push"
 			],
 			[
 				"git ",
@@ -556,30 +580,43 @@
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle"
 	],
 	"file_history":
 	[
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Main.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/MyInputProcessor.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO47.tmp/Matrix4.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Entity.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOBB9B.tmp/Matrix4.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO47FC.tmp/Vector3.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State.java",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zOAD08.tmp/CGL.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle.properties",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/GameStateManager.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/MyPerspectiveCamera.java",
-		"/D/Downloads/tubeoffline-1masterkey.user.js",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO575F.tmp/Matrix4.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zODE79.tmp/Matrix4.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO915B.tmp/MathUtils.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOAD63.tmp/Quaternion.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Box.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO5E11.tmp/Camera.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/MyInputProcessor.java",
+		"/D/Documents/JVD Docs/steamlock.txt",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Main.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/GameStateManager.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Window.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/MyEnvironment.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/ChaseCamera.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zO6757.tmp/Quaternion.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOE835.tmp/Quaternion.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
+		"/C/Users/Jaxson/AppData/Local/Temp/7zOAD08.tmp/CGL.java",
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle.properties",
+		"/D/Downloads/tubeoffline-1masterkey.user.js",
 		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
 		"/D/Documents/Development/School/CS 115/Assignment 5/PriorityQueue.java",
 		"/D/Documents/Development/School/CS 115/Assignment 5/Heap.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Entity.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/GameStateManager.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/sprites/Sprite.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State3D.java",
@@ -591,7 +628,6 @@
 		"/C/Users/Jaxson/AppData/Local/Temp/7zOA0EF.tmp/Camera.java",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zO46F5.tmp/GL20.java",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zOEF9D.tmp/PerspectiveCamera.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/Box.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/ChaseCamera.java",
 		"/C/Users/Jaxson/Desktop/ChaseCamera.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities/InputEntity.java",
@@ -678,19 +714,7 @@
 		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/B2DVars.java",
 		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/states/LevelSelect.java",
 		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Content.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/B2DVars.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/MyContactListener.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Animation.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/B2DSprite.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/MyInputProcessor.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/MyInput.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/GameState.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Game.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Player.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/GameStateManager.java",
-		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/Play.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/states/GameStateManager.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/Main.java"
+		"/D/Documents/Development/libGDX/Fox/core/src/com/woofers/fox/B2DVars.java"
 	],
 	"find":
 	{
@@ -708,6 +732,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"12",
+			"forward",
+			"direction",
 			"isFocused()",
 			"direction",
 			"Vector3.tmp",
@@ -800,6 +827,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"direction",
 			"temporary",
 			"camera",
 			"newMouse.y",
@@ -834,19 +862,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "core/src/com/jaxson/lib/gdx/states/State.java",
+					"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3223,
+						"buffer_size": 1555,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1046,
-								1046
+								835,
+								835
 							]
 						],
 						"settings":
@@ -855,7 +883,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 291.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -863,48 +891,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "core/src/com/jaxson/lib/gdx/graphics/MyPerspectiveCamera.java",
+					"file": "core/src/com/jaxson/lib/gdx/entities/Entity.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2882,
+						"buffer_size": 2387,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2074,
-								2074
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1027.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1283,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								888,
-								888
+								1607,
+								1607
 							]
 						],
 						"settings":
@@ -916,7 +915,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -924,7 +923,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 36.0
 	},
 	"input":
 	{
@@ -979,27 +978,43 @@
 		"selected_items":
 		[
 			[
-				"p",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\MyPerspectiveCamera.java"
+				"ent",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Entity.java"
 			],
 			[
 				"pla",
 				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
 			],
 			[
+				"my",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\MyPerspectiveCamera.java"
+			],
+			[
+				"camer",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\MyPerspectiveCamera.java"
+			],
+			[
 				"sta",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
+			],
+			[
+				"box",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Box.java"
+			],
+			[
+				"play",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
+			],
+			[
+				"myp",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\MyPerspectiveCamera.java"
+			],
+			[
+				"stat",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State.java"
 			],
 			[
-				"des",
-				"desktop\\src\\com\\jaxson\\desktop\\DesktopLauncher.java"
-			],
-			[
-				"my",
-				"core\\src\\com\\jaxson\\lib\\gdx\\util\\MyInputProcessor.java"
-			],
-			[
-				"gam",
+				"game",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameStateManager.java"
 			],
 			[
@@ -1007,12 +1022,16 @@
 				"core\\src\\com\\jaxson\\woofers3d\\Main.java"
 			],
 			[
-				"ent",
-				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Entity.java"
+				"p",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\MyPerspectiveCamera.java"
 			],
 			[
-				"stat",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
+				"des",
+				"desktop\\src\\com\\jaxson\\desktop\\DesktopLauncher.java"
+			],
+			[
+				"gam",
+				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameStateManager.java"
 			],
 			[
 				"sat",
@@ -1021,10 +1040,6 @@
 			[
 				"staa",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\State3D.java"
-			],
-			[
-				"box",
-				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Box.java"
 			],
 			[
 				"stata",
@@ -1055,20 +1070,12 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\util\\MyInputProcessor.java"
 			],
 			[
-				"play",
-				"core\\src\\com\\jaxson\\woofers3d\\entities\\Player.java"
-			],
-			[
 				"menu",
 				"core\\src\\com\\jaxson\\woofers3d\\states\\MenuState.java"
 			],
 			[
 				"int",
 				"core\\src\\com\\jaxson\\woofers3d\\entities\\InputEntity.java"
-			],
-			[
-				"game",
-				"core\\src\\com\\jaxson\\woofers3d\\states\\GameStateManager.java"
 			],
 			[
 				"state3d",

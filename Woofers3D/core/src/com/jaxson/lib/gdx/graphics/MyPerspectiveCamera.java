@@ -15,11 +15,8 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	private static final int FOV                = 75;
 	private static final float FAR              = 300f;
 	private static final float NEAR             = 1f / 10f;
-	private static final float MOUSE_SCALE      = 1f / 10f;
-	private static final float SENSITIVITY      = 1.05f;
-	private static final boolean INVERT_MOUSE   = true;
-	private static final Vector3 MAX_CLAMP      = new Vector3(0.7f, 0f, 0f);
-	private static final Vector3 MIN_CLAMP      = new Vector3(-0.7f, -0.7f, 0f);
+	private static final Vector2 MAX_CLAMP      = new Vector2(100f, 0f);
+	private static final Vector2 MIN_CLAMP      = new Vector2(-100f, -55f);
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
@@ -55,10 +52,16 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 		if (hasTarget())
 		{
-			position.set(offset.cpy().add(getTargetLocation()));
-			lookAt(getTargetLocation());
+			center();
 			oldTargetLocation = getTargetLocation();
 		}
+	}
+
+	public void center()
+	{
+		Vector3 location = getTargetLocation();
+		position.set(offset.cpy().add(location));
+		lookAt(location);
 	}
 
 	public Vector3 getDeltaLocation()
@@ -71,18 +74,14 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		return offset.cpy().scl(-1, -1, -1);
 	}
 
+	public Vector2 getMouse()
+	{
+		return MyInputProcessor.getScaledMouse();
+	}
+
 	public Vector3 getLocation()
 	{
 		return position;
-	}
-
-	private Vector2 getMouse()
-	{
-		final float scale = MOUSE_SCALE * SENSITIVITY;
-		Vector2 mouse = MyInputProcessor.getDeltaMouse();
-		mouse.scl(scale, -scale);
-		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
-		return mouse;
 	}
 
 	public Vector3 getOffset()
@@ -90,11 +89,25 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		return offset;
 	}
 
-	public Quaternion getRotation()
+	public Vector3 getRotation()
 	{
-		return view.getRotation(new Quaternion());
+		Quaternion quaternion = view.getRotation(new Quaternion());
+		return new Vector3(quaternion.getYaw(), quaternion.getPitch(), quaternion.getRoll());
 	}
-
+		//if (mouse.x > 0)
+		//{
+		//	if (rotation.x > MIN_CLAMP.x)
+		//	{
+		//		rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+		//	}
+		//}
+		//else
+		//{
+		//	if (rotation.x < MAX_CLAMP.x)
+		//	{
+		//		rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+		//	}
+		//}
 	public Entity getTarget()
 	{
 		return target;
@@ -115,37 +128,27 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	{
 		if (!hasTarget()) return;
 		Vector2 mouse = getMouse();
-		if (mouse.x > 0)
-		{
-			if (direction.x < MAX_CLAMP.x)
-			{
-				rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-			}
-		}
-		else
-		{
-			if (direction.x > MIN_CLAMP.x)
-			{
-				rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-			}
-		}
+		Vector3 rotation = getRotation();
+		Vector3 targetLocation = getTargetLocation();
+
+		rotateAround(targetLocation, Vector3.Y, mouse.x);
 		if (mouse.y > 0)
 		{
-			if (direction.y > MIN_CLAMP.y)
+			if (rotation.y > MIN_CLAMP.y)
 			{
-				rotateAround(getTargetLocation(), Vector3.X, mouse.y);
+				rotateAround(targetLocation, Vector3.X, mouse.y);
 			}
 		}
 		else
 		{
-			if (direction.y < MAX_CLAMP.y)
+			if (rotation.y < MAX_CLAMP.y)
 			{
-				rotateAround(getTargetLocation(), Vector3.X, mouse.y);
+				rotateAround(targetLocation, Vector3.X, mouse.y);
 			}
 		}
 		up.set(Vector3.Y);
 		position.add(getDeltaLocation());
-		oldTargetLocation = getTargetLocation();
+		oldTargetLocation = targetLocation;
 	}
 
 	public void removeTarget()
@@ -169,4 +172,21 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		input();
 		super.update();
 	}
+
+	/*
+	if (mouse.x > 0)
+	{
+		if (rotation.x > MIN_CLAMP.x)
+		{
+			rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+		}
+	}
+	else
+	{
+		if (rotation.x < MAX_CLAMP.x)
+		{
+			rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
+		}
+	}
+	*/
 }
