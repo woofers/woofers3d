@@ -17,8 +17,11 @@ import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends State<MyPerspectiveCamera>
 {
+	private static final Color FLOOR_COLOR = new Color(81f / 255f, 101f / 255f, 107f / 255f, 1f);
+
 	private FPSLogger fps;
-	private Box[] boxs;
+	private Box box;
+	private Box floor;
 	private Player player;
 
 	private static final int BOX_SIZE = 3;
@@ -30,16 +33,11 @@ public class PlayState extends State<MyPerspectiveCamera>
 
 		fps = new FPSLogger();
 
-		boxs = new Box[BOX_SIZE];
+		floor = new Box(FLOOR_COLOR, new Vector3(100f, 0.1f, 100f));
+		add(floor);
 
-		boxs[0] = new Box();
-		//add(boxs[0]);
-
-		boxs[1] = new Box(Color.GRAY, new Vector3(2f, 2f, 2f), new Vector3(0f, 0f, 5f));
-		add(boxs[1]);
-
-		boxs[2] = new Box(Color.GREEN);
-		add(boxs[2]);
+		box = new Box();
+		add(box);
 
 		player = new Player(getCamera());
 		add(player);
@@ -68,7 +66,5 @@ public class PlayState extends State<MyPerspectiveCamera>
 	public void update(float dt)
 	{
 		super.update(dt);
-		boxs[2].transform.set(player.getDirection(), new Quaternion());
-		System.out.println(getCamera().direction);
 	}
 }

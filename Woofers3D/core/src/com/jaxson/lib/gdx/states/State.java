@@ -64,6 +64,11 @@ public abstract class State<C extends Camera>
 		}
 	}
 
+	public float getAspectRatio()
+	{
+		return (float)(getWidth()) / (float)(getHeight());
+	}
+
 	public C getCamera()
 	{
 		return camera;
@@ -79,13 +84,21 @@ public abstract class State<C extends Camera>
 		return Gdx.graphics.getWidth();
 	}
 
+
 	protected abstract void input();
 
 	public boolean isCursorCatched()
 	{
 		return Gdx.input.isCursorCatched();
 	}
-
+/*
+	protected boolean isVisible(Entity entity)
+	{
+        entity.transform.getTranslation(position);
+        position.add(entity.center);
+        return cam.frustum.sphereInFrustum(position, entity.radius);
+    }
+*/
 	public void remove(Entity entity)
 	{
 		entities.remove(entity);

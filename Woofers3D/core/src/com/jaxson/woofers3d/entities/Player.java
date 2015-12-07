@@ -21,7 +21,12 @@ public class Player extends Entity
 
 	public Player(MyPerspectiveCamera camera)
 	{
-		super(PATH);
+		this(camera, LOCATION);
+	}
+
+	public Player(MyPerspectiveCamera camera, Vector3 location)
+	{
+		super(PATH, location);
 		this.camera = camera;
 		camera.setTarget(this);
 	}
@@ -30,6 +35,7 @@ public class Player extends Entity
 	public void dispose()
 	{
 		super.dispose();
+		camera.setTarget(null);
 	}
 
 	@Override
@@ -54,7 +60,8 @@ public class Player extends Entity
 		}
 		if (MyInputProcessor.isPressed(MyInputProcessor.SPACE))
 		{
-			camera.center();
+			//camera.center();
+			System.out.println(camera.getRotation());
 		}
 	}
 

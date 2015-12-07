@@ -15,8 +15,8 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	private static final int FOV                = 75;
 	private static final float FAR              = 300f;
 	private static final float NEAR             = 1f / 10f;
-	private static final Vector2 MAX_CLAMP      = new Vector2(100f, 0f);
-	private static final Vector2 MIN_CLAMP      = new Vector2(-100f, -55f);
+	private static final float MAX_CLAMP        = 0f;
+	private static final float MIN_CLAMP        = -55f;
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
@@ -57,6 +57,16 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		}
 	}
 
+	private boolean canRotateY(Vector3 rotation)
+	{
+		if (rotation.x > -90 && rotation.x <= 90)
+		{
+			return rotation.y > 0;
+
+		}
+		return rotation.y < 0;
+	}
+
 	public void center()
 	{
 		Vector3 location = getTargetLocation();
@@ -91,23 +101,15 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	public Vector3 getRotation()
 	{
-		Quaternion quaternion = view.getRotation(new Quaternion());
-		return new Vector3(quaternion.getYaw(), quaternion.getPitch(), quaternion.getRoll());
+		Quaternion rotation = getRoationQuat();
+		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
 	}
-		//if (mouse.x > 0)
-		//{
-		//	if (rotation.x > MIN_CLAMP.x)
-		//	{
-		//		rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-		//	}
-		//}
-		//else
-		//{
-		//	if (rotation.x < MAX_CLAMP.x)
-		//	{
-		//		rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-		//	}
-		//}
+
+	public Quaternion getRoationQuat()
+	{
+		return view.getRotation(new Quaternion());
+	}
+
 	public Entity getTarget()
 	{
 		return target;
@@ -130,23 +132,12 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		Vector2 mouse = getMouse();
 		Vector3 rotation = getRotation();
 		Vector3 targetLocation = getTargetLocation();
+		System.out.println(mouse.y);
 
 		rotateAround(targetLocation, Vector3.Y, mouse.x);
-		if (mouse.y > 0)
-		{
-			if (rotation.y > MIN_CLAMP.y)
-			{
-				rotateAround(targetLocation, Vector3.X, mouse.y);
-			}
-		}
-		else
-		{
-			if (rotation.y < MAX_CLAMP.y)
-			{
-				rotateAround(targetLocation, Vector3.X, mouse.y);
-			}
-		}
+		rotateAround(targetLocation, Vector3.X, mouse.y);
 		up.set(Vector3.Y);
+
 		position.add(getDeltaLocation());
 		oldTargetLocation = targetLocation;
 	}
@@ -172,21 +163,4 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 		input();
 		super.update();
 	}
-
-	/*
-	if (mouse.x > 0)
-	{
-		if (rotation.x > MIN_CLAMP.x)
-		{
-			rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-		}
-	}
-	else
-	{
-		if (rotation.x < MAX_CLAMP.x)
-		{
-			rotateAround(getTargetLocation(), Vector3.Y, mouse.x);
-		}
-	}
-	*/
 }

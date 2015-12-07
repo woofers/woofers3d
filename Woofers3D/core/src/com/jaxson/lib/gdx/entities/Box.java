@@ -11,7 +11,7 @@ public class Box extends Entity
 {
 	private static final Color COLOR = Color.ORANGE;
 	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
-	private static final Vector3 SCALE = new Vector3(2f, 2f, 2f);
+	private static final Vector3 SCALE = new Vector3(1f, 1f, 1f);
 	private static final long ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
 
 	public Box()
