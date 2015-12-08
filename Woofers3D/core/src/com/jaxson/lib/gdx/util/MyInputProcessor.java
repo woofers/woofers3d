@@ -1,9 +1,10 @@
 package com.jaxson.lib.gdx.util;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class MyInputProcessor implements InputProcessor
 {
@@ -44,6 +45,7 @@ public class MyInputProcessor implements InputProcessor
 
 	public static Vector2 getScaledMouse()
 	{
+		if (!Gdx.input.isCursorCatched()) return Vector2.Zero;
 		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = getDeltaMouse();
 		mouse.scl(scale, -scale);

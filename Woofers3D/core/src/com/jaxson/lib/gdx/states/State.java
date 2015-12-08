@@ -3,14 +3,14 @@ package com.jaxson.lib.gdx.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.entities.Entity;
-import com.jaxson.lib.gdx.graphics.MyEnvironment;
 import com.jaxson.lib.gdx.sprites.Sprite;
 import com.jaxson.lib.gdx.states.GameStateManager;
+import com.jaxson.lib.gdx.states.stage.*;
 import com.jaxson.lib.gdx.util.MyInputProcessor;
 import com.jaxson.lib.util.MyArrayList;
 
@@ -21,9 +21,8 @@ public abstract class State<C extends Camera>
 	private C camera;
 	private GameStateManager gameStateManager;
 	private InputProcessor input;
-	private MyArrayList<Entity> entities;
-	private MyArrayList<Sprite> sprites;
-	private Environment environment;
+	private Stage3D stage3D;
+	private Stage2D stage2D;
 
 	public State(GameStateManager gameStateManager)
 	{
@@ -34,9 +33,8 @@ public abstract class State<C extends Camera>
 	{
 		this.gameStateManager = gameStateManager;
 		this.camera = camera;
-		this.entities = new MyArrayList<Entity>();
-		this.sprites = new MyArrayList<Sprite>();
-		this.environment = new MyEnvironment();
+		this.stage3D = new Stage3D();
+		this.stage2D = new Stage2D();
 
 		setCursorCatched(CURSOR_CATCHED);
 		setInputProcessor(new MyInputProcessor());
@@ -44,24 +42,18 @@ public abstract class State<C extends Camera>
 
 	public void add(Entity entity)
 	{
-		entities.add(entity);
+		stage3D.add(entity);
 	}
 
 	public void add(Sprite sprite)
 	{
-		sprites.add(sprite);
+		stage2D.add(sprite);
 	}
 
 	public void dispose()
 	{
-		for (Entity entity: entities)
-		{
-			entity.dispose();
-		}
-		for (Sprite sprite: sprites)
-		{
-			sprite.dispose();
-		}
+		stage3D.dispose();
+		stage2D.dispose();
 	}
 
 	public float getAspectRatio()
@@ -84,59 +76,27 @@ public abstract class State<C extends Camera>
 		return Gdx.graphics.getWidth();
 	}
 
-
 	protected abstract void input();
 
 	public boolean isCursorCatched()
 	{
 		return Gdx.input.isCursorCatched();
 	}
-/*
-	protected boolean isVisible(Entity entity)
-	{
-        entity.transform.getTranslation(position);
-        position.add(entity.center);
-        return cam.frustum.sphereInFrustum(position, entity.radius);
-    }
-*/
+
 	public void remove(Entity entity)
 	{
-		entities.remove(entity);
+		stage3D.remove(entity);
 	}
 
 	public void remove(Sprite sprite)
 	{
-		sprites.remove(sprite);
+		stage2D.remove(sprite);
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		render(modelBatch);
-		render(spriteBatch);
-	}
-
-	public void render(ModelBatch modelBatch)
-	{
-		if (modelBatch == null || entities.isEmpty()) return;
-		modelBatch.begin(camera);
-		for (Entity entity: entities)
-		{
-			modelBatch.render(entity, environment);
-		}
-		modelBatch.end();
-	}
-
-	public void render(SpriteBatch spriteBatch)
-	{
-		if (spriteBatch == null || sprites.isEmpty()) return;
-		Vector2 location;
-		spriteBatch.begin();
-		for (Sprite sprite: sprites)
-		{
-			location = sprite.getLocation();
-			spriteBatch.draw(sprite, location.x, location.y);
-		}
-		spriteBatch.end();
+		stage3D.render(modelBatch, camera);
+		stage2D.render(spriteBatch);
 	}
 
 	public void setCamera(C camera)
@@ -163,14 +123,8 @@ public abstract class State<C extends Camera>
 	public void update(float dt)
 	{
 		input();
-		for (Entity entity: entities)
-		{
-			entity.update(dt);
-		}
-		for (Sprite sprite: sprites)
-		{
-			sprite.update(dt);
-		}
+		stage3D.update(dt);
+		stage2D.update(dt);
 		camera.update();
 		MyInputProcessor.update(dt);
 	}
