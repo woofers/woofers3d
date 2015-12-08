@@ -30,7 +30,6 @@ public class Stage3D extends Stage<Entity>
 	{
 		Ray ray = camera.getPickRay(x, y);
 
-
 		for (Entity entity: objects)
 		{
 

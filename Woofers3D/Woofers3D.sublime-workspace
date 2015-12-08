@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"CO",
+				"CollisionManager"
+			],
+			[
+				"coo",
+				"collisionWorld"
+			],
+			[
+				"RB",
+				"RGB_TO_FLOAT"
+			],
+			[
+				"R",
+				"RGB_MAX"
+			],
+			[
 				"STA",
 				"Stage3D"
 			],
@@ -427,7 +443,31 @@
 			"file": "core/src/com/jaxson/lib/gdx/states/stage/Stage3D.java",
 			"settings":
 			{
-				"buffer_size": 1325,
+				"buffer_size": 1324,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/entities/CollisionManager.java",
+			"settings":
+			{
+				"buffer_size": 2424,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
+			"settings":
+			{
+				"buffer_size": 1932,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/util/MyMath.java",
+			"settings":
+			{
+				"buffer_size": 801,
 				"line_ending": "Windows"
 			}
 		},
@@ -435,7 +475,15 @@
 			"file": "core/src/com/jaxson/lib/gdx/entities/Entity.java",
 			"settings":
 			{
-				"buffer_size": 2676,
+				"buffer_size": 3231,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
+			"settings":
+			{
+				"buffer_size": 1744,
 				"line_ending": "Windows"
 			}
 		}
@@ -585,21 +633,20 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Documents/Development/School/JavaProjects/Woofers3D",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/entities",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/gradle"
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util"
 	],
 	"file_history":
 	[
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/build.gradle",
+		"/C/Users/707021/AppData/Local/Temp/Temp1_libgdx-demo-invaders-master.zip/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/Simulation.java",
+		"/C/Users/707021/AppData/Local/Temp/Temp1_libgdx-demo-invaders-master.zip/libgdx-demo-invaders-master/core/src/com/badlogic/invaders/simulation/SimulationListener.java",
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/MyInputProcessor.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/stage/Stage3D.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
@@ -723,11 +770,7 @@
 		"/C/Users/Jaxson/AppData/Local/Temp/7zOD1BB.tmp/BBInputProcessor.java",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zOB307.tmp/BBInput.java",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zO74E4.tmp/BlockBunnyDesktop.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/Spike.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/HUD.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/Background.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/BBInput.java",
-		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/handlers/BBInputProcessor.java"
+		"/C/Users/Jaxson/Desktop/Block Bunny/src/com/neet/blockbunny/entities/Spike.java"
 	],
 	"find":
 	{
@@ -745,6 +788,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"desktop",
+			"core",
 			"12",
 			"forward",
 			"direction",
@@ -879,15 +924,101 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1325,
+						"buffer_size": 1324,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								710,
-								710
+								364,
+								364
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "core/src/com/jaxson/lib/gdx/entities/CollisionManager.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2424,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1169,
+								1169
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 102.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1932,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1420,
+								1420
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "core/src/com/jaxson/lib/util/MyMath.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 801,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								372,
+								372
 							]
 						],
 						"settings":
@@ -903,20 +1034,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 4,
 					"file": "core/src/com/jaxson/lib/gdx/entities/Entity.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2676,
+						"buffer_size": 3231,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1262,
-								1262
+								3208,
+								3208
 							]
 						],
 						"settings":
@@ -925,10 +1056,39 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 561.0,
+						"translation.y": 2006.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1744,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1305,
+								1305
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 714.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -977,7 +1137,7 @@
 	{
 		"height": 480.0
 	},
-	"pinned_build_system": "Packages/User/ant.sublime-build",
+	"pinned_build_system": "Packages/User/run.sublime-build",
 	"project": "Woofers3D.sublime-project",
 	"replace":
 	{
@@ -991,16 +1151,20 @@
 		"selected_items":
 		[
 			[
-				"ent",
-				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Entity.java"
+				"pla",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
 			],
 			[
 				"sta",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\stage\\Stage3D.java"
 			],
 			[
-				"pla",
-				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
+				"my",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\MyInputProcessor.java"
+			],
+			[
+				"ent",
+				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Entity.java"
 			],
 			[
 				"men",
@@ -1017,10 +1181,6 @@
 			[
 				"box",
 				"core\\src\\com\\jaxson\\lib\\gdx\\entities\\Box.java"
-			],
-			[
-				"my",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\MyPerspectiveCamera.java"
 			],
 			[
 				"camer",
