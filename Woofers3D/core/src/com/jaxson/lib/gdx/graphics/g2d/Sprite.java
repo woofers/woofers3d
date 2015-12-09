@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.sprites;
+package com.jaxson.lib.gdx.graphics.g2d;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;

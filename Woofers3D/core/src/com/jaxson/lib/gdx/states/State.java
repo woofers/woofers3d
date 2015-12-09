@@ -7,14 +7,15 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.entities.Entity;
-import com.jaxson.lib.gdx.sprites.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.stage.*;
-import com.jaxson.lib.gdx.util.MyInputProcessor;
 import com.jaxson.lib.util.MyArrayList;
 
-public abstract class State<C extends Camera>
+public abstract class State<C extends Camera> extends GameObject
 {
 	private static final boolean CURSOR_CATCHED = true;
 
@@ -37,7 +38,7 @@ public abstract class State<C extends Camera>
 		this.stage2D = new Stage2D();
 
 		setCursorCatched(CURSOR_CATCHED);
-		setInputProcessor(new MyInputProcessor());
+		setInputProcessor(new KeyHandler());
 	}
 
 	public void add(Entity entity)
@@ -50,6 +51,7 @@ public abstract class State<C extends Camera>
 		stage2D.add(sprite);
 	}
 
+	@Override
 	public void dispose()
 	{
 		stage3D.dispose();
@@ -76,8 +78,6 @@ public abstract class State<C extends Camera>
 		return Gdx.graphics.getWidth();
 	}
 
-	protected abstract void input();
-
 	public boolean isCursorCatched()
 	{
 		return Gdx.input.isCursorCatched();
@@ -93,6 +93,7 @@ public abstract class State<C extends Camera>
 		stage2D.remove(sprite);
 	}
 
+	@Override
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		stage3D.render(modelBatch, camera);
@@ -120,12 +121,13 @@ public abstract class State<C extends Camera>
 		setCursorCatched(!isCursorCatched());
 	}
 
+	@Override
 	public void update(float dt)
 	{
-		input();
+		super.update(dt);
 		stage3D.update(dt);
 		stage2D.update(dt);
 		camera.update();
-		MyInputProcessor.update(dt);
+		KeyHandler.update(dt);
 	}
 }

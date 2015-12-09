@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.graphics;
+package com.jaxson.lib.gdx.graphics.cameras;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -6,11 +6,11 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.entities.Entity;
-import com.jaxson.lib.gdx.util.MyInputProcessor;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.input.KeyHandler;
 import java.lang.Math;
 
-public class MyPerspectiveCamera extends PerspectiveCamera
+public class TargetCamera extends PerspectiveCamera
 {
 	private static final int FOV                = 75;
 	private static final float FAR              = 300f;
@@ -24,21 +24,21 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 	private Vector3 offset;
 	private Vector3 oldTargetLocation;
 
-	public MyPerspectiveCamera(float width, float height)
+	public TargetCamera(float width, float height)
 	{
 		this(width, height, null);
 	}
 
-	public MyPerspectiveCamera(float width, float height, Entity target)
+	public TargetCamera(float width, float height, Entity target)
 	{
 		this(FOV, width, height, OFFSET, target);
 	}
-	public MyPerspectiveCamera(float fov, float width, float height, Vector3 offset)
+	public TargetCamera(float fov, float width, float height, Vector3 offset)
 	{
 		this(fov, width, height, offset, null);
 	}
 
-	public MyPerspectiveCamera(float fov, float width, float height, Vector3 offset, Entity target)
+	public TargetCamera(float fov, float width, float height, Vector3 offset, Entity target)
 	{
 		super(fov, width, height);
 		this.target = target;
@@ -86,7 +86,7 @@ public class MyPerspectiveCamera extends PerspectiveCamera
 
 	public Vector2 getMouse()
 	{
-		return MyInputProcessor.getScaledMouse();
+		return KeyHandler.getScaledMouse();
 	}
 
 	public Vector3 getLocation()

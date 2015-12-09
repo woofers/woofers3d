@@ -9,16 +9,16 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
-import com.jaxson.lib.gdx.entities.Box;
-import com.jaxson.lib.gdx.entities.CollisionManager;
-import com.jaxson.lib.gdx.graphics.MyPerspectiveCamera;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.graphics.g3d.Box;
+import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.math.collision.CollisionManager;
 import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.State;
-import com.jaxson.lib.gdx.util.MyInputProcessor;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
 
-public class PlayState extends State<MyPerspectiveCamera>
+public class PlayState extends State<TargetCamera>
 {
 	private static final Color FLOOR_COLOR = new Color(MyMath.toRGB(81), MyMath.toRGB(101), MyMath.toRGB(107), 1f);
 
@@ -33,7 +33,7 @@ public class PlayState extends State<MyPerspectiveCamera>
 	public PlayState(GameStateManager gameStateManager)
 	{
 		super(gameStateManager);
-		setCamera(new MyPerspectiveCamera(getWidth(), getHeight()));
+		setCamera(new TargetCamera(getWidth(), getHeight()));
 
 		Bullet.init();
 		collisionManager = new CollisionManager();
@@ -49,7 +49,7 @@ public class PlayState extends State<MyPerspectiveCamera>
 
 		player = new Player(getCamera());
 		add(player);
-		collisionManager.addObject(player);
+		collisionManager.add(player);
 	}
 
 	@Override
@@ -75,5 +75,6 @@ public class PlayState extends State<MyPerspectiveCamera>
 	public void update(float dt)
 	{
 		super.update(dt);
+		collisionManager.update(dt);
 	}
 }

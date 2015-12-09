@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.util;
+package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
-public class MyInputProcessor implements InputProcessor
+public class KeyHandler implements InputProcessor
 {
 	public static final int UP      = Keys.W;
 	public static final int FORWARD = Keys.W;
@@ -25,7 +25,7 @@ public class MyInputProcessor implements InputProcessor
 	private static boolean[] keys, prevKeys;
 	private static Vector2 mouse, prevMouse;
 
-	public MyInputProcessor()
+	public KeyHandler()
 	{
 		keys = new boolean[KEY_SIZE];
 		prevKeys = new boolean[KEY_SIZE];

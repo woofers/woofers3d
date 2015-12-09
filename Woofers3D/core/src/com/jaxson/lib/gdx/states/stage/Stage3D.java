@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.collision.Ray;
-import com.jaxson.lib.gdx.entities.Entity;
-import com.jaxson.lib.gdx.graphics.MyEnvironment;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
 
 public class Stage3D extends Stage<Entity>
 {
@@ -55,7 +55,7 @@ public class Stage3D extends Stage<Entity>
 		modelBatch.begin(camera);
 		for (Entity entity: objects)
 		{
-			modelBatch.render(entity, environment);
+			modelBatch.render(entity.getModelInstance(), environment);
 		}
 		modelBatch.end();
 	}

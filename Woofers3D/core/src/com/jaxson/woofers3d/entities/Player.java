@@ -6,10 +6,11 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.entities.Entity;
-import com.jaxson.lib.gdx.entities.Box;
-import com.jaxson.lib.gdx.graphics.MyPerspectiveCamera;
-import com.jaxson.lib.gdx.util.MyInputProcessor;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.graphics.g3d.Box;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.input.KeyHandler;
+
 import java.lang.Math;
 
 public class Player extends Entity
@@ -17,14 +18,14 @@ public class Player extends Entity
 	private static final float SPEED = 0.03f;
 	private static final String PATH = "entities/dog/dog.obj";
 
-	private MyPerspectiveCamera camera;
+	private TargetCamera camera;
 
-	public Player(MyPerspectiveCamera camera)
+	public Player(TargetCamera camera)
 	{
 		this(camera, LOCATION);
 	}
 
-	public Player(MyPerspectiveCamera camera, Vector3 location)
+	public Player(TargetCamera camera, Vector3 location)
 	{
 		super(PATH, location);
 		this.camera = camera;
@@ -42,23 +43,23 @@ public class Player extends Entity
 	protected void input()
 	{
 		Vector3 rotation = getRotation();
-		if (MyInputProcessor.isDown(MyInputProcessor.LEFT))
+		if (KeyHandler.isDown(KeyHandler.LEFT))
 		{
 			translate(new Vector3(SPEED, 0f, 0f));
 		}
-		if (MyInputProcessor.isDown(MyInputProcessor.RIGHT))
+		if (KeyHandler.isDown(KeyHandler.RIGHT))
 		{
 			translate(new Vector3(-SPEED, 0f, 0f));
 		}
-		if (MyInputProcessor.isDown(MyInputProcessor.FORWARD))
+		if (KeyHandler.isDown(KeyHandler.FORWARD))
 		{
 			translate(new Vector3(0f, 0f, SPEED));
 		}
-		if (MyInputProcessor.isDown(MyInputProcessor.BACK))
+		if (KeyHandler.isDown(KeyHandler.BACK))
 		{
 			translate(new Vector3(0f, 0f, -SPEED));
 		}
-		if (MyInputProcessor.isPressed(MyInputProcessor.SPACE))
+		if (KeyHandler.isPressed(KeyHandler.SPACE))
 		{
 			//camera.center();
 			System.out.println(camera.getRotation());

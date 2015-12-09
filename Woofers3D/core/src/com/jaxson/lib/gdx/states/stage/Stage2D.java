@@ -2,7 +2,7 @@ package com.jaxson.lib.gdx.states.stage;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.jaxson.lib.gdx.sprites.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 
 public class Stage2D extends Stage<Sprite>
 {

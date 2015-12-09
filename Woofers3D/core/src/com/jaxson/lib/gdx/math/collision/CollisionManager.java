@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.entities;
+package com.jaxson.lib.gdx.math.collision;
 
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -16,13 +16,14 @@ import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration
 import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.util.MyArrayList;
 
 public class CollisionManager
 {
 	private final static short GROUND_FLAG = 1 << 8;
-    private final static short OBJECT_FLAG = 1 << 9;
-    private final static short ALL_FLAG = -1;
+	private final static short OBJECT_FLAG = 1 << 9;
+	private final static short ALL_FLAG    = -1;
 
 	private MyArrayList<Entity> objects;
 	private btDefaultCollisionConfiguration collisionConfig;
@@ -39,6 +40,11 @@ public class CollisionManager
 		this.collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
 	}
 
+	public void add(Entity entity)
+	{
+		add(entity, OBJECT_FLAG, GROUND_FLAG);
+	}
+
 	public void add(Entity entity, short group, short mask)
 	{
 		objects.add(entity);
@@ -49,12 +55,6 @@ public class CollisionManager
 	{
 		add(entity, GROUND_FLAG, ALL_FLAG);
 	}
-
-	public void addObject(Entity entity)
-	{
-		add(entity, OBJECT_FLAG, GROUND_FLAG);
-	}
-
 
 	public void remove(Entity entity)
 	{
