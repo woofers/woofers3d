@@ -17,6 +17,7 @@ public abstract class Entity extends GameObject
 {
 	protected static final Vector3 LOCATION = Vector3.Zero;
 	private static final btCollisionShape SHAPE = new btCapsuleShape(1f, 1f);
+	private static final int COLLISON_FLAG = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
 
 	private ModelInstance modelInstance;
 	private btCollisionObject body;
@@ -40,7 +41,9 @@ public abstract class Entity extends GameObject
 	{
 		this.modelInstance = new ModelInstance(model, location);
 		this.body = new btCollisionObject();
-		this.body.setCollisionShape(new btCapsuleShape(1f, 1f));
+
+		setCollisionShape(new btCapsuleShape(1f, 1f));
+		setCollisionFlags(getCollisionFlags() | COLLISON_FLAG);
 	}
 
 	@Override
@@ -57,6 +60,11 @@ public abstract class Entity extends GameObject
 	public BoundingBox getBoundingBox()
 	{
 		return modelInstance.calculateBoundingBox(new BoundingBox());
+	}
+
+	public int getCollisionFlags()
+	{
+		return body.getCollisionFlags();
 	}
 
 	public Vector3 getDirection()
@@ -124,6 +132,18 @@ public abstract class Entity extends GameObject
 		updateBody();
 	}
 
+	public void setCollisionFlags(int flags)
+	{
+		if (!hasBody()) return;
+		body.setCollisionFlags(flags);
+	}
+
+	public void setCollisionShape(btCollisionShape shape)
+	{
+		if (!hasBody()) return;
+		body.setCollisionShape(shape);
+	}
+
 	public void setLocation(Vector3 location)
 	{
 		modelInstance.transform.set(location, getRoationQuat());
@@ -159,8 +179,9 @@ public abstract class Entity extends GameObject
 		updateBody();
 	}
 
-	public void updateBody()
+	private void updateBody()
 	{
-		if (hasBody()) body.setWorldTransform(modelInstance.transform);
+		if (!hasBody()) return;
+		body.setWorldTransform(modelInstance.transform);
 	}
 }

@@ -62,9 +62,7 @@ public class Player extends Entity
 		if (KeyHandler.isPressed(KeyHandler.SPACE))
 		{
 			//camera.center();
-			System.out.println(camera.getRotation());
 		}
-		System.out.println(getLocation());
 		translate(new Vector3(0, -1f / 120f, 0));
 	}
 

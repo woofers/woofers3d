@@ -28,8 +28,6 @@ public class PlayState extends State<TargetCamera>
 	private Player player;
 	private CollisionManager collisionManager;
 
-	private static final int BOX_SIZE = 3;
-
 	public PlayState(GameStateManager gameStateManager)
 	{
 		super(gameStateManager);
@@ -47,7 +45,7 @@ public class PlayState extends State<TargetCamera>
 		box = new Box();
 		add(box);
 
-		player = new Player(getCamera());
+		player = new Player(getCamera(), new Vector3(0, 10, 0));
 		add(player);
 		collisionManager.add(player);
 	}
