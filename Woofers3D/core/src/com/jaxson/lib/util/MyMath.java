@@ -27,7 +27,6 @@ public class MyMath
 		return Math.log10(value) / Math.log10(base);
 	}
 
-
 	public static float toRGB(int color)
 	{
 		color = Math.abs(color);

@@ -5,22 +5,28 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.math.collision.MyMotionState;
 import java.lang.Math;
 
 public abstract class Entity extends GameObject
 {
 	protected static final Vector3 LOCATION = Vector3.Zero;
-	private static final btCollisionShape SHAPE = new btCapsuleShape(1f, 1f);
-	private static final int COLLISON_FLAG = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
+	private final btCollisionShape SHAPE = new btCapsuleShape(1f, 1f);
+	private static final float MASS = 1f;
 
 	private ModelInstance modelInstance;
-	private btCollisionObject body;
+	private MyMotionState motionState;
+	private float mass;
+	private btRigidBody body;
+	private btCollisionShape shape;
 
 	public Entity(String modelPath)
 	{
@@ -39,11 +45,23 @@ public abstract class Entity extends GameObject
 
 	public Entity(Model model, Vector3 location)
 	{
-		this.modelInstance = new ModelInstance(model, location);
-		this.body = new btCollisionObject();
+		this(model, location, MASS);
+	}
 
-		setCollisionShape(new btCapsuleShape(1f, 1f));
-		setCollisionFlags(getCollisionFlags() | COLLISON_FLAG);
+	public Entity(Model model, Vector3 location, float mass)
+	{
+		this.modelInstance = new ModelInstance(model, location);
+		this.motionState = new MyMotionState();
+		this.mass = mass;
+		this.shape = SHAPE;
+		this.motionState.setWorldTransform(getTransform());
+		this.body = new btRigidBody(mass, motionState, shape, getInertia());
+		setCollisionShape(shape);
+	}
+
+	public void addCollisionFlag(int flag)
+	{
+		setCollisionFlags(getCollisionFlags() | flag);
 	}
 
 	@Override
@@ -52,7 +70,12 @@ public abstract class Entity extends GameObject
 		modelInstance.model.dispose();
 	}
 
-	public btCollisionObject getBody()
+	public int getActivationState()
+	{
+		return body.getActivationState();
+	}
+
+	public btRigidBody getBody()
 	{
 		return body;
 	}
@@ -62,6 +85,21 @@ public abstract class Entity extends GameObject
 		return modelInstance.calculateBoundingBox(new BoundingBox());
 	}
 
+	public Vector3 getCenterLocation()
+	{
+		return getRadius().add(getLocation());
+	}
+
+	public int getContactCallbackFlag()
+	{
+		return body.getContactCallbackFlag();
+	}
+
+    public int getContactCallbackFilter()
+    {
+		return body.getContactCallbackFilter();
+    }
+
 	public int getCollisionFlags()
 	{
 		return body.getCollisionFlags();
@@ -69,8 +107,21 @@ public abstract class Entity extends GameObject
 
 	public Vector3 getDirection()
 	{
-		float[] matrix = modelInstance.transform.getValues();
+		float[] matrix = getTransform().getValues();
 		return new Vector3(matrix[8], matrix[9], matrix[10]);
+	}
+
+	public Vector3 getInertia()
+	{
+		Vector3 inertia = new Vector3();
+		if (mass <= 0) return inertia;
+		shape.calculateLocalInertia(mass, inertia);
+		return inertia;
+	}
+
+	public float getMass()
+	{
+		return mass;
 	}
 
 	public ModelInstance getModelInstance()
@@ -85,17 +136,12 @@ public abstract class Entity extends GameObject
 
 	public Vector3 getLocation()
 	{
-		return modelInstance.transform.getTranslation(new Vector3());
-	}
-
-	public Vector3 getCenterLocation()
-	{
-		return getRadius().add(getLocation());
+		return getTransform().getTranslation(new Vector3());
 	}
 
 	public Vector3 getScale()
 	{
-		return modelInstance.transform.getScale(new Vector3());
+		return getTransform().getScale(new Vector3());
 	}
 
 	public Vector3 getRadius()
@@ -111,7 +157,12 @@ public abstract class Entity extends GameObject
 
 	public Quaternion getRoationQuat()
 	{
-		return modelInstance.transform.getRotation(new Quaternion());
+		return getTransform().getRotation(new Quaternion());
+	}
+
+	public Matrix4 getTransform()
+	{
+		return modelInstance.transform;
 	}
 
 	public boolean hasBody()
@@ -126,27 +177,41 @@ public abstract class Entity extends GameObject
 
 	public void rotate(float yaw, float pitch, float roll)
 	{
-		modelInstance.transform.rotate(Vector3.Y, yaw);
-		modelInstance.transform.rotate(Vector3.X, pitch);
-		modelInstance.transform.rotate(Vector3.Z, roll);
+		getTransform().rotate(Vector3.Y, yaw);
+		getTransform().rotate(Vector3.X, pitch);
+		getTransform().rotate(Vector3.Z, roll);
 		updateBody();
 	}
 
-	public void setCollisionFlags(int flags)
+	public void setActivationState(int state)
 	{
 		if (!hasBody()) return;
-		body.setCollisionFlags(flags);
+		body.setActivationState(state);
+	}
+
+	public void setContactCallbackFlag(int flag)
+	{
+		body.setContactCallbackFlag(flag);
+	}
+
+    public void setContactCallbackFilter(int flag)
+    {
+		body.setContactCallbackFilter(flag);
+    }
+
+	public void setCollisionFlags(int flags)
+	{
+		body.setContactCallbackFilter(flags);
 	}
 
 	public void setCollisionShape(btCollisionShape shape)
 	{
-		if (!hasBody()) return;
 		body.setCollisionShape(shape);
 	}
 
 	public void setLocation(Vector3 location)
 	{
-		modelInstance.transform.set(location, getRoationQuat());
+		getTransform().set(location, getRoationQuat());
 		updateBody();
 	}
 
@@ -169,19 +234,25 @@ public abstract class Entity extends GameObject
 
 	public void translate(Vector3 translation)
 	{
-		modelInstance.transform.translate(translation);
+		getTransform().translate(translation);
 		updateBody();
 	}
 
 	public void translateABS(Vector3 translation)
 	{
-		modelInstance.transform.trn(translation);
+		getTransform().trn(translation);
 		updateBody();
+	}
+
+	@Override
+	public void update(float dt)
+	{
+		body.getWorldTransform(getTransform());
+		body.transform.rotate(Vector3.Y, 1f);
 	}
 
 	private void updateBody()
 	{
-		if (!hasBody()) return;
-		body.setWorldTransform(modelInstance.transform);
+		body.proceedToTransform(getTransform());
 	}
 }

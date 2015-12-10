@@ -132,7 +132,6 @@ public class TargetCamera extends PerspectiveCamera
 		Vector2 mouse = getMouse();
 		Vector3 rotation = getRotation();
 		Vector3 targetLocation = getTargetLocation();
-		System.out.println(mouse.y);
 
 		rotateAround(targetLocation, Vector3.Y, mouse.x);
 		rotateAround(targetLocation, Vector3.X, mouse.y);

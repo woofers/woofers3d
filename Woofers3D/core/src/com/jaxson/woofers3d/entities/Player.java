@@ -63,7 +63,6 @@ public class Player extends Entity
 		{
 			//camera.center();
 		}
-		translate(new Vector3(0, -1f / 120f, 0));
 	}
 
 	@Override

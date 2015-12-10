@@ -13,6 +13,7 @@ public class Box extends Entity
 	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
 	private static final Vector3 SCALE = new Vector3(1f, 1f, 1f);
 	private static final long ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
+	private static final float MASS = 0f;
 
 	public Box()
 	{
@@ -41,7 +42,7 @@ public class Box extends Entity
 
 	public Box(Color color, Vector3 scale, Vector3 location)
 	{
-		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES), location);
+		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES), location, MASS);
 		setScale(scale);
 	}
 

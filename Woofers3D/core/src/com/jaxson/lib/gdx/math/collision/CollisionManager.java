@@ -30,17 +30,19 @@ import com.jaxson.lib.util.MyArrayList;
 
 public class CollisionManager
 {
-	private final static short GROUND_FLAG = 1 << 8;
-	private final static short OBJECT_FLAG = 1 << 9;
-	private final static short ALL_FLAG    = -1;
-	private final static Vector3 GRAVITY = new Vector3(0, -10f, 0);
+	private final static short GROUND_FLAG  = 1 << 8;
+	private final static short OBJECT_FLAG  = 1 << 9;
+	private final static short ALL_FLAG     = -1;
+	private final static int KINEMATIC_FLAG = btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
+	private final static int CALLBACK_FLAG  = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
+
+	private final Vector3 GRAVITY          = new Vector3(0, -10f, 0);
 
 	private MyArrayList<Entity> objects;
 	private MyContactListener contactListener;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
 	private btDbvtBroadphase broadphase;
-	private btCollisionWorld collisionWorld;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private btDiscreteDynamicsWorld dynamicsWorld;
 
@@ -51,38 +53,51 @@ public class CollisionManager
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
 		this.broadphase = new btDbvtBroadphase();
-		this.collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		this.dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
+		setGravity(GRAVITY);
 	}
 
 	public void add(Entity entity)
 	{
 		add(entity, OBJECT_FLAG, GROUND_FLAG);
+		entity.addCollisionFlag(CALLBACK_FLAG);
 	}
 
-	public void add(Entity entity, short group, short mask)
+	public void add(Entity entity, int group, int mask)
 	{
 		objects.add(entity);
-		collisionWorld.addCollisionObject(entity.getBody(), group, mask);
+		dynamicsWorld.addRigidBody(entity.getBody());
+		entity.setContactCallbackFlag(group);
+		entity.setContactCallbackFilter(mask);
 	}
 
 	public void addFloor(Entity entity)
 	{
 		add(entity, GROUND_FLAG, ALL_FLAG);
+		entity.addCollisionFlag(KINEMATIC_FLAG);
+		entity.setActivationState(Collision.DISABLE_DEACTIVATION);
+	}
+
+	public Vector3 getGravity()
+	{
+		return dynamicsWorld.getGravity();
+	}
+
+	public void setGravity(Vector3 gravity)
+	{
+		dynamicsWorld.setGravity(gravity);
 	}
 
 	public void remove(Entity entity)
 	{
 		objects.remove(entity);
-		collisionWorld.removeCollisionObject(entity.getBody());
+		dynamicsWorld.removeRigidBody(entity.getBody());
 	}
 
 	public void update(float dt)
 	{
-		collisionWorld.performDiscreteCollisionDetection();
-		//dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+		dynamicsWorld.stepSimulation(dt);
 	}
 }
 

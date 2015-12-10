@@ -46,7 +46,19 @@ public class Main extends ApplicationAdapter
 		modelBatch.dispose();
 		gameStateManager.popAll();
 	}
-
+/*
+	public LwjglApplicationConfiguration getConfig()
+	{
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title         = Main.TITLE;
+		config.width         = Main.WIDTH;
+		config.height        = Main.HEIGHT;
+		config.vSyncEnabled  = Main.VSYNC;
+		config.foregroundFPS = Main.FPS;
+		config.backgroundFPS = Main.BACKGROUND_FPS;
+		return config;
+	}
+*/
 	@Override
 	public void render()
 	{

@@ -43,6 +43,7 @@ import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.Disposable;
+import com.jaxson.lib.gdx.math.collision.CollisionManager;
 
 public class Main implements ApplicationListener {
 	final static short GROUND_FLAG = 1<<8;
@@ -82,6 +83,11 @@ public class Main implements ApplicationListener {
 			motionState.transform = transform;
 			body = new btRigidBody(constructionInfo);
 			body.setMotionState(motionState);
+		}
+
+		public btRigidBody getBody()
+		{
+			return body;
 		}
 
 		@Override
@@ -135,6 +141,7 @@ public class Main implements ApplicationListener {
 	btBroadphaseInterface broadphase;
    btDynamicsWorld dynamicsWorld;
    btConstraintSolver constraintSolver;
+   private CollisionManager collisionManager;
 
 	@Override
 	public void create () {
@@ -190,18 +197,18 @@ public class Main implements ApplicationListener {
       broadphase = new btDbvtBroadphase();
       constraintSolver = new btSequentialImpulseConstraintSolver();
       dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-      dynamicsWorld.setGravity(new Vector3(0, -10f, 0));
+      dynamicsWorld.setGravity(new Vector3(0, 0f, 0));
       contactListener = new MyContactListener();
 
       instances = new Array<GameObject>();
       GameObject object = constructors.get("ground").construct();
-      object.body.setCollisionFlags(object.body.getCollisionFlags()
-  			| btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
+      System.out.println("FLAGS  " + object.body.getCollisionFlags());
+      //object.body.setCollisionFlags(object.body.getCollisionFlags()	| btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
       instances.add(object);
       dynamicsWorld.addRigidBody(object.body);
-		object.body.setContactCallbackFlag(GROUND_FLAG);
-		object.body.setContactCallbackFilter(0);
-		object.body.setActivationState(Collision.DISABLE_DEACTIVATION);
+		//object.body.setContactCallbackFlag(GROUND_FLAG);
+		//object.body.setContactCallbackFilter(0);
+		//object.body.setActivationState(Collision.DISABLE_DEACTIVATION);
 	}
 
 	public void spawn () {
@@ -210,11 +217,11 @@ public class Main implements ApplicationListener {
 		obj.transform.trn(MathUtils.random(-2.5f, 2.5f), 9f, MathUtils.random(-2.5f, 2.5f));
 		obj.body.proceedToTransform(obj.transform);
 		obj.body.setUserValue(instances.size);
-		obj.body.setCollisionFlags(obj.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
+		//obj.body.setCollisionFlags(obj.body.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 		instances.add(obj);
 		dynamicsWorld.addRigidBody(obj.body);
-		obj.body.setContactCallbackFlag(OBJECT_FLAG);
-		obj.body.setContactCallbackFilter(GROUND_FLAG);
+		//obj.body.setContactCallbackFlag(OBJECT_FLAG);
+		//obj.body.setContactCallbackFilter(GROUND_FLAG);
 	}
 
 	float angle, speed = 90f;
@@ -223,7 +230,7 @@ public class Main implements ApplicationListener {
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
 		angle = (angle + delta * speed) % 360f;
-		instances.get(0).transform.setTranslation(0, MathUtils.sinDeg(angle) * 2.5f, 0f);
+		//instances.get(0).transform.setTranslation(0, MathUtils.sinDeg(angle) * 2.5f, 0f);
 
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 
