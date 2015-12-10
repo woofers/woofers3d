@@ -19,6 +19,11 @@ public class MyMotionState extends btMotionState
 		worldTrans.set(transform);
 	}
 
+	public void setTransform(Matrix4 transform)
+	{
+		this.transform = transform;
+	}
+
 	@Override
 	public void setWorldTransform(Matrix4 worldTrans)
 	{

@@ -6,13 +6,17 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 
-public class Box extends Entity
+public class Box extends RigidBody
 {
 	private static final Color COLOR = Color.ORANGE;
 	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
 	private static final Vector3 SCALE = new Vector3(1f, 1f, 1f);
 	private static final long ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
+	private static final btCollisionShape SHAPE = new btBoxShape(new Vector3(1f, 1f, 1f));
+
 	private static final float MASS = 0f;
 
 	public Box()
@@ -42,7 +46,7 @@ public class Box extends Entity
 
 	public Box(Color color, Vector3 scale, Vector3 location)
 	{
-		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES), location, MASS);
+		super(new ModelBuilder().createBox(SIZE.x, SIZE.y, SIZE.z, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES), SHAPE, MASS);
 		setScale(scale);
 	}
 

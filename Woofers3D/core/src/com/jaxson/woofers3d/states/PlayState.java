@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
+import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.math.collision.CollisionManager;
 import com.jaxson.lib.gdx.states.GameStateManager;
@@ -20,7 +21,7 @@ import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends State<TargetCamera>
 {
-	private static final Color FLOOR_COLOR = new Color(MyMath.toRGB(81), MyMath.toRGB(101), MyMath.toRGB(107), 1f);
+	private static final Color FLOOR_COLOR = new MyColor(81, 101, 107);
 
 	private FPSLogger fps;
 	private Box floor;
@@ -33,19 +34,20 @@ public class PlayState extends State<TargetCamera>
 		super(gameStateManager);
 		setCamera(new TargetCamera(getWidth(), getHeight()));
 
-		Bullet.init();
 		collisionManager = new CollisionManager();
 
 		fps = new FPSLogger();
 
-		floor = new Box(FLOOR_COLOR, new Vector3(100f, 0.1f, 100f));
+		floor = new Box(FLOOR_COLOR);
+		floor.setScale(new Vector3(100f, 0.1f, 100f));
 		add(floor);
 		collisionManager.addFloor(floor);
 
 		box = new Box();
 		add(box);
 
-		player = new Player(getCamera(), new Vector3(0, 10, 0));
+		player = new Player(getCamera());
+		player.setLocation(new Vector3(0, 10, 0));
 		add(player);
 		collisionManager.add(player);
 	}

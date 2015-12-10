@@ -25,7 +25,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
-import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.RigidBody;
 import com.jaxson.lib.util.MyArrayList;
 
 public class CollisionManager
@@ -36,9 +36,9 @@ public class CollisionManager
 	private final static int KINEMATIC_FLAG = btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
 	private final static int CALLBACK_FLAG  = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
 
-	private final Vector3 GRAVITY          = new Vector3(0, -10f, 0);
+	private final Vector3 GRAVITY = new Vector3(0, -10f, 0);
 
-	private MyArrayList<Entity> objects;
+	private MyArrayList<RigidBody> objects;
 	private MyContactListener contactListener;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
@@ -48,7 +48,9 @@ public class CollisionManager
 
 	public CollisionManager()
 	{
-		this.objects = new MyArrayList<Entity>();
+		BulletStarter.init();
+
+		this.objects = new MyArrayList<RigidBody>();
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
@@ -58,13 +60,13 @@ public class CollisionManager
 		setGravity(GRAVITY);
 	}
 
-	public void add(Entity entity)
+	public void add(RigidBody entity)
 	{
 		add(entity, OBJECT_FLAG, GROUND_FLAG);
 		entity.addCollisionFlag(CALLBACK_FLAG);
 	}
 
-	public void add(Entity entity, int group, int mask)
+	public void add(RigidBody entity, int group, int mask)
 	{
 		objects.add(entity);
 		dynamicsWorld.addRigidBody(entity.getBody());
@@ -72,7 +74,7 @@ public class CollisionManager
 		entity.setContactCallbackFilter(mask);
 	}
 
-	public void addFloor(Entity entity)
+	public void addFloor(RigidBody entity)
 	{
 		add(entity, GROUND_FLAG, ALL_FLAG);
 		entity.addCollisionFlag(KINEMATIC_FLAG);
@@ -89,7 +91,7 @@ public class CollisionManager
 		dynamicsWorld.setGravity(gravity);
 	}
 
-	public void remove(Entity entity)
+	public void remove(RigidBody entity)
 	{
 		objects.remove(entity);
 		dynamicsWorld.removeRigidBody(entity.getBody());
