@@ -68,7 +68,7 @@ public class PlayState extends State<TargetCamera>
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		System.out.println(player.getLocation());
+		collisionManager.render(spriteBatch, modelBatch, getCamera());
 	}
 
 	@Override

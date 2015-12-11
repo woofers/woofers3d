@@ -1,5 +1,9 @@
 package com.jaxson.lib.gdx.math.collision;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -19,6 +23,7 @@ import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
+import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
@@ -40,6 +45,7 @@ public class CollisionManager
 
 	private MyArrayList<RigidBody> objects;
 	private MyContactListener contactListener;
+	private MyDebugDrawer debugDrawer;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
 	private btDbvtBroadphase broadphase;
@@ -57,7 +63,10 @@ public class CollisionManager
 		this.broadphase = new btDbvtBroadphase();
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		this.debugDrawer = new MyDebugDrawer(dynamicsWorld);
+
 		setGravity(GRAVITY);
+		setDebugMode(MyDebugDrawer.WIREFRAME);
 	}
 
 	public void add(RigidBody entity)
@@ -83,36 +92,16 @@ public class CollisionManager
 
 	public int getDebugMode()
 	{
-		return (debugDrawer == null) ? 0 : debugDrawer.getDebugMode();
+		return debugDrawer.getDebugMode();
 	}
-
 
 	public Vector3 getGravity()
 	{
 		return dynamicsWorld.getGravity();
 	}
 
-	private boolean hasDebugDrawer()
-	{
-		return getDebugMode() != btIDebugDraw.DebugDrawModes.DBG_NoDebug;
-	}
-
 	public void setDebugMode(int mode)
 	{
-		if (mode == btIDebugDraw.DebugDrawModes.DBG_NoDebug)
-		{
-			if (hasDebugDrawer())
-			{
-				debugDrawer.dispose();
-				debugDrawer = null;
-			}
-			return;
-		}
-		if (!hasDebugDrawer())
-		{
-			debugDrawer = new DebugDrawer();
-			dynamicsWorld.setDebugDrawer(debugDrawer);
-		}
 		debugDrawer.setDebugMode(mode);
 	}
 
@@ -125,6 +114,11 @@ public class CollisionManager
 	{
 		objects.remove(entity);
 		dynamicsWorld.removeRigidBody(entity.getBody());
+	}
+
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	{
+		debugDrawer.render(spriteBatch, modelBatch, camera);
 	}
 
 	public void update(float dt)

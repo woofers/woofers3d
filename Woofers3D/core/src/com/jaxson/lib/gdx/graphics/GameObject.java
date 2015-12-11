@@ -1,5 +1,6 @@
 package com.jaxson.lib.gdx.graphics;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
@@ -17,7 +18,7 @@ public abstract class GameObject
 
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
 
 	}

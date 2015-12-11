@@ -93,7 +93,6 @@ public abstract class State<C extends Camera> extends GameObject
 		stage2D.remove(sprite);
 	}
 
-	@Override
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		stage3D.render(modelBatch, camera);

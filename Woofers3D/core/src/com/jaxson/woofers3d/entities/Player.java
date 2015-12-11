@@ -3,19 +3,19 @@ package com.jaxson.woofers3d.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.RigidBody;
 import com.jaxson.lib.gdx.input.KeyHandler;
-
 import java.lang.Math;
 
 public class Player extends RigidBody
 {
 	private static final float SPEED = 0.03f;
 	private static final String PATH = "entities/dog/dog.obj";
-	private static final btCollisionShape SHAPE = new btCapsuleShape(1f, 1f);
+	private static final btCollisionShape SHAPE = new btBoxShape(new Vector3(1f, 1f, 1f));
 	private static final float MASS = 100f;
 
 	private TargetCamera camera;
