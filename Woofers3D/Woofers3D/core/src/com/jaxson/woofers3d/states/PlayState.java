@@ -47,7 +47,7 @@ public class PlayState extends State<TargetCamera>
 		add(box);
 
 		player = new Player(getCamera());
-		player.setLocation(new Vector3(0, 10, 0));
+		player.setLocation(new Vector3(0, 20, 0));
 		add(player);
 		collisionManager.add(player);
 	}
@@ -68,7 +68,7 @@ public class PlayState extends State<TargetCamera>
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		//fps.log();
+		System.out.println(player.getLocation());
 	}
 
 	@Override

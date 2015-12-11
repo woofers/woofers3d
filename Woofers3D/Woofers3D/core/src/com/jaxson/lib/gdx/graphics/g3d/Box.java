@@ -15,7 +15,7 @@ public class Box extends RigidBody
 	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
 	private static final Vector3 SCALE = new Vector3(1f, 1f, 1f);
 	private static final long ATTRIBUTES = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
-	private static final btCollisionShape SHAPE = new btBoxShape(new Vector3(1f, 1f, 1f));
+	private static final btCollisionShape SHAPE = new btBoxShape(new Vector3(100f, 1f, 100f));
 
 	private static final float MASS = 0f;
 

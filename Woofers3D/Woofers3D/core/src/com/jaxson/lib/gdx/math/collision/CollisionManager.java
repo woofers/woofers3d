@@ -81,9 +81,39 @@ public class CollisionManager
 		entity.setActivationState(Collision.DISABLE_DEACTIVATION);
 	}
 
+	public int getDebugMode()
+	{
+		return (debugDrawer == null) ? 0 : debugDrawer.getDebugMode();
+	}
+
+
 	public Vector3 getGravity()
 	{
 		return dynamicsWorld.getGravity();
+	}
+
+	private boolean hasDebugDrawer()
+	{
+		return getDebugMode() != btIDebugDraw.DebugDrawModes.DBG_NoDebug;
+	}
+
+	public void setDebugMode(int mode)
+	{
+		if (mode == btIDebugDraw.DebugDrawModes.DBG_NoDebug)
+		{
+			if (hasDebugDrawer())
+			{
+				debugDrawer.dispose();
+				debugDrawer = null;
+			}
+			return;
+		}
+		if (!hasDebugDrawer())
+		{
+			debugDrawer = new DebugDrawer();
+			dynamicsWorld.setDebugDrawer(debugDrawer);
+		}
+		debugDrawer.setDebugMode(mode);
 	}
 
 	public void setGravity(Vector3 gravity)

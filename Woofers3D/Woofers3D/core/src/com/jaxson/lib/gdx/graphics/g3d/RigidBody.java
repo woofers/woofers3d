@@ -45,8 +45,7 @@ public abstract class RigidBody extends Entity
 		super(model);
 		this.mass = mass;
 		this.shape = shape;
-		this.motionState = new MyMotionState();
-		this.motionState.setTransform(getTransform());
+		this.motionState = new MyMotionState(getTransform());
 		this.body = new btRigidBody(mass, motionState, shape, getInertia());
 		setCollisionShape(shape);
 	}
@@ -137,6 +136,11 @@ public abstract class RigidBody extends Entity
 	{
 		this.mass = mass;
 		body.setMassProps(mass, getInertia());
+	}
+
+	public void setMotionState(MyMotionState motionState)
+	{
+		this.motionState = motionState;
 	}
 
 	private void updateBody()

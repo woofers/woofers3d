@@ -7,21 +7,16 @@ public class MyMotionState extends btMotionState
 {
 	private Matrix4 transform;
 
-	public MyMotionState()
+	public MyMotionState(Matrix4 transform)
 	{
 		super();
-		this.transform = new Matrix4();
+		this.transform = transform;
 	}
 
 	@Override
 	public void getWorldTransform(Matrix4 worldTrans)
 	{
 		worldTrans.set(transform);
-	}
-
-	public void setTransform(Matrix4 transform)
-	{
-		this.transform = transform;
 	}
 
 	@Override
