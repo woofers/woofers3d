@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.math.collision;
+package com.jaxson.lib.gdx.bullet;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,10 +9,14 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 
 public class MyDebugDrawer
 {
-	public final static int NO_DEBUG    = btIDebugDraw.DebugDrawModes.DBG_NoDebug;
-	public final static int WIREFRAME   = btIDebugDraw.DebugDrawModes.DBG_DrawWireframe;
-	public final static int CONSTRAINTS = btIDebugDraw.DebugDrawModes.DBG_DrawConstraints;
-	public final static int NORMALS     = btIDebugDraw.DebugDrawModes.DBG_DrawNormals;
+	public final static int NO_DEBUG       = btIDebugDraw.DebugDrawModes.DBG_NoDebug;
+	public final static int WIREFRAME      = btIDebugDraw.DebugDrawModes.DBG_DrawWireframe;
+	public final static int CONSTRAINTS    = btIDebugDraw.DebugDrawModes.DBG_DrawConstraints;
+	public final static int NORMALS        = btIDebugDraw.DebugDrawModes.DBG_DrawNormals;
+	public final static int TEXT           = btIDebugDraw.DebugDrawModes.DBG_DrawText;
+	public final static int CONTACT_POINTS = btIDebugDraw.DebugDrawModes.DBG_DrawContactPoints;
+	public final static int FEATURES_TEXT  = btIDebugDraw.DebugDrawModes.DBG_DrawFeaturesText;
+	public final static int MIXED          = WIREFRAME | FEATURES_TEXT | TEXT | CONTACT_POINTS;
 
 	private DebugDrawer debugDrawer;
 	private btCollisionWorld world;
@@ -29,18 +33,18 @@ public class MyDebugDrawer
 
 	public int getDebugMode()
 	{
-		if (debugDrawer == null) return NO_DEBUG;
+		if (!hasDebugDrawer()) return NO_DEBUG;
 		return debugDrawer.getDebugMode();
 	}
 
 	private boolean hasDebugDrawer()
 	{
-		return getDebugMode() != NO_DEBUG;
+		return debugDrawer != null;
 	}
 
 	private void removeDebugDrawer()
 	{
-		if (debugDrawer == null) return;
+		if (!hasDebugDrawer()) return;
 		debugDrawer.dispose();
 		debugDrawer = null;
 	}

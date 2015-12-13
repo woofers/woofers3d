@@ -1,12 +1,13 @@
-package com.jaxson.lib.gdx.states.stage;
+package com.jaxson.lib.gdx.states.renderables;
 
+import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
-public abstract class Stage<T>
+public abstract class Renderable<T extends GameObject>
 {
 	protected MyArrayList<T> objects;
 
-	public Stage()
+	public Renderable()
 	{
 		this.objects = new MyArrayList<T>();
 	}
@@ -16,7 +17,13 @@ public abstract class Stage<T>
 		objects.add(object);
 	}
 
-	public abstract void dispose();
+	public void dispose()
+	{
+		for (T object: objects)
+		{
+			object.dispose();
+		}
+	}
 
 	public boolean isEmpty()
 	{
@@ -33,5 +40,11 @@ public abstract class Stage<T>
 		objects.remove(object);
 	}
 
-	public abstract void update(float dt);
+	public void update(float dt)
+	{
+		for (T object: objects)
+		{
+			object.update(dt);
+		}
+	}
 }

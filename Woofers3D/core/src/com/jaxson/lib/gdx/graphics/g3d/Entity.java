@@ -5,20 +5,16 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
-import com.jaxson.lib.gdx.math.collision.MyMotionState;
-import java.lang.Math;
 
 public abstract class Entity extends GameObject
 {
 	protected static final Vector3 LOCATION = Vector3.Zero;
+	private static final float DIAMETER_TO_RADIUS = 1f / 2f;
 
 	private ModelInstance modelInstance;
 
@@ -45,7 +41,7 @@ public abstract class Entity extends GameObject
 	@Override
 	public void dispose()
 	{
-		modelInstance.model.dispose();
+		getModel().dispose();
 	}
 
 	public BoundingBox getBoundingBox()
@@ -53,9 +49,34 @@ public abstract class Entity extends GameObject
 		return modelInstance.calculateBoundingBox(new BoundingBox());
 	}
 
+	public Vector3 getCenter()
+	{
+		return getBoundingBox().getCenter(new Vector3());
+	}
+
 	public Vector3 getCenterLocation()
 	{
-		return getRadius().add(getLocation());
+		return getCenter().add(getLocation());
+	}
+
+	public Vector3 getDeltaLocation(Entity entity)
+	{
+		return getDeltaLocation(entity.getLocation());
+	}
+
+	public Vector3 getDeltaLocation(Vector3 location)
+	{
+		return location.cpy().sub(getLocation());
+	}
+
+	public float getDiameter()
+	{
+		return getDimensions().len();
+	}
+
+	public Vector3 getDimensions()
+	{
+		return getBoundingBox().getDimensions(new Vector3());
 	}
 
 	public Vector3 getDirection()
@@ -84,9 +105,19 @@ public abstract class Entity extends GameObject
 		return getTransform().getScale(new Vector3());
 	}
 
-	public Vector3 getRadius()
+	public float getRadius()
 	{
-		return getBoundingBox().getCenter(new Vector3());
+		return getDiameter() * DIAMETER_TO_RADIUS;
+	}
+
+	public Ray getRay(Entity entity)
+	{
+		return getRay(entity.getLocation());
+	}
+
+	public Ray getRay(Vector3 location)
+	{
+		return new Ray(getCenterLocation(), getDeltaLocation(location));
 	}
 
 	public Vector3 getRotation()
@@ -105,45 +136,8 @@ public abstract class Entity extends GameObject
 		return modelInstance.transform;
 	}
 
-	public void rotate(Vector3 angles)
-	{
-		rotate(angles.x, angles.y, angles.z);
-	}
-
-	public void rotate(float yaw, float pitch, float roll)
-	{
-		getTransform().rotate(Vector3.Y, yaw);
-		getTransform().rotate(Vector3.X, pitch);
-		getTransform().rotate(Vector3.Z, roll);
-	}
-
-	public void setLocation(Vector3 location)
-	{
-		getTransform().set(location, getRoationQuat());
-	}
-
-	public void setRotation(Vector3 angles)
-	{
-		setRotation(angles.x, angles.y, angles.z);
-	}
-
-	public void setRotation(float yaw, float pitch, float roll)
-	{
-		getTransform().setFromEulerAngles(yaw, pitch, roll);
-	}
-
 	public void setScale(Vector3 scale)
 	{
-		modelInstance.transform.scl(scale);
-	}
-
-	public void translate(Vector3 translation)
-	{
-		getTransform().translate(translation);
-	}
-
-	public void translateABS(Vector3 translation)
-	{
-		getTransform().trn(translation);
+		getTransform().scl(scale);
 	}
 }

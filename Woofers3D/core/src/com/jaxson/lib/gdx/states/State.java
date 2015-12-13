@@ -7,12 +7,16 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.jaxson.lib.gdx.bullet.PhysicsWorld;
+import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
+import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
+import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.states.GameStateManager;
-import com.jaxson.lib.gdx.states.stage.*;
+import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
 import com.jaxson.lib.util.MyArrayList;
 
 public abstract class State<C extends Camera> extends GameObject
@@ -22,8 +26,8 @@ public abstract class State<C extends Camera> extends GameObject
 	private C camera;
 	private GameStateManager gameStateManager;
 	private InputProcessor input;
-	private Stage3D stage3D;
-	private Stage2D stage2D;
+	private MixedRenderable renderable;
+	private PhysicsWorld world;
 
 	public State(GameStateManager gameStateManager)
 	{
@@ -34,8 +38,8 @@ public abstract class State<C extends Camera> extends GameObject
 	{
 		this.gameStateManager = gameStateManager;
 		this.camera = camera;
-		this.stage3D = new Stage3D();
-		this.stage2D = new Stage2D();
+		this.renderable = new MixedRenderable();
+		this.world = new PhysicsWorld();
 
 		setCursorCatched(CURSOR_CATCHED);
 		setInputProcessor(new KeyHandler());
@@ -43,19 +47,33 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public void add(Entity entity)
 	{
-		stage3D.add(entity);
+		renderable.add(entity);
 	}
 
 	public void add(Sprite sprite)
 	{
-		stage2D.add(sprite);
+		renderable.add(sprite);
+	}
+
+	public void applyPhysics(EntityBody<?> entity)
+	{
+		world.add(entity);
+	}
+
+	public void applyPhysics(PlayerBody entity)
+	{
+		world.add(entity);
+	}
+
+	public void applyPhysics(RigidBody entity)
+	{
+		world.add(entity);
 	}
 
 	@Override
 	public void dispose()
 	{
-		stage3D.dispose();
-		stage2D.dispose();
+		renderable.dispose();
 	}
 
 	public float getAspectRatio()
@@ -68,6 +86,11 @@ public abstract class State<C extends Camera> extends GameObject
 		return camera;
 	}
 
+	public Vector2 getCenter()
+	{
+		return new Vector2(getWidth() / 2, getHeight() / 2);
+	}
+
 	public int getHeight()
 	{
 		return Gdx.graphics.getHeight();
@@ -78,6 +101,11 @@ public abstract class State<C extends Camera> extends GameObject
 		return Gdx.graphics.getWidth();
 	}
 
+	public PhysicsWorld getPhysicsWorld()
+	{
+		return world;
+	}
+
 	public boolean isCursorCatched()
 	{
 		return Gdx.input.isCursorCatched();
@@ -85,18 +113,18 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public void remove(Entity entity)
 	{
-		stage3D.remove(entity);
+		renderable.remove(entity);
 	}
 
 	public void remove(Sprite sprite)
 	{
-		stage2D.remove(sprite);
+		renderable.remove(sprite);
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		stage3D.render(modelBatch, camera);
-		stage2D.render(spriteBatch);
+		renderable.render(spriteBatch, modelBatch, camera);
+		world.render(spriteBatch, modelBatch, camera);
 	}
 
 	public void setCamera(C camera)
@@ -124,8 +152,8 @@ public abstract class State<C extends Camera> extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
-		stage3D.update(dt);
-		stage2D.update(dt);
+		world.update(dt);
+		renderable.update(dt);
 		camera.update();
 		KeyHandler.update(dt);
 	}

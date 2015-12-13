@@ -1,13 +1,18 @@
-package com.jaxson.lib.gdx.math.collision;
+package com.jaxson.lib.gdx.bullet;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.collision.btAxisSweep3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
+import com.badlogic.gdx.physics.bullet.collision.btBroadphaseProxy;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
@@ -20,6 +25,7 @@ import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
+import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
@@ -30,57 +36,87 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
-import com.jaxson.lib.gdx.graphics.g3d.RigidBody;
+import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
+import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
+import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.util.MyArrayList;
+import java.lang.Math;
 
-public class CollisionManager
+public class PhysicsWorld
 {
 	private final static short GROUND_FLAG  = 1 << 8;
 	private final static short OBJECT_FLAG  = 1 << 9;
 	private final static short ALL_FLAG     = -1;
-	private final static int KINEMATIC_FLAG = btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
-	private final static int CALLBACK_FLAG  = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
 
-	private final Vector3 GRAVITY = new Vector3(0, -10f, 0);
+	private final static int KINEMATIC_FLAG   = btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
+	private final static int CALLBACK_FLAG    = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
 
-	private MyArrayList<RigidBody> objects;
+	private final static int CHARACTER_FILTER = btBroadphaseProxy.CollisionFilterGroups.CharacterFilter;
+	private final static int STATIC_FILTER    = btBroadphaseProxy.CollisionFilterGroups.StaticFilter;
+	private final static int DEFAULT_FILTER   = btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
+
+	private final Vector3 GRAVITY = new Vector3(0, -5f, 0);
+
+	private MyArrayList<EntityBody<?>> objects;
 	private MyContactListener contactListener;
 	private MyDebugDrawer debugDrawer;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
 	private btDbvtBroadphase broadphase;
+	private btAxisSweep3 sweep;
 	private btSequentialImpulseConstraintSolver constraintSolver;
-	private btDiscreteDynamicsWorld dynamicsWorld;
+	private btDiscreteDynamicsWorld wolrd;
 
-	public CollisionManager()
+	public PhysicsWorld()
 	{
 		BulletStarter.init();
 
-		this.objects = new MyArrayList<RigidBody>();
+		this.objects = new MyArrayList<EntityBody<?>>();
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
-		this.broadphase = new btDbvtBroadphase();
+		//this.broadphase = new btDbvtBroadphase();
+		this.sweep = new btAxisSweep3(new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000));
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
-		this.dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		this.debugDrawer = new MyDebugDrawer(dynamicsWorld);
+		this.wolrd = new btDiscreteDynamicsWorld(dispatcher, sweep, constraintSolver, collisionConfig);
+		this.debugDrawer = new MyDebugDrawer(wolrd);
 
 		setGravity(GRAVITY);
-		setDebugMode(MyDebugDrawer.WIREFRAME);
+		setDebugMode(MyDebugDrawer.MIXED);
+	}
+
+	public void add(EntityBody<?> entity)
+	{
+		add(entity, OBJECT_FLAG, GROUND_FLAG);
+	}
+
+	public void add(EntityBody<?> entity, int group, int mask)
+	{
+		wolrd.addCollisionObject(entity.getBody(), (short)(group), (short)(mask));
+		objects.add(entity);
+	}
+
+	public void add(PlayerBody entity)
+	{
+		entity.setCollisionFlags(CHARACTER_FILTER);
+		sweep.getOverlappingPairCache().setInternalGhostPairCallback(entity.getCallback());
+		wolrd.addCollisionObject(entity.getBody(), (short)CHARACTER_FILTER, (short)(STATIC_FILTER | DEFAULT_FILTER));
+		wolrd.addAction(entity.getCharacterController());
+		objects.add(entity);
 	}
 
 	public void add(RigidBody entity)
 	{
 		add(entity, OBJECT_FLAG, GROUND_FLAG);
-		entity.addCollisionFlag(CALLBACK_FLAG);
 	}
 
 	public void add(RigidBody entity, int group, int mask)
 	{
 		objects.add(entity);
-		dynamicsWorld.addRigidBody(entity.getBody());
+		wolrd.addRigidBody(entity.getBody());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);
+		entity.addCollisionFlag(CALLBACK_FLAG);
 	}
 
 	public void addFloor(RigidBody entity)
@@ -95,9 +131,46 @@ public class CollisionManager
 		return debugDrawer.getDebugMode();
 	}
 
+	public EntityBody<?> getBody(Vector2 location, Camera camera)
+	{
+		return getBody((int)location.x, (int)location.y, camera);
+	}
+
+	public EntityBody<?> getBody(int x, int y, Camera camera)
+	{
+		return getBody(camera.getPickRay(x, y));
+	}
+
+	public EntityBody<?> getBody(Ray ray)
+	{
+		float length, newDistance, distance;
+		Vector3 location;
+		EntityBody<?> result = null;
+
+		distance = -1f;
+		for (EntityBody<?> entity: objects)
+		{
+			location = entity.getCenterLocation();
+			length = ray.direction.dot(location.x - ray.origin.x, location.y - ray.origin.y, location.z - ray.origin.z);
+			//if (length < 0f) continue;
+			newDistance = location.dst2(ray.origin.x + ray.direction.x * length, ray.origin.y +ray.direction.y * length, ray.origin.z + ray.direction.z * length);
+
+			newDistance = ray.origin.dst2(location);
+			if (distance >= 0f && newDistance > distance) continue;
+
+			//if (newDistance <= Math.pow(entity.getRadius(), 2))
+			if (Intersector.intersectRaySphere(ray, location, entity.getRadius(), null))
+			{
+				result = entity;
+				distance = newDistance;
+			}
+		}
+		return result;
+	}
+
 	public Vector3 getGravity()
 	{
-		return dynamicsWorld.getGravity();
+		return wolrd.getGravity();
 	}
 
 	public void setDebugMode(int mode)
@@ -107,13 +180,13 @@ public class CollisionManager
 
 	public void setGravity(Vector3 gravity)
 	{
-		dynamicsWorld.setGravity(gravity);
+		wolrd.setGravity(gravity);
 	}
 
 	public void remove(RigidBody entity)
 	{
 		objects.remove(entity);
-		dynamicsWorld.removeRigidBody(entity.getBody());
+		wolrd.removeRigidBody(entity.getBody());
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
@@ -123,7 +196,7 @@ public class CollisionManager
 
 	public void update(float dt)
 	{
-		dynamicsWorld.stepSimulation(dt);
+		wolrd.stepSimulation(dt);
 	}
 }
 

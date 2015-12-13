@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.graphics.g3d;
+package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
@@ -11,43 +11,41 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
-import com.jaxson.lib.gdx.math.collision.MyMotionState;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.bullet.MyMotionState;
 import java.lang.Math;
 
-public abstract class RigidBody extends Entity
+public abstract class EntityBody<T extends btCollisionObject> extends Entity
 {
-	private static final float MASS = 1f;
+	protected static final float MASS = 1f;
 
-	private MyMotionState motionState;
 	private float mass;
-	private btRigidBody body;
-	private btCollisionShape shape;
+	private T body;
+	private btConvexShape shape;
 
-	public RigidBody(String modelPath, btCollisionShape shape)
+	public EntityBody(String modelPath, btConvexShape shape)
 	{
 		this(modelPath, shape, MASS);
 	}
 
-	public RigidBody(String modelPath, btCollisionShape shape, float mass)
+	public EntityBody(String modelPath, btConvexShape shape, float mass)
 	{
 		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
 	}
 
-	public RigidBody(Model model, btCollisionShape shape)
+	public EntityBody(Model model, btConvexShape shape)
 	{
 		this(model, shape, MASS);
 	}
 
-	public RigidBody(Model model, btCollisionShape shape, float mass)
+	public EntityBody(Model model, btConvexShape shape, float mass)
 	{
 		super(model);
 		this.mass = mass;
 		this.shape = shape;
-		this.motionState = new MyMotionState(getTransform());
-		this.body = new btRigidBody(mass, motionState, shape, getInertia());
-		setCollisionShape(shape);
 	}
 
 	public void addCollisionFlag(int flag)
@@ -68,7 +66,7 @@ public abstract class RigidBody extends Entity
 		return body.getActivationState();
 	}
 
-	public btRigidBody getBody()
+	public T getBody()
 	{
 		return body;
 	}
@@ -88,7 +86,7 @@ public abstract class RigidBody extends Entity
 		return body.getCollisionFlags();
 	}
 
-	public btCollisionShape getCollisionShape()
+	public btConvexShape getCollisionShape()
 	{
 		return shape;
 	}
@@ -111,6 +109,11 @@ public abstract class RigidBody extends Entity
 		body.setActivationState(state);
 	}
 
+	protected void setBody(T body)
+	{
+		this.body = body;
+	}
+
 	public void setContactCallbackFlag(int flag)
 	{
 		body.setContactCallbackFlag(flag);
@@ -126,7 +129,7 @@ public abstract class RigidBody extends Entity
 		body.setContactCallbackFilter(flags);
 	}
 
-	public void setCollisionShape(btCollisionShape shape)
+	public void setCollisionShape(btConvexShape shape)
 	{
 		this.shape = shape;
 		body.setCollisionShape(shape);
@@ -135,16 +138,5 @@ public abstract class RigidBody extends Entity
 	public void setMass(float mass)
 	{
 		this.mass = mass;
-		body.setMassProps(mass, getInertia());
-	}
-
-	public void setMotionState(MyMotionState motionState)
-	{
-		this.motionState = motionState;
-	}
-
-	private void updateBody()
-	{
-		body.proceedToTransform(getTransform());
 	}
 }

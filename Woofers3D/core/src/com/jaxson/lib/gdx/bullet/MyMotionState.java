@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.math.collision;
+package com.jaxson.lib.gdx.bullet;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;

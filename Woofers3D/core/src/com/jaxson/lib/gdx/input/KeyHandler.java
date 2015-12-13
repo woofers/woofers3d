@@ -8,14 +8,15 @@ import com.badlogic.gdx.math.Vector2;
 
 public class KeyHandler implements InputProcessor
 {
-	public static final int UP      = Keys.W;
-	public static final int FORWARD = Keys.W;
-	public static final int DOWN    = Keys.S;
-	public static final int BACK    = Keys.S;
-	public static final int LEFT    = Keys.A;
-	public static final int RIGHT   = Keys.D;
-	public static final int SPACE   = Keys.SPACE;
-	public static final int PAUSE   = Keys.ESCAPE;
+	public static final int UP       = Keys.W;
+	public static final int FORWARD  = Keys.W;
+	public static final int DOWN     = Keys.S;
+	public static final int BACK     = Keys.S;
+	public static final int BACKWARD = Keys.S;
+	public static final int LEFT     = Keys.A;
+	public static final int RIGHT    = Keys.D;
+	public static final int SPACE    = Keys.SPACE;
+	public static final int PAUSE    = Keys.ESCAPE;
 
 	private static final float MOUSE_SCALE      = 1f / 10f;
 	private static final float SENSITIVITY      = 1.05f;

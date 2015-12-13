@@ -2,6 +2,7 @@ package com.jaxson.lib.gdx.graphics.cameras;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
@@ -79,6 +80,11 @@ public class TargetCamera extends PerspectiveCamera
 		return getTargetLocation().sub(oldTargetLocation);
 	}
 
+	public Vector3 getDeltaLocation(Vector3 location)
+	{
+		return location.cpy().sub(getLocation());
+	}
+
 	public Vector3 getInverseOffset()
 	{
 		return offset.cpy().scl(-1, -1, -1);
@@ -97,6 +103,12 @@ public class TargetCamera extends PerspectiveCamera
 	public Vector3 getOffset()
 	{
 		return offset;
+	}
+
+	public Ray getRay()
+	{
+		if (!hasTarget()) return null;
+		return new Ray(getLocation(), getDeltaLocation(target.getLocation()));
 	}
 
 	public Vector3 getRotation()
