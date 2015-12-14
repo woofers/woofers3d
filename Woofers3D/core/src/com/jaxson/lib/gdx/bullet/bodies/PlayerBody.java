@@ -1,7 +1,6 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
@@ -23,14 +22,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 {
-	private static final float STEP           = 0.3f;
+	private static final float STEP_HEIGHT    = 0.3f;
 	private static final float SPEED          = 0.12f;
 	private static final float ROTATION_SPEED = 2f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
-	private Vector3 characterDirection;
-	private Vector3 walkDirection;
+	private float speed;
+	private float stepHeight;
 
 	public PlayerBody(String modelPath, btConvexShape shape)
 	{
@@ -52,10 +51,9 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		super(model, shape, mass);
 		setBody(new btPairCachingGhostObject());
 		getBody().setCollisionShape(shape);
-		this.characterController = new btKinematicCharacterController(getBody(), shape, STEP);
+		this.characterController = new btKinematicCharacterController(getBody(), shape, STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
-		this.characterDirection = new Vector3();
-		this.walkDirection = new Vector3();
+		setSpeed(SPEED);
 		transformToBody();
 	}
 
@@ -85,9 +83,9 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		return characterController;
 	}
 
-	public boolean isGrounded()
+	public float getSpeed()
 	{
-		return canJump();
+		return speed;
 	}
 
 	public void jump()
@@ -125,6 +123,11 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		transformToBody();
 	}
 
+	public void setSpeed(float speed)
+	{
+		this.speed = speed;
+	}
+
 	public void translate(Vector3 translation)
 	{
 		getTransform().translate(translation);
@@ -140,8 +143,7 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 	@Override
 	public void update(float dt)
 	{
-		characterDirection.set(getDirection());
-		walkDirection.set(Vector3.Zero);
+		Vector3 walkDirection = new Vector3();
 		if (KeyHandler.isDown(KeyHandler.LEFT))
 		{
 			rotate(ROTATION_SPEED, 0, 0);
@@ -152,17 +154,17 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		}
 		if (KeyHandler.isDown(KeyHandler.FORWARD))
 		{
-			walkDirection.add(characterDirection);
+			walkDirection.add(getDirection());
 		}
 		if (KeyHandler.isDown(KeyHandler.BACK))
 		{
-			walkDirection.add(-characterDirection.x, -characterDirection.y, -characterDirection.z);
+			walkDirection.sub(getDirection());
 		}
 		if (KeyHandler.isDown(KeyHandler.SPACE))
 		{
 			if (canJump()) jump();
 		}
-		walkDirection.scl(SPEED);
+		walkDirection.scl(speed);
 		characterController.setWalkDirection(walkDirection);
 		bodyToTransform();
 	}

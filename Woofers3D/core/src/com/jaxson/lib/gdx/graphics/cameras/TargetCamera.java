@@ -1,83 +1,58 @@
 package com.jaxson.lib.gdx.graphics.cameras;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.input.KeyHandler;
-import java.lang.Math;
 
 public class TargetCamera extends PerspectiveCamera
 {
 	private static final int FOV                = 75;
 	private static final float FAR              = 300f;
 	private static final float NEAR             = 1f / 10f;
-	private static final float MAX_CLAMP        = 0f;
-	private static final float MIN_CLAMP        = -55f;
 	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
 	private Vector3 offset;
 	private Vector3 oldTargetLocation;
+	private PhysicsWorld world;
 
 	public TargetCamera(float width, float height)
 	{
-		this(width, height, null);
+		this(FOV, width, height);
 	}
 
-	public TargetCamera(float width, float height, Entity target)
+	public TargetCamera(float fov, float width, float height)
 	{
-		this(FOV, width, height, OFFSET, target);
+		this(fov, width, height, OFFSET);
 	}
+
 	public TargetCamera(float fov, float width, float height, Vector3 offset)
 	{
-		this(fov, width, height, offset, null);
-	}
-
-	public TargetCamera(float fov, float width, float height, Vector3 offset, Entity target)
-	{
 		super(fov, width, height);
-		this.target = target;
 		this.offset = offset;
 		this.near = NEAR;
 		this.far = FAR;
-
-		position.set(offset);
-		lookAt(STAGE_LOCATION);
-		oldTargetLocation = STAGE_LOCATION;
-
-		if (hasTarget())
-		{
-			center();
-			oldTargetLocation = getTargetLocation();
-		}
-	}
-
-	private boolean canRotateY(Vector3 rotation)
-	{
-		if (rotation.x > -90 && rotation.x <= 90)
-		{
-			return rotation.y > 0;
-
-		}
-		return rotation.y < 0;
+		center(STAGE_LOCATION);
 	}
 
 	public void center()
 	{
-		Vector3 location = getTargetLocation();
-		position.set(offset.cpy().add(location));
-		lookAt(location);
+		if (hasTarget()) center(getTargetLocation());
 	}
 
-	public Vector3 getDeltaLocation()
+	public void center(Vector3 point)
 	{
-		return getTargetLocation().sub(oldTargetLocation);
+		Vector3 location = getTargetLocation();
+		position.set(offset.cpy().add(point));
+		lookAt(point);
+		oldTargetLocation = location;
 	}
 
 	public Vector3 getDeltaLocation(Vector3 location)
@@ -85,9 +60,9 @@ public class TargetCamera extends PerspectiveCamera
 		return location.cpy().sub(getLocation());
 	}
 
-	public Vector3 getInverseOffset()
+	public Vector3 getDeltaTargetLocation()
 	{
-		return offset.cpy().scl(-1, -1, -1);
+		return getTargetLocation().cpy().sub(oldTargetLocation);
 	}
 
 	public Vector2 getMouse()
@@ -138,24 +113,66 @@ public class TargetCamera extends PerspectiveCamera
 		return target != null;
 	}
 
+	public boolean hasWorld()
+	{
+		return world != null;
+	}
+
 	private void input()
 	{
 		if (!hasTarget()) return;
-		Vector2 mouse = getMouse();
-		Vector3 rotation = getRotation();
-		Vector3 targetLocation = getTargetLocation();
-
-		rotateAround(targetLocation, Vector3.Y, mouse.x);
-		rotateAround(targetLocation, Vector3.X, mouse.y);
+		rotateAround(getTargetLocation(), getMouse());
 		up.set(Vector3.Y);
-
-		position.add(getDeltaLocation());
-		oldTargetLocation = targetLocation;
+		position.add(getDeltaTargetLocation());
 	}
 
-	public void removeTarget()
+	public void rotate(Vector2 angles)
 	{
-		setTarget(null);
+		rotate(angles.x, angles.y, 0);
+	}
+
+	public void rotate(Vector3 angles)
+	{
+		rotate(angles.x, angles.y, angles.z);
+	}
+
+	public void rotate(float yaw, float pitch, float roll)
+	{
+		rotate(Vector3.Y, yaw);
+		rotate(Vector3.X, pitch);
+		rotate(Vector3.Z, roll);
+	}
+
+	public void rotateAround(Vector3 location, Vector2 angles)
+	{
+		rotateAround(location, angles.x, angles.y, 0);
+	}
+
+	public void rotateAround(Vector3 location, Vector3 angles)
+	{
+		rotateAround(location, angles.x, angles.y, angles.z);
+	}
+
+	public void rotateAround(Vector3 location, float yaw, float pitch, float roll)
+	{
+		rotateAround(location, yaw, pitch, roll, true);
+	}
+
+	public void rotateAround(Vector3 location, float yaw, float pitch, float roll, boolean keepInBounds)
+	{
+		rotateAround(location, Vector3.Y, yaw);
+		rotateAround(location, Vector3.X, pitch);
+		rotateAround(location, Vector3.Z, roll);
+		if (keepInBounds)
+		{
+			if (hasWorld() && hasTarget())
+			{
+				//if (world.getBody(getRay()) != target)
+				//{
+				//	rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
+				//}
+			}
+		}
 	}
 
 	public void setOffset(Vector3 offset)
@@ -163,15 +180,33 @@ public class TargetCamera extends PerspectiveCamera
 		this.offset = offset;
 	}
 
+	public void setRotation(Vector3 angles)
+	{
+		setRotation(angles.x, angles.y, angles.z);
+	}
+
+	public void setRotation(float yaw, float pitch, float roll)
+	{
+		view.setFromEulerAngles(yaw, pitch, roll);
+	}
+
 	public void setTarget(Entity target)
 	{
 		this.target = target;
+		center();
 	}
+
 
 	@Override
 	public void update()
 	{
 		input();
+		oldTargetLocation = getTargetLocation();
 		super.update();
+	}
+
+	public void setWorld(PhysicsWorld world)
+	{
+		this.world = world;
 	}
 }

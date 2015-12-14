@@ -65,7 +65,7 @@ public class PhysicsWorld
 	private btCollisionDispatcher dispatcher;
 	private btAxisSweep3 sweep;
 	private btSequentialImpulseConstraintSolver constraintSolver;
-	private btDiscreteDynamicsWorld wolrd;
+	private btDiscreteDynamicsWorld world;
 
 	public PhysicsWorld()
 	{
@@ -82,8 +82,8 @@ public class PhysicsWorld
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
 		this.sweep = new btAxisSweep3(worldSize.scl(-1 / 2), worldSize.scl(1 / 2));
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
-		this.wolrd = new btDiscreteDynamicsWorld(dispatcher, sweep, constraintSolver, collisionConfig);
-		this.debugDrawer = new MyDebugDrawer(wolrd);
+		this.world = new btDiscreteDynamicsWorld(dispatcher, sweep, constraintSolver, collisionConfig);
+		this.debugDrawer = new MyDebugDrawer(world);
 
 		setGravity(GRAVITY);
 		setDebugMode(MyDebugDrawer.MIXED);
@@ -94,8 +94,8 @@ public class PhysicsWorld
 		objects.add(entity);
 		//entity.setCollisionFlags(CHARACTER_FILTER);
 		sweep.getOverlappingPairCache().setInternalGhostPairCallback(entity.getCallback());
-		wolrd.addCollisionObject(entity.getBody(), (short)CHARACTER_FILTER, (short)(STATIC_FILTER | DEFAULT_FILTER));
-		wolrd.addAction(entity.getCharacterController());
+		world.addCollisionObject(entity.getBody(), (short)CHARACTER_FILTER, (short)(STATIC_FILTER | DEFAULT_FILTER));
+		world.addAction(entity.getCharacterController());
 	}
 
 	public void add(RigidBody entity)
@@ -106,7 +106,7 @@ public class PhysicsWorld
 	public void add(RigidBody entity, int group, int mask)
 	{
 		objects.add(entity);
-		wolrd.addRigidBody(entity.getBody());
+		world.addRigidBody(entity.getBody());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);
 		entity.addCollisionFlag(CALLBACK_FLAG);
@@ -148,8 +148,6 @@ public class PhysicsWorld
 			if (length < 0f) continue;
 			newDistance = location.dst2(ray.origin.x + ray.direction.x * length, ray.origin.y +ray.direction.y * length, ray.origin.z + ray.direction.z * length);
 			if (distance >= 0f && newDistance > distance) continue;
-			//newDistance = ray.origin.dst2(location);
-			//if (Intersector.intersectRaySphere(ray, location, entity.getRadius(), null))
 			if (newDistance <= Math.pow(entity.getRadius(), 2))
 			{
 				result = entity;
@@ -161,7 +159,7 @@ public class PhysicsWorld
 
 	public Vector3 getGravity()
 	{
-		return wolrd.getGravity();
+		return world.getGravity();
 	}
 
 	public void setDebugMode(int mode)
@@ -171,13 +169,13 @@ public class PhysicsWorld
 
 	public void setGravity(Vector3 gravity)
 	{
-		wolrd.setGravity(gravity);
+		world.setGravity(gravity);
 	}
 
 	public void remove(RigidBody entity)
 	{
 		objects.remove(entity);
-		wolrd.removeRigidBody(entity.getBody());
+		world.removeRigidBody(entity.getBody());
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
@@ -187,7 +185,7 @@ public class PhysicsWorld
 
 	public void update(float dt)
 	{
-		wolrd.stepSimulation(dt);
+		world.stepSimulation(dt);
 	}
 }
 

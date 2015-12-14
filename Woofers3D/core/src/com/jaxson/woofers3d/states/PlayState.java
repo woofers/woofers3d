@@ -39,15 +39,17 @@ public class PlayState extends State<TargetCamera>
 		applyPhysics(floor);
 		add(floor);
 
-		player = new Player(getCamera());
-		applyPhysics(player);
-		add(player);
-
 		//box = new RigidBox();
 		//box.setScale(new Vector3(10f, 10f, 10f));
 		//box.setLocation(new Vector3(10f, 0f, 10f));
 		//applyPhysics(box);
 		//add(box);
+
+		player = new Player(getCamera());
+		applyPhysics(player);
+		add(player);
+
+		getCamera().setWorld(getPhysicsWorld());
 	}
 
 	@Override
@@ -66,14 +68,15 @@ public class PlayState extends State<TargetCamera>
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
+		fps.log();
 	}
 
 	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
-		EntityBody<?> entity = null;
-		entity = getPhysicsWorld().getBody(getCamera().getRay());
+		//EntityBody<?> entity = null;
+		//entity = getPhysicsWorld().getBody(getCamera().getRay());
 		//System.out.println(entity);
 		//if (entity == floor) System.out.println("Woof");
 	}
