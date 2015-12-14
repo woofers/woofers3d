@@ -30,7 +30,7 @@ public class MyMath
 	public static float toRGB(int color)
 	{
 		color = Math.abs(color);
-		if (color > RGB_MAX) return 0;
+		if (color > RGB_MAX) return RGB_TO_FLOAT;
 		return color * RGB_TO_FLOAT;
 	}
 

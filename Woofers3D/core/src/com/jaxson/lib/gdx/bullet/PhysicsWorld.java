@@ -39,6 +39,7 @@ import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
+import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.util.MyArrayList;
 import java.lang.Math;
 
@@ -62,12 +63,16 @@ public class PhysicsWorld
 	private MyDebugDrawer debugDrawer;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
-	private btDbvtBroadphase broadphase;
 	private btAxisSweep3 sweep;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private btDiscreteDynamicsWorld wolrd;
 
 	public PhysicsWorld()
+	{
+		this(new Vector3(2000, 2000, 2000));
+	}
+
+	public PhysicsWorld(Vector3 worldSize)
 	{
 		BulletStarter.init();
 
@@ -75,8 +80,7 @@ public class PhysicsWorld
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
-		//this.broadphase = new btDbvtBroadphase();
-		this.sweep = new btAxisSweep3(new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000));
+		this.sweep = new btAxisSweep3(worldSize.scl(-1 / 2), worldSize.scl(1 / 2));
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.wolrd = new btDiscreteDynamicsWorld(dispatcher, sweep, constraintSolver, collisionConfig);
 		this.debugDrawer = new MyDebugDrawer(wolrd);
@@ -85,24 +89,13 @@ public class PhysicsWorld
 		setDebugMode(MyDebugDrawer.MIXED);
 	}
 
-	public void add(EntityBody<?> entity)
-	{
-		add(entity, OBJECT_FLAG, GROUND_FLAG);
-	}
-
-	public void add(EntityBody<?> entity, int group, int mask)
-	{
-		wolrd.addCollisionObject(entity.getBody(), (short)(group), (short)(mask));
-		objects.add(entity);
-	}
-
 	public void add(PlayerBody entity)
 	{
-		entity.setCollisionFlags(CHARACTER_FILTER);
+		objects.add(entity);
+		//entity.setCollisionFlags(CHARACTER_FILTER);
 		sweep.getOverlappingPairCache().setInternalGhostPairCallback(entity.getCallback());
 		wolrd.addCollisionObject(entity.getBody(), (short)CHARACTER_FILTER, (short)(STATIC_FILTER | DEFAULT_FILTER));
 		wolrd.addAction(entity.getCharacterController());
-		objects.add(entity);
 	}
 
 	public void add(RigidBody entity)
@@ -119,11 +112,11 @@ public class PhysicsWorld
 		entity.addCollisionFlag(CALLBACK_FLAG);
 	}
 
-	public void addFloor(RigidBody entity)
+	public void add(Floor entity)
 	{
 		add(entity, GROUND_FLAG, ALL_FLAG);
-		entity.addCollisionFlag(KINEMATIC_FLAG);
-		entity.setActivationState(Collision.DISABLE_DEACTIVATION);
+		//entity.addCollisionFlag(KINEMATIC_FLAG);
+		//entity.setActivationState(Collision.DISABLE_DEACTIVATION);
 	}
 
 	public int getDebugMode()
@@ -152,14 +145,12 @@ public class PhysicsWorld
 		{
 			location = entity.getCenterLocation();
 			length = ray.direction.dot(location.x - ray.origin.x, location.y - ray.origin.y, location.z - ray.origin.z);
-			//if (length < 0f) continue;
+			if (length < 0f) continue;
 			newDistance = location.dst2(ray.origin.x + ray.direction.x * length, ray.origin.y +ray.direction.y * length, ray.origin.z + ray.direction.z * length);
-
-			newDistance = ray.origin.dst2(location);
 			if (distance >= 0f && newDistance > distance) continue;
-
-			//if (newDistance <= Math.pow(entity.getRadius(), 2))
-			if (Intersector.intersectRaySphere(ray, location, entity.getRadius(), null))
+			//newDistance = ray.origin.dst2(location);
+			//if (Intersector.intersectRaySphere(ray, location, entity.getRadius(), null))
+			if (newDistance <= Math.pow(entity.getRadius(), 2))
 			{
 				result = entity;
 				distance = newDistance;
@@ -205,7 +196,7 @@ class MyContactListener extends ContactListener
 	@Override
 	public boolean onContactAdded(int userValue0, int partId0, int index0, int userValue1, int partId1, int index1)
 	{
-		System.out.println("floor");
+		//System.out.println("floor");
 		return true;
 	}
 }

@@ -11,6 +11,7 @@ import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
+import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.graphics.GameObject;
@@ -55,17 +56,17 @@ public abstract class State<C extends Camera> extends GameObject
 		renderable.add(sprite);
 	}
 
-	public void applyPhysics(EntityBody<?> entity)
-	{
-		world.add(entity);
-	}
-
 	public void applyPhysics(PlayerBody entity)
 	{
 		world.add(entity);
 	}
 
 	public void applyPhysics(RigidBody entity)
+	{
+		world.add(entity);
+	}
+
+	public void applyPhysics(Floor entity)
 	{
 		world.add(entity);
 	}

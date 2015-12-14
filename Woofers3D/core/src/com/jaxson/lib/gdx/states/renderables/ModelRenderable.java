@@ -16,12 +16,6 @@ public class ModelRenderable extends Renderable<Entity>
 		this.environment = new MyEnvironment();
 	}
 
-	private boolean isVisible(Entity entity, Camera camera)
-	{
-		return true;
-		//return camera.frustum.boundsInFrustum(entity.getCenterLocation(), entity.getDimensions());
-	}
-
 	public void render(ModelBatch modelBatch, Camera camera)
 	{
 		if (modelBatch == null) return;
@@ -30,7 +24,7 @@ public class ModelRenderable extends Renderable<Entity>
 		modelBatch.begin(camera);
 		for (Entity entity: objects)
 		{
-			if (isVisible(entity, camera)) modelBatch.render(entity.getModelInstance(), environment);
+			if (entity.isVisible(camera)) modelBatch.render(entity.getModelInstance(), environment);
 		}
 		modelBatch.end();
 	}

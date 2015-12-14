@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.graphics.g3d;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -134,6 +135,11 @@ public abstract class Entity extends GameObject
 	public Matrix4 getTransform()
 	{
 		return modelInstance.transform;
+	}
+
+	public boolean isVisible(Camera camera)
+	{
+		return camera.frustum.sphereInFrustum(getCenterLocation(), getRadius());
 	}
 
 	public void setScale(Vector3 scale)

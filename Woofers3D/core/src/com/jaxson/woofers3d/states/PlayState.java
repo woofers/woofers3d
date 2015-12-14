@@ -18,14 +18,14 @@ import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
 import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
+import com.jaxson.lib.gdx.bullet.bodies.Floor;
+import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 
 public class PlayState extends State<TargetCamera>
 {
-	private static final Color FLOOR_COLOR = new MyColor(81, 101, 107);
-
 	private FPSLogger fps;
-	private Box floor;
-	private Box box;
+	private Floor floor;
+	private RigidBox box;
 	private Player player;
 
 	public PlayState(GameStateManager gameStateManager)
@@ -35,19 +35,19 @@ public class PlayState extends State<TargetCamera>
 
 		fps = new FPSLogger();
 
-		floor = new Box(FLOOR_COLOR);
-		//floor.setScale(new Vector3(100f, 0.1f, 100f));
+		floor = new Floor();
 		applyPhysics(floor);
 		add(floor);
-
-		//box = new Box();
-		//box.setScale(new Vector3(10f, 10f, 10f));
-		//applyPhysics(box);
-		//add(box);
 
 		player = new Player(getCamera());
 		applyPhysics(player);
 		add(player);
+
+		//box = new RigidBox();
+		//box.setScale(new Vector3(10f, 10f, 10f));
+		//box.setLocation(new Vector3(10f, 0f, 10f));
+		//applyPhysics(box);
+		//add(box);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class PlayState extends State<TargetCamera>
 		super.update(dt);
 		EntityBody<?> entity = null;
 		entity = getPhysicsWorld().getBody(getCamera().getRay());
-		System.out.println(entity);
-		if (entity == floor) System.out.println("Woof");
+		//System.out.println(entity);
+		//if (entity == floor) System.out.println("Woof");
 	}
 }

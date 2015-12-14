@@ -126,7 +126,7 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 
 	public void setCollisionFlags(int flags)
 	{
-		body.setContactCallbackFilter(flags);
+		body.setCollisionFlags(flags);
 	}
 
 	public void setCollisionShape(btConvexShape shape)
@@ -138,5 +138,12 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 	public void setMass(float mass)
 	{
 		this.mass = mass;
+	}
+
+	@Override
+	public void setScale(Vector3 scale)
+	{
+		super.setScale(scale);
+		shape.setLocalScaling(scale);
 	}
 }
