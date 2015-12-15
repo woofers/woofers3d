@@ -39,7 +39,7 @@ public class Player extends PlayerBody
 	@Override
 	protected void input()
 	{
-
+		super.input();
 	}
 
 	@Override

@@ -6,9 +6,13 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
+import com.jaxson.lib.gdx.bullet.bodies.Floor;
+import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
 import com.jaxson.lib.gdx.graphics.MyColor;
@@ -17,9 +21,6 @@ import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
-import com.jaxson.lib.gdx.bullet.bodies.Floor;
-import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 
 public class PlayState extends State<TargetCamera>
 {

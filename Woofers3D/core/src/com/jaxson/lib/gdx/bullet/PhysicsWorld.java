@@ -45,16 +45,20 @@ import java.lang.Math;
 
 public class PhysicsWorld
 {
-	private final static short GROUND_FLAG  = 1 << 8;
-	private final static short OBJECT_FLAG  = 1 << 9;
-	private final static short ALL_FLAG     = -1;
+	private static final short GROUND_FLAG  = 1 << 8;
+	private static final short OBJECT_FLAG  = 1 << 9;
+	private static final short ALL_FLAG     = -1;
 
-	private final static int KINEMATIC_FLAG   = btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
-	private final static int CALLBACK_FLAG    = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
+	private static final int KINEMATIC_FLAG   = btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
+	private static final int CALLBACK_FLAG    = btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
 
-	private final static int CHARACTER_FILTER = btBroadphaseProxy.CollisionFilterGroups.CharacterFilter;
-	private final static int STATIC_FILTER    = btBroadphaseProxy.CollisionFilterGroups.StaticFilter;
-	private final static int DEFAULT_FILTER   = btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
+	private static final int CHARACTER_FILTER = btBroadphaseProxy.CollisionFilterGroups.CharacterFilter;
+	private static final int STATIC_FILTER    = btBroadphaseProxy.CollisionFilterGroups.StaticFilter;
+	private static final int DEFAULT_FILTER   = btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
+
+	private static final float VECOTR_TO_MAX = 1f / 2f;
+	private static final float VECOTR_TO_MIN = -VECOTR_TO_MAX;
+	private static final Vector3 WORLD_SIZE = new Vector3(2000, 2000, 2000);
 
 	private final Vector3 GRAVITY = new Vector3(0, -5f, 0);
 
@@ -69,7 +73,7 @@ public class PhysicsWorld
 
 	public PhysicsWorld()
 	{
-		this(new Vector3(2000, 2000, 2000));
+		this(WORLD_SIZE);
 	}
 
 	public PhysicsWorld(Vector3 worldSize)
@@ -80,7 +84,7 @@ public class PhysicsWorld
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
-		this.sweep = new btAxisSweep3(worldSize.scl(-1 / 2), worldSize.scl(1 / 2));
+		this.sweep = new btAxisSweep3(worldSize.scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.world = new btDiscreteDynamicsWorld(dispatcher, sweep, constraintSolver, collisionConfig);
 		this.debugDrawer = new MyDebugDrawer(world);
@@ -106,17 +110,17 @@ public class PhysicsWorld
 	public void add(RigidBody entity, int group, int mask)
 	{
 		objects.add(entity);
+		entity.addCollisionFlag(CALLBACK_FLAG);
 		world.addRigidBody(entity.getBody());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);
-		entity.addCollisionFlag(CALLBACK_FLAG);
 	}
 
 	public void add(Floor entity)
 	{
-		add(entity, GROUND_FLAG, ALL_FLAG);
 		//entity.addCollisionFlag(KINEMATIC_FLAG);
-		//entity.setActivationState(Collision.DISABLE_DEACTIVATION);
+		entity.setActivationState(Collision.DISABLE_DEACTIVATION);
+		add(entity, GROUND_FLAG, ALL_FLAG);
 	}
 
 	public int getDebugMode()

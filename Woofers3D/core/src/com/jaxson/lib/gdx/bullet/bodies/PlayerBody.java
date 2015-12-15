@@ -88,6 +88,35 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		return speed;
 	}
 
+	@Override
+	protected void input()
+	{
+		Vector3 walkDirection = new Vector3();
+		if (KeyHandler.isDown(KeyHandler.LEFT))
+		{
+			rotate(ROTATION_SPEED, 0, 0);
+		}
+		if (KeyHandler.isDown(KeyHandler.RIGHT))
+		{
+			rotate(-ROTATION_SPEED, 0, 0);
+		}
+		if (KeyHandler.isDown(KeyHandler.FORWARD))
+		{
+			walkDirection.add(getDirection());
+		}
+		if (KeyHandler.isDown(KeyHandler.BACK))
+		{
+			walkDirection.sub(getDirection());
+		}
+		if (KeyHandler.isDown(KeyHandler.SPACE))
+		{
+			if (canJump()) jump();
+		}
+		walkDirection.scl(speed);
+		characterController.setWalkDirection(walkDirection);
+		bodyToTransform();
+	}
+
 	public void jump()
 	{
 		characterController.jump();
@@ -143,30 +172,7 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 	@Override
 	public void update(float dt)
 	{
-		Vector3 walkDirection = new Vector3();
-		if (KeyHandler.isDown(KeyHandler.LEFT))
-		{
-			rotate(ROTATION_SPEED, 0, 0);
-		}
-		if (KeyHandler.isDown(KeyHandler.RIGHT))
-		{
-			rotate(-ROTATION_SPEED, 0, 0);
-		}
-		if (KeyHandler.isDown(KeyHandler.FORWARD))
-		{
-			walkDirection.add(getDirection());
-		}
-		if (KeyHandler.isDown(KeyHandler.BACK))
-		{
-			walkDirection.sub(getDirection());
-		}
-		if (KeyHandler.isDown(KeyHandler.SPACE))
-		{
-			if (canJump()) jump();
-		}
-		walkDirection.scl(speed);
-		characterController.setWalkDirection(walkDirection);
-		bodyToTransform();
+		super.update(dt);
 	}
 
 	private void transformToBody()
