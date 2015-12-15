@@ -40,7 +40,12 @@ public abstract class GhostEntity extends Entity
 
 	public void setLocation(Vector3 location)
 	{
-		getTransform().set(location, getRoationQuat());
+		getTransform().setToTranslation(location);
+	}
+
+	public void setScale(Vector3 scale)
+	{
+		getTransform().scale(scale.x, scale.y, scale.z);
 	}
 
 	public void setRotation(Vector3 angles)

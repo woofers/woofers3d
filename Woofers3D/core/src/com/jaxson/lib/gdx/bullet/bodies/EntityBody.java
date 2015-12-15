@@ -15,10 +15,11 @@ import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.GhostEntity;
 import com.jaxson.lib.gdx.bullet.MyMotionState;
 import java.lang.Math;
 
-public abstract class EntityBody<T extends btCollisionObject> extends Entity
+public abstract class EntityBody<T extends btCollisionObject> extends GhostEntity
 {
 	protected static final float MASS = 1f;
 
@@ -51,6 +52,11 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 	public void addCollisionFlag(int flag)
 	{
 		setCollisionFlags(getCollisionFlags() | flag);
+	}
+
+	protected void bodyToTransform()
+	{
+		getBody().getWorldTransform(getTransform());
 	}
 
 	@Override
@@ -104,6 +110,13 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 		return mass;
 	}
 
+	@Override
+	public void rotate(float yaw, float pitch, float roll)
+	{
+		super.rotate(yaw, pitch, roll);
+		transformToBody();
+	}
+
 	public void setActivationState(int state)
 	{
 		body.setActivationState(state);
@@ -135,15 +148,51 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 		body.setCollisionShape(shape);
 	}
 
+	@Override
+	public void setLocation(Vector3 location)
+	{
+		super.setLocation(location);
+		//calculateTransforms();
+		transformToBody();
+	}
+
 	public void setMass(float mass)
 	{
 		this.mass = mass;
 	}
 
 	@Override
+	public void setRotation(float yaw, float pitch, float roll)
+	{
+		super.setRotation(yaw, pitch, roll);
+		transformToBody();
+	}
+
+	@Override
 	public void setScale(Vector3 scale)
 	{
 		super.setScale(scale);
+		System.out.println(" test  " + shape.getLocalScaling());
 		shape.setLocalScaling(scale);
+		System.out.println(" test  " + shape.getLocalScaling());
+	}
+
+	protected void transformToBody()
+	{
+		getBody().setWorldTransform(getTransform());
+	}
+
+	@Override
+	public void translate(Vector3 translation)
+	{
+		super.translate(translation);
+		transformToBody();
+	}
+
+	@Override
+	public void translateABS(Vector3 translation)
+	{
+		super.translateABS(translation);
+		transformToBody();
 	}
 }

@@ -4,8 +4,9 @@ import java.lang.Math;
 
 public class MyMath
 {
-	private static final int RGB_MAX        = 255;
-	private static final float RGB_TO_FLOAT = (float)(1f) / (float)RGB_MAX;
+	private static final int RGB_MAX             = 255;
+	private static final float RGB_TO_FLOAT      = (float)(1f) / (float)RGB_MAX;
+	public static final float DIAMETER_TO_RADIUS = 1f / 2f;
 
 	public static boolean isEven(int value)
 	{

@@ -11,11 +11,11 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.util.MyMath;
 
 public abstract class Entity extends GameObject
 {
 	protected static final Vector3 LOCATION = Vector3.Zero;
-	private static final float DIAMETER_TO_RADIUS = 1f / 2f;
 
 	private ModelInstance modelInstance;
 
@@ -108,7 +108,7 @@ public abstract class Entity extends GameObject
 
 	public float getRadius()
 	{
-		return getDiameter() * DIAMETER_TO_RADIUS;
+		return getDiameter() * MyMath.DIAMETER_TO_RADIUS;
 	}
 
 	public Ray getRay(Entity entity)
@@ -140,10 +140,5 @@ public abstract class Entity extends GameObject
 	public boolean isVisible(Camera camera)
 	{
 		return camera.frustum.sphereInFrustum(getCenterLocation(), getRadius());
-	}
-
-	public void setScale(Vector3 scale)
-	{
-		getTransform().scl(scale);
 	}
 }

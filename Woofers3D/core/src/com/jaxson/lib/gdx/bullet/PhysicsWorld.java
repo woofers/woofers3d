@@ -36,10 +36,15 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
+import com.badlogic.gdx.physics.bullet.softbody.btSoftBody;
+import com.badlogic.gdx.physics.bullet.softbody.btSoftBodyHelpers;
+import com.badlogic.gdx.physics.bullet.softbody.btSoftBodyRigidBodyCollisionConfiguration;
+import com.badlogic.gdx.physics.bullet.softbody.btSoftBodyWorldInfo;
+import com.badlogic.gdx.physics.bullet.softbody.btSoftRigidDynamicsWorld;
 import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
+import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
-import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.util.MyArrayList;
 import java.lang.Math;
 
@@ -67,7 +72,7 @@ public class PhysicsWorld
 	private MyDebugDrawer debugDrawer;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
-	private btAxisSweep3 sweep;
+	private btAxisSweep3 broadphase;
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private btDiscreteDynamicsWorld world;
 
@@ -84,9 +89,9 @@ public class PhysicsWorld
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
-		this.sweep = new btAxisSweep3(worldSize.scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
+		this.broadphase = new btAxisSweep3(worldSize.scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
-		this.world = new btDiscreteDynamicsWorld(dispatcher, sweep, constraintSolver, collisionConfig);
+		this.world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		this.debugDrawer = new MyDebugDrawer(world);
 
 		setGravity(GRAVITY);
@@ -97,7 +102,7 @@ public class PhysicsWorld
 	{
 		objects.add(entity);
 		//entity.setCollisionFlags(CHARACTER_FILTER);
-		sweep.getOverlappingPairCache().setInternalGhostPairCallback(entity.getCallback());
+		broadphase.getOverlappingPairCache().setInternalGhostPairCallback(entity.getCallback());
 		world.addCollisionObject(entity.getBody(), (short)CHARACTER_FILTER, (short)(STATIC_FILTER | DEFAULT_FILTER));
 		world.addAction(entity.getCharacterController());
 	}
@@ -130,10 +135,10 @@ public class PhysicsWorld
 
 	public EntityBody<?> getBody(Vector2 location, Camera camera)
 	{
-		return getBody((int)location.x, (int)location.y, camera);
+		return getBody(location.x, location.y, camera);
 	}
 
-	public EntityBody<?> getBody(int x, int y, Camera camera)
+	public EntityBody<?> getBody(float x, float y, Camera camera)
 	{
 		return getBody(camera.getPickRay(x, y));
 	}

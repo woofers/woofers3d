@@ -57,11 +57,6 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		transformToBody();
 	}
 
-	private void bodyToTransform()
-	{
-		getBody().getWorldTransform(getTransform());
-	}
-
 	public boolean canJump()
 	{
 		return characterController.canJump();
@@ -122,61 +117,14 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		characterController.jump();
 	}
 
-	public void rotate(Vector3 angles)
-	{
-		rotate(angles.x, angles.y, angles.z);
-	}
-
-	public void rotate(float yaw, float pitch, float roll)
-	{
-		getTransform().rotate(Vector3.Y, yaw);
-		getTransform().rotate(Vector3.X, pitch);
-		getTransform().rotate(Vector3.Z, roll);
-		transformToBody();
-	}
-
-	public void setLocation(Vector3 location)
-	{
-		getTransform().set(location, getRoationQuat());
-		transformToBody();
-	}
-
-	public void setRotation(Vector3 angles)
-	{
-		setRotation(angles.x, angles.y, angles.z);
-	}
-
-	public void setRotation(float yaw, float pitch, float roll)
-	{
-		getTransform().setFromEulerAngles(yaw, pitch, roll);
-		transformToBody();
-	}
-
 	public void setSpeed(float speed)
 	{
 		this.speed = speed;
-	}
-
-	public void translate(Vector3 translation)
-	{
-		getTransform().translate(translation);
-		transformToBody();
-	}
-
-	public void translateABS(Vector3 translation)
-	{
-		getTransform().trn(translation);
-		transformToBody();
 	}
 
 	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
-	}
-
-	private void transformToBody()
-	{
-		getBody().setWorldTransform(getTransform());
 	}
 }
