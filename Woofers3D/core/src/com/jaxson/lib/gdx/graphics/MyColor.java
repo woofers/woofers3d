@@ -1,7 +1,7 @@
 package com.jaxson.lib.gdx.graphics;
 
 import com.badlogic.gdx.graphics.Color;
-import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.gdx.util.GdxMath;
 
 public class MyColor extends Color
 {
@@ -14,6 +14,6 @@ public class MyColor extends Color
 
 	public MyColor(int r, int g, int b, int a)
 	{
-		super(MyMath.toRGB(r), MyMath.toRGB(g), MyMath.toRGB(b), MyMath.toRGB(a));
+		super(GdxMath.toRGB(r), GdxMath.toRGB(g), GdxMath.toRGB(b), GdxMath.toRGB(a));
 	}
 }

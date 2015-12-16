@@ -47,6 +47,7 @@ import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.util.MyArrayList;
 import java.lang.Math;
+import com.jaxson.lib.gdx.util.GdxMath;
 
 public class PhysicsWorld
 {
@@ -61,8 +62,8 @@ public class PhysicsWorld
 	private static final int STATIC_FILTER    = btBroadphaseProxy.CollisionFilterGroups.StaticFilter;
 	private static final int DEFAULT_FILTER   = btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
 
-	private static final float VECOTR_TO_MAX = 1f / 2f;
-	private static final float VECOTR_TO_MIN = -VECOTR_TO_MAX;
+	private static final float VECOTR_TO_MAX = GdxMath.HALF;
+	private static final float VECOTR_TO_MIN = -GdxMath.HALF;
 	private static final Vector3 WORLD_SIZE = new Vector3(2000, 2000, 2000);
 
 	private final Vector3 GRAVITY = new Vector3(0, -5f, 0);
@@ -83,13 +84,18 @@ public class PhysicsWorld
 
 	public PhysicsWorld(Vector3 worldSize)
 	{
+		this(worldSize.cpy().scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
+	}
+
+	public PhysicsWorld(Vector3 minSize, Vector3 maxSize)
+	{
 		BulletStarter.init();
 
 		this.objects = new MyArrayList<EntityBody<?>>();
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
 		this.dispatcher = new btCollisionDispatcher(collisionConfig);
-		this.broadphase = new btAxisSweep3(worldSize.scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
+		this.broadphase = new btAxisSweep3(minSize, maxSize);
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		this.debugDrawer = new MyDebugDrawer(world);
@@ -115,7 +121,7 @@ public class PhysicsWorld
 	public void add(RigidBody entity, int group, int mask)
 	{
 		objects.add(entity);
-		entity.addCollisionFlag(CALLBACK_FLAG);
+		//entity.addCollisionFlag(CALLBACK_FLAG);
 		world.addRigidBody(entity.getBody());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);

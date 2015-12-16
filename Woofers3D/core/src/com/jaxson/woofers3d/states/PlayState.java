@@ -40,14 +40,14 @@ public class PlayState extends State<TargetCamera>
 		applyPhysics(floor);
 		add(floor);
 
-		//box = new RigidBox();
-		//box.setScale(new Vector3(4f, 2f, 2f));
-		//box.setLocation(new Vector3(10f, 10f, 10f));
-		//applyPhysics(box);
-		//add(box);
+		box = new RigidBox();
+		box.setLocation(new Vector3(10f, 15f, 0));
+		//box.setScale(new Vector3(4f, 0.5f, 2f));
+		applyPhysics(box);
+		add(box);
 
 		player = new Player(getCamera());
-		//player.setScale(new Vector3(1, 5, 2));
+		player.setLocation(new Vector3(10f, 15f, 0));
 		applyPhysics(player);
 		add(player);
 

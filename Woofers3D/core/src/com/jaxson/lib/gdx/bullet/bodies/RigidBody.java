@@ -58,4 +58,11 @@ public abstract class RigidBody extends EntityBody<btRigidBody>
 		this.motionState = motionState;
 		getBody().setMotionState(motionState);
 	}
+
+	@Override
+	protected void transformToBody()
+	{
+		super.transformToBody();
+		//motionState.getWorldTransform(getTransform());
+	}
 }

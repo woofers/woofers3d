@@ -4,8 +4,6 @@ import java.lang.Math;
 
 public class MyMath
 {
-	private static final int RGB_MAX             = 255;
-	private static final float RGB_TO_FLOAT      = (float)(1f) / (float)RGB_MAX;
 	public static final float DIAMETER_TO_RADIUS = 1f / 2f;
 
 	public static boolean isEven(int value)
@@ -27,14 +25,6 @@ public class MyMath
 	{
 		return Math.log10(value) / Math.log10(base);
 	}
-
-	public static float toRGB(int color)
-	{
-		color = Math.abs(color);
-		if (color > RGB_MAX) return RGB_TO_FLOAT;
-		return color * RGB_TO_FLOAT;
-	}
-
 	public static int toInt(float value)
 	{
 		return (int)(value);

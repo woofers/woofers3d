@@ -72,12 +72,7 @@ public abstract class Entity extends GameObject
 
 	public float getDiameter()
 	{
-		return getDimensions().len();
-	}
-
-	public Vector3 getDimensions()
-	{
-		return getBoundingBox().getDimensions(new Vector3());
+		return getSize().len();
 	}
 
 	public Vector3 getDirection()
@@ -104,6 +99,11 @@ public abstract class Entity extends GameObject
 	public Vector3 getScale()
 	{
 		return getTransform().getScale(new Vector3());
+	}
+
+	public Vector3 getSize()
+	{
+		return getBoundingBox().getDimensions(new Vector3());
 	}
 
 	public float getRadius()

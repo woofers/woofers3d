@@ -48,6 +48,15 @@ public abstract class GhostEntity extends Entity
 		getTransform().scale(scale.x, scale.y, scale.z);
 	}
 
+	public void setSize(Vector3 size)
+	{
+		Vector3 oldSize = getSize();
+		System.out.println(oldSize.toString());
+		oldSize = size.scl(1f / oldSize.x, 1f / oldSize.y, 1f / oldSize.z);
+		System.out.println(oldSize.toString());
+		setScale(oldSize);
+	}
+
 	public void setRotation(Vector3 angles)
 	{
 		setRotation(angles.x, angles.y, angles.z);
