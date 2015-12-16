@@ -16,6 +16,9 @@ import com.jaxson.lib.util.MyMath;
 public abstract class Entity extends GameObject
 {
 	protected static final Vector3 LOCATION = Vector3.Zero;
+	private static final int MATRIX_DIRECTION_X = 8;
+	private static final int MATRIX_DIRECTION_Y = 9;
+	private static final int MATRIX_DIRECTION_Z = 10;
 
 	private ModelInstance modelInstance;
 
@@ -78,7 +81,7 @@ public abstract class Entity extends GameObject
 	public Vector3 getDirection()
 	{
 		float[] matrix = getTransform().getValues();
-		return new Vector3(matrix[8], matrix[9], matrix[10]);
+		return new Vector3(matrix[MATRIX_DIRECTION_X], matrix[MATRIX_DIRECTION_Y], matrix[MATRIX_DIRECTION_Z]);
 	}
 
 	public ModelInstance getModelInstance()
@@ -96,6 +99,11 @@ public abstract class Entity extends GameObject
 		return getTransform().getTranslation(new Vector3());
 	}
 
+	public Vector3 getOriginalSize()
+	{
+		return getBoundingBox().getDimensions(new Vector3());
+	}
+
 	public Vector3 getScale()
 	{
 		return getTransform().getScale(new Vector3());
@@ -103,7 +111,7 @@ public abstract class Entity extends GameObject
 
 	public Vector3 getSize()
 	{
-		return getBoundingBox().getDimensions(new Vector3());
+		return getOriginalSize().scl(getScale());
 	}
 
 	public float getRadius()

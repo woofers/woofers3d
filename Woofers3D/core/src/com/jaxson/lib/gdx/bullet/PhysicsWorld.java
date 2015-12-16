@@ -101,7 +101,7 @@ public class PhysicsWorld
 		this.debugDrawer = new MyDebugDrawer(world);
 
 		setGravity(GRAVITY);
-		setDebugMode(MyDebugDrawer.MIXED);
+		//setDebugMode(MyDebugDrawer.MIXED);
 	}
 
 	public void add(PlayerBody entity)

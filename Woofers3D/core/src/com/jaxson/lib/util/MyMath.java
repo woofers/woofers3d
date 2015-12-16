@@ -1,10 +1,17 @@
 package com.jaxson.lib.util;
 
 import java.lang.Math;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MyMath
 {
 	public static final float DIAMETER_TO_RADIUS = 1f / 2f;
+
+	public static Random getRandom()
+	{
+		return ThreadLocalRandom.current();
+	}
 
 	public static boolean isEven(int value)
 	{
@@ -25,6 +32,17 @@ public class MyMath
 	{
 		return Math.log10(value) / Math.log10(base);
 	}
+
+	public static float randFloat(float min, float max)
+	{
+		return getRandom().nextFloat() * ((max - min) + 1) + min;
+	}
+
+	public static int randInt(int min, int max)
+	{
+		return getRandom().nextInt((max - min) + 1) + min;
+	}
+
 	public static int toInt(float value)
 	{
 		return (int)(value);

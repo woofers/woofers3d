@@ -19,14 +19,18 @@ import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.State;
+import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
+import java.util.Random;
 
 public class PlayState extends State<TargetCamera>
 {
+	private static final int BOX_AMOUNT = 20;
+
 	private FPSLogger fps;
 	private Floor floor;
-	private RigidBox box;
+	private RigidBox[] boxs;
 	private Player player;
 
 	public PlayState(GameStateManager gameStateManager)
@@ -40,14 +44,17 @@ public class PlayState extends State<TargetCamera>
 		applyPhysics(floor);
 		add(floor);
 
-		box = new RigidBox();
-		box.setLocation(new Vector3(10f, 15f, 0));
-		//box.setScale(new Vector3(4f, 0.5f, 2f));
-		applyPhysics(box);
-		add(box);
+		boxs = new RigidBox[BOX_AMOUNT];
+		for (int i = 0; i < BOX_AMOUNT; i ++)
+		{
+			boxs[i] = new RigidBox();
+			boxs[i].setLocation(new Vector3(10f, 15f, 0));
+			//boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f)));
+			applyPhysics(boxs[i]);
+			add(boxs[i]);
+		}
 
 		player = new Player(getCamera());
-		player.setLocation(new Vector3(10f, 15f, 0));
 		applyPhysics(player);
 		add(player);
 
