@@ -23,14 +23,17 @@ import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
 import java.util.Random;
+import com.jaxson.lib.gdx.graphics.g3d.Box;
+
 
 public class PlayState extends State<TargetCamera>
 {
-	private static final int BOX_AMOUNT = 20;
+	private static final int BOX_AMOUNT = 100;
 
 	private FPSLogger fps;
 	private Floor floor;
 	private RigidBox[] boxs;
+	private Box ghost;
 	private Player player;
 
 	public PlayState(GameStateManager gameStateManager)
@@ -47,9 +50,10 @@ public class PlayState extends State<TargetCamera>
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] = new RigidBox();
+			boxs[i] = new RigidBox(Color.ORANGE);
 			boxs[i].setLocation(new Vector3(10f, 15f, 0));
-			//boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f)));
+			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f)));
+			boxs[i].setMass(0.0001f);
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
 		}

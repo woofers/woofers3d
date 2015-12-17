@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.graphics.g3d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.collision.BoundingBox;
@@ -19,6 +20,7 @@ public abstract class Entity extends GameObject
 	private static final int MATRIX_DIRECTION_X = 8;
 	private static final int MATRIX_DIRECTION_Y = 9;
 	private static final int MATRIX_DIRECTION_Z = 10;
+	private static final int ROOT_NODE_LOCATION = 0;
 
 	private ModelInstance modelInstance;
 
@@ -42,6 +44,11 @@ public abstract class Entity extends GameObject
 		this.modelInstance = new ModelInstance(model, location);
 	}
 
+	protected void calculateTransforms()
+	{
+		getModelInstance().calculateTransforms();
+	}
+
 	@Override
 	public void dispose()
 	{
@@ -50,7 +57,7 @@ public abstract class Entity extends GameObject
 
 	public BoundingBox getBoundingBox()
 	{
-		return modelInstance.calculateBoundingBox(new BoundingBox());
+		return getModelInstance().calculateBoundingBox(new BoundingBox());
 	}
 
 	public Vector3 getCenter()
@@ -84,14 +91,14 @@ public abstract class Entity extends GameObject
 		return new Vector3(matrix[MATRIX_DIRECTION_X], matrix[MATRIX_DIRECTION_Y], matrix[MATRIX_DIRECTION_Z]);
 	}
 
+	public Model getModel()
+	{
+		return getModelInstance().model;
+	}
+
 	public ModelInstance getModelInstance()
 	{
 		return modelInstance;
-	}
-
-	public Model getModel()
-	{
-		return modelInstance.model;
 	}
 
 	public Vector3 getLocation()
@@ -135,6 +142,11 @@ public abstract class Entity extends GameObject
 		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
 	}
 
+	public Node getRootNode()
+	{
+		return getModelInstance().nodes.get(ROOT_NODE_LOCATION);
+	}
+
 	public Quaternion getRoationQuat()
 	{
 		return getTransform().getRotation(new Quaternion());
@@ -142,11 +154,61 @@ public abstract class Entity extends GameObject
 
 	public Matrix4 getTransform()
 	{
-		return modelInstance.transform;
+		return getModelInstance().transform;
 	}
 
 	public boolean isVisible(Camera camera)
 	{
 		return camera.frustum.sphereInFrustum(getCenterLocation(), getRadius());
+	}
+
+	public void rotate(Vector3 angles)
+	{
+		rotate(angles.x, angles.y, angles.z);
+	}
+
+	public void rotate(float yaw, float pitch, float roll)
+	{
+		getTransform().rotate(Vector3.Y, yaw);
+		getTransform().rotate(Vector3.X, pitch);
+		getTransform().rotate(Vector3.Z, roll);
+	}
+
+	public void setLocation(Vector3 location)
+	{
+		getTransform().setToTranslation(location);
+	}
+
+	public void setScale(Vector3 scale)
+	{
+		getRootNode().scale.set(scale);
+		calculateTransforms();
+	}
+
+	public void setSize(Vector3 size)
+	{
+		Vector3 oldSize = getOriginalSize();
+		oldSize = size.scl(1f / oldSize.x, 1f / oldSize.y, 1f / oldSize.z);
+		setScale(oldSize);
+	}
+
+	public void setRotation(Vector3 angles)
+	{
+		setRotation(angles.x, angles.y, angles.z);
+	}
+
+	public void setRotation(float yaw, float pitch, float roll)
+	{
+		getTransform().setFromEulerAngles(yaw, pitch, roll);
+	}
+
+	public void translate(Vector3 translation)
+	{
+		getTransform().translate(translation);
+	}
+
+	public void translateABS(Vector3 translation)
+	{
+		getTransform().trn(translation);
 	}
 }

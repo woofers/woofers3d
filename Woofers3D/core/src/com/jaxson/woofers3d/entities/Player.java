@@ -16,7 +16,7 @@ import java.lang.Math;
 
 public class Player extends PlayerBody
 {
-	private static final float SPEED = 0.03f;
+	private static final float SPEED = 0.06f;
 	private static final String PATH = "entities/dog/dog.obj";
 	private static final float MASS = 100f;
 	private static final btConvexShape SHAPE = new BoxShape(new Vector3(2f, 2f, 2f));

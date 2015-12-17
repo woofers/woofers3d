@@ -65,8 +65,7 @@ public class PhysicsWorld
 	private static final float VECOTR_TO_MAX = GdxMath.HALF;
 	private static final float VECOTR_TO_MIN = -GdxMath.HALF;
 	private static final Vector3 WORLD_SIZE = new Vector3(2000, 2000, 2000);
-
-	private final Vector3 GRAVITY = new Vector3(0, -5f, 0);
+	private static final Vector3 GRAVITY = new Vector3(0, -5f, 0);
 
 	private MyArrayList<EntityBody<?>> objects;
 	private MyContactListener contactListener;
@@ -122,6 +121,7 @@ public class PhysicsWorld
 	{
 		objects.add(entity);
 		//entity.addCollisionFlag(CALLBACK_FLAG);
+		entity.setActivationState(Collision.DISABLE_DEACTIVATION);
 		world.addRigidBody(entity.getBody());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);

@@ -67,10 +67,10 @@ public class Main extends ApplicationAdapter
 		accumulator += dt;
 		while (accumulator >= STEP)
 		{
-			Gdx.gl.glClear(CLEAR_MASK);
 			gameStateManager.update(STEP);
 			accumulator -= STEP;
 		}
+		Gdx.gl.glClear(CLEAR_MASK);
 		gameStateManager.render(spriteBatch, modelBatch);
 	}
 

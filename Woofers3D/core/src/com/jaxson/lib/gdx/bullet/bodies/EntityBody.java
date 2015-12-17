@@ -152,7 +152,6 @@ public abstract class EntityBody<T extends btCollisionObject> extends GhostEntit
 	public void setLocation(Vector3 location)
 	{
 		super.setLocation(location);
-		//calculateTransforms();
 		transformToBody();
 	}
 
@@ -172,9 +171,8 @@ public abstract class EntityBody<T extends btCollisionObject> extends GhostEntit
 	public void setScale(Vector3 scale)
 	{
 		super.setScale(scale);
-		System.out.println(" test  " + shape.getLocalScaling());
 		shape.setLocalScaling(scale);
-		System.out.println(" test  " + shape.getLocalScaling());
+		transformToBody();
 	}
 
 	protected void transformToBody()
