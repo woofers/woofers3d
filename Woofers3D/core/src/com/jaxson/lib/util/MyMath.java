@@ -1,6 +1,5 @@
 package com.jaxson.lib.util;
 
-import java.lang.Math;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -45,11 +44,11 @@ public class MyMath
 
 	public static int toInt(float value)
 	{
-		return (int)(value);
+		return (int) (value);
 	}
 
 	public static int toInt(double value)
 	{
-		return (int)(value);
+		return (int) (value);
 	}
 }

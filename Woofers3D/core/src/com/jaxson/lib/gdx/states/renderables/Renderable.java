@@ -19,7 +19,7 @@ public abstract class Renderable<T extends GameObject>
 
 	public void dispose()
 	{
-		for (T object: objects)
+		for (T object : objects)
 		{
 			object.dispose();
 		}
@@ -42,7 +42,7 @@ public abstract class Renderable<T extends GameObject>
 
 	public void update(float dt)
 	{
-		for (T object: objects)
+		for (T object : objects)
 		{
 			object.update(dt);
 		}

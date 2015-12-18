@@ -1,30 +1,18 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.Bullet;
-import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
-import com.jaxson.lib.gdx.graphics.MyColor;
-import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.State;
-import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
-import java.util.Random;
-import com.jaxson.lib.gdx.graphics.g3d.Box;
-
 
 public class PlayState extends State<TargetCamera>
 {
@@ -48,7 +36,7 @@ public class PlayState extends State<TargetCamera>
 		add(floor);
 
 		boxs = new RigidBox[BOX_AMOUNT];
-		for (int i = 0; i < BOX_AMOUNT; i ++)
+		for (int i = 0; i < BOX_AMOUNT; i++)
 		{
 			boxs[i] = new RigidBox(Color.ORANGE);
 			boxs[i].setLocation(new Vector3(10f, 15f, 0));
@@ -61,6 +49,7 @@ public class PlayState extends State<TargetCamera>
 		player = new Player(getCamera());
 		applyPhysics(player);
 		add(player);
+		System.out.println(player.getSize());
 
 		getCamera().setWorld(getPhysicsWorld());
 	}
@@ -88,9 +77,9 @@ public class PlayState extends State<TargetCamera>
 	public void update(float dt)
 	{
 		super.update(dt);
-		//EntityBody<?> entity = null;
-		//entity = getPhysicsWorld().getBody(getCamera().getRay());
-		//System.out.println(entity);
-		//if (entity == floor) System.out.println("Woof");
+		// EntityBody<?> entity = null;
+		// entity = getPhysicsWorld().getBody(getCamera().getRay());
+		// System.out.println(entity);
+		// if (entity == floor) System.out.println("Woof");
 	}
 }

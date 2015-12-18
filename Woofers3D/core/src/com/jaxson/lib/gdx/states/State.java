@@ -1,24 +1,20 @@
 package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
-import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
+import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
-import com.jaxson.lib.gdx.bullet.bodies.Floor;
+import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.input.KeyHandler;
-import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
-import com.jaxson.lib.util.MyArrayList;
 
 public abstract class State<C extends Camera> extends GameObject
 {
@@ -79,7 +75,7 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public float getAspectRatio()
 	{
-		return (float)(getWidth()) / (float)(getHeight());
+		return (float) (getWidth()) / (float) (getHeight());
 	}
 
 	public C getCamera()

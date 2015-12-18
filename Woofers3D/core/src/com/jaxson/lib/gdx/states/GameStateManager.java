@@ -1,11 +1,9 @@
 package com.jaxson.lib.gdx.states;
 
+import java.util.Stack;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.jaxson.lib.gdx.states.State;
-import com.jaxson.lib.util.MyArrayList;
-import java.util.Stack;
 
 public class GameStateManager
 {
@@ -33,7 +31,8 @@ public class GameStateManager
 
 	public void popAll()
 	{
-		if (isEmpty()) return;
+		if (isEmpty())
+			return;
 		pop();
 		popAll();
 	}

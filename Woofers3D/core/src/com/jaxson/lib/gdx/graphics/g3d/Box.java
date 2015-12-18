@@ -1,7 +1,6 @@
 package com.jaxson.lib.gdx.graphics.g3d;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class Box extends Entity

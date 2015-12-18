@@ -1,25 +1,18 @@
 package com.jaxson.woofers3d.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
-import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
-import com.jaxson.lib.gdx.bullet.collision.BoxShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
-import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
-import com.jaxson.lib.gdx.input.KeyHandler;
-import java.lang.Math;
+import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
+import com.jaxson.lib.gdx.bullet.collision.BoxShape;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
 public class Player extends PlayerBody
 {
 	private static final float SPEED = 0.06f;
 	private static final String PATH = "entities/dog/dog.obj";
 	private static final float MASS = 100f;
-	private static final btConvexShape SHAPE = new BoxShape(new Vector3(2f, 2f, 2f));
+	private static final Vector3 SIZE = new Vector3(0.671983f, 2.223813f, 3.852066f);
+	private static final btConvexShape SHAPE = new BoxShape(SIZE);
 
 	private TargetCamera camera;
 

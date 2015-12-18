@@ -2,11 +2,10 @@ package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.jaxson.lib.gdx.bullet.collision.BoxShape;
-import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class RigidBox extends RigidBody
 {

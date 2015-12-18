@@ -13,11 +13,13 @@ public class SpriteRenderable extends Renderable<Sprite>
 
 	public void render(SpriteBatch spriteBatch)
 	{
-		if (spriteBatch == null) return;
-		if (isEmpty()) return;
+		if (spriteBatch == null)
+			return;
+		if (isEmpty())
+			return;
 		Vector2 location;
 		spriteBatch.begin();
-		for (Sprite sprite: objects)
+		for (Sprite sprite : objects)
 		{
 			location = sprite.getLocation();
 			spriteBatch.draw(sprite.getTexture(), location.x, location.y);

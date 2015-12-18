@@ -1,21 +1,20 @@
 package com.jaxson.lib.gdx.graphics.cameras;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.math.collision.Ray;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.input.KeyHandler;
 
 public class TargetCamera extends PerspectiveCamera
 {
-	private static final int FOV                = 75;
-	private static final float FAR              = 300f;
-	private static final float NEAR             = 1f / 10f;
-	private static final Vector3 OFFSET         = new Vector3(0f, 5f, -5f);
+	private static final int FOV = 75;
+	private static final float FAR = 300f;
+	private static final float NEAR = 1f / 10f;
+	private static final Vector3 OFFSET = new Vector3(0f, 5f, -5f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
@@ -44,7 +43,8 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void center()
 	{
-		if (hasTarget()) center(getTargetLocation());
+		if (hasTarget())
+			center(getTargetLocation());
 	}
 
 	public void center(Vector3 point)
@@ -82,7 +82,8 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Ray getRay()
 	{
-		if (!hasTarget()) return null;
+		if (!hasTarget())
+			return null;
 		return new Ray(getLocation(), getDeltaLocation(target.getLocation()));
 	}
 
@@ -104,7 +105,8 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Vector3 getTargetLocation()
 	{
-		if (!hasTarget()) return null;
+		if (!hasTarget())
+			return null;
 		return target.getLocation();
 	}
 
@@ -120,7 +122,8 @@ public class TargetCamera extends PerspectiveCamera
 
 	private void input()
 	{
-		if (!hasTarget()) return;
+		if (!hasTarget())
+			return;
 		rotateAround(getTargetLocation(), getMouse());
 		up.set(Vector3.Y);
 		position.add(getDeltaTargetLocation());
@@ -167,10 +170,10 @@ public class TargetCamera extends PerspectiveCamera
 		{
 			if (hasWorld() && hasTarget())
 			{
-				//if (world.getBody(getRay()) != target)
-				//{
-				//	rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
-				//}
+				// if (world.getBody(getRay()) != target)
+				// {
+				// rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
+				// }
 			}
 		}
 	}
@@ -195,7 +198,6 @@ public class TargetCamera extends PerspectiveCamera
 		this.target = target;
 		center();
 	}
-
 
 	@Override
 	public void update()

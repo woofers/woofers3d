@@ -2,28 +2,18 @@ package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
-import com.jaxson.lib.gdx.bullet.MyMotionState;
 import com.jaxson.lib.gdx.input.KeyHandler;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
 
 public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 {
-	private static final float STEP_HEIGHT    = 0.3f;
-	private static final float SPEED          = 0.12f;
+	private static final float STEP_HEIGHT = 0.3f;
+	private static final float SPEED = 0.12f;
 	private static final float ROTATION_SPEED = 2f;
 
 	private btKinematicCharacterController characterController;
@@ -54,7 +44,6 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		this.characterController = new btKinematicCharacterController(getBody(), shape, STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
 		setSpeed(SPEED);
-		transformToBody();
 	}
 
 	public boolean canJump()
@@ -105,7 +94,8 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		}
 		if (KeyHandler.isDown(KeyHandler.SPACE))
 		{
-			if (canJump()) jump();
+			if (canJump())
+				jump();
 		}
 		walkDirection.scl(speed);
 		characterController.setWalkDirection(walkDirection);

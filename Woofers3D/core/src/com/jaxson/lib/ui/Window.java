@@ -10,11 +10,11 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame
 {
-	private static final String TITLE         = "Window";
-	private static final int WIDTH            = 800;
-	private static final int HEIGHT           = 600;
-	private static final double MIN_SIZE      = 0.4;
-	private static final int CLOSE_OPERATION  = EXIT_ON_CLOSE;
+	private static final String TITLE = "Window";
+	private static final int WIDTH = 800;
+	private static final int HEIGHT = 600;
+	private static final double MIN_SIZE = 0.4;
+	private static final int CLOSE_OPERATION = EXIT_ON_CLOSE;
 	private static final LayoutManager LAYOUT = new BorderLayout();
 
 	private int width, height;
@@ -61,8 +61,9 @@ public class Window extends JFrame
 
 	private double getAspectRatio(int width, int height)
 	{
-		if (height == 0) return 1;
-		return (double)(width) / (double)(height);
+		if (height == 0)
+			return 1;
+		return (double) (width) / (double) (height);
 	}
 
 	public int getWindowHeight()
@@ -72,7 +73,7 @@ public class Window extends JFrame
 
 	private int getWindowHeight(double scale)
 	{
-		return (int)(getScreenSize().height * scale);
+		return (int) (getScreenSize().height * scale);
 	}
 
 	public int getWindowWidth()
@@ -82,7 +83,7 @@ public class Window extends JFrame
 
 	private int getWindowWidth(double scale)
 	{
-		return (int)(getScreenSize().height * scale * getAspectRatio());
+		return (int) (getScreenSize().height * scale * getAspectRatio());
 	}
 
 	private Dimension getScreenSize()
@@ -112,10 +113,10 @@ public class Window extends JFrame
 
 	public void setWindowSize(int width, int height)
 	{
-		int minWidth  = (int)(width * MIN_SIZE);
-		int minHeight = (int)(height * MIN_SIZE);
-		this.width    = width;
-		this.height   = height;
+		int minWidth = (int) (width * MIN_SIZE);
+		int minHeight = (int) (height * MIN_SIZE);
+		this.width = width;
+		this.height = height;
 		setSize(width, height);
 		setMinimumSize(new Dimension(minWidth, minHeight));
 		setMaximumSize(getScreenSize());

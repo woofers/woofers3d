@@ -68,8 +68,8 @@ public class Dialog<T extends Window> extends JDialog
 	public void setDialogSize(int width, int height)
 	{
 		int minWidth, minHeight;
-		minWidth = (int)(width * MIN_SIZE);
-		minHeight = (int)(height * MIN_SIZE);
+		minWidth = (int) (width * MIN_SIZE);
+		minHeight = (int) (height * MIN_SIZE);
 
 		setSize(width, height);
 		setMinimumSize(new Dimension(minWidth, minHeight));

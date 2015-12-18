@@ -2,16 +2,17 @@ package com.jaxson.lib.gdx.graphics.g3d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
-import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 
 public abstract class Entity extends GameObject
@@ -187,9 +188,7 @@ public abstract class Entity extends GameObject
 
 	public void setSize(Vector3 size)
 	{
-		Vector3 oldSize = getOriginalSize();
-		oldSize = size.scl(1f / oldSize.x, 1f / oldSize.y, 1f / oldSize.z);
-		setScale(oldSize);
+		setScale(GdxMath.divideVector(size, getOriginalSize()));
 	}
 
 	public void setRotation(Vector3 angles)

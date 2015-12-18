@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.GameObject;
-import com.jaxson.lib.util.MyArrayList;
 
 public class MixedRenderable
 {

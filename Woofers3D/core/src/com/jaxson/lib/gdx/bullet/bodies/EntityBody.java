@@ -1,25 +1,15 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.collision.btCapsuleShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
-import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.bullet.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.g3d.GhostEntity;
-import com.jaxson.lib.gdx.bullet.MyMotionState;
-import java.lang.Math;
 
-public abstract class EntityBody<T extends btCollisionObject> extends GhostEntity
+public abstract class EntityBody<T extends btCollisionObject> extends Entity
 {
 	protected static final float MASS = 1f;
 
@@ -82,10 +72,10 @@ public abstract class EntityBody<T extends btCollisionObject> extends GhostEntit
 		return body.getContactCallbackFlag();
 	}
 
-    public int getContactCallbackFilter()
-    {
+	public int getContactCallbackFilter()
+	{
 		return body.getContactCallbackFilter();
-    }
+	}
 
 	public int getCollisionFlags()
 	{
@@ -97,10 +87,17 @@ public abstract class EntityBody<T extends btCollisionObject> extends GhostEntit
 		return shape;
 	}
 
+	public btConvexShape getFittedHitbox()
+	{
+		Vector3 size = getSize();
+		return new BoxShape(size);
+	}
+
 	public Vector3 getInertia()
 	{
 		Vector3 inertia = new Vector3();
-		if (mass <= 0) return inertia;
+		if (mass <= 0)
+			return inertia;
 		shape.calculateLocalInertia(mass, inertia);
 		return inertia;
 	}
@@ -132,10 +129,10 @@ public abstract class EntityBody<T extends btCollisionObject> extends GhostEntit
 		body.setContactCallbackFlag(flag);
 	}
 
-    public void setContactCallbackFilter(int flag)
-    {
+	public void setContactCallbackFilter(int flag)
+	{
 		body.setContactCallbackFilter(flag);
-    }
+	}
 
 	public void setCollisionFlags(int flags)
 	{
@@ -172,7 +169,6 @@ public abstract class EntityBody<T extends btCollisionObject> extends GhostEntit
 	{
 		super.setScale(scale);
 		shape.setLocalScaling(scale);
-		transformToBody();
 	}
 
 	protected void transformToBody()

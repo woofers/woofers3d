@@ -1,28 +1,27 @@
 package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class KeyHandler implements InputProcessor
 {
-	public static final int UP       = Keys.W;
-	public static final int FORWARD  = Keys.W;
-	public static final int DOWN     = Keys.S;
-	public static final int BACK     = Keys.S;
+	public static final int UP = Keys.W;
+	public static final int FORWARD = Keys.W;
+	public static final int DOWN = Keys.S;
+	public static final int BACK = Keys.S;
 	public static final int BACKWARD = Keys.S;
-	public static final int LEFT     = Keys.A;
-	public static final int RIGHT    = Keys.D;
-	public static final int SPACE    = Keys.SPACE;
-	public static final int PAUSE    = Keys.ESCAPE;
+	public static final int LEFT = Keys.A;
+	public static final int RIGHT = Keys.D;
+	public static final int SPACE = Keys.SPACE;
+	public static final int PAUSE = Keys.ESCAPE;
 
-	private static final float MOUSE_SCALE      = 1f / 10f;
-	private static final float SENSITIVITY      = 1.05f;
-	private static final boolean INVERT_MOUSE   = true;
+	private static final float MOUSE_SCALE = 1f / 10f;
+	private static final float SENSITIVITY = 1.05f;
+	private static final boolean INVERT_MOUSE = true;
 
-	private static final int KEY_SIZE  = 256;
+	private static final int KEY_SIZE = 256;
 	private static boolean[] keys, prevKeys;
 	private static Vector2 mouse, prevMouse;
 
@@ -46,11 +45,13 @@ public class KeyHandler implements InputProcessor
 
 	public static Vector2 getScaledMouse()
 	{
-		if (!Gdx.input.isCursorCatched()) return Vector2.Zero;
+		if (!Gdx.input.isCursorCatched())
+			return Vector2.Zero;
 		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = getDeltaMouse();
 		mouse.scl(scale, -scale);
-		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
+		if (INVERT_MOUSE)
+			mouse.scl(-1f, -1f);
 		return mouse;
 	}
 
@@ -130,7 +131,7 @@ public class KeyHandler implements InputProcessor
 
 	public static void update(float dt)
 	{
-		for (int i = 0; i < KEY_SIZE; i ++)
+		for (int i = 0; i < KEY_SIZE; i++)
 		{
 			prevKeys[i] = keys[i];
 		}

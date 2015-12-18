@@ -20,14 +20,15 @@ public class ScaleContainer<T extends Panel> extends Panel
 	private double getAspectRatio(T panel)
 	{
 		Dimension size = panel.getPreferredSize();
-		if (size.height == 0) return 1;
+		if (size.height == 0)
+			return 1;
 		return size.width / size.height;
 	}
 
 	public void keepAspectRatio()
 	{
-		int size =  Math.min(getWidth(), getHeight());
-		panel.setPanelSize(size, (int)(size / getAspectRatio(panel)));
+		int size = Math.min(getWidth(), getHeight());
+		panel.setPanelSize(size, (int) (size / getAspectRatio(panel)));
 		draw();
 	}
 }

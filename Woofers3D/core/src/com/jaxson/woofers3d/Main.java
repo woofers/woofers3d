@@ -3,26 +3,26 @@ package com.jaxson.woofers3d;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.jaxson.lib.gdx.states.GameStateManager;
-import com.jaxson.woofers3d.states.*;
+import com.jaxson.woofers3d.states.PlayState;
 
 public class Main extends ApplicationAdapter
 {
-	public static final String TITLE       = "Woofers 3D";
-	public static final int WIDTH          = 1024;
-	public static final int HEIGHT         = 768;
-	public static final int FPS            = 300;
+	public static final String TITLE = "Woofers 3D";
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = 768;
+	public static final int FPS = 300;
 	public static final int BACKGROUND_FPS = -1;
-	public static final boolean VSYNC      = false;
+	public static final boolean VSYNC = false;
+	public static final boolean RESIZABLE = false;
 
-	private static final float STEP         = 1f / 120f;
-	private static final float CLAMP        = 1f / 4f;
-	private static final int CLEAR_MASK     = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
-	private static final Color CLEAR_COLOR  = new Color(0f, 0f, 1f, 1f);
+	private static final float STEP = 1f / 120f;
+	private static final float CLAMP = 1f / 4f;
+	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
+	private static final Color CLEAR_COLOR = new Color(0f, 0f, 1f, 1f);
 
 	private float accumulator;
 	private GameStateManager gameStateManager;
@@ -46,24 +46,21 @@ public class Main extends ApplicationAdapter
 		modelBatch.dispose();
 		gameStateManager.popAll();
 	}
-/*
-	public LwjglApplicationConfiguration getConfig()
-	{
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title         = Main.TITLE;
-		config.width         = Main.WIDTH;
-		config.height        = Main.HEIGHT;
-		config.vSyncEnabled  = Main.VSYNC;
-		config.foregroundFPS = Main.FPS;
-		config.backgroundFPS = Main.BACKGROUND_FPS;
-		return config;
-	}
-*/
+
+	/*
+	 * public LwjglApplicationConfiguration getConfig() {
+	 * LwjglApplicationConfiguration config = new
+	 * LwjglApplicationConfiguration(); config.title = Main.TITLE; config.width
+	 * = Main.WIDTH; config.height = Main.HEIGHT; config.vSyncEnabled =
+	 * Main.VSYNC; config.foregroundFPS = Main.FPS; config.backgroundFPS =
+	 * Main.BACKGROUND_FPS; return config; }
+	 */
 	@Override
 	public void render()
 	{
 		float dt = Gdx.graphics.getDeltaTime();
-		if (dt > CLAMP) dt = CLAMP;
+		if (dt > CLAMP)
+			dt = CLAMP;
 		accumulator += dt;
 		while (accumulator >= STEP)
 		{
