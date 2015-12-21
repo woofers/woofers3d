@@ -47,6 +47,12 @@ public class Main extends ApplicationAdapter
 		gameStateManager.popAll();
 	}
 
+	@Override
+	public void pause()
+	{
+		System.out.println("paused");
+	}
+
 	/*
 	 * public LwjglApplicationConfiguration getConfig() {
 	 * LwjglApplicationConfiguration config = new
@@ -59,8 +65,7 @@ public class Main extends ApplicationAdapter
 	public void render()
 	{
 		float dt = Gdx.graphics.getDeltaTime();
-		if (dt > CLAMP)
-			dt = CLAMP;
+		if (dt > CLAMP) dt = CLAMP;
 		accumulator += dt;
 		while (accumulator >= STEP)
 		{
@@ -81,12 +86,6 @@ public class Main extends ApplicationAdapter
 	public void resume()
 	{
 		System.out.println("resume");
-	}
-
-	@Override
-	public void pause()
-	{
-		System.out.println("paused");
 	}
 
 }

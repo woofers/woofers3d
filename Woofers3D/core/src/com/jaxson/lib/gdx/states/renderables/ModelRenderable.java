@@ -18,17 +18,13 @@ public class ModelRenderable extends Renderable<Entity>
 
 	public void render(ModelBatch modelBatch, Camera camera)
 	{
-		if (modelBatch == null)
-			return;
-		if (camera == null)
-			return;
-		if (isEmpty())
-			return;
+		if (modelBatch == null) return;
+		if (camera == null) return;
+		if (isEmpty()) return;
 		modelBatch.begin(camera);
-		for (Entity entity : objects)
+		for (Entity entity: objects)
 		{
-			if (entity.isVisible(camera))
-				modelBatch.render(entity.getModelInstance(), environment);
+			if (entity.isVisible(camera)) modelBatch.render(entity.getModelInstance(), environment);
 		}
 		modelBatch.end();
 	}

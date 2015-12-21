@@ -7,23 +7,13 @@ import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.bullet.MyMotionState;
 
-public abstract class RigidBody extends EntityBody<btRigidBody>
+public abstract class RigidBody extends ShapeBody<btRigidBody>
 {
 	private MyMotionState motionState;
 
-	public RigidBody(String modelPath, btConvexShape shape)
-	{
-		this(modelPath, shape, MASS);
-	}
-
-	public RigidBody(String modelPath, btConvexShape shape, float mass)
-	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
-	}
-
 	public RigidBody(Model model, btConvexShape shape)
 	{
-		this(model, shape, MASS);
+		this(model, shape, DEFAULT_MASS);
 	}
 
 	public RigidBody(Model model, btConvexShape shape, float mass)
@@ -31,6 +21,16 @@ public abstract class RigidBody extends EntityBody<btRigidBody>
 		super(model, shape, mass);
 		this.motionState = new MyMotionState(getTransform());
 		setBody(new btRigidBody(mass, motionState, shape, getInertia()));
+	}
+
+	public RigidBody(String modelPath, btConvexShape shape)
+	{
+		this(modelPath, shape, DEFAULT_MASS);
+	}
+
+	public RigidBody(String modelPath, btConvexShape shape, float mass)
+	{
+		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
 	}
 
 	@Override
@@ -56,12 +56,5 @@ public abstract class RigidBody extends EntityBody<btRigidBody>
 	{
 		this.motionState = motionState;
 		getBody().setMotionState(motionState);
-	}
-
-	@Override
-	protected void transformToBody()
-	{
-		super.transformToBody();
-		// motionState.getWorldTransform(getTransform());
 	}
 }

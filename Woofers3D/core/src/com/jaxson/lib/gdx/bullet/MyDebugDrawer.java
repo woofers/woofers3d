@@ -33,8 +33,7 @@ public class MyDebugDrawer
 
 	public int getDebugMode()
 	{
-		if (!hasDebugDrawer())
-			return NO_DEBUG;
+		if (!hasDebugDrawer()) return NO_DEBUG;
 		return debugDrawer.getDebugMode();
 	}
 
@@ -45,20 +44,16 @@ public class MyDebugDrawer
 
 	private void removeDebugDrawer()
 	{
-		if (!hasDebugDrawer())
-			return;
+		if (!hasDebugDrawer()) return;
 		debugDrawer.dispose();
 		debugDrawer = null;
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
-		if (modelBatch == null)
-			return;
-		if (camera == null)
-			return;
-		if (!hasDebugDrawer())
-			return;
+		if (!hasDebugDrawer()) return;
+		if (modelBatch == null) return;
+		if (camera == null) return;
 		modelBatch.flush();
 		debugDrawer.begin(camera);
 		world.debugDrawWorld();
@@ -74,7 +69,8 @@ public class MyDebugDrawer
 				removeDebugDrawer();
 				return;
 			}
-		} else
+		}
+		else
 		{
 			debugDrawer = new DebugDrawer();
 		}

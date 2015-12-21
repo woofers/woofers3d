@@ -20,7 +20,7 @@ public class RigidBox extends RigidBody
 
 	public RigidBox(Color color)
 	{
-		super(new MyModelBuilder().createBox(color), new BoxShape(new Vector3(1f, 1f, 1f)), MASS);
+		super(new MyModelBuilder().createBox(color), new BoxShape(new Vector3(1f, 1f, 1f)));
 	}
 
 	@Override

@@ -4,16 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Window extends JFrame
 {
 	private static final String TITLE = "Window";
+
 	private static final int WIDTH = 800;
+
 	private static final int HEIGHT = 600;
+
 	private static final double MIN_SIZE = 0.4;
+
 	private static final int CLOSE_OPERATION = EXIT_ON_CLOSE;
 	private static final LayoutManager LAYOUT = new BorderLayout();
 
@@ -22,11 +25,6 @@ public class Window extends JFrame
 	public Window()
 	{
 		this(LAYOUT);
-	}
-
-	public Window(LayoutManager layout)
-	{
-		this(WIDTH, HEIGHT, layout);
 	}
 
 	public Window(int width, int height)
@@ -41,6 +39,11 @@ public class Window extends JFrame
 		setDefaultCloseOperation(CLOSE_OPERATION);
 		setLayout(layout);
 		center();
+	}
+
+	public Window(LayoutManager layout)
+	{
+		this(WIDTH, HEIGHT, layout);
 	}
 
 	public void center()
@@ -61,9 +64,13 @@ public class Window extends JFrame
 
 	private double getAspectRatio(int width, int height)
 	{
-		if (height == 0)
-			return 1;
-		return (double) (width) / (double) (height);
+		if (height == 0) return 1;
+		return (double) width / (double) height;
+	}
+
+	private Dimension getScreenSize()
+	{
+		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 
 	public int getWindowHeight()
@@ -86,11 +93,6 @@ public class Window extends JFrame
 		return (int) (getScreenSize().height * scale * getAspectRatio());
 	}
 
-	private Dimension getScreenSize()
-	{
-		return Toolkit.getDefaultToolkit().getScreenSize();
-	}
-
 	public void setIcon(String iconPath)
 	{
 		setIconImage(new ImageIcon(iconPath).getImage());
@@ -106,11 +108,6 @@ public class Window extends JFrame
 		setWindowSize(width, height);
 	}
 
-	public void setWindowWidth(int width)
-	{
-		setWindowSize(width, height);
-	}
-
 	public void setWindowSize(int width, int height)
 	{
 		int minWidth = (int) (width * MIN_SIZE);
@@ -120,6 +117,11 @@ public class Window extends JFrame
 		setSize(width, height);
 		setMinimumSize(new Dimension(minWidth, minHeight));
 		setMaximumSize(getScreenSize());
+	}
+
+	public void setWindowWidth(int width)
+	{
+		setWindowSize(width, height);
 	}
 
 	public void showWindow()

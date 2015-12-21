@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Floor extends RigidBox
 {
-	private static final float THICKNESS = 0.0000001f;
+	private static final float THICKNESS = 0.0001f;
 	private static final float WIDTH = 100f;
 	private static final float HEIGHT = 100f;
 	private static final float MASS = 0f;
@@ -24,7 +24,7 @@ public class Floor extends RigidBox
 	{
 		super(color);
 		setMass(MASS);
-		setScale(new Vector3(WIDTH, THICKNESS, HEIGHT));
+		setScale(new Vector3(width, THICKNESS, height));
 	}
 
 	@Override

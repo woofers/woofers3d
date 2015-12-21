@@ -4,32 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
-
 import javax.swing.JDialog;
 
 public class Dialog<T extends Window> extends JDialog
 {
 	private static final String TITLE = "Dialog";
+
 	private static final int WIDTH = 200;
+
 	private static final int HEIGHT = 100;
+
 	private static final boolean RESIZEABLE = false;
+
 	private static final double MIN_SIZE = 0.4;
+
 	private static final LayoutManager LAYOUT = new BorderLayout();
-
-	public Dialog(LayoutManager layout)
-	{
-		this(null, layout);
-	}
-
-	public Dialog(T window)
-	{
-		this(window, LAYOUT);
-	}
-
-	public Dialog(T window, LayoutManager layout)
-	{
-		this(WIDTH, HEIGHT, window, layout);
-	}
 
 	public Dialog(int width, int height, T window)
 	{
@@ -47,6 +36,21 @@ public class Dialog<T extends Window> extends JDialog
 		setLayout(layout);
 		center();
 		draw();
+	}
+
+	public Dialog(LayoutManager layout)
+	{
+		this(null, layout);
+	}
+
+	public Dialog(T window)
+	{
+		this(window, LAYOUT);
+	}
+
+	public Dialog(T window, LayoutManager layout)
+	{
+		this(WIDTH, HEIGHT, window, layout);
 	}
 
 	public void center()

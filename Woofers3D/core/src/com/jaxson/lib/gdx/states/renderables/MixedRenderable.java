@@ -9,6 +9,7 @@ import com.jaxson.lib.gdx.graphics.g3d.Entity;
 public class MixedRenderable
 {
 	private SpriteRenderable spriteRenderable;
+
 	private ModelRenderable modelRenderable;
 
 	public MixedRenderable()
@@ -17,14 +18,14 @@ public class MixedRenderable
 		this.modelRenderable = new ModelRenderable();
 	}
 
-	public void add(Sprite sprite)
-	{
-		spriteRenderable.add(sprite);
-	}
-
 	public void add(Entity model)
 	{
 		modelRenderable.add(model);
+	}
+
+	public void add(Sprite sprite)
+	{
+		spriteRenderable.add(sprite);
 	}
 
 	public void dispose()
@@ -38,14 +39,14 @@ public class MixedRenderable
 		return spriteRenderable.isEmpty() && modelRenderable.isEmpty();
 	}
 
-	public void remove(Sprite sprite)
-	{
-		spriteRenderable.add(sprite);
-	}
-
 	public void remove(Entity model)
 	{
 		modelRenderable.remove(model);
+	}
+
+	public void remove(Sprite sprite)
+	{
+		spriteRenderable.add(sprite);
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)

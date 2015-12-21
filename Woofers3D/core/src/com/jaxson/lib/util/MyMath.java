@@ -34,21 +34,21 @@ public class MyMath
 
 	public static float randFloat(float min, float max)
 	{
-		return getRandom().nextFloat() * ((max - min) + 1) + min;
+		return getRandom().nextFloat() * (max - min + 1) + min;
 	}
 
 	public static int randInt(int min, int max)
 	{
-		return getRandom().nextInt((max - min) + 1) + min;
-	}
-
-	public static int toInt(float value)
-	{
-		return (int) (value);
+		return getRandom().nextInt(max - min + 1) + min;
 	}
 
 	public static int toInt(double value)
 	{
-		return (int) (value);
+		return (int) value;
+	}
+
+	public static int toInt(float value)
+	{
+		return (int) value;
 	}
 }

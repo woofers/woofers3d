@@ -2,15 +2,17 @@ package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
+import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.util.GdxMath;
 
-public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
+public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 {
 	private static final float STEP_HEIGHT = 0.3f;
 	private static final float SPEED = 0.12f;
@@ -19,21 +21,12 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
 	private float speed;
+	private float rotationSpeed;
 	private float stepHeight;
-
-	public PlayerBody(String modelPath, btConvexShape shape)
-	{
-		this(modelPath, shape, MASS);
-	}
-
-	public PlayerBody(String modelPath, btConvexShape shape, float mass)
-	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
-	}
 
 	public PlayerBody(Model model, btConvexShape shape)
 	{
-		this(model, shape, MASS);
+		this(model, shape, DEFAULT_MASS);
 	}
 
 	public PlayerBody(Model model, btConvexShape shape, float mass)
@@ -44,11 +37,22 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		this.characterController = new btKinematicCharacterController(getBody(), shape, STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
 		setSpeed(SPEED);
+		setRotationSpeed(ROTATION_SPEED);
+	}
+
+	public PlayerBody(String modelPath, btConvexShape shape)
+	{
+		this(modelPath, shape, DEFAULT_MASS);
+	}
+
+	public PlayerBody(String modelPath, btConvexShape shape, float mass)
+	{
+		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)), shape, mass);
 	}
 
 	public boolean canJump()
 	{
-		return characterController.canJump();
+		return getCharacterController().canJump();
 	}
 
 	@Override
@@ -67,6 +71,21 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 		return characterController;
 	}
 
+	public float getMaxSlope()
+	{
+		return getMaxSlopeRad() * GdxMath.RADIANS_TO_DEGREES;
+	}
+
+	public float getMaxSlopeRad()
+	{
+		return getCharacterController().getMaxSlope();
+	}
+
+	public float getRotationSpeed()
+	{
+		return rotationSpeed;
+	}
+
 	public float getSpeed()
 	{
 		return speed;
@@ -76,35 +95,67 @@ public abstract class PlayerBody extends EntityBody<btPairCachingGhostObject>
 	protected void input()
 	{
 		Vector3 walkDirection = new Vector3();
-		if (KeyHandler.isDown(KeyHandler.LEFT))
+		if (onGround())
 		{
-			rotate(ROTATION_SPEED, 0, 0);
+			if (KeyHandler.isDown(KeyHandler.ANY_LEFT))
+			{
+				rotate(getRotationSpeed(), 0, 0);
+			}
+			if (KeyHandler.isDown(KeyHandler.ANY_RIGHT))
+			{
+				rotate(-getRotationSpeed(), 0, 0);
+			}
 		}
-		if (KeyHandler.isDown(KeyHandler.RIGHT))
-		{
-			rotate(-ROTATION_SPEED, 0, 0);
-		}
-		if (KeyHandler.isDown(KeyHandler.FORWARD))
+		if (KeyHandler.isDown(KeyHandler.ANY_UP))
 		{
 			walkDirection.add(getDirection());
 		}
-		if (KeyHandler.isDown(KeyHandler.BACK))
+		if (KeyHandler.isDown(KeyHandler.ANY_DOWN))
 		{
 			walkDirection.sub(getDirection());
 		}
 		if (KeyHandler.isDown(KeyHandler.SPACE))
 		{
-			if (canJump())
-				jump();
+			if (canJump()) jump();
 		}
-		walkDirection.scl(speed);
-		characterController.setWalkDirection(walkDirection);
+		walkDirection.scl(getSpeed());
+		getCharacterController().setWalkDirection(walkDirection);
 		bodyToTransform();
 	}
 
 	public void jump()
 	{
-		characterController.jump();
+		getCharacterController().jump();
+	}
+
+	public boolean onGround()
+	{
+		return getCharacterController().onGround();
+	}
+
+	public void setFallSpeed(float fallSpeed)
+	{
+		getCharacterController().setFallSpeed(fallSpeed);
+	}
+
+	public void setJumpSpeed(float jumpSpeed)
+	{
+		getCharacterController().setJumpSpeed(jumpSpeed);
+	}
+
+	public void setMaxSlope(float maxSlope)
+	{
+		setMaxSlope(maxSlope * GdxMath.DEGREES_TO_RADIANS);
+	}
+
+	public void setMaxSlopeRad(float maxSlope)
+	{
+		getCharacterController().setMaxSlope(maxSlope);
+	}
+
+	public void setRotationSpeed(float rotationSpeed)
+	{
+		this.rotationSpeed = rotationSpeed;
 	}
 
 	public void setSpeed(float speed)

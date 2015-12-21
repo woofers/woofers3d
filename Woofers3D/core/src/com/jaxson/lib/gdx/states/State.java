@@ -10,6 +10,7 @@ import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
+import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
@@ -21,8 +22,8 @@ public abstract class State<C extends Camera> extends GameObject
 	private static final boolean CURSOR_CATCHED = true;
 
 	private C camera;
+
 	private GameStateManager gameStateManager;
-	private InputProcessor input;
 	private MixedRenderable renderable;
 	private PhysicsWorld world;
 
@@ -52,6 +53,11 @@ public abstract class State<C extends Camera> extends GameObject
 		renderable.add(sprite);
 	}
 
+	public void applyPhysics(Floor entity)
+	{
+		world.add(entity);
+	}
+
 	public void applyPhysics(PlayerBody entity)
 	{
 		world.add(entity);
@@ -62,7 +68,7 @@ public abstract class State<C extends Camera> extends GameObject
 		world.add(entity);
 	}
 
-	public void applyPhysics(Floor entity)
+	public void applyPhysics(SoftBody entity)
 	{
 		world.add(entity);
 	}
@@ -75,7 +81,7 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public float getAspectRatio()
 	{
-		return (float) (getWidth()) / (float) (getHeight());
+		return (float) getWidth() / (float) getHeight();
 	}
 
 	public C getCamera()
@@ -93,14 +99,14 @@ public abstract class State<C extends Camera> extends GameObject
 		return Gdx.graphics.getHeight();
 	}
 
-	public int getWidth()
-	{
-		return Gdx.graphics.getWidth();
-	}
-
 	public PhysicsWorld getPhysicsWorld()
 	{
 		return world;
+	}
+
+	public int getWidth()
+	{
+		return Gdx.graphics.getWidth();
 	}
 
 	public boolean isCursorCatched()
@@ -136,8 +142,7 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
-		this.input = inputProcessor;
-		Gdx.input.setInputProcessor(input);
+		Gdx.input.setInputProcessor(inputProcessor);
 	}
 
 	public void toggleCursorCatched()

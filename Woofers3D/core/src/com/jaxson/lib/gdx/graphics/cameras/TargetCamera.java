@@ -43,8 +43,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void center()
 	{
-		if (hasTarget())
-			center(getTargetLocation());
+		if (hasTarget()) center(getTargetLocation());
 	}
 
 	public void center(Vector3 point)
@@ -65,14 +64,14 @@ public class TargetCamera extends PerspectiveCamera
 		return getTargetLocation().cpy().sub(oldTargetLocation);
 	}
 
-	public Vector2 getMouse()
-	{
-		return KeyHandler.getScaledMouse();
-	}
-
 	public Vector3 getLocation()
 	{
 		return position;
+	}
+
+	public Vector2 getMouse()
+	{
+		return KeyHandler.getScaledMouse();
 	}
 
 	public Vector3 getOffset()
@@ -82,20 +81,19 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Ray getRay()
 	{
-		if (!hasTarget())
-			return null;
-		return new Ray(getLocation(), getDeltaLocation(target.getLocation()));
+		if (!hasTarget()) return null;
+		return new Ray(getLocation(), getDeltaLocation(getTarget().getLocation()));
+	}
+
+	public Quaternion getRoationQuat()
+	{
+		return view.getRotation(new Quaternion());
 	}
 
 	public Vector3 getRotation()
 	{
 		Quaternion rotation = getRoationQuat();
 		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
-	}
-
-	public Quaternion getRoationQuat()
-	{
-		return view.getRotation(new Quaternion());
 	}
 
 	public Entity getTarget()
@@ -105,14 +103,13 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Vector3 getTargetLocation()
 	{
-		if (!hasTarget())
-			return null;
-		return target.getLocation();
+		if (!hasTarget()) return null;
+		return getTarget().getLocation();
 	}
 
 	public boolean hasTarget()
 	{
-		return target != null;
+		return getTarget() != null;
 	}
 
 	public boolean hasWorld()
@@ -122,11 +119,17 @@ public class TargetCamera extends PerspectiveCamera
 
 	private void input()
 	{
-		if (!hasTarget())
-			return;
+		if (!hasTarget()) return;
 		rotateAround(getTargetLocation(), getMouse());
 		up.set(Vector3.Y);
 		position.add(getDeltaTargetLocation());
+	}
+
+	public void rotate(float yaw, float pitch, float roll)
+	{
+		rotate(Vector3.Y, yaw);
+		rotate(Vector3.X, pitch);
+		rotate(Vector3.Z, roll);
 	}
 
 	public void rotate(Vector2 angles)
@@ -139,11 +142,24 @@ public class TargetCamera extends PerspectiveCamera
 		rotate(angles.x, angles.y, angles.z);
 	}
 
-	public void rotate(float yaw, float pitch, float roll)
+	public void rotateAround(Vector3 location, float yaw, float pitch, float roll)
 	{
-		rotate(Vector3.Y, yaw);
-		rotate(Vector3.X, pitch);
-		rotate(Vector3.Z, roll);
+		rotateAround(location, yaw, pitch, roll, false);
+	}
+
+	public void rotateAround(Vector3 location, float yaw, float pitch, float roll, boolean keepInBounds)
+	{
+		rotateAround(location, Vector3.Y, yaw);
+		rotateAround(location, Vector3.X, pitch);
+		rotateAround(location, Vector3.Z, roll);
+		if (!keepInBounds) return;
+		if (hasWorld() && hasTarget())
+		{
+			if (world.getBody(getRay()) != getTarget())
+			{
+				rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
+			}
+		}
 	}
 
 	public void rotateAround(Vector3 location, Vector2 angles)
@@ -156,41 +172,19 @@ public class TargetCamera extends PerspectiveCamera
 		rotateAround(location, angles.x, angles.y, angles.z);
 	}
 
-	public void rotateAround(Vector3 location, float yaw, float pitch, float roll)
-	{
-		rotateAround(location, yaw, pitch, roll, true);
-	}
-
-	public void rotateAround(Vector3 location, float yaw, float pitch, float roll, boolean keepInBounds)
-	{
-		rotateAround(location, Vector3.Y, yaw);
-		rotateAround(location, Vector3.X, pitch);
-		rotateAround(location, Vector3.Z, roll);
-		if (keepInBounds)
-		{
-			if (hasWorld() && hasTarget())
-			{
-				// if (world.getBody(getRay()) != target)
-				// {
-				// rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
-				// }
-			}
-		}
-	}
-
 	public void setOffset(Vector3 offset)
 	{
 		this.offset = offset;
 	}
 
-	public void setRotation(Vector3 angles)
-	{
-		setRotation(angles.x, angles.y, angles.z);
-	}
-
 	public void setRotation(float yaw, float pitch, float roll)
 	{
 		view.setFromEulerAngles(yaw, pitch, roll);
+	}
+
+	public void setRotation(Vector3 angles)
+	{
+		setRotation(angles.x, angles.y, angles.z);
 	}
 
 	public void setTarget(Entity target)
@@ -199,16 +193,16 @@ public class TargetCamera extends PerspectiveCamera
 		center();
 	}
 
+	public void setWorld(PhysicsWorld world)
+	{
+		this.world = world;
+	}
+
 	@Override
 	public void update()
 	{
 		input();
 		oldTargetLocation = getTargetLocation();
 		super.update();
-	}
-
-	public void setWorld(PhysicsWorld world)
-	{
-		this.world = world;
 	}
 }

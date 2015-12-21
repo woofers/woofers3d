@@ -14,8 +14,17 @@ public class KeyHandler implements InputProcessor
 	public static final int BACKWARD = Keys.S;
 	public static final int LEFT = Keys.A;
 	public static final int RIGHT = Keys.D;
+	public static final int UP_ARROW = Keys.UP;
+	public static final int DOWN_ARROW = Keys.DOWN;
+	public static final int LEFT_ARROW = Keys.LEFT;
+	public static final int RIGHT_ARROW = Keys.RIGHT;
 	public static final int SPACE = Keys.SPACE;
 	public static final int PAUSE = Keys.ESCAPE;
+
+	public static final int[] ANY_RIGHT = { RIGHT, RIGHT_ARROW };
+	public static final int[] ANY_LEFT = { LEFT, LEFT_ARROW };
+	public static final int[] ANY_UP = { UP, UP_ARROW };
+	public static final int[] ANY_DOWN = { DOWN, DOWN_ARROW };
 
 	private static final float MOUSE_SCALE = 1f / 10f;
 	private static final float SENSITIVITY = 1.05f;
@@ -33,48 +42,6 @@ public class KeyHandler implements InputProcessor
 		prevMouse = new Vector2();
 	}
 
-	public static Vector2 getDeltaMouse()
-	{
-		return getMouse().sub(prevMouse);
-	}
-
-	public static Vector2 getMouse()
-	{
-		return mouse.cpy();
-	}
-
-	public static Vector2 getScaledMouse()
-	{
-		if (!Gdx.input.isCursorCatched())
-			return Vector2.Zero;
-		final float scale = MOUSE_SCALE * SENSITIVITY;
-		Vector2 mouse = getDeltaMouse();
-		mouse.scl(scale, -scale);
-		if (INVERT_MOUSE)
-			mouse.scl(-1f, -1f);
-		return mouse;
-	}
-
-	public static Vector2 getPrevMouse()
-	{
-		return prevMouse.cpy();
-	}
-
-	public static boolean isDown(int keycode)
-	{
-		return keys[keycode];
-	}
-
-	public static boolean isPressed(int keycode)
-	{
-		return keys[keycode] && !prevKeys[keycode];
-	}
-
-	public static boolean isReleased(int keycode)
-	{
-		return !keys[keycode] && prevKeys[keycode];
-	}
-
 	@Override
 	public boolean keyDown(int keycode)
 	{
@@ -83,15 +50,15 @@ public class KeyHandler implements InputProcessor
 	}
 
 	@Override
-	public boolean keyUp(int keycode)
+	public boolean keyTyped(char character)
 	{
-		keys[keycode] = false;
 		return true;
 	}
 
 	@Override
-	public boolean keyTyped(char character)
+	public boolean keyUp(int keycode)
 	{
+		keys[keycode] = false;
 		return true;
 	}
 
@@ -127,6 +94,73 @@ public class KeyHandler implements InputProcessor
 	public boolean touchUp(int x, int y, int pointer, int button)
 	{
 		return true;
+	}
+
+	public static Vector2 getDeltaMouse()
+	{
+		return getMouse().sub(getPrevMouse());
+	}
+
+	public static Vector2 getMouse()
+	{
+		return mouse.cpy();
+	}
+
+	public static Vector2 getPrevMouse()
+	{
+		return prevMouse.cpy();
+	}
+
+	public static Vector2 getScaledMouse()
+	{
+		if (!Gdx.input.isCursorCatched()) return Vector2.Zero;
+		final float scale = MOUSE_SCALE * SENSITIVITY;
+		Vector2 mouse = getDeltaMouse();
+		mouse.scl(scale, -scale);
+		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
+		return mouse;
+	}
+
+	public static boolean isDown(int keycode)
+	{
+		return keys[keycode];
+	}
+
+	public static boolean isDown(int[] keycodes)
+	{
+		for (int keycode: keycodes)
+		{
+			if (isDown(keycode)) return true;
+		}
+		return false;
+	}
+
+	public static boolean isPressed(int keycode)
+	{
+		return keys[keycode] && !prevKeys[keycode];
+	}
+
+	public static boolean isPressed(int[] keycodes)
+	{
+		for (int keycode: keycodes)
+		{
+			if (isPressed(keycode)) return true;
+		}
+		return false;
+	}
+
+	public static boolean isReleased(int keycode)
+	{
+		return !keys[keycode] && prevKeys[keycode];
+	}
+
+	public static boolean isReleased(int[] keycodes)
+	{
+		for (int keycode: keycodes)
+		{
+			if (isReleased(keycode)) return true;
+		}
+		return false;
 	}
 
 	public static void update(float dt)

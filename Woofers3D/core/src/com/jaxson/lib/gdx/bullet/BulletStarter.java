@@ -9,9 +9,13 @@ public class BulletStarter
 
 	public static void init()
 	{
-		if (isInit)
-			return;
-		Bullet.init(REFERENCE_COUNTING);
+		init(REFERENCE_COUNTING);
+	}
+
+	public static void init(boolean countReferences)
+	{
+		if (isInit) return;
+		Bullet.init(countReferences);
 		isInit = true;
 	}
 }

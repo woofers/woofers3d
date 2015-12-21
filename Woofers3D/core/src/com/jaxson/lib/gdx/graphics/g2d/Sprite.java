@@ -14,6 +14,7 @@ public abstract class Sprite extends GameObject
 		this.texture = new Texture(file);
 	}
 
+	@Override
 	public abstract void dispose();
 
 	public abstract Vector2 getLocation();
@@ -23,5 +24,6 @@ public abstract class Sprite extends GameObject
 		return texture;
 	}
 
+	@Override
 	public abstract void update(float dt);
 }

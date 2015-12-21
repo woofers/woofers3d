@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
@@ -25,16 +26,6 @@ public abstract class Entity extends GameObject
 
 	private ModelInstance modelInstance;
 
-	public Entity(String modelPath)
-	{
-		this(modelPath, LOCATION);
-	}
-
-	public Entity(String modelPath, Vector3 location)
-	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), location);
-	}
-
 	public Entity(Model model)
 	{
 		this(model, LOCATION);
@@ -43,6 +34,16 @@ public abstract class Entity extends GameObject
 	public Entity(Model model, Vector3 location)
 	{
 		this.modelInstance = new ModelInstance(model, location);
+	}
+
+	public Entity(String modelPath)
+	{
+		this(modelPath, LOCATION);
+	}
+
+	public Entity(String modelPath, Vector3 location)
+	{
+		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)), location);
 	}
 
 	protected void calculateTransforms()
@@ -92,6 +93,11 @@ public abstract class Entity extends GameObject
 		return new Vector3(matrix[MATRIX_DIRECTION_X], matrix[MATRIX_DIRECTION_Y], matrix[MATRIX_DIRECTION_Z]);
 	}
 
+	public Vector3 getLocation()
+	{
+		return getTransform().getTranslation(new Vector3());
+	}
+
 	public Model getModel()
 	{
 		return getModelInstance().model;
@@ -102,24 +108,9 @@ public abstract class Entity extends GameObject
 		return modelInstance;
 	}
 
-	public Vector3 getLocation()
-	{
-		return getTransform().getTranslation(new Vector3());
-	}
-
 	public Vector3 getOriginalSize()
 	{
 		return getBoundingBox().getDimensions(new Vector3());
-	}
-
-	public Vector3 getScale()
-	{
-		return getTransform().getScale(new Vector3());
-	}
-
-	public Vector3 getSize()
-	{
-		return getOriginalSize().scl(getScale());
 	}
 
 	public float getRadius()
@@ -137,10 +128,9 @@ public abstract class Entity extends GameObject
 		return new Ray(getCenterLocation(), getDeltaLocation(location));
 	}
 
-	public Vector3 getRotation()
+	public Quaternion getRoationQuat()
 	{
-		Quaternion rotation = getRoationQuat();
-		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
+		return getTransform().getRotation(new Quaternion());
 	}
 
 	public Node getRootNode()
@@ -148,9 +138,20 @@ public abstract class Entity extends GameObject
 		return getModelInstance().nodes.get(ROOT_NODE_LOCATION);
 	}
 
-	public Quaternion getRoationQuat()
+	public Vector3 getRotation()
 	{
-		return getTransform().getRotation(new Quaternion());
+		Quaternion rotation = getRoationQuat();
+		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
+	}
+
+	public Vector3 getScale()
+	{
+		return getTransform().getScale(new Vector3());
+	}
+
+	public Vector3 getSize()
+	{
+		return getOriginalSize().scl(getScale());
 	}
 
 	public Matrix4 getTransform()
@@ -163,11 +164,6 @@ public abstract class Entity extends GameObject
 		return camera.frustum.sphereInFrustum(getCenterLocation(), getRadius());
 	}
 
-	public void rotate(Vector3 angles)
-	{
-		rotate(angles.x, angles.y, angles.z);
-	}
-
 	public void rotate(float yaw, float pitch, float roll)
 	{
 		getTransform().rotate(Vector3.Y, yaw);
@@ -175,9 +171,24 @@ public abstract class Entity extends GameObject
 		getTransform().rotate(Vector3.Z, roll);
 	}
 
+	public void rotate(Vector3 angles)
+	{
+		rotate(angles.x, angles.y, angles.z);
+	}
+
 	public void setLocation(Vector3 location)
 	{
 		getTransform().setToTranslation(location);
+	}
+
+	public void setRotation(float yaw, float pitch, float roll)
+	{
+		getTransform().setFromEulerAngles(yaw, pitch, roll);
+	}
+
+	public void setRotation(Vector3 angles)
+	{
+		setRotation(angles.x, angles.y, angles.z);
 	}
 
 	public void setScale(Vector3 scale)
@@ -189,16 +200,6 @@ public abstract class Entity extends GameObject
 	public void setSize(Vector3 size)
 	{
 		setScale(GdxMath.divideVector(size, getOriginalSize()));
-	}
-
-	public void setRotation(Vector3 angles)
-	{
-		setRotation(angles.x, angles.y, angles.z);
-	}
-
-	public void setRotation(float yaw, float pitch, float roll)
-	{
-		getTransform().setFromEulerAngles(yaw, pitch, roll);
 	}
 
 	public void translate(Vector3 translation)

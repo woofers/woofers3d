@@ -19,20 +19,20 @@ public abstract class Renderable<T extends GameObject>
 
 	public void dispose()
 	{
-		for (T object : objects)
+		for (T object: objects)
 		{
 			object.dispose();
 		}
 	}
 
-	public boolean isEmpty()
-	{
-		return objects.isEmpty();
-	}
-
 	public MyArrayList<T> getObject()
 	{
 		return objects;
+	}
+
+	public boolean isEmpty()
+	{
+		return objects.isEmpty();
 	}
 
 	public void remove(T object)
@@ -42,7 +42,7 @@ public abstract class Renderable<T extends GameObject>
 
 	public void update(float dt)
 	{
-		for (T object : objects)
+		for (T object: objects)
 		{
 			object.update(dt);
 		}

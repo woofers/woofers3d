@@ -1,9 +1,8 @@
 package com.jaxson.lib.gdx.states;
 
-import java.util.Stack;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import java.util.Stack;
 
 public class GameStateManager
 {
@@ -19,11 +18,6 @@ public class GameStateManager
 		return states.isEmpty();
 	}
 
-	public void push(State<?> state)
-	{
-		states.push(state);
-	}
-
 	public void pop()
 	{
 		states.pop().dispose();
@@ -31,10 +25,29 @@ public class GameStateManager
 
 	public void popAll()
 	{
-		if (isEmpty())
-			return;
+		if (isEmpty()) return;
 		pop();
 		popAll();
+	}
+
+	public void push(State<?> state)
+	{
+		states.push(state);
+	}
+
+	public void render(ModelBatch modelBatch)
+	{
+		render(null, modelBatch);
+	}
+
+	public void render(SpriteBatch spriteBatch)
+	{
+		render(spriteBatch, null);
+	}
+
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	{
+		states.peek().render(spriteBatch, modelBatch);
 	}
 
 	public void set(State<?> state)
@@ -46,20 +59,5 @@ public class GameStateManager
 	public void update(float dt)
 	{
 		states.peek().update(dt);
-	}
-
-	public void render(SpriteBatch spriteBatch)
-	{
-		render(spriteBatch, null);
-	}
-
-	public void render(ModelBatch modelBatch)
-	{
-		render(null, modelBatch);
-	}
-
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
-	{
-		states.peek().render(spriteBatch, modelBatch);
 	}
 }

@@ -9,8 +9,9 @@ import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 public class Player extends PlayerBody
 {
 	private static final float SPEED = 0.06f;
-	private static final String PATH = "entities/dog/dog.obj";
-	private static final float MASS = 100f;
+
+	private static final String PATH = "entities/dog/dog.g3db";
+	private static final float MASS = -1f;
 	private static final Vector3 SIZE = new Vector3(0.671983f, 2.223813f, 3.852066f);
 	private static final btConvexShape SHAPE = new BoxShape(SIZE);
 

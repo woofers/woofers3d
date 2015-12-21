@@ -5,38 +5,23 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
-import com.jaxson.lib.gdx.bullet.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 
 public abstract class EntityBody<T extends btCollisionObject> extends Entity
 {
-	protected static final float MASS = 1f;
-
+	protected static final float DEFAULT_MASS = 1f;
 	private float mass;
 	private T body;
-	private btConvexShape shape;
 
-	public EntityBody(String modelPath, btConvexShape shape)
-	{
-		this(modelPath, shape, MASS);
-	}
-
-	public EntityBody(String modelPath, btConvexShape shape, float mass)
-	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
-	}
-
-	public EntityBody(Model model, btConvexShape shape)
-	{
-		this(model, shape, MASS);
-	}
-
-	public EntityBody(Model model, btConvexShape shape, float mass)
+	public EntityBody(Model model, float mass)
 	{
 		super(model);
 		this.mass = mass;
-		this.shape = shape;
+	}
+
+	public EntityBody(String modelPath, float mass)
+	{
+		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), mass);
 	}
 
 	public void addCollisionFlag(int flag)
@@ -54,12 +39,11 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 	{
 		super.dispose();
 		body.dispose();
-		shape.dispose();
 	}
 
 	public int getActivationState()
 	{
-		return body.getActivationState();
+		return getBody().getActivationState();
 	}
 
 	public T getBody()
@@ -67,39 +51,19 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 		return body;
 	}
 
-	public int getContactCallbackFlag()
+	public int getCollisionFlags()
 	{
-		return body.getContactCallbackFlag();
+		return getBody().getCollisionFlags();
 	}
 
 	public int getContactCallbackFilter()
 	{
-		return body.getContactCallbackFilter();
+		return getBody().getContactCallbackFilter();
 	}
 
-	public int getCollisionFlags()
+	public int getContactCallbackFlag()
 	{
-		return body.getCollisionFlags();
-	}
-
-	public btConvexShape getCollisionShape()
-	{
-		return shape;
-	}
-
-	public btConvexShape getFittedHitbox()
-	{
-		Vector3 size = getSize();
-		return new BoxShape(size);
-	}
-
-	public Vector3 getInertia()
-	{
-		Vector3 inertia = new Vector3();
-		if (mass <= 0)
-			return inertia;
-		shape.calculateLocalInertia(mass, inertia);
-		return inertia;
+		return getBody().getContactCallbackFlag();
 	}
 
 	public float getMass()
@@ -116,7 +80,7 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 
 	public void setActivationState(int state)
 	{
-		body.setActivationState(state);
+		getBody().setActivationState(state);
 	}
 
 	protected void setBody(T body)
@@ -124,25 +88,19 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 		this.body = body;
 	}
 
-	public void setContactCallbackFlag(int flag)
+	public void setCollisionFlags(int flags)
 	{
-		body.setContactCallbackFlag(flag);
+		getBody().setCollisionFlags(flags);
 	}
 
 	public void setContactCallbackFilter(int flag)
 	{
-		body.setContactCallbackFilter(flag);
+		getBody().setContactCallbackFilter(flag);
 	}
 
-	public void setCollisionFlags(int flags)
+	public void setContactCallbackFlag(int flag)
 	{
-		body.setCollisionFlags(flags);
-	}
-
-	public void setCollisionShape(btConvexShape shape)
-	{
-		this.shape = shape;
-		body.setCollisionShape(shape);
+		getBody().setContactCallbackFlag(flag);
 	}
 
 	@Override
@@ -162,13 +120,6 @@ public abstract class EntityBody<T extends btCollisionObject> extends Entity
 	{
 		super.setRotation(yaw, pitch, roll);
 		transformToBody();
-	}
-
-	@Override
-	public void setScale(Vector3 scale)
-	{
-		super.setScale(scale);
-		shape.setLocalScaling(scale);
 	}
 
 	protected void transformToBody()

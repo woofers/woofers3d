@@ -12,8 +12,7 @@ public class MyArrayList<E> extends ArrayList<E>
 	@Override
 	public boolean add(E e)
 	{
-		if (e == null)
-			return false;
+		if (e == null) return false;
 		return super.add(e);
 	}
 }
