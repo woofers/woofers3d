@@ -39,7 +39,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		getBody().setConfig_kDF(0.2f);
 		getBody().randomizeConstraints();
 		getBody().setTotalMass(mass);
-		getBody().translate(new Vector3(50f, 25f, 5f));
+		getBody().translate(new Vector3(50f, 25f / 3f, 5f));
 	}
 
 	public SoftBody(Model model, PhysicsWorld world)

@@ -13,9 +13,26 @@ public class GameStateManager
 		states = new Stack<State<?>>();
 	}
 
+	public void dispose()
+	{
+		if (isEmpty()) return;
+		pop();
+		dispose();
+	}
+
 	public boolean isEmpty()
 	{
 		return states.isEmpty();
+	}
+
+	public void pause()
+	{
+		peek().pause();
+	}
+
+	public State<?> peek()
+	{
+		return states.peek();
 	}
 
 	public void pop()
@@ -23,41 +40,29 @@ public class GameStateManager
 		states.pop().dispose();
 	}
 
-	public void popAll()
-	{
-		if (isEmpty()) return;
-		pop();
-		popAll();
-	}
-
 	public void push(State<?> state)
 	{
 		states.push(state);
 	}
 
-	public void render(ModelBatch modelBatch)
-	{
-		render(null, modelBatch);
-	}
-
-	public void render(SpriteBatch spriteBatch)
-	{
-		render(spriteBatch, null);
-	}
-
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		states.peek().render(spriteBatch, modelBatch);
+		peek().render(spriteBatch, modelBatch);
+	}
+
+	public void resume()
+	{
+		peek().resume();
 	}
 
 	public void set(State<?> state)
 	{
 		pop();
-		states.push(state);
+		push(state);
 	}
 
 	public void update(float dt)
 	{
-		states.peek().update(dt);
+		peek().update(dt);
 	}
 }

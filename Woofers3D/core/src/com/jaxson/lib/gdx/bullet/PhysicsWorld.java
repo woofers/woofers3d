@@ -81,7 +81,7 @@ public class PhysicsWorld
 		this.worldInfo.getSparsesdf().Initialize();
 
 		setGravity(GRAVITY);
-		// setDebugMode(MyDebugDrawer.MIXED);
+		setDebugMode(MyDebugDrawer.MIXED);
 	}
 
 	public void add(Floor entity)

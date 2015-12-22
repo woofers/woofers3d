@@ -9,7 +9,6 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
-import com.jaxson.lib.gdx.states.GameStateManager;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
@@ -26,9 +25,9 @@ public class PlayState extends State<TargetCamera>
 	private Box ghost;
 	private Player player;
 
-	public PlayState(GameStateManager gameStateManager)
+	public PlayState()
 	{
-		super(gameStateManager);
+		super();
 		setCamera(new TargetCamera(getWidth(), getHeight()));
 
 		fps = new FPSLogger();
@@ -77,7 +76,7 @@ public class PlayState extends State<TargetCamera>
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		fps.log();
+		// fps.log();
 	}
 
 	@Override

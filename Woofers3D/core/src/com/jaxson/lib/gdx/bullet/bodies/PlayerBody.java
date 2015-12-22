@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.math.Vector3;
@@ -114,7 +115,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 		{
 			walkDirection.sub(getDirection());
 		}
-		if (KeyHandler.isDown(KeyHandler.SPACE))
+		if (KeyHandler.isDown(Keys.SPACE))
 		{
 			if (canJump()) jump();
 		}

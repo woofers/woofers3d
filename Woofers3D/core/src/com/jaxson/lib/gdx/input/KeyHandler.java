@@ -1,30 +1,39 @@
 package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
-public class KeyHandler implements InputProcessor
+public class KeyHandler extends Keys implements InputProcessor
 {
-	public static final int UP = Keys.W;
-	public static final int FORWARD = Keys.W;
-	public static final int DOWN = Keys.S;
-	public static final int BACK = Keys.S;
-	public static final int BACKWARD = Keys.S;
-	public static final int LEFT = Keys.A;
-	public static final int RIGHT = Keys.D;
-	public static final int UP_ARROW = Keys.UP;
-	public static final int DOWN_ARROW = Keys.DOWN;
-	public static final int LEFT_ARROW = Keys.LEFT;
-	public static final int RIGHT_ARROW = Keys.RIGHT;
-	public static final int SPACE = Keys.SPACE;
-	public static final int PAUSE = Keys.ESCAPE;
+	public static final int UP = W;
+	public static final int FORWARD = W;
+	public static final int DOWN = S;
+	public static final int BACK = S;
+	public static final int BACKWARD = S;
+	public static final int LEFT = A;
+	public static final int RIGHT = D;
+	public static final int UP_ARROW = UP;
+	public static final int DOWN_ARROW = DOWN;
+	public static final int LEFT_ARROW = LEFT;
+	public static final int RIGHT_ARROW = RIGHT;
+	public static final int PAUSE = ESCAPE;
+
+	public static final int MOUSE_LEFT = Buttons.LEFT;
+	public static final int MOUSE_RIGHT = Buttons.RIGHT;
+	public static final int MOUSE_MIDDLE = Buttons.MIDDLE;
+	public static final int MOUSE_BACK = Buttons.BACK;
+	public static final int MOUSE_FORWARD = Buttons.FORWARD;
 
 	public static final int[] ANY_RIGHT = { RIGHT, RIGHT_ARROW };
 	public static final int[] ANY_LEFT = { LEFT, LEFT_ARROW };
 	public static final int[] ANY_UP = { UP, UP_ARROW };
 	public static final int[] ANY_DOWN = { DOWN, DOWN_ARROW };
+	public static final int[] ANY_BUTTON = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
+	public static final int[] FULLSCREEN = { F11, BACKSLASH };
 
 	private static final float MOUSE_SCALE = 1f / 10f;
 	private static final float SENSITIVITY = 1.05f;
@@ -96,9 +105,21 @@ public class KeyHandler implements InputProcessor
 		return true;
 	}
 
+	public static boolean anyKey()
+	{
+		if (isButtonPressed(ANY_BUTTON)) return true;
+		if (isDown(ANY_KEY)) return true;
+		return false;
+	}
+
 	public static Vector2 getDeltaMouse()
 	{
 		return getMouse().sub(getPrevMouse());
+	}
+
+	private static Input getInput()
+	{
+		return Gdx.input;
 	}
 
 	public static Vector2 getMouse()
@@ -121,8 +142,23 @@ public class KeyHandler implements InputProcessor
 		return mouse;
 	}
 
+	public static boolean isButtonPressed(int button)
+	{
+		return getInput().isButtonPressed(button);
+	}
+
+	public static boolean isButtonPressed(int[] buttons)
+	{
+		for (int button: buttons)
+		{
+			if (isButtonPressed(button)) return true;
+		}
+		return false;
+	}
+
 	public static boolean isDown(int keycode)
 	{
+		if (keycode == ANY_KEY) return true;
 		return keys[keycode];
 	}
 
@@ -161,6 +197,11 @@ public class KeyHandler implements InputProcessor
 			if (isReleased(keycode)) return true;
 		}
 		return false;
+	}
+
+	public static boolean justTouched()
+	{
+		return getInput().justTouched();
 	}
 
 	public static void update(float dt)

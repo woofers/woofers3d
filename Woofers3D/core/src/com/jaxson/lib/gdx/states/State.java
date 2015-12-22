@@ -1,11 +1,12 @@
 package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
@@ -22,19 +23,17 @@ public abstract class State<C extends Camera> extends GameObject
 	private static final boolean CURSOR_CATCHED = true;
 
 	private C camera;
-
-	private GameStateManager gameStateManager;
+	private DisplayManager displayManager;
 	private MixedRenderable renderable;
 	private PhysicsWorld world;
 
-	public State(GameStateManager gameStateManager)
+	public State()
 	{
-		this(gameStateManager, null);
+		this(null);
 	}
 
-	public State(GameStateManager gameStateManager, C camera)
+	public State(C camera)
 	{
-		this.gameStateManager = gameStateManager;
 		this.camera = camera;
 		this.renderable = new MixedRenderable();
 		this.world = new PhysicsWorld();
@@ -79,24 +78,24 @@ public abstract class State<C extends Camera> extends GameObject
 		renderable.dispose();
 	}
 
-	public float getAspectRatio()
-	{
-		return (float) getWidth() / (float) getHeight();
-	}
-
 	public C getCamera()
 	{
 		return camera;
 	}
 
-	public Vector2 getCenter()
+	public Graphics getGraphics()
 	{
-		return new Vector2(getWidth() / 2, getHeight() / 2);
+		return Gdx.graphics;
 	}
 
 	public int getHeight()
 	{
-		return Gdx.graphics.getHeight();
+		return getGraphics().getHeight();
+	}
+
+	public Input getInput()
+	{
+		return Gdx.input;
 	}
 
 	public PhysicsWorld getPhysicsWorld()
@@ -106,12 +105,18 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public int getWidth()
 	{
-		return Gdx.graphics.getWidth();
+		return getGraphics().getWidth();
+	}
+
+	@Override
+	protected void input()
+	{
+
 	}
 
 	public boolean isCursorCatched()
 	{
-		return Gdx.input.isCursorCatched();
+		return getInput().isCursorCatched();
 	}
 
 	public void remove(Entity entity)
@@ -137,12 +142,17 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public void setCursorCatched(boolean catched)
 	{
-		Gdx.input.setCursorCatched(catched);
+		getInput().setCursorCatched(catched);
+	}
+
+	public void setDisplayManager(DisplayManager displayManager)
+	{
+		this.displayManager = displayManager;
 	}
 
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
-		Gdx.input.setInputProcessor(inputProcessor);
+		getInput().setInputProcessor(inputProcessor);
 	}
 
 	public void toggleCursorCatched()
@@ -158,5 +168,6 @@ public abstract class State<C extends Camera> extends GameObject
 		renderable.update(dt);
 		camera.update();
 		KeyHandler.update(dt);
+
 	}
 }
