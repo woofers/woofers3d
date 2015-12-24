@@ -2,22 +2,31 @@ package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.jaxson.lib.gdx.input.KeyHandler;
 import java.util.Stack;
 
 public class GameStateManager
 {
 	private Stack<State<?>> states;
+	private KeyHandler keyHandler;
 
 	public GameStateManager()
 	{
-		states = new Stack<State<?>>();
+		this.states = new Stack<State<?>>();
+		this.keyHandler = new KeyHandler();
 	}
 
 	public void dispose()
 	{
+		makeEmpty();
+		keyHandler = null;
+	}
+
+	public void makeEmpty()
+	{
 		if (isEmpty()) return;
 		pop();
-		dispose();
+		makeEmpty();
 	}
 
 	public boolean isEmpty()
@@ -42,6 +51,7 @@ public class GameStateManager
 
 	public void push(State<?> state)
 	{
+		state.setInputProcessor(keyHandler);
 		states.push(state);
 	}
 

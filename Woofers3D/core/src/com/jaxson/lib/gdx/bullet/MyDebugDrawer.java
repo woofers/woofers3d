@@ -23,7 +23,7 @@ public class MyDebugDrawer
 
 	public MyDebugDrawer(btCollisionWorld world)
 	{
-		this.world = world;
+		setWorld(world);
 	}
 
 	public void dispose()

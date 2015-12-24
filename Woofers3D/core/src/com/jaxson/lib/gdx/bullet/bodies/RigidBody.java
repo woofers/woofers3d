@@ -19,8 +19,8 @@ public abstract class RigidBody extends ShapeBody<btRigidBody>
 	public RigidBody(Model model, btConvexShape shape, float mass)
 	{
 		super(model, shape, mass);
-		this.motionState = new MyMotionState(getTransform());
-		setBody(new btRigidBody(mass, motionState, shape, getInertia()));
+		setBody(new btRigidBody(mass, getMotionState(), shape, getInertia()));
+		setMotionState(new MyMotionState(getTransform()));
 	}
 
 	public RigidBody(String modelPath, btConvexShape shape)

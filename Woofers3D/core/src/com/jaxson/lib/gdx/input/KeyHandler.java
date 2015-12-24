@@ -34,6 +34,7 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final int[] ANY_DOWN = { DOWN, DOWN_ARROW };
 	public static final int[] ANY_BUTTON = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
 	public static final int[] FULLSCREEN = { F11, BACKSLASH };
+	public static final int[] ALT = { ALT_LEFT, ALT_RIGHT };
 
 	private static final float MOUSE_SCALE = 1f / 10f;
 	private static final float SENSITIVITY = 1.05f;
@@ -202,6 +203,15 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static boolean justTouched()
 	{
 		return getInput().justTouched();
+	}
+
+	public static void reset()
+	{
+		for (int i = 0; i < KEY_SIZE; i++)
+		{
+			keys[i] = false;
+			prevKeys[i] = false;
+		}
 	}
 
 	public static void update(float dt)

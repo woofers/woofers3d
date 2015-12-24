@@ -3,41 +3,58 @@ package com.jaxson.lib.gdx.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.GameConfig;
-import com.jaxson.lib.gdx.util.GdxMath;
+import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.util.GdxMath;
 
-public class DisplayManager
+public class DisplayManager extends GameObject
 {
-	private GameStateManager gameStateManager;
+	private static final boolean CURSOR_CATCHED = true;
+
+	private GameConfig config;
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
-	private GameConfig config;
 	private boolean fullscreen;
+	private boolean focused;
 
 	public DisplayManager(GameConfig config)
 	{
 		this.config = config;
-		this.gameStateManager = new GameStateManager();
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
-		getGL().glClearColor(GameConfig.CLEAR_COLOR.r, GameConfig.CLEAR_COLOR.g, GameConfig.CLEAR_COLOR.b, GameConfig.CLEAR_COLOR.a);
+
+		setCursorCatched(CURSOR_CATCHED);
+		clearScreen(GameConfig.CLEAR_COLOR);
+		setFullscreen(startsFullscreen());
 	}
 
 	public boolean canFullscreen()
 	{
-		return config.canFullscreen();
+		return config.allowsFullscreen();
 	}
 
+	public void clearScreen(Color color)
+	{
+		clearScreen(color.r, color.g, color.b, color.a);
+	}
+
+	public void clearScreen(float r, float g, float b, float a)
+	{
+		getGL().glClearColor(r, g, b, a);
+	}
+
+	@Override
 	public void dispose()
 	{
 		spriteBatch.dispose();
 		modelBatch.dispose();
-		getGameStateManager().dispose();
 	}
 
 	public Vector2 getCenter()
@@ -53,6 +70,11 @@ public class DisplayManager
 	public int getDefaultWidth()
 	{
 		return config.getWidth();
+	}
+
+	private float getDeltaTime()
+	{
+		return getGraphics().getDeltaTime();
 	}
 
 	public DisplayMode getDisplayMode()
@@ -76,11 +98,6 @@ public class DisplayManager
 		return bestMode;
 	}
 
-	public GameStateManager getGameStateManager()
-	{
-		return gameStateManager;
-	}
-
 	public GL20 getGL()
 	{
 		return Gdx.gl;
@@ -96,56 +113,98 @@ public class DisplayManager
 		return getGraphics().getHeight();
 	}
 
+	public Input getInput()
+	{
+		return Gdx.input;
+	}
+
+	public ModelBatch getModelBatch()
+	{
+		return modelBatch;
+	}
+
+	public SpriteBatch getSpriteBatch()
+	{
+		return spriteBatch;
+	}
+
 	public int getWidth()
 	{
 		return getGraphics().getWidth();
 	}
 
+	@Override
+	protected void input()
+	{
+		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN)) toggleFullscreen();
+		if (KeyHandler.justTouched()) setCursorCatched(true);
+		if (KeyHandler.isPressed(KeyHandler.ALT))
+		{
+			if (isCursorCatched()) setCursorPosition(getCenter());
+			setCursorCatched(false);
+		}
+	}
+
+	public boolean isCursorCatched()
+	{
+		return getInput().isCursorCatched();
+	}
+
+	public boolean isFocused()
+	{
+		return focused && isCursorCatched();
+	}
+
 	public boolean isFullscreen()
 	{
-		return fullscreen;
+		return getGraphics().isFullscreen();
 	}
 
+	@Override
 	public void pause()
 	{
-		getGameStateManager().pause();
+		focused = false;
 	}
 
-	public void pop()
+	public void resize(int width, int height)
 	{
-		getGameStateManager().pop();
-	}
-
-	public void push(State<?> state)
-	{
-		state.setDisplayManager(this);
-		getGameStateManager().push(state);
+		//spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
 	}
 
 	public void render()
 	{
 		getGL().glClear(GameConfig.CLEAR_MASK);
-		getGameStateManager().render(spriteBatch, modelBatch);
 	}
 
-	public void resize(int width, int height)
-	{
-		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
-	}
-
+	@Override
 	public void resume()
 	{
-		getGameStateManager().resume();
+		focused = true;
 	}
 
-	public void set(State<?> state)
+	public void setCursorCatched(boolean catched)
 	{
-		getGameStateManager().set(state);
+		getInput().setCursorCatched(catched);
+	}
+
+	public void setCursorPosition(int x, int y)
+	{
+		getInput().setCursorPosition(x, y);
+	}
+
+	public void setCursorPosition(Vector2 location)
+	{
+		setCursorPosition((int) location.x, (int) location.y);
 	}
 
 	public void setDisplayMode(DisplayMode displayMode)
 	{
 		getGraphics().setDisplayMode(displayMode);
+	}
+
+	public void setDisplayMode(int width, int height)
+	{
+		setDisplayMode(width, height, false);
 	}
 
 	public void setDisplayMode(int width, int height, boolean fullscreen)
@@ -156,15 +215,15 @@ public class DisplayManager
 
 	public void setFullscreen(boolean fullscreen)
 	{
-		this.fullscreen = fullscreen;
-		if (isFullscreen())
+		if (fullscreen)
 		{
 			setDisplayMode(getFullscreenDisplayMode());
 		}
 		else
 		{
-			setDisplayMode(config.getWidth(), config.getHeight(), false);
+			setDisplayMode(getDefaultWidth(), getDefaultHeight());
 		}
+		KeyHandler.reset();
 	}
 
 	public void setViewport(int width, int height)
@@ -177,15 +236,25 @@ public class DisplayManager
 		getGL().glViewport(x, y, width, height);
 	}
 
+	public boolean startsFullscreen()
+	{
+		return config.startsFullscreen();
+	}
+
+	public void toggleCursorCatched()
+	{
+		setCursorCatched(!isCursorCatched());
+	}
+
 	public void toggleFullscreen()
 	{
 		setFullscreen(!isFullscreen());
 	}
 
+	@Override
 	public void update(float dt)
 	{
-		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN)) toggleFullscreen();
-		getGameStateManager().update(dt);
+		super.update(dt);
 	}
 
 	public void updateViewport()

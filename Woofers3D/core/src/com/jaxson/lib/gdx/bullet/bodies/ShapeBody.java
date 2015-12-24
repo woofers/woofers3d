@@ -54,7 +54,8 @@ public abstract class ShapeBody<T extends btCollisionObject> extends EntityBody<
 	{
 		Vector3 inertia = new Vector3();
 		if (getMass() <= 0) return inertia;
-		shape.calculateLocalInertia(getMass(), inertia);
+		System.out.println(getCollisionShape());
+		getCollisionShape().calculateLocalInertia(getMass(), inertia);
 		return inertia;
 	}
 

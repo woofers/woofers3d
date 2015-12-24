@@ -20,10 +20,8 @@ import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
 
 public abstract class State<C extends Camera> extends GameObject
 {
-	private static final boolean CURSOR_CATCHED = true;
-
 	private C camera;
-	private DisplayManager displayManager;
+	private GameManager gameManager;
 	private MixedRenderable renderable;
 	private PhysicsWorld world;
 
@@ -37,9 +35,6 @@ public abstract class State<C extends Camera> extends GameObject
 		this.camera = camera;
 		this.renderable = new MixedRenderable();
 		this.world = new PhysicsWorld();
-
-		setCursorCatched(CURSOR_CATCHED);
-		setInputProcessor(new KeyHandler());
 	}
 
 	public void add(Entity entity)
@@ -83,7 +78,7 @@ public abstract class State<C extends Camera> extends GameObject
 		return camera;
 	}
 
-	public Graphics getGraphics()
+	private Graphics getGraphics()
 	{
 		return Gdx.graphics;
 	}
@@ -93,7 +88,7 @@ public abstract class State<C extends Camera> extends GameObject
 		return getGraphics().getHeight();
 	}
 
-	public Input getInput()
+	private Input getInput()
 	{
 		return Gdx.input;
 	}
@@ -112,11 +107,6 @@ public abstract class State<C extends Camera> extends GameObject
 	protected void input()
 	{
 
-	}
-
-	public boolean isCursorCatched()
-	{
-		return getInput().isCursorCatched();
 	}
 
 	public void remove(Entity entity)
@@ -140,24 +130,14 @@ public abstract class State<C extends Camera> extends GameObject
 		this.camera = camera;
 	}
 
-	public void setCursorCatched(boolean catched)
+	public void setGameManager(GameManager gameManager)
 	{
-		getInput().setCursorCatched(catched);
-	}
-
-	public void setDisplayManager(DisplayManager displayManager)
-	{
-		this.displayManager = displayManager;
+		this.gameManager = gameManager;
 	}
 
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
 		getInput().setInputProcessor(inputProcessor);
-	}
-
-	public void toggleCursorCatched()
-	{
-		setCursorCatched(!isCursorCatched());
 	}
 
 	@Override
@@ -167,7 +147,5 @@ public abstract class State<C extends Camera> extends GameObject
 		world.update(dt);
 		renderable.update(dt);
 		camera.update();
-		KeyHandler.update(dt);
-
 	}
 }

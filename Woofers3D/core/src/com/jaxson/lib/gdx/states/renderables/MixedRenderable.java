@@ -9,7 +9,6 @@ import com.jaxson.lib.gdx.graphics.g3d.Entity;
 public class MixedRenderable
 {
 	private SpriteRenderable spriteRenderable;
-
 	private ModelRenderable modelRenderable;
 
 	public MixedRenderable()

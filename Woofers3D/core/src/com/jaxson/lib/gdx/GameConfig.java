@@ -1,12 +1,14 @@
 package com.jaxson.lib.gdx;
 
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class GameConfig
 {
-	private static final String TITLE = "Title";
+	private static final String TITLE = "New Game";
 	private static final int WIDTH = 1024;
 	private static final int HEIGHT = 768;
 	private static final int FPS = 300;
@@ -14,11 +16,16 @@ public class GameConfig
 	private static final boolean VSYNC = false;
 	private static final boolean RESIZABLE = false;
 	private static final boolean ALLOW_FULLSCREEN = true;
+	private static final boolean START_FULLSCREEN = false;
 	private static final float STEP = 1f / 120f;
+	private static final boolean STATUS_BAR = false;
+	private static final boolean IMMERSIVE = true;
+	private static final String ICON_PATH = "";
+	private static final FileType ICON_TYPE = FileType.Absolute;
 
 	public static final float CLAMP = 1f / 4f;
 	public static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
-	public static final Color CLEAR_COLOR = new Color(0f, 0f, 1f, 1f);
+	public static final Color CLEAR_COLOR = Color.BLUE;
 
 	private String title;
 	private int width;
@@ -29,6 +36,10 @@ public class GameConfig
 	private boolean resizable;
 	private float step;
 	private boolean allowFullscreen;
+	private boolean startFullscreen;
+	private boolean statusBar;
+	private boolean immersive;
+	private String iconPath;
 
 	public GameConfig()
 	{
@@ -46,9 +57,13 @@ public class GameConfig
 		setVsync(VSYNC);
 		setResizable(RESIZABLE);
 		setFullscreen(ALLOW_FULLSCREEN);
+		setFullscreenStartup(START_FULLSCREEN);
+		setStatusBar(STATUS_BAR);
+		setImmersiveMode(IMMERSIVE);
+		setIconPath(ICON_PATH);
 	}
 
-	public boolean canFullscreen()
+	public boolean allowsFullscreen()
 	{
 		return allowFullscreen;
 	}
@@ -68,6 +83,11 @@ public class GameConfig
 		return height;
 	}
 
+	public String getIconPath()
+	{
+		return iconPath;
+	}
+
 	public float getStep()
 	{
 		return step;
@@ -81,6 +101,21 @@ public class GameConfig
 	public int getWidth()
 	{
 		return width;
+	}
+
+	public boolean hasIcon()
+	{
+		return getIconPath() != ICON_PATH;
+	}
+
+	public boolean hasStatusBar()
+	{
+		return statusBar;
+	}
+
+	public boolean isImmersive()
+	{
+		return immersive;
 	}
 
 	public boolean isResizable()
@@ -108,14 +143,34 @@ public class GameConfig
 		this.allowFullscreen = allowFullscreen;
 	}
 
+	public void setFullscreenStartup(boolean startFullscreen)
+	{
+		this.startFullscreen = startFullscreen;
+	}
+
 	public void setHeight(int height)
 	{
 		this.height = height;
 	}
 
+	public void setIconPath(String iconPath)
+	{
+		this.iconPath = iconPath;
+	}
+
+	public void setImmersiveMode(boolean immersive)
+	{
+		this.immersive = immersive;
+	}
+
 	public void setResizable(boolean resizable)
 	{
 		this.resizable = resizable;
+	}
+
+	public void setStatusBar(boolean statusBar)
+	{
+		this.statusBar = statusBar;
 	}
 
 	public void setStep(float step)
@@ -138,6 +193,19 @@ public class GameConfig
 		this.width = width;
 	}
 
+	public boolean startsFullscreen()
+	{
+		return startFullscreen;
+	}
+
+	public AndroidApplicationConfiguration toAndroidConfig()
+	{
+		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.hideStatusBar = hasStatusBar();
+		config.useImmersiveMode = isImmersive();
+		return config;
+	}
+
 	public LwjglApplicationConfiguration toLwjglConfig()
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -148,6 +216,7 @@ public class GameConfig
 		config.foregroundFPS = getFps();
 		config.backgroundFPS = getBackgroundFps();
 		config.resizable = isResizable();
+		if (hasIcon()) config.addIcon(getIconPath(), ICON_TYPE);
 		return config;
 	}
 }
