@@ -1,12 +1,8 @@
 package com.jaxson.lib.gdx.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import java.util.Stack;
-import com.jaxson.lib.gdx.GameConfig;
 import com.badlogic.gdx.Gdx;
+import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.input.KeyHandler;
-
 
 public class GameManager
 {

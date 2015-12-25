@@ -1,17 +1,22 @@
 package com.jaxson.lib.gdx;
 
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import com.google.gson.Gson;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.jaxson.lib.util.MyFileReader;
 
 public class GameConfig
 {
 	private static final String TITLE = "New Game";
 	private static final int WIDTH = 1024;
 	private static final int HEIGHT = 768;
-	private static final int FPS = 300;
+	private static final int FPS = 400;
 	private static final int BACKGROUND_FPS = -1;
 	private static final boolean VSYNC = false;
 	private static final boolean RESIZABLE = false;
@@ -20,8 +25,9 @@ public class GameConfig
 	private static final float STEP = 1f / 120f;
 	private static final boolean STATUS_BAR = false;
 	private static final boolean IMMERSIVE = true;
-	private static final String ICON_PATH = "";
 	private static final FileType ICON_TYPE = FileType.Absolute;
+	private static final String CONFIG_PATH = "config";
+	private static final String CONFIG_TYPE = ".json";
 
 	public static final float CLAMP = 1f / 4f;
 	public static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
@@ -40,6 +46,7 @@ public class GameConfig
 	private boolean statusBar;
 	private boolean immersive;
 	private String iconPath;
+	private String savePath;
 
 	public GameConfig()
 	{
@@ -60,7 +67,7 @@ public class GameConfig
 		setFullscreenStartup(START_FULLSCREEN);
 		setStatusBar(STATUS_BAR);
 		setImmersiveMode(IMMERSIVE);
-		setIconPath(ICON_PATH);
+		setSavePath(CONFIG_PATH);
 	}
 
 	public boolean allowsFullscreen()
@@ -88,6 +95,16 @@ public class GameConfig
 		return iconPath;
 	}
 
+	public String getSaveLocation()
+	{
+		return savePath + CONFIG_TYPE;
+	}
+
+	public String getSavePath()
+	{
+		return savePath;
+	}
+
 	public float getStep()
 	{
 		return step;
@@ -105,7 +122,7 @@ public class GameConfig
 
 	public boolean hasIcon()
 	{
-		return getIconPath() != ICON_PATH;
+		return getIconPath() != null;
 	}
 
 	public boolean hasStatusBar()
@@ -126,6 +143,55 @@ public class GameConfig
 	public boolean isVsync()
 	{
 		return vsync;
+	}
+
+	public void read()
+	{
+		String json = MyFileReader.read(getSaveLocation());
+		set(fromJson(json));
+	}
+
+	public void save()
+	{
+		MyFileReader.write(getSaveLocation(), toJson());
+	}
+
+	public void readOrCreate()
+	{
+		if (MyFileReader.exists(getSaveLocation()))
+		{
+			read();
+			return;
+		}
+		save();
+	}
+
+	private GameConfig fromJson(String json)
+	{
+		return new Gson().fromJson(json, GameConfig.class);
+	}
+
+	private String toJson()
+	{
+		return new Gson().toJson(this);
+	}
+
+	public void set(GameConfig config)
+	{
+		setTitle(config.getTitle());
+		setWidth(config.getWidth());
+		setHeight(config.getHeight());
+		setFps(config.getFps());
+		setStep(config.getStep());
+		setBackgroundFps(config.getBackgroundFps());
+		setVsync(config.isVsync());
+		setResizable(config.isResizable());
+		setFullscreen(config.allowsFullscreen());
+		setFullscreenStartup(config.startsFullscreen());
+		setStatusBar(config.hasStatusBar());
+		setImmersiveMode(config.isImmersive());
+		setSavePath(config.getSavePath());
+		setIconPath(config.getIconPath());
 	}
 
 	public void setBackgroundFps(int backgroundFps)
@@ -166,6 +232,11 @@ public class GameConfig
 	public void setResizable(boolean resizable)
 	{
 		this.resizable = resizable;
+	}
+
+	public void setSavePath(String savePath)
+	{
+		this.savePath = savePath;
 	}
 
 	public void setStatusBar(boolean statusBar)

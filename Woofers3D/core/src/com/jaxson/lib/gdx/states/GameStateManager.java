@@ -22,16 +22,16 @@ public class GameStateManager
 		keyHandler = null;
 	}
 
+	public boolean isEmpty()
+	{
+		return states.isEmpty();
+	}
+
 	public void makeEmpty()
 	{
 		if (isEmpty()) return;
 		pop();
 		makeEmpty();
-	}
-
-	public boolean isEmpty()
-	{
-		return states.isEmpty();
 	}
 
 	public void pause()

@@ -15,7 +15,6 @@ import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
 
 public abstract class State<C extends Camera> extends GameObject

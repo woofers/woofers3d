@@ -62,24 +62,30 @@ public class MyDebugDrawer
 
 	public void setDebugMode(int mode)
 	{
-		if (hasDebugDrawer())
-		{
-			if (mode == NO_DEBUG)
-			{
-				removeDebugDrawer();
-				return;
-			}
-		}
-		else
+		if (mode == getDebugMode()) return;
+		if (mode == NO_DEBUG && !hasDebugDrawer()) return;
+		if (!hasDebugDrawer())
 		{
 			debugDrawer = new DebugDrawer();
+			world.setDebugDrawer(debugDrawer);
 		}
 		debugDrawer.setDebugMode(mode);
-		world.setDebugDrawer(debugDrawer);
 	}
 
 	public void setWorld(btCollisionWorld world)
 	{
 		this.world = world;
+	}
+
+	public void toggleDebugMode()
+	{
+		if (getDebugMode() == NO_DEBUG)
+		{
+			setDebugMode(MIXED);
+		}
+		else
+		{
+			setDebugMode(NO_DEBUG);
+		}
 	}
 }

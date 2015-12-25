@@ -166,14 +166,15 @@ public class DisplayManager extends GameObject
 		focused = false;
 	}
 
-	public void resize(int width, int height)
-	{
-		//spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(), getHeight());
-	}
-
 	public void render()
 	{
 		getGL().glClear(GameConfig.CLEAR_MASK);
+	}
+
+	public void resize(int width, int height)
+	{
+		// spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(),
+		// getHeight());
 	}
 
 	@Override
@@ -249,6 +250,8 @@ public class DisplayManager extends GameObject
 	public void toggleFullscreen()
 	{
 		setFullscreen(!isFullscreen());
+		config.setFullscreenStartup(isFullscreen());
+		config.save();
 	}
 
 	@Override

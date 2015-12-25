@@ -51,5 +51,4 @@ public class Woofers3D extends Game
 	{
 		super.resume();
 	}
-
 }

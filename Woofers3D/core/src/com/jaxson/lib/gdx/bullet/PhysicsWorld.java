@@ -1,5 +1,6 @@
 package com.jaxson.lib.gdx.bullet;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -20,6 +21,7 @@ import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
+import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
 
@@ -40,7 +42,7 @@ public class PhysicsWorld
 	protected static final float VECOTR_TO_MAX = GdxMath.HALF;
 	protected static final float VECOTR_TO_MIN = -GdxMath.HALF;
 	protected static final Vector3 WORLD_SIZE = new Vector3(2000, 2000, 2000);
-	protected static final Vector3 GRAVITY = new Vector3(0, -5f, 0);
+	protected static final Vector3 GRAVITY = new Vector3(0, -50f, 0);
 
 	private MyArrayList<EntityBody<?>> objects;
 	private MyContactListener contactListener;
@@ -81,7 +83,6 @@ public class PhysicsWorld
 		this.worldInfo.getSparsesdf().Initialize();
 
 		setGravity(GRAVITY);
-		setDebugMode(MyDebugDrawer.MIXED);
 	}
 
 	public void add(Floor entity)
@@ -203,8 +204,14 @@ public class PhysicsWorld
 		world.setGravity(gravity);
 	}
 
+	public void toggleDebugMode()
+	{
+		debugDrawer.toggleDebugMode();
+	}
+
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
+		if (KeyHandler.isPressed(Keys.F5)) toggleDebugMode();
 	}
 }
