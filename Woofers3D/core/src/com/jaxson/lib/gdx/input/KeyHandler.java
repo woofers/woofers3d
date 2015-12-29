@@ -33,6 +33,7 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final int[] ANY_UP = { UP, UP_ARROW };
 	public static final int[] ANY_DOWN = { DOWN, DOWN_ARROW };
 	public static final int[] ANY_BUTTON = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
+	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
 	public static final int[] FULLSCREEN = { F11, BACKSLASH };
 	public static final int[] ALT = { ALT_LEFT, ALT_RIGHT };
 
@@ -155,6 +156,11 @@ public class KeyHandler extends Keys implements InputProcessor
 			if (isButtonPressed(button)) return true;
 		}
 		return false;
+	}
+
+	public static boolean isClicked()
+	{
+		return isButtonPressed(PRIMARY_MOUSE);
 	}
 
 	public static boolean isDown(int keycode)

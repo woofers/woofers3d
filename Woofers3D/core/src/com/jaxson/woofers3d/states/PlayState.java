@@ -13,6 +13,8 @@ import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+
 
 public class PlayState extends State<TargetCamera>
 {
@@ -29,6 +31,7 @@ public class PlayState extends State<TargetCamera>
 	{
 		super();
 		setCamera(new TargetCamera(getWidth(), getHeight()));
+		setViewport(new FillViewport(getWidth(), getHeight(), getCamera()));
 
 		fps = new FPSLogger();
 
@@ -55,7 +58,6 @@ public class PlayState extends State<TargetCamera>
 		// player.setCollisionShape(player.getFittedHitbox());
 		applyPhysics(player);
 		add(player);
-		System.out.println(player.getSize());
 
 		getCamera().setWorld(getPhysicsWorld());
 	}
@@ -76,7 +78,7 @@ public class PlayState extends State<TargetCamera>
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		// fps.log();
+		fps.log();
 	}
 
 	@Override

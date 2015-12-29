@@ -65,6 +65,11 @@ public class GameStateManager
 		peek().resume();
 	}
 
+	public void resize(int width, int height)
+	{
+		peek().resize(width, height);
+	}
+
 	public void set(State<?> state)
 	{
 		pop();

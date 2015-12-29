@@ -35,6 +35,11 @@ public class GameManager
 		return Gdx.graphics.getDeltaTime();
 	}
 
+	public boolean isFocused()
+	{
+		return displayManager.isFocused();
+	}
+
 	public void pause()
 	{
 		gameStateManager.pause();
@@ -55,11 +60,12 @@ public class GameManager
 		accumulator += dt;
 		while (accumulator >= step)
 		{
-			gameStateManager.update(step);
+			if (isFocused()) gameStateManager.update(step);
 			displayManager.update(step);
 			KeyHandler.update(step);
 			accumulator -= step;
 		}
+		if (!isFocused()) return;
 		displayManager.render();
 		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch());
 	}
@@ -67,6 +73,7 @@ public class GameManager
 	public void resize(int width, int height)
 	{
 		displayManager.resize(width, height);
+		gameStateManager.resize(width, height);
 	}
 
 	public void resume()

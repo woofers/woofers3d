@@ -16,13 +16,11 @@ import com.jaxson.lib.gdx.util.GdxMath;
 
 public class DisplayManager extends GameObject
 {
-	private static final boolean CURSOR_CATCHED = true;
-
 	private GameConfig config;
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
 	private boolean fullscreen;
-	private boolean focused;
+	private boolean paused;
 
 	public DisplayManager(GameConfig config)
 	{
@@ -30,7 +28,6 @@ public class DisplayManager extends GameObject
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
 
-		setCursorCatched(CURSOR_CATCHED);
 		clearScreen(GameConfig.CLEAR_COLOR);
 		setFullscreen(startsFullscreen());
 	}
@@ -70,11 +67,6 @@ public class DisplayManager extends GameObject
 	public int getDefaultWidth()
 	{
 		return config.getWidth();
-	}
-
-	private float getDeltaTime()
-	{
-		return getGraphics().getDeltaTime();
 	}
 
 	public DisplayMode getDisplayMode()
@@ -136,12 +128,19 @@ public class DisplayManager extends GameObject
 	@Override
 	protected void input()
 	{
-		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN)) toggleFullscreen();
-		if (KeyHandler.justTouched()) setCursorCatched(true);
-		if (KeyHandler.isPressed(KeyHandler.ALT))
+		if (!isFullscreen())
 		{
-			if (isCursorCatched()) setCursorPosition(getCenter());
-			setCursorCatched(false);
+			if (isCursorCatched() && KeyHandler.isPressed(KeyHandler.ALT))
+			{
+				setCursorPosition(getCenter());
+				setCursorCatched(false);
+			}
+		}
+		if (KeyHandler.isClicked()) setCursorCatched(true);
+		if (!isFocused()) return;
+		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN))
+		{
+			toggleFullscreen();
 		}
 	}
 
@@ -152,7 +151,7 @@ public class DisplayManager extends GameObject
 
 	public boolean isFocused()
 	{
-		return focused && isCursorCatched();
+		return !isPaused() && isCursorCatched();
 	}
 
 	public boolean isFullscreen()
@@ -160,10 +159,15 @@ public class DisplayManager extends GameObject
 		return getGraphics().isFullscreen();
 	}
 
+	public boolean isPaused()
+	{
+		return paused;
+	}
+
 	@Override
 	public void pause()
 	{
-		focused = false;
+		paused = true;
 	}
 
 	public void render()
@@ -173,6 +177,8 @@ public class DisplayManager extends GameObject
 
 	public void resize(int width, int height)
 	{
+		getSpriteBatch().flush();
+		getModelBatch().flush();
 		// spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(),
 		// getHeight());
 	}
@@ -180,7 +186,7 @@ public class DisplayManager extends GameObject
 	@Override
 	public void resume()
 	{
-		focused = true;
+		paused = false;
 	}
 
 	public void setCursorCatched(boolean catched)

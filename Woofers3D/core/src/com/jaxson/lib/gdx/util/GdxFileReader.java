@@ -1,8 +1,8 @@
 package com.jaxson.lib.gdx.util;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 public class GdxFileReader
 {
@@ -16,15 +16,15 @@ public class GdxFileReader
 		write(location, contents, false);
 	}
 
+	public FileHandle getAbsoluteFileHandle(String path)
+	{
+		return getFiles().absolute(path);
+	}
+
 	private Files getFiles()
 	{
 		System.out.println(Gdx.files == null);
 		return Gdx.files;
-	}
-
-	public FileHandle getAbsoluteFileHandle(String path)
-	{
-		return getFiles().absolute(path);
 	}
 
 	public FileHandle getInternalFileHandle(String path)

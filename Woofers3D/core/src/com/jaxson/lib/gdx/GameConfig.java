@@ -1,14 +1,11 @@
 package com.jaxson.lib.gdx;
 
-import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.PrintWriter;
 import com.google.gson.Gson;
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.jaxson.lib.util.MyFileReader;
 
 public class GameConfig
@@ -73,6 +70,11 @@ public class GameConfig
 	public boolean allowsFullscreen()
 	{
 		return allowFullscreen;
+	}
+
+	private GameConfig fromJson(String json)
+	{
+		return new Gson().fromJson(json, GameConfig.class);
 	}
 
 	public int getBackgroundFps()
@@ -151,11 +153,6 @@ public class GameConfig
 		set(fromJson(json));
 	}
 
-	public void save()
-	{
-		MyFileReader.write(getSaveLocation(), toJson());
-	}
-
 	public void readOrCreate()
 	{
 		if (MyFileReader.exists(getSaveLocation()))
@@ -166,14 +163,9 @@ public class GameConfig
 		save();
 	}
 
-	private GameConfig fromJson(String json)
+	public void save()
 	{
-		return new Gson().fromJson(json, GameConfig.class);
-	}
-
-	private String toJson()
-	{
-		return new Gson().toJson(this);
+		MyFileReader.write(getSaveLocation(), toJson());
 	}
 
 	public void set(GameConfig config)
@@ -275,6 +267,11 @@ public class GameConfig
 		config.hideStatusBar = hasStatusBar();
 		config.useImmersiveMode = isImmersive();
 		return config;
+	}
+
+	private String toJson()
+	{
+		return new Gson().toJson(this);
 	}
 
 	public LwjglApplicationConfiguration toLwjglConfig()

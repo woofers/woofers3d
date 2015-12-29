@@ -16,10 +16,13 @@ import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public abstract class State<C extends Camera> extends GameObject
 {
 	private C camera;
+	private Viewport viewport;
 	private GameManager gameManager;
 	private MixedRenderable renderable;
 	private PhysicsWorld world;
@@ -102,6 +105,16 @@ public abstract class State<C extends Camera> extends GameObject
 		return getGraphics().getWidth();
 	}
 
+	public boolean hasCamera()
+	{
+		return camera != null;
+	}
+
+	public boolean hasViewport()
+	{
+		return viewport != null;
+	}
+
 	@Override
 	protected void input()
 	{
@@ -124,9 +137,15 @@ public abstract class State<C extends Camera> extends GameObject
 		world.render(spriteBatch, modelBatch, camera);
 	}
 
+	public void resize(int width, int height)
+	{
+		if (hasViewport()) viewport.update(width, height);
+	}
+
 	public void setCamera(C camera)
 	{
 		this.camera = camera;
+		if (hasViewport()) viewport.setCamera(camera);
 	}
 
 	public void setGameManager(GameManager gameManager)
@@ -137,6 +156,12 @@ public abstract class State<C extends Camera> extends GameObject
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
 		getInput().setInputProcessor(inputProcessor);
+	}
+
+	public void setViewport(Viewport viewport)
+	{
+		this.viewport = viewport;
+		setCamera(camera);
 	}
 
 	@Override

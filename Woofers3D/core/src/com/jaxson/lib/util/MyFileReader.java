@@ -1,10 +1,9 @@
 package com.jaxson.lib.util;
 
-import com.jaxson.lib.gdx.GameConfig;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.io.File;
 
 public class MyFileReader
 {
@@ -15,7 +14,6 @@ public class MyFileReader
 
 	public static String read(String path)
 	{
-		GameConfig temp = null;
 		BufferedReader reader = null;
 		String output = "";
 		try
