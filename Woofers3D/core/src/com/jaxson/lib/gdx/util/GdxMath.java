@@ -23,7 +23,7 @@ public class GdxMath extends MyMath
 
 	public static Vector3 divideVector(Vector3 vector, Vector3 vector2)
 	{
-		return new Vector3(vector.x / vector2.x, vector.y / vector2.y, vector.z / vector2.z);
+		return vector.set(vector.x / vector2.x, vector.y / vector2.y, vector.z / vector2.z);
 	}
 
 	public static Color randColor()

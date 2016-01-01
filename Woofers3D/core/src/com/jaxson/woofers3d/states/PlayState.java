@@ -1,6 +1,5 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -9,31 +8,27 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
+import com.jaxson.lib.gdx.states.GameManager;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 
-
-public class PlayState extends State<TargetCamera>
+public class PlayState extends State
 {
 	private static final int BOX_AMOUNT = 100;
 
-	private FPSLogger fps;
 	private Floor floor;
 	private RigidBox[] boxs;
 	private SoftBox softBox;
 	private Box ghost;
 	private Player player;
 
-	public PlayState()
+	public PlayState(GameManager gameManager)
 	{
-		super();
-		setCamera(new TargetCamera(getWidth(), getHeight()));
-		setViewport(new FillViewport(getWidth(), getHeight(), getCamera()));
+		super(gameManager);
 
-		fps = new FPSLogger();
+		getTargetCamera().setWorld(getPhysicsWorld());
 
 		floor = new Floor();
 		applyPhysics(floor);
@@ -54,12 +49,11 @@ public class PlayState extends State<TargetCamera>
 		applyPhysics(softBox);
 		add(softBox);
 
-		player = new Player(getCamera());
+		player = new Player(getTargetCamera());
 		// player.setCollisionShape(player.getFittedHitbox());
 		applyPhysics(player);
 		add(player);
 
-		getCamera().setWorld(getPhysicsWorld());
 	}
 
 	@Override
@@ -78,7 +72,6 @@ public class PlayState extends State<TargetCamera>
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		fps.log();
 	}
 
 	@Override

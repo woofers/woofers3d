@@ -28,7 +28,6 @@ public class GdxFileReader
 	}
 
 	public FileHandle getInternalFileHandle(String path)
-
 	{
 		return getFiles().internal(path);
 	}

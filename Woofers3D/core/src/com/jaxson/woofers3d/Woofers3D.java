@@ -13,13 +13,14 @@ public class Woofers3D extends Game
 		super();
 		getConfig().setTitle(TITLE);
 		getConfig().setIconPath(ICON_PATH);
+		getConfig().readOrCreate();
 	}
 
 	@Override
 	public void create()
 	{
 		super.create();
-		push(new PlayState());
+		push(new PlayState(getGameManager()));
 	}
 
 	@Override

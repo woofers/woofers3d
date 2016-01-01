@@ -1,16 +1,15 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.jaxson.lib.gdx.states.GameManager;
 import com.jaxson.lib.gdx.states.State;
 
-public class MenuState extends State<PerspectiveCamera>
+public class MenuState extends State
 {
-	public MenuState()
+	public MenuState(GameManager gameManager)
 	{
-		super(new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		super(gameManager);
 	}
 
 	@Override

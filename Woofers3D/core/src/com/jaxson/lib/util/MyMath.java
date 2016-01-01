@@ -42,6 +42,11 @@ public class MyMath
 		return getRandom().nextInt(max - min + 1) + min;
 	}
 
+	public static float reciprocal(float value)
+	{
+		return 1f / value;
+	}
+
 	public static int toInt(double value)
 	{
 		return (int) value;

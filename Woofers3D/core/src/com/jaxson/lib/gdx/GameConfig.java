@@ -1,12 +1,12 @@
 package com.jaxson.lib.gdx;
 
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.google.gson.Gson;
 import com.jaxson.lib.util.MyFileReader;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.gson.Gson;
 
 public class GameConfig
 {
@@ -25,6 +25,7 @@ public class GameConfig
 	private static final FileType ICON_TYPE = FileType.Absolute;
 	private static final String CONFIG_PATH = "config";
 	private static final String CONFIG_TYPE = ".json";
+	private static final boolean SHOW_FPS = true;
 
 	public static final float CLAMP = 1f / 4f;
 	public static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
@@ -44,6 +45,7 @@ public class GameConfig
 	private boolean immersive;
 	private String iconPath;
 	private String savePath;
+	private boolean showFps;
 
 	public GameConfig()
 	{
@@ -65,6 +67,7 @@ public class GameConfig
 		setStatusBar(STATUS_BAR);
 		setImmersiveMode(IMMERSIVE);
 		setSavePath(CONFIG_PATH);
+		setShowFps(SHOW_FPS);
 	}
 
 	public boolean allowsFullscreen()
@@ -184,6 +187,7 @@ public class GameConfig
 		setImmersiveMode(config.isImmersive());
 		setSavePath(config.getSavePath());
 		setIconPath(config.getIconPath());
+		setShowFps(config.showsFps());
 	}
 
 	public void setBackgroundFps(int backgroundFps)
@@ -231,6 +235,11 @@ public class GameConfig
 		this.savePath = savePath;
 	}
 
+	public void setShowFps(boolean showFps)
+	{
+		this.showFps = showFps;
+	}
+
 	public void setStatusBar(boolean statusBar)
 	{
 		this.statusBar = statusBar;
@@ -254,6 +263,11 @@ public class GameConfig
 	public void setWidth(int width)
 	{
 		this.width = width;
+	}
+
+	public boolean showsFps()
+	{
+		return showFps;
 	}
 
 	public boolean startsFullscreen()

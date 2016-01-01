@@ -13,8 +13,8 @@ public class ButtonListener<T> implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e)
+	public void actionPerformed(ActionEvent event)
 	{
-		System.out.println(e.toString());
+		System.out.println(event.toString());
 	}
 }

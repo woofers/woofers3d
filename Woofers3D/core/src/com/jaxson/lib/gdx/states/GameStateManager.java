@@ -7,12 +7,12 @@ import java.util.Stack;
 
 public class GameStateManager
 {
-	private Stack<State<?>> states;
+	private Stack<State> states;
 	private KeyHandler keyHandler;
 
 	public GameStateManager()
 	{
-		this.states = new Stack<State<?>>();
+		this.states = new Stack<State>();
 		this.keyHandler = new KeyHandler();
 	}
 
@@ -39,7 +39,7 @@ public class GameStateManager
 		peek().pause();
 	}
 
-	public State<?> peek()
+	public State peek()
 	{
 		return states.peek();
 	}
@@ -49,7 +49,7 @@ public class GameStateManager
 		states.pop().dispose();
 	}
 
-	public void push(State<?> state)
+	public void push(State state)
 	{
 		state.setInputProcessor(keyHandler);
 		states.push(state);
@@ -60,17 +60,17 @@ public class GameStateManager
 		peek().render(spriteBatch, modelBatch);
 	}
 
-	public void resume()
-	{
-		peek().resume();
-	}
-
 	public void resize(int width, int height)
 	{
 		peek().resize(width, height);
 	}
 
-	public void set(State<?> state)
+	public void resume()
+	{
+		peek().resume();
+	}
+
+	public void set(State state)
 	{
 		pop();
 		push(state);

@@ -19,7 +19,6 @@ public abstract class Game extends ApplicationAdapter
 	@Override
 	public void create()
 	{
-		getConfig().readOrCreate();
 		this.gameManager = new GameManager(getConfig());
 	}
 
@@ -34,6 +33,11 @@ public abstract class Game extends ApplicationAdapter
 		return config;
 	}
 
+	public GameManager getGameManager()
+	{
+		return gameManager;
+	}
+
 	public LwjglApplicationConfiguration getLwjglConfig()
 	{
 		return getConfig().toLwjglConfig();
@@ -45,7 +49,7 @@ public abstract class Game extends ApplicationAdapter
 		gameManager.pause();
 	}
 
-	public void push(State<?> state)
+	public void push(State state)
 	{
 		gameManager.push(state);
 	}

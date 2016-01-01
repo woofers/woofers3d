@@ -4,21 +4,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
+import com.jaxson.lib.util.MyMath;
 
 public class DisplayManager extends GameObject
 {
+	private static final int FONT_PADDING = 20;
+	private static final Color FPS_COLOR = Color.WHITE;
+
 	private GameConfig config;
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
+	private BitmapFont font;
+	private Viewport viewport;
+	private Camera camera;
 	private boolean fullscreen;
 	private boolean paused;
 
@@ -27,7 +39,11 @@ public class DisplayManager extends GameObject
 		this.config = config;
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
+		this.camera = new TargetCamera(getWidth(), getHeight());
+		this.viewport = new FillViewport(getWidth(), getHeight(), getCamera());
+		this.font = new BitmapFont();
 
+		font.setColor(FPS_COLOR);
 		clearScreen(GameConfig.CLEAR_COLOR);
 		setFullscreen(startsFullscreen());
 	}
@@ -42,6 +58,11 @@ public class DisplayManager extends GameObject
 		clearScreen(color.r, color.g, color.b, color.a);
 	}
 
+	public void clearScreen(float r, float g, float b)
+	{
+		clearScreen(r, g, b, 1);
+	}
+
 	public void clearScreen(float r, float g, float b, float a)
 	{
 		getGL().glClearColor(r, g, b, a);
@@ -54,9 +75,48 @@ public class DisplayManager extends GameObject
 		modelBatch.dispose();
 	}
 
+	public void drawFps()
+	{
+		if (!showsFps()) return;
+		getSpriteBatch().begin();
+		font.draw(getSpriteBatch(), "Fps: " + getFps(), getOriginX() + FONT_PADDING, getOriginY() + FONT_PADDING);
+		getSpriteBatch().end();
+		System.out.println("--------------------------");
+		System.out.println("getBottomGutterHeight()" + ":  " + getViewport().getBottomGutterHeight());
+		System.out.println("getLeftGutterWidth()" + ":  " + getViewport().getLeftGutterWidth());
+		System.out.println("getRightGutterWidth()" + ":  " + getViewport().getRightGutterWidth());
+		System.out.println("getRightGutterX()" + ":  " + getViewport().getRightGutterX());
+		System.out.println("getTopGutterHeight()" + ":  " + getViewport().getTopGutterHeight());
+		System.out.println("getTopGutterY()" + ":  " + getViewport().getTopGutterY());
+		System.out.println("getScreenHeight()" + ":  " + getViewport().getScreenHeight());
+		System.out.println("getScreenWidth()" + ":  " + getViewport().getScreenWidth());
+		System.out.println("getScreenX()" + ":  " + getViewport().getScreenX());
+		System.out.println("getScreenY()" + ":  " + getViewport().getScreenY());
+	}
+
+	public float getAspectRatio()
+	{
+		return (float) getWidth() / (float) getHeight();
+	}
+
+	public int getBottomGutterHeight()
+	{
+		return getViewport().getBottomGutterHeight();
+	}
+
+	public Camera getCamera()
+	{
+		return camera;
+	}
+
 	public Vector2 getCenter()
 	{
 		return new Vector2(getWidth() * GdxMath.HALF, getHeight() * GdxMath.HALF);
+	}
+
+	public float getDefaultAspectRatio()
+	{
+		return (float) getDefaultWidth() / (float) getDefaultHeight();
 	}
 
 	public int getDefaultHeight()
@@ -77,6 +137,11 @@ public class DisplayManager extends GameObject
 	public DisplayMode[] getDisplayModes()
 	{
 		return getGraphics().getDisplayModes();
+	}
+
+	public int getFps()
+	{
+		return getGraphics().getFramesPerSecond();
 	}
 
 	public DisplayMode getFullscreenDisplayMode()
@@ -110,14 +175,75 @@ public class DisplayManager extends GameObject
 		return Gdx.input;
 	}
 
+	public int getLeftGutterWidth()
+	{
+		return getViewport().getLeftGutterWidth();
+	}
+
 	public ModelBatch getModelBatch()
 	{
 		return modelBatch;
 	}
 
+	public Vector2 getOrigin()
+	{
+		return new Vector2(getOriginX(), getOriginY());
+	}
+
+	public int getOriginX()
+	{
+		return Math.abs((int) (getLeftGutterWidth() * MyMath.reciprocal(getDefaultAspectRatio())));
+	}
+
+	public int getOriginY()
+	{
+		return Math.abs((int) (getBottomGutterHeight() * MyMath.reciprocal(getDefaultAspectRatio())));
+	}
+
+	public int getRightGutterWidth()
+	{
+		return getViewport().getRightGutterWidth();
+	}
+
+	public Vector2 getScale(float sourceWidth, float sourceHeight, float targetWidth, float targetHeight)
+	{
+		float targetRatio = targetHeight / targetWidth;
+		float sourceRatio = sourceHeight / sourceWidth;
+		Vector2 scale = new Vector2(sourceWidth, sourceHeight);
+		float ratio = targetRatio < sourceRatio ? targetWidth / sourceWidth : targetHeight / sourceHeight;
+		scale.scl(ratio);
+		return scale;
+	}
+
 	public SpriteBatch getSpriteBatch()
 	{
 		return spriteBatch;
+	}
+
+	public TargetCamera getTargetCamera()
+	{
+		if (camera instanceof TargetCamera) return (TargetCamera)(camera);
+		return null;
+	}
+
+	public int getTopGutterHeight()
+	{
+		return getViewport().getTopGutterHeight();
+	}
+
+	public int getTotalGutterHeight()
+	{
+		return getTopGutterHeight() + getBottomGutterHeight();
+	}
+
+	public int getTotalGutterWidth()
+	{
+		return getLeftGutterWidth() + getRightGutterWidth();
+	}
+
+	public Viewport getViewport()
+	{
+		return viewport;
 	}
 
 	public int getWidth()
@@ -128,20 +254,10 @@ public class DisplayManager extends GameObject
 	@Override
 	protected void input()
 	{
-		if (!isFullscreen())
-		{
-			if (isCursorCatched() && KeyHandler.isPressed(KeyHandler.ALT))
-			{
-				setCursorPosition(getCenter());
-				setCursorCatched(false);
-			}
-		}
+		if (!isFullscreen() && isCursorCatched() && KeyHandler.isPressed(KeyHandler.ALT)) setCursorCatched(false);
 		if (KeyHandler.isClicked()) setCursorCatched(true);
 		if (!isFocused()) return;
-		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN))
-		{
-			toggleFullscreen();
-		}
+		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN)) toggleFullscreen();
 	}
 
 	public boolean isCursorCatched()
@@ -177,10 +293,8 @@ public class DisplayManager extends GameObject
 
 	public void resize(int width, int height)
 	{
-		getSpriteBatch().flush();
-		getModelBatch().flush();
-		// spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, getWidth(),
-		// getHeight());
+		viewport.update(width, height);
+		updateSprtieBatch(width, height);
 	}
 
 	@Override
@@ -189,9 +303,17 @@ public class DisplayManager extends GameObject
 		paused = false;
 	}
 
+	public void setCamera(Camera camera)
+	{
+		this.camera = camera;
+		getViewport().setCamera(camera);
+	}
+
 	public void setCursorCatched(boolean catched)
 	{
+		if (catched == isCursorCatched()) return;
 		getInput().setCursorCatched(catched);
+		if (!catched) setCursorPosition(getCenter());
 	}
 
 	public void setCursorPosition(int x, int y)
@@ -207,6 +329,8 @@ public class DisplayManager extends GameObject
 	public void setDisplayMode(DisplayMode displayMode)
 	{
 		getGraphics().setDisplayMode(displayMode);
+		updateSprtieBatch();
+		updateViewport();
 	}
 
 	public void setDisplayMode(int width, int height)
@@ -217,11 +341,13 @@ public class DisplayManager extends GameObject
 	public void setDisplayMode(int width, int height, boolean fullscreen)
 	{
 		getGraphics().setDisplayMode(width, height, fullscreen);
+		updateSprtieBatch();
 		updateViewport();
 	}
 
 	public void setFullscreen(boolean fullscreen)
 	{
+		if (isFullscreen() == fullscreen) return;
 		if (fullscreen)
 		{
 			setDisplayMode(getFullscreenDisplayMode());
@@ -241,6 +367,17 @@ public class DisplayManager extends GameObject
 	public void setViewport(int x, int y, int width, int height)
 	{
 		getGL().glViewport(x, y, width, height);
+	}
+
+	public void setViewport(Viewport viewport)
+	{
+		this.viewport = viewport;
+		getViewport().setCamera(camera);
+	}
+
+	public boolean showsFps()
+	{
+		return config.showsFps();
 	}
 
 	public boolean startsFullscreen()
@@ -264,6 +401,19 @@ public class DisplayManager extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
+		camera.update();
+	}
+
+	public void updateSprtieBatch()
+	{
+		updateSprtieBatch(getWidth(), getHeight());
+	}
+
+	public void updateSprtieBatch(int width, int height)
+	{
+		getSpriteBatch().getProjectionMatrix().idt();
+		getSpriteBatch().getTransformMatrix().idt();
+		getSpriteBatch().getProjectionMatrix().setToOrtho2D(0, 0, width, height);
 	}
 
 	public void updateViewport()

@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
@@ -16,25 +17,17 @@ import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
-public abstract class State<C extends Camera> extends GameObject
+public abstract class State extends GameObject
 {
-	private C camera;
-	private Viewport viewport;
 	private GameManager gameManager;
 	private MixedRenderable renderable;
 	private PhysicsWorld world;
 
-	public State()
+	public State(GameManager gameManager)
 	{
-		this(null);
-	}
-
-	public State(C camera)
-	{
-		this.camera = camera;
+		this.gameManager = gameManager;
 		this.renderable = new MixedRenderable();
 		this.world = new PhysicsWorld();
 	}
@@ -75,9 +68,9 @@ public abstract class State<C extends Camera> extends GameObject
 		renderable.dispose();
 	}
 
-	public C getCamera()
+	public Camera getCamera()
 	{
-		return camera;
+		return gameManager.getCamera();
 	}
 
 	private Graphics getGraphics()
@@ -100,19 +93,19 @@ public abstract class State<C extends Camera> extends GameObject
 		return world;
 	}
 
+	public TargetCamera getTargetCamera()
+	{
+		return gameManager.getTargetCamera();
+	}
+
+	public Viewport getViewport()
+	{
+		return gameManager.getViewport();
+	}
+
 	public int getWidth()
 	{
 		return getGraphics().getWidth();
-	}
-
-	public boolean hasCamera()
-	{
-		return camera != null;
-	}
-
-	public boolean hasViewport()
-	{
-		return viewport != null;
 	}
 
 	@Override
@@ -133,24 +126,18 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		renderable.render(spriteBatch, modelBatch, camera);
-		world.render(spriteBatch, modelBatch, camera);
+		renderable.render(spriteBatch, modelBatch, getCamera());
+		world.render(spriteBatch, modelBatch, getCamera());
 	}
 
 	public void resize(int width, int height)
 	{
-		if (hasViewport()) viewport.update(width, height);
+
 	}
 
-	public void setCamera(C camera)
+	public void setCamera(Camera camera)
 	{
-		this.camera = camera;
-		if (hasViewport()) viewport.setCamera(camera);
-	}
-
-	public void setGameManager(GameManager gameManager)
-	{
-		this.gameManager = gameManager;
+		gameManager.setCamera(camera);
 	}
 
 	public void setInputProcessor(InputProcessor inputProcessor)
@@ -160,8 +147,7 @@ public abstract class State<C extends Camera> extends GameObject
 
 	public void setViewport(Viewport viewport)
 	{
-		this.viewport = viewport;
-		setCamera(camera);
+		gameManager.setViewport(viewport);
 	}
 
 	@Override
@@ -170,6 +156,5 @@ public abstract class State<C extends Camera> extends GameObject
 		super.update(dt);
 		world.update(dt);
 		renderable.update(dt);
-		camera.update();
 	}
 }

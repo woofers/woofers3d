@@ -1,8 +1,12 @@
 package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.input.KeyHandler;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
 public class GameManager
 {
@@ -25,6 +29,11 @@ public class GameManager
 		displayManager.dispose();
 	}
 
+	public Camera getCamera()
+	{
+		return displayManager.getCamera();
+	}
+
 	public GameConfig getConfig()
 	{
 		return config;
@@ -33,6 +42,16 @@ public class GameManager
 	private float getDeltaTime()
 	{
 		return Gdx.graphics.getDeltaTime();
+	}
+
+	public TargetCamera getTargetCamera()
+	{
+		return displayManager.getTargetCamera();
+	}
+
+	public Viewport getViewport()
+	{
+		return displayManager.getViewport();
 	}
 
 	public boolean isFocused()
@@ -46,9 +65,8 @@ public class GameManager
 		displayManager.pause();
 	}
 
-	public void push(State<?> state)
+	public void push(State state)
 	{
-		state.setGameManager(this);
 		gameStateManager.push(state);
 	}
 
@@ -68,6 +86,7 @@ public class GameManager
 		if (!isFocused()) return;
 		displayManager.render();
 		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch());
+		displayManager.drawFps();
 	}
 
 	public void resize(int width, int height)
@@ -80,5 +99,19 @@ public class GameManager
 	{
 		gameStateManager.resume();
 		displayManager.resume();
+	}
+
+	public void setState(State state)
+	{
+		gameStateManager.set(state);
+	}
+
+	public void setCamera(Camera camera)
+	{
+		displayManager.setCamera(camera);
+	}
+	public void setViewport(Viewport viewport)
+	{
+		displayManager.setViewport(viewport);
 	}
 }
