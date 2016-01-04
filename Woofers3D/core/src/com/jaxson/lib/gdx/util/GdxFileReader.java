@@ -11,9 +11,14 @@ public class GdxFileReader
 		write(location, contents, false);
 	}
 
-	public static FileHandle getAbsoluteFileHandle(String path)
+	public static FileHandle getAbsoluteFile(String path)
 	{
 		return getFiles().absolute(path);
+	}
+
+	public static FileHandle getClasspathFile(String path)
+	{
+		return getFiles().classpath(path);
 	}
 
 	private static Files getFiles()
@@ -21,19 +26,24 @@ public class GdxFileReader
 		return Gdx.files;
 	}
 
-	public static FileHandle getInternalFileHandle(String path)
+	public static FileHandle getInternalFile(String path)
 	{
 		return getFiles().internal(path);
 	}
 
-	public static FileHandle getLocalFileHandle(String path)
+	public static FileHandle getLocalFile(String path)
 	{
 		return getFiles().local(path);
 	}
 
+	public static FileHandle getExternal(String path)
+	{
+		return getFiles().external(path);
+	}
+
 	public static String read(String location)
 	{
-		return getAbsoluteFileHandle(location).readString();
+		return getAbsoluteFile(location).readString();
 	}
 
 	public static void write(String location, String contents)
@@ -43,6 +53,6 @@ public class GdxFileReader
 
 	public static void write(String location, String contents, boolean overwrite)
 	{
-		getLocalFileHandle(location).writeString(contents, !overwrite);
+		getLocalFile(location).writeString(contents, !overwrite);
 	}
 }

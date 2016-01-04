@@ -65,19 +65,39 @@ public class GameManager
 		return displayManager.getViewport();
 	}
 
+	public boolean isAndroid()
+	{
+		return getApplicationType() == ApplicationType.Android;
+	}
+
+	public boolean isDesktop()
+	{
+		return getApplicationType() == ApplicationType.Desktop;
+	}
+
 	public boolean isFocused()
 	{
 		return displayManager.isFocused();
 	}
 
+	public boolean isIOS()
+	{
+		return getApplicationType() == ApplicationType.iOS;
+	}
+
+	public boolean isWeb()
+	{
+		return getApplicationType() == ApplicationType.WebGL;
+	}
+
 	public boolean hasTouchScreen()
 	{
-		return getApplicationType() == ApplicationType.Android || getApplicationType() == ApplicationType.iOS;
+		return isAndroid() || isIOS();
 	}
 
 	public boolean isMobile()
 	{
-		return hasTouchScreen() || getApplicationType() == ApplicationType.WebGL;
+		return hasTouchScreen() || isWeb();
 	}
 
 	public void pause()

@@ -37,7 +37,7 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final int[] FULLSCREEN = { F11, BACKSLASH };
 	public static final int[] ALT = { ALT_LEFT, ALT_RIGHT };
 
-	private static final float MOUSE_SCALE = 1f / 5000f;
+	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float SENSITIVITY = 1.3f;
 	private static final boolean INVERT_MOUSE = true;
 
@@ -150,6 +150,7 @@ public class KeyHandler extends Keys implements InputProcessor
 		if (!isCursorCatched()) return Vector2.Zero;
 		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = getDeltaMouse();
+		mouse.scl(scale);
 		if (INVERT_MOUSE) mouse.scl(-1f);
 		return mouse;
 	}
