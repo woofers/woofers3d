@@ -9,13 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 
 public class KeyHandler extends Keys implements InputProcessor
 {
-	public static final int UP = W;
-	public static final int FORWARD = W;
-	public static final int DOWN = S;
-	public static final int BACK = S;
-	public static final int BACKWARD = S;
-	public static final int LEFT = A;
-	public static final int RIGHT = D;
+	public static final int MOVE_UP = W;
+	public static final int MOVE_FORWARD = W;
+	public static final int MOVE_DOWN = S;
+	public static final int MOVE_BACK = S;
+	public static final int MOVE_BACKWARD = S;
+	public static final int MOVE_LEFT = A;
+	public static final int MOVE_RIGHT = D;
 	public static final int UP_ARROW = UP;
 	public static final int DOWN_ARROW = DOWN;
 	public static final int LEFT_ARROW = LEFT;
@@ -28,29 +28,29 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final int MOUSE_BACK = Buttons.BACK;
 	public static final int MOUSE_FORWARD = Buttons.FORWARD;
 
-	public static final int[] ANY_RIGHT = { RIGHT, RIGHT_ARROW };
-	public static final int[] ANY_LEFT = { LEFT, LEFT_ARROW };
-	public static final int[] ANY_UP = { UP, UP_ARROW };
-	public static final int[] ANY_DOWN = { DOWN, DOWN_ARROW };
-	public static final int[] ANY_BUTTON = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
+	public static final int[] ANY_RIGHT = { MOVE_RIGHT, RIGHT_ARROW };
+	public static final int[] ANY_LEFT = { MOVE_LEFT, LEFT_ARROW };
+	public static final int[] ANY_UP = { MOVE_UP, UP_ARROW };
+	public static final int[] ANY_DOWN = { MOVE_DOWN, DOWN_ARROW };
+	public static final int[] ANY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
 	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
 	public static final int[] FULLSCREEN = { F11, BACKSLASH };
 	public static final int[] ALT = { ALT_LEFT, ALT_RIGHT };
 
-	private static final float MOUSE_SCALE = 1f / 10f;
-	private static final float SENSITIVITY = 1.05f;
+	private static final float MOUSE_SCALE = 1f / 5000f;
+	private static final float SENSITIVITY = 1.3f;
 	private static final boolean INVERT_MOUSE = true;
 
 	private static final int KEY_SIZE = 256;
 	private static boolean[] keys, prevKeys;
-	private static Vector2 mouse, prevMouse;
+	private static Vector2 mouse, deltaMouse;
 
 	public KeyHandler()
 	{
-		keys = new boolean[KEY_SIZE];
-		prevKeys = new boolean[KEY_SIZE];
-		mouse = new Vector2();
-		prevMouse = new Vector2();
+		KeyHandler.keys = new boolean[KEY_SIZE];
+		KeyHandler.prevKeys = new boolean[KEY_SIZE];
+		KeyHandler.mouse = new Vector2();
+		KeyHandler.deltaMouse = new Vector2();
 	}
 
 	@Override
@@ -76,8 +76,6 @@ public class KeyHandler extends Keys implements InputProcessor
 	@Override
 	public boolean mouseMoved(int x, int y)
 	{
-		mouse.x = x;
-		mouse.y = y;
 		return true;
 	}
 
@@ -96,8 +94,6 @@ public class KeyHandler extends Keys implements InputProcessor
 	@Override
 	public boolean touchDragged(int x, int y, int pointer)
 	{
-		mouse.x = x;
-		mouse.y = y;
 		return true;
 	}
 
@@ -109,14 +105,24 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static boolean anyKey()
 	{
-		if (isButtonPressed(ANY_BUTTON)) return true;
+		if (isButtonPressed(ANY_MOUSE)) return true;
 		if (isDown(ANY_KEY)) return true;
 		return false;
 	}
 
 	public static Vector2 getDeltaMouse()
 	{
-		return getMouse().sub(getPrevMouse());
+		return deltaMouse.set(getDeltaMouseX(), getDeltaMouseY());
+	}
+
+	public static int getDeltaMouseX()
+	{
+		return getInput().getDeltaX();
+	}
+
+	public static int getDeltaMouseY()
+	{
+		return getInput().getDeltaY();
 	}
 
 	private static Input getInput()
@@ -126,21 +132,25 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static Vector2 getMouse()
 	{
-		return mouse.cpy();
+		return mouse.set(getMouseX(), getMouseY());
 	}
 
-	public static Vector2 getPrevMouse()
+	public static int getMouseX()
 	{
-		return prevMouse.cpy();
+		return getInput().getX();
+	}
+
+	public static int getMouseY()
+	{
+		return getInput().getY();
 	}
 
 	public static Vector2 getScaledMouse()
 	{
-		if (!Gdx.input.isCursorCatched()) return Vector2.Zero;
+		if (!isCursorCatched()) return Vector2.Zero;
 		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = getDeltaMouse();
-		mouse.scl(scale, -scale);
-		if (INVERT_MOUSE) mouse.scl(-1f, -1f);
+		if (INVERT_MOUSE) mouse.scl(-1f);
 		return mouse;
 	}
 
@@ -161,6 +171,11 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static boolean isClicked()
 	{
 		return isButtonPressed(PRIMARY_MOUSE);
+	}
+
+	public static boolean isCursorCatched()
+	{
+		return getInput().isCursorCatched();
 	}
 
 	public static boolean isDown(int keycode)
@@ -226,6 +241,5 @@ public class KeyHandler extends Keys implements InputProcessor
 		{
 			prevKeys[i] = keys[i];
 		}
-		prevMouse = mouse.cpy();
 	}
 }

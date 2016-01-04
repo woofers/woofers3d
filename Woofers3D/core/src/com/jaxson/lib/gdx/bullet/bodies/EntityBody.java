@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.AnimatedEntity;
 
-public abstract class EntityBody<T extends btCollisionObject> extends Entity
+public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEntity
 {
 	protected static final float DEFAULT_MASS = 1f;
 	private float mass;

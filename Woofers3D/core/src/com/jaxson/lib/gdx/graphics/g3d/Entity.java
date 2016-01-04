@@ -18,7 +18,6 @@ import com.jaxson.lib.util.MyMath;
 
 public abstract class Entity extends GameObject
 {
-	protected static final Vector3 LOCATION = Vector3.Zero;
 	private static final int MATRIX_DIRECTION_X = 8;
 	private static final int MATRIX_DIRECTION_Y = 9;
 	private static final int MATRIX_DIRECTION_Z = 10;
@@ -28,22 +27,12 @@ public abstract class Entity extends GameObject
 
 	public Entity(Model model)
 	{
-		this(model, LOCATION);
-	}
-
-	public Entity(Model model, Vector3 location)
-	{
-		this.modelInstance = new ModelInstance(model, location);
+		this.modelInstance = new ModelInstance(model);
 	}
 
 	public Entity(String modelPath)
 	{
-		this(modelPath, LOCATION);
-	}
-
-	public Entity(String modelPath, Vector3 location)
-	{
-		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)), location);
+		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)));
 	}
 
 	protected void calculateTransforms()

@@ -8,8 +8,8 @@ import com.jaxson.lib.util.MyMath;
 
 public class GdxMath extends MyMath
 {
-	private static final int RGB_MIN = 0;
-	private static final int RGB_MAX = 255;
+	public static final int RGB_MIN = 0;
+	public static final int RGB_MAX = 255;
 	private static final float RGB_TO_FLOAT = 1f / RGB_MAX;
 
 	public static final float HALF = 1f / 2f;
@@ -18,7 +18,7 @@ public class GdxMath extends MyMath
 
 	public static Vector3 divideVector(Vector3 vector, float scalar)
 	{
-		return vector.scl(1f / scalar);
+		return vector.scl(reciprocal(scalar));
 	}
 
 	public static Vector3 divideVector(Vector3 vector, Vector3 vector2)
@@ -38,7 +38,7 @@ public class GdxMath extends MyMath
 
 	public static Vector3 reciprocalVector(Vector3 vector)
 	{
-		return vector.set(1f / vector.x, 1f / vector.y, 1f / vector.z);
+		return vector.set(reciprocal(vector.x), reciprocal(vector.y), reciprocal(vector.z));
 	}
 
 	public static float toRGB(int color)

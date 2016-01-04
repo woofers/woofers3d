@@ -2,11 +2,12 @@ package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.jaxson.lib.gdx.GameConfig;
-import com.jaxson.lib.gdx.input.KeyHandler;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.input.KeyHandler;
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Application;
 
 public class GameManager
 {
@@ -44,6 +45,16 @@ public class GameManager
 		return Gdx.graphics.getDeltaTime();
 	}
 
+	public Application getApplication()
+	{
+		return Gdx.app;
+	}
+
+	public ApplicationType getApplicationType()
+	{
+		return getApplication().getType();
+	}
+
 	public TargetCamera getTargetCamera()
 	{
 		return displayManager.getTargetCamera();
@@ -57,6 +68,16 @@ public class GameManager
 	public boolean isFocused()
 	{
 		return displayManager.isFocused();
+	}
+
+	public boolean hasTouchScreen()
+	{
+		return getApplicationType() == ApplicationType.Android || getApplicationType() == ApplicationType.iOS;
+	}
+
+	public boolean isMobile()
+	{
+		return hasTouchScreen() || getApplicationType() == ApplicationType.WebGL;
 	}
 
 	public void pause()
@@ -101,15 +122,16 @@ public class GameManager
 		displayManager.resume();
 	}
 
+	public void setCamera(Camera camera)
+	{
+		displayManager.setCamera(camera);
+	}
+
 	public void setState(State state)
 	{
 		gameStateManager.set(state);
 	}
 
-	public void setCamera(Camera camera)
-	{
-		displayManager.setCamera(camera);
-	}
 	public void setViewport(Viewport viewport)
 	{
 		displayManager.setViewport(viewport);

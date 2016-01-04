@@ -81,6 +81,7 @@ public class DisplayManager extends GameObject
 		getSpriteBatch().begin();
 		font.draw(getSpriteBatch(), "Fps: " + getFps(), getOriginX() + FONT_PADDING, getOriginY() + FONT_PADDING);
 		getSpriteBatch().end();
+		/*
 		System.out.println("--------------------------");
 		System.out.println("getBottomGutterHeight()" + ":  " + getViewport().getBottomGutterHeight());
 		System.out.println("getLeftGutterWidth()" + ":  " + getViewport().getLeftGutterWidth());
@@ -92,6 +93,7 @@ public class DisplayManager extends GameObject
 		System.out.println("getScreenWidth()" + ":  " + getViewport().getScreenWidth());
 		System.out.println("getScreenX()" + ":  " + getViewport().getScreenX());
 		System.out.println("getScreenY()" + ":  " + getViewport().getScreenY());
+		*/
 	}
 
 	public float getAspectRatio()
@@ -222,7 +224,7 @@ public class DisplayManager extends GameObject
 
 	public TargetCamera getTargetCamera()
 	{
-		if (camera instanceof TargetCamera) return (TargetCamera)(camera);
+		if (camera instanceof TargetCamera) return (TargetCamera) camera;
 		return null;
 	}
 

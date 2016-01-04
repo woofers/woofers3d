@@ -14,10 +14,10 @@ import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
 public abstract class State extends GameObject
 {

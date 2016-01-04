@@ -26,7 +26,6 @@ public class MyFileReader
 				output += System.lineSeparator();
 				nextLine = reader.readLine();
 			}
-			reader.close();
 		}
 		catch (Exception ex)
 		{
@@ -34,7 +33,14 @@ public class MyFileReader
 		}
 		finally
 		{
-
+		    try
+		    {
+		   		reader.close();
+		    }
+		    catch (Exception ex)
+		    {
+		        ex.printStackTrace();
+		    }
 		}
 		return output;
 	}

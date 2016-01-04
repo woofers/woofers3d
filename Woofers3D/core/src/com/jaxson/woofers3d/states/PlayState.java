@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
 import com.jaxson.lib.gdx.states.GameManager;
 import com.jaxson.lib.gdx.states.State;

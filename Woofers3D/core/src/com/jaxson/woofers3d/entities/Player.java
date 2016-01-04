@@ -1,5 +1,6 @@
 package com.jaxson.woofers3d.entities;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.jaxson.lib.gdx.bullet.bodies.CameraPlayerBody;
@@ -9,9 +10,9 @@ import com.jaxson.lib.gdx.input.KeyHandler;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/dog/dog.g3db";
+	private static final String PATH = "entities/yoshi/Retextured Green/yoshi.g3db";
 	private static final float MASS = -1f;
-	private static final Vector3 SIZE = new Vector3(0.3f, 2f, 2f);
+	private static final Vector3 SIZE = new Vector3(0.3f, 2f, 3f);
 	private static final btConvexShape SHAPE = new BoxShape(SIZE);
 
 	public Player(TargetCamera camera)
@@ -29,8 +30,8 @@ public class Player extends CameraPlayerBody
 	protected void input()
 	{
 		super.input();
-		if (KeyHandler.isPressed(KeyHandler.O)) lockCamera();
-		if (KeyHandler.isPressed(KeyHandler.P)) unlockCamera();
+		if (KeyHandler.isPressed(Keys.O)) lockCamera();
+		if (KeyHandler.isPressed(Keys.P)) unlockCamera();
 	}
 
 	@Override

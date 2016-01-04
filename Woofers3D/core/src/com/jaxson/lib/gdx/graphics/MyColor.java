@@ -5,7 +5,7 @@ import com.jaxson.lib.gdx.util.GdxMath;
 
 public class MyColor extends Color
 {
-	private static final int ALPHA = 255;
+	private static final int ALPHA = GdxMath.RGB_MAX;
 
 	public MyColor(int r, int g, int b)
 	{

@@ -3,7 +3,6 @@ package com.jaxson.lib.geom;
 public class Point
 {
 	private static final String X_PREFIX = "X: ";
-
 	private static final String Y_PREFIX = ", Y: ";
 
 	public int x, y;
