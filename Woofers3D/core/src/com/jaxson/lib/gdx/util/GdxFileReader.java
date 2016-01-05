@@ -21,6 +21,11 @@ public class GdxFileReader
 		return getFiles().classpath(path);
 	}
 
+	public static FileHandle getExternal(String path)
+	{
+		return getFiles().external(path);
+	}
+
 	private static Files getFiles()
 	{
 		return Gdx.files;
@@ -34,11 +39,6 @@ public class GdxFileReader
 	public static FileHandle getLocalFile(String path)
 	{
 		return getFiles().local(path);
-	}
-
-	public static FileHandle getExternal(String path)
-	{
-		return getFiles().external(path);
 	}
 
 	public static String read(String location)

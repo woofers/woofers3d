@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -82,18 +83,27 @@ public class DisplayManager extends GameObject
 		font.draw(getSpriteBatch(), "Fps: " + getFps(), getOriginX() + FONT_PADDING, getOriginY() + FONT_PADDING);
 		getSpriteBatch().end();
 		/*
-		System.out.println("--------------------------");
-		System.out.println("getBottomGutterHeight()" + ":  " + getViewport().getBottomGutterHeight());
-		System.out.println("getLeftGutterWidth()" + ":  " + getViewport().getLeftGutterWidth());
-		System.out.println("getRightGutterWidth()" + ":  " + getViewport().getRightGutterWidth());
-		System.out.println("getRightGutterX()" + ":  " + getViewport().getRightGutterX());
-		System.out.println("getTopGutterHeight()" + ":  " + getViewport().getTopGutterHeight());
-		System.out.println("getTopGutterY()" + ":  " + getViewport().getTopGutterY());
-		System.out.println("getScreenHeight()" + ":  " + getViewport().getScreenHeight());
-		System.out.println("getScreenWidth()" + ":  " + getViewport().getScreenWidth());
-		System.out.println("getScreenX()" + ":  " + getViewport().getScreenX());
-		System.out.println("getScreenY()" + ":  " + getViewport().getScreenY());
-		*/
+		 * System.out.println("--------------------------");
+		 * System.out.println("getBottomGutterHeight()" + ":  " +
+		 * getViewport().getBottomGutterHeight());
+		 * System.out.println("getLeftGutterWidth()" + ":  " +
+		 * getViewport().getLeftGutterWidth());
+		 * System.out.println("getRightGutterWidth()" + ":  " +
+		 * getViewport().getRightGutterWidth());
+		 * System.out.println("getRightGutterX()" + ":  " +
+		 * getViewport().getRightGutterX());
+		 * System.out.println("getTopGutterHeight()" + ":  " +
+		 * getViewport().getTopGutterHeight());
+		 * System.out.println("getTopGutterY()" + ":  " +
+		 * getViewport().getTopGutterY());
+		 * System.out.println("getScreenHeight()" + ":  " +
+		 * getViewport().getScreenHeight());
+		 * System.out.println("getScreenWidth()" + ":  " +
+		 * getViewport().getScreenWidth()); System.out.println("getScreenX()" +
+		 * ":  " + getViewport().getScreenX());
+		 * System.out.println("getScreenY()" + ":  " +
+		 * getViewport().getScreenY());
+		 */
 	}
 
 	public float getAspectRatio()
@@ -256,10 +266,10 @@ public class DisplayManager extends GameObject
 	@Override
 	protected void input()
 	{
-		if (!isFullscreen() && isCursorCatched() && KeyHandler.isPressed(KeyHandler.ESCAPE)) setCursorCatched(false);
+		if (!isFullscreen() && isCursorCatched() && KeyHandler.isPressed(Keys.ESCAPE)) setCursorCatched(false);
 		if (KeyHandler.isClicked()) setCursorCatched(true);
 		if (!isFocused()) return;
-		if (canFullscreen() && KeyHandler.isPressed(KeyHandler.FULLSCREEN)) toggleFullscreen();
+		if (canFullscreen() && KeyHandler.isDown(KeyHandler.FULLSCREEN)) toggleFullscreen();
 	}
 
 	public boolean isCursorCatched()

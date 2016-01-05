@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.utils.UBJsonReader;
-import com.badlogic.gdx.utils.JsonReader;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
 public class CameraPlayerBody extends PlayerBody

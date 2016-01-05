@@ -10,7 +10,7 @@ import com.jaxson.lib.gdx.input.KeyHandler;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/yoshi/Retextured Green/yoshi.g3db";
+	private static final String PATH = "entities/dog/dog.g3db";
 	private static final float MASS = -1f;
 	private static final Vector3 SIZE = new Vector3(0.3f, 2f, 3f);
 	private static final btConvexShape SHAPE = new BoxShape(SIZE);

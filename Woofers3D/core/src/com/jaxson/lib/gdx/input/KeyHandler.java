@@ -34,8 +34,9 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final int[] ANY_DOWN = { MOVE_DOWN, DOWN_ARROW };
 	public static final int[] ANY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
 	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
-	public static final int[] FULLSCREEN = { F11, BACKSLASH };
 	public static final int[] ALT = { ALT_LEFT, ALT_RIGHT };
+	public static final KeyList FULLSCREEN = new KeyList(
+			new Object[]{ F11, BACKSLASH, new KeyCombination(new int[]{ ALT_LEFT, ENTER }) });
 
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float SENSITIVITY = 1.3f;
@@ -191,6 +192,31 @@ public class KeyHandler extends Keys implements InputProcessor
 		{
 			if (isDown(keycode)) return true;
 		}
+		return false;
+	}
+
+	public static boolean isDown(KeyCombination keyCombination)
+	{
+		for (int keycode: keyCombination.getKeys())
+		{
+			if (!isDown(keycode)) return false;
+		}
+		return true;
+	}
+
+	public static boolean isDown(KeyCombination[] keyCombinations)
+	{
+		for (KeyCombination keyCombination: keyCombinations)
+		{
+			if (isDown(keyCombination)) return true;
+		}
+		return false;
+	}
+
+	public static boolean isDown(KeyList keyList)
+	{
+		if (isDown(keyList.getKeys())) return true;
+		if (isDown(keyList.getKeyCombinations())) return true;
 		return false;
 	}
 

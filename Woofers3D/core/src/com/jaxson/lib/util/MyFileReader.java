@@ -33,14 +33,14 @@ public class MyFileReader
 		}
 		finally
 		{
-		    try
-		    {
-		   		reader.close();
-		    }
-		    catch (Exception ex)
-		    {
-		        ex.printStackTrace();
-		    }
+			try
+			{
+				reader.close();
+			}
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
 		}
 		return output;
 	}

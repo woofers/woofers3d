@@ -1,13 +1,13 @@
 package com.jaxson.lib.gdx.states;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyHandler;
-import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Application;
 
 public class GameManager
 {
@@ -30,6 +30,16 @@ public class GameManager
 		displayManager.dispose();
 	}
 
+	public Application getApplication()
+	{
+		return Gdx.app;
+	}
+
+	public ApplicationType getApplicationType()
+	{
+		return getApplication().getType();
+	}
+
 	public Camera getCamera()
 	{
 		return displayManager.getCamera();
@@ -45,16 +55,6 @@ public class GameManager
 		return Gdx.graphics.getDeltaTime();
 	}
 
-	public Application getApplication()
-	{
-		return Gdx.app;
-	}
-
-	public ApplicationType getApplicationType()
-	{
-		return getApplication().getType();
-	}
-
 	public TargetCamera getTargetCamera()
 	{
 		return displayManager.getTargetCamera();
@@ -63,6 +63,11 @@ public class GameManager
 	public Viewport getViewport()
 	{
 		return displayManager.getViewport();
+	}
+
+	public boolean hasTouchScreen()
+	{
+		return isAndroid() || isIOS();
 	}
 
 	public boolean isAndroid()
@@ -85,19 +90,14 @@ public class GameManager
 		return getApplicationType() == ApplicationType.iOS;
 	}
 
-	public boolean isWeb()
-	{
-		return getApplicationType() == ApplicationType.WebGL;
-	}
-
-	public boolean hasTouchScreen()
-	{
-		return isAndroid() || isIOS();
-	}
-
 	public boolean isMobile()
 	{
 		return hasTouchScreen() || isWeb();
+	}
+
+	public boolean isWeb()
+	{
+		return getApplicationType() == ApplicationType.WebGL;
 	}
 
 	public void pause()

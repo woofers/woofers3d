@@ -2,13 +2,11 @@ package com.jaxson.lib.gdx.graphics.g3d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController.AnimationDesc;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController.AnimationListener;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.UBJsonReader;
 
 public abstract class AnimatedEntity extends Entity
@@ -26,7 +24,8 @@ public abstract class AnimatedEntity extends Entity
 		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)));
 	}
 
-	public void action(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void action(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,
+			float transitionTime)
 	{
 		getAnimationController().action(id, offset, duration, loopCount, speed, listener, transitionTime);
 	}
@@ -46,7 +45,8 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().animate(id, transitionTime);
 	}
 
-	public void animate(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void animate(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,
+			float transitionTime)
 	{
 		getAnimationController().animate(id, offset, duration, loopCount, speed, listener, transitionTime);
 	}
@@ -91,7 +91,8 @@ public abstract class AnimatedEntity extends Entity
 		return getAnimationController().paused;
 	}
 
-	public void queue(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void queue(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,
+			float transitionTime)
 	{
 		getAnimationController().queue(id, offset, duration, loopCount, speed, listener, transitionTime);
 	}
@@ -111,7 +112,8 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().setAnimation(id, listener);
 	}
 
-	public void setAnimation(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener)
+	public void setAnimation(String id, float offset, float duration, int loopCount, float speed,
+			AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, offset, duration, loopCount, speed, listener);
 	}
