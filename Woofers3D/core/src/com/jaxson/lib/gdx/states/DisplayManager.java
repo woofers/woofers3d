@@ -266,9 +266,9 @@ public class DisplayManager extends GameObject
 	@Override
 	protected void input()
 	{
-		if (!isFullscreen() && isCursorCatched() && KeyHandler.isPressed(Keys.ESCAPE)) setCursorCatched(false);
 		if (KeyHandler.isClicked()) setCursorCatched(true);
 		if (!isFocused()) return;
+		if (!isFullscreen() && isCursorCatched() && KeyHandler.isPressed(Keys.ESCAPE)) setCursorCatched(false);
 		if (canFullscreen() && KeyHandler.isDown(KeyHandler.FULLSCREEN)) toggleFullscreen();
 	}
 

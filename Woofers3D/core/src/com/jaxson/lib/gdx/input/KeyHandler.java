@@ -35,8 +35,7 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final int[] ANY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
 	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
 	public static final int[] ALT = { ALT_LEFT, ALT_RIGHT };
-	public static final KeyList FULLSCREEN = new KeyList(
-			new Object[]{ F11, BACKSLASH, new KeyCombination(new int[]{ ALT_LEFT, ENTER }) });
+	public static final KeyList FULLSCREEN = new KeyList(F11, BACKSLASH, new KeyCombination(ALT_LEFT, ENTER));
 
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float SENSITIVITY = 1.3f;
@@ -234,6 +233,33 @@ public class KeyHandler extends Keys implements InputProcessor
 		return false;
 	}
 
+	public static boolean isPressed(KeyCombination keyCombination)
+	{
+		boolean wasPressed = false;
+		for (int keycode: keyCombination.getKeys())
+		{
+			if (!isDown(keycode)) return false;
+			if (isPressed(keycode)) wasPressed = true;
+		}
+		return wasPressed;
+	}
+
+	public static boolean isPressed(KeyCombination[] keyCombinations)
+	{
+		for (KeyCombination keyCombination: keyCombinations)
+		{
+			if (isPressed(keyCombination)) return true;
+		}
+		return false;
+	}
+
+	public static boolean isPressed(KeyList keyList)
+	{
+		if (isPressed(keyList.getKeys())) return true;
+		if (isPressed(keyList.getKeyCombinations())) return true;
+		return false;
+	}
+
 	public static boolean isReleased(int keycode)
 	{
 		return !keys[keycode] && prevKeys[keycode];
@@ -245,6 +271,31 @@ public class KeyHandler extends Keys implements InputProcessor
 		{
 			if (isReleased(keycode)) return true;
 		}
+		return false;
+	}
+
+	public static boolean isReleased(KeyCombination keyCombination)
+	{
+		for (int keycode: keyCombination.getKeys())
+		{
+			if (!isReleased(keycode)) return false;
+		}
+		return true;
+	}
+
+	public static boolean isReleased(KeyCombination[] keyCombinations)
+	{
+		for (KeyCombination keyCombination: keyCombinations)
+		{
+			if (isReleased(keyCombination)) return true;
+		}
+		return false;
+	}
+
+	public static boolean isReleased(KeyList keyList)
+	{
+		if (isReleased(keyList.getKeys())) return true;
+		if (isReleased(keyList.getKeyCombinations())) return true;
 		return false;
 	}
 

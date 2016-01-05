@@ -1,1 +1,1 @@
-{"title":"Woofers 3D","width":1024,"height":768,"fps":400,"backgroundFps":-1,"vsync":false,"resizable":true,"step":0.008333334,"allowFullscreen":true,"startFullscreen":false,"statusBar":false,"immersive":true,"iconPath":"icon.png","savePath":"config","showFps":true}
+{"title":"Woofers 3D","width":1280,"height":720,"fps":400,"vsync":false,"resizable":false,"allowFullscreen":true,"startFullscreen":false,"statusBar":false,"immersive":true,"iconPath":"icon.png","showFps":true}

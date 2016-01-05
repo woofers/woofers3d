@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.jaxson.lib.util.MyFileReader;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.google.gson.Gson;
+import com.jaxson.lib.util.GsonObject;
 
-public class GameConfig
+public class GameConfig extends GsonObject<GameConfig>
 {
 	private static final String TITLE = "New Game";
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 768;
+	private static final int WIDTH = 1280;
+	private static final int HEIGHT = 720;
 	private static final int FPS = 400;
 	private static final int BACKGROUND_FPS = -1;
 	private static final boolean VSYNC = false;
@@ -22,7 +22,7 @@ public class GameConfig
 	private static final float STEP = 1f / 120f;
 	private static final boolean STATUS_BAR = false;
 	private static final boolean IMMERSIVE = true;
-	private static final FileType ICON_TYPE = FileType.Absolute;
+	private static final FileType ICON_TYPE = FileType.Internal;
 	private static final String CONFIG_PATH = "config";
 	private static final String CONFIG_TYPE = ".json";
 	private static final boolean SHOW_FPS = true;
@@ -35,16 +35,16 @@ public class GameConfig
 	private int width;
 	private int height;
 	private int fps;
-	private int backgroundFps;
+	private transient int backgroundFps;
 	private boolean vsync;
 	private boolean resizable;
-	private float step;
+	private transient float step;
 	private boolean allowFullscreen;
 	private boolean startFullscreen;
 	private boolean statusBar;
 	private boolean immersive;
 	private String iconPath;
-	private String savePath;
+	private transient String savePath;
 	private boolean showFps;
 
 	public GameConfig()
@@ -54,6 +54,7 @@ public class GameConfig
 
 	public GameConfig(int width, int height, int fps, float step)
 	{
+		super(GameConfig.class);
 		setWidth(width);
 		setHeight(height);
 		setFps(fps);
@@ -73,11 +74,6 @@ public class GameConfig
 	public boolean allowsFullscreen()
 	{
 		return allowFullscreen;
-	}
-
-	private GameConfig fromJson(String json)
-	{
-		return new Gson().fromJson(json, GameConfig.class);
 	}
 
 	public int getBackgroundFps()
@@ -281,11 +277,6 @@ public class GameConfig
 		config.hideStatusBar = hasStatusBar();
 		config.useImmersiveMode = isImmersive();
 		return config;
-	}
-
-	private String toJson()
-	{
-		return new Gson().toJson(this);
 	}
 
 	public LwjglApplicationConfiguration toLwjglConfig()
