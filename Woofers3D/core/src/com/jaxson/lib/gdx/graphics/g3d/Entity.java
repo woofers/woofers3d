@@ -180,6 +180,11 @@ public abstract class Entity extends GameObject
 		setRotation(angles.x, angles.y, angles.z);
 	}
 
+	public void setScale(float scale)
+	{
+		setScale(new Vector3(scale, scale, scale));
+	}
+
 	public void setScale(Vector3 scale)
 	{
 		getRootNode().scale.set(scale);

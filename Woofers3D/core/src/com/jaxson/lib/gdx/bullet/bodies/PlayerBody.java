@@ -96,28 +96,40 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	protected void input()
 	{
 		Vector3 walkDirection = new Vector3();
-		if (onGround())
+		if (KeyHandler.hasHardwareKeyboard())
 		{
-			if (KeyHandler.isDown(KeyHandler.ANY_LEFT))
+			if (onGround())
 			{
-				rotate(getRotationSpeed(), 0, 0);
+				if (KeyHandler.isDown(KeyHandler.ANY_LEFT))
+				{
+					rotate(getRotationSpeed(), 0, 0);
+				}
+				if (KeyHandler.isDown(KeyHandler.ANY_RIGHT))
+				{
+					rotate(-getRotationSpeed(), 0, 0);
+				}
 			}
-			if (KeyHandler.isDown(KeyHandler.ANY_RIGHT))
+			if (KeyHandler.isDown(KeyHandler.ANY_UP))
 			{
-				rotate(-getRotationSpeed(), 0, 0);
+				walkDirection.add(getDirection());
+			}
+			if (KeyHandler.isDown(KeyHandler.ANY_DOWN))
+			{
+				walkDirection.sub(getDirection());
+			}
+			if (KeyHandler.isDown(Keys.SPACE))
+			{
+				jumpWhenGrounded();
 			}
 		}
-		if (KeyHandler.isDown(KeyHandler.ANY_UP))
+		if (KeyHandler.hasAccelerometer())
 		{
-			walkDirection.add(getDirection());
+			Vector3 accelerometer = KeyHandler.getRelativeAccelerometer();
+			System.out.println(accelerometer);
 		}
-		if (KeyHandler.isDown(KeyHandler.ANY_DOWN))
+		if (KeyHandler.hasTouchScreen())
 		{
-			walkDirection.sub(getDirection());
-		}
-		if (KeyHandler.isDown(Keys.SPACE))
-		{
-			if (canJump()) jump();
+			if (KeyHandler.justTouched()) jumpWhenGrounded();
 		}
 		walkDirection.scl(getSpeed());
 		getCharacterController().setWalkDirection(walkDirection);
@@ -127,6 +139,11 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	public void jump()
 	{
 		getCharacterController().jump();
+	}
+
+	public void jumpWhenGrounded()
+	{
+		if (canJump()) jump();
 	}
 
 	public boolean onGround()

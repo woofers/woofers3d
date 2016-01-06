@@ -12,13 +12,14 @@ public class Player extends CameraPlayerBody
 {
 	private static final String PATH = "entities/ship/ship.g3db";
 	private static final float MASS = -1f;
-	private static final Vector3 SIZE = new Vector3(1.3f, 0.33f, 1.5f).scl(0.75f);
+	private static final float SCALE = 2.1f;
+	private static final Vector3 SIZE = new Vector3(1.3f, 0.33f, 1.5f).scl(0.8f);
 	private static final btConvexShape SHAPE = new BoxShape(SIZE);
 
 	public Player(TargetCamera camera)
 	{
 		super(PATH, SHAPE, MASS, camera);
-		setScale(new Vector3(2f, 2f, 2f));
+		setScale(SCALE);
 	}
 
 	@Override

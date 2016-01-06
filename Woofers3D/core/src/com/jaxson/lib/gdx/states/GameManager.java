@@ -21,7 +21,7 @@ public class GameManager
 	{
 		this.config = config;
 		this.gameStateManager = new GameStateManager();
-		this.displayManager = new DisplayManager(getConfig());
+		this.displayManager = new DisplayManager(this);
 	}
 
 	public void dispose()
@@ -65,7 +65,7 @@ public class GameManager
 		return displayManager.getViewport();
 	}
 
-	public boolean hasTouchScreen()
+	public boolean isSmartPhone()
 	{
 		return isAndroid() || isIOS();
 	}
@@ -92,7 +92,7 @@ public class GameManager
 
 	public boolean isMobile()
 	{
-		return hasTouchScreen() || isWeb();
+		return isSmartPhone() || isWeb();
 	}
 
 	public boolean isWeb()

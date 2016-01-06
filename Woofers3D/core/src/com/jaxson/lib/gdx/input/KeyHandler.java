@@ -6,6 +6,10 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.Input.Peripheral;
+import com.badlogic.gdx.Input.Orientation;
+import com.jaxson.lib.gdx.util.GdxMath;
 
 public class KeyHandler extends Keys implements InputProcessor
 {
@@ -110,6 +114,68 @@ public class KeyHandler extends Keys implements InputProcessor
 		return false;
 	}
 
+	public static Vector3 getRelativeAccelerometer()
+	{
+		return new Vector3(getRelativeAccelerometerX(), getRelativeAccelerometerY(), getRelativeAccelerometerZ());
+	}
+
+	public static float getRelativeAccelerometerX()
+	{
+		if (isLandscape()) return getAccelerometerY();
+		return getAccelerometerX();
+	}
+
+	public static float getRelativeAccelerometerY()
+	{
+		if (isLandscape()) return getAccelerometerX();
+		return getAccelerometerY();
+	}
+
+	public static float getRelativeAccelerometerZ()
+	{
+		return getAccelerometerZ();
+	}
+
+	public static Vector3 getAccelerometer()
+	{
+		return new Vector3(getAccelerometerX(), getAccelerometerY(), getAccelerometerZ());
+	}
+
+	public static float getAccelerometerX()
+	{
+		return getInput().getAccelerometerX() * GdxMath.RADIANS_TO_DEGREES;
+	}
+
+	public static float getAccelerometerY()
+	{
+		return getInput().getAccelerometerY() * GdxMath.RADIANS_TO_DEGREES;
+	}
+
+	public static float getAccelerometerZ()
+	{
+		return getInput().getAccelerometerZ() * GdxMath.RADIANS_TO_DEGREES;
+	}
+
+	public static Vector3 getAccelerometerRad()
+	{
+		return new Vector3(getAccelerometerXRad(), getAccelerometerYRad(), getAccelerometerZRad());
+	}
+
+	public static float getAccelerometerXRad()
+	{
+		return getInput().getAccelerometerX();
+	}
+
+	public static float getAccelerometerYRad()
+	{
+		return getInput().getAccelerometerY();
+	}
+
+	public static float getAccelerometerZRad()
+	{
+		return getInput().getAccelerometerZ();
+	}
+
 	public static Vector2 getDeltaMouse()
 	{
 		return deltaMouse.set(getDeltaMouseX(), getDeltaMouseY());
@@ -143,6 +209,27 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static int getMouseY()
 	{
 		return getInput().getY();
+	}
+
+
+	public static Orientation getNativeOrientation()
+	{
+		return getInput().getNativeOrientation();
+	}
+
+	public static boolean isPortrait()
+	{
+		return getNativeOrientation() == Orientation.Portrait;
+	}
+
+	public static boolean isLandscape()
+	{
+		return getNativeOrientation() == Orientation.Landscape;
+	}
+
+	public static int getRotation()
+	{
+		return getInput().getRotation();
 	}
 
 	public static Vector2 getScaledMouse()
@@ -319,5 +406,45 @@ public class KeyHandler extends Keys implements InputProcessor
 		{
 			prevKeys[i] = keys[i];
 		}
+	}
+
+	public static boolean isPeripheralAvailable(Peripheral peripheral)
+	{
+		return isPeripheralAvailable(peripheral);
+	}
+
+	public static boolean hasAccelerometer()
+	{
+		return isPeripheralAvailable(Peripheral.Accelerometer);
+	}
+
+	public static boolean hasTouchScreen()
+	{
+		return isPeripheralAvailable(Peripheral.MultitouchScreen);
+	}
+
+	public static boolean hasVibrator()
+	{
+		return isPeripheralAvailable(Peripheral.Vibrator);
+	}
+
+	public static boolean hasTouchKeyboard()
+	{
+		return isPeripheralAvailable(Peripheral.OnscreenKeyboard);
+	}
+
+	public static boolean hasHardwareKeyboard()
+	{
+		return isPeripheralAvailable(Peripheral.HardwareKeyboard);
+	}
+
+	public static boolean hasKeyboard()
+	{
+		return hasHardwareKeyboard() || hasTouchKeyboard();
+	}
+
+	public static boolean hasCompass()
+	{
+		return isPeripheralAvailable(Peripheral.Compass);
 	}
 }

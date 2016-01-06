@@ -1,3 +1,9 @@
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmmss')
+    return formattedDate
+}
+
 buildscript {
     repositories {
         mavenCentral()
@@ -15,7 +21,7 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '1.0'
+    version = '1.0' + getDate()
     ext {
         appName = "Woofers3D"
         gdxVersion = '1.7.1'

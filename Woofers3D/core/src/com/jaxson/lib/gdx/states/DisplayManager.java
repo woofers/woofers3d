@@ -26,7 +26,7 @@ public class DisplayManager extends GameObject
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
 
-	private GameConfig config;
+	private GameManager gameManager;
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
 	private BitmapFont font;
@@ -35,9 +35,9 @@ public class DisplayManager extends GameObject
 	private boolean fullscreen;
 	private boolean paused;
 
-	public DisplayManager(GameConfig config)
+	public DisplayManager(GameManager gameManager)
 	{
-		this.config = config;
+		this.gameManager = gameManager;
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
 		this.camera = new TargetCamera(getWidth(), getHeight());
@@ -51,7 +51,7 @@ public class DisplayManager extends GameObject
 
 	public boolean canFullscreen()
 	{
-		return config.allowsFullscreen();
+		return getConfig().allowsFullscreen();
 	}
 
 	public void clearScreen(Color color)
@@ -126,6 +126,11 @@ public class DisplayManager extends GameObject
 		return new Vector2(getWidth() * GdxMath.HALF, getHeight() * GdxMath.HALF);
 	}
 
+	public GameConfig getConfig()
+	{
+		return gameManager.getConfig();
+	}
+
 	public float getDefaultAspectRatio()
 	{
 		return (float) getDefaultWidth() / (float) getDefaultHeight();
@@ -133,12 +138,12 @@ public class DisplayManager extends GameObject
 
 	public int getDefaultHeight()
 	{
-		return config.getHeight();
+		return getConfig().getHeight();
 	}
 
 	public int getDefaultWidth()
 	{
-		return config.getWidth();
+		return getConfig().getWidth();
 	}
 
 	public DisplayMode getDisplayMode()
@@ -279,12 +284,17 @@ public class DisplayManager extends GameObject
 
 	public boolean isFocused()
 	{
-		return !isPaused() && isCursorCatched();
+		return !isPaused() && isCursorCatched() || isMobile();
 	}
 
 	public boolean isFullscreen()
 	{
 		return getGraphics().isFullscreen();
+	}
+
+	public boolean isMobile()
+	{
+		return gameManager.isMobile();
 	}
 
 	public boolean isPaused()
@@ -389,12 +399,12 @@ public class DisplayManager extends GameObject
 
 	public boolean showsFps()
 	{
-		return config.showsFps();
+		return getConfig().showsFps();
 	}
 
 	public boolean startsFullscreen()
 	{
-		return config.startsFullscreen();
+		return getConfig().startsFullscreen();
 	}
 
 	public void toggleCursorCatched()
@@ -405,8 +415,8 @@ public class DisplayManager extends GameObject
 	public void toggleFullscreen()
 	{
 		setFullscreen(!isFullscreen());
-		config.setFullscreenStartup(isFullscreen());
-		config.save();
+		getConfig().setFullscreenStartup(isFullscreen());
+		getConfig().save();
 	}
 
 	@Override
