@@ -8,6 +8,11 @@ public class MyMath
 	public static final float DIAMETER_TO_RADIUS = 1f / 2f;
 	public static final float GRAVITY_EARTH = 9.80665f;
 
+	public static float abs(float value)
+	{
+		return Math.abs(value);
+	}
+
 	public static Random getRandom()
 	{
 		return ThreadLocalRandom.current();

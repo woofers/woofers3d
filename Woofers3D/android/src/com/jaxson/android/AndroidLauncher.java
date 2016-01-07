@@ -9,7 +9,7 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Woofers3D(), config);
+		Woofers3D game = new Woofers3D();
+		initialize(game, game.toAndroidConfig());
 	}
 }

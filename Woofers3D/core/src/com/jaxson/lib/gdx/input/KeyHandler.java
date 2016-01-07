@@ -44,6 +44,14 @@ public class KeyHandler extends Keys implements InputProcessor
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float SENSITIVITY = 1.3f;
 	private static final boolean INVERT_MOUSE = true;
+	private static final float ACCELEROMETER_TOLERANCE = 0.5f;
+	private static final float ACCELEROMETER_BACK_MAX = 10f;
+	private static final float ACCELEROMETER_BACK_MIN = 6f;
+	private static final float ACCELEROMETER_BACK_RANGE = ACCELEROMETER_BACK_MAX - ACCELEROMETER_BACK_MIN;
+	private static final float ACCELEROMETER_FORWARD_MAX = 4f;
+	private static final float ACCELEROMETER_FORWARD_MIN = -10f;
+	private static final float ACCELEROMETER_FORWARD_RANGE = ACCELEROMETER_FORWARD_MAX - ACCELEROMETER_FORWARD_MIN;
+	private static final float ACCELEROMETER_RANGE = 20f;
 
 	private static final int KEY_SIZE = 256;
 	private static boolean[] keys, prevKeys;
@@ -114,26 +122,64 @@ public class KeyHandler extends Keys implements InputProcessor
 		return false;
 	}
 
-	public static Vector3 getRelativeAccelerometer()
+	public static boolean isAccelerometerForward()
 	{
-		return new Vector3(getRelativeAccelerometerX(), getRelativeAccelerometerY(), getRelativeAccelerometerZ());
+		return getAccelerometerForward() != 0;
 	}
 
-	public static float getRelativeAccelerometerX()
+	public static boolean isAccelerometerBack()
 	{
-		if (isLandscape()) return getAccelerometerY();
-		return getAccelerometerX();
+		return getAccelerometerBack() != 0;
 	}
 
-	public static float getRelativeAccelerometerY()
+	public static float getAccelerometerBack()
 	{
-		if (isLandscape()) return getAccelerometerX();
-		return getAccelerometerY();
+		float y = getAccelerometerY();
+		if (y > ACCELEROMETER_BACK_MIN) return y;
+		return 0;
 	}
 
-	public static float getRelativeAccelerometerZ()
+	public static float getAccelerometerForward()
 	{
-		return getAccelerometerZ();
+		float y = getAccelerometerY();
+		if (y < ACCELEROMETER_FORWARD_MAX) return y;
+		return 0;
+	}
+
+	public static float getAccelerometerAmountY()
+	{
+		float forward = getAccelerometerForward();
+		float back = getAccelerometerBack();
+		float amount = 0f;
+		if (forward == 0)
+		{
+			amount = (back - ACCELEROMETER_BACK_MIN) * ACCELEROMETER_FORWARD_RANGE / ACCELEROMETER_BACK_RANGE;
+		}
+		else
+		{
+			amount = forward - ACCELEROMETER_FORWARD_MAX;
+		}
+		return amount / ACCELEROMETER_FORWARD_RANGE;
+	}
+
+	public static Vector3 getAccelerometer(float scale)
+	{
+		return getAccelerometer().scl(scale);
+	}
+
+	public static float getAccelerometerX(float scale)
+	{
+		return getAccelerometerX() * scale;
+	}
+
+	public static float getAccelerometerY(float scale)
+	{
+		return getAccelerometerY() * scale;
+	}
+
+	public static float getAccelerometerZ(float scale)
+	{
+		return getAccelerometerZ() * scale;
 	}
 
 	public static Vector3 getAccelerometer()
@@ -143,35 +189,37 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static float getAccelerometerX()
 	{
-		return getInput().getAccelerometerX() * GdxMath.RADIANS_TO_DEGREES;
+		if (isLandscape()) return getAbsouluteAccelerometerY();
+		return getAbsouluteAccelerometerX();
 	}
 
 	public static float getAccelerometerY()
 	{
-		return getInput().getAccelerometerY() * GdxMath.RADIANS_TO_DEGREES;
+		if (isLandscape()) return getAbsouluteAccelerometerX();
+		return getAbsouluteAccelerometerY();
 	}
 
 	public static float getAccelerometerZ()
 	{
-		return getInput().getAccelerometerZ() * GdxMath.RADIANS_TO_DEGREES;
+		return getAbsouluteAccelerometerZ();
 	}
 
-	public static Vector3 getAccelerometerRad()
+	public static Vector3 getAbsouluteAccelerometer()
 	{
-		return new Vector3(getAccelerometerXRad(), getAccelerometerYRad(), getAccelerometerZRad());
+		return new Vector3(getAbsouluteAccelerometerX(), getAbsouluteAccelerometerY(), getAbsouluteAccelerometerZ());
 	}
 
-	public static float getAccelerometerXRad()
+	public static float getAbsouluteAccelerometerX()
 	{
 		return getInput().getAccelerometerX();
 	}
 
-	public static float getAccelerometerYRad()
+	public static float getAbsouluteAccelerometerY()
 	{
 		return getInput().getAccelerometerY();
 	}
 
-	public static float getAccelerometerZRad()
+	public static float getAbsouluteAccelerometerZ()
 	{
 		return getInput().getAccelerometerZ();
 	}
@@ -211,7 +259,6 @@ public class KeyHandler extends Keys implements InputProcessor
 		return getInput().getY();
 	}
 
-
 	public static Orientation getNativeOrientation()
 	{
 		return getInput().getNativeOrientation();
@@ -219,12 +266,27 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static boolean isPortrait()
 	{
-		return getNativeOrientation() == Orientation.Portrait;
+		return getOrientation() == Orientation.Portrait;
 	}
 
 	public static boolean isLandscape()
 	{
-		return getNativeOrientation() == Orientation.Landscape;
+		return getOrientation() == Orientation.Landscape;
+	}
+
+	public static Orientation getOrientation()
+	{
+		int rotation = getRotation();
+		if (getNativeOrientation() == Orientation.Portrait)
+		{
+			if (rotation == 180 || rotation == 0) return Orientation.Portrait;
+			return Orientation.Landscape;
+		}
+		else
+		{
+			if (rotation == 180 || rotation == 0) return Orientation.Landscape;
+			return Orientation.Portrait;
+		}
 	}
 
 	public static int getRotation()
@@ -234,7 +296,7 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static Vector2 getScaledMouse()
 	{
-		if (!isCursorCatched()) return Vector2.Zero;
+		if (!isCursorCatched() && !hasTouchScreen()) return Vector2.Zero;
 		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = getDeltaMouse();
 		mouse.scl(scale);
@@ -410,7 +472,7 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static boolean isPeripheralAvailable(Peripheral peripheral)
 	{
-		return isPeripheralAvailable(peripheral);
+		return getInput().isPeripheralAvailable(peripheral);
 	}
 
 	public static boolean hasAccelerometer()

@@ -16,8 +16,11 @@ import com.jaxson.lib.gdx.util.GdxMath;
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 {
 	private static final float STEP_HEIGHT = 0.3f;
-	private static final float SPEED = 0.12f;
+	private static final float SPEED = 0.2f;
 	private static final float ROTATION_SPEED = 2f;
+	private static final float ACCELEROMETER_TOLERANCE = 0.5f;
+	private static final float ROTATION_TOLERANCE = 8f;
+	private static final float ACCELEROMETER_SCALE = 1f / 5f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
@@ -119,17 +122,36 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 			}
 			if (KeyHandler.isDown(Keys.SPACE))
 			{
-				jumpWhenGrounded();
+				jump();
+			}
+		}
+		if (KeyHandler.hasTouchScreen())
+		{
+			if (KeyHandler.justTouched())
+			{
+				jump();
 			}
 		}
 		if (KeyHandler.hasAccelerometer())
 		{
-			Vector3 accelerometer = KeyHandler.getRelativeAccelerometer();
-			System.out.println(accelerometer);
-		}
-		if (KeyHandler.hasTouchScreen())
-		{
-			if (KeyHandler.justTouched()) jumpWhenGrounded();
+			Vector3 accelerometer = KeyHandler.getAccelerometer();
+			//if (accelerometer.x < ROTATION_TOLERANCE)
+			//{
+			//	rotate(getRotationSpeed() * GdxMath.abs(accelerometer.x * ACCELEROMETER_SCALE), 0, 0);
+			//}
+			//if (accelerometer.x > ROTATION_TOLERANCE)
+			//{
+			//	rotate(-getRotationSpeed() * GdxMath.abs(accelerometer.x * ACCELEROMETER_SCALE), 0, 0);
+			//}
+			if (KeyHandler.isAccelerometerForward())
+			{
+				walkDirection.add(getDirection());
+			}
+			if (KeyHandler.isAccelerometerBack())
+			{
+				walkDirection.sub(getDirection());
+			}
+			//walkDirection.scl(GdxMath.abs(KeyHandler.getAccelerometerAmountY()));
 		}
 		walkDirection.scl(getSpeed());
 		getCharacterController().setWalkDirection(walkDirection);
@@ -139,11 +161,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	public void jump()
 	{
 		getCharacterController().jump();
-	}
-
-	public void jumpWhenGrounded()
-	{
-		if (canJump()) jump();
 	}
 
 	public boolean onGround()
