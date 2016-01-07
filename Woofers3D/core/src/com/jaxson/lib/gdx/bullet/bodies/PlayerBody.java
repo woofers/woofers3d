@@ -146,12 +146,13 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 			if (KeyHandler.isAccelerometerForward())
 			{
 				walkDirection.add(getDirection());
+				walkDirection.scl(KeyHandler.getAccelerometerForward());
 			}
 			if (KeyHandler.isAccelerometerBack())
 			{
 				walkDirection.sub(getDirection());
+				walkDirection.scl(KeyHandler.getAccelerometerBack());
 			}
-			//walkDirection.scl(GdxMath.abs(KeyHandler.getAccelerometerAmountY()));
 		}
 		walkDirection.scl(getSpeed());
 		getCharacterController().setWalkDirection(walkDirection);

@@ -44,15 +44,12 @@ public class KeyHandler extends Keys implements InputProcessor
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float SENSITIVITY = 1.3f;
 	private static final boolean INVERT_MOUSE = true;
-	private static final float ACCELEROMETER_TOLERANCE = 0.5f;
-	private static final float ACCELEROMETER_BACK_MAX = 10f;
-	private static final float ACCELEROMETER_BACK_MIN = 6f;
-	private static final float ACCELEROMETER_BACK_RANGE = ACCELEROMETER_BACK_MAX - ACCELEROMETER_BACK_MIN;
-	private static final float ACCELEROMETER_FORWARD_MAX = 4f;
-	private static final float ACCELEROMETER_FORWARD_MIN = -10f;
-	private static final float ACCELEROMETER_FORWARD_RANGE = ACCELEROMETER_FORWARD_MAX - ACCELEROMETER_FORWARD_MIN;
-	private static final float ACCELEROMETER_RANGE = 20f;
-
+	private static final float ACCELEROMETER_FORWARD_SCALE = 70f / 100f;
+	private static final float ACCELEROMETER_BACK_SCALE = 20f / 100f;
+	private static final float ACCELEROMETER_NULL_SCALE = 100f - ACCELEROMETER_FORWARD_SCALE - ACCELEROMETER_BACK_SCALE;
+	private static final float ACCELEROMETER_MAX = 10f;
+	private static final float ACCELEROMETER_MIN = -ACCELEROMETER_MAX;
+	private static final float ACCELEROMETER_RANGE = ACCELEROMETER_MAX - ACCELEROMETER_MIN;
 	private static final int KEY_SIZE = 256;
 	private static boolean[] keys, prevKeys;
 	private static Vector2 mouse, deltaMouse;
@@ -132,54 +129,43 @@ public class KeyHandler extends Keys implements InputProcessor
 		return getAccelerometerBack() != 0;
 	}
 
+	public static float getAccelerometerMaxY()
+	{
+		return ACCELEROMETER_MAX - getAccelerometerNullMaxY();
+	}
+
+	public static float getAccelerometerMinY()
+	{
+		return ACCELEROMETER_MAX - getAccelerometerNullMinY();
+	}
+
+	public static float getAccelerometerNullMaxY()
+	{
+		return ACCELEROMETER_MAX - getScaledAccelerometerRange(ACCELEROMETER_BACK_SCALE);
+	}
+
+	public static float getAccelerometerNullMinY()
+	{
+		return ACCELEROMETER_MIN + getScaledAccelerometerRange(ACCELEROMETER_FORWARD_SCALE);
+	}
+
 	public static float getAccelerometerBack()
 	{
 		float y = getAccelerometerY();
-		if (y > ACCELEROMETER_BACK_MIN) return y;
+		if (y > getAccelerometerNullMaxY()) return GdxMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMaxY());
 		return 0;
 	}
 
 	public static float getAccelerometerForward()
 	{
 		float y = getAccelerometerY();
-		if (y < ACCELEROMETER_FORWARD_MAX) return y;
+		if (y < getAccelerometerNullMinY()) return GdxMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinY());
 		return 0;
 	}
 
-	public static float getAccelerometerAmountY()
+	private static float getScaledAccelerometerRange(float scale)
 	{
-		float forward = getAccelerometerForward();
-		float back = getAccelerometerBack();
-		float amount = 0f;
-		if (forward == 0)
-		{
-			amount = (back - ACCELEROMETER_BACK_MIN) * ACCELEROMETER_FORWARD_RANGE / ACCELEROMETER_BACK_RANGE;
-		}
-		else
-		{
-			amount = forward - ACCELEROMETER_FORWARD_MAX;
-		}
-		return amount / ACCELEROMETER_FORWARD_RANGE;
-	}
-
-	public static Vector3 getAccelerometer(float scale)
-	{
-		return getAccelerometer().scl(scale);
-	}
-
-	public static float getAccelerometerX(float scale)
-	{
-		return getAccelerometerX() * scale;
-	}
-
-	public static float getAccelerometerY(float scale)
-	{
-		return getAccelerometerY() * scale;
-	}
-
-	public static float getAccelerometerZ(float scale)
-	{
-		return getAccelerometerZ() * scale;
+		return scale * ACCELEROMETER_RANGE;
 	}
 
 	public static Vector3 getAccelerometer()
@@ -204,22 +190,22 @@ public class KeyHandler extends Keys implements InputProcessor
 		return getAbsouluteAccelerometerZ();
 	}
 
-	public static Vector3 getAbsouluteAccelerometer()
+	private static Vector3 getAbsouluteAccelerometer()
 	{
 		return new Vector3(getAbsouluteAccelerometerX(), getAbsouluteAccelerometerY(), getAbsouluteAccelerometerZ());
 	}
 
-	public static float getAbsouluteAccelerometerX()
+	private static float getAbsouluteAccelerometerX()
 	{
 		return getInput().getAccelerometerX();
 	}
 
-	public static float getAbsouluteAccelerometerY()
+	private static float getAbsouluteAccelerometerY()
 	{
 		return getInput().getAccelerometerY();
 	}
 
-	public static float getAbsouluteAccelerometerZ()
+	private static float getAbsouluteAccelerometerZ()
 	{
 		return getInput().getAccelerometerZ();
 	}
