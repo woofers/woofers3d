@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyHandler;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameManager
 {
@@ -22,6 +23,7 @@ public class GameManager
 		this.config = config;
 		this.gameStateManager = new GameStateManager();
 		this.displayManager = new DisplayManager(this);
+		KeyHandler.setSensitivity(getConfig().getSensitivity());
 	}
 
 	public void dispose()

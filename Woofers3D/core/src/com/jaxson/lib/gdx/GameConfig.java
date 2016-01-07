@@ -7,45 +7,41 @@ import com.badlogic.gdx.graphics.GL20;
 import com.jaxson.lib.util.MyFileReader;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.jaxson.lib.util.GsonObject;
+import com.badlogic.gdx.math.Vector2;
 
 public class GameConfig extends GsonObject<GameConfig>
 {
-	private static final String TITLE = "New Game";
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int FPS = 400;
-	private static final int BACKGROUND_FPS = -1;
-	private static final boolean VSYNC = false;
-	private static final boolean RESIZABLE = false;
-	private static final boolean ALLOW_FULLSCREEN = true;
-	private static final boolean START_FULLSCREEN = false;
 	private static final float STEP = 1f / 120f;
-	private static final boolean STATUS_BAR = false;
-	private static final boolean IMMERSIVE = true;
 	private static final FileType ICON_TYPE = FileType.Internal;
 	private static final String CONFIG_PATH = "config";
 	private static final String CONFIG_TYPE = ".json";
-	private static final boolean SHOW_FPS = true;
+	private static final float SENSITIVITY = 1.3f;
 
 	public static final float CLAMP = 1f / 4f;
 	public static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
 	public static final Color CLEAR_COLOR = Color.BLUE;
 
-	private String title;
+	private String title = "New Game";
 	private int width;
 	private int height;
 	private int fps;
-	private transient int backgroundFps;
-	private boolean vsync;
-	private boolean resizable;
+	private transient int backgroundFps = -1;
+	private boolean vsync = false;
+	private boolean resizable = false;
 	private transient float step;
-	private boolean allowFullscreen;
-	private boolean startFullscreen;
-	private boolean statusBar;
-	private boolean immersive;
+	private boolean allowFullscreen = true;
+	private boolean startFullscreen = false;
+	private boolean statusBar = false;
+	private boolean immersive = true;
 	private String iconPath;
-	private transient String savePath;
-	private boolean showFps;
+	private transient String savePath = CONFIG_PATH;
+	private boolean showFps = true;
+	private Vector2 sensitivity;
+	private boolean invertMouseX = true;
+	private boolean invertMouseY = true;
 
 	public GameConfig()
 	{
@@ -55,20 +51,12 @@ public class GameConfig extends GsonObject<GameConfig>
 	public GameConfig(int width, int height, int fps, float step)
 	{
 		super(GameConfig.class);
+		this.sensitivity = new Vector2();
 		setWidth(width);
 		setHeight(height);
 		setFps(fps);
 		setStep(step);
-		setTitle(TITLE);
-		setBackgroundFps(BACKGROUND_FPS);
-		setVsync(VSYNC);
-		setResizable(RESIZABLE);
-		setFullscreen(ALLOW_FULLSCREEN);
-		setFullscreenStartup(START_FULLSCREEN);
-		setStatusBar(STATUS_BAR);
-		setImmersiveMode(IMMERSIVE);
-		setSavePath(CONFIG_PATH);
-		setShowFps(SHOW_FPS);
+		setSensitivity(SENSITIVITY);
 	}
 
 	public boolean allowsFullscreen()
@@ -269,6 +257,21 @@ public class GameConfig extends GsonObject<GameConfig>
 	public boolean startsFullscreen()
 	{
 		return startFullscreen;
+	}
+
+	public Vector2 getSensitivity()
+	{
+		return sensitivity;
+	}
+
+	public void setSensitivity(Vector2 sensitivity)
+	{
+		this.sensitivity = sensitivity;
+	}
+
+	public void setSensitivity(float sensitivity)
+	{
+		getSensitivity().set(sensitivity, sensitivity);
 	}
 
 	public AndroidApplicationConfiguration toAndroidConfig()

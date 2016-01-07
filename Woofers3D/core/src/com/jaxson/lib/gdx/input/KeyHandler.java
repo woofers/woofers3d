@@ -42,8 +42,10 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static final KeyList FULLSCREEN = new KeyList(F11, BACKSLASH, new KeyCombination(ALT_LEFT, ENTER));
 
 	private static final float MOUSE_SCALE = 1f / 5f;
+	private static final float TOUCH_MOUSE_SCALE = MOUSE_SCALE;
 	private static final float SENSITIVITY = 1.3f;
-	private static final boolean INVERT_MOUSE = true;
+	private static final boolean INVERT_MOUSE_X = true;
+	private static final boolean INVERT_MOUSE_Y = true;
 	private static final float ACCELEROMETER_FORWARD_SCALE = 70f / 100f;
 	private static final float ACCELEROMETER_BACK_SCALE = 20f / 100f;
 	private static final float ACCELEROMETER_NULL_SCALE = 100f - ACCELEROMETER_FORWARD_SCALE - ACCELEROMETER_BACK_SCALE;
@@ -52,7 +54,8 @@ public class KeyHandler extends Keys implements InputProcessor
 	private static final float ACCELEROMETER_RANGE = ACCELEROMETER_MAX - ACCELEROMETER_MIN;
 	private static final int KEY_SIZE = 256;
 	private static boolean[] keys, prevKeys;
-	private static Vector2 mouse, deltaMouse;
+	private static Vector2 mouse, deltaMouse, invertMouse, sensitivity;
+	private static float scrollWheel;
 
 	public KeyHandler()
 	{
@@ -60,6 +63,10 @@ public class KeyHandler extends Keys implements InputProcessor
 		KeyHandler.prevKeys = new boolean[KEY_SIZE];
 		KeyHandler.mouse = new Vector2();
 		KeyHandler.deltaMouse = new Vector2();
+		KeyHandler.invertMouse = new Vector2(1f, 1f);
+		KeyHandler.sensitivity = new Vector2(1f, 1f);
+		setInvertMouse(INVERT_MOUSE_X, INVERT_MOUSE_Y);
+		setSensitivity(SENSITIVITY);
 	}
 
 	@Override
@@ -91,6 +98,7 @@ public class KeyHandler extends Keys implements InputProcessor
 	@Override
 	public boolean scrolled(int amount)
 	{
+		scrollWheel = amount;
 		return true;
 	}
 
@@ -136,7 +144,7 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static float getAccelerometerMinY()
 	{
-		return ACCELEROMETER_MAX - getAccelerometerNullMinY();
+		return getAccelerometerNullMinY() - ACCELEROMETER_MIN;
 	}
 
 	public static float getAccelerometerNullMaxY()
@@ -151,6 +159,8 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static float getAccelerometerBack()
 	{
+		// Y > 6
+		// 6 to 10
 		float y = getAccelerometerY();
 		if (y > getAccelerometerNullMaxY()) return GdxMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMaxY());
 		return 0;
@@ -158,6 +168,8 @@ public class KeyHandler extends Keys implements InputProcessor
 
 	public static float getAccelerometerForward()
 	{
+		// Y < 4
+		// 4 to -10
 		float y = getAccelerometerY();
 		if (y < getAccelerometerNullMinY()) return GdxMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinY());
 		return 0;
@@ -230,6 +242,11 @@ public class KeyHandler extends Keys implements InputProcessor
 		return Gdx.input;
 	}
 
+	public static Vector2 getInvertMouse()
+	{
+		return invertMouse;
+	}
+
 	public static Vector2 getMouse()
 	{
 		return mouse.set(getMouseX(), getMouseY());
@@ -250,6 +267,11 @@ public class KeyHandler extends Keys implements InputProcessor
 		return getInput().getNativeOrientation();
 	}
 
+	public static float getScrollWheel()
+	{
+		return scrollWheel;
+	}
+
 	public static boolean isPortrait()
 	{
 		return getOrientation() == Orientation.Portrait;
@@ -268,11 +290,8 @@ public class KeyHandler extends Keys implements InputProcessor
 			if (rotation == 180 || rotation == 0) return Orientation.Portrait;
 			return Orientation.Landscape;
 		}
-		else
-		{
-			if (rotation == 180 || rotation == 0) return Orientation.Landscape;
-			return Orientation.Portrait;
-		}
+		if (rotation == 180 || rotation == 0) return Orientation.Landscape;
+		return Orientation.Portrait;
 	}
 
 	public static int getRotation()
@@ -283,10 +302,15 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static Vector2 getScaledMouse()
 	{
 		if (!isCursorCatched() && !hasTouchScreen()) return Vector2.Zero;
-		final float scale = MOUSE_SCALE * SENSITIVITY;
 		Vector2 mouse = getDeltaMouse();
-		mouse.scl(scale);
-		if (INVERT_MOUSE) mouse.scl(-1f);
+		mouse.scl(MOUSE_SCALE);
+		mouse.scl(sensitivity);
+		mouse.scl(invertMouse);
+		if (hasTouchScreen())
+		{
+			mouse.scl(1f, -1f);
+			mouse.scl(TOUCH_MOUSE_SCALE);
+		}
 		return mouse;
 	}
 
@@ -437,6 +461,44 @@ public class KeyHandler extends Keys implements InputProcessor
 	public static boolean justTouched()
 	{
 		return getInput().justTouched();
+	}
+
+
+	public static void flipInvertMouse(boolean flipX, boolean flipY)
+	{
+		if (flipX) getInvertMouse().scl(-1f, 1f);
+		if (flipY) getInvertMouse().scl(1f, -1f);
+	}
+
+	public static void setInvertMouse(boolean invertX, boolean invertY)
+	{
+		setInvertMouse(1, 1);
+		flipInvertMouse(invertX, invertY);
+	}
+
+	public static void setInvertMouse(int x, int y)
+	{
+		getInvertMouse().set(x, y);
+	}
+
+	public static void setInvertMouse(Vector2 invertMouse)
+	{
+		KeyHandler.invertMouse = invertMouse;
+	}
+
+	public static Vector2 getSensitivity()
+	{
+		return sensitivity;
+	}
+
+	public static void setSensitivity(Vector2 sensitivity)
+	{
+		KeyHandler.sensitivity = sensitivity;
+	}
+
+	public static void setSensitivity(float sensitivity)
+	{
+		getSensitivity().set(sensitivity, sensitivity);
 	}
 
 	public static void reset()
