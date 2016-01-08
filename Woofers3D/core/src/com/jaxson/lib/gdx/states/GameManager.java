@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.input.KeyHandler;
-import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.gdx.input.InputHandler;
 
 public class GameManager
 {
@@ -23,7 +22,7 @@ public class GameManager
 		this.config = config;
 		this.gameStateManager = new GameStateManager();
 		this.displayManager = new DisplayManager(this);
-		KeyHandler.setSensitivity(getConfig().getSensitivity());
+		InputHandler.setSensitivity(getConfig().getSensitivity());
 	}
 
 	public void dispose()
@@ -67,11 +66,6 @@ public class GameManager
 		return displayManager.getViewport();
 	}
 
-	public boolean isSmartPhone()
-	{
-		return isAndroid() || isIOS();
-	}
-
 	public boolean isAndroid()
 	{
 		return getApplicationType() == ApplicationType.Android;
@@ -95,6 +89,11 @@ public class GameManager
 	public boolean isMobile()
 	{
 		return isSmartPhone() || isWeb();
+	}
+
+	public boolean isSmartPhone()
+	{
+		return isAndroid() || isIOS();
 	}
 
 	public boolean isWeb()
@@ -123,7 +122,7 @@ public class GameManager
 		{
 			if (isFocused()) gameStateManager.update(step);
 			displayManager.update(step);
-			KeyHandler.update(step);
+			InputHandler.update(step);
 			accumulator -= step;
 		}
 		if (!isFocused()) return;

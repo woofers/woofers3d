@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.jaxson.lib.gdx.bullet.bodies.CameraPlayerBody;
 import com.jaxson.lib.gdx.bullet.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.input.InputHandler;
 
 public class Player extends CameraPlayerBody
 {
@@ -32,8 +32,8 @@ public class Player extends CameraPlayerBody
 	protected void input()
 	{
 		super.input();
-		if (KeyHandler.isPressed(Keys.O)) lockCamera();
-		if (KeyHandler.isPressed(Keys.P)) unlockCamera();
+		if (InputHandler.isPressed(Keys.O)) lockCamera();
+		if (InputHandler.isPressed(Keys.P)) unlockCamera();
 	}
 
 	@Override

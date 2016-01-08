@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.badlogic.gdx.utils.UBJsonReader;
-import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
@@ -99,59 +99,61 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	protected void input()
 	{
 		Vector3 walkDirection = new Vector3();
-		if (KeyHandler.hasHardwareKeyboard())
+		if (InputHandler.hasHardwareKeyboard())
 		{
 			if (onGround())
 			{
-				if (KeyHandler.isDown(KeyHandler.ANY_LEFT))
+				if (InputHandler.isDown(InputHandler.ANY_LEFT))
 				{
 					rotate(getRotationSpeed(), 0, 0);
 				}
-				if (KeyHandler.isDown(KeyHandler.ANY_RIGHT))
+				if (InputHandler.isDown(InputHandler.ANY_RIGHT))
 				{
 					rotate(-getRotationSpeed(), 0, 0);
 				}
 			}
-			if (KeyHandler.isDown(KeyHandler.ANY_UP))
+			if (InputHandler.isDown(InputHandler.ANY_UP))
 			{
 				walkDirection.add(getDirection());
 			}
-			if (KeyHandler.isDown(KeyHandler.ANY_DOWN))
+			if (InputHandler.isDown(InputHandler.ANY_DOWN))
 			{
 				walkDirection.sub(getDirection());
 			}
-			if (KeyHandler.isDown(Keys.SPACE))
+			if (InputHandler.isDown(Keys.SPACE))
 			{
 				jump();
 			}
 		}
-		if (KeyHandler.hasTouchScreen())
+		if (InputHandler.hasTouchScreen())
 		{
-			if (KeyHandler.justTouched())
+			if (InputHandler.justTouched())
 			{
 				jump();
 			}
 		}
-		if (KeyHandler.hasAccelerometer())
+		if (InputHandler.hasAccelerometer())
 		{
-			Vector3 accelerometer = KeyHandler.getAccelerometer();
-			//if (accelerometer.x < ROTATION_TOLERANCE)
-			//{
-			//	rotate(getRotationSpeed() * GdxMath.abs(accelerometer.x * ACCELEROMETER_SCALE), 0, 0);
-			//}
-			//if (accelerometer.x > ROTATION_TOLERANCE)
-			//{
-			//	rotate(-getRotationSpeed() * GdxMath.abs(accelerometer.x * ACCELEROMETER_SCALE), 0, 0);
-			//}
-			if (KeyHandler.isAccelerometerForward())
+			Vector3 accelerometer = InputHandler.getAccelerometer();
+			// if (accelerometer.x < ROTATION_TOLERANCE)
+			// {
+			// rotate(getRotationSpeed() * GdxMath.abs(accelerometer.x *
+			// ACCELEROMETER_SCALE), 0, 0);
+			// }
+			// if (accelerometer.x > ROTATION_TOLERANCE)
+			// {
+			// rotate(-getRotationSpeed() * GdxMath.abs(accelerometer.x *
+			// ACCELEROMETER_SCALE), 0, 0);
+			// }
+			if (InputHandler.isAccelerometerForward())
 			{
 				walkDirection.add(getDirection());
-				walkDirection.scl(KeyHandler.getAccelerometerForward());
+				walkDirection.scl(InputHandler.getAccelerometerForward());
 			}
-			if (KeyHandler.isAccelerometerBack())
+			if (InputHandler.isAccelerometerBack())
 			{
 				walkDirection.sub(getDirection());
-				walkDirection.scl(KeyHandler.getAccelerometerBack());
+				walkDirection.scl(InputHandler.getAccelerometerBack());
 			}
 		}
 		walkDirection.scl(getSpeed());

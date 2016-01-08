@@ -1,11 +1,11 @@
 package com.jaxson.lib.gdx;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.jaxson.lib.gdx.states.GameManager;
 import com.jaxson.lib.gdx.states.State;
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 public abstract class Game extends ApplicationAdapter
 {
@@ -44,11 +44,6 @@ public abstract class Game extends ApplicationAdapter
 		return getConfig().toLwjglConfig();
 	}
 
-	public AndroidApplicationConfiguration toAndroidConfig()
-	{
-		return getConfig().toAndroidConfig();
-	}
-
 	@Override
 	public void pause()
 	{
@@ -81,5 +76,10 @@ public abstract class Game extends ApplicationAdapter
 	public LwjglApplication startDesktop()
 	{
 		return new LwjglApplication(this, getLwjglConfig());
+	}
+
+	public AndroidApplicationConfiguration toAndroidConfig()
+	{
+		return getConfig().toAndroidConfig();
 	}
 }

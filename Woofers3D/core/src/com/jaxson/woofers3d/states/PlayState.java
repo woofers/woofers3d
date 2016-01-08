@@ -15,7 +15,7 @@ import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends State
 {
-	private static final int BOX_AMOUNT = 10;
+	private static final int BOX_AMOUNT = 25;
 
 	private Floor floor;
 	private RigidBox[] boxs;

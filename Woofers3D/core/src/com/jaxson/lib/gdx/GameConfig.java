@@ -1,13 +1,13 @@
 package com.jaxson.lib.gdx;
 
 import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.jaxson.lib.util.MyFileReader;
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.jaxson.lib.util.GsonObject;
 import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.util.GsonObject;
+import com.jaxson.lib.util.MyFileReader;
 
 public class GameConfig extends GsonObject<GameConfig>
 {
@@ -92,6 +92,11 @@ public class GameConfig extends GsonObject<GameConfig>
 	public String getSavePath()
 	{
 		return savePath;
+	}
+
+	public Vector2 getSensitivity()
+	{
+		return sensitivity;
 	}
 
 	public float getStep()
@@ -219,6 +224,16 @@ public class GameConfig extends GsonObject<GameConfig>
 		this.savePath = savePath;
 	}
 
+	public void setSensitivity(float sensitivity)
+	{
+		getSensitivity().set(sensitivity, sensitivity);
+	}
+
+	public void setSensitivity(Vector2 sensitivity)
+	{
+		this.sensitivity = sensitivity;
+	}
+
 	public void setShowFps(boolean showFps)
 	{
 		this.showFps = showFps;
@@ -257,21 +272,6 @@ public class GameConfig extends GsonObject<GameConfig>
 	public boolean startsFullscreen()
 	{
 		return startFullscreen;
-	}
-
-	public Vector2 getSensitivity()
-	{
-		return sensitivity;
-	}
-
-	public void setSensitivity(Vector2 sensitivity)
-	{
-		this.sensitivity = sensitivity;
-	}
-
-	public void setSensitivity(float sensitivity)
-	{
-		getSensitivity().set(sensitivity, sensitivity);
 	}
 
 	public AndroidApplicationConfiguration toAndroidConfig()

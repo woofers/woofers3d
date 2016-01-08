@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.input.InputHandler;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -71,7 +71,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Vector2 getMouse()
 	{
-		return KeyHandler.getScaledMouse();
+		return InputHandler.getScaledMouse();
 	}
 
 	public Vector3 getOffset()

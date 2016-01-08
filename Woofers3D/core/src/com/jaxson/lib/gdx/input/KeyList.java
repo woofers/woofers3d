@@ -1,7 +1,6 @@
 package com.jaxson.lib.gdx.input;
 
 import com.jaxson.lib.util.MyArrayList;
-import java.lang.IllegalArgumentException;
 
 public class KeyList
 {
@@ -17,12 +16,12 @@ public class KeyList
 
 	public KeyList(Object key1, Object key2)
 	{
-		this(new Object[] {key1, key2});
+		this(new Object[]{ key1, key2 });
 	}
 
 	public KeyList(Object key1, Object key2, Object key3)
 	{
-		this(new Object[] {key1, key2, key3});
+		this(new Object[]{ key1, key2, key3 });
 	}
 
 	public KeyList(Object[] keys)
@@ -47,11 +46,6 @@ public class KeyList
 		keyCombinations.add(keyCombination);
 	}
 
-	public boolean isValidKey(Object key)
-	{
-		return key instanceof Integer || key instanceof KeyCombination;
-	}
-
 	public KeyCombination[] getKeyCombinations()
 	{
 		return keyCombinations.toArray(new KeyCombination[0]);
@@ -66,5 +60,10 @@ public class KeyList
 			intKeycodes[i] = keycodes.get(i);
 		}
 		return intKeycodes;
+	}
+
+	public boolean isValidKey(Object key)
+	{
+		return key instanceof Integer || key instanceof KeyCombination;
 	}
 }

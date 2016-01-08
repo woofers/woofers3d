@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 
@@ -271,10 +271,10 @@ public class DisplayManager extends GameObject
 	@Override
 	protected void input()
 	{
-		if (KeyHandler.isClicked()) setCursorCatched(true);
+		if (InputHandler.isClicked()) setCursorCatched(true);
 		if (!isFocused()) return;
-		if (!isFullscreen() && isCursorCatched() && KeyHandler.isPressed(Keys.ESCAPE)) setCursorCatched(false);
-		if (canFullscreen() && KeyHandler.isDown(KeyHandler.FULLSCREEN)) toggleFullscreen();
+		if (!isFullscreen() && isCursorCatched() && InputHandler.isPressed(Keys.ESCAPE)) setCursorCatched(false);
+		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
 	}
 
 	public boolean isCursorCatched()
@@ -316,7 +316,11 @@ public class DisplayManager extends GameObject
 	public void resize(int width, int height)
 	{
 		viewport.update(width, height);
-		updateSprtieBatch(width, height);
+		getSpriteBatch().dispose();
+		getModelBatch().dispose();
+		spriteBatch = new SpriteBatch();
+		modelBatch = new ModelBatch();
+		//updateSprtieBatch(width, height);
 	}
 
 	@Override
@@ -378,7 +382,7 @@ public class DisplayManager extends GameObject
 		{
 			setDisplayMode(getDefaultWidth(), getDefaultHeight());
 		}
-		KeyHandler.reset();
+		InputHandler.reset();
 	}
 
 	public void setViewport(int width, int height)

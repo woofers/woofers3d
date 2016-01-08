@@ -2,18 +2,18 @@ package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.input.InputHandler;
 import java.util.Stack;
 
 public class GameStateManager
 {
 	private Stack<State> states;
-	private KeyHandler keyHandler;
+	private InputHandler keyHandler;
 
 	public GameStateManager()
 	{
 		this.states = new Stack<State>();
-		this.keyHandler = new KeyHandler();
+		this.keyHandler = new InputHandler();
 	}
 
 	public void dispose()

@@ -21,7 +21,7 @@ import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
-import com.jaxson.lib.gdx.input.KeyHandler;
+import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
 
@@ -212,6 +212,6 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (KeyHandler.isPressed(Keys.F5)) toggleDebugMode();
+		if (InputHandler.isPressed(Keys.F5)) toggleDebugMode();
 	}
 }
