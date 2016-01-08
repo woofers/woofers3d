@@ -32,7 +32,6 @@ public class DisplayManager extends GameObject
 	private BitmapFont font;
 	private Viewport viewport;
 	private Camera camera;
-	private boolean fullscreen;
 	private boolean paused;
 
 	public DisplayManager(GameManager gameManager)

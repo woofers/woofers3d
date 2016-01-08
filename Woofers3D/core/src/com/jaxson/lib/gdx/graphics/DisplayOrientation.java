@@ -4,18 +4,23 @@ public enum DisplayOrientation
 {
 	Portrait, Landscape, ReversePortrait, ReverseLandscape;
 
+	private static final int PORTRAIT_ANGLE = 0;
+	private static final int LANDSCAPE_ANGLE = 90;
+	private static final int REVERSE_PORTRAIT_ANGLE = 180;
+	private static final int REVERSE_LANDSCAPE_ANGLE = 270;
+
 	public int getAngle()
 	{
 		switch (this)
 		{
 			case Landscape:
-				return 90;
+				return LANDSCAPE_ANGLE;
 			case ReversePortrait:
-				return 180;
+				return REVERSE_PORTRAIT_ANGLE;
 			case ReverseLandscape:
-				return 270;
+				return REVERSE_LANDSCAPE_ANGLE;
 		}
-		return 0;
+		return PORTRAIT_ANGLE;
 	}
 
 	public boolean isLandscape()
@@ -40,11 +45,11 @@ public enum DisplayOrientation
 		}
 		switch (angle)
 		{
-			case 90:
+			case LANDSCAPE_ANGLE:
 				return Landscape;
-			case 180:
+			case REVERSE_PORTRAIT_ANGLE:
 				return ReversePortrait;
-			case 270:
+			case REVERSE_LANDSCAPE_ANGLE:
 				return ReverseLandscape;
 		}
 		return Portrait;

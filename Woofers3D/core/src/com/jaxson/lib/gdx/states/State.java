@@ -140,11 +140,6 @@ public abstract class State extends GameObject
 		gameManager.setCamera(camera);
 	}
 
-	public void setInputProcessor(InputProcessor inputProcessor)
-	{
-		getInput().setInputProcessor(inputProcessor);
-	}
-
 	public void setViewport(Viewport viewport)
 	{
 		gameManager.setViewport(viewport);

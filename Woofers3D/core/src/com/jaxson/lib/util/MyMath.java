@@ -5,7 +5,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MyMath
 {
-	public static final float DIAMETER_TO_RADIUS = 1f / 2f;
+	public static final float HALF = 1f / 2f;
+	public static final float DIAMETER_TO_RADIUS = HALF;
+	public static final int FLIP_SIGN = -1;
 	public static final float GRAVITY_EARTH = 9.80665f;
 
 	public static float abs(float value)
@@ -26,6 +28,21 @@ public class MyMath
 	public static boolean isOdd(int value)
 	{
 		return !isEven(value);
+	}
+
+	public static float flipSign(float value)
+	{
+		return value * FLIP_SIGN;
+	}
+
+	public static float max(float a, float b)
+	{
+		return Math.max(a, b);
+	}
+
+	public static float min(float a, float b)
+	{
+		return Math.min(a, b);
 	}
 
 	public static double log(double value)

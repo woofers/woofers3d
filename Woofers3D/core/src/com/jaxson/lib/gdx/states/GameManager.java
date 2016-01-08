@@ -8,12 +8,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 
 public class GameManager
 {
 	private GameConfig config;
 	private GameStateManager gameStateManager;
 	private DisplayManager displayManager;
+	private InputHandler inputHandler;
 	private float accumulator;
 	private float dt;
 
@@ -22,6 +25,8 @@ public class GameManager
 		this.config = config;
 		this.gameStateManager = new GameStateManager();
 		this.displayManager = new DisplayManager(this);
+		this.inputHandler = new InputHandler();
+		setInputProcessor(inputHandler.getInputProcessor());
 		InputHandler.setSensitivity(getConfig().getSensitivity());
 	}
 
@@ -74,6 +79,11 @@ public class GameManager
 	public boolean isDesktop()
 	{
 		return getApplicationType() == ApplicationType.Desktop;
+	}
+
+	private Input getInput()
+	{
+		return Gdx.input;
 	}
 
 	public boolean isFocused()
@@ -151,6 +161,11 @@ public class GameManager
 	public void setState(State state)
 	{
 		gameStateManager.set(state);
+	}
+
+	public void setInputProcessor(InputProcessor inputProcessor)
+	{
+		getInput().setInputProcessor(inputProcessor);
 	}
 
 	public void setViewport(Viewport viewport)

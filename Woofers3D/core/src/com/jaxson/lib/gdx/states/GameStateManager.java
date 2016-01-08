@@ -8,18 +8,15 @@ import java.util.Stack;
 public class GameStateManager
 {
 	private Stack<State> states;
-	private InputHandler keyHandler;
 
 	public GameStateManager()
 	{
 		this.states = new Stack<State>();
-		this.keyHandler = new InputHandler();
 	}
 
 	public void dispose()
 	{
 		makeEmpty();
-		keyHandler = null;
 	}
 
 	public boolean isEmpty()
@@ -51,7 +48,6 @@ public class GameStateManager
 
 	public void push(State state)
 	{
-		state.setInputProcessor(keyHandler);
 		states.push(state);
 	}
 

@@ -11,8 +11,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.DisplayOrientation;
 import com.jaxson.lib.util.MyMath;
+import java.lang.IllegalArgumentException;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.InputMultiplexer;
 
-public class InputHandler extends Keys implements InputProcessor
+public class InputHandler extends Keys implements InputProcessor, GestureListener
 {
 	public static final int MOVE_UP = W;
 	public static final int MOVE_FORWARD = W;
@@ -54,10 +58,12 @@ public class InputHandler extends Keys implements InputProcessor
 	private static final float ACCELEROMETER_MIN = -ACCELEROMETER_MAX;
 	private static final float ACCELEROMETER_RANGE = ACCELEROMETER_MAX - ACCELEROMETER_MIN;
 	private static final int KEY_SIZE = 256;
+	private static final int MULTITOUCH_SUPPORT = 20;
 	private static boolean[] keys, prevKeys;
 	private static Vector2 mouse, deltaMouse, invertMouse, sensitivity;
 	private static int scrollWheel;
 	private static DisplayOrientation orientation, prevOrientation;
+	private InputMultiplexer inputProcessor;
 
 	public InputHandler()
 	{
@@ -71,6 +77,14 @@ public class InputHandler extends Keys implements InputProcessor
 		InputHandler.prevOrientation = orientation;
 		setInvertMouse(INVERT_MOUSE_X, INVERT_MOUSE_Y);
 		setSensitivity(SENSITIVITY);
+		inputProcessor = new InputMultiplexer();
+		inputProcessor.addProcessor(this);
+		inputProcessor.addProcessor(new GestureDetector(this));
+	}
+
+	public InputMultiplexer getInputProcessor()
+	{
+		return inputProcessor;
 	}
 
 	@Override
@@ -164,13 +178,11 @@ public class InputHandler extends Keys implements InputProcessor
 
 	public static float getAccelerometerBack()
 	{
-		// Y > 6
 		float value = 0;
 		float y = getAccelerometerY();
 		if (y > getAccelerometerNullMaxY())
 			value = MyMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMinRangeY());
-		if (value > 1) return 1;
-		return value;
+		return MyMath.max(value, 1f);
 	}
 
 	public static float getAccelerometerBackRangeY()
@@ -180,14 +192,11 @@ public class InputHandler extends Keys implements InputProcessor
 
 	public static float getAccelerometerForward()
 	{
-		// Y < 4
-		// 4 to -10
 		float value = 0;
 		float y = getAccelerometerY();
 		if (y < getAccelerometerNullMinY())
 			value = MyMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinRangeY());
-		if (value > 1) return 1;
-		return value;
+		return MyMath.max(value, 1f);
 	}
 
 	public static float getAccelerometerForwardRangeY()
@@ -582,6 +591,52 @@ public class InputHandler extends Keys implements InputProcessor
 		return getInput().justTouched();
 	}
 
+	public static boolean touched()
+	{
+		return isTouched(0);
+	}
+
+	public static boolean isTouched(int pointer)
+	{
+		return getInput().isTouched(pointer);
+	}
+
+	public static boolean oneFingerTouching()
+	{
+		return getTouchAmmount() >= 1;
+	}
+
+	public static boolean twoFingerTouching()
+	{
+		return getTouchAmmount() >= 2;
+	}
+
+	public static boolean threeFingerTouching()
+	{
+		return getTouchAmmount() >= 3;
+	}
+
+	public static int getTouchAmmount()
+	{
+		return getTouchAmmount(MULTITOUCH_SUPPORT);
+	}
+
+	public static int getTouchAmmount(int max)
+	{
+		return getTouchAmmount(0, max);
+	}
+
+	public static int getTouchAmmount(int min, int max)
+	{
+		if (min < 0 || MULTITOUCH_SUPPORT < max) throw new IllegalArgumentException("Pointers out of range");
+		int touches = 0;
+		for (int pointer = 0; pointer < max; pointer ++)
+		{
+			if (isTouched(pointer)) touches ++;
+		}
+		return touches;
+	}
+
 	public static void reset()
 	{
 		for (int i = 0; i < KEY_SIZE; i++)
@@ -625,5 +680,54 @@ public class InputHandler extends Keys implements InputProcessor
 		}
 		prevOrientation = orientation;
 		orientation = getOrientation();
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y)
+	{
+		System.out.println("longprss");
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
+	{
+		return false;
 	}
 }

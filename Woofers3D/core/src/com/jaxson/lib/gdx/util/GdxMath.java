@@ -12,7 +12,6 @@ public class GdxMath extends MyMath
 	public static final int RGB_MAX = 255;
 	private static final float RGB_TO_FLOAT = 1f / RGB_MAX;
 
-	public static final float HALF = 1f / 2f;
 	public static final float DEGREES_TO_RADIANS = MathUtils.degreesToRadians;
 	public static final float RADIANS_TO_DEGREES = MathUtils.radiansToDegrees;
 
