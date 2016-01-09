@@ -15,6 +15,11 @@ public class MyMath
 		return Math.abs(value);
 	}
 
+	public static float flipSign(float value)
+	{
+		return value * FLIP_SIGN;
+	}
+
 	public static Random getRandom()
 	{
 		return ThreadLocalRandom.current();
@@ -30,9 +35,14 @@ public class MyMath
 		return !isEven(value);
 	}
 
-	public static float flipSign(float value)
+	public static double log(double value)
 	{
-		return value * FLIP_SIGN;
+		return log(value, Math.E);
+	}
+
+	public static double log(double value, double base)
+	{
+		return Math.log10(value) / Math.log10(base);
 	}
 
 	public static float max(float a, float b)
@@ -43,16 +53,6 @@ public class MyMath
 	public static float min(float a, float b)
 	{
 		return Math.min(a, b);
-	}
-
-	public static double log(double value)
-	{
-		return log(value, Math.E);
-	}
-
-	public static double log(double value, double base)
-	{
-		return Math.log10(value) / Math.log10(base);
 	}
 
 	public static float randFloat(float min, float max)

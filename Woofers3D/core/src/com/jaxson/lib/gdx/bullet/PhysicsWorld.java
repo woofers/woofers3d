@@ -212,6 +212,6 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (InputHandler.isPressed(Keys.F5)) toggleDebugMode();
+		if (InputHandler.isPressed(Keys.F5) || InputHandler.threeFingerTouched()) toggleDebugMode();
 	}
 }

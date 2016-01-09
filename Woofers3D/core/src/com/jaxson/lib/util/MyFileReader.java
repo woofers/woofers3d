@@ -5,13 +5,28 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 
+/**
+ * A FileReader that handles writing and reading.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public class MyFileReader
 {
+	/**
+	 * Gets whether the file exists.
+	 * @param path The path of the file
+	 * @return {@code boolean} - Whether the object exists
+	 */
 	public static boolean exists(String path)
 	{
 		return new File(path).exists();
 	}
 
+	/**
+	 * Parses a text file
+	 * @param path The path of the file
+	 * @return {@code String} - The contents of the file
+	 */
 	public static String read(String path)
 	{
 		BufferedReader reader = null;
@@ -45,6 +60,11 @@ public class MyFileReader
 		return output;
 	}
 
+	/**
+	 * Writes to a text file
+	 * @param path The path to write to
+	 * @param contents The contents to write
+	 */
 	public static void write(String path, String contents)
 	{
 		PrintWriter writer = null;

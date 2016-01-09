@@ -6,9 +6,9 @@ import java.awt.event.ComponentEvent;
 
 class ResizeAdapter extends ComponentAdapter
 {
-	private ScaleContainer object;
+	private ScaleContainer<?> object;
 
-	public ResizeAdapter(ScaleContainer object)
+	public ResizeAdapter(ScaleContainer<?> object)
 	{
 		this.object = object;
 	}

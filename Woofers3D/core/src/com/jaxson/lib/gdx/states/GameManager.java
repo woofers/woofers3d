@@ -3,13 +3,13 @@ package com.jaxson.lib.gdx.states;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 
 public class GameManager
 {
@@ -23,10 +23,10 @@ public class GameManager
 	public GameManager(GameConfig config)
 	{
 		this.config = config;
+		this.inputHandler = new InputHandler();
 		this.gameStateManager = new GameStateManager();
 		this.displayManager = new DisplayManager(this);
-		this.inputHandler = new InputHandler();
-		setInputProcessor(inputHandler.getInputProcessor());
+		setInputProcessor(InputHandler.getInputProcessor());
 		InputHandler.setSensitivity(getConfig().getSensitivity());
 	}
 
@@ -61,6 +61,11 @@ public class GameManager
 		return Gdx.graphics.getDeltaTime();
 	}
 
+	private Input getInput()
+	{
+		return Gdx.input;
+	}
+
 	public TargetCamera getTargetCamera()
 	{
 		return displayManager.getTargetCamera();
@@ -79,11 +84,6 @@ public class GameManager
 	public boolean isDesktop()
 	{
 		return getApplicationType() == ApplicationType.Desktop;
-	}
-
-	private Input getInput()
-	{
-		return Gdx.input;
 	}
 
 	public boolean isFocused()
@@ -158,14 +158,14 @@ public class GameManager
 		displayManager.setCamera(camera);
 	}
 
-	public void setState(State state)
-	{
-		gameStateManager.set(state);
-	}
-
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
 		getInput().setInputProcessor(inputProcessor);
+	}
+
+	public void setState(State state)
+	{
+		gameStateManager.set(state);
 	}
 
 	public void setViewport(Viewport viewport)

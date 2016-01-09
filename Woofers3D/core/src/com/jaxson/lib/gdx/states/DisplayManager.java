@@ -18,7 +18,6 @@ import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 
 public class DisplayManager extends GameObject
@@ -122,7 +121,7 @@ public class DisplayManager extends GameObject
 
 	public Vector2 getCenter()
 	{
-		return new Vector2(getWidth() * GdxMath.HALF, getHeight() * GdxMath.HALF);
+		return new Vector2(getWidth() * MyMath.HALF, getHeight() * MyMath.HALF);
 	}
 
 	public GameConfig getConfig()
@@ -319,7 +318,7 @@ public class DisplayManager extends GameObject
 		getModelBatch().dispose();
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
-		//updateSprtieBatch(width, height);
+		// updateSprtieBatch(width, height);
 	}
 
 	@Override

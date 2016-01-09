@@ -6,15 +6,14 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Orientation;
 import com.badlogic.gdx.Input.Peripheral;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.DisplayOrientation;
 import com.jaxson.lib.util.MyMath;
-import java.lang.IllegalArgumentException;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.InputMultiplexer;
 
 public class InputHandler extends Keys implements InputProcessor, GestureListener
 {
@@ -59,16 +58,19 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	private static final float ACCELEROMETER_RANGE = ACCELEROMETER_MAX - ACCELEROMETER_MIN;
 	private static final int KEY_SIZE = 256;
 	private static final int MULTITOUCH_SUPPORT = 20;
-	private static boolean[] keys, prevKeys;
+	private static boolean[] keys, prevKeys, touches, prevTouches;
 	private static Vector2 mouse, deltaMouse, invertMouse, sensitivity;
 	private static int scrollWheel;
 	private static DisplayOrientation orientation, prevOrientation;
-	private InputMultiplexer inputProcessor;
+	private static InputMultiplexer inputProcessor;
+	private static GestureDetector gestureDetector;
 
 	public InputHandler()
 	{
 		InputHandler.keys = new boolean[KEY_SIZE];
 		InputHandler.prevKeys = new boolean[KEY_SIZE];
+		InputHandler.touches = new boolean[MULTITOUCH_SUPPORT];
+		InputHandler.prevTouches = new boolean[MULTITOUCH_SUPPORT];
 		InputHandler.mouse = new Vector2();
 		InputHandler.deltaMouse = new Vector2();
 		InputHandler.invertMouse = new Vector2(1f, 1f);
@@ -78,13 +80,15 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		setInvertMouse(INVERT_MOUSE_X, INVERT_MOUSE_Y);
 		setSensitivity(SENSITIVITY);
 		inputProcessor = new InputMultiplexer();
+		gestureDetector = new GestureDetector(this);
 		inputProcessor.addProcessor(this);
-		inputProcessor.addProcessor(new GestureDetector(this));
+		inputProcessor.addProcessor(gestureDetector);
 	}
 
-	public InputMultiplexer getInputProcessor()
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button)
 	{
-		return inputProcessor;
+		return true;
 	}
 
 	@Override
@@ -108,7 +112,31 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	}
 
 	@Override
+	public boolean longPress(float x, float y)
+	{
+		return false;
+	}
+
+	@Override
 	public boolean mouseMoved(int x, int y)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
 	{
 		return true;
 	}
@@ -121,9 +149,22 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	}
 
 	@Override
-	public boolean touchDown(int x, int y, int pointer, int button)
+	public boolean tap(float x, float y, int count, int button)
 	{
 		return true;
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button)
+	{
+		touches[pointer] = true;
+		return true;
+	}
+
+	@Override
+	public boolean touchDown(int x, int y, int pointer, int button)
+	{
+		return touchDown((float) x, (float) y, pointer, button);
 	}
 
 	@Override
@@ -135,7 +176,14 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button)
 	{
+		touches[pointer] = false;
 		return true;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance)
+	{
+		return false;
 	}
 
 	public static boolean anyKey()
@@ -182,7 +230,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		float y = getAccelerometerY();
 		if (y > getAccelerometerNullMaxY())
 			value = MyMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMinRangeY());
-		return MyMath.max(value, 1f);
+		return MyMath.min(value, 1f);
 	}
 
 	public static float getAccelerometerBackRangeY()
@@ -196,7 +244,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		float y = getAccelerometerY();
 		if (y < getAccelerometerNullMinY())
 			value = MyMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinRangeY());
-		return MyMath.max(value, 1f);
+		return MyMath.min(value, 1f);
 	}
 
 	public static float getAccelerometerForwardRangeY()
@@ -276,14 +324,14 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return getInput().getDeltaY();
 	}
 
-	public static DisplayOrientation getOrientation()
-	{
-		return DisplayOrientation.getOrientation(getRotation());
-	}
-
 	private static Input getInput()
 	{
 		return Gdx.input;
+	}
+
+	public static InputMultiplexer getInputProcessor()
+	{
+		return inputProcessor;
 	}
 
 	public static Vector2 getInvertMouse()
@@ -314,6 +362,11 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	public static int getNativeRotation()
 	{
 		return getInput().getRotation();
+	}
+
+	public static DisplayOrientation getOrientation()
+	{
+		return DisplayOrientation.getOrientation(getRotation());
 	}
 
 	public static int getRotation()
@@ -354,6 +407,27 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	public static Vector2 getSensitivity()
 	{
 		return sensitivity;
+	}
+
+	public static int getTouchAmmount()
+	{
+		return getTouchAmmount(MULTITOUCH_SUPPORT);
+	}
+
+	public static int getTouchAmmount(int max)
+	{
+		return getTouchAmmount(0, max);
+	}
+
+	public static int getTouchAmmount(int min, int max)
+	{
+		if (min < 0 || MULTITOUCH_SUPPORT < max) throw new IllegalArgumentException("Pointers out of range");
+		int touches = 0;
+		for (int pointer = 0; pointer < max; pointer++)
+		{
+			if (isTouched(pointer)) touches++;
+		}
+		return touches;
 	}
 
 	public static boolean hasAccelerometer()
@@ -465,24 +539,9 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return false;
 	}
 
-	public static boolean orientationHasChanged()
-	{
-		return orientation != prevOrientation;
-	}
-
 	public static boolean isLandscape()
 	{
 		return getOrientation().isLandscape();
-	}
-
-	public static boolean isStandardLandscape()
-	{
-		return getOrientation() == DisplayOrientation.Landscape;
-	}
-
-	public static boolean isReverseLandscape()
-	{
-		return getOrientation() == DisplayOrientation.ReverseLandscape;
 	}
 
 	public static boolean isPeripheralAvailable(Peripheral peripheral)
@@ -494,17 +553,6 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	{
 		return getOrientation().isPortrait();
 	}
-
-	public static boolean isStandardPortrait()
-	{
-		return getOrientation() == DisplayOrientation.Portrait;
-	}
-
-	public static boolean isReversePortrait()
-	{
-		return getOrientation() == DisplayOrientation.ReversePortrait;
-	}
-
 
 	public static boolean isPressed(int keycode)
 	{
@@ -586,14 +634,34 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return false;
 	}
 
-	public static boolean justTouched()
+	public static boolean isReverseLandscape()
 	{
-		return getInput().justTouched();
+		return getOrientation() == DisplayOrientation.ReverseLandscape;
 	}
 
-	public static boolean touched()
+	public static boolean isReversePortrait()
 	{
-		return isTouched(0);
+		return getOrientation() == DisplayOrientation.ReversePortrait;
+	}
+
+	public static boolean isStandardLandscape()
+	{
+		return getOrientation() == DisplayOrientation.Landscape;
+	}
+
+	public static boolean isStandardPortrait()
+	{
+		return getOrientation() == DisplayOrientation.Portrait;
+	}
+
+	public static boolean isTouchDown(int pointer)
+	{
+		return touches[pointer];
+	}
+
+	public static boolean isTouched()
+	{
+		return getInput().isTouched();
 	}
 
 	public static boolean isTouched(int pointer)
@@ -601,40 +669,53 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return getInput().isTouched(pointer);
 	}
 
+	public static boolean isTouchPressed(int pointer)
+	{
+		return touches[pointer] && !prevTouches[pointer];
+	}
+
+	public static boolean isTouchReleased(int pointer)
+	{
+		return !touches[pointer] && prevTouches[pointer];
+	}
+
+	public static boolean areTouched(int amount)
+	{
+		int touched = 0;
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
+		{
+			if (isTouched(i)) touched ++;
+			if (touched >= amount) return true;
+		}
+		return false;
+	}
+
+	public static boolean areTouchedPressed(int amount)
+	{
+		int touched = 0;
+		boolean wasTouched = false;
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
+		{
+			if (isTouched(i)) touched ++;
+			if (isTouchPressed(i)) wasTouched = true;
+			if (touched >= amount && wasTouched) return true;
+		}
+		return false;
+	}
+
+	public static boolean justTouched()
+	{
+		return getInput().justTouched();
+	}
+
 	public static boolean oneFingerTouching()
 	{
 		return getTouchAmmount() >= 1;
 	}
 
-	public static boolean twoFingerTouching()
+	public static boolean orientationHasChanged()
 	{
-		return getTouchAmmount() >= 2;
-	}
-
-	public static boolean threeFingerTouching()
-	{
-		return getTouchAmmount() >= 3;
-	}
-
-	public static int getTouchAmmount()
-	{
-		return getTouchAmmount(MULTITOUCH_SUPPORT);
-	}
-
-	public static int getTouchAmmount(int max)
-	{
-		return getTouchAmmount(0, max);
-	}
-
-	public static int getTouchAmmount(int min, int max)
-	{
-		if (min < 0 || MULTITOUCH_SUPPORT < max) throw new IllegalArgumentException("Pointers out of range");
-		int touches = 0;
-		for (int pointer = 0; pointer < max; pointer ++)
-		{
-			if (isTouched(pointer)) touches ++;
-		}
-		return touches;
+		return orientation != prevOrientation;
 	}
 
 	public static void reset()
@@ -672,62 +753,32 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		InputHandler.sensitivity = sensitivity;
 	}
 
+	public static boolean threeFingerTouching()
+	{
+		return getTouchAmmount() >= 3;
+	}
+
+	public static boolean threeFingerTouched()
+	{
+		return areTouchedPressed(3);
+	}
+
+	public static boolean twoFingerTouching()
+	{
+		return getTouchAmmount() >= 2;
+	}
+
 	public static void update(float dt)
 	{
 		for (int i = 0; i < KEY_SIZE; i++)
 		{
 			prevKeys[i] = keys[i];
 		}
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i++)
+		{
+			prevTouches[i] = touches[i];
+		}
 		prevOrientation = orientation;
 		orientation = getOrientation();
-	}
-
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean tap(float x, float y, int count, int button)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean longPress(float x, float y)
-	{
-		System.out.println("longprss");
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean panStop(float x, float y, int pointer, int button)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
-	{
-		return false;
 	}
 }
