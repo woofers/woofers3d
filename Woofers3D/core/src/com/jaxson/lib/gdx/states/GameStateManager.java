@@ -2,6 +2,7 @@ package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+
 import java.util.Stack;
 
 public class GameStateManager

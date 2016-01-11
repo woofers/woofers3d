@@ -1,13 +1,10 @@
 package com.jaxson.lib.gdx.graphics.g3d;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController.AnimationDesc;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController.AnimationListener;
-import com.badlogic.gdx.utils.UBJsonReader;
 
 public abstract class AnimatedEntity extends Entity
 {
@@ -21,7 +18,7 @@ public abstract class AnimatedEntity extends Entity
 
 	public AnimatedEntity(String modelPath)
 	{
-		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)));
+		this(readModel(modelPath));
 	}
 
 	public void action(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,

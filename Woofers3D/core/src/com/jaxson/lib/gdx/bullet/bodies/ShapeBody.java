@@ -1,8 +1,6 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
@@ -30,7 +28,7 @@ public abstract class ShapeBody<T extends btCollisionObject> extends EntityBody<
 
 	public ShapeBody(String modelPath, btConvexShape shape, float mass)
 	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
+		this(readModel(modelPath), shape, mass);
 	}
 
 	@Override

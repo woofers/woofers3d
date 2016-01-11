@@ -1,8 +1,6 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.bullet.MyMotionState;
@@ -30,7 +28,7 @@ public abstract class RigidBody extends ShapeBody<btRigidBody>
 
 	public RigidBody(String modelPath, btConvexShape shape, float mass)
 	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), shape, mass);
+		this(readModel(modelPath), shape, mass);
 	}
 
 	@Override

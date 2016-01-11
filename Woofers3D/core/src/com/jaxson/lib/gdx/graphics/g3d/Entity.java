@@ -1,18 +1,16 @@
 package com.jaxson.lib.gdx.graphics.g3d;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 
@@ -32,7 +30,7 @@ public abstract class Entity extends GameObject
 
 	public Entity(String modelPath)
 	{
-		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)));
+		this(readModel(modelPath));
 	}
 
 	protected void calculateTransforms()
@@ -204,5 +202,10 @@ public abstract class Entity extends GameObject
 	public void translateABS(Vector3 translation)
 	{
 		getTransform().trn(translation);
+	}
+
+	protected static Model readModel(String modelPath)
+	{
+		return GdxFileReader.loadModel(modelPath);
 	}
 }

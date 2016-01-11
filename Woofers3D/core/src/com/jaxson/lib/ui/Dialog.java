@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+
 import javax.swing.JDialog;
 
 public class Dialog<T extends Window> extends JDialog

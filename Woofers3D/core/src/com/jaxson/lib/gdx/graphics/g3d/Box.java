@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.graphics.g3d;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class Box extends Entity
@@ -14,7 +15,7 @@ public class Box extends Entity
 
 	public Box(Color color)
 	{
-		super(new MyModelBuilder().createBox(color));
+		super(getModel(color));
 	}
 
 	@Override
@@ -27,5 +28,10 @@ public class Box extends Entity
 	public void update(float dt)
 	{
 
+	}
+
+	protected static Model getModel(Color color)
+	{
+		return new MyModelBuilder().createBox(color);
 	}
 }

@@ -1,15 +1,12 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 
@@ -18,9 +15,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	private static final float STEP_HEIGHT = 0.3f;
 	private static final float SPEED = 0.2f;
 	private static final float ROTATION_SPEED = 2f;
-	private static final float ACCELEROMETER_TOLERANCE = 0.5f;
-	private static final float ROTATION_TOLERANCE = 8f;
-	private static final float ACCELEROMETER_SCALE = 1f / 5f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
@@ -51,7 +45,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 
 	public PlayerBody(String modelPath, btConvexShape shape, float mass)
 	{
-		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)), shape, mass);
+		this(readModel(modelPath), shape, mass);
 	}
 
 	public boolean canJump()
@@ -135,16 +129,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 		if (InputHandler.hasAccelerometer())
 		{
 			Vector3 accelerometer = InputHandler.getAccelerometer();
-			// if (accelerometer.x < ROTATION_TOLERANCE)
-			// {
-			// rotate(getRotationSpeed() * GdxMath.abs(accelerometer.x *
-			// ACCELEROMETER_SCALE), 0, 0);
-			// }
-			// if (accelerometer.x > ROTATION_TOLERANCE)
-			// {
-			// rotate(-getRotationSpeed() * GdxMath.abs(accelerometer.x *
-			// ACCELEROMETER_SCALE), 0, 0);
-			// }
 			if (InputHandler.isAccelerometerForward())
 			{
 				walkDirection.add(getDirection());

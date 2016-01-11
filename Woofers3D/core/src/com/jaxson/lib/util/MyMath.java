@@ -3,6 +3,11 @@ package com.jaxson.lib.util;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * A Math class for miscellaneous functions.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public class MyMath
 {
 	public static final float HALF = 1f / 2f;
@@ -10,6 +15,11 @@ public class MyMath
 	public static final int FLIP_SIGN = -1;
 	public static final float GRAVITY_EARTH = 9.80665f;
 
+	/**
+	 * Get the absoulute value of the number.
+	 * @param value The number
+	 * @return {@code float} - The absoulute value
+	 */
 	public static float abs(float value)
 	{
 		return Math.abs(value);

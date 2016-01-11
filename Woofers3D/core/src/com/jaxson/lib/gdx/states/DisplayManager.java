@@ -83,23 +83,15 @@ public class DisplayManager extends GameObject
 		/*
 		 * System.out.println("--------------------------");
 		 * System.out.println("getBottomGutterHeight()" + ":  " +
-		 * getViewport().getBottomGutterHeight());
-		 * System.out.println("getLeftGutterWidth()" + ":  " +
-		 * getViewport().getLeftGutterWidth());
-		 * System.out.println("getRightGutterWidth()" + ":  " +
-		 * getViewport().getRightGutterWidth());
-		 * System.out.println("getRightGutterX()" + ":  " +
-		 * getViewport().getRightGutterX());
-		 * System.out.println("getTopGutterHeight()" + ":  " +
-		 * getViewport().getTopGutterHeight());
-		 * System.out.println("getTopGutterY()" + ":  " +
-		 * getViewport().getTopGutterY());
-		 * System.out.println("getScreenHeight()" + ":  " +
-		 * getViewport().getScreenHeight());
-		 * System.out.println("getScreenWidth()" + ":  " +
-		 * getViewport().getScreenWidth()); System.out.println("getScreenX()" +
-		 * ":  " + getViewport().getScreenX());
-		 * System.out.println("getScreenY()" + ":  " +
+		 * getViewport().getBottomGutterHeight()); System.out.println("getLeftGutterWidth()" + ":  "
+		 * + getViewport().getLeftGutterWidth()); System.out.println("getRightGutterWidth()" + ":  "
+		 * + getViewport().getRightGutterWidth()); System.out.println("getRightGutterX()" + ":  " +
+		 * getViewport().getRightGutterX()); System.out.println("getTopGutterHeight()" + ":  " +
+		 * getViewport().getTopGutterHeight()); System.out.println("getTopGutterY()" + ":  " +
+		 * getViewport().getTopGutterY()); System.out.println("getScreenHeight()" + ":  " +
+		 * getViewport().getScreenHeight()); System.out.println("getScreenWidth()" + ":  " +
+		 * getViewport().getScreenWidth()); System.out.println("getScreenX()" + ":  " +
+		 * getViewport().getScreenX()); System.out.println("getScreenY()" + ":  " +
 		 * getViewport().getScreenY());
 		 */
 	}
@@ -375,8 +367,7 @@ public class DisplayManager extends GameObject
 		if (fullscreen)
 		{
 			setDisplayMode(getFullscreenDisplayMode());
-		}
-		else
+		} else
 		{
 			setDisplayMode(getDefaultWidth(), getDefaultHeight());
 		}

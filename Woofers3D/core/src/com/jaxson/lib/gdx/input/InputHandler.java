@@ -193,6 +193,30 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return false;
 	}
 
+	public static boolean areTouched(int amount)
+	{
+		int touched = 0;
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
+		{
+			if (isTouched(i)) touched ++;
+			if (touched >= amount) return true;
+		}
+		return false;
+	}
+
+	public static boolean areTouchedPressed(int amount)
+	{
+		int touched = 0;
+		boolean wasTouched = false;
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
+		{
+			if (isTouched(i)) touched ++;
+			if (isTouchPressed(i)) wasTouched = true;
+			if (touched >= amount && wasTouched) return true;
+		}
+		return false;
+	}
+
 	public static void flipInvertMouse(boolean flipX, boolean flipY)
 	{
 		if (flipX) getInvertMouse().scl(-1f, 1f);
@@ -278,8 +302,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 			x = getAbsouluteAccelerometerY();
 			if (isReverseLandscape()) x *= -1f;
 
-		}
-		else
+		} else
 		{
 			x = getAbsouluteAccelerometerX();
 			if (isReversePortrait()) x *= -1f;
@@ -295,8 +318,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 			y = getAbsouluteAccelerometerX();
 			if (isReverseLandscape()) y *= -1f;
 
-		}
-		else
+		} else
 		{
 			y = getAbsouluteAccelerometerY();
 			if (isReversePortrait()) y *= -1f;
@@ -423,9 +445,9 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	{
 		if (min < 0 || MULTITOUCH_SUPPORT < max) throw new IllegalArgumentException("Pointers out of range");
 		int touches = 0;
-		for (int pointer = 0; pointer < max; pointer++)
+		for (int pointer = 0; pointer < max; pointer ++)
 		{
-			if (isTouched(pointer)) touches++;
+			if (isTouched(pointer)) touches ++;
 		}
 		return touches;
 	}
@@ -679,30 +701,6 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return !touches[pointer] && prevTouches[pointer];
 	}
 
-	public static boolean areTouched(int amount)
-	{
-		int touched = 0;
-		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
-		{
-			if (isTouched(i)) touched ++;
-			if (touched >= amount) return true;
-		}
-		return false;
-	}
-
-	public static boolean areTouchedPressed(int amount)
-	{
-		int touched = 0;
-		boolean wasTouched = false;
-		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
-		{
-			if (isTouched(i)) touched ++;
-			if (isTouchPressed(i)) wasTouched = true;
-			if (touched >= amount && wasTouched) return true;
-		}
-		return false;
-	}
-
 	public static boolean justTouched()
 	{
 		return getInput().justTouched();
@@ -720,7 +718,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void reset()
 	{
-		for (int i = 0; i < KEY_SIZE; i++)
+		for (int i = 0; i < KEY_SIZE; i ++)
 		{
 			keys[i] = false;
 			prevKeys[i] = false;
@@ -753,14 +751,14 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		InputHandler.sensitivity = sensitivity;
 	}
 
-	public static boolean threeFingerTouching()
-	{
-		return getTouchAmmount() >= 3;
-	}
-
 	public static boolean threeFingerTouched()
 	{
 		return areTouchedPressed(3);
+	}
+
+	public static boolean threeFingerTouching()
+	{
+		return getTouchAmmount() >= 3;
 	}
 
 	public static boolean twoFingerTouching()
@@ -770,11 +768,11 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void update(float dt)
 	{
-		for (int i = 0; i < KEY_SIZE; i++)
+		for (int i = 0; i < KEY_SIZE; i ++)
 		{
 			prevKeys[i] = keys[i];
 		}
-		for (int i = 0; i < MULTITOUCH_SUPPORT; i++)
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
 		{
 			prevTouches[i] = touches[i];
 		}

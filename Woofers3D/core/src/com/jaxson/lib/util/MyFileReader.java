@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.util.regex.Pattern;
 
 /**
  * A FileReader that handles writing and reading.
@@ -20,6 +21,30 @@ public class MyFileReader
 	public static boolean exists(String path)
 	{
 		return new File(path).exists();
+	}
+
+	/**
+	 * Gets the file extension of a path.
+	 * Returns null if the file has no extesnion
+	 * @param path The path of the file
+	 * @return {@code String} - The file extension
+	 */
+	public static String getFileExtension(String path)
+	{
+		String dot = Pattern.quote(".");
+		String[] fileNames = getFileName(path).split(dot);
+		if (fileNames.length == 1)
+		{
+			if (fileNames[0].contains(dot)) return fileNames[0];
+			return null;
+		}
+		return fileNames[1];
+	}
+
+	public static String getFileName(String path)
+	{
+		String[] directories = path.split("/");
+		return directories[directories.length - 1];
 	}
 
 	/**
@@ -41,18 +66,15 @@ public class MyFileReader
 				output += System.lineSeparator();
 				nextLine = reader.readLine();
 			}
-		}
-		catch (Exception ex)
+		} catch (Exception ex)
 		{
 			ex.printStackTrace();
-		}
-		finally
+		} finally
 		{
 			try
 			{
 				reader.close();
-			}
-			catch (Exception ex)
+			} catch (Exception ex)
 			{
 				ex.printStackTrace();
 			}
@@ -73,12 +95,10 @@ public class MyFileReader
 			writer = new PrintWriter(path);
 			writer.print(contents);
 
-		}
-		catch (Exception ex)
+		} catch (Exception ex)
 		{
 			ex.printStackTrace();
-		}
-		finally
+		} finally
 		{
 			writer.close();
 		}

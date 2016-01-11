@@ -1,15 +1,14 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.model.MeshPart;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody.Material;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
+
 import java.nio.ShortBuffer;
 
 public abstract class SoftBody extends EntityBody<btSoftBody>
@@ -49,7 +48,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 
 	public SoftBody(String modelPath, float mass, PhysicsWorld world)
 	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), mass, world);
+		this(readModel(modelPath), mass, world);
 	}
 
 	public SoftBody(String modelPath, PhysicsWorld world)

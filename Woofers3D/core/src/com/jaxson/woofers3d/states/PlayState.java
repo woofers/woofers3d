@@ -34,7 +34,7 @@ public class PlayState extends State
 		add(floor);
 
 		boxs = new RigidBox[BOX_AMOUNT];
-		for (int i = 0; i < BOX_AMOUNT; i++)
+		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
 			boxs[i] = new RigidBox(GdxMath.randColor());
 			boxs[i].setLocation(new Vector3(10f, 15f, 0));

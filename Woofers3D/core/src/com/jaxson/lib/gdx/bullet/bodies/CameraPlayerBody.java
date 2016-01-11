@@ -1,10 +1,7 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
 public class CameraPlayerBody extends PlayerBody
@@ -25,7 +22,7 @@ public class CameraPlayerBody extends PlayerBody
 
 	public CameraPlayerBody(String modelPath, btConvexShape shape, float mass, TargetCamera camera)
 	{
-		this(new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal(modelPath)), shape, mass, camera);
+		this(readModel(modelPath), shape, mass, camera);
 	}
 
 	public CameraPlayerBody(String modelPath, btConvexShape shape, TargetCamera camera)
@@ -79,8 +76,7 @@ public class CameraPlayerBody extends PlayerBody
 		if (cameraIsLocked())
 		{
 			unlockCamera();
-		}
-		else
+		} else
 		{
 			lockCamera();
 		}

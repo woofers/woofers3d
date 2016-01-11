@@ -1,8 +1,6 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.jaxson.lib.gdx.graphics.g3d.AnimatedEntity;
@@ -21,7 +19,7 @@ public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEn
 
 	public EntityBody(String modelPath, float mass)
 	{
-		this(new ObjLoader().loadModel(Gdx.files.internal(modelPath)), mass);
+		this(readModel(modelPath), mass);
 	}
 
 	public void addCollisionFlag(int flag)

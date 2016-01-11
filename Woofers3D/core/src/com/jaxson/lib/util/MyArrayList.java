@@ -18,9 +18,8 @@ public class MyArrayList<E> extends ArrayList<E>
 	}
 
 	/**
-	 * Adds element to the list.
-	 * Does nothing if element is null.
-	 * @param  e Element to add
+	 * Adds element to the list. Does nothing if element is null.
+	 * @param e Element to add
 	 * @return {@code boolean} - Whether element was added
 	 */
 	@Override
