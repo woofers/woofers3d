@@ -91,6 +91,11 @@ public class GameManager
 		return displayManager.isFocused();
 	}
 
+	public boolean isPaused()
+	{
+		return displayManager.isPaused();
+	}
+
 	public boolean isIOS()
 	{
 		return getApplicationType() == ApplicationType.iOS;
@@ -130,14 +135,14 @@ public class GameManager
 		accumulator += dt;
 		while (accumulator >= step)
 		{
-			if (isFocused()) gameStateManager.update(step);
+			gameStateManager.update(step, isFocused());
 			displayManager.update(step);
 			InputHandler.update(step);
 			accumulator -= step;
 		}
 		if (!isFocused()) return;
 		displayManager.render();
-		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch());
+		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch(), isFocused());
 		displayManager.drawFps();
 	}
 

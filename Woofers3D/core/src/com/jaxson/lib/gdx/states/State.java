@@ -14,7 +14,7 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
 
@@ -23,6 +23,7 @@ public abstract class State extends GameObject
 	private GameManager gameManager;
 	private MixedRenderable renderable;
 	private PhysicsWorld world;
+	private State pauseState;
 
 	public State(GameManager gameManager)
 	{
@@ -36,7 +37,7 @@ public abstract class State extends GameObject
 		renderable.add(entity);
 	}
 
-	public void add(Sprite sprite)
+	public void add(GdxSprite sprite)
 	{
 		renderable.add(sprite);
 	}
@@ -107,6 +108,16 @@ public abstract class State extends GameObject
 		return getGraphics().getWidth();
 	}
 
+	public boolean hasPauseState()
+	{
+		return getPauseState() != null;
+	}
+
+	public State getPauseState()
+	{
+		return pauseState;
+	}
+
 	@Override
 	protected void input()
 	{
@@ -118,7 +129,7 @@ public abstract class State extends GameObject
 		renderable.remove(entity);
 	}
 
-	public void remove(Sprite sprite)
+	public void remove(GdxSprite sprite)
 	{
 		renderable.remove(sprite);
 	}
@@ -132,6 +143,11 @@ public abstract class State extends GameObject
 	public void resize(int width, int height)
 	{
 
+	}
+
+	public void setPauseState(State pauseState)
+	{
+		this.pauseState = pauseState;
 	}
 
 	public void setCamera(Camera camera)

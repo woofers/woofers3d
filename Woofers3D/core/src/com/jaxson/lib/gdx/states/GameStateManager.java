@@ -51,9 +51,16 @@ public class GameStateManager
 		states.push(state);
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, boolean isFocused)
 	{
-		peek().render(spriteBatch, modelBatch);
+		if (isFocused)
+		{
+			peek().render(spriteBatch, modelBatch);
+		}
+		else
+		{
+			peek().getPauseState().render(spriteBatch, modelBatch);
+		}
 	}
 
 	public void resize(int width, int height)
@@ -72,8 +79,15 @@ public class GameStateManager
 		push(state);
 	}
 
-	public void update(float dt)
+	public void update(float dt, boolean isFocused)
 	{
-		peek().update(dt);
+		if (isFocused)
+		{
+			peek().update(dt);
+		}
+		else
+		{
+			peek().getPauseState().update(dt);
+		}
 	}
 }

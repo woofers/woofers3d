@@ -41,6 +41,11 @@ public class MyFileReader
 		return fileNames[1];
 	}
 
+	/**
+	 * Gets the file name of a path.
+	 * @param path The path of the file
+	 * @return {@code String} - The file name
+	 */
 	public static String getFileName(String path)
 	{
 		String[] directories = path.split("/");

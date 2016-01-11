@@ -3,7 +3,7 @@ package com.jaxson.lib.gdx.states.renderables;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 
 public class MixedRenderable
@@ -22,7 +22,7 @@ public class MixedRenderable
 		modelRenderable.add(model);
 	}
 
-	public void add(Sprite sprite)
+	public void add(GdxSprite sprite)
 	{
 		spriteRenderable.add(sprite);
 	}
@@ -43,7 +43,7 @@ public class MixedRenderable
 		modelRenderable.remove(model);
 	}
 
-	public void remove(Sprite sprite)
+	public void remove(GdxSprite sprite)
 	{
 		spriteRenderable.add(sprite);
 	}

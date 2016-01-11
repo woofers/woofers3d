@@ -3,6 +3,7 @@ package com.jaxson.woofers3d.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
@@ -26,6 +27,8 @@ public class PlayState extends State
 	public PlayState(GameManager gameManager)
 	{
 		super(gameManager);
+
+		setPauseState(new PauseState(gameManager));
 
 		getTargetCamera().setWorld(getPhysicsWorld());
 
@@ -52,7 +55,6 @@ public class PlayState extends State
 		// player.setCollisionShape(player.getFittedHitbox());
 		applyPhysics(player);
 		add(player);
-
 	}
 
 	@Override

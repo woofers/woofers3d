@@ -2,9 +2,9 @@ package com.jaxson.lib.gdx.states.renderables;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 
-public class SpriteRenderable extends Renderable<Sprite>
+public class SpriteRenderable extends Renderable<GdxSprite>
 {
 	public SpriteRenderable()
 	{
@@ -17,10 +17,9 @@ public class SpriteRenderable extends Renderable<Sprite>
 		if (isEmpty()) return;
 		Vector2 location;
 		spriteBatch.begin();
-		for (Sprite sprite: objects)
+		for (GdxSprite sprite: objects)
 		{
-			location = sprite.getLocation();
-			spriteBatch.draw(sprite.getTexture(), location.x, location.y);
+			sprite.draw(spriteBatch);
 		}
 		spriteBatch.end();
 	}
