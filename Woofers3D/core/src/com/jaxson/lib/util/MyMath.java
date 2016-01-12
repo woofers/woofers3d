@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A Math class for miscellaneous functions.
+ * 
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -17,7 +18,9 @@ public class MyMath
 
 	/**
 	 * Get the absoulute value of the number.
-	 * @param value The number
+	 * 
+	 * @param value
+	 *            The number
 	 * @return {@code float} - The absoulute value
 	 */
 	public static float abs(float value)

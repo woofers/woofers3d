@@ -1,14 +1,14 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.jaxson.lib.gdx.graphics.GameObject;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.jaxson.lib.gdx.util.GdxFileReader;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jaxson.lib.gdx.graphics.MyColor;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.util.GdxFileReader;
 
 public class GdxSprite extends GameObject
 {
@@ -25,84 +25,20 @@ public class GdxSprite extends GameObject
 		this.sprite = new Sprite(texture);
 	}
 
-	public float getWidth()
+	@Override
+	public void dispose()
 	{
-		return sprite.getWidth();
+
 	}
 
-	public float getHeight()
+	public void draw(SpriteBatch spriteBatch)
 	{
-		return sprite.getHeight();
+		sprite.draw(spriteBatch);
 	}
 
-	public float getDepth()
+	public void flip(boolean flipX, boolean flipY)
 	{
-		return depth;
-	}
-
-	public Vector2 getSize()
-	{
-		return new Vector2(getWidth(), getHeight());
-	}
-
-	public float getLocationX()
-	{
-		return sprite.getX();
-	}
-
-	public float getLocationY()
-	{
-		return sprite.getY();
-	}
-
-	public Vector2 getLocation()
-	{
-		return new Vector2(getLocationX(), getLocationY());
-	}
-
-	public float getOriginX()
-	{
-		return sprite.getOriginX();
-	}
-
-	public float getOriginY()
-	{
-		return sprite.getOriginY();
-	}
-
-	public Vector2 getOrigin()
-	{
-		return new Vector2(getOriginX(), getOriginY());
-	}
-
-	public float getRotation()
-	{
-		return sprite.getRotation();
-	}
-
-	public float getScaleX()
-	{
-		return sprite.getScaleX();
-	}
-
-	public float getScaleY()
-	{
-		return sprite.getScaleY();
-	}
-
-	public Vector2 getScale()
-	{
-		return new Vector2(getScaleX(), getScaleY());
-	}
-
-	public Vector2 getCenter()
-	{
-		return getLocation().add(getOrigin());
-	}
-
-	public Color getTint()
-	{
-		return sprite.getColor();
+		sprite.flip(flipX, flipY);
 	}
 
 	public void flipX()
@@ -115,9 +51,84 @@ public class GdxSprite extends GameObject
 		flip(false, true);
 	}
 
-	public void flip(boolean flipX, boolean flipY)
+	public Vector2 getCenter()
 	{
-		sprite.flip(flipX, flipY);
+		return getLocation().add(getOrigin());
+	}
+
+	public float getDepth()
+	{
+		return depth;
+	}
+
+	public float getHeight()
+	{
+		return sprite.getHeight();
+	}
+
+	public Vector2 getLocation()
+	{
+		return new Vector2(getLocationX(), getLocationY());
+	}
+
+	public float getLocationX()
+	{
+		return sprite.getX();
+	}
+
+	public float getLocationY()
+	{
+		return sprite.getY();
+	}
+
+	public Vector2 getOrigin()
+	{
+		return new Vector2(getOriginX(), getOriginY());
+	}
+
+	public float getOriginX()
+	{
+		return sprite.getOriginX();
+	}
+
+	public float getOriginY()
+	{
+		return sprite.getOriginY();
+	}
+
+	public float getRotation()
+	{
+		return sprite.getRotation();
+	}
+
+	public Vector2 getScale()
+	{
+		return new Vector2(getScaleX(), getScaleY());
+	}
+
+	public float getScaleX()
+	{
+		return sprite.getScaleX();
+	}
+
+	public float getScaleY()
+	{
+		return sprite.getScaleY();
+	}
+
+	public Vector2 getSize()
+	{
+		return new Vector2(getWidth(), getHeight());
+	}
+
+	public Color getTint()
+	{
+		return sprite.getColor();
+	}
+
+	public float getWidth()
+	{
+		return sprite.getWidth();
 	}
 
 	public void setAlpha(float alpha)
@@ -135,14 +146,9 @@ public class GdxSprite extends GameObject
 		sprite.setCenter(x, y);
 	}
 
-	public void setTint(Color color)
+	public void setDepth(float depth)
 	{
-		sprite.setColor(color);
-	}
-
-	public void setTint(int r, int g, int b, int a)
-	{
-		setTint(new MyColor(r, g, b, a));
+		this.depth = depth;
 	}
 
 	public void setFlip(boolean flipX, boolean flipY)
@@ -150,14 +156,14 @@ public class GdxSprite extends GameObject
 		setFlip(flipX, flipY);
 	}
 
-	public void setOrigin(float originX, float originY)
+	public void setLocation(float x, float y)
 	{
-		sprite.setOrigin(originX, originY);
+		sprite.setPosition(x, y);
 	}
 
-	public void setOrigin()
+	public void setLocation(Vector2 location)
 	{
-		sprite.setOriginCenter();
+		setLocation(location.x, location.y);
 	}
 
 	public void setLocation(Vector3 location)
@@ -166,19 +172,14 @@ public class GdxSprite extends GameObject
 		depth = location.z;
 	}
 
-	public void setLocation(Vector2 location)
+	public void setOrigin()
 	{
-		setLocation(location.x, location.y);
+		sprite.setOriginCenter();
 	}
 
-	public void setLocation(float x, float y)
+	public void setOrigin(float originX, float originY)
 	{
-		sprite.setPosition(x, y);
-	}
-
-	public void setDepth(float depth)
-	{
-		this.depth = depth;
+		sprite.setOrigin(originX, originY);
 	}
 
 	public void setRotation(float roll)
@@ -191,24 +192,14 @@ public class GdxSprite extends GameObject
 		sprite.setScale(scale);
 	}
 
-	public void setSize(Vector2 size)
+	public void setScale(float scaleX, float scaleY)
 	{
-		setSize(size.x, size.y);
-	}
-
-	public void setSize(float width, float height)
-	{
-		sprite.setSize(width, height);
+		sprite.setScale(scaleX, scaleY);
 	}
 
 	public void setScale(Vector2 scale)
 	{
 		setScale(scale.x, scale.y);
-	}
-
-	public void setScale(float scaleX, float scaleY)
-	{
-		sprite.setScale(scaleX, scaleY);
 	}
 
 	public void setScaleX(float scale)
@@ -221,14 +212,34 @@ public class GdxSprite extends GameObject
 		setScale(getScaleX(), scale);
 	}
 
-	public void translate(Vector2 translation)
+	public void setSize(float width, float height)
 	{
-		translate(translation.x, translation.y);
+		sprite.setSize(width, height);
+	}
+
+	public void setSize(Vector2 size)
+	{
+		setSize(size.x, size.y);
+	}
+
+	public void setTint(Color color)
+	{
+		sprite.setColor(color);
+	}
+
+	public void setTint(int r, int g, int b, int a)
+	{
+		setTint(new MyColor(r, g, b, a));
 	}
 
 	public void translate(float x, float y)
 	{
 		sprite.translate(x, y);
+	}
+
+	public void translate(Vector2 translation)
+	{
+		translate(translation.x, translation.y);
 	}
 
 	public void translateX(float x)
@@ -239,17 +250,6 @@ public class GdxSprite extends GameObject
 	public void translateY(float y)
 	{
 		sprite.translateY(y);
-	}
-
-	@Override
-	public void dispose()
-	{
-
-	}
-
-	public void draw(SpriteBatch spriteBatch)
-	{
-		sprite.draw(spriteBatch);
 	}
 
 	@Override

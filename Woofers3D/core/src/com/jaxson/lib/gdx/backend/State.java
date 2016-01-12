@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.states;
+package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
@@ -16,30 +16,30 @@ import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.states.renderables.MixedRenderable;
+import com.jaxson.lib.gdx.states.renderer.MixedRenderer;
 
 public abstract class State extends GameObject
 {
 	private GameManager gameManager;
-	private MixedRenderable renderable;
+	private MixedRenderer renderer;
 	private PhysicsWorld world;
 	private State pauseState;
 
 	public State(GameManager gameManager)
 	{
 		this.gameManager = gameManager;
-		this.renderable = new MixedRenderable();
+		this.renderer = new MixedRenderer();
 		this.world = new PhysicsWorld();
 	}
 
 	public void add(Entity entity)
 	{
-		renderable.add(entity);
+		renderer.add(entity);
 	}
 
 	public void add(GdxSprite sprite)
 	{
-		renderable.add(sprite);
+		renderer.add(sprite);
 	}
 
 	public void applyPhysics(Floor entity)
@@ -65,7 +65,7 @@ public abstract class State extends GameObject
 	@Override
 	public void dispose()
 	{
-		renderable.dispose();
+		renderer.dispose();
 	}
 
 	public Camera getCamera()
@@ -86,6 +86,11 @@ public abstract class State extends GameObject
 	private Input getInput()
 	{
 		return Gdx.input;
+	}
+
+	public State getPauseState()
+	{
+		return pauseState;
 	}
 
 	public PhysicsWorld getPhysicsWorld()
@@ -113,11 +118,6 @@ public abstract class State extends GameObject
 		return getPauseState() != null;
 	}
 
-	public State getPauseState()
-	{
-		return pauseState;
-	}
-
 	@Override
 	protected void input()
 	{
@@ -126,17 +126,17 @@ public abstract class State extends GameObject
 
 	public void remove(Entity entity)
 	{
-		renderable.remove(entity);
+		renderer.remove(entity);
 	}
 
 	public void remove(GdxSprite sprite)
 	{
-		renderable.remove(sprite);
+		renderer.remove(sprite);
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		renderable.render(spriteBatch, modelBatch, getCamera());
+		renderer.render(spriteBatch, modelBatch, getCamera());
 		world.render(spriteBatch, modelBatch, getCamera());
 	}
 
@@ -145,14 +145,14 @@ public abstract class State extends GameObject
 
 	}
 
-	public void setPauseState(State pauseState)
-	{
-		this.pauseState = pauseState;
-	}
-
 	public void setCamera(Camera camera)
 	{
 		gameManager.setCamera(camera);
+	}
+
+	public void setPauseState(State pauseState)
+	{
+		this.pauseState = pauseState;
 	}
 
 	public void setViewport(Viewport viewport)
@@ -165,6 +165,6 @@ public abstract class State extends GameObject
 	{
 		super.update(dt);
 		world.update(dt);
-		renderable.update(dt);
+		renderer.update(dt);
 	}
 }

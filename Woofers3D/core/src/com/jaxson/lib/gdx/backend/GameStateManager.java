@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.states;
+package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -7,10 +7,12 @@ import java.util.Stack;
 
 public class GameStateManager
 {
+	private GameManager gameManager;
 	private Stack<State> states;
 
-	public GameStateManager()
+	public GameStateManager(GameManager gameManager)
 	{
+		this.gameManager = gameManager;
 		this.states = new Stack<State>();
 	}
 
@@ -19,9 +21,29 @@ public class GameStateManager
 		makeEmpty();
 	}
 
+	public boolean hasPausedState()
+	{
+		return peek().hasPauseState();
+	}
+
 	public boolean isEmpty()
 	{
 		return states.isEmpty();
+	}
+
+	public boolean isFocused()
+	{
+		return gameManager.isFocused();
+	}
+
+	public boolean isMinimized()
+	{
+		return gameManager.isMinimized();
+	}
+
+	public boolean isPaused()
+	{
+		return gameManager.isPaused();
 	}
 
 	public void makeEmpty()
@@ -51,15 +73,15 @@ public class GameStateManager
 		states.push(state);
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, boolean isFocused)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		if (isFocused)
+		if (!isPaused())
 		{
 			peek().render(spriteBatch, modelBatch);
 		}
 		else
 		{
-			peek().getPauseState().render(spriteBatch, modelBatch);
+			if (hasPausedState()) peek().getPauseState().render(spriteBatch, modelBatch);
 		}
 	}
 
@@ -79,15 +101,15 @@ public class GameStateManager
 		push(state);
 	}
 
-	public void update(float dt, boolean isFocused)
+	public void update(float dt)
 	{
-		if (isFocused)
+		if (!isPaused())
 		{
 			peek().update(dt);
 		}
 		else
 		{
-			peek().getPauseState().update(dt);
+			if (hasPausedState()) peek().getPauseState().update(dt);
 		}
 	}
 }

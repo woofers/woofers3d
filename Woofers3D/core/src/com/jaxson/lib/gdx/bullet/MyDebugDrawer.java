@@ -82,7 +82,8 @@ public class MyDebugDrawer
 		if (getDebugMode() == NO_DEBUG)
 		{
 			setDebugMode(MIXED);
-		} else
+		}
+		else
 		{
 			setDebugMode(NO_DEBUG);
 		}

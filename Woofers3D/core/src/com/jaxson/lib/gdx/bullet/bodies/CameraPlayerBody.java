@@ -76,7 +76,8 @@ public class CameraPlayerBody extends PlayerBody
 		if (cameraIsLocked())
 		{
 			unlockCamera();
-		} else
+		}
+		else
 		{
 			lockCamera();
 		}

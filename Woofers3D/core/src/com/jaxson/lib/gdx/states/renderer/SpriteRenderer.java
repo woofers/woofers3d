@@ -1,12 +1,12 @@
-package com.jaxson.lib.gdx.states.renderables;
+package com.jaxson.lib.gdx.states.renderer;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 
-public class SpriteRenderable extends Renderable<GdxSprite>
+public class SpriteRenderer extends Renderer<GdxSprite>
 {
-	public SpriteRenderable()
+	public SpriteRenderer()
 	{
 		super();
 	}

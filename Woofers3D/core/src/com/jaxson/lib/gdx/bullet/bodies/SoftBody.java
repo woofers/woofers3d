@@ -14,20 +14,20 @@ import java.nio.ShortBuffer;
 public abstract class SoftBody extends EntityBody<btSoftBody>
 {
 	private ShortBuffer indexMap;
-	private MeshPart rootMesh;
+	private MeshPart meshPart;
 	private int positionOffset;
 	private int normalOffset;
 
 	public SoftBody(Model model, float mass, PhysicsWorld world)
 	{
 		super(model, mass);
-		rootMesh = model.nodes.get(0).parts.get(0).meshPart;
-		rootMesh.mesh.scale(6, 6, 6);
-		indexMap = BufferUtils.newShortBuffer(rootMesh.size);
-		positionOffset = rootMesh.mesh.getVertexAttribute(Usage.Position).offset;
-		normalOffset = rootMesh.mesh.getVertexAttribute(Usage.Normal).offset;
-		setBody(new btSoftBody(world.getWorldInfo(), rootMesh.mesh.getVerticesBuffer(), rootMesh.mesh.getVertexSize(),
-				positionOffset, normalOffset, rootMesh.mesh.getIndicesBuffer(), rootMesh.offset, rootMesh.size,
+		meshPart = model.nodes.get(0).parts.get(0).meshPart;
+		meshPart.mesh.scale(6, 6, 6);
+		indexMap = BufferUtils.newShortBuffer(meshPart.size);
+		positionOffset = meshPart.mesh.getVertexAttribute(Usage.Position).offset;
+		normalOffset = meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
+		setBody(new btSoftBody(world.getWorldInfo(), meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(),
+				positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size,
 				indexMap, 0));
 		Material material = getBody().appendMaterial();
 		material.setKLST(0.2f);
@@ -65,8 +65,8 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	@Override
 	public void update(float dt)
 	{
-		getBody().getVertices(rootMesh.mesh.getVerticesBuffer(), rootMesh.mesh.getVertexSize(), positionOffset,
-				normalOffset, rootMesh.mesh.getIndicesBuffer(), rootMesh.offset, rootMesh.size, indexMap, 0);
+		getBody().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(), positionOffset,
+				normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0);
 		bodyToTransform();
 	}
 }

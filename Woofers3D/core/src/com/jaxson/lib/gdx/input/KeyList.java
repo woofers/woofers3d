@@ -55,7 +55,7 @@ public class KeyList
 	{
 		int size = keycodes.size();
 		int[] intKeycodes = new int[size];
-		for (int i = 0; i < size; i ++)
+		for (int i = 0; i < size; i++)
 		{
 			intKeycodes[i] = keycodes.get(i);
 		}

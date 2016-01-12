@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.states;
+package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.GameObject;
@@ -31,6 +32,7 @@ public class DisplayManager extends GameObject
 	private BitmapFont font;
 	private Viewport viewport;
 	private Camera camera;
+	private boolean minimized;
 	private boolean paused;
 
 	public DisplayManager(GameManager gameManager)
@@ -39,7 +41,7 @@ public class DisplayManager extends GameObject
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
 		this.camera = new TargetCamera(getWidth(), getHeight());
-		this.viewport = new FillViewport(getWidth(), getHeight(), getCamera());
+		this.viewport = new StretchViewport(getWidth(), getHeight(), getCamera());
 		this.font = new BitmapFont();
 
 		font.setColor(FPS_COLOR);
@@ -80,20 +82,6 @@ public class DisplayManager extends GameObject
 		getSpriteBatch().begin();
 		font.draw(getSpriteBatch(), "Fps: " + getFps(), getOriginX() + FONT_PADDING, getOriginY() + FONT_PADDING);
 		getSpriteBatch().end();
-		/*
-		 * System.out.println("--------------------------");
-		 * System.out.println("getBottomGutterHeight()" + ":  " +
-		 * getViewport().getBottomGutterHeight()); System.out.println("getLeftGutterWidth()" + ":  "
-		 * + getViewport().getLeftGutterWidth()); System.out.println("getRightGutterWidth()" + ":  "
-		 * + getViewport().getRightGutterWidth()); System.out.println("getRightGutterX()" + ":  " +
-		 * getViewport().getRightGutterX()); System.out.println("getTopGutterHeight()" + ":  " +
-		 * getViewport().getTopGutterHeight()); System.out.println("getTopGutterY()" + ":  " +
-		 * getViewport().getTopGutterY()); System.out.println("getScreenHeight()" + ":  " +
-		 * getViewport().getScreenHeight()); System.out.println("getScreenWidth()" + ":  " +
-		 * getViewport().getScreenWidth()); System.out.println("getScreenX()" + ":  " +
-		 * getViewport().getScreenX()); System.out.println("getScreenY()" + ":  " +
-		 * getViewport().getScreenY());
-		 */
 	}
 
 	public float getAspectRatio()
@@ -261,10 +249,9 @@ public class DisplayManager extends GameObject
 	@Override
 	protected void input()
 	{
-		if (InputHandler.isClicked()) setCursorCatched(true);
-		if (!isFocused()) return;
-		if (!isFullscreen() && isCursorCatched() && InputHandler.isPressed(Keys.ESCAPE)) setCursorCatched(false);
 		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
+		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
+		if (InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
 	}
 
 	public boolean isCursorCatched()
@@ -274,12 +261,17 @@ public class DisplayManager extends GameObject
 
 	public boolean isFocused()
 	{
-		return !isPaused() && isCursorCatched() || isMobile();
+		return !isMinimized() && isCursorCatched() || isMobile();
 	}
 
 	public boolean isFullscreen()
 	{
 		return getGraphics().isFullscreen();
+	}
+
+	public boolean isMinimized()
+	{
+		return minimized;
 	}
 
 	public boolean isMobile()
@@ -295,7 +287,8 @@ public class DisplayManager extends GameObject
 	@Override
 	public void pause()
 	{
-		paused = true;
+		if (!isPaused()) setCursorCatched(minimized);
+		minimized = true;
 	}
 
 	public void render()
@@ -316,7 +309,8 @@ public class DisplayManager extends GameObject
 	@Override
 	public void resume()
 	{
-		paused = false;
+		if (!isPaused()) setCursorCatched(minimized);
+		minimized = false;
 	}
 
 	public void setCamera(Camera camera)
@@ -367,11 +361,20 @@ public class DisplayManager extends GameObject
 		if (fullscreen)
 		{
 			setDisplayMode(getFullscreenDisplayMode());
-		} else
+			setCursorCatched(true);
+		}
+		else
 		{
 			setDisplayMode(getDefaultWidth(), getDefaultHeight());
+			if (!isPaused()) setCursorCatched(true);
 		}
 		InputHandler.reset();
+	}
+
+	public void setPaused(boolean paused)
+	{
+		this.paused = paused;
+		setCursorCatched(!isPaused());
 	}
 
 	public void setViewport(int width, int height)
@@ -410,6 +413,11 @@ public class DisplayManager extends GameObject
 		setFullscreen(!isFullscreen());
 		getConfig().setFullscreenStartup(isFullscreen());
 		getConfig().save();
+	}
+
+	public void togglePaused()
+	{
+		setPaused(!isPaused());
 	}
 
 	@Override

@@ -3,16 +3,16 @@ package com.jaxson.woofers3d.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.State;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
-import com.jaxson.lib.gdx.states.GameManager;
-import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
+import com.badlogic.gdx.graphics.Color;
 
 public class PlayState extends State
 {
@@ -37,11 +37,11 @@ public class PlayState extends State
 		add(floor);
 
 		boxs = new RigidBox[BOX_AMOUNT];
-		for (int i = 0; i < BOX_AMOUNT; i ++)
+		for (int i = 0; i < BOX_AMOUNT; i++)
 		{
-			boxs[i] = new RigidBox(GdxMath.randColor());
+			boxs[i] = new RigidBox(Color.ORANGE);
 			boxs[i].setLocation(new Vector3(10f, 15f, 0));
-			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 4f)));
+			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 2f), MyMath.randFloat(1f, 4f)));
 			boxs[i].setMass(0.0001f);
 			applyPhysics(boxs[i]);
 			add(boxs[i]);

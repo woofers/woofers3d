@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.states;
+package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Application.ApplicationType;
@@ -24,7 +24,7 @@ public class GameManager
 	{
 		this.config = config;
 		this.inputHandler = new InputHandler();
-		this.gameStateManager = new GameStateManager();
+		this.gameStateManager = new GameStateManager(this);
 		this.displayManager = new DisplayManager(this);
 		setInputProcessor(InputHandler.getInputProcessor());
 		InputHandler.setSensitivity(getConfig().getSensitivity());
@@ -91,19 +91,24 @@ public class GameManager
 		return displayManager.isFocused();
 	}
 
-	public boolean isPaused()
-	{
-		return displayManager.isPaused();
-	}
-
 	public boolean isIOS()
 	{
 		return getApplicationType() == ApplicationType.iOS;
 	}
 
+	public boolean isMinimized()
+	{
+		return displayManager.isMinimized();
+	}
+
 	public boolean isMobile()
 	{
 		return isSmartPhone() || isWeb();
+	}
+
+	public boolean isPaused()
+	{
+		return displayManager.isPaused();
 	}
 
 	public boolean isSmartPhone()
@@ -135,14 +140,13 @@ public class GameManager
 		accumulator += dt;
 		while (accumulator >= step)
 		{
-			gameStateManager.update(step, isFocused());
+			gameStateManager.update(step);
 			displayManager.update(step);
 			InputHandler.update(step);
 			accumulator -= step;
 		}
-		if (!isFocused()) return;
 		displayManager.render();
-		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch(), isFocused());
+		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch());
 		displayManager.drawFps();
 	}
 

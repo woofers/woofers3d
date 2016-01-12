@@ -4,8 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.jaxson.lib.gdx.states.GameManager;
-import com.jaxson.lib.gdx.states.State;
+import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.State;
 
 public abstract class Game extends ApplicationAdapter
 {

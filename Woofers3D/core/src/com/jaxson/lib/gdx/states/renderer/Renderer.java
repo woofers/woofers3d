@@ -1,13 +1,13 @@
-package com.jaxson.lib.gdx.states.renderables;
+package com.jaxson.lib.gdx.states.renderer;
 
 import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
-public abstract class Renderable<T extends GameObject>
+public abstract class Renderer<T extends GameObject>
 {
 	protected MyArrayList<T> objects;
 
-	public Renderable()
+	public Renderer()
 	{
 		this.objects = new MyArrayList<T>();
 	}
