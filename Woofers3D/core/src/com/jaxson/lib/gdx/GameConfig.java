@@ -22,7 +22,7 @@ public class GameConfig extends GsonObject<GameConfig>
 
 	public static final float CLAMP = 1f / 4f;
 	public static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
-	public static final Color CLEAR_COLOR = Color.BLUE;
+	public static final Color CLEAR_COLOR = Color.BLACK;
 
 	private String title = "New Game";
 	private int width;

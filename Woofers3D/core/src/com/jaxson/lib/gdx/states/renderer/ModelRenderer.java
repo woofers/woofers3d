@@ -26,14 +26,7 @@ public class ModelRenderer extends Renderer<Entity>
 		if (camera == null) return;
 		if (isEmpty()) return;
 
-		environment.getShadowLight().begin(Vector3.Zero, camera.direction);
-		environment.getShadowBatch().begin(environment.getShadowLight().getCamera());
-		for (Entity entity: objects)
-		{
-			environment.getShadowBatch().render(entity.getModelInstance());
-		}
-		environment.getShadowBatch().end();
-		environment.getShadowLight().end();
+		environment.render(objects, camera);
 
 		modelBatch.begin(camera);
 		for (Entity entity: objects)
