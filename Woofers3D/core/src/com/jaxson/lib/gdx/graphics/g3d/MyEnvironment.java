@@ -16,26 +16,26 @@ public class MyEnvironment extends Environment
 	private static final Vector3 LIGHT_DIRECTION = new Vector3(-1f, -0.8f, -0.2f);
 
 	private DirectionalShadowLight shadowLight;
-	private ModelBatch shawdowBatch;
+	private ModelBatch shadowBatch;
 
 	public MyEnvironment()
 	{
 		super();
 		set(new ColorAttribute(LIGHT_TYPE, LIGHT_COLOR));
-		light = new DirectionalShadowLight(1024, 1024, 20f, 20f, 1f, 300f);
-		light.set(LIGHT_COLOR, LIGHT_DIRECTION);
-		add(light);
+		shadowLight = new DirectionalShadowLight(1024, 1024, 40f, 40f, 1f, 300f);
+		shadowLight.set(LIGHT_COLOR, LIGHT_DIRECTION);
+		add(shadowLight);
 		this.shadowMap = shadowLight;
-		this.shawdowBatch = new ModelBatch(new DepthShaderProvider());
+		this.shadowBatch = new ModelBatch(new DepthShaderProvider());
 	}
 
-	public DirectionalShadowLight getShawdowLight()
+	public DirectionalShadowLight getShadowLight()
 	{
 		return shadowLight;
 	}
 
-	public ModelBatch getShawdowBatch()
+	public ModelBatch getShadowBatch()
 	{
-		return shawdowBatch;
+		return shadowBatch;
 	}
 }
