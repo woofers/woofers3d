@@ -8,11 +8,9 @@ import com.jaxson.lib.gdx.backend.State;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
-import com.jaxson.lib.gdx.graphics.g3d.Box;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
-import com.badlogic.gdx.graphics.Color;
 
 public class PlayState extends State
 {
@@ -21,16 +19,12 @@ public class PlayState extends State
 	private Floor floor;
 	private RigidBox[] boxs;
 	private SoftBox softBox;
-	private Box ghost;
 	private Player player;
 
 	public PlayState(GameManager gameManager)
 	{
 		super(gameManager);
-
 		setPauseState(new PauseState(gameManager));
-
-		getTargetCamera().setWorld(getPhysicsWorld());
 
 		floor = new Floor();
 		applyPhysics(floor);
@@ -39,8 +33,8 @@ public class PlayState extends State
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i++)
 		{
-			boxs[i] = new RigidBox(Color.ORANGE);
-			boxs[i].setLocation(new Vector3(10f, 15f, 0));
+			boxs[i] = new RigidBox(GdxMath.randColor());
+			boxs[i].setLocation(GdxMath.randVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 2f), MyMath.randFloat(1f, 4f)));
 			boxs[i].setMass(0.0001f);
 			applyPhysics(boxs[i]);

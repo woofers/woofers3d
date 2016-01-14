@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
 
 public class MixedRenderer
 {
@@ -31,6 +32,11 @@ public class MixedRenderer
 	{
 		spriteRenderer.dispose();
 		modelRenderer.dispose();
+	}
+
+	public MyEnvironment getEnvironment()
+	{
+		return modelRenderer.getEnvironment();
 	}
 
 	public boolean isEmpty()

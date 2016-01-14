@@ -11,13 +11,9 @@ import javax.swing.JFrame;
 public class Window extends JFrame
 {
 	private static final String TITLE = "Window";
-
 	private static final int WIDTH = 800;
-
 	private static final int HEIGHT = 600;
-
 	private static final double MIN_SIZE = 0.4;
-
 	private static final int CLOSE_OPERATION = EXIT_ON_CLOSE;
 	private static final LayoutManager LAYOUT = new BorderLayout();
 

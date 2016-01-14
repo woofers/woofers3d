@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 
 /**
  * Class to serialize any {@code Object} into a string.
- * 
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -17,9 +16,8 @@ public abstract class GsonObject<T>
 
 	/**
 	 * Constructs an GsonObject containing the class type of the object.
-	 * 
-	 * @param type
-	 *            The class
+	 * @param type The generic class
+	 * The class
 	 */
 	public GsonObject(Class<T> type)
 	{
@@ -28,9 +26,7 @@ public abstract class GsonObject<T>
 
 	/**
 	 * Parses the json string into the object.
-	 * 
-	 * @param json
-	 *            The json to parse
+	 * @param json The json to parse
 	 * @return {@code T} - Newly parsed object
 	 */
 	public T fromJson(String json)
@@ -45,7 +41,6 @@ public abstract class GsonObject<T>
 
 	/**
 	 * Serializes the object into a json string.
-	 * 
 	 * @return {@code String} - Newly serialized json string
 	 */
 	public String toJson()

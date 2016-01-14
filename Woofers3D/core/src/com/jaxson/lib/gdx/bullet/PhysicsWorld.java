@@ -53,6 +53,7 @@ public class PhysicsWorld
 	private btSequentialImpulseConstraintSolver constraintSolver;
 	private btSoftRigidDynamicsWorld world;
 	private btSoftBodyWorldInfo worldInfo;
+	private Vector3 worldSize;
 
 	public PhysicsWorld()
 	{
@@ -68,6 +69,7 @@ public class PhysicsWorld
 	{
 		BulletStarter.init();
 
+		this.worldSize = GdxMath.absVector(minSize).add(GdxMath.absVector(maxSize));
 		this.objects = new MyArrayList<EntityBody<?>>();
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
@@ -181,6 +183,11 @@ public class PhysicsWorld
 	public btSoftBodyWorldInfo getWorldInfo()
 	{
 		return worldInfo;
+	}
+
+	public Vector3 getWorldSize()
+	{
+		return worldSize;
 	}
 
 	public void remove(RigidBody entity)

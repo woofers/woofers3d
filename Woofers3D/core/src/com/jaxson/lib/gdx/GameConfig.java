@@ -141,8 +141,7 @@ public class GameConfig extends GsonObject<GameConfig>
 
 	public void read()
 	{
-		String json = MyFileReader.read(getSaveLocation());
-		set(fromJson(json));
+		set(fromJson(MyFileReader.read(getSaveLocation())));
 	}
 
 	public void readOrCreate()

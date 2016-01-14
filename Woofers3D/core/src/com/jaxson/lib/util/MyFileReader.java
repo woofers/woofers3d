@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 /**
  * A FileReader that handles writing and reading.
- * 
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -16,9 +15,7 @@ public class MyFileReader
 {
 	/**
 	 * Gets whether the file exists.
-	 * 
-	 * @param path
-	 *            The path of the file
+	 * @param path The path of the file
 	 * @return {@code boolean} - Whether the object exists
 	 */
 	public static boolean exists(String path)
@@ -28,10 +25,8 @@ public class MyFileReader
 
 	/**
 	 * Gets the file extension of a path. Returns null if the file has no
-	 * extesnion
-	 * 
-	 * @param path
-	 *            The path of the file
+	 * extesnion.
+	 * @param path The path of the file
 	 * @return {@code String} - The file extension
 	 */
 	public static String getFileExtension(String path)
@@ -48,9 +43,7 @@ public class MyFileReader
 
 	/**
 	 * Gets the file name of a path.
-	 * 
-	 * @param path
-	 *            The path of the file
+	 * @param path The path of the file
 	 * @return {@code String} - The file name
 	 */
 	public static String getFileName(String path)
@@ -61,9 +54,7 @@ public class MyFileReader
 
 	/**
 	 * Parses a text file
-	 * 
-	 * @param path
-	 *            The path of the file
+	 * @param path The path of the file
 	 * @return {@code String} - The contents of the file
 	 */
 	public static String read(String path)
@@ -80,15 +71,18 @@ public class MyFileReader
 				output += System.lineSeparator();
 				nextLine = reader.readLine();
 			}
-		} catch (Exception ex)
+		}
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
-		} finally
+		}
+		finally
 		{
 			try
 			{
 				reader.close();
-			} catch (Exception ex)
+			}
+			catch (Exception ex)
 			{
 				ex.printStackTrace();
 			}
@@ -98,11 +92,8 @@ public class MyFileReader
 
 	/**
 	 * Writes to a text file
-	 * 
-	 * @param path
-	 *            The path to write to
-	 * @param contents
-	 *            The contents to write
+	 * @param path The path to write to
+	 * @param contents The contents to write
 	 */
 	public static void write(String path, String contents)
 	{
@@ -112,10 +103,12 @@ public class MyFileReader
 			writer = new PrintWriter(path);
 			writer.print(contents);
 
-		} catch (Exception ex)
+		}
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
-		} finally
+		}
+		finally
 		{
 			writer.close();
 		}

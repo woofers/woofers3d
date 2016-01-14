@@ -1,6 +1,6 @@
 package com.jaxson.lib.gdx.states.renderer;
 
-import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
 public abstract class Renderer<T extends GameObject>

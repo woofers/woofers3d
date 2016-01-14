@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 
 public class GdxSprite extends GameObject

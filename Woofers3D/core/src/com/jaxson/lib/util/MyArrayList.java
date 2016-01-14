@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * An ArrayList that will not add null .
- * 
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -20,9 +19,7 @@ public class MyArrayList<E> extends ArrayList<E>
 
 	/**
 	 * Adds element to the list. Does nothing if element is null.
-	 * 
-	 * @param e
-	 *            Element to add
+	 * @param e Element to add
 	 * @return {@code boolean} - Whether element was added
 	 */
 	@Override

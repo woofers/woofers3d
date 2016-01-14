@@ -2,7 +2,6 @@ package com.jaxson.woofers3d.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.GameManager;
 import com.jaxson.lib.gdx.backend.State;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
@@ -10,6 +9,8 @@ import com.jaxson.lib.gdx.graphics.g3d.Box;
 
 public class PauseState extends State
 {
+	private static final String PAUSE_SCREEN_PATH = "pauseScreen.png";
+
 	private GdxSprite image;
 	private Box box;
 
@@ -17,8 +18,7 @@ public class PauseState extends State
 	{
 		super(gameManager);
 
-		image = new GdxSprite("pauseScreen.png");
-		image.setLocation(new Vector2(0, 0));
+		image = new GdxSprite(PAUSE_SCREEN_PATH);
 		add(image);
 	}
 

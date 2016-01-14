@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
-import com.jaxson.lib.gdx.graphics.GameObject;
+import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;

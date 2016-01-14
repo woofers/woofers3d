@@ -5,7 +5,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A Math class for miscellaneous functions.
- * 
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -18,31 +17,48 @@ public class MyMath
 
 	/**
 	 * Get the absoulute value of the number.
-	 * 
-	 * @param value
-	 *            The number
-	 * @return {@code float} - The absoulute value
+	 * @param value Number The number
+	 * @return {@link float} - The absoulute value
 	 */
 	public static float abs(float value)
 	{
 		return Math.abs(value);
 	}
 
+	/**
+	 * Inverts the sign of a number.
+	 * @param value The number
+	 * @return {@link float} - The absoulute value
+	 */
 	public static float flipSign(float value)
 	{
 		return value * FLIP_SIGN;
 	}
 
+	/**
+	 * Returns the current Random instance.
+	 * @return {@link Random} - The Random instance
+	 */
 	public static Random getRandom()
 	{
 		return ThreadLocalRandom.current();
 	}
 
+	/**
+	 * Retruns the whether a number is even.
+	 * @param value The number
+	 * @return {@link boolean} - Whether the number is even
+	 */
 	public static boolean isEven(int value)
 	{
 		return value % 2 == 0;
 	}
 
+	/**
+	 * Retruns the whether a number is odd.
+	 * @param value The number
+	 * @return {@link boolean} - Whether the number is odd
+	 */
 	public static boolean isOdd(int value)
 	{
 		return !isEven(value);

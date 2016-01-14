@@ -12,13 +12,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
-import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyMath;
 
 public class DisplayManager extends GameObject

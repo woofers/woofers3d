@@ -6,17 +6,19 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
-import com.jaxson.lib.gdx.graphics.GameObject;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
 import com.jaxson.lib.gdx.states.renderer.MixedRenderer;
+import com.jaxson.lib.gdx.util.GameObject;
 
 public abstract class State extends GameObject
 {
@@ -30,6 +32,8 @@ public abstract class State extends GameObject
 		this.gameManager = gameManager;
 		this.renderer = new MixedRenderer();
 		this.world = new PhysicsWorld();
+		getEnvironment().setWorldSize(new Vector3(100f, 0f, 100f));
+		getEnvironment().setShawdows(true);
 	}
 
 	public void add(Entity entity)
@@ -71,6 +75,11 @@ public abstract class State extends GameObject
 	public Camera getCamera()
 	{
 		return gameManager.getCamera();
+	}
+
+	public MyEnvironment getEnvironment()
+	{
+		return renderer.getEnvironment();
 	}
 
 	private Graphics getGraphics()
@@ -148,6 +157,7 @@ public abstract class State extends GameObject
 	public void setCamera(Camera camera)
 	{
 		gameManager.setCamera(camera);
+		if (camera instanceof TargetCamera) getTargetCamera().setWorld(world);
 	}
 
 	public void setPauseState(State pauseState)
