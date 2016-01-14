@@ -763,6 +763,11 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return getTouchAmmount() >= 3;
 	}
 
+	public static boolean twoFingerTouched()
+	{
+		return areTouchedPressed(2);
+	}
+
 	public static boolean twoFingerTouching()
 	{
 		return getTouchAmmount() >= 2;

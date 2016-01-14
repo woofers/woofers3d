@@ -19,6 +19,7 @@ import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
 import com.jaxson.lib.gdx.states.renderer.MixedRenderer;
 import com.jaxson.lib.gdx.util.GameObject;
+import com.jaxson.lib.gdx.graphics.MyColor;
 
 public abstract class State extends GameObject
 {

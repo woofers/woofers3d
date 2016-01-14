@@ -54,6 +54,7 @@ public class PhysicsWorld
 	private btSoftRigidDynamicsWorld world;
 	private btSoftBodyWorldInfo worldInfo;
 	private Vector3 worldSize;
+	private RayCallback rayCallback;
 
 	public PhysicsWorld()
 	{
@@ -69,7 +70,7 @@ public class PhysicsWorld
 	{
 		BulletStarter.init();
 
-		this.worldSize = GdxMath.absVector(minSize).add(GdxMath.absVector(maxSize));
+		this.worldSize = maxSize.sub(minSize);
 		this.objects = new MyArrayList<EntityBody<?>>();
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
@@ -78,6 +79,7 @@ public class PhysicsWorld
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.world = new btSoftRigidDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		this.debugDrawer = new MyDebugDrawer(world);
+		this.rayCallback = new RayCallback();
 
 		this.worldInfo = new btSoftBodyWorldInfo();
 		this.worldInfo.setBroadphase(broadphase);
@@ -143,26 +145,12 @@ public class PhysicsWorld
 
 	public EntityBody<?> getBody(Ray ray)
 	{
-		float length, newDistance, distance;
-		Vector3 location;
-		EntityBody<?> result = null;
-
-		distance = -1f;
+		btCollisionObject object = rayCallback.getCollisionObject(ray, this);
 		for (EntityBody<?> entity: objects)
 		{
-			location = entity.getCenterLocation();
-			length = ray.direction.dot(location.x - ray.origin.x, location.y - ray.origin.y, location.z - ray.origin.z);
-			if (length < 0f) continue;
-			newDistance = location.dst2(ray.origin.x + ray.direction.x * length,
-					ray.origin.y + ray.direction.y * length, ray.origin.z + ray.direction.z * length);
-			if (distance >= 0f && newDistance > distance) continue;
-			if (newDistance <= Math.pow(entity.getRadius(), 2))
-			{
-				result = entity;
-				distance = newDistance;
-			}
+			if ((btCollisionObject)(entity.getBody()) == object) return entity;
 		}
-		return result;
+		return null;
 	}
 
 	public EntityBody<?> getBody(Vector2 location, Camera camera)
@@ -196,6 +184,11 @@ public class PhysicsWorld
 		world.removeRigidBody(entity.getBody());
 	}
 
+	public void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)
+	{
+		world.rayTest(rayStart, rayEnd, callback);
+	}
+
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
 		debugDrawer.render(spriteBatch, modelBatch, camera);
@@ -219,6 +212,7 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (InputHandler.isPressed(Keys.F5) || InputHandler.threeFingerTouched()) toggleDebugMode();
+		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.F5)) toggleDebugMode();
+		if (InputHandler.hasTouchScreen() && InputHandler.twoFingerTouched()) toggleDebugMode();
 	}
 }

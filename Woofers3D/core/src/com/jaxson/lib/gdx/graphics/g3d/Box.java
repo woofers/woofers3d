@@ -24,6 +24,11 @@ public class Box extends Entity
 		super.dispose();
 	}
 
+	protected void input()
+	{
+
+	}
+
 	@Override
 	public void update(float dt)
 	{

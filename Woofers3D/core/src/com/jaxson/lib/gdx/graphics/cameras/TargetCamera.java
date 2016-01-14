@@ -144,7 +144,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void rotateAround(Vector3 location, float yaw, float pitch, float roll)
 	{
-		rotateAround(location, yaw, pitch, roll, false);
+		rotateAround(location, yaw, pitch, roll, true);
 	}
 
 	public void rotateAround(Vector3 location, float yaw, float pitch, float roll, boolean keepInBounds)

@@ -11,13 +11,23 @@ public class ModelRenderer extends Renderer<Entity>
 
 	public ModelRenderer()
 	{
+		this(new MyEnvironment());
+	}
+
+	public ModelRenderer(MyEnvironment environment)
+	{
 		super();
-		this.environment = new MyEnvironment();
+		this.environment = environment;
 	}
 
 	public MyEnvironment getEnvironment()
 	{
 		return environment;
+	}
+
+	public void setEnvironment(MyEnvironment environment)
+	{
+		this.environment = environment;
 	}
 
 	public void render(ModelBatch modelBatch, Camera camera)

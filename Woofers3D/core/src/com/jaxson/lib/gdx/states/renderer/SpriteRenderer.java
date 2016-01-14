@@ -15,7 +15,6 @@ public class SpriteRenderer extends Renderer<GdxSprite>
 	{
 		if (spriteBatch == null) return;
 		if (isEmpty()) return;
-		Vector2 location;
 		spriteBatch.begin();
 		for (GdxSprite sprite: objects)
 		{
