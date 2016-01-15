@@ -249,9 +249,8 @@ public class DisplayManager extends GameObject
 	protected void input()
 	{
 		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
-		//if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
-		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(InputHandler.ESCAPE)) togglePaused();
-		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(InputHandler.ALT)) toggleCursorCatched();
+		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
+		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
 		if (InputHandler.hasTouchScreen() && InputHandler.threeFingerTouched()) togglePaused();
 	}
 

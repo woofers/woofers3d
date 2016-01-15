@@ -1,11 +1,11 @@
 package com.jaxson.lib.gdx.bullet;
 
-import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
-import com.badlogic.gdx.math.collision.Ray;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 
 public class RayCallback extends ClosestRayResultCallback
 {
@@ -18,12 +18,6 @@ public class RayCallback extends ClosestRayResultCallback
 		super(Vector3.Zero, Vector3.Z);
 		this.rayStart = new Vector3();
 		this.rayEnd = new Vector3();
-	}
-
-	public void reset()
-	{
-		setCollisionObject(null);
-		setClosestHitFraction(1f);
 	}
 
 	public btCollisionObject getCollisionObject(float x, float y, Camera camera, PhysicsWorld world)
@@ -47,16 +41,10 @@ public class RayCallback extends ClosestRayResultCallback
 		return null;
 	}
 
-	public btRigidBody getRigidBody(float x, float y, Camera camera, PhysicsWorld world)
+	public void reset()
 	{
-		return getRigidBody(camera.getPickRay(x, y), world);
-	}
-
-	public btRigidBody getRigidBody(Ray ray, PhysicsWorld world)
-	{
-		btCollisionObject object = getCollisionObject(ray, world);
-		if (object instanceof btRigidBody) return (btRigidBody)(object);
-		return null;
+		setCollisionObject(null);
+		setClosestHitFraction(1f);
 	}
 
 }

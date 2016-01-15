@@ -24,6 +24,7 @@ public class Box extends Entity
 		super.dispose();
 	}
 
+	@Override
 	protected void input()
 	{
 

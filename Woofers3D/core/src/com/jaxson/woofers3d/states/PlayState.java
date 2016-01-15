@@ -3,18 +3,18 @@ package com.jaxson.woofers3d.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.GameManager;
 import com.jaxson.lib.gdx.backend.State;
+import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
+import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
+import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
-import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
-import com.badlogic.gdx.math.collision.Ray;
-import com.jaxson.lib.gdx.input.InputHandler;
 
 public class PlayState extends State
 {
@@ -40,8 +40,7 @@ public class PlayState extends State
 		{
 			boxs[i] = new RigidBox(GdxMath.randColor());
 			boxs[i].setLocation(GdxMath.randVector3(6f, 30f));
-			boxs[i].setSize(new Vector3(GdxMath.randFloat(1f, 4f), GdxMath.randFloat(1f, 2f), GdxMath.randFloat(1f, 4f)));
-			boxs[i].setMass(0.0001f);
+			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 2f), MyMath.randFloat(1f, 4f)));
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
 		}
@@ -64,20 +63,18 @@ public class PlayState extends State
 	@Override
 	protected void input()
 	{
-		//if (InputHandler.hasTouchScreen())
-		//{
-			if (InputHandler.justTouched())
+		if (InputHandler.hasTouchScreen() && InputHandler.justTouched())
+		{
+			Ray ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
+			EntityBody<?> body = getPhysicsWorld().getBody(ray);
+			System.out.println(body);
+			if (body instanceof RigidBody)
 			{
-				Ray ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
-				EntityBody<?> body = getPhysicsWorld().getBody(ray);
-				System.out.println(body);
-				if (body instanceof RigidBody)
-				{
-					RigidBody rigidBody = (RigidBody)(body);
-					rigidBody.applyCentralImpulse(ray.direction.cpy().scl(20f));
-				}
+				RigidBody rigidBody = (RigidBody) body;
+				rigidBody.activate();
+				rigidBody.applyCentralImpulse(ray.direction.scl(5f));
 			}
-		//}
+		}
 	}
 
 	@Override

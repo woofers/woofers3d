@@ -1,7 +1,6 @@
 package com.jaxson.lib.gdx.states.renderer;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 
 public class SpriteRenderer extends Renderer<GdxSprite>

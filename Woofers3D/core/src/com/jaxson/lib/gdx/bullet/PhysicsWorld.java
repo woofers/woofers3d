@@ -148,7 +148,7 @@ public class PhysicsWorld
 		btCollisionObject object = rayCallback.getCollisionObject(ray, this);
 		for (EntityBody<?> entity: objects)
 		{
-			if ((btCollisionObject)(entity.getBody()) == object) return entity;
+			if (entity.getBody() == object) return entity;
 		}
 		return null;
 	}
@@ -178,15 +178,15 @@ public class PhysicsWorld
 		return worldSize;
 	}
 
+	public void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)
+	{
+		world.rayTest(rayStart, rayEnd, callback);
+	}
+
 	public void remove(RigidBody entity)
 	{
 		objects.remove(entity);
 		world.removeRigidBody(entity.getBody());
-	}
-
-	public void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)
-	{
-		world.rayTest(rayStart, rayEnd, callback);
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)

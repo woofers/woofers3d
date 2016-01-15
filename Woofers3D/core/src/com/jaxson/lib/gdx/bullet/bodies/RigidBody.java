@@ -1,10 +1,10 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.bullet.MyMotionState;
-import com.badlogic.gdx.math.Vector3;
 
 public abstract class RigidBody extends ShapeBody<btRigidBody>
 {
@@ -32,14 +32,14 @@ public abstract class RigidBody extends ShapeBody<btRigidBody>
 		this(readModel(modelPath), shape, mass);
 	}
 
-	public void applyCentralImpulse(Vector3 impulse)
-	{
-		getBody().applyCentralImpulse(impulse);
-	}
-
 	public void activate()
 	{
 		getBody().activate();
+	}
+
+	public void applyCentralImpulse(Vector3 impulse)
+	{
+		getBody().applyCentralImpulse(impulse);
 	}
 
 	@Override

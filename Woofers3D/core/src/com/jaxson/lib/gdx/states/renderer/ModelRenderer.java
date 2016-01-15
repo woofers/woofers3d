@@ -25,11 +25,6 @@ public class ModelRenderer extends Renderer<Entity>
 		return environment;
 	}
 
-	public void setEnvironment(MyEnvironment environment)
-	{
-		this.environment = environment;
-	}
-
 	public void render(ModelBatch modelBatch, Camera camera)
 	{
 		if (modelBatch == null) return;
@@ -42,5 +37,10 @@ public class ModelRenderer extends Renderer<Entity>
 			if (entity.isVisible(camera)) modelBatch.render(entity.getModelInstance(), environment);
 		}
 		modelBatch.end();
+	}
+
+	public void setEnvironment(MyEnvironment environment)
+	{
+		this.environment = environment;
 	}
 }
