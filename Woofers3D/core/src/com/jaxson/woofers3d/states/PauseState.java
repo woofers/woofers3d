@@ -19,6 +19,7 @@ public class PauseState extends State
 		super(gameManager);
 
 		image = new GdxSprite(PAUSE_SCREEN_PATH);
+		image.setAlpha(0.75f);
 		add(image);
 	}
 

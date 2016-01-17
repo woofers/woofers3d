@@ -56,8 +56,8 @@ public class MixedRenderer
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
-		spriteRenderer.render(spriteBatch);
-		modelRenderer.render(modelBatch, camera);
+		spriteRenderer.render(spriteBatch, modelBatch, camera);
+		modelRenderer.render(spriteBatch, modelBatch, camera);
 	}
 
 	public void update(float dt)

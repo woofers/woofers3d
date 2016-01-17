@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.bullet;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -22,10 +23,9 @@ import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
-import com.jaxson.lib.gdx.util.GdxFileReader;
-import com.badlogic.gdx.files.FileHandle;
 
 public class PhysicsWorld
 {
@@ -89,19 +89,6 @@ public class PhysicsWorld
 		this.worldInfo.getSparsesdf().Initialize();
 
 		setGravity(GRAVITY);
-	}
-
-	public void loadFile(String path)
-	{
-		loadFile(GdxFileReader.getInternalFile(path));
-	}
-
-	public void loadFile(FileHandle file)
-	{
-		WorldImporter importer = new WorldImporter(world);
-		importer.loadFile(file);
-		importer.deleteAllData();
-		importer.dispose();
 	}
 
 	public void add(Floor entity)
@@ -191,6 +178,19 @@ public class PhysicsWorld
 	public Vector3 getWorldSize()
 	{
 		return worldSize;
+	}
+
+	public void loadFile(FileHandle file)
+	{
+		WorldImporter importer = new WorldImporter(world);
+		importer.loadFile(file);
+		importer.deleteAllData();
+		importer.dispose();
+	}
+
+	public void loadFile(String path)
+	{
+		loadFile(GdxFileReader.getInternalFile(path));
 	}
 
 	public void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)

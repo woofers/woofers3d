@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.states.renderer;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
@@ -25,11 +26,11 @@ public class ModelRenderer extends Renderer<Entity>
 		return environment;
 	}
 
-	public void render(ModelBatch modelBatch, Camera camera)
+	@Override
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
-		if (modelBatch == null) return;
-		if (camera == null) return;
 		if (isEmpty()) return;
+		checkAgruments(spriteBatch, modelBatch, camera);
 		environment.render(objects, camera);
 		modelBatch.begin(camera);
 		for (Entity entity: objects)

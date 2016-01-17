@@ -13,7 +13,8 @@ import com.jaxson.lib.gdx.util.GdxFileReader;
 public class GdxSprite extends GameObject
 {
 	private Sprite sprite;
-	private float depth;
+	private float alpha = 1f;
+	private float depth = 1f;
 
 	public GdxSprite(String path)
 	{
@@ -33,7 +34,7 @@ public class GdxSprite extends GameObject
 
 	public void draw(SpriteBatch spriteBatch)
 	{
-		sprite.draw(spriteBatch);
+		sprite.draw(spriteBatch, getAlpha());
 	}
 
 	public void flip(boolean flipX, boolean flipY)
@@ -49,6 +50,11 @@ public class GdxSprite extends GameObject
 	public void flipY()
 	{
 		flip(false, true);
+	}
+
+	public float getAlpha()
+	{
+		return alpha;
 	}
 
 	public Vector2 getCenter()
@@ -132,6 +138,11 @@ public class GdxSprite extends GameObject
 	}
 
 	public void setAlpha(float alpha)
+	{
+		this.alpha = alpha;
+	}
+
+	public void setAlphaTint(float alpha)
 	{
 		sprite.setAlpha(alpha);
 	}

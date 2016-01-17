@@ -14,14 +14,14 @@ public class MyMotionState extends btMotionState
 	}
 
 	@Override
-	public void getWorldTransform(Matrix4 worldTrans)
+	public void getWorldTransform(Matrix4 worldTransform)
 	{
-		worldTrans.set(transform);
+		worldTransform.set(transform);
 	}
 
 	@Override
-	public void setWorldTransform(Matrix4 worldTrans)
+	public void setWorldTransform(Matrix4 worldTransform)
 	{
-		transform.set(worldTrans);
+		transform.set(worldTransform);
 	}
 }

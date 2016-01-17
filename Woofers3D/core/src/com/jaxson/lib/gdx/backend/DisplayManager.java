@@ -18,6 +18,7 @@ import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
+import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.util.MyMath;
 
 public class DisplayManager extends GameObject
@@ -251,6 +252,8 @@ public class DisplayManager extends GameObject
 		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
 		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
 		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
+		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.F12))
+			GdxFileReader.saveScreenshot("woofers.png");
 		if (InputHandler.hasTouchScreen() && InputHandler.threeFingerTouched()) togglePaused();
 	}
 
@@ -361,12 +364,10 @@ public class DisplayManager extends GameObject
 		if (fullscreen)
 		{
 			setDisplayMode(getFullscreenDisplayMode());
-			setCursorCatched(true);
 		}
 		else
 		{
 			setDisplayMode(getDefaultWidth(), getDefaultHeight());
-			if (!isPaused()) setCursorCatched(true);
 		}
 		InputHandler.reset();
 	}

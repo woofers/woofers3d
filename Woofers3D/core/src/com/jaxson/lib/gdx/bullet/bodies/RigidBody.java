@@ -32,13 +32,9 @@ public abstract class RigidBody extends ShapeBody<btRigidBody>
 		this(readModel(modelPath), shape, mass);
 	}
 
-	public void activate()
-	{
-		getBody().activate();
-	}
-
 	public void applyCentralImpulse(Vector3 impulse)
 	{
+		activate();
 		getBody().applyCentralImpulse(impulse);
 	}
 

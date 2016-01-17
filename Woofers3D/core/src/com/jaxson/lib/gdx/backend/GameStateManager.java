@@ -75,14 +75,8 @@ public class GameStateManager
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		if (!isPaused())
-		{
-			peek().render(spriteBatch, modelBatch);
-		}
-		else
-		{
-			if (hasPausedState()) peek().getPauseState().render(spriteBatch, modelBatch);
-		}
+		peek().render(spriteBatch, modelBatch);
+		if (isPaused() && hasPausedState()) peek().getPauseState().render(spriteBatch, modelBatch);
 	}
 
 	public void resize(int width, int height)

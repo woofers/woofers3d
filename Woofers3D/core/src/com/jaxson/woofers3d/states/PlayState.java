@@ -19,6 +19,7 @@ import com.jaxson.woofers3d.entities.Player;
 public class PlayState extends State
 {
 	private static final int BOX_AMOUNT = 25;
+	private static final float IMPULSE_SPEED = 20f;
 
 	private Floor floor;
 	private RigidBox[] boxs;
@@ -71,8 +72,7 @@ public class PlayState extends State
 			if (body instanceof RigidBody)
 			{
 				RigidBody rigidBody = (RigidBody) body;
-				rigidBody.activate();
-				rigidBody.applyCentralImpulse(ray.direction.scl(5f));
+				rigidBody.applyCentralImpulse(ray.direction.scl(IMPULSE_SPEED));
 			}
 		}
 	}

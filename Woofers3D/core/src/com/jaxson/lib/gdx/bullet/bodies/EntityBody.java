@@ -8,6 +8,7 @@ import com.jaxson.lib.gdx.graphics.g3d.AnimatedEntity;
 public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEntity
 {
 	protected static final float DEFAULT_MASS = 1f;
+
 	private float mass;
 	private T body;
 
@@ -20,6 +21,11 @@ public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEn
 	public EntityBody(String modelPath, float mass)
 	{
 		this(readModel(modelPath), mass);
+	}
+
+	public void activate()
+	{
+		getBody().activate();
 	}
 
 	public void addCollisionFlag(int flag)

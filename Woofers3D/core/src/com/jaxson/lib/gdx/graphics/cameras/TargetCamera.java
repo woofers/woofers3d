@@ -1,5 +1,6 @@
 package com.jaxson.lib.gdx.graphics.cameras;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +12,7 @@ import com.jaxson.lib.gdx.input.InputHandler;
 
 public class TargetCamera extends PerspectiveCamera
 {
-	private static final int FOV = 75;
+	private static final int FOV = 90;
 	private static final float FAR = 300f;
 	private static final float NEAR = 1f / 10f;
 	private static final Vector3 OFFSET = new Vector3(0f, 5f, -5f);
@@ -48,10 +49,10 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void center(Vector3 point)
 	{
-		Vector3 location = getTargetLocation();
 		position.set(offset.cpy().add(point));
+		// if (hasTarget()) position.scl(getTarget().getDirection().nor());
 		lookAt(point);
-		oldTargetLocation = location;
+		oldTargetLocation = point;
 	}
 
 	public Vector3 getDeltaLocation(Vector3 location)
@@ -120,15 +121,19 @@ public class TargetCamera extends PerspectiveCamera
 	private void input()
 	{
 		if (!hasTarget()) return;
-		rotateAround(getTargetLocation(), getMouse());
 		up.set(Vector3.Y);
+		rotateAround(getTargetLocation(), getMouse());
 		position.add(getDeltaTargetLocation());
+		if (InputHandler.isPressed(Keys.R))
+		{
+			center(getTargetLocation());
+		}
 	}
 
 	public void rotate(float yaw, float pitch, float roll)
 	{
-		rotate(Vector3.Y, yaw);
 		rotate(Vector3.X, pitch);
+		rotate(Vector3.Y, yaw);
 		rotate(Vector3.Z, roll);
 	}
 
@@ -203,6 +208,7 @@ public class TargetCamera extends PerspectiveCamera
 	{
 		input();
 		oldTargetLocation = getTargetLocation();
+		if (hasTarget()) System.out.println(getTarget().getDirection());
 		super.update();
 	}
 }
