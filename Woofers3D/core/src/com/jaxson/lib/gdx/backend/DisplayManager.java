@@ -252,8 +252,7 @@ public class DisplayManager extends GameObject
 		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
 		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
 		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
-		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.F12))
-			GdxFileReader.saveScreenshot("woofers.png");
+		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.F12)) GdxFileReader.saveScreenshot();
 		if (InputHandler.hasTouchScreen() && InputHandler.threeFingerTouched()) togglePaused();
 	}
 

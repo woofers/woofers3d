@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.input.InputHandler;
+import com.badlogic.gdx.math.Matrix4;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -37,22 +38,29 @@ public class TargetCamera extends PerspectiveCamera
 	{
 		super(fov, width, height);
 		this.offset = offset;
-		this.near = NEAR;
-		this.far = FAR;
-		center(STAGE_LOCATION);
+		setNear(NEAR);
+		setFar(FAR);
+		center();
+		oldTargetLocation = STAGE_LOCATION;
 	}
 
 	public void center()
 	{
-		if (hasTarget()) center(getTargetLocation());
+		if (hasTarget())
+		{
+			center(getTargetLocation());
+		}
+		else
+		{
+			center(STAGE_LOCATION);
+		}
 	}
 
 	public void center(Vector3 point)
 	{
-		position.set(offset.cpy().add(point));
-		// if (hasTarget()) position.scl(getTarget().getDirection().nor());
+		setLocation(point);
+		translate(offset);
 		lookAt(point);
-		oldTargetLocation = point;
 	}
 
 	public Vector3 getDeltaLocation(Vector3 location)
@@ -63,6 +71,16 @@ public class TargetCamera extends PerspectiveCamera
 	public Vector3 getDeltaTargetLocation()
 	{
 		return getTargetLocation().cpy().sub(oldTargetLocation);
+	}
+
+	public Vector3 getDirection()
+	{
+		return direction;
+	}
+
+	public Matrix4 getView()
+	{
+		return view;
 	}
 
 	public Vector3 getLocation()
@@ -88,7 +106,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Quaternion getRoationQuat()
 	{
-		return view.getRotation(new Quaternion());
+		return getView().getRotation(new Quaternion());
 	}
 
 	public Vector3 getRotation()
@@ -113,6 +131,12 @@ public class TargetCamera extends PerspectiveCamera
 		return getTarget() != null;
 	}
 
+	public Vector3 getTargetDirection()
+	{
+		if (!hasTarget()) return null;
+		return getTarget().getDirection();
+	}
+
 	public boolean hasWorld()
 	{
 		return world != null;
@@ -123,7 +147,7 @@ public class TargetCamera extends PerspectiveCamera
 		if (!hasTarget()) return;
 		up.set(Vector3.Y);
 		rotateAround(getTargetLocation(), getMouse());
-		position.add(getDeltaTargetLocation());
+		translate(getDeltaTargetLocation());
 		if (InputHandler.isPressed(Keys.R))
 		{
 			center(getTargetLocation());
@@ -154,8 +178,8 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void rotateAround(Vector3 location, float yaw, float pitch, float roll, boolean keepInBounds)
 	{
-		rotateAround(location, Vector3.Y, yaw);
 		rotateAround(location, Vector3.X, pitch);
+		rotateAround(location, Vector3.Y, yaw);
 		rotateAround(location, Vector3.Z, roll);
 		if (!keepInBounds) return;
 		if (hasWorld() && hasTarget())
@@ -165,6 +189,15 @@ public class TargetCamera extends PerspectiveCamera
 				rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
 			}
 		}
+	}
+
+	public Vector3 getNewLocation(Vector3 point, Vector3 direction)
+	{
+		Vector3 cross = new Vector3();
+		cross.set(point);
+		cross.crs(direction);
+		cross.nor();
+		return cross;
 	}
 
 	public void rotateAround(Vector3 location, Vector2 angles)
@@ -184,7 +217,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setRotation(float yaw, float pitch, float roll)
 	{
-		view.setFromEulerAngles(yaw, pitch, roll);
+		getView().setFromEulerAngles(yaw, pitch, roll);
 	}
 
 	public void setRotation(Vector3 angles)
@@ -203,12 +236,63 @@ public class TargetCamera extends PerspectiveCamera
 		this.world = world;
 	}
 
+	public void setLocation(Vector3 location)
+	{
+		getLocation().set(location);
+	}
+
+	public void translate(Vector3 translation)
+	{
+		getLocation().add(translation);
+	}
+
+	public void setUpLocation(Vector3 location)
+	{
+		up.set(location);
+	}
+
+	public Vector3 getUpLocation()
+	{
+		return up;
+	}
+
+	public void setFar(float far)
+	{
+		if (far <= 0f) throw new IllegalArgumentException("far must be positive");
+		this.far = far;
+	}
+
+	public float getFar()
+	{
+		return far;
+	}
+
+	public void setNear(float near)
+	{
+		if (near <= 0f) throw new IllegalArgumentException("near must be positive");
+		this.near = near;
+	}
+
+	public float getNear()
+	{
+		return near;
+	}
+
+	public float getFov()
+	{
+		return fieldOfView;
+	}
+
+	public void setFov(float fov)
+	{
+		this.fieldOfView = fov;
+	}
+
 	@Override
 	public void update()
 	{
 		input();
 		oldTargetLocation = getTargetLocation();
-		if (hasTarget()) System.out.println(getTarget().getDirection());
 		super.update();
 	}
 }

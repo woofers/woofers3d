@@ -27,13 +27,19 @@ public abstract class GsonObject<T>
 	/**
 	 * Parses the json string into the object.
 	 * @param json The json to parse
-	 * @return {@code T} - Newly parsed object
+	 * @return {@link T} - Newly parsed object
 	 */
 	public T fromJson(String json)
 	{
 		return fromJson(json, type);
 	}
 
+	/**
+	 * Parses the json string into the object.
+	 * @param json The json to parse
+	 * @param type The class of the object
+	 * @return {@link T} - Newly parsed object
+	 */
 	private T fromJson(String json, Class<T> type)
 	{
 		return new Gson().fromJson(json, type);
@@ -41,7 +47,7 @@ public abstract class GsonObject<T>
 
 	/**
 	 * Serializes the object into a json string.
-	 * @return {@code String} - Newly serialized json string
+	 * @return {@link String} - Newly serialized json string
 	 */
 	public String toJson()
 	{

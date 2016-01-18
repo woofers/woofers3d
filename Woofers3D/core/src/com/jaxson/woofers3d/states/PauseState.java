@@ -10,6 +10,7 @@ import com.jaxson.lib.gdx.graphics.g3d.Box;
 public class PauseState extends State
 {
 	private static final String PAUSE_SCREEN_PATH = "pauseScreen.png";
+	private static final float PAUSE_ALPHA = 3f / 4f;
 
 	private GdxSprite image;
 	private Box box;
@@ -19,7 +20,7 @@ public class PauseState extends State
 		super(gameManager);
 
 		image = new GdxSprite(PAUSE_SCREEN_PATH);
-		image.setAlpha(0.75f);
+		image.setAlpha(PAUSE_ALPHA);
 		add(image);
 	}
 

@@ -15,6 +15,10 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	private static final float STEP_HEIGHT = 0.3f;
 	private static final float SPEED = 0.2f;
 	private static final float ROTATION_SPEED = 2f;
+	private static final float GRAVITY_SCALE = 3f;
+	private static final float GRAVITY = GdxMath.GRAVITY_EARTH * GRAVITY_SCALE;
+	private static final float FALL_SPEED = 55f;
+	private static final float JUMP_SPEED = 10f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
@@ -34,8 +38,11 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 		getBody().setCollisionShape(shape);
 		this.characterController = new btKinematicCharacterController(getBody(), shape, STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
+		setGravity(GRAVITY);
 		setSpeed(SPEED);
 		setRotationSpeed(ROTATION_SPEED);
+		setJumpSpeed(JUMP_SPEED);
+		setFallSpeed(FALL_SPEED);
 	}
 
 	public PlayerBody(String modelPath, btConvexShape shape)
@@ -62,6 +69,11 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	public btGhostPairCallback getCallback()
 	{
 		return callback;
+	}
+
+	public float getGravity()
+	{
+		return getCharacterController().getGravity();
 	}
 
 	public btKinematicCharacterController getCharacterController()
@@ -128,7 +140,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 		}
 		if (InputHandler.hasAccelerometer())
 		{
-			Vector3 accelerometer = InputHandler.getAccelerometer();
 			if (InputHandler.isAccelerometerForward())
 			{
 				walkDirection.add(getDirection());
@@ -178,6 +189,11 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	public void setRotationSpeed(float rotationSpeed)
 	{
 		this.rotationSpeed = rotationSpeed;
+	}
+
+	public void setGravity(float gravity)
+	{
+		getCharacterController().setGravity(gravity);
 	}
 
 	public void setSpeed(float speed)

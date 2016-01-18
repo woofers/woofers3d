@@ -13,10 +13,12 @@ import java.util.regex.Pattern;
  */
 public class MyFileReader
 {
+	protected static final String FOWARD_SLASH = "/";
+
 	/**
 	 * Gets whether the file exists.
 	 * @param path The path of the file
-	 * @return {@code boolean} - Whether the object exists
+	 * @return {@link boolean} - Whether the object exists
 	 */
 	public static boolean exists(String path)
 	{
@@ -27,7 +29,7 @@ public class MyFileReader
 	 * Gets the file extension of a path. Returns null if the file has no
 	 * extesnion.
 	 * @param path The path of the file
-	 * @return {@code String} - The file extension
+	 * @return {@link String} - The file extension
 	 */
 	public static String getFileExtension(String path)
 	{
@@ -44,18 +46,18 @@ public class MyFileReader
 	/**
 	 * Gets the file name of a path.
 	 * @param path The path of the file
-	 * @return {@code String} - The file name
+	 * @return {@link String} - The file name
 	 */
 	public static String getFileName(String path)
 	{
-		String[] directories = path.split("/");
+		String[] directories = path.split(FOWARD_SLASH);
 		return directories[directories.length - 1];
 	}
 
 	/**
 	 * Parses a text file
 	 * @param path The path of the file
-	 * @return {@code String} - The contents of the file
+	 * @return {@link String} - The contents of the file
 	 */
 	public static String read(String path)
 	{
@@ -65,12 +67,12 @@ public class MyFileReader
 		{
 			reader = new BufferedReader(new FileReader(path));
 			String nextLine = "";
-			while (nextLine != null)
+			do
 			{
-				output += reader.readLine();
+				output += nextLine;
 				output += System.lineSeparator();
 				nextLine = reader.readLine();
-			}
+			} while (nextLine != null);
 		}
 		catch (Exception ex)
 		{

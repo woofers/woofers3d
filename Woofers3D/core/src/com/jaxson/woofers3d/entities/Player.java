@@ -13,7 +13,8 @@ public class Player extends CameraPlayerBody
 	private static final String PATH = "entities/ship/ship.g3db";
 	private static final float MASS = -1f;
 	private static final float SCALE = 2.1f;
-	private static final Vector3 SIZE = new Vector3(1.3f, 0.33f, 1.5f).scl(0.8f);
+	private static final float HITBOX_SCALE = 85f / 100f;
+	private static final Vector3 SIZE = new Vector3(1.3f, 0.33f, 1.5f).scl(HITBOX_SCALE);
 	private static final btConvexShape SHAPE = new BoxShape(SIZE);
 
 	public Player(TargetCamera camera)

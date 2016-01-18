@@ -28,7 +28,7 @@ public class MyMath
 	/**
 	 * Inverts the sign of a number.
 	 * @param value The number
-	 * @return {@link float} - The absoulute value
+	 * @return {@link float} - The inverted value
 	 */
 	public static float flipSign(float value)
 	{

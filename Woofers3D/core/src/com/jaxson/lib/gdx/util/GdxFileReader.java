@@ -26,6 +26,9 @@ public class GdxFileReader extends MyFileReader
 	private static final String G3DB_EXTENSION = "g3db";
 	private static final String OBJ_EXTENSION = "obj";
 	private static final String EXCEPTION_MESSAGE = "Loader could not be found for given filetype.";
+	private static final String SCREENSHOT_NAME = "Screenshot ";
+	private static final String SCREENSHOT_FOLDER = "screenshots";
+	private static final String SCREENSHOT_EXTENSION = ".png";
 
 	public static void add(String location, String contents)
 	{
@@ -45,6 +48,11 @@ public class GdxFileReader extends MyFileReader
 	public static FileHandle getExternal(String path)
 	{
 		return getFiles().external(path);
+	}
+
+	public static boolean exists(String path)
+	{
+		return getLocalFile(path).exists();
 	}
 
 	private static Files getFiles()
@@ -155,6 +163,18 @@ public class GdxFileReader extends MyFileReader
 		{
 			ex.printStackTrace();
 		}
+	}
+
+	public static void saveScreenshot()
+	{
+		FileHandle file;
+		int counter = 0;
+        do
+        {
+	       counter ++;
+	       file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
+        } while (file.exists());
+        saveScreenshot(file);
 	}
 
 	public static void saveScreenshot(String path)
