@@ -150,7 +150,7 @@ public class PhysicsWorld
 		btCollisionObject object = rayCallback.getCollisionObject(ray, this);
 		for (EntityBody<?> entity: objects)
 		{
-			if (entity.getBody() == object) return entity;
+			if (entity.isBody(object)) return entity;
 		}
 		return null;
 	}

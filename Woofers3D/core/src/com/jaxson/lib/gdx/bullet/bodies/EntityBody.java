@@ -107,6 +107,11 @@ public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEn
 		getBody().setContactCallbackFlag(flag);
 	}
 
+	public boolean isBody(btCollisionObject body)
+	{
+		return getBody() == body;
+	}
+
 	@Override
 	public void setLocation(Vector3 location)
 	{
