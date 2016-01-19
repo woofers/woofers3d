@@ -169,12 +169,12 @@ public class GdxFileReader extends MyFileReader
 	{
 		FileHandle file;
 		int counter = 0;
-        do
-        {
-	       counter ++;
-	       file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
-        } while (file.exists());
-        saveScreenshot(file);
+		do
+		{
+		   counter ++;
+		   file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
+		} while (file.exists());
+		saveScreenshot(file);
 	}
 
 	public static void saveScreenshot(String path)

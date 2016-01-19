@@ -13,7 +13,7 @@ public class GameConfig extends GsonObject<GameConfig>
 {
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
-	private static final int FPS = 400;
+	private static final int FPS = 0;
 	private static final float STEP = 1f / 120f;
 	private static final FileType ICON_TYPE = FileType.Internal;
 	private static final String CONFIG_PATH = "config";

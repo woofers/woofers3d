@@ -137,6 +137,12 @@ public class TargetCamera extends PerspectiveCamera
 		return getTarget().getDirection();
 	}
 
+	public Vector3 getTargetRotation()
+	{
+		if (!hasTarget()) return null;
+		return getTarget().getRotation();
+	}
+
 	public boolean hasWorld()
 	{
 		return world != null;
@@ -191,15 +197,6 @@ public class TargetCamera extends PerspectiveCamera
 		}
 	}
 
-	public Vector3 getNewLocation(Vector3 point, Vector3 direction)
-	{
-		Vector3 cross = new Vector3();
-		cross.set(point);
-		cross.crs(direction);
-		cross.nor();
-		return cross;
-	}
-
 	public void rotateAround(Vector3 location, Vector2 angles)
 	{
 		rotateAround(location, angles.x, angles.y, 0);
@@ -239,11 +236,6 @@ public class TargetCamera extends PerspectiveCamera
 	public void setLocation(Vector3 location)
 	{
 		getLocation().set(location);
-	}
-
-	public void translate(Vector3 translation)
-	{
-		getLocation().add(translation);
 	}
 
 	public void setUpLocation(Vector3 location)

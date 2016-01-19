@@ -251,9 +251,12 @@ public class DisplayManager extends GameObject
 	{
 		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
 		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
-		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
-		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.F12)) GdxFileReader.saveScreenshot();
 		if (InputHandler.hasTouchScreen() && InputHandler.threeFingerTouched()) togglePaused();
+		if (InputHandler.hasHardwareKeyboard())
+		{
+			if (InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
+			if (InputHandler.isPressed(Keys.F12)) GdxFileReader.saveScreenshot();
+		}
 	}
 
 	public boolean isCursorCatched()
@@ -305,7 +308,6 @@ public class DisplayManager extends GameObject
 		getModelBatch().dispose();
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
-		// updateSprtieBatch(width, height);
 	}
 
 	@Override
@@ -424,6 +426,7 @@ public class DisplayManager extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
+		if (isPaused()) return;
 		camera.update();
 	}
 

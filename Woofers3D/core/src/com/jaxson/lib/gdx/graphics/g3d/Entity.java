@@ -153,9 +153,14 @@ public abstract class Entity extends GameObject
 
 	public void rotate(float yaw, float pitch, float roll)
 	{
-		getTransform().rotate(Vector3.Y, yaw);
-		getTransform().rotate(Vector3.X, pitch);
-		getTransform().rotate(Vector3.Z, roll);
+		rotate(Vector3.X, pitch);
+		rotate(Vector3.Y, yaw);
+		rotate(Vector3.Z, roll);
+	}
+
+	public void rotate(Vector3 axis, float amount)
+	{
+		getTransform().rotate(axis, amount);
 	}
 
 	public void rotate(Vector3 angles)
