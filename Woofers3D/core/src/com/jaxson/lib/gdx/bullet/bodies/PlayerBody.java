@@ -71,14 +71,14 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 		return callback;
 	}
 
-	public float getGravity()
-	{
-		return getCharacterController().getGravity();
-	}
-
 	public btKinematicCharacterController getCharacterController()
 	{
 		return characterController;
+	}
+
+	public float getGravity()
+	{
+		return getCharacterController().getGravity();
 	}
 
 	public float getMaxSlope()
@@ -171,6 +171,11 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 		getCharacterController().setFallSpeed(fallSpeed);
 	}
 
+	public void setGravity(float gravity)
+	{
+		getCharacterController().setGravity(gravity);
+	}
+
 	public void setJumpSpeed(float jumpSpeed)
 	{
 		getCharacterController().setJumpSpeed(jumpSpeed);
@@ -189,11 +194,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	public void setRotationSpeed(float rotationSpeed)
 	{
 		this.rotationSpeed = rotationSpeed;
-	}
-
-	public void setGravity(float gravity)
-	{
-		getCharacterController().setGravity(gravity);
 	}
 
 	public void setSpeed(float speed)

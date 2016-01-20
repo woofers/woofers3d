@@ -2,6 +2,7 @@ package com.jaxson.lib.gdx.graphics.cameras;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.badlogic.gdx.math.Matrix4;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -58,8 +58,10 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void center(Vector3 point)
 	{
+		Vector3 newOffset = offset.cpy();
+		if (hasTarget()) newOffset.rotate(Vector3.Y, getTargetRotation().x);
 		setLocation(point);
-		translate(offset);
+		translate(newOffset);
 		lookAt(point);
 	}
 
@@ -78,9 +80,14 @@ public class TargetCamera extends PerspectiveCamera
 		return direction;
 	}
 
-	public Matrix4 getView()
+	public float getFar()
 	{
-		return view;
+		return far;
+	}
+
+	public float getFov()
+	{
+		return fieldOfView;
 	}
 
 	public Vector3 getLocation()
@@ -91,6 +98,11 @@ public class TargetCamera extends PerspectiveCamera
 	public Vector2 getMouse()
 	{
 		return InputHandler.getScaledMouse();
+	}
+
+	public float getNear()
+	{
+		return near;
 	}
 
 	public Vector3 getOffset()
@@ -126,21 +138,25 @@ public class TargetCamera extends PerspectiveCamera
 		return getTarget().getLocation();
 	}
 
-	public boolean hasTarget()
-	{
-		return getTarget() != null;
-	}
-
-	public Vector3 getTargetDirection()
-	{
-		if (!hasTarget()) return null;
-		return getTarget().getDirection();
-	}
-
 	public Vector3 getTargetRotation()
 	{
 		if (!hasTarget()) return null;
 		return getTarget().getRotation();
+	}
+
+	public Vector3 getUp()
+	{
+		return up;
+	}
+
+	public Matrix4 getView()
+	{
+		return view;
+	}
+
+	public boolean hasTarget()
+	{
+		return getTarget() != null;
 	}
 
 	public boolean hasWorld()
@@ -151,13 +167,23 @@ public class TargetCamera extends PerspectiveCamera
 	private void input()
 	{
 		if (!hasTarget()) return;
-		up.set(Vector3.Y);
+		resetUp();
 		rotateAround(getTargetLocation(), getMouse());
 		translate(getDeltaTargetLocation());
 		if (InputHandler.isPressed(Keys.R))
 		{
 			center(getTargetLocation());
 		}
+	}
+
+	public void resetDirection()
+	{
+		setDirection(Vector3.Z);
+	}
+
+	public void resetUp()
+	{
+		setUp(Vector3.Y);
 	}
 
 	public void rotate(float yaw, float pitch, float roll)
@@ -207,6 +233,33 @@ public class TargetCamera extends PerspectiveCamera
 		rotateAround(location, angles.x, angles.y, angles.z);
 	}
 
+	public void setDirection(Vector3 direction)
+	{
+		getDirection().set(direction);
+	}
+
+	public void setFar(float far)
+	{
+		if (far <= 0f) throw new IllegalArgumentException("far must be positive");
+		this.far = far;
+	}
+
+	public void setFov(float fov)
+	{
+		this.fieldOfView = fov;
+	}
+
+	public void setLocation(Vector3 location)
+	{
+		getLocation().set(location);
+	}
+
+	public void setNear(float near)
+	{
+		if (near <= 0f) throw new IllegalArgumentException("near must be positive");
+		this.near = near;
+	}
+
 	public void setOffset(Vector3 offset)
 	{
 		this.offset = offset;
@@ -214,7 +267,9 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setRotation(float yaw, float pitch, float roll)
 	{
-		getView().setFromEulerAngles(yaw, pitch, roll);
+		resetUp();
+		resetDirection();
+		rotate(yaw, pitch, roll);
 	}
 
 	public void setRotation(Vector3 angles)
@@ -228,56 +283,14 @@ public class TargetCamera extends PerspectiveCamera
 		center();
 	}
 
+	public void setUp(Vector3 location)
+	{
+		getUp().set(location);
+	}
+
 	public void setWorld(PhysicsWorld world)
 	{
 		this.world = world;
-	}
-
-	public void setLocation(Vector3 location)
-	{
-		getLocation().set(location);
-	}
-
-	public void setUpLocation(Vector3 location)
-	{
-		up.set(location);
-	}
-
-	public Vector3 getUpLocation()
-	{
-		return up;
-	}
-
-	public void setFar(float far)
-	{
-		if (far <= 0f) throw new IllegalArgumentException("far must be positive");
-		this.far = far;
-	}
-
-	public float getFar()
-	{
-		return far;
-	}
-
-	public void setNear(float near)
-	{
-		if (near <= 0f) throw new IllegalArgumentException("near must be positive");
-		this.near = near;
-	}
-
-	public float getNear()
-	{
-		return near;
-	}
-
-	public float getFov()
-	{
-		return fieldOfView;
-	}
-
-	public void setFov(float fov)
-	{
-		this.fieldOfView = fov;
 	}
 
 	@Override

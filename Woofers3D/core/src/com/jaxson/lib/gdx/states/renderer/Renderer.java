@@ -1,10 +1,10 @@
 package com.jaxson.lib.gdx.states.renderer;
 
-import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.util.MyArrayList;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.Camera;
+import com.jaxson.lib.gdx.util.GameObject;
+import com.jaxson.lib.util.MyArrayList;
 
 public abstract class Renderer<T extends GameObject> extends GameObject
 {
@@ -20,6 +20,13 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 		objects.add(object);
 	}
 
+	protected void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	{
+		if (modelBatch == null) throw new IllegalArgumentException("modelBatch cannot be null");
+		if (spriteBatch == null) throw new IllegalArgumentException("spriteBatch cannot be null");
+		if (camera == null) throw new IllegalArgumentException("camera cannot be null");
+	}
+
 	@Override
 	public void dispose()
 	{
@@ -27,13 +34,6 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 		{
 			object.dispose();
 		}
-	}
-
-	protected void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
-	{
-		if (modelBatch == null) throw new IllegalArgumentException("modelBatch cannot be null");
-		if (spriteBatch == null) throw new IllegalArgumentException("spriteBatch cannot be null");
-		if (camera == null) throw new IllegalArgumentException("camera cannot be null");
 	}
 
 	public MyArrayList<T> getObject()

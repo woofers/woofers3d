@@ -72,7 +72,8 @@ public class MyFileReader
 				output += nextLine;
 				output += System.lineSeparator();
 				nextLine = reader.readLine();
-			} while (nextLine != null);
+			}
+			while (nextLine != null);
 		}
 		catch (Exception ex)
 		{

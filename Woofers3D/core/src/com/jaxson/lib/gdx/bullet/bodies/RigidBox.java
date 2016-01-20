@@ -11,6 +11,16 @@ public class RigidBox extends RigidBody
 	protected static final Color COLOR = new MyColor(81, 101, 107);
 	private static final float MASS = 1f;
 
+	protected static Model getModel(Color color)
+	{
+		return new MyModelBuilder().createBox(color);
+	}
+
+	protected static BoxShape getShape()
+	{
+		return new BoxShape();
+	}
+
 	public RigidBox()
 	{
 		this(COLOR);
@@ -31,15 +41,5 @@ public class RigidBox extends RigidBody
 	public void update(float dt)
 	{
 
-	}
-
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
-	}
-
-	protected static BoxShape getShape()
-	{
-		return new BoxShape();
 	}
 }

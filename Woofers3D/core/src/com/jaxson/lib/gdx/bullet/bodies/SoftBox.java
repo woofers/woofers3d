@@ -9,6 +9,11 @@ public class SoftBox extends SoftBody
 {
 	protected static final Color COLOR = Color.ORANGE;
 
+	protected static Model getModel(Color color)
+	{
+		return new MyModelBuilder().createBox(color);
+	}
+
 	public SoftBox(Color color, PhysicsWorld world)
 	{
 		super(getModel(color), DEFAULT_MASS, world);
@@ -17,10 +22,5 @@ public class SoftBox extends SoftBody
 	public SoftBox(PhysicsWorld world)
 	{
 		this(COLOR, world);
-	}
-
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
 	}
 }

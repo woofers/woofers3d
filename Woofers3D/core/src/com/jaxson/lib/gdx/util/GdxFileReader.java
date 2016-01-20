@@ -35,6 +35,11 @@ public class GdxFileReader extends MyFileReader
 		write(location, contents, false);
 	}
 
+	public static boolean exists(String path)
+	{
+		return getLocalFile(path).exists();
+	}
+
 	public static FileHandle getAbsoluteFile(String path)
 	{
 		return getFiles().absolute(path);
@@ -48,11 +53,6 @@ public class GdxFileReader extends MyFileReader
 	public static FileHandle getExternal(String path)
 	{
 		return getFiles().external(path);
-	}
-
-	public static boolean exists(String path)
-	{
-		return getLocalFile(path).exists();
 	}
 
 	private static Files getFiles()
@@ -151,6 +151,19 @@ public class GdxFileReader extends MyFileReader
 		return getAbsoluteFile(path).readString();
 	}
 
+	public static void saveScreenshot()
+	{
+		FileHandle file;
+		int counter = 0;
+		do
+		{
+			counter++;
+			file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
+		}
+		while (file.exists());
+		saveScreenshot(file);
+	}
+
 	public static void saveScreenshot(FileHandle file)
 	{
 		try
@@ -163,18 +176,6 @@ public class GdxFileReader extends MyFileReader
 		{
 			ex.printStackTrace();
 		}
-	}
-
-	public static void saveScreenshot()
-	{
-		FileHandle file;
-		int counter = 0;
-		do
-		{
-		   counter ++;
-		   file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
-		} while (file.exists());
-		saveScreenshot(file);
 	}
 
 	public static void saveScreenshot(String path)

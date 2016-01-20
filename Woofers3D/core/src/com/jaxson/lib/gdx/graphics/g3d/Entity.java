@@ -21,6 +21,11 @@ public abstract class Entity extends GameObject
 	private static final int MATRIX_DIRECTION_Z = 10;
 	private static final int ROOT_NODE_LOCATION = 0;
 
+	protected static Model readModel(String modelPath)
+	{
+		return GdxFileReader.loadModel(modelPath);
+	}
+
 	private ModelInstance modelInstance;
 
 	public Entity(Model model)
@@ -158,14 +163,14 @@ public abstract class Entity extends GameObject
 		rotate(Vector3.Z, roll);
 	}
 
-	public void rotate(Vector3 axis, float amount)
-	{
-		getTransform().rotate(axis, amount);
-	}
-
 	public void rotate(Vector3 angles)
 	{
 		rotate(angles.x, angles.y, angles.z);
+	}
+
+	public void rotate(Vector3 axis, float amount)
+	{
+		getTransform().rotate(axis, amount);
 	}
 
 	public void setLocation(Vector3 location)
@@ -207,10 +212,5 @@ public abstract class Entity extends GameObject
 	public void translateABS(Vector3 translation)
 	{
 		getTransform().trn(translation);
-	}
-
-	protected static Model readModel(String modelPath)
-	{
-		return GdxFileReader.loadModel(modelPath);
 	}
 }

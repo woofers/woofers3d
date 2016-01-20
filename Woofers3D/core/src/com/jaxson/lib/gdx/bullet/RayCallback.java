@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.bullet;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
@@ -29,6 +28,12 @@ public class RayCallback extends ClosestRayResultCallback
 		return null;
 	}
 
+	public void reset()
+	{
+		setCollisionObject(null);
+		setClosestHitFraction(1f);
+	}
+
 	public void set(Ray ray)
 	{
 		set(ray, MAX_DISTANCE);
@@ -48,11 +53,5 @@ public class RayCallback extends ClosestRayResultCallback
 		reset();
 		setRayFromWorld(rayStart);
 		setRayToWorld(rayEnd);
-	}
-
-	public void reset()
-	{
-		setCollisionObject(null);
-		setClosestHitFraction(1f);
 	}
 }

@@ -75,6 +75,11 @@ public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEn
 		return mass;
 	}
 
+	public boolean isBody(btCollisionObject body)
+	{
+		return getBody() == body;
+	}
+
 	@Override
 	public void rotate(float yaw, float pitch, float roll)
 	{
@@ -105,11 +110,6 @@ public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEn
 	public void setContactCallbackFlag(int flag)
 	{
 		getBody().setContactCallbackFlag(flag);
-	}
-
-	public boolean isBody(btCollisionObject body)
-	{
-		return getBody() == body;
 	}
 
 	@Override
