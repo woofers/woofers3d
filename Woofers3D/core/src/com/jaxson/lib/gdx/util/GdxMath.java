@@ -52,8 +52,8 @@ public class GdxMath extends MyMath
 
 	public static float toRGB(int color)
 	{
-		color = Math.abs(color);
-		if (color > RGB_MAX) return RGB_TO_FLOAT;
+		color = max(RGB_MIN, color);
+		color = min(RGB_MAX, color);
 		return color * RGB_TO_FLOAT;
 	}
 }

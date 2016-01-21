@@ -16,4 +16,14 @@ public class MyColor extends Color
 	{
 		super(GdxMath.toRGB(r), GdxMath.toRGB(g), GdxMath.toRGB(b), GdxMath.toRGB(a));
 	}
+
+	public void rand()
+	{
+		set(GdxMath.randColor());
+	}
+
+	public void rand(int min, int max)
+	{
+		set(GdxMath.randColor(min, max));
+	}
 }

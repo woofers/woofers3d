@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class ButtonListener<T> implements ActionListener
 {
-	protected T object;
+	private T object;
 
 	public ButtonListener(T object)
 	{

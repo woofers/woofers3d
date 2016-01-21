@@ -20,6 +20,7 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.util.MyMath;
+import com.badlogic.gdx.Graphics.BufferFormat;
 
 /**
  * A class that handles the display and rendering.
@@ -29,6 +30,9 @@ import com.jaxson.lib.util.MyMath;
  */
 public class DisplayManager extends GameObject
 {
+	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
+	private static final int COVERAGE_SAMPLING_MASK = GL20.GL_COVERAGE_BUFFER_BIT_NV;
+	private static final int EMPTY_MASK = GL20.GL_ZERO;
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
 
@@ -55,13 +59,17 @@ public class DisplayManager extends GameObject
 		this.font = new BitmapFont();
 
 		font.setColor(FPS_COLOR);
-		clearScreen(GameConfig.CLEAR_COLOR);
 		setFullscreen(startsFullscreen());
 	}
 
 	public boolean canFullscreen()
 	{
 		return getConfig().allowsFullscreen();
+	}
+
+	public void clearScreen()
+	{
+		clearScreen(GameConfig.CLEAR_COLOR);
 	}
 
 	public void clearScreen(Color color)
@@ -298,7 +306,23 @@ public class DisplayManager extends GameObject
 
 	public void render()
 	{
-		getGL().glClear(GameConfig.CLEAR_MASK);
+		clearScreen();
+		getGL().glClear(CLEAR_MASK | getCoverageSampling());
+	}
+
+	public BufferFormat getBufferFormat()
+	{
+		return getGraphics().getBufferFormat();
+	}
+
+	public boolean hasCoverageSampling()
+	{
+		return getBufferFormat().coverageSampling;
+	}
+
+	public int getCoverageSampling()
+	{
+		return hasCoverageSampling() ? COVERAGE_SAMPLING_MASK : EMPTY_MASK;
 	}
 
 	public void resize(int width, int height)

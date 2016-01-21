@@ -157,7 +157,7 @@ public class GdxFileReader extends MyFileReader
 		int counter = 0;
 		do
 		{
-			counter++;
+			counter ++;
 			file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
 		}
 		while (file.exists());

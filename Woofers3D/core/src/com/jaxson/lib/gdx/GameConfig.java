@@ -21,8 +21,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	private static final float SENSITIVITY = 1.3f;
 
 	public static final float CLAMP = 1f / 4f;
-	public static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
-	public static final Color CLEAR_COLOR = Color.BLACK;
+	public static final Color CLEAR_COLOR = Color.BLUE;
 
 	private String title = "New Game";
 	private int width;
@@ -34,6 +33,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	private transient float step;
 	private boolean allowFullscreen = true;
 	private boolean startFullscreen = false;
+	private int antiAliasing = 4;
 	private boolean statusBar = false;
 	private boolean immersive = true;
 	private String iconPath;
@@ -55,6 +55,16 @@ public class GameConfig extends GsonObject<GameConfig>
 		setHeight(height);
 		setFps(fps);
 		setStep(step);
+	}
+
+	public void setAntiAliasing(int antiAliasing)
+	{
+		this.antiAliasing = antiAliasing;
+	}
+
+	public int getAntiAliasing()
+	{
+		return antiAliasing;
 	}
 
 	public boolean allowsFullscreen()
@@ -174,6 +184,7 @@ public class GameConfig extends GsonObject<GameConfig>
 		setSavePath(config.getSavePath());
 		setIconPath(config.getIconPath());
 		setShowFps(config.showsFps());
+		setAntiAliasing(config.getAntiAliasing());
 	}
 
 	public void setBackgroundFps(int backgroundFps)
@@ -276,6 +287,7 @@ public class GameConfig extends GsonObject<GameConfig>
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.hideStatusBar = hasStatusBar();
 		config.useImmersiveMode = isImmersive();
+		config.numSamples = getAntiAliasing();
 		return config;
 	}
 
@@ -289,6 +301,7 @@ public class GameConfig extends GsonObject<GameConfig>
 		config.foregroundFPS = getFps();
 		config.backgroundFPS = getBackgroundFps();
 		config.resizable = isResizable();
+		config.samples = getAntiAliasing();
 		if (hasIcon()) config.addIcon(getIconPath(), ICON_TYPE);
 		return config;
 	}

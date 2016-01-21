@@ -8,7 +8,7 @@ import com.jaxson.lib.util.MyArrayList;
 
 public abstract class Renderer<T extends GameObject> extends GameObject
 {
-	protected MyArrayList<T> objects;
+	private MyArrayList<T> objects;
 
 	public Renderer()
 	{
@@ -17,7 +17,7 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 
 	public void add(T object)
 	{
-		objects.add(object);
+		getObjects().add(object);
 	}
 
 	protected void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
@@ -30,31 +30,31 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 	@Override
 	public void dispose()
 	{
-		for (T object: objects)
+		for (T object: getObjects())
 		{
 			object.dispose();
 		}
 	}
 
-	public MyArrayList<T> getObject()
+	protected MyArrayList<T> getObjects()
 	{
 		return objects;
 	}
 
 	public boolean isEmpty()
 	{
-		return objects.isEmpty();
+		return getObjects().isEmpty();
 	}
 
 	public void remove(T object)
 	{
-		objects.remove(object);
+		getObjects().remove(object);
 	}
 
 	@Override
 	public void update(float dt)
 	{
-		for (T object: objects)
+		for (T object: getObjects())
 		{
 			object.update(dt);
 		}

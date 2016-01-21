@@ -18,7 +18,7 @@ public class SpriteRenderer extends Renderer<GdxSprite>
 		if (isEmpty()) return;
 		checkAgruments(spriteBatch, modelBatch, camera);
 		spriteBatch.begin();
-		for (GdxSprite sprite: objects)
+		for (GdxSprite sprite: getObjects())
 		{
 			sprite.draw(spriteBatch);
 		}

@@ -121,6 +121,28 @@ public class MyMath
 	}
 
 	/**
+	 * Returns the greater of two values.
+	 * @param a Number
+	 * @param b Number
+	 * @return {@link float} - Max value
+	 */
+	public static int max(int a, int b)
+	{
+		return Math.max(a, b);
+	}
+
+	/**
+	 * Returns the smaller of two values.
+	 * @param a Number
+	 * @param b Number
+	 * @return {@link int} - Min value
+	 */
+	public static int min(int a, int b)
+	{
+		return Math.min(a, b);
+	}
+
+	/**
 	 * Returns random {@link float} between the range.
 	 * @param min Min
 	 * @param max Max

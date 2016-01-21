@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.util.MyArrayList;
+import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 
 public class MyEnvironment extends Environment
 {
@@ -19,7 +20,7 @@ public class MyEnvironment extends Environment
 	private static final Vector3 LIGHT_DIRECTION = new Vector3(-1f, -0.8f, -0.2f);
 	private static final int SHADOW_RESOLUTION = 4096;
 	private static final float SHADOW_NEAR = 1f;
-	private static final float SHADOW_FAR = 300f;
+	private static final float SHADOW_FAR = 100f;
 
 	public static DirectionalLight createLight(Color color, Vector3 direction)
 	{
@@ -72,11 +73,8 @@ public class MyEnvironment extends Environment
 	}
 
 	private ColorAttribute color;
-
 	private DirectionalLight light;
-
 	private ModelBatch shadowBatch;
-
 	private Vector3 worldSize;
 
 	public MyEnvironment()
@@ -200,7 +198,7 @@ public class MyEnvironment extends Environment
 	{
 		if (light == getLight()) return;
 		if (hasLight()) remove(light);
-		this.shadowMap = null;
+		setShawdowMap(null);
 		this.light = light;
 		add(light);
 		setColor(light.color);
@@ -209,8 +207,13 @@ public class MyEnvironment extends Environment
 
 	private void setShadowLight(DirectionalShadowLight light)
 	{
-		this.shadowMap = light;
+		setShawdowMap(light);
 		createShadowBatch();
+	}
+
+	public void setShawdowMap(ShadowMap shadowMap)
+	{
+		this.shadowMap = shadowMap;
 	}
 
 	public void setShawdows(boolean shawdows)

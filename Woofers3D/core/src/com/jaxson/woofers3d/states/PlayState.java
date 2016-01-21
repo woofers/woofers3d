@@ -15,14 +15,17 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
+import com.badlogic.gdx.graphics.Color;
+
 
 public class PlayState extends State
 {
 	private static final int BOX_AMOUNT = 25;
-	private static final float IMPULSE_SPEED = 20f;
+	private static final float IMPULSE_SPEED = 30f;
 
 	private Floor floor;
 	private RigidBox[] boxs;
+	private RigidBox box;
 	private SoftBox softBox;
 	private Player player;
 
@@ -46,6 +49,11 @@ public class PlayState extends State
 			add(boxs[i]);
 		}
 
+		box = new RigidBox(Color.YELLOW);
+		box.setLocation(new Vector3(50f, 25f, 5f));
+		box.setSize(new Vector3(2f, 2f, 2f));
+		add(box);
+
 		softBox = new SoftBox(getPhysicsWorld());
 		applyPhysics(softBox);
 		add(softBox);
@@ -68,13 +76,13 @@ public class PlayState extends State
 		{
 			Ray ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
-			System.out.println(body);
 			if (body instanceof RigidBody)
 			{
 				RigidBody rigidBody = (RigidBody) body;
 				rigidBody.applyCentralImpulse(ray.direction.scl(IMPULSE_SPEED));
 			}
 		}
+		if (InputHandler.isPressed(InputHandler.L)) applyPhysics(box);
 	}
 
 	@Override

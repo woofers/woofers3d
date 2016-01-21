@@ -10,15 +10,10 @@ import javax.swing.JDialog;
 public class Dialog<T extends Window> extends JDialog
 {
 	private static final String TITLE = "Dialog";
-
 	private static final int WIDTH = 200;
-
 	private static final int HEIGHT = 100;
-
 	private static final boolean RESIZEABLE = false;
-
 	private static final double MIN_SIZE = 0.4;
-
 	private static final LayoutManager LAYOUT = new BorderLayout();
 
 	public Dialog(int width, int height, T window)

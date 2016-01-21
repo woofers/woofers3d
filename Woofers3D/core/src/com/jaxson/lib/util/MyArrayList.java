@@ -3,7 +3,7 @@ package com.jaxson.lib.util;
 import java.util.ArrayList;
 
 /**
- * An ArrayList that will not add null .
+ * An ArrayList that will not add null.
  * @author Jaxson Van Doorn
  * @since 1.0
  */

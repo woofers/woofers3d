@@ -31,9 +31,9 @@ public class ModelRenderer extends Renderer<Entity>
 	{
 		if (isEmpty()) return;
 		checkAgruments(spriteBatch, modelBatch, camera);
-		environment.render(objects, camera);
+		environment.render(getObjects(), camera);
 		modelBatch.begin(camera);
-		for (Entity entity: objects)
+		for (Entity entity: getObjects())
 		{
 			if (entity.isVisible(camera)) modelBatch.render(entity.getModelInstance(), environment);
 		}
