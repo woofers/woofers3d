@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"has",
+				"hasPausedState"
+			],
+			[
+				"Game",
+				"GameObject"
+			],
+			[
 				"VE",
 				"Vector3"
 			],
@@ -106,10 +114,6 @@
 			[
 				"SH",
 				"SHADOW_FAR"
-			],
-			[
-				"has",
-				"hasShawdows"
 			],
 			[
 				"getSH",
@@ -510,20 +514,32 @@
 			[
 				"butto",
 				"buttons"
-			],
-			[
-				"pa",
-				"pause"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "core/src/com/jaxson/lib/gdx/graphics/cameras/TargetCamera.java",
+			"file": "core/src/com/jaxson/lib/gdx/backend/GameStateManager.java",
 			"settings":
 			{
-				"buffer_size": 5695,
+				"buffer_size": 3259,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/Game.java",
+			"settings":
+			{
+				"buffer_size": 3578,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/backend/DisplayManager.java",
+			"settings":
+			{
+				"buffer_size": 9252,
 				"line_ending": "Windows"
 			}
 		}
@@ -571,14 +587,10 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 130.0,
-		"last_filter": "upp",
+		"height": 113.0,
+		"last_filter": "",
 		"selected_items":
 		[
-			[
-				"upp",
-				"Convert Case: Upper Case"
-			],
 			[
 				"git push",
 				"Git: Push"
@@ -588,11 +600,15 @@
 				"Git: Commit"
 			],
 			[
-				"git ad",
+				"git add",
 				"Git: Add..."
 			],
 			[
-				"git add",
+				"upp",
+				"Convert Case: Upper Case"
+			],
+			[
+				"git ad",
 				"Git: Add..."
 			],
 			[
@@ -696,7 +712,7 @@
 				"Git: Commit"
 			]
 		],
-		"width": 320.0
+		"width": 536.0
 	},
 	"console":
 	{
@@ -708,7 +724,7 @@
 	},
 	"distraction_free":
 	{
-		"menu_visible": true,
+		"menu_visible": false,
 		"show_minimap": false,
 		"show_open_files": false,
 		"show_tabs": false,
@@ -723,43 +739,69 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx"
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util"
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Resizeable.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/GameObject.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Pauseable.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/Game.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Renderable.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/GdxFileReader.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/GameConfig.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/ApplicationListener.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/ApplicationAdapter.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/utils/Disposable.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/State.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/GameStateManager.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/utils/Align.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/GameManager.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayManager.java",
+		"/C/Users/jaxso/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/Game.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/Camera.java",
+		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/g2d/SpriteBatch.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/Mesh.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/GdxSprite.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/GdxMath.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/GsonObject.java",
+		"/D/Documents/Development/lib/libGDX/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/desktop/src/com/jaxson/desktop/DesktopLauncher.java",
+		"/D/Documents/Development/lib/libGDX/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/src/com/jaxson/android/AndroidLauncher.java",
+		"/D/Documents/Development/lib/libGDX/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidDaydream.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Quaternion.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/utils/GdxNativesLoader.java",
+		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Matrix4.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyMath.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyFileReader.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/cameras/TargetCamera.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/settings.gradle",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/local.properties",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyMath.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/Game.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/geom/Point.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/ScaleContainer.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyFileReader.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Window.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/GsonObject.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/MenuState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PauseState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Woofers3D.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/cameras/TargetCamera.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/GameConfig.java",
 		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/Color.java",
-		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/Mesh.java",
 		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/GL30.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/doc/com/jaxson/lib/gdx/GameConfig.html",
-		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/graphics/Camera.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java",
 		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Vector.java",
 		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Vector2.java",
 		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Vector3.java",
-		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Matrix4.java",
-		"/D/Documents/Development/lib/libGDX/gdx/src/com/badlogic/gdx/math/Quaternion.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/bodies/PlayerBody.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/Entity.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/bodies/EntityBody.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/PhysicsWorld.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/RayCallback.java",
-		"/D/Documents/JVD Docs/Video Game Backups/PC Game Save Backups/Counter-Strike Global Offensive/csgo/cfg/autoexec.cfg",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/MyEnvironment.java",
 		"/C/Program Files (x86)/Google/Chrome/Application/chrome.VisualElementsManifest.xml",
 		"/C/Users/jaxso/Desktop/chrome.VisualElementsManifest.xml",
@@ -830,31 +872,7 @@
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/BulletStarter.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/util/MyModelBuilder.java",
 		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/MyContractListener.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/MyDebugDrawer.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/AnimatedEntity.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/Box.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/DisplayOrientation.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/MyColor.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/InputHandler.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/GameObject.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/event/ButtonListener.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/geom/Point.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Dialog.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyMath.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyFileReader.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/ScaleContainer.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Panel.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Window.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/GsonObject.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/MenuState.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/Woofers3D.java",
-		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/bodies/SoftBody.java",
-		"/D/Documents/Development/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/BulletTest.java",
-		"/D/Documents/Development/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShadowMappingTest.java",
-		"/D/Documents/Development/libgdx-master/tests/gdx-tests-lwjgl/src/com/badlogic/gdx/tests/lwjgl/LwjglTestStarter.java",
-		"/D/Documents/Development/libgdx-master/gdx/src/com/badlogic/gdx.gwt.xml"
+		"/D/Documents/Development/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/MyDebugDrawer.java"
 	],
 	"find":
 	{
@@ -872,6 +890,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"wasFocusChanged",
 			"getDirection",
 			"tmpMat",
 			"snd_headphone_pan_radial_weight",
@@ -998,8 +1017,7 @@
 			"[Controls]",
 			"setUniqueId",
 			"color",
-			";\n",
-			"{\n"
+			";\n"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1051,19 +1069,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "core/src/com/jaxson/lib/gdx/graphics/cameras/TargetCamera.java",
+					"file": "core/src/com/jaxson/lib/gdx/backend/GameStateManager.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5695,
+						"buffer_size": 3259,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								775,
-								775
+								1149,
+								1149
 							]
 						],
 						"settings":
@@ -1072,10 +1090,68 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 300.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "core/src/com/jaxson/lib/gdx/Game.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3578,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								661,
+								661
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "core/src/com/jaxson/lib/gdx/backend/DisplayManager.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9127,
+								9127
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 7286.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1142,12 +1218,100 @@
 		"selected_items":
 		[
 			[
-				"tar",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\cameras\\TargetCamera.java"
+				"game",
+				"core\\src\\com\\jaxson\\lib\\gdx\\Game.java"
+			],
+			[
+				"paus",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Pauseable.java"
+			],
+			[
+				"gamo",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\GameObject.java"
+			],
+			[
+				"resi",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Resizeable.java"
+			],
+			[
+				"resia",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Resizeable.java"
+			],
+			[
+				"gameob",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\GameObject.java"
+			],
+			[
+				"rende",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Renderable.java"
+			],
+			[
+				"resiz",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Resizeable.java"
+			],
+			[
+				"gameo",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\GameObject.java"
+			],
+			[
+				"render",
+				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Renderable.java"
+			],
+			[
+				"sta",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\State.java"
+			],
+			[
+				"gamesta",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\GameStateManager.java"
+			],
+			[
+				"gamsta",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\GameStateManager.java"
+			],
+			[
+				"displa",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\DisplayManager.java"
+			],
+			[
+				"gama",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\GameManager.java"
+			],
+			[
+				"spr",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g2d\\GdxSprite.java"
+			],
+			[
+				"deks",
+				"desktop\\src\\com\\jaxson\\desktop\\DesktopLauncher.java"
+			],
+			[
+				"android",
+				"android\\src\\com\\jaxson\\android\\AndroidLauncher.java"
+			],
+			[
+				"myar",
+				"core\\src\\com\\jaxson\\lib\\util\\MyArrayList.java"
+			],
+			[
+				"gamena",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\GameManager.java"
 			],
 			[
 				"mymat",
 				"core\\src\\com\\jaxson\\lib\\util\\MyMath.java"
+			],
+			[
+				"myarlist",
+				"core\\src\\com\\jaxson\\lib\\util\\MyArrayList.java"
+			],
+			[
+				"gson",
+				"core\\src\\com\\jaxson\\lib\\util\\GsonObject.java"
+			],
+			[
+				"tar",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\cameras\\TargetCamera.java"
 			],
 			[
 				"gamcon",
@@ -1178,10 +1342,6 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\MyEnvironment.java"
 			],
 			[
-				"sta",
-				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\State.java"
-			],
-			[
 				"camera",
 				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\bodies\\CameraPlayerBody.java"
 			],
@@ -1198,19 +1358,7 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\renderer\\MixedRenderer.java"
 			],
 			[
-				"gameob",
-				"core\\src\\com\\jaxson\\lib\\gdx\\util\\GameObject.java"
-			],
-			[
-				"rende",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\renderer\\Renderer.java"
-			],
-			[
 				"rend",
-				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Renderable.java"
-			],
-			[
-				"render",
 				"core\\src\\com\\jaxson\\lib\\gdx\\util\\Renderable.java"
 			],
 			[
@@ -1222,10 +1370,6 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\renderer\\SpriteRenderer.java"
 			],
 			[
-				"displa",
-				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\DisplayManager.java"
-			],
-			[
 				"sprite",
 				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g2d\\GdxSprite.java"
 			],
@@ -1234,16 +1378,8 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\util\\GdxMath.java"
 			],
 			[
-				"spr",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\renderer\\SpriteRenderer.java"
-			],
-			[
 				"pausesta",
 				"core\\src\\com\\jaxson\\woofers3d\\states\\PauseState.java"
-			],
-			[
-				"gamsta",
-				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\GameStateManager.java"
 			],
 			[
 				"gmana",
@@ -1314,10 +1450,6 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\util\\GdxMath.java"
 			],
 			[
-				"gson",
-				"core\\src\\com\\jaxson\\lib\\util\\GsonObject.java"
-			],
-			[
 				"myenvi",
 				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\MyEnvironment.java"
 			],
@@ -1374,10 +1506,6 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\GameConfig.java"
 			],
 			[
-				"gamesta",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameStateManager.java"
-			],
-			[
 				"input",
 				"core\\src\\com\\jaxson\\lib\\gdx\\input\\InputHandler.java"
 			],
@@ -1388,14 +1516,6 @@
 			[
 				"plasta",
 				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
-			],
-			[
-				"paus",
-				"core\\src\\com\\jaxson\\woofers3d\\states\\PauseState.java"
-			],
-			[
-				"gama",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameManager.java"
 			],
 			[
 				"play",
@@ -1470,20 +1590,12 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\DisplayOrientation.java"
 			],
 			[
-				"android",
-				"android\\build\\intermediates\\manifests\\full\\debug\\AndroidManifest.xml"
-			],
-			[
 				"gamemna",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameManager.java"
 			],
 			[
 				"displayman",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\DisplayManager.java"
-			],
-			[
-				"game",
-				"core\\src\\com\\jaxson\\lib\\gdx\\GameConfig.java"
 			],
 			[
 				"dis",
@@ -1532,10 +1644,6 @@
 			[
 				"gamana",
 				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameManager.java"
-			],
-			[
-				"gameo",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\GameObject.java"
 			],
 			[
 				"my",
@@ -1620,38 +1728,6 @@
 			[
 				"andr",
 				"android\\src\\com\\jaxson\\android\\AndroidLauncher.java"
-			],
-			[
-				"displ",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\DisplayManager.java"
-			],
-			[
-				"ga",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameManager.java"
-			],
-			[
-				"gamma",
-				"core\\src\\com\\jaxson\\lib\\gdx\\states\\GameManager.java"
-			],
-			[
-				"soft",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\bodies\\SoftBody.java"
-			],
-			[
-				"flor",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\bodies\\Floor.java"
-			],
-			[
-				"woof",
-				"core\\src\\com\\jaxson\\woofers3d\\Woofers3D.java"
-			],
-			[
-				"wofo",
-				"core\\src\\com\\jaxson\\woofers3d\\Woofers3D.java"
-			],
-			[
-				"js",
-				"core\\src\\com\\jaxson\\lib\\util\\JSONConvertor.java"
 			]
 		],
 		"width": 0.0

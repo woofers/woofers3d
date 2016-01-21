@@ -39,7 +39,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	private String iconPath;
 	private transient String savePath = CONFIG_PATH;
 	private boolean showFps = true;
-	private Vector2 sensitivity;
+	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
 	private boolean invertMouseX = true;
 	private boolean invertMouseY = true;
 
@@ -51,12 +51,10 @@ public class GameConfig extends GsonObject<GameConfig>
 	public GameConfig(int width, int height, int fps, float step)
 	{
 		super(GameConfig.class);
-		this.sensitivity = new Vector2();
 		setWidth(width);
 		setHeight(height);
 		setFps(fps);
 		setStep(step);
-		setSensitivity(SENSITIVITY);
 	}
 
 	public boolean allowsFullscreen()

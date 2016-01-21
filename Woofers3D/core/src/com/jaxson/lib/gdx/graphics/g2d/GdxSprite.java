@@ -172,6 +172,12 @@ public class GdxSprite extends GameObject
 		sprite.setPosition(x, y);
 	}
 
+	public void setLocation(float x, float y, float z)
+	{
+		setLocation(x, y);
+		depth = z;
+	}
+
 	public void setLocation(Vector2 location)
 	{
 		setLocation(location.x, location.y);
@@ -179,8 +185,7 @@ public class GdxSprite extends GameObject
 
 	public void setLocation(Vector3 location)
 	{
-		setLocation(location);
-		depth = location.z;
+		setLocation(location.x, location.y, location.z);
 	}
 
 	public void setOrigin()

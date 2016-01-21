@@ -21,6 +21,12 @@ import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.util.MyMath;
 
+/**
+ * A class that handles the display and rendering.
+ * Contains the {@link Camera}, {@link Viewport}, {@link SpriteBatch}, {@link ModelBatch}.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public class DisplayManager extends GameObject
 {
 	private static final int FONT_PADDING = 20;
@@ -35,6 +41,10 @@ public class DisplayManager extends GameObject
 	private boolean minimized;
 	private boolean paused;
 
+	/**
+	 * Constructs the display manager.
+	 * @param gameManager Reference to the {@link GameManager}
+	 */
 	public DisplayManager(GameManager gameManager)
 	{
 		this.gameManager = gameManager;
@@ -198,16 +208,6 @@ public class DisplayManager extends GameObject
 	public int getRightGutterWidth()
 	{
 		return getViewport().getRightGutterWidth();
-	}
-
-	public Vector2 getScale(float sourceWidth, float sourceHeight, float targetWidth, float targetHeight)
-	{
-		float targetRatio = targetHeight / targetWidth;
-		float sourceRatio = sourceHeight / sourceWidth;
-		Vector2 scale = new Vector2(sourceWidth, sourceHeight);
-		float ratio = targetRatio < sourceRatio ? targetWidth / sourceWidth : targetHeight / sourceHeight;
-		scale.scl(ratio);
-		return scale;
 	}
 
 	public SpriteBatch getSpriteBatch()
@@ -437,9 +437,9 @@ public class DisplayManager extends GameObject
 
 	public void updateSprtieBatch(int width, int height)
 	{
-		getSpriteBatch().getProjectionMatrix().idt();
-		getSpriteBatch().getTransformMatrix().idt();
-		getSpriteBatch().getProjectionMatrix().setToOrtho2D(0, 0, width, height);
+		//getSpriteBatch().getProjectionMatrix().idt();
+		//getSpriteBatch().getTransformMatrix().idt();
+		//getSpriteBatch().getProjectionMatrix().setToOrtho2D(0, 0, width, height);
 	}
 
 	public void updateViewport()

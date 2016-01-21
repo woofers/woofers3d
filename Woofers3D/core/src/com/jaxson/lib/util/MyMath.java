@@ -10,10 +10,17 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class MyMath
 {
-
 	public static final float HALF = 1f / 2f;
 	public static final int FLIP_SIGN = -1;
 
+	/**
+	 * Constant to convert a radius to as diamiater.
+	 */
+	public static final float RADIUS_TO_DIAMETER = 2f;
+
+	/**
+	 * Constant to convert a diamiater to as radius.
+	 */
 	public static final float DIAMETER_TO_RADIUS = HALF;
 
 	/**

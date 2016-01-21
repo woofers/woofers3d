@@ -17,7 +17,6 @@ public abstract class GsonObject<T>
 	/**
 	 * Constructs an GsonObject containing the class type of the object.
 	 * @param type The generic class
-	 * The class
 	 */
 	public GsonObject(Class<T> type)
 	{
