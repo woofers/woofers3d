@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.jaxson.lib.gdx.bullet.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 
 public class RigidBox extends RigidBody
 {

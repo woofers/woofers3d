@@ -43,7 +43,7 @@ public class PhysicsWorld
 
 	protected static final float VECOTR_TO_MAX = GdxMath.HALF;
 	protected static final float VECOTR_TO_MIN = -GdxMath.HALF;
-	protected static final Vector3 WORLD_SIZE = new Vector3(200, 200, 200);
+	protected static final Vector3 WORLD_SIZE = new Vector3(100f, 100f, 100f);
 	protected static final Vector3 GRAVITY = new Vector3(0, -GdxMath.GRAVITY_EARTH, 0);
 
 	private MyArrayList<EntityBody<?>> objects;

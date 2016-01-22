@@ -6,6 +6,8 @@ import com.jaxson.lib.gdx.bullet.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
+import com.jaxson.lib.gdx.bullet.collision.SphereShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 
 public class RigidSphere extends RigidBody
 {
@@ -33,8 +35,8 @@ public class RigidSphere extends RigidBody
 		return new MyModelBuilder().createSphere(color);
 	}
 
-	protected static btSphereShape getShape()
+	protected static SphereShape getShape()
 	{
-		return new btSphereShape(0.5f);
+		return new SphereShape();
 	}
 }
