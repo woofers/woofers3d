@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
+import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.util.MyArrayList;
-import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 
 public class MyEnvironment extends Environment
 {
@@ -21,56 +21,6 @@ public class MyEnvironment extends Environment
 	private static final int SHADOW_RESOLUTION = 4096;
 	private static final float SHADOW_NEAR = 1f;
 	private static final float SHADOW_FAR = 100f;
-
-	public static DirectionalLight createLight(Color color, Vector3 direction)
-	{
-		return new DirectionalLight().set(color, direction);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction)
-	{
-		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, float worldWidth,
-			float worldDepth)
-	{
-		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION, worldWidth, worldDepth);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth,
-			int shadowResolutionHeight, float worldWidth, float worldDepth)
-	{
-		return createShadowLight(color, direction, shadowResolutionHeight, shadowResolutionHeight, worldWidth,
-				worldDepth, SHADOW_NEAR, SHADOW_FAR);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth,
-			int shadowResolutionHeight, float worldWidth, float worldDepth, float near, float far)
-	{
-		DirectionalShadowLight light = new DirectionalShadowLight(shadowResolutionWidth, shadowResolutionHeight,
-				worldWidth, worldDepth, near, far);
-		light.set(color, direction);
-		return light;
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth,
-			int shadowResolutionHeight, Vector3 worldSize, Camera camera)
-	{
-		return createShadowLight(color, direction, shadowResolutionHeight, shadowResolutionHeight, worldSize.x,
-				worldSize.z, camera.near, camera.far);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, Vector3 worldSize)
-	{
-		return createShadowLight(color, direction, worldSize.x, worldSize.z);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, Vector3 worldSize,
-			Camera camera)
-	{
-		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION, worldSize, camera);
-	}
 
 	private ColorAttribute color;
 	private DirectionalLight light;
@@ -239,5 +189,55 @@ public class MyEnvironment extends Environment
 	public void setWorldSize(Vector3 worldSize)
 	{
 		this.worldSize = worldSize;
+	}
+
+	public static DirectionalLight createLight(Color color, Vector3 direction)
+	{
+		return new DirectionalLight().set(color, direction);
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction)
+	{
+		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION);
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, float worldWidth,
+			float worldDepth)
+	{
+		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION, worldWidth, worldDepth);
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth,
+			int shadowResolutionHeight, float worldWidth, float worldDepth)
+	{
+		return createShadowLight(color, direction, shadowResolutionHeight, shadowResolutionHeight, worldWidth,
+				worldDepth, SHADOW_NEAR, SHADOW_FAR);
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth,
+			int shadowResolutionHeight, float worldWidth, float worldDepth, float near, float far)
+	{
+		DirectionalShadowLight light = new DirectionalShadowLight(shadowResolutionWidth, shadowResolutionHeight,
+				worldWidth, worldDepth, near, far);
+		light.set(color, direction);
+		return light;
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth,
+			int shadowResolutionHeight, Vector3 worldSize, Camera camera)
+	{
+		return createShadowLight(color, direction, shadowResolutionHeight, shadowResolutionHeight, worldSize.x,
+				worldSize.z, camera.near, camera.far);
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, Vector3 worldSize)
+	{
+		return createShadowLight(color, direction, worldSize.x, worldSize.z);
+	}
+
+	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, Vector3 worldSize,
+			Camera camera)
+	{
+		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION, worldSize, camera);
 	}
 }

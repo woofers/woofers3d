@@ -5,18 +5,19 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.jaxson.lib.gdx.bullet.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
+import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 
-public class RigidBox extends RigidBody
+public class RigidSphere extends RigidBody
 {
 	protected static final Color COLOR = new MyColor(81, 101, 107);
 	private static final float MASS = 1f;
 
-	public RigidBox()
+	public RigidSphere()
 	{
 		this(COLOR);
 	}
 
-	public RigidBox(Color color)
+	public RigidSphere(Color color)
 	{
 		super(getModel(color), getShape());
 	}
@@ -27,19 +28,13 @@ public class RigidBox extends RigidBody
 		super.dispose();
 	}
 
-	@Override
-	public void update(float dt)
-	{
-
-	}
-
 	protected static Model getModel(Color color)
 	{
-		return new MyModelBuilder().createBox(color);
+		return new MyModelBuilder().createSphere(color);
 	}
 
-	protected static BoxShape getShape()
+	protected static btSphereShape getShape()
 	{
-		return new BoxShape();
+		return new btSphereShape(0.5f);
 	}
 }

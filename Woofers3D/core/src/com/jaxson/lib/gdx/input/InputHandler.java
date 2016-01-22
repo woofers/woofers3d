@@ -65,6 +65,127 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	private static InputMultiplexer inputProcessor;
 	private static GestureDetector gestureDetector;
 
+	public InputHandler()
+	{
+		InputHandler.keys = new boolean[KEY_SIZE];
+		InputHandler.prevKeys = new boolean[KEY_SIZE];
+		InputHandler.touches = new boolean[MULTITOUCH_SUPPORT];
+		InputHandler.prevTouches = new boolean[MULTITOUCH_SUPPORT];
+		InputHandler.mouse = new Vector2();
+		InputHandler.deltaMouse = new Vector2();
+		InputHandler.invertMouse = new Vector2(1f, 1f);
+		InputHandler.sensitivity = new Vector2(1f, 1f);
+		InputHandler.orientation = getOrientation();
+		InputHandler.prevOrientation = orientation;
+		setInvertMouse(INVERT_MOUSE_X, INVERT_MOUSE_Y);
+		setSensitivity(SENSITIVITY);
+		inputProcessor = new InputMultiplexer();
+		gestureDetector = new GestureDetector(this);
+		inputProcessor.addProcessor(this);
+		inputProcessor.addProcessor(gestureDetector);
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean keyDown(int keycode)
+	{
+		keys[keycode] = true;
+		return true;
+	}
+
+	@Override
+	public boolean keyTyped(char character)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode)
+	{
+		keys[keycode] = false;
+		return true;
+	}
+
+	@Override
+	public boolean longPress(float x, float y)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int x, int y)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean scrolled(int amount)
+	{
+		scrollWheel += amount;
+		return true;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button)
+	{
+		touches[pointer] = true;
+		return true;
+	}
+
+	@Override
+	public boolean touchDown(int x, int y, int pointer, int button)
+	{
+		return touchDown((float) x, (float) y, pointer, button);
+	}
+
+	@Override
+	public boolean touchDragged(int x, int y, int pointer)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean touchUp(int x, int y, int pointer, int button)
+	{
+		touches[pointer] = false;
+		return true;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance)
+	{
+		return false;
+	}
+
 	public static boolean anyKey()
 	{
 		if (isButtonPressed(ANY_MOUSE)) return true;
@@ -664,126 +785,5 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		}
 		prevOrientation = orientation;
 		orientation = getOrientation();
-	}
-
-	public InputHandler()
-	{
-		InputHandler.keys = new boolean[KEY_SIZE];
-		InputHandler.prevKeys = new boolean[KEY_SIZE];
-		InputHandler.touches = new boolean[MULTITOUCH_SUPPORT];
-		InputHandler.prevTouches = new boolean[MULTITOUCH_SUPPORT];
-		InputHandler.mouse = new Vector2();
-		InputHandler.deltaMouse = new Vector2();
-		InputHandler.invertMouse = new Vector2(1f, 1f);
-		InputHandler.sensitivity = new Vector2(1f, 1f);
-		InputHandler.orientation = getOrientation();
-		InputHandler.prevOrientation = orientation;
-		setInvertMouse(INVERT_MOUSE_X, INVERT_MOUSE_Y);
-		setSensitivity(SENSITIVITY);
-		inputProcessor = new InputMultiplexer();
-		gestureDetector = new GestureDetector(this);
-		inputProcessor.addProcessor(this);
-		inputProcessor.addProcessor(gestureDetector);
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean keyDown(int keycode)
-	{
-		keys[keycode] = true;
-		return true;
-	}
-
-	@Override
-	public boolean keyTyped(char character)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean keyUp(int keycode)
-	{
-		keys[keycode] = false;
-		return true;
-	}
-
-	@Override
-	public boolean longPress(float x, float y)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int x, int y)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean panStop(float x, float y, int pointer, int button)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean scrolled(int amount)
-	{
-		scrollWheel += amount;
-		return true;
-	}
-
-	@Override
-	public boolean tap(float x, float y, int count, int button)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button)
-	{
-		touches[pointer] = true;
-		return true;
-	}
-
-	@Override
-	public boolean touchDown(int x, int y, int pointer, int button)
-	{
-		return touchDown((float) x, (float) y, pointer, button);
-	}
-
-	@Override
-	public boolean touchDragged(int x, int y, int pointer)
-	{
-		return true;
-	}
-
-	@Override
-	public boolean touchUp(int x, int y, int pointer, int button)
-	{
-		touches[pointer] = false;
-		return true;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance)
-	{
-		return false;
 	}
 }

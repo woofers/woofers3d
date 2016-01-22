@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.states.renderer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.jaxson.lib.gdx.util.ExceptionBuilder;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
@@ -22,9 +23,9 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 
 	protected void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
-		if (modelBatch == null) throw new IllegalArgumentException("modelBatch cannot be null");
-		if (spriteBatch == null) throw new IllegalArgumentException("spriteBatch cannot be null");
-		if (camera == null) throw new IllegalArgumentException("camera cannot be null");
+		if (modelBatch == null) throw ExceptionBuilder.cannotBeNull("spriteBatch");
+		if (spriteBatch == null) throw ExceptionBuilder.cannotBeNull("modelBatch");
+		if (camera == null) throw ExceptionBuilder.cannotBeNull("camera");
 	}
 
 	@Override

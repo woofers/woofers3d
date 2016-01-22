@@ -43,7 +43,7 @@ public class PhysicsWorld
 
 	protected static final float VECOTR_TO_MAX = GdxMath.HALF;
 	protected static final float VECOTR_TO_MIN = -GdxMath.HALF;
-	protected static final Vector3 WORLD_SIZE = new Vector3(2000, 2000, 2000);
+	protected static final Vector3 WORLD_SIZE = new Vector3(200, 200, 200);
 	protected static final Vector3 GRAVITY = new Vector3(0, -GdxMath.GRAVITY_EARTH, 0);
 
 	private MyArrayList<EntityBody<?>> objects;
@@ -98,6 +98,7 @@ public class PhysicsWorld
 
 	public void add(Floor entity, boolean hasMovement)
 	{
+		if (contains(entity)) return;
 		if (hasMovement) entity.addCollisionFlag(KINEMATIC_FLAG);
 		entity.setActivationState(CollisionConstants.DISABLE_DEACTIVATION);
 		add(entity, GROUND_FLAG, ALL_FLAG);
@@ -105,6 +106,7 @@ public class PhysicsWorld
 
 	public void add(PlayerBody entity)
 	{
+		if (contains(entity)) return;
 		objects.add(entity);
 		entity.setCollisionFlags(CHARACTER_FLAG);
 		broadphase.getOverlappingPairCache().setInternalGhostPairCallback(entity.getCallback());
@@ -119,6 +121,7 @@ public class PhysicsWorld
 
 	public void add(RigidBody entity, int group, int mask)
 	{
+		if (contains(entity)) return;
 		objects.add(entity);
 		entity.addCollisionFlag(CALLBACK_FLAG);
 		world.addRigidBody(entity.getBody());
@@ -133,11 +136,17 @@ public class PhysicsWorld
 
 	public void add(SoftBody entity, int group, int mask)
 	{
+		if (contains(entity)) return;
 		objects.add(entity);
 		entity.addCollisionFlag(CALLBACK_FLAG);
 		world.addSoftBody(entity.getBody());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);
+	}
+
+	public boolean contains(EntityBody<?> entity)
+	{
+		return objects.contains(entity);
 	}
 
 	public EntityBody<?> getBody(float x, float y, Camera camera)
@@ -198,10 +207,23 @@ public class PhysicsWorld
 		world.rayTest(rayStart, rayEnd, callback);
 	}
 
+	public void remove(PlayerBody entity)
+	{
+		objects.remove(entity);
+		world.removeCollisionObject(entity.getBody());
+		world.removeAction(entity.getCharacterController());
+	}
+
 	public void remove(RigidBody entity)
 	{
 		objects.remove(entity);
 		world.removeRigidBody(entity.getBody());
+	}
+
+	public void remove(SoftBody entity)
+	{
+		objects.remove(entity);
+		world.removeSoftBody(entity.getBody());
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)

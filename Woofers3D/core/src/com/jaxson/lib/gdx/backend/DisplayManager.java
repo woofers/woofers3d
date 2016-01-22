@@ -2,6 +2,7 @@ package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Graphics.BufferFormat;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -20,11 +21,11 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.util.MyMath;
-import com.badlogic.gdx.Graphics.BufferFormat;
 
 /**
  * A class that handles the display and rendering.
- * Contains the {@link Camera}, {@link Viewport}, {@link SpriteBatch}, {@link ModelBatch}.
+ * Contains the {@link Camera}, {@link Viewport}, {@link SpriteBatch},
+ * {@link ModelBatch}.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -33,6 +34,8 @@ public class DisplayManager extends GameObject
 	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
 	private static final int COVERAGE_SAMPLING_MASK = GL20.GL_COVERAGE_BUFFER_BIT_NV;
 	private static final int EMPTY_MASK = GL20.GL_ZERO;
+	public static final Color CLEAR_COLOR = Color.BLUE;
+
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
 
@@ -69,7 +72,8 @@ public class DisplayManager extends GameObject
 
 	public void clearScreen()
 	{
-		clearScreen(GameConfig.CLEAR_COLOR);
+		clearScreen(CLEAR_COLOR);
+		clearScreen(getClearMask());
 	}
 
 	public void clearScreen(Color color)
@@ -85,6 +89,11 @@ public class DisplayManager extends GameObject
 	public void clearScreen(float r, float g, float b, float a)
 	{
 		getGL().glClearColor(r, g, b, a);
+	}
+
+	public void clearScreen(int mask)
+	{
+		getGL().glClear(mask);
 	}
 
 	@Override
@@ -112,6 +121,11 @@ public class DisplayManager extends GameObject
 		return getViewport().getBottomGutterHeight();
 	}
 
+	public BufferFormat getBufferFormat()
+	{
+		return getGraphics().getBufferFormat();
+	}
+
 	public Camera getCamera()
 	{
 		return camera;
@@ -122,9 +136,19 @@ public class DisplayManager extends GameObject
 		return new Vector2(getWidth() * MyMath.HALF, getHeight() * MyMath.HALF);
 	}
 
+	public int getClearMask()
+	{
+		return CLEAR_MASK | getCoverageSampling();
+	}
+
 	public GameConfig getConfig()
 	{
 		return gameManager.getConfig();
+	}
+
+	public int getCoverageSampling()
+	{
+		return hasCoverageSampling() ? COVERAGE_SAMPLING_MASK : EMPTY_MASK;
 	}
 
 	public float getDefaultAspectRatio()
@@ -254,6 +278,11 @@ public class DisplayManager extends GameObject
 		return getGraphics().getWidth();
 	}
 
+	public boolean hasCoverageSampling()
+	{
+		return getBufferFormat().coverageSampling;
+	}
+
 	@Override
 	protected void input()
 	{
@@ -307,22 +336,6 @@ public class DisplayManager extends GameObject
 	public void render()
 	{
 		clearScreen();
-		getGL().glClear(CLEAR_MASK | getCoverageSampling());
-	}
-
-	public BufferFormat getBufferFormat()
-	{
-		return getGraphics().getBufferFormat();
-	}
-
-	public boolean hasCoverageSampling()
-	{
-		return getBufferFormat().coverageSampling;
-	}
-
-	public int getCoverageSampling()
-	{
-		return hasCoverageSampling() ? COVERAGE_SAMPLING_MASK : EMPTY_MASK;
 	}
 
 	public void resize(int width, int height)
@@ -461,9 +474,10 @@ public class DisplayManager extends GameObject
 
 	public void updateSprtieBatch(int width, int height)
 	{
-		//getSpriteBatch().getProjectionMatrix().idt();
-		//getSpriteBatch().getTransformMatrix().idt();
-		//getSpriteBatch().getProjectionMatrix().setToOrtho2D(0, 0, width, height);
+		// getSpriteBatch().getProjectionMatrix().idt();
+		// getSpriteBatch().getTransformMatrix().idt();
+		// getSpriteBatch().getProjectionMatrix().setToOrtho2D(0, 0, width,
+		// height);
 	}
 
 	public void updateViewport()

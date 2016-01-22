@@ -21,11 +21,6 @@ public abstract class Entity extends GameObject
 	private static final int MATRIX_DIRECTION_Z = 10;
 	private static final int ROOT_NODE_LOCATION = 0;
 
-	protected static Model readModel(String modelPath)
-	{
-		return GdxFileReader.loadModel(modelPath);
-	}
-
 	private ModelInstance modelInstance;
 
 	public Entity(Model model)
@@ -212,5 +207,10 @@ public abstract class Entity extends GameObject
 	public void translateABS(Vector3 translation)
 	{
 		getTransform().trn(translation);
+	}
+
+	protected static Model readModel(String modelPath)
+	{
+		return GdxFileReader.loadModel(modelPath);
 	}
 }

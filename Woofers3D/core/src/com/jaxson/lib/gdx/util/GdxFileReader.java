@@ -25,7 +25,7 @@ public class GdxFileReader extends MyFileReader
 	private static final String G3DJ_EXTENSION = "g3dj";
 	private static final String G3DB_EXTENSION = "g3db";
 	private static final String OBJ_EXTENSION = "obj";
-	private static final String EXCEPTION_MESSAGE = "Loader could not be found for given filetype.";
+	private static final String LOADER_NOT_FOUND = "Loader could not be found for given filetype.";
 	private static final String SCREENSHOT_NAME = "Screenshot ";
 	private static final String SCREENSHOT_FOLDER = "screenshots";
 	private static final String SCREENSHOT_EXTENSION = ".png";
@@ -138,7 +138,7 @@ public class GdxFileReader extends MyFileReader
 		if (extension.equals(G3DB_EXTENSION)) return loadG3db(path);
 		if (extension.equals(G3DJ_EXTENSION)) return loadG3dj(path);
 		if (extension.equals(OBJ_EXTENSION)) return loadObj(path);
-		throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+		throw new IllegalArgumentException(LOADER_NOT_FOUND);
 	}
 
 	public static Model loadObj(String path)
@@ -157,7 +157,7 @@ public class GdxFileReader extends MyFileReader
 		int counter = 0;
 		do
 		{
-			counter ++;
+			counter++;
 			file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
 		}
 		while (file.exists());

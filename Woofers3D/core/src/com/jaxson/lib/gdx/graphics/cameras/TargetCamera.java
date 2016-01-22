@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.util.ExceptionBuilder;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -167,9 +168,9 @@ public class TargetCamera extends PerspectiveCamera
 	private void input()
 	{
 		if (!hasTarget()) return;
-		resetUp();
 		rotateAround(getTargetLocation(), getMouse());
 		translate(getDeltaTargetLocation());
+		resetUp();
 		if (InputHandler.isPressed(Keys.R))
 		{
 			center(getTargetLocation());
@@ -240,7 +241,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setFar(float far)
 	{
-		if (far <= 0f) throw new IllegalArgumentException("far must be positive");
+		if (far <= 0f) throw ExceptionBuilder.mustBePostive("far");
 		this.far = far;
 	}
 
@@ -256,7 +257,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setNear(float near)
 	{
-		if (near <= 0f) throw new IllegalArgumentException("near must be positive");
+		if (near <= 0f) throw ExceptionBuilder.mustBePostive("near");
 		this.near = near;
 	}
 

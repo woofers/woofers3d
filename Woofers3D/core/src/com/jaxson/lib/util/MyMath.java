@@ -110,17 +110,6 @@ public class MyMath
 	}
 
 	/**
-	 * Returns the smaller of two values.
-	 * @param a Number
-	 * @param b Number
-	 * @return {@link float} - Min value
-	 */
-	public static float min(float a, float b)
-	{
-		return Math.min(a, b);
-	}
-
-	/**
 	 * Returns the greater of two values.
 	 * @param a Number
 	 * @param b Number
@@ -129,6 +118,17 @@ public class MyMath
 	public static int max(int a, int b)
 	{
 		return Math.max(a, b);
+	}
+
+	/**
+	 * Returns the smaller of two values.
+	 * @param a Number
+	 * @param b Number
+	 * @return {@link float} - Min value
+	 */
+	public static float min(float a, float b)
+	{
+		return Math.min(a, b);
 	}
 
 	/**

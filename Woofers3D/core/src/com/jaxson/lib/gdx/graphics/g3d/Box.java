@@ -8,11 +8,6 @@ public class Box extends Entity
 {
 	private static final Color COLOR = Color.ORANGE;
 
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
-	}
-
 	public Box()
 	{
 		this(COLOR);
@@ -39,5 +34,10 @@ public class Box extends Entity
 	public void update(float dt)
 	{
 
+	}
+
+	protected static Model getModel(Color color)
+	{
+		return new MyModelBuilder().createBox(color);
 	}
 }

@@ -35,9 +35,20 @@ public class GdxMath extends MyMath
 		return randColor(RGB_MIN, RGB_MAX);
 	}
 
+	public static Color randColor(Color minColor, Color maxColor)
+	{
+		return new MyColor(randFloat(minColor.r, maxColor.r), randFloat(minColor.g, maxColor.g),
+				randFloat(minColor.b, maxColor.b));
+	}
+
 	public static Color randColor(int minRGB, int maxRGB)
 	{
-		return new MyColor(randInt(minRGB, maxRGB), randInt(minRGB, maxRGB), randInt(minRGB, maxRGB));
+		return randColor(minRGB, maxRGB, minRGB, maxRGB, minRGB, maxRGB);
+	}
+
+	public static Color randColor(int minR, int maxR, int minG, int maxG, int minB, int maxB)
+	{
+		return new MyColor(randInt(minR, maxR), randInt(minG, maxG), randInt(minB, maxB));
 	}
 
 	public static Vector3 randVector3(float min, float max)

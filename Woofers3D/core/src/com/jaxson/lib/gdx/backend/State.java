@@ -32,7 +32,7 @@ public abstract class State extends GameObject
 		this.gameManager = gameManager;
 		this.renderer = new MixedRenderer();
 		this.world = new PhysicsWorld();
-		getEnvironment().setWorldSize(new Vector3(100f, 0f, 100f));
+		getEnvironment().setWorldSize(getPhysicsWorld().getWorldSize());
 		getEnvironment().setShawdows(true);
 	}
 
@@ -141,6 +141,21 @@ public abstract class State extends GameObject
 	public void remove(GdxSprite sprite)
 	{
 		renderer.remove(sprite);
+	}
+
+	public void removePhysics(PlayerBody entity)
+	{
+		world.remove(entity);
+	}
+
+	public void removePhysics(RigidBody entity)
+	{
+		world.remove(entity);
+	}
+
+	public void removePhysics(SoftBody entity)
+	{
+		world.remove(entity);
 	}
 
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
