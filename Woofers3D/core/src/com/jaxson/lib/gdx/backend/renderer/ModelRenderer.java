@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.states.renderer;
+package com.jaxson.lib.gdx.backend.renderer;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -18,24 +18,6 @@ public class Box extends Entity
 		super(getModel(color));
 	}
 
-	@Override
-	public void dispose()
-	{
-		super.dispose();
-	}
-
-	@Override
-	protected void input()
-	{
-
-	}
-
-	@Override
-	public void update(float dt)
-	{
-
-	}
-
 	protected static Model getModel(Color color)
 	{
 		return new MyModelBuilder().createBox(color);

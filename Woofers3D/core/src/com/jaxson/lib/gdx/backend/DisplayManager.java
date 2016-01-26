@@ -21,6 +21,7 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.gdx.graphics.MyColor;
 
 /**
  * A class that handles the display and rendering.
@@ -34,7 +35,7 @@ public class DisplayManager extends GameObject
 	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
 	private static final int COVERAGE_SAMPLING_MASK = GL20.GL_COVERAGE_BUFFER_BIT_NV;
 	private static final int EMPTY_MASK = GL20.GL_ZERO;
-	public static final Color CLEAR_COLOR = Color.BLUE;
+	private static final Color CLEAR_COLOR = Color.BLUE;
 
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
@@ -83,7 +84,7 @@ public class DisplayManager extends GameObject
 
 	public void clearScreen(float r, float g, float b)
 	{
-		clearScreen(r, g, b, 1);
+		clearScreen(r, g, b, MyColor.MAX_VALUE_FLOAT);
 	}
 
 	public void clearScreen(float r, float g, float b, float a)

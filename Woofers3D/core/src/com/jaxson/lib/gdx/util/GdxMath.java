@@ -8,12 +8,13 @@ import com.jaxson.lib.util.MyMath;
 
 public class GdxMath extends MyMath
 {
-	public static final int RGB_MIN = 0;
-	public static final int RGB_MAX = 255;
-	private static final float RGB_TO_FLOAT = 1f / RGB_MAX;
-
 	public static final float DEGREES_TO_RADIANS = MathUtils.degreesToRadians;
 	public static final float RADIANS_TO_DEGREES = MathUtils.radiansToDegrees;
+
+	private GdxMath()
+	{
+
+	}
 
 	public static Vector3 absVector(Vector3 vector)
 	{
@@ -32,7 +33,7 @@ public class GdxMath extends MyMath
 
 	public static Color randColor()
 	{
-		return randColor(RGB_MIN, RGB_MAX);
+		return randColor(MyColor.MIN_VALUE_INT, MyColor.MAX_VALUE_INT);
 	}
 
 	public static Color randColor(Color minColor, Color maxColor)
@@ -59,12 +60,5 @@ public class GdxMath extends MyMath
 	public static Vector3 reciprocalVector(Vector3 vector)
 	{
 		return vector.set(reciprocal(vector.x), reciprocal(vector.y), reciprocal(vector.z));
-	}
-
-	public static float toRGB(int color)
-	{
-		color = max(RGB_MIN, color);
-		color = min(RGB_MAX, color);
-		return color * RGB_TO_FLOAT;
 	}
 }

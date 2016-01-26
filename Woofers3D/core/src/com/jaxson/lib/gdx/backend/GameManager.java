@@ -2,14 +2,21 @@ package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
+import com.jaxson.lib.gdx.bullet.BulletState;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.states.State;
 
 public class GameManager
 {
@@ -46,6 +53,11 @@ public class GameManager
 		return getApplication().getType();
 	}
 
+	public Audio getAudio()
+	{
+		return getApplication().getAudio();
+	}
+
 	public Camera getCamera()
 	{
 		return displayManager.getCamera();
@@ -58,12 +70,32 @@ public class GameManager
 
 	private float getDeltaTime()
 	{
-		return Gdx.graphics.getDeltaTime();
+		return getGraphics().getDeltaTime();
 	}
 
-	private Input getInput()
+	public Files getFiles()
 	{
-		return Gdx.input;
+		return getApplication().getFiles();
+	}
+
+	public GL20 getGl()
+	{
+		return Gdx.gl;
+	}
+
+	public Graphics getGraphics()
+	{
+		return getApplication().getGraphics();
+	}
+
+	public Input getInput()
+	{
+		return getApplication().getInput();
+	}
+
+	public Net getNetwork()
+	{
+		return getApplication().getNet();
 	}
 
 	public TargetCamera getTargetCamera()

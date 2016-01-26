@@ -76,8 +76,13 @@ public abstract class Entity extends GameObject
 
 	public Vector3 getDirection()
 	{
-		float[] matrix = getTransform().getValues();
+		float[] matrix = getTransformValues();
 		return new Vector3(matrix[MATRIX_DIRECTION_X], matrix[MATRIX_DIRECTION_Y], matrix[MATRIX_DIRECTION_Z]);
+	}
+
+	public Ray getForwardRay()
+	{
+		return new Ray(getLocation(), getDirection());
 	}
 
 	public Vector3 getLocation()
@@ -144,6 +149,11 @@ public abstract class Entity extends GameObject
 	public Matrix4 getTransform()
 	{
 		return getModelInstance().transform;
+	}
+
+	public float[] getTransformValues()
+	{
+		return getTransform().getValues();
 	}
 
 	public boolean isVisible(Camera camera)

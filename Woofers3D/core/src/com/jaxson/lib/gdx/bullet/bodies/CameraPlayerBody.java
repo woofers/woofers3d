@@ -3,31 +3,22 @@ package com.jaxson.lib.gdx.bullet.bodies;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.input.InputHandler;
+import com.badlogic.gdx.math.Vector3;
 
 public class CameraPlayerBody extends PlayerBody
 {
-	private static final float MASS = -1f;
 	private TargetCamera camera;
-
-	public CameraPlayerBody(Model model, btConvexShape shape, float mass, TargetCamera camera)
-	{
-		super(model, shape, mass);
-		setCamera(camera);
-	}
 
 	public CameraPlayerBody(Model model, btConvexShape shape, TargetCamera camera)
 	{
-		this(model, shape, MASS, camera);
-	}
-
-	public CameraPlayerBody(String modelPath, btConvexShape shape, float mass, TargetCamera camera)
-	{
-		this(readModel(modelPath), shape, mass, camera);
+		super(model, shape);
+		setCamera(camera);
 	}
 
 	public CameraPlayerBody(String modelPath, btConvexShape shape, TargetCamera camera)
 	{
-		this(modelPath, shape, MASS, camera);
+		this(readModel(modelPath), shape, camera);
 	}
 
 	public boolean cameraIsLocked()
@@ -56,6 +47,8 @@ public class CameraPlayerBody extends PlayerBody
 	protected void input()
 	{
 		super.input();
+		int scroll = 5;
+		getCamera().setZoom(new Vector3(1f, scroll, scroll));
 	}
 
 	public void lockCamera()

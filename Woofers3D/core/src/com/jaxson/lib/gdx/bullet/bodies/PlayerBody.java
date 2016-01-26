@@ -12,6 +12,7 @@ import com.jaxson.lib.gdx.util.GdxMath;
 
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 {
+	private static final float GHOST_MASS = -1f;
 	private static final float STEP_HEIGHT = 0.3f;
 	private static final float SPEED = 0.2f;
 	private static final float ROTATION_SPEED = 2f;
@@ -22,22 +23,19 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
+	private Vector3 walkDirection;
 	private float speed;
 	private float rotationSpeed;
 	private float stepHeight;
 
 	public PlayerBody(Model model, btConvexShape shape)
 	{
-		this(model, shape, DEFAULT_MASS);
-	}
-
-	public PlayerBody(Model model, btConvexShape shape, float mass)
-	{
-		super(model, shape, mass);
+		super(model, shape, GHOST_MASS);
 		setBody(new btPairCachingGhostObject());
 		getBody().setCollisionShape(shape);
 		this.characterController = new btKinematicCharacterController(getBody(), shape, STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
+		this.walkDirection = new Vector3();
 		setGravity(GRAVITY);
 		setSpeed(SPEED);
 		setRotationSpeed(ROTATION_SPEED);
@@ -47,12 +45,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 
 	public PlayerBody(String modelPath, btConvexShape shape)
 	{
-		this(modelPath, shape, DEFAULT_MASS);
-	}
-
-	public PlayerBody(String modelPath, btConvexShape shape, float mass)
-	{
-		this(readModel(modelPath), shape, mass);
+		this(readModel(modelPath), shape);
 	}
 
 	public boolean canJump()
@@ -104,18 +97,18 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	@Override
 	protected void input()
 	{
-		Vector3 walkDirection = new Vector3();
+		walkDirection.setZero();
 		if (InputHandler.hasHardwareKeyboard())
 		{
 			if (onGround())
 			{
 				if (InputHandler.isDown(InputHandler.ANY_LEFT))
 				{
-					rotate(getRotationSpeed(), 0, 0);
+					rotate(getRotationSpeed(), 0f, 0f);
 				}
 				if (InputHandler.isDown(InputHandler.ANY_RIGHT))
 				{
-					rotate(-getRotationSpeed(), 0, 0);
+					rotate(-getRotationSpeed(), 0f, 0f);
 				}
 			}
 			if (InputHandler.isDown(InputHandler.ANY_UP))

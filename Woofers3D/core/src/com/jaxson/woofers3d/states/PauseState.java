@@ -3,11 +3,11 @@ package com.jaxson.woofers3d.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.backend.GameManager;
-import com.jaxson.lib.gdx.backend.State;
+import com.jaxson.lib.gdx.bullet.BulletState;
 import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
 import com.jaxson.lib.gdx.graphics.g3d.Box;
 
-public class PauseState extends State
+public class PauseState extends BulletState
 {
 	private static final String PAUSE_SCREEN_PATH = "pauseScreen.png";
 	private static final float PAUSE_ALPHA = 3f / 4f;

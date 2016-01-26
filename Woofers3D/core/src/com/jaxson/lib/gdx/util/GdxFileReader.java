@@ -30,6 +30,11 @@ public class GdxFileReader extends MyFileReader
 	private static final String SCREENSHOT_FOLDER = "screenshots";
 	private static final String SCREENSHOT_EXTENSION = ".png";
 
+	private GdxFileReader()
+	{
+
+	}
+
 	public static void add(String location, String contents)
 	{
 		write(location, contents, false);
@@ -94,7 +99,7 @@ public class GdxFileReader extends MyFileReader
 			int numBytes = width * height * 4;
 			byte[] lines = new byte[numBytes];
 			int numBytesPerLine = width * 4;
-			for (int i = 0; i < height; i++)
+			for (int i = 0; i < height; i ++)
 			{
 				pixels.position((height - i - 1) * numBytesPerLine);
 				pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
@@ -157,7 +162,7 @@ public class GdxFileReader extends MyFileReader
 		int counter = 0;
 		do
 		{
-			counter++;
+			counter ++;
 			file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
 		}
 		while (file.exists());

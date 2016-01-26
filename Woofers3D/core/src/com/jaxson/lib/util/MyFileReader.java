@@ -15,6 +15,11 @@ public class MyFileReader
 {
 	protected static final String FOWARD_SLASH = "/";
 
+	protected MyFileReader()
+	{
+
+	}
+
 	/**
 	 * Gets whether the file exists.
 	 * @param path The path of the file

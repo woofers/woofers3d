@@ -21,7 +21,9 @@ public class TargetCamera extends PerspectiveCamera
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
+	private Vector3 combinedOffset;
 	private Vector3 offset;
+	private Vector3 zoom;
 	private Vector3 oldTargetLocation;
 	private PhysicsWorld world;
 
@@ -39,31 +41,37 @@ public class TargetCamera extends PerspectiveCamera
 	{
 		super(fov, width, height);
 		this.offset = offset;
+		this.zoom = new Vector3(1f, 1f, 1f);
 		setNear(NEAR);
 		setFar(FAR);
 		center();
-		oldTargetLocation = STAGE_LOCATION;
 	}
 
 	public void center()
 	{
-		if (hasTarget())
-		{
-			center(getTargetLocation());
-		}
-		else
-		{
-			center(STAGE_LOCATION);
-		}
+		center(getTargetLocation());
 	}
 
 	public void center(Vector3 point)
 	{
+		if (point == null) point = STAGE_LOCATION;
 		Vector3 newOffset = offset.cpy();
 		if (hasTarget()) newOffset.rotate(Vector3.Y, getTargetRotation().x);
+		//newOffset.scl(zoom);
 		setLocation(point);
 		translate(newOffset);
 		lookAt(point);
+		oldTargetLocation = point;
+	}
+
+	public Vector3 getZoom()
+	{
+		return zoom;
+	}
+
+	public void setZoom(Vector3 zoom)
+	{
+		this.zoom = zoom;
 	}
 
 	public Vector3 getDeltaLocation(Vector3 location)
@@ -281,7 +289,7 @@ public class TargetCamera extends PerspectiveCamera
 	public void setTarget(Entity target)
 	{
 		this.target = target;
-		center();
+		if (hasTarget()) center();
 	}
 
 	public void setUp(Vector3 location)
@@ -292,6 +300,11 @@ public class TargetCamera extends PerspectiveCamera
 	public void setWorld(PhysicsWorld world)
 	{
 		this.world = world;
+	}
+
+	private Vector3 getCombinedOffset()
+	{
+		return combinedOffset.set(offset).scl(zoom);
 	}
 
 	@Override

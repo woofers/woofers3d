@@ -196,9 +196,9 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	public static boolean areTouched(int amount)
 	{
 		int touched = 0;
-		for (int i = 0; i < MULTITOUCH_SUPPORT; i++)
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
 		{
-			if (isTouched(i)) touched++;
+			if (isTouched(i)) touched ++;
 			if (touched >= amount) return true;
 		}
 		return false;
@@ -208,9 +208,9 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	{
 		int touched = 0;
 		boolean wasTouched = false;
-		for (int i = 0; i < MULTITOUCH_SUPPORT; i++)
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
 		{
-			if (isTouched(i)) touched++;
+			if (isTouched(i)) touched ++;
 			if (isTouchPressed(i)) wasTouched = true;
 			if (touched >= amount && wasTouched) return true;
 		}
@@ -447,9 +447,9 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	{
 		if (min < 0 || MULTITOUCH_SUPPORT < max) throw new IllegalArgumentException("Pointers out of range");
 		int touches = 0;
-		for (int pointer = 0; pointer < max; pointer++)
+		for (int pointer = 0; pointer < max; pointer ++)
 		{
-			if (isTouched(pointer)) touches++;
+			if (isTouched(pointer)) touches ++;
 		}
 		return touches;
 	}
@@ -720,7 +720,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void reset()
 	{
-		for (int i = 0; i < KEY_SIZE; i++)
+		for (int i = 0; i < KEY_SIZE; i ++)
 		{
 			keys[i] = false;
 			prevKeys[i] = false;
@@ -775,11 +775,11 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void update(float dt)
 	{
-		for (int i = 0; i < KEY_SIZE; i++)
+		for (int i = 0; i < KEY_SIZE; i ++)
 		{
 			prevKeys[i] = keys[i];
 		}
-		for (int i = 0; i < MULTITOUCH_SUPPORT; i++)
+		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
 		{
 			prevTouches[i] = touches[i];
 		}

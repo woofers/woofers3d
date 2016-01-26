@@ -3,10 +3,9 @@ package com.jaxson.woofers3d.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.GameManager;
-import com.jaxson.lib.gdx.backend.State;
+import com.jaxson.lib.gdx.bullet.BulletState;
 import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
@@ -17,9 +16,8 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 import com.jaxson.woofers3d.entities.Player;
-import com.badlogic.gdx.Gdx;
 
-public class PlayState extends State
+public class PlayState extends BulletState
 {
 	private static final int BOX_AMOUNT = 50;
 	private static final int SPHERE_AMOUNT = 50;
@@ -42,24 +40,24 @@ public class PlayState extends State
 		add(floor);
 
 		boxs = new RigidBox[BOX_AMOUNT];
-		for (int i = 0; i < BOX_AMOUNT; i++)
+		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
 			boxs[i] = new RigidBox(GdxMath.randColor(255, 255, 95, 165, 0, 50));
 			boxs[i].setLocation(GdxMath.randVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 3f), MyMath.randFloat(1f, 4f)));
-			boxs[i].setMass(GdxMath.randFloat(0.9f, 1.2f));
+			boxs[i].setMass(MyMath.randFloat(0.9f, 1.2f));
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
 		}
 
-		spheres = new RigidSphere[BOX_AMOUNT];
-		for (int i = 0; i < BOX_AMOUNT; i++)
+		spheres = new RigidSphere[SPHERE_AMOUNT];
+		for (int i = 0; i < SPHERE_AMOUNT; i ++)
 		{
 			if (InputHandler.hasTouchScreen()) break;
 			spheres[i] = new RigidSphere(GdxMath.randColor());
 			spheres[i].setLocation(GdxMath.randVector3(6f, 30f));
 			spheres[i].setSize(new Vector3(2f, 2f, 2f));
-			spheres[i].setMass(GdxMath.randFloat(0.9f, 1.2f));
+			spheres[i].setMass(MyMath.randFloat(0.9f, 1.2f));
 			applyPhysics(spheres[i]);
 			add(spheres[i]);
 		}
@@ -84,8 +82,9 @@ public class PlayState extends State
 	{
 		if (InputHandler.justTouched())
 		{
-			Ray ray = new Ray(player.getLocation(), player.getDirection());
-			if (InputHandler.hasTouchScreen()) ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
+			Ray ray = player.getForwardRay();
+			if (InputHandler.hasTouchScreen())
+				ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{

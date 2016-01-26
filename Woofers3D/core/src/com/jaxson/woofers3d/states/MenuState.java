@@ -3,9 +3,9 @@ package com.jaxson.woofers3d.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.backend.GameManager;
-import com.jaxson.lib.gdx.backend.State;
+import com.jaxson.lib.gdx.bullet.BulletState;
 
-public class MenuState extends State
+public class MenuState extends BulletState
 {
 	public MenuState(GameManager gameManager)
 	{
