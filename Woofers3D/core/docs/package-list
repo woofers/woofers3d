@@ -1,6 +1,7 @@
 com.badlogic.gdx
 com.badlogic.gdx.assets
 com.badlogic.gdx.assets.loaders
+com.badlogic.gdx.audio
 com.badlogic.gdx.backends.android
 com.badlogic.gdx.backends.android.surfaceview
 com.badlogic.gdx.backends.lwjgl
@@ -20,6 +21,7 @@ com.badlogic.gdx.graphics.glutils
 com.badlogic.gdx.input
 com.badlogic.gdx.math
 com.badlogic.gdx.math.collision
+com.badlogic.gdx.net
 com.badlogic.gdx.physics.bullet
 com.badlogic.gdx.physics.bullet.collision
 com.badlogic.gdx.physics.bullet.dynamics
@@ -36,6 +38,7 @@ com.jaxson
 com.jaxson.lib.event
 com.jaxson.lib.gdx
 com.jaxson.lib.gdx.backend
+com.jaxson.lib.gdx.backend.renderer
 com.jaxson.lib.gdx.bullet
 com.jaxson.lib.gdx.bullet.bodies
 com.jaxson.lib.gdx.bullet.collision
@@ -46,7 +49,6 @@ com.jaxson.lib.gdx.graphics.g3d
 com.jaxson.lib.gdx.graphics.g3d.util
 com.jaxson.lib.gdx.input
 com.jaxson.lib.gdx.states
-com.jaxson.lib.gdx.states.renderer
 com.jaxson.lib.gdx.util
 com.jaxson.lib.geom
 com.jaxson.lib.ui

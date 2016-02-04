@@ -19,7 +19,7 @@ public class MenuState extends BulletState
 	}
 
 	@Override
-	protected void input()
+	protected void input(float dt)
 	{
 
 	}

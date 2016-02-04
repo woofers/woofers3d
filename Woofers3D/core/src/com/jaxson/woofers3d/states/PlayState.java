@@ -32,7 +32,7 @@ public class PlayState extends BulletState
 	public PlayState(GameManager gameManager)
 	{
 		super(gameManager);
-		setPauseState(new PauseState(gameManager));
+		setSubState(new PauseState(gameManager));
 		getTargetCamera().setWorld(getPhysicsWorld());
 
 		floor = new Floor();
@@ -78,13 +78,12 @@ public class PlayState extends BulletState
 	}
 
 	@Override
-	protected void input()
+	protected void input(float dt)
 	{
 		if (InputHandler.justTouched())
 		{
 			Ray ray = player.getForwardRay();
-			if (InputHandler.hasTouchScreen())
-				ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
+			if (InputHandler.hasTouchScreen()) ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{

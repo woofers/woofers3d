@@ -21,8 +21,7 @@ public class WorldImporter extends btBulletWorldImporter
 	}
 
 	@Override
-	public btRigidBody createRigidBody(boolean isDynamic, float mass, Matrix4 startTransform, btCollisionShape shape,
-			String bodyName)
+	public btRigidBody createRigidBody(boolean isDynamic, float mass, Matrix4 startTransform, btCollisionShape shape, String bodyName)
 	{
 		// instance.transform.set(startTransform);
 		return super.createRigidBody(isDynamic, mass, startTransform, shape, bodyName);

@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.bullet;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.backend.GameManager;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
@@ -10,7 +11,6 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.states.State;
-import com.badlogic.gdx.math.Vector3;
 
 public abstract class BulletState extends State
 {
@@ -62,6 +62,11 @@ public abstract class BulletState extends State
 		return world;
 	}
 
+	public Vector3 getWorldSize()
+	{
+		return getPhysicsWorld().getWorldSize();
+	}
+
 	public void removePhysics(PlayerBody entity)
 	{
 		world.remove(entity);
@@ -91,16 +96,9 @@ public abstract class BulletState extends State
 		if (camera instanceof TargetCamera) getTargetCamera().setWorld(getPhysicsWorld());
 	}
 
-	@Override
-	public void update(float dt)
+	public void setShadows(boolean shadows)
 	{
-		super.update(dt);
-		world.update(dt);
-	}
-
-	public Vector3 getWorldSize()
-	{
-		return getPhysicsWorld().getWorldSize();
+		getEnvironment().setShawdows(shadows);
 	}
 
 	public void setWorldSize()
@@ -113,8 +111,10 @@ public abstract class BulletState extends State
 		getEnvironment().setWorldSize(worldSize);
 	}
 
-	public void setShadows(boolean shadows)
+	@Override
+	public void update(float dt)
 	{
-		getEnvironment().setShawdows(shadows);
+		super.update(dt);
+		world.update(dt);
 	}
 }

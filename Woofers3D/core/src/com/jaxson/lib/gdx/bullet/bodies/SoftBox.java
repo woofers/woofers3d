@@ -7,8 +7,6 @@ import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class SoftBox extends SoftBody
 {
-	protected static final Color COLOR = Color.ORANGE;
-
 	public SoftBox(Color color, PhysicsWorld world)
 	{
 		super(getModel(color), DEFAULT_MASS, world);
@@ -16,7 +14,7 @@ public class SoftBox extends SoftBody
 
 	public SoftBox(PhysicsWorld world)
 	{
-		this(COLOR, world);
+		this(DEFAULT_COLOR, world);
 	}
 
 	protected static Model getModel(Color color)

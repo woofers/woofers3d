@@ -26,7 +26,6 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
-import com.badlogic.gdx.physics.bullet.collision.Collision;
 
 public class PhysicsWorld
 {
@@ -101,7 +100,7 @@ public class PhysicsWorld
 	{
 		if (contains(entity)) return;
 		if (hasMovement) entity.addCollisionFlag(KINEMATIC_FLAG);
-		entity.setActivationState(Collision.DISABLE_DEACTIVATION);
+		entity.setActivationState(CollisionConstants.DISABLE_DEACTIVATION);
 		add(entity, GROUND_FLAG, ALL_FLAG);
 	}
 

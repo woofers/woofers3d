@@ -2,30 +2,33 @@ package com.jaxson.lib.gdx.states;
 
 import com.jaxson.lib.gdx.backend.GameManager;
 
-public abstract class State extends SubState
+public abstract class State extends BaseState
 {
-	private SubState pauseState;
+	private SubState subState;
 
 	public State(GameManager gameManager)
 	{
 		super(gameManager);
 	}
 
-	@Override
-	public SubState getPauseState()
+	public SubState getSubState()
 	{
-		return pauseState;
+		return subState;
 	}
 
-	@Override
 	public boolean hasPauseState()
 	{
-		return getPauseState() != null;
+		if (hasSubState()) return getSubState().isPauseState();
+		return false;
 	}
 
-	@Override
-	public void setPauseState(SubState pauseState)
+	public boolean hasSubState()
 	{
-		this.pauseState = pauseState;
+		return getSubState() != null;
+	}
+
+	public void setSubState(SubState subState)
+	{
+		this.subState = subState;
 	}
 }

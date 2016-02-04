@@ -10,7 +10,6 @@ import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 public class RigidSphere extends RigidBody
 {
 	protected static final Color COLOR = new MyColor(81, 101, 107);
-	private static final float MASS = 1f;
 
 	public RigidSphere()
 	{
@@ -20,12 +19,6 @@ public class RigidSphere extends RigidBody
 	public RigidSphere(Color color)
 	{
 		super(getModel(color), getShape());
-	}
-
-	@Override
-	public void dispose()
-	{
-		super.dispose();
 	}
 
 	protected static Model getModel(Color color)

@@ -38,8 +38,7 @@ public class GdxMath extends MyMath
 
 	public static Color randColor(Color minColor, Color maxColor)
 	{
-		return new MyColor(randFloat(minColor.r, maxColor.r), randFloat(minColor.g, maxColor.g),
-				randFloat(minColor.b, maxColor.b));
+		return new MyColor(randFloat(minColor.r, maxColor.r), randFloat(minColor.g, maxColor.g), randFloat(minColor.b, maxColor.b));
 	}
 
 	public static Color randColor(int minRGB, int maxRGB)

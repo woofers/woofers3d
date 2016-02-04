@@ -21,8 +21,7 @@ public abstract class AnimatedEntity extends Entity
 		this(readModel(modelPath));
 	}
 
-	public void action(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,
-			float transitionTime)
+	public void action(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
 	{
 		getAnimationController().action(id, offset, duration, loopCount, speed, listener, transitionTime);
 	}
@@ -42,8 +41,7 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().animate(id, transitionTime);
 	}
 
-	public void animate(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,
-			float transitionTime)
+	public void animate(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
 	{
 		getAnimationController().animate(id, offset, duration, loopCount, speed, listener, transitionTime);
 	}
@@ -88,8 +86,7 @@ public abstract class AnimatedEntity extends Entity
 		return getAnimationController().paused;
 	}
 
-	public void queue(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener,
-			float transitionTime)
+	public void queue(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
 	{
 		getAnimationController().queue(id, offset, duration, loopCount, speed, listener, transitionTime);
 	}
@@ -109,8 +106,7 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().setAnimation(id, listener);
 	}
 
-	public void setAnimation(String id, float offset, float duration, int loopCount, float speed,
-			AnimationListener listener)
+	public void setAnimation(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, offset, duration, loopCount, speed, listener);
 	}

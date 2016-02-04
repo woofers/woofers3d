@@ -30,9 +30,9 @@ public class Player extends CameraPlayerBody
 	}
 
 	@Override
-	protected void input()
+	protected void input(float dt)
 	{
-		super.input();
+		super.input(dt);
 		if (InputHandler.isPressed(Keys.O)) lockCamera();
 		if (InputHandler.isPressed(Keys.P)) unlockCamera();
 	}

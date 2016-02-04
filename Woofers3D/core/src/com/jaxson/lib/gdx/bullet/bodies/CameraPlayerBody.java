@@ -1,10 +1,9 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.input.InputHandler;
-import com.badlogic.gdx.math.Vector3;
 
 public class CameraPlayerBody extends PlayerBody
 {
@@ -44,9 +43,9 @@ public class CameraPlayerBody extends PlayerBody
 	}
 
 	@Override
-	protected void input()
+	protected void input(float dt)
 	{
-		super.input();
+		super.input(dt);
 		int scroll = 5;
 		getCamera().setZoom(new Vector3(1f, scroll, scroll));
 	}

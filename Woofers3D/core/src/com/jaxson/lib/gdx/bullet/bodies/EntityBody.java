@@ -1,5 +1,6 @@
 package com.jaxson.lib.gdx.bullet.bodies;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
@@ -8,6 +9,7 @@ import com.jaxson.lib.gdx.graphics.g3d.AnimatedEntity;
 public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEntity
 {
 	protected static final float DEFAULT_MASS = 1f;
+	protected static final Color DEFAULT_COLOR = Color.ORANGE;
 
 	private float mass;
 	private T body;

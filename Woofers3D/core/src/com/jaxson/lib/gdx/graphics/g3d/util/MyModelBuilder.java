@@ -36,7 +36,6 @@ public class MyModelBuilder extends ModelBuilder
 
 	public Model createSphere(Vector3 size, Color color)
 	{
-		return createSphere(size.x, size.y, size.z, DIVISIONS, DIVISIONS,
-				new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES);
+		return createSphere(size.x, size.y, size.z, DIVISIONS, DIVISIONS, new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES);
 	}
 }

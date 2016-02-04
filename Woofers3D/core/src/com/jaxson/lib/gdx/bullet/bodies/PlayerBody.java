@@ -13,7 +13,7 @@ import com.jaxson.lib.gdx.util.GdxMath;
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 {
 	private static final float GHOST_MASS = -1f;
-	private static final float STEP_HEIGHT = 0.3f;
+	private static final float STEP_HEIGHT = 1f / 4f;
 	private static final float SPEED = 0.2f;
 	private static final float ROTATION_SPEED = 2f;
 	private static final float GRAVITY_SCALE = 3f;
@@ -95,7 +95,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 	}
 
 	@Override
-	protected void input()
+	protected void input(float dt)
 	{
 		walkDirection.setZero();
 		if (InputHandler.hasHardwareKeyboard())

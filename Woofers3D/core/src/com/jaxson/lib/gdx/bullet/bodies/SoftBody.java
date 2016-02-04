@@ -26,9 +26,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		indexMap = BufferUtils.newShortBuffer(meshPart.size);
 		positionOffset = meshPart.mesh.getVertexAttribute(Usage.Position).offset;
 		normalOffset = meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
-		setBody(new btSoftBody(world.getWorldInfo(), meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(),
-				positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size,
-				indexMap, 0));
+		setBody(new btSoftBody(world.getWorldInfo(), meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(), positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0));
 		Material material = getBody().appendMaterial();
 		material.setKLST(0.2f);
 		material.setFlags(0);
@@ -65,8 +63,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	@Override
 	public void update(float dt)
 	{
-		getBody().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(), positionOffset,
-				normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0);
+		getBody().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(), positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0);
 		bodyToTransform();
 	}
 }

@@ -1,137 +1,41 @@
 package com.jaxson.lib.gdx.states;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.backend.GameManager;
-import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
-import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
-import com.jaxson.lib.gdx.util.GameObject;
 
-public abstract class SubState extends GameObject
+public abstract class SubState extends BaseState
 {
-	private GameManager gameManager;
-	private MixedRenderer renderer;
-	private SubState pauseState;
+	public static enum SubStateBehavior
+	{
+		/**
+		 * Uses the state as a pause screen.
+		 */
+		Pause,
+
+		/**
+		 * Handled by the user.
+		 */
+		Manual;
+	}
+
+	private SubStateBehavior behavior = SubStateBehavior.Pause;
 
 	public SubState(GameManager gameManager)
 	{
-		this.gameManager = gameManager;
-		this.renderer = new MixedRenderer();
+		super(gameManager);
 	}
 
-	public void add(Entity entity)
+	public SubStateBehavior getBehavior()
 	{
-		renderer.add(entity);
+		return behavior;
 	}
 
-	public void add(GdxSprite sprite)
+	public boolean isPauseState()
 	{
-		renderer.add(sprite);
+		return behavior == SubStateBehavior.Pause;
 	}
 
-	@Override
-	public void dispose()
+	public void setBehavior(SubStateBehavior behavior)
 	{
-		renderer.dispose();
-	}
-
-	public Camera getCamera()
-	{
-		return gameManager.getCamera();
-	}
-
-	public MyEnvironment getEnvironment()
-	{
-		return renderer.getEnvironment();
-	}
-
-	private Graphics getGraphics()
-	{
-		return Gdx.graphics;
-	}
-
-	public int getHeight()
-	{
-		return getGraphics().getHeight();
-	}
-
-	private Input getInput()
-	{
-		return Gdx.input;
-	}
-
-	public SubState getPauseState()
-	{
-		return pauseState;
-	}
-
-	public TargetCamera getTargetCamera()
-	{
-		return gameManager.getTargetCamera();
-	}
-
-	public Viewport getViewport()
-	{
-		return gameManager.getViewport();
-	}
-
-	public int getWidth()
-	{
-		return getGraphics().getWidth();
-	}
-
-	public boolean hasPauseState()
-	{
-		return getPauseState() != null;
-	}
-
-	public void remove(Entity entity)
-	{
-		renderer.remove(entity);
-	}
-
-	public void remove(GdxSprite sprite)
-	{
-		renderer.remove(sprite);
-	}
-
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
-	{
-		renderer.render(spriteBatch, modelBatch, getCamera());
-	}
-
-	public void resize(int width, int height)
-	{
-
-	}
-
-	public void setCamera(Camera camera)
-	{
-		gameManager.setCamera(camera);
-	}
-
-	public void setPauseState(SubState pauseState)
-	{
-		this.pauseState = pauseState;
-	}
-
-	public void setViewport(Viewport viewport)
-	{
-		gameManager.setViewport(viewport);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-		renderer.update(dt);
+		this.behavior = behavior;
 	}
 }

@@ -4,11 +4,12 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
-import com.jaxson.lib.gdx.states.State;
 
 /**
  * A Game class containing a {@link GameManager} and a {@link GameConfig}.

@@ -172,9 +172,19 @@ public class MyMath
 	/**
 	 * Returns the reciprocal of an {@link float}.
 	 * @param value Number
-	 * @return {@link int} - Reciprocal
+	 * @return {@link float} - Reciprocal
 	 */
 	public static float reciprocal(float value)
+	{
+		return 1f / value;
+	}
+
+	/**
+	 * Returns the reciprocal of an {@link int}.
+	 * @param value Number
+	 * @return {@link float} - Reciprocal
+	 */
+	public static float reciprocal(int value)
 	{
 		return 1f / value;
 	}

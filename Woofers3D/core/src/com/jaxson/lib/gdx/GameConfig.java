@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.util.GsonObject;
-import com.jaxson.lib.util.MyFileReader;
+import com.jaxson.lib.util.MyMath;
 
 /**
  * A universal config file that can be converted to other config types.
@@ -17,33 +17,44 @@ import com.jaxson.lib.util.MyFileReader;
 public class GameConfig extends GsonObject<GameConfig>
 {
 	/**
-	 * The minimum step that the {@link Game} cannot skip.
+	 * The minimum step interval that the {@link Game} cannot skip.
 	 */
 	public static final float CLAMP = 1f / 4f;
 
-	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
-	private static final int FPS = 600;
-	private static final float STEP = 1f / 120f;
+	/**
+	 * Used in {@link #setBackgroundFps(int)} to pause the {@link Game} on
+	 * minimize.
+	 */
+	public static final int PAUSE_ON_LOST_FOCUS = -1;
+
+	/**
+	 * Used in {@link #setStep(int)} to use a variable time step.
+	 */
+	public static final int VARIBLE_TIME_STEP = -1;
+
+	/**
+	 * Used in {@link #setMaxFps(int)} to use a variable frame rate.
+	 */
+	public static final int VARIBLE_FRAME_RATE = 0;
+
 	private static final FileType ICON_TYPE = FileType.Internal;
-	private static final String CONFIG_PATH = "config.json";
 	private static final float SENSITIVITY = 1.3f;
+	private static final String SAVE_PATH = "config.json";
 
 	private String title = "New Game";
-	private int width;
-	private int height;
-	private int fps;
-	private transient int backgroundFps = -1;
+	private int width = 1280;
+	private int height = 720;
+	private int fps = 600;
+	private transient int backgroundFps = PAUSE_ON_LOST_FOCUS;
 	private boolean vsync = false;
 	private boolean resizable = false;
-	private transient float step;
+	private transient int step = 120;
 	private boolean allowFullscreen = true;
 	private boolean startFullscreen = false;
 	private int antiAliasing = 4;
 	private boolean statusBar = false;
 	private boolean immersive = true;
 	private String iconPath;
-	private transient String savePath = CONFIG_PATH;
 	private boolean showFps = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
 	private boolean invertMouseX = true;
@@ -54,7 +65,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	 */
 	public GameConfig()
 	{
-		this(WIDTH, HEIGHT, FPS, STEP);
+		this(null);
 	}
 
 	/**
@@ -63,24 +74,25 @@ public class GameConfig extends GsonObject<GameConfig>
 	public GameConfig(GameConfig config)
 	{
 		super(GameConfig.class);
+		setSavePath(SAVE_PATH);
 		set(config);
 	}
 
 	/**
-	 * Constructs a {@link GameConfig}
+	 * Constructs a config from the arguments.
 	 * @param width The width of the window
 	 * @param height The height of the window
 	 * @param fps The target fps of the {@link Game}
-	 * @param step The interval between {@link Game} logic updates in
-	 * milliseconds
+	 * @param step The number of logic updates per second in the {@link Game}
 	 */
-	public GameConfig(int width, int height, int fps, float step)
+	public GameConfig(int width, int height, int fps, int step)
 	{
 		super(GameConfig.class);
 		setWidth(width);
 		setHeight(height);
-		setFps(fps);
+		setMaxFps(fps);
 		setStep(step);
+		setSavePath(SAVE_PATH);
 	}
 
 	/**
@@ -122,15 +134,6 @@ public class GameConfig extends GsonObject<GameConfig>
 	}
 
 	/**
-	 * Gets the target frame rate.
-	 * @return {@link int} - The target frame rate
-	 */
-	public int getFps()
-	{
-		return fps;
-	}
-
-	/**
 	 * Gets the starting height of the window in pixels.
 	 * @return {@link int} - The starting height of the window in pixels
 	 */
@@ -150,12 +153,12 @@ public class GameConfig extends GsonObject<GameConfig>
 	}
 
 	/**
-	 * Gets the path to save the {@link GameConfig} file.
-	 * @return {@link String} - The path to save the {@link GameConfig} file
+	 * Gets the max frame rate.
+	 * @return {@link int} - The max frame rate
 	 */
-	public String getSavePath()
+	public int getMaxFps()
 	{
-		return savePath;
+		return fps;
 	}
 
 	/**
@@ -168,13 +171,23 @@ public class GameConfig extends GsonObject<GameConfig>
 	}
 
 	/**
+	 * Gets the number of logic updates per second in the {@link Game}.
+	 * @return {@link int} - The number of logic updates per second in the
+	 * {@link Game}
+	 */
+	public int getStep()
+	{
+		return step;
+	}
+
+	/**
 	 * Gets the interval between {@link Game} logic updates in milliseconds.
 	 * @return {@link float} - The interval between {@link Game} logic updates
 	 * in milliseconds
 	 */
-	public float getStep()
+	public float getStepInterval()
 	{
-		return step;
+		return MyMath.reciprocal(step);
 	}
 
 	/**
@@ -193,6 +206,25 @@ public class GameConfig extends GsonObject<GameConfig>
 	public int getWidth()
 	{
 		return width;
+	}
+
+	/**
+	 * Gets whether the {@link Game} uses a fixed time step.
+	 * @return {@link boolean} - Whether the {@link Game} uses a fixed time
+	 * step
+	 */
+	public boolean hasFixedTimeStep()
+	{
+		return getStep() != VARIBLE_TIME_STEP;
+	}
+
+	/**
+	 * Gets whether the {@link Game} has a frame rate cap.
+	 * @return {@link boolean} - Whether the {@link Game} has a frame rate cap
+	 */
+	public boolean hasFpsCap()
+	{
+		return getMaxFps() != VARIBLE_FRAME_RATE;
 	}
 
 	/**
@@ -216,7 +248,9 @@ public class GameConfig extends GsonObject<GameConfig>
 	/**
 	 * Gets whether the {@link Game} uses {@code Kitkat}'s immersive mode.
 	 * @return {@link boolean} - Whether the {@link Game} uses immersive mode.
-	 * @see {@link http://developer.android.com/training/system-ui/immersive.html}
+	 * @see <a href=
+	 * "http://developer.android.com/training/system-ui/immersive.html">
+	 * Immersive Mode</a>
 	 */
 	public boolean isImmersive()
 	{
@@ -244,31 +278,12 @@ public class GameConfig extends GsonObject<GameConfig>
 	/**
 	 * Reads the saved config file and sets the instance to it's values.
 	 */
-	public void read()
+	@Override
+	public String read()
 	{
-		set(fromJson(MyFileReader.read(getSavePath())));
-	}
-
-	/**
-	 * Searches for a config file and if one exists it reads it.
-	 * Otherwise it creates one.
-	 */
-	public void readOrCreate()
-	{
-		if (MyFileReader.exists(getSavePath()))
-		{
-			read();
-			return;
-		}
-		save();
-	}
-
-	/**
-	 * Saves the current {@link GameConfig} to the {@link #getSavePath()}.
-	 */
-	public void save()
-	{
-		MyFileReader.write(getSavePath(), toJson());
+		String file = super.read();
+		set(fromJson(file));
+		return file;
 	}
 
 	/**
@@ -277,10 +292,12 @@ public class GameConfig extends GsonObject<GameConfig>
 	 */
 	public void set(GameConfig config)
 	{
+		if (config == null) return;
+		setSaveBehavior(SaveBehavior.Manual);
 		setTitle(config.getTitle());
 		setWidth(config.getWidth());
 		setHeight(config.getHeight());
-		setFps(config.getFps());
+		setMaxFps(config.getMaxFps());
 		setStep(config.getStep());
 		setBackgroundFps(config.getBackgroundFps());
 		setVsync(config.isVsync());
@@ -293,6 +310,8 @@ public class GameConfig extends GsonObject<GameConfig>
 		setIconPath(config.getIconPath());
 		setShowFps(config.showsFps());
 		setAntiAliasing(config.getAntiAliasing());
+		setSaveBehavior(config.getSaveBehavior());
+		autoSave();
 	}
 
 	/**
@@ -303,6 +322,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setAntiAliasing(int antiAliasing)
 	{
 		this.antiAliasing = antiAliasing;
+		autoSave();
 	}
 
 	/**
@@ -313,15 +333,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setBackgroundFps(int backgroundFps)
 	{
 		this.backgroundFps = backgroundFps;
-	}
-
-	/**
-	 * Sets the target frame rate.
-	 * @param fps The target frame rate
-	 */
-	public void setFps(int fps)
-	{
-		this.fps = fps;
+		autoSave();
 	}
 
 	/**
@@ -331,6 +343,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setFullscreen(boolean allowFullscreen)
 	{
 		this.allowFullscreen = allowFullscreen;
+		autoSave();
 	}
 
 	/**
@@ -340,6 +353,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setFullscreenStartup(boolean startFullscreen)
 	{
 		this.startFullscreen = startFullscreen;
+		autoSave();
 	}
 
 	/**
@@ -349,6 +363,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setHeight(int height)
 	{
 		this.height = height;
+		autoSave();
 	}
 
 	/**
@@ -359,16 +374,30 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setIconPath(String iconPath)
 	{
 		this.iconPath = iconPath;
+		autoSave();
 	}
 
 	/**
 	 * Sets whether the {@link Game} uses {@code Kitkat}'s immersive mode.
 	 * @param immersive Whether the {@link Game} uses immersive mode.
-	 * @see {@link http://developer.android.com/training/system-ui/immersive.html}
+	 * @see <a href=
+	 * "http://developer.android.com/training/system-ui/immersive.html">
+	 * Immersive Mode</a>
 	 */
 	public void setImmersiveMode(boolean immersive)
 	{
 		this.immersive = immersive;
+		autoSave();
+	}
+
+	/**
+	 * Sets the max frame rate.
+	 * @param fps The max frame rate
+	 */
+	public void setMaxFps(int fps)
+	{
+		this.fps = fps;
+		autoSave();
 	}
 
 	/**
@@ -378,15 +407,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setResizable(boolean resizable)
 	{
 		this.resizable = resizable;
-	}
-
-	/**
-	 * Sets the path to save the {@link GameConfig} file.
-	 * @param savePath The path to save the {@link GameConfig} file
-	 */
-	public void setSavePath(String savePath)
-	{
-		this.savePath = savePath;
+		autoSave();
 	}
 
 	/**
@@ -396,6 +417,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setSensitivity(float sensitivity)
 	{
 		getSensitivity().set(sensitivity, sensitivity);
+		autoSave();
 	}
 
 	/**
@@ -406,6 +428,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setSensitivity(Vector2 sensitivity)
 	{
 		this.sensitivity = sensitivity;
+		autoSave();
 	}
 
 	/**
@@ -415,6 +438,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setShowFps(boolean showFps)
 	{
 		this.showFps = showFps;
+		autoSave();
 	}
 
 	/**
@@ -424,16 +448,17 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setStatusBar(boolean statusBar)
 	{
 		this.statusBar = statusBar;
+		autoSave();
 	}
 
 	/**
-	 * Sets the interval between {@link Game} logic updates in milliseconds.
-	 * @param step The interval between {@link Game} logic updates in
-	 * milliseconds
+	 * Sets the number of logic updates per second in the {@link Game}.
+	 * @param step The number of logic updates per second in the {@link Game}
 	 */
-	public void setStep(float step)
+	public void setStep(int step)
 	{
 		this.step = step;
+		autoSave();
 	}
 
 	/**
@@ -443,6 +468,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setTitle(String title)
 	{
 		this.title = title;
+		autoSave();
 	}
 
 	/**
@@ -452,6 +478,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setVsync(boolean vsync)
 	{
 		this.vsync = vsync;
+		autoSave();
 	}
 
 	/**
@@ -461,6 +488,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void setWidth(int width)
 	{
 		this.width = width;
+		autoSave();
 	}
 
 	/**
@@ -506,7 +534,7 @@ public class GameConfig extends GsonObject<GameConfig>
 		config.width = getWidth();
 		config.height = getHeight();
 		config.vSyncEnabled = isVsync();
-		config.foregroundFPS = getFps();
+		config.foregroundFPS = getMaxFps();
 		config.backgroundFPS = getBackgroundFps();
 		config.resizable = isResizable();
 		config.samples = getAntiAliasing();

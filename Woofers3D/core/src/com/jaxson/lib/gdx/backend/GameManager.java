@@ -11,9 +11,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.Clipboard;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
-import com.jaxson.lib.gdx.bullet.BulletState;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.states.State;
@@ -24,8 +24,9 @@ public class GameManager
 	private GameStateManager gameStateManager;
 	private DisplayManager displayManager;
 	private InputHandler inputHandler;
-	private float accumulator;
 	private float dt;
+	private float accumulator;
+	private float step;
 
 	public GameManager(GameConfig config)
 	{
@@ -41,6 +42,11 @@ public class GameManager
 	{
 		gameStateManager.dispose();
 		displayManager.dispose();
+	}
+
+	public void exit()
+	{
+		getApplication().exit();
 	}
 
 	public Application getApplication()
@@ -63,6 +69,11 @@ public class GameManager
 		return displayManager.getCamera();
 	}
 
+	public Clipboard getClipboard()
+	{
+		return getApplication().getClipboard();
+	}
+
 	public GameConfig getConfig()
 	{
 		return config;
@@ -80,7 +91,7 @@ public class GameManager
 
 	public GL20 getGl()
 	{
-		return Gdx.gl;
+		return displayManager.getGl();
 	}
 
 	public Graphics getGraphics()
@@ -98,6 +109,11 @@ public class GameManager
 		return getApplication().getNet();
 	}
 
+	public float getStepInterval()
+	{
+		return getConfig().getStepInterval();
+	}
+
 	public TargetCamera getTargetCamera()
 	{
 		return displayManager.getTargetCamera();
@@ -106,6 +122,11 @@ public class GameManager
 	public Viewport getViewport()
 	{
 		return displayManager.getViewport();
+	}
+
+	public boolean hasFixedTimeStamp()
+	{
+		return getConfig().hasFixedTimeStep();
 	}
 
 	public boolean isAndroid()
@@ -153,6 +174,11 @@ public class GameManager
 		return getApplicationType() == ApplicationType.WebGL;
 	}
 
+	public void log(String tag, String message)
+	{
+		getApplication().log(tag, message);
+	}
+
 	public void pause()
 	{
 		gameStateManager.pause();
@@ -167,15 +193,20 @@ public class GameManager
 	public void render()
 	{
 		dt = getDeltaTime();
-		float step = getConfig().getStep();
 		if (dt > GameConfig.CLAMP) dt = GameConfig.CLAMP;
-		accumulator += dt;
-		while (accumulator >= step)
+		if (hasFixedTimeStamp())
 		{
-			gameStateManager.update(step);
-			displayManager.update(step);
-			InputHandler.update(step);
-			accumulator -= step;
+			step = getStepInterval();
+			accumulator += dt;
+			while (accumulator >= step)
+			{
+				update(step);
+				accumulator -= step;
+			}
+		}
+		else
+		{
+			update(dt);
 		}
 		displayManager.render();
 		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch());
@@ -212,5 +243,12 @@ public class GameManager
 	public void setViewport(Viewport viewport)
 	{
 		displayManager.setViewport(viewport);
+	}
+
+	public void update(float step)
+	{
+		gameStateManager.update(step);
+		displayManager.update(step);
+		InputHandler.update(step);
 	}
 }

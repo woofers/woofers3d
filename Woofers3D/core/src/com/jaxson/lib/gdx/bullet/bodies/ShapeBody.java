@@ -62,11 +62,9 @@ public abstract class ShapeBody<T extends btCollisionObject> extends EntityBody<
 		getBody().setCollisionShape(shape);
 	}
 
-	@Override
-	public void setScale(Vector3 scale)
+	public void setCollisionShapeScale(float scale)
 	{
-		super.setScale(scale);
-		setCollisionShapeScale(scale);
+		getCollisionShape().setLocalScaling(new Vector3(scale, scale, scale));
 	}
 
 	public void setCollisionShapeScale(Vector3 scale)
@@ -74,8 +72,10 @@ public abstract class ShapeBody<T extends btCollisionObject> extends EntityBody<
 		getCollisionShape().setLocalScaling(scale);
 	}
 
-	public void setCollisionShapeScale(float scale)
+	@Override
+	public void setScale(Vector3 scale)
 	{
-		getCollisionShape().setLocalScaling(new Vector3(scale, scale, scale));
+		super.setScale(scale);
+		setCollisionShapeScale(scale);
 	}
 }

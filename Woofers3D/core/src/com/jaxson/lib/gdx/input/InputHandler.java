@@ -48,16 +48,23 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float TOUCH_MOUSE_SCALE = 1f / 3f;
 	private static final float SENSITIVITY = 1.3f;
+
 	private static final boolean INVERT_MOUSE_X = true;
 	private static final boolean INVERT_MOUSE_Y = true;
+
 	private static final float ACCELEROMETER_FORWARD_SCALE = 70f / 100f;
 	private static final float ACCELEROMETER_BACK_SCALE = 20f / 100f;
 	private static final float ACCELEROMETER_NULL_SCALE = 100f - ACCELEROMETER_FORWARD_SCALE - ACCELEROMETER_BACK_SCALE;
 	private static final float ACCELEROMETER_MAX = 10f;
 	private static final float ACCELEROMETER_MIN = -ACCELEROMETER_MAX;
 	private static final float ACCELEROMETER_RANGE = ACCELEROMETER_MAX - ACCELEROMETER_MIN;
-	private static final int KEY_SIZE = 256;
+
+	private static final int KEY_MIN = 0;
+	private static final int KEY_MAX = 256;
 	private static final int MULTITOUCH_SUPPORT = 20;
+
+	private static final int NATIVE_ROTATION_OFFSET = 90;
+
 	private static boolean[] keys, prevKeys, touches, prevTouches;
 	private static Vector2 mouse, deltaMouse, invertMouse, sensitivity;
 	private static int scrollWheel;
@@ -67,8 +74,8 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public InputHandler()
 	{
-		InputHandler.keys = new boolean[KEY_SIZE];
-		InputHandler.prevKeys = new boolean[KEY_SIZE];
+		InputHandler.keys = new boolean[KEY_MAX];
+		InputHandler.prevKeys = new boolean[KEY_MAX];
 		InputHandler.touches = new boolean[MULTITOUCH_SUPPORT];
 		InputHandler.prevTouches = new boolean[MULTITOUCH_SUPPORT];
 		InputHandler.mouse = new Vector2();
@@ -252,8 +259,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	{
 		float value = 0;
 		float y = getAccelerometerY();
-		if (y > getAccelerometerNullMaxY())
-			value = MyMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMinRangeY());
+		if (y > getAccelerometerNullMaxY()) value = MyMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMinRangeY());
 		return MyMath.min(value, 1f);
 	}
 
@@ -266,8 +272,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	{
 		float value = 0;
 		float y = getAccelerometerY();
-		if (y < getAccelerometerNullMinY())
-			value = MyMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinRangeY());
+		if (y < getAccelerometerNullMinY()) value = MyMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinRangeY());
 		return MyMath.min(value, 1f);
 	}
 
@@ -396,11 +401,8 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	public static int getRotation()
 	{
 		int rotation = getNativeRotation();
-		if (getNativeOrientation() == Orientation.Portrait)
-		{
-			return rotation;
-		}
-		return rotation + 90;
+		if (getNativeOrientation() == Orientation.Portrait) return rotation;
+		return rotation + NATIVE_ROTATION_OFFSET;
 	}
 
 	private static float getScaledAccelerometerRange(float scale)
@@ -526,6 +528,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 	public static boolean isDown(int keycode)
 	{
 		if (keycode == ANY_KEY) return true;
+		if (!isKeyInRange(keycode)) throw new KeyOutOfRangeException();
 		return keys[keycode];
 	}
 
@@ -563,6 +566,11 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return false;
 	}
 
+	public static boolean isKeyInRange(int keycode)
+	{
+		return KEY_MIN <= keycode && keycode < KEY_MAX;
+	}
+
 	public static boolean isLandscape()
 	{
 		return getOrientation().isLandscape();
@@ -580,6 +588,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static boolean isPressed(int keycode)
 	{
+		if (!isKeyInRange(keycode)) throw new KeyOutOfRangeException();
 		return keys[keycode] && !prevKeys[keycode];
 	}
 
@@ -621,6 +630,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static boolean isReleased(int keycode)
 	{
+		if (!isKeyInRange(keycode)) throw new KeyOutOfRangeException();
 		return !keys[keycode] && prevKeys[keycode];
 	}
 
@@ -720,7 +730,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void reset()
 	{
-		for (int i = 0; i < KEY_SIZE; i ++)
+		for (int i = 0; i < KEY_MAX; i ++)
 		{
 			keys[i] = false;
 			prevKeys[i] = false;
@@ -775,7 +785,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void update(float dt)
 	{
-		for (int i = 0; i < KEY_SIZE; i ++)
+		for (int i = 0; i < KEY_MAX; i ++)
 		{
 			prevKeys[i] = keys[i];
 		}

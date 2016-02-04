@@ -14,7 +14,7 @@ import com.jaxson.lib.gdx.util.ExceptionBuilder;
 
 public class TargetCamera extends PerspectiveCamera
 {
-	private static final int FOV = 90;
+	private static final int FOV = 95;
 	private static final float FAR = 300f;
 	private static final float NEAR = 1f / 10f;
 	private static final Vector3 OFFSET = new Vector3(0f, 5f, -5f);
@@ -57,21 +57,16 @@ public class TargetCamera extends PerspectiveCamera
 		if (point == null) point = STAGE_LOCATION;
 		Vector3 newOffset = offset.cpy();
 		if (hasTarget()) newOffset.rotate(Vector3.Y, getTargetRotation().x);
-		//newOffset.scl(zoom);
+		// newOffset.scl(zoom);
 		setLocation(point);
 		translate(newOffset);
 		lookAt(point);
 		oldTargetLocation = point;
 	}
 
-	public Vector3 getZoom()
+	private Vector3 getCombinedOffset()
 	{
-		return zoom;
-	}
-
-	public void setZoom(Vector3 zoom)
-	{
-		this.zoom = zoom;
+		return combinedOffset.set(offset).scl(zoom);
 	}
 
 	public Vector3 getDeltaLocation(Vector3 location)
@@ -161,6 +156,11 @@ public class TargetCamera extends PerspectiveCamera
 	public Matrix4 getView()
 	{
 		return view;
+	}
+
+	public Vector3 getZoom()
+	{
+		return zoom;
 	}
 
 	public boolean hasTarget()
@@ -302,9 +302,9 @@ public class TargetCamera extends PerspectiveCamera
 		this.world = world;
 	}
 
-	private Vector3 getCombinedOffset()
+	public void setZoom(Vector3 zoom)
 	{
-		return combinedOffset.set(offset).scl(zoom);
+		this.zoom = zoom;
 	}
 
 	@Override

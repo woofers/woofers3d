@@ -11,9 +11,12 @@ public class Woofers3D extends Game
 	public Woofers3D()
 	{
 		super();
-		getConfig().setTitle(TITLE);
-		getConfig().setIconPath(ICON_PATH);
-		// getConfig().readOrCreate();
+		if (!getConfig().hasSaveData())
+		{
+			getConfig().setTitle(TITLE);
+			getConfig().setIconPath(ICON_PATH);
+		}
+		//getConfig().smartRead();
 	}
 
 	@Override

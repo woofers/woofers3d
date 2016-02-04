@@ -2,8 +2,7 @@ package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.MathUtils;
-import com.jaxson.lib.gdx.util.GdxMath;
+import com.jaxson.lib.gdx.graphics.MyColor;
 
 public class Floor extends RigidBox
 {
@@ -11,6 +10,7 @@ public class Floor extends RigidBox
 	private static final float WIDTH = 100f;
 	private static final float HEIGHT = 100f;
 	private static final float MASS = 0f;
+	private static final Color COLOR = new MyColor(81, 101, 107);
 
 	private float angle;
 
@@ -41,7 +41,7 @@ public class Floor extends RigidBox
 	@Override
 	public void update(float dt)
 	{
-		//angle = (angle + dt * 90f) % 360f;
-		//translate(new Vector3(0, MathUtils.sinDeg(angle) * 2.5f, 0f));
+		// angle = (angle + dt * 90f) % 360f;
+		// translate(new Vector3(0, MathUtils.sinDeg(angle) * 2.5f, 0f));
 	}
 }

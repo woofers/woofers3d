@@ -3,11 +3,11 @@ package com.jaxson.lib.util;
 import com.google.gson.Gson;
 
 /**
- * Class to serialize any {@code Object} into a string.
+ * Class to serialize any {@link Object} into a string.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class GsonObject<T>
+public abstract class GsonObject<T> extends SaveObject
 {
 	/**
 	 * Stores the class type for obect parsing.
@@ -31,6 +31,15 @@ public abstract class GsonObject<T>
 	public T fromJson(String json)
 	{
 		return new Gson().fromJson(json, type);
+	}
+
+	/**
+	 * Saves the current {@link Object} to a file.
+	 */
+	@Override
+	public void save()
+	{
+		save(toJson());
 	}
 
 	/**

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 
 public class RayCallback extends ClosestRayResultCallback
 {
+	private static final float CLOSEST_HIT_FRACTION = 1f;
 	private static final float MAX_DISTANCE = 50f;
 	private static final Vector3 RAY_START = Vector3.Zero;
 	private static final Vector3 RAY_END = Vector3.Y;
@@ -16,8 +17,9 @@ public class RayCallback extends ClosestRayResultCallback
 	public RayCallback()
 	{
 		super(RAY_START, RAY_END);
-		this.rayStart = new Vector3(RAY_START);
-		this.rayEnd = new Vector3(RAY_END);
+		this.rayStart = new Vector3();
+		this.rayEnd = new Vector3();
+		set();
 	}
 
 	public btCollisionObject getCollisionObject(Ray ray, PhysicsWorld world)
@@ -31,7 +33,12 @@ public class RayCallback extends ClosestRayResultCallback
 	public void reset()
 	{
 		setCollisionObject(null);
-		setClosestHitFraction(1f);
+		setClosestHitFraction(CLOSEST_HIT_FRACTION);
+	}
+
+	public void set()
+	{
+		set(RAY_START, RAY_END);
 	}
 
 	public void set(Ray ray)

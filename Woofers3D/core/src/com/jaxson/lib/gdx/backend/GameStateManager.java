@@ -2,8 +2,9 @@ package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.states.State;
+import com.jaxson.lib.gdx.util.GameObject;
+
 import java.util.Stack;
 
 /**
@@ -79,7 +80,7 @@ public class GameStateManager extends GameObject
 	public void pause()
 	{
 		peek().pause();
-		if (isPaused() && hasPausedState()) peek().getPauseState().pause();
+		if (isPaused() && hasPausedState()) peek().getSubState().pause();
 	}
 
 	/**
@@ -116,7 +117,7 @@ public class GameStateManager extends GameObject
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		peek().render(spriteBatch, modelBatch);
-		if (isPaused() && hasPausedState()) peek().getPauseState().render(spriteBatch, modelBatch);
+		if (isPaused() && hasPausedState()) peek().getSubState().render(spriteBatch, modelBatch);
 	}
 
 	/**
@@ -125,14 +126,14 @@ public class GameStateManager extends GameObject
 	public void resize(int width, int height)
 	{
 		peek().resize(width, height);
-		if (isPaused() && hasPausedState()) peek().getPauseState().resize(width, height);
+		if (isPaused() && hasPausedState()) peek().getSubState().resize(width, height);
 	}
 
 	@Override
 	public void resume()
 	{
 		peek().resume();
-		if (isPaused() && hasPausedState()) peek().getPauseState().resume();
+		if (isPaused() && hasPausedState()) peek().getSubState().resume();
 	}
 
 	/**
@@ -147,7 +148,8 @@ public class GameStateManager extends GameObject
 
 	/**
 	 * Gets the number of states in the {@link GameStateManager}.
-	 * @return {@link int} - Whether the {@link GameStateManager} is empty
+	 * @return {@link int} - The amount of states in the
+	 * {@link GameStateManager}
 	 */
 	public int size()
 	{
@@ -166,7 +168,7 @@ public class GameStateManager extends GameObject
 		}
 		else
 		{
-			if (hasPausedState()) peek().getPauseState().update(dt);
+			if (hasPausedState()) peek().getSubState().update(dt);
 		}
 	}
 }

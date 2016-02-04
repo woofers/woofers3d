@@ -45,6 +45,23 @@ public class GdxFileReader extends MyFileReader
 		return getLocalFile(path).exists();
 	}
 
+	private static Pixmap flipPixmap(Pixmap pixmap, int width, int height)
+	{
+		ByteBuffer pixels = pixmap.getPixels();
+		int numBytes = width * height * 4;
+		byte[] lines = new byte[numBytes];
+		int numBytesPerLine = width * 4;
+		for (int i = 0; i < height; i ++)
+		{
+			pixels.position((height - i - 1) * numBytesPerLine);
+			pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
+		}
+		pixels.clear();
+		pixels.put(lines);
+		pixels.clear();
+		return pixmap;
+	}
+
 	public static FileHandle getAbsoluteFile(String path)
 	{
 		return getFiles().absolute(path);
@@ -93,22 +110,13 @@ public class GdxFileReader extends MyFileReader
 	public static Pixmap getScreenshot(int x, int y, int width, int height, boolean yDown)
 	{
 		Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, width, height);
-		if (yDown)
-		{
-			ByteBuffer pixels = pixmap.getPixels();
-			int numBytes = width * height * 4;
-			byte[] lines = new byte[numBytes];
-			int numBytesPerLine = width * 4;
-			for (int i = 0; i < height; i ++)
-			{
-				pixels.position((height - i - 1) * numBytesPerLine);
-				pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
-			}
-			pixels.clear();
-			pixels.put(lines);
-			pixels.clear();
-		}
+		if (yDown) pixmap = flipPixmap(pixmap, width, height);
 		return pixmap;
+	}
+
+	private static String getScreenshotPath(int index)
+	{
+		return SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + index + SCREENSHOT_EXTENSION;
 	}
 
 	public static GdxSprite getScreenshotSprite(int width, int height)
@@ -116,12 +124,12 @@ public class GdxFileReader extends MyFileReader
 		return new GdxSprite(getScreenshotTexture(width, height));
 	}
 
-	public static Texture getScreenshotTexture(int width, int height)
+	private static Texture getScreenshotTexture(int width, int height)
 	{
 		return new Texture(getScreenshotTextureData(width, height));
 	}
 
-	public static TextureData getScreenshotTextureData(int width, int height)
+	private static TextureData getScreenshotTextureData(int width, int height)
 	{
 		Pixmap pixmap = getScreenshot(width, height);
 		return new PixmapTextureData(pixmap, pixmap.getFormat(), true, true);
@@ -163,7 +171,7 @@ public class GdxFileReader extends MyFileReader
 		do
 		{
 			counter ++;
-			file = new FileHandle(SCREENSHOT_FOLDER + FOWARD_SLASH + SCREENSHOT_NAME + counter + SCREENSHOT_EXTENSION);
+			file = new FileHandle(getScreenshotPath(counter));
 		}
 		while (file.exists());
 		saveScreenshot(file);

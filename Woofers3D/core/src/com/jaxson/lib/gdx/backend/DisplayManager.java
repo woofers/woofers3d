@@ -13,15 +13,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
+import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.gdx.util.GdxFileReader;
 import com.jaxson.lib.util.MyMath;
-import com.jaxson.lib.gdx.graphics.MyColor;
 
 /**
  * A class that handles the display and rendering.
@@ -35,7 +35,7 @@ public class DisplayManager extends GameObject
 	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
 	private static final int COVERAGE_SAMPLING_MASK = GL20.GL_COVERAGE_BUFFER_BIT_NV;
 	private static final int EMPTY_MASK = GL20.GL_ZERO;
-	private static final Color CLEAR_COLOR = Color.BLUE;
+	private static final Color CLEAR_COLOR = Color.ROYAL;
 
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
@@ -59,7 +59,7 @@ public class DisplayManager extends GameObject
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
 		this.camera = new TargetCamera(getWidth(), getHeight());
-		this.viewport = new StretchViewport(getWidth(), getHeight(), getCamera());
+		this.viewport = new FillViewport(getWidth(), getHeight(), getCamera());
 		this.font = new BitmapFont();
 
 		font.setColor(FPS_COLOR);
@@ -89,12 +89,12 @@ public class DisplayManager extends GameObject
 
 	public void clearScreen(float r, float g, float b, float a)
 	{
-		getGL().glClearColor(r, g, b, a);
+		getGl().glClearColor(r, g, b, a);
 	}
 
 	public void clearScreen(int mask)
 	{
-		getGL().glClear(mask);
+		getGl().glClear(mask);
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class DisplayManager extends GameObject
 		return bestMode;
 	}
 
-	public GL20 getGL()
+	public GL20 getGl()
 	{
 		return Gdx.gl;
 	}
@@ -285,7 +285,7 @@ public class DisplayManager extends GameObject
 	}
 
 	@Override
-	protected void input()
+	protected void input(float dt)
 	{
 		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
 		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
@@ -317,7 +317,7 @@ public class DisplayManager extends GameObject
 		return minimized;
 	}
 
-	public boolean isMobile()
+	private boolean isMobile()
 	{
 		return gameManager.isMobile();
 	}
@@ -381,7 +381,6 @@ public class DisplayManager extends GameObject
 	public void setDisplayMode(DisplayMode displayMode)
 	{
 		getGraphics().setDisplayMode(displayMode);
-		updateSprtieBatch();
 		updateViewport();
 	}
 
@@ -393,7 +392,6 @@ public class DisplayManager extends GameObject
 	public void setDisplayMode(int width, int height, boolean fullscreen)
 	{
 		getGraphics().setDisplayMode(width, height, fullscreen);
-		updateSprtieBatch();
 		updateViewport();
 	}
 
@@ -417,6 +415,12 @@ public class DisplayManager extends GameObject
 		setCursorCatched(!isPaused());
 	}
 
+	public void setTitle(String title)
+	{
+		getGraphics().setTitle(title);
+		getConfig().setTitle(title);
+	}
+
 	public void setViewport(int width, int height)
 	{
 		setViewport(0, 0, width, height);
@@ -424,13 +428,19 @@ public class DisplayManager extends GameObject
 
 	public void setViewport(int x, int y, int width, int height)
 	{
-		getGL().glViewport(x, y, width, height);
+		getGl().glViewport(x, y, width, height);
 	}
 
 	public void setViewport(Viewport viewport)
 	{
 		this.viewport = viewport;
 		getViewport().setCamera(camera);
+	}
+
+	public void setVsync(boolean vsync)
+	{
+		getGraphics().setVSync(vsync);
+		getConfig().setVsync(vsync);
 	}
 
 	public boolean showsFps()
@@ -464,21 +474,7 @@ public class DisplayManager extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
-		if (isPaused()) return;
-		camera.update();
-	}
-
-	public void updateSprtieBatch()
-	{
-		updateSprtieBatch(getWidth(), getHeight());
-	}
-
-	public void updateSprtieBatch(int width, int height)
-	{
-		// getSpriteBatch().getProjectionMatrix().idt();
-		// getSpriteBatch().getTransformMatrix().idt();
-		// getSpriteBatch().getProjectionMatrix().setToOrtho2D(0, 0, width,
-		// height);
+		if (!isPaused()) camera.update();
 	}
 
 	public void updateViewport()
