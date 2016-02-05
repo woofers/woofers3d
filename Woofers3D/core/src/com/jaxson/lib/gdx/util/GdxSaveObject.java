@@ -1,7 +1,8 @@
 package com.jaxson.lib.gdx.util;
 
-import com.jaxson.lib.util.SaveObject;
 import com.jaxson.lib.util.MyFileReader;
+import com.jaxson.lib.util.SaveObject;
+import com.jaxson.lib.util.Saveable;
 
 /**
  * Default implementation of {@link Saveable}

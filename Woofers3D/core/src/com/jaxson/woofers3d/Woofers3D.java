@@ -13,7 +13,7 @@ public class Woofers3D extends Game
 		super();
 		getConfig().setTitle(TITLE);
 		getConfig().setIconPath(ICON_PATH);
-		//getConfig().smartRead();
+		// getConfig().smartRead();
 	}
 
 	@Override

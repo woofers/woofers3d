@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.states;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
