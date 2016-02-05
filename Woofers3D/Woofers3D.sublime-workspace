@@ -595,10 +595,22 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 138.0,
-		"last_filter": "upp",
+		"height": 113.0,
+		"last_filter": "git push",
 		"selected_items":
 		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
 			[
 				"upp",
 				"Convert Case: Upper Case"
@@ -626,18 +638,6 @@
 			[
 				"inst",
 				"Package Control: Install Package"
-			],
-			[
-				"git push",
-				"Git: Push"
-			],
-			[
-				"git com",
-				"Git: Commit"
-			],
-			[
-				"git add",
-				"Git: Add..."
 			],
 			[
 				"git ad",
@@ -1196,8 +1196,8 @@
 						"selection":
 						[
 							[
-								11962,
-								11962
+								2286,
+								2286
 							]
 						],
 						"settings":

@@ -19,8 +19,8 @@ import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends BulletState
 {
-	private static final int BOX_AMOUNT = 50;
-	private static final int SPHERE_AMOUNT = 50;
+	private static final int BOX_AMOUNT = 25;
+	private static final int SPHERE_AMOUNT = 25;
 	private static final float IMPULSE_SPEED = 45f;
 
 	private Floor floor;
@@ -89,7 +89,6 @@ public class PlayState extends BulletState
 			{
 				RigidBody rigidBody = (RigidBody) body;
 				rigidBody.applyCentralImpulse(ray.direction.scl(IMPULSE_SPEED));
-				System.out.println(rigidBody);
 			}
 		}
 	}

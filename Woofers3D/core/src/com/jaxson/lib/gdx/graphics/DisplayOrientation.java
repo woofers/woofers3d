@@ -8,6 +8,7 @@ public enum DisplayOrientation
 	private static final int LANDSCAPE_ANGLE = 90;
 	private static final int REVERSE_PORTRAIT_ANGLE = 180;
 	private static final int REVERSE_LANDSCAPE_ANGLE = 270;
+	private static final int MAX_ANGLE = 360;
 
 	public int getAngle()
 	{
@@ -35,13 +36,13 @@ public enum DisplayOrientation
 
 	public static DisplayOrientation getOrientation(int angle)
 	{
-		while (angle >= 360)
+		while (angle >= MAX_ANGLE)
 		{
-			angle -= 360;
+			angle -= MAX_ANGLE;
 		}
 		while (angle < 0)
 		{
-			angle += 360;
+			angle += MAX_ANGLE;
 		}
 		switch (angle)
 		{

@@ -54,7 +54,7 @@ public abstract class BaseState extends GameObject
 
 	private Graphics getGraphics()
 	{
-		return Gdx.graphics;
+		return gameManager.getGraphics();
 	}
 
 	public int getHeight()
@@ -64,7 +64,7 @@ public abstract class BaseState extends GameObject
 
 	private Input getInput()
 	{
-		return Gdx.input;
+		return gameManager.getInput();
 	}
 
 	public TargetCamera getTargetCamera()

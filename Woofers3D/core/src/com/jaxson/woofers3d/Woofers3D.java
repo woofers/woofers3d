@@ -11,11 +11,8 @@ public class Woofers3D extends Game
 	public Woofers3D()
 	{
 		super();
-		if (!getConfig().hasSaveData())
-		{
-			getConfig().setTitle(TITLE);
-			getConfig().setIconPath(ICON_PATH);
-		}
+		getConfig().setTitle(TITLE);
+		getConfig().setIconPath(ICON_PATH);
 		//getConfig().smartRead();
 	}
 
@@ -24,35 +21,5 @@ public class Woofers3D extends Game
 	{
 		super.create();
 		push(new PlayState(getGameManager()));
-	}
-
-	@Override
-	public void dispose()
-	{
-		super.dispose();
-	}
-
-	@Override
-	public void pause()
-	{
-		super.pause();
-	}
-
-	@Override
-	public void render()
-	{
-		super.render();
-	}
-
-	@Override
-	public void resize(int width, int height)
-	{
-		super.resize(width, height);
-	}
-
-	@Override
-	public void resume()
-	{
-		super.resume();
 	}
 }
