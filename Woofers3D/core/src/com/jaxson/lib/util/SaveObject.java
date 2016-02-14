@@ -8,7 +8,7 @@ package com.jaxson.lib.util;
  */
 public abstract class SaveObject implements Saveable
 {
-	private transient String savePath;
+	private transient File saveFile;
 	private SaveBehavior saveBehavior = SaveBehavior.Manual;
 
 	/**
@@ -41,50 +41,59 @@ public abstract class SaveObject implements Saveable
 	}
 
 	/**
-	 * Sets the save path where the {@link Object} saves.
-	 * @return {@link String} - The save path where the {@link Object} saves
+	 * Gets the save saveFile of the {@link Object}.
+	 * @return {@link saveFile} - The save saveFile of the {@link Object}
 	 */
 	@Override
-	public String getSavePath()
+	public File getSaveFile()
 	{
-		if (savePath == null) return toString().replace("@", "_");
-		return savePath;
+		if (saveFile == null) saveFile = new File(toString().replace("@", "_"));
+		return saveFile;
 	}
 
 	/**
-	 * Gets whether the {@link Object} has a save file.
-	 * @return {@link boolean} - Whether the {@link Object} has a save file
+	 * Sets the save path where the {@link Object} saves.
+	 * @return {@link String} - The save path where the {@link Object} saves
+	 */
+	public String getSavePath()
+	{
+		return getSaveFile().getPath();
+	}
+
+	/**
+	 * Gets whether the {@link Object} has a save saveFile.
+	 * @return {@link boolean} - Whether the {@link Object} has a save saveFile
 	 */
 	@Override
 	public boolean hasSaveData()
 	{
-		return MyFileReader.exists(getSavePath());
+		return saveFile.exists();
 	}
 
 	/**
-	 * Reads the save file and sets the {@link Object}'s instance to it's
+	 * Reads the save saveFile and sets the {@link Object}'s instance to it's
 	 * values.
-	 * @return {@link String} - The save file as a string
+	 * @return {@link String} - The save saveFile as a string
 	 */
 	@Override
 	public String read()
 	{
-		return MyFileReader.read(getSavePath());
+		return saveFile.read();
 	}
 
 	/**
-	 * Saves the current {@link Object} to a file.
+	 * Saves the current {@link Object} to a saveFile.
 	 */
 	@Override
 	public abstract void save();
 
 	/**
-	 * Saves the given data to the save file.
+	 * Saves the given data to the save saveFile.
 	 * @param data The data to write
 	 */
 	protected void save(String data)
 	{
-		MyFileReader.write(getSavePath(), data);
+		saveFile.write(data);
 
 	}
 
@@ -100,16 +109,25 @@ public abstract class SaveObject implements Saveable
 
 	/**
 	 * Sets the save path where the {@link Object} saves.
-	 * @param savePath The save path where the {@link Object} saves
+	 * @param saveFile The saveFile that the {@link Object} saves to
 	 */
 	@Override
-	public void setSavePath(String savePath)
+	public void setSaveFile(File saveFile)
 	{
-		this.savePath = savePath;
+		this.saveFile = saveFile;
 	}
 
 	/**
-	 * Searches for a save file and if one exists it reads it.
+	 * Sets the save path where the {@link Object} saves.
+	 * @param savePath The save path where the {@link Object} saves
+	 */
+	public void setSavePath(String savePath)
+	{
+		this.saveFile = new File(savePath);
+	}
+
+	/**
+	 * Searches for a save saveFile and if one exists it reads it.
 	 * Otherwise it creates one.
 	 */
 	@Override

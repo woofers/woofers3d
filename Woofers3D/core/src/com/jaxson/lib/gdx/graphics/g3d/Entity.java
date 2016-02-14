@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.gdx.util.GdxFileReader;
+import com.jaxson.lib.gdx.util.GdxFile;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyMath;
 
@@ -221,6 +221,6 @@ public abstract class Entity extends GameObject
 
 	protected static Model readModel(String modelPath)
 	{
-		return GdxFileReader.loadModel(modelPath);
+		return new GdxFile(modelPath).loadModel();
 	}
 }

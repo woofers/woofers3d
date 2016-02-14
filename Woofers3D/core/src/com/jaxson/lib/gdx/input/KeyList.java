@@ -11,20 +11,10 @@ public class KeyList
 
 	public KeyList()
 	{
-		this(null);
+		this((Object) null);
 	}
 
-	public KeyList(Object key1, Object key2)
-	{
-		this(new Object[]{ key1, key2 });
-	}
-
-	public KeyList(Object key1, Object key2, Object key3)
-	{
-		this(new Object[]{ key1, key2, key3 });
-	}
-
-	public KeyList(Object[] keys)
+	public KeyList(Object... keys)
 	{
 		this.keycodes = new MyArrayList<Integer>();
 		this.keyCombinations = new MyArrayList<KeyCombination>();

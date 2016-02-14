@@ -155,28 +155,6 @@ public class MyMath
 	}
 
 	/**
-	 * Returns random {@link float} between the range.
-	 * @param min Min
-	 * @param max Max
-	 * @return {@link float} - Random float
-	 */
-	public static float randFloat(float min, float max)
-	{
-		return getRandom().nextFloat() * (max - min + 1) + min;
-	}
-
-	/**
-	 * Returns random {@link int} between the range.
-	 * @param min Min
-	 * @param max Max
-	 * @return {@link int} - Random int
-	 */
-	public static int randInt(int min, int max)
-	{
-		return getRandom().nextInt(max - min + 1) + min;
-	}
-
-	/**
 	 * Returns the reciprocal of an {@link float}.
 	 * @param value Number
 	 * @return {@link float} - Reciprocal

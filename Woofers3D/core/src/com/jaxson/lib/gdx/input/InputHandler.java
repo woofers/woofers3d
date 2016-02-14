@@ -506,7 +506,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return getInput().isButtonPressed(button);
 	}
 
-	public static boolean isButtonPressed(int[] buttons)
+	public static boolean isButtonPressed(int... buttons)
 	{
 		for (int button: buttons)
 		{
@@ -532,7 +532,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return keys[keycode];
 	}
 
-	public static boolean isDown(int[] keycodes)
+	public static boolean isDown(int... keycodes)
 	{
 		for (int keycode: keycodes)
 		{
@@ -550,7 +550,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return true;
 	}
 
-	public static boolean isDown(KeyCombination[] keyCombinations)
+	public static boolean isDown(KeyCombination... keyCombinations)
 	{
 		for (KeyCombination keyCombination: keyCombinations)
 		{
@@ -592,7 +592,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return keys[keycode] && !prevKeys[keycode];
 	}
 
-	public static boolean isPressed(int[] keycodes)
+	public static boolean isPressed(int... keycodes)
 	{
 		for (int keycode: keycodes)
 		{
@@ -612,7 +612,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return wasPressed;
 	}
 
-	public static boolean isPressed(KeyCombination[] keyCombinations)
+	public static boolean isPressed(KeyCombination... keyCombinations)
 	{
 		for (KeyCombination keyCombination: keyCombinations)
 		{
@@ -634,7 +634,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return !keys[keycode] && prevKeys[keycode];
 	}
 
-	public static boolean isReleased(int[] keycodes)
+	public static boolean isReleased(int... keycodes)
 	{
 		for (int keycode: keycodes)
 		{
@@ -652,7 +652,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		return true;
 	}
 
-	public static boolean isReleased(KeyCombination[] keyCombinations)
+	public static boolean isReleased(KeyCombination... keyCombinations)
 	{
 		for (KeyCombination keyCombination: keyCombinations)
 		{

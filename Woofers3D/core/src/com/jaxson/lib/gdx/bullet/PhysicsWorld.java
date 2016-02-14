@@ -23,7 +23,7 @@ import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.jaxson.lib.gdx.util.GdxFileReader;
+import com.jaxson.lib.gdx.util.GdxFile;
 import com.jaxson.lib.gdx.util.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
 
@@ -199,7 +199,7 @@ public class PhysicsWorld
 
 	public void loadFile(String path)
 	{
-		loadFile(GdxFileReader.getInternalFile(path));
+		loadFile(GdxFile.getInternalFile(path));
 	}
 
 	public void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)

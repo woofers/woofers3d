@@ -20,7 +20,7 @@ import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.gdx.util.GdxFileReader;
+import com.jaxson.lib.gdx.util.Screenshot;
 import com.jaxson.lib.util.MyMath;
 
 /**
@@ -293,7 +293,12 @@ public class DisplayManager extends GameObject
 		if (InputHandler.hasHardwareKeyboard())
 		{
 			if (InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
-			if (InputHandler.isPressed(Keys.F12)) GdxFileReader.saveScreenshot();
+			if (InputHandler.isPressed(Keys.F12))
+			{
+				Screenshot screenshot = new Screenshot();
+				screenshot.save();
+				screenshot.dispose();
+			}
 		}
 	}
 

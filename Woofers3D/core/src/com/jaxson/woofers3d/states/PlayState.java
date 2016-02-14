@@ -12,9 +12,10 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
+import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GdxMath;
-import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.util.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends BulletState
@@ -39,13 +40,15 @@ public class PlayState extends BulletState
 		applyPhysics(floor);
 		add(floor);
 
+		RandomNumber boxSizeRange = new RandomNumber(1, 4);
+		RandomNumber massRange = new RandomNumber(0.9f, 1.2f);
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] = new RigidBox(GdxMath.randColor(255, 255, 95, 165, 0, 50));
+			boxs[i] = new RigidBox(new MyColor().random(255, 255, 95, 165, 0, 50));
 			boxs[i].setLocation(GdxMath.randVector3(6f, 30f));
-			boxs[i].setSize(new Vector3(MyMath.randFloat(1f, 4f), MyMath.randFloat(1f, 3f), MyMath.randFloat(1f, 4f)));
-			boxs[i].setMass(MyMath.randFloat(0.9f, 1.2f));
+			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(), boxSizeRange.floatValue(), boxSizeRange.floatValue()));
+			boxs[i].setMass(massRange.floatValue());
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
 		}
@@ -54,10 +57,10 @@ public class PlayState extends BulletState
 		for (int i = 0; i < SPHERE_AMOUNT; i ++)
 		{
 			if (InputHandler.hasTouchScreen()) break;
-			spheres[i] = new RigidSphere(GdxMath.randColor());
+			spheres[i] = new RigidSphere(new MyColor().random());
 			spheres[i].setLocation(GdxMath.randVector3(6f, 30f));
 			spheres[i].setSize(new Vector3(2f, 2f, 2f));
-			spheres[i].setMass(MyMath.randFloat(0.9f, 1.2f));
+			spheres[i].setMass(massRange.floatValue());
 			applyPhysics(spheres[i]);
 			add(spheres[i]);
 		}

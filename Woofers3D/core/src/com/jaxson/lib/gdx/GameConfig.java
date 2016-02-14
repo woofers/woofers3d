@@ -412,7 +412,7 @@ public class GameConfig extends GsonObject<GameConfig>
 
 	/**
 	 * Sets sensitivity of the mouse.
-	 * @param sensitivity - The sensitivity of the mouse
+	 * @param sensitivity The sensitivity of the mouse
 	 */
 	public void setSensitivity(float sensitivity)
 	{
@@ -423,7 +423,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	/**
 	 * Sets sensitivity of the mouse.
 	 * Allows separate x and y sensitives.
-	 * @param sensitivity - The sensitivity of the mouse
+	 * @param sensitivity The sensitivity of the mouse
 	 */
 	public void setSensitivity(Vector2 sensitivity)
 	{

@@ -1,10 +1,9 @@
 package com.jaxson.lib.gdx.util;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.util.RandomNumber;
 
 public class GdxMath extends MyMath
 {
@@ -31,29 +30,10 @@ public class GdxMath extends MyMath
 		return vector.set(vector.x / vector2.x, vector.y / vector2.y, vector.z / vector2.z);
 	}
 
-	public static Color randColor()
-	{
-		return randColor(MyColor.MIN_VALUE_INT, MyColor.MAX_VALUE_INT);
-	}
-
-	public static Color randColor(Color minColor, Color maxColor)
-	{
-		return new MyColor(randFloat(minColor.r, maxColor.r), randFloat(minColor.g, maxColor.g), randFloat(minColor.b, maxColor.b));
-	}
-
-	public static Color randColor(int minRGB, int maxRGB)
-	{
-		return randColor(minRGB, maxRGB, minRGB, maxRGB, minRGB, maxRGB);
-	}
-
-	public static Color randColor(int minR, int maxR, int minG, int maxG, int minB, int maxB)
-	{
-		return new MyColor(randInt(minR, maxR), randInt(minG, maxG), randInt(minB, maxB));
-	}
-
 	public static Vector3 randVector3(float min, float max)
 	{
-		return new Vector3(randFloat(min, max), randFloat(min, max), randFloat(min, max));
+		RandomNumber range = new RandomNumber(min, max);
+		return new Vector3(range.floatValue(), range.floatValue(), range.floatValue());
 	}
 
 	public static Vector3 reciprocalVector(Vector3 vector)

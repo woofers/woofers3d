@@ -30,9 +30,14 @@ public class RayCallback extends ClosestRayResultCallback
 		return null;
 	}
 
-	public void reset()
+	public void releaseCollisionObject()
 	{
 		setCollisionObject(null);
+	}
+
+	public void reset()
+	{
+		releaseCollisionObject();
 		setClosestHitFraction(CLOSEST_HIT_FRACTION);
 	}
 

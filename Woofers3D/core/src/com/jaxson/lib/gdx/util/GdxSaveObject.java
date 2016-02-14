@@ -1,13 +1,12 @@
 package com.jaxson.lib.gdx.util;
 
-import com.jaxson.lib.util.MyFileReader;
 import com.jaxson.lib.util.SaveObject;
 import com.jaxson.lib.util.Saveable;
 
 /**
  * Default implementation of {@link Saveable}
  * Used to save any {@link Object}.
- * Uses the {@link GdxFileReader} instead of {@link MyFileReader}
+ * Uses the {@link GdxFile} instead of {@link MyFileReader}
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -20,7 +19,7 @@ public abstract class GdxSaveObject extends SaveObject
 	@Override
 	public boolean hasSaveData()
 	{
-		return GdxFileReader.exists(getSavePath());
+		return getSaveFile().exists();
 	}
 
 	/**
@@ -31,7 +30,7 @@ public abstract class GdxSaveObject extends SaveObject
 	@Override
 	public String read()
 	{
-		return GdxFileReader.read(getSavePath());
+		return getSaveFile().read();
 	}
 
 	/**
@@ -41,6 +40,6 @@ public abstract class GdxSaveObject extends SaveObject
 	@Override
 	protected void save(String data)
 	{
-		GdxFileReader.write(getSavePath(), data);
+		getSaveFile().write(data);
 	}
 }

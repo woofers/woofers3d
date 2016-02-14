@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.MyColor;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.gdx.util.GdxFileReader;
+import com.jaxson.lib.gdx.util.GdxFile;
 
 public class GdxSprite extends GameObject
 {
@@ -18,7 +18,7 @@ public class GdxSprite extends GameObject
 
 	public GdxSprite(String path)
 	{
-		this(new Texture(GdxFileReader.getInternalFile(path)));
+		this(new Texture(GdxFile.getInternalFile(path)));
 	}
 
 	public GdxSprite(Texture texture)
