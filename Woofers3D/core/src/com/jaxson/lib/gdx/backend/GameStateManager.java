@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GameObject;
-
 import java.util.Stack;
 
 /**

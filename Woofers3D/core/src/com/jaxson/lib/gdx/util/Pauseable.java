@@ -2,6 +2,11 @@ package com.jaxson.lib.gdx.util;
 
 import com.jaxson.lib.gdx.Game;
 
+/**
+ * Interface for pauseable {@link Object}s.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public interface Pauseable
 {
 	/**

@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.util.MyArrayList;
 
 public class MyEnvironment extends Environment

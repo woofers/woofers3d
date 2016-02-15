@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.bullet.softbody.btSoftBody;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody.Material;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.jaxson.lib.gdx.bullet.PhysicsWorld;
-
 import java.nio.ShortBuffer;
 
 public abstract class SoftBody extends EntityBody<btSoftBody>

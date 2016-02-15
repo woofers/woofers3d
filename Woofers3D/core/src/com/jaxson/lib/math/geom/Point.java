@@ -1,11 +1,11 @@
-package com.jaxson.lib.geom;
+package com.jaxson.lib.math.geom;
 
 public class Point
 {
 	private static final String X_PREFIX = "X: ";
 	private static final String Y_PREFIX = ", Y: ";
 
-	public int x, y;
+	private int x, y;
 
 	public Point()
 	{
@@ -14,8 +14,7 @@ public class Point
 
 	public Point(int x, int y)
 	{
-		this.x = x;
-		this.y = y;
+		set(x, y);
 	}
 
 	public Point(Point point)
@@ -27,6 +26,35 @@ public class Point
 	public Point clone()
 	{
 		return new Point(this);
+	}
+
+	public int getX()
+	{
+		return x;
+	}
+
+	public int getY()
+	{
+		return y;
+	}
+
+	public Point set(int x, int y)
+	{
+		setX(x);
+		setY(y);
+		return this;
+	}
+
+	public Point setX(int x)
+	{
+		this.x = x;
+		return this;
+	}
+
+	public Point setY(int y)
+	{
+		this.y = y;
+		return this;
 	}
 
 	@Override

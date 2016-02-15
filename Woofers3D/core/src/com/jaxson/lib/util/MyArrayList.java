@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class MyArrayList<E> extends ArrayList<E>
 {
 	/**
-	 * Constructs an empty list with an initial capacity of ten.
+	 * Constructs an empty list with an initial capacity of {@code 10}.
 	 */
 	public MyArrayList()
 	{

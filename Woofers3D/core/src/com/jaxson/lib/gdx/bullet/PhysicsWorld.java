@@ -1,5 +1,6 @@
 package com.jaxson.lib.gdx.bullet;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
@@ -23,8 +24,8 @@ import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.jaxson.lib.gdx.util.GdxFile;
-import com.jaxson.lib.gdx.util.GdxMath;
+import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
 
 public class PhysicsWorld
@@ -199,7 +200,7 @@ public class PhysicsWorld
 
 	public void loadFile(String path)
 	{
-		loadFile(GdxFile.getInternalFile(path));
+		loadFile(new GdxFile(path, FileType.Internal).getFileHandle());
 	}
 
 	public void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)

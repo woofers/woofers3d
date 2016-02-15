@@ -1,7 +1,7 @@
-package com.jaxson.lib.gdx.graphics;
+package com.jaxson.lib.gdx.graphics.color;
 
 import com.badlogic.gdx.graphics.Color;
-import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.math.MyMath;
 
 public class MyColor extends Color
 {

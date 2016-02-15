@@ -13,7 +13,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.DisplayOrientation;
-import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.math.MyMath;
 
 public class InputHandler extends Keys implements InputProcessor, GestureListener
 {

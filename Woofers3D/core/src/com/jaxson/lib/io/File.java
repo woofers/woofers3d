@@ -1,4 +1,4 @@
-package com.jaxson.lib.util;
+package com.jaxson.lib.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -84,7 +84,7 @@ public class File
 			do
 			{
 				output += nextLine;
-				output += System.lineSeparator();
+				output += NEW_LINE;
 				nextLine = reader.readLine();
 			}
 			while (nextLine != null);

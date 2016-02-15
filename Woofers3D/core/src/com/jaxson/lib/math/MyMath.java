@@ -1,4 +1,4 @@
-package com.jaxson.lib.util;
+package com.jaxson.lib.math;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

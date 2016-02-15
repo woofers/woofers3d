@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
+/**
+ * Interface for renderable {@link Object}s.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public interface Renderable
 {
 	/**

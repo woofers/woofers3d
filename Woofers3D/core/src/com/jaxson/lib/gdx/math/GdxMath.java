@@ -1,9 +1,9 @@
-package com.jaxson.lib.gdx.util;
+package com.jaxson.lib.gdx.math;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.util.MyMath;
-import com.jaxson.lib.util.RandomNumber;
+import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.math.random.RandomNumber;
 
 public class GdxMath extends MyMath
 {

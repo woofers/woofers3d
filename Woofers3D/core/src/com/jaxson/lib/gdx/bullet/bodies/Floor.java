@@ -2,7 +2,7 @@ package com.jaxson.lib.gdx.bullet.bodies;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 
 public class Floor extends RigidBox
 {

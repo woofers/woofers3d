@@ -12,10 +12,10 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
-import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.jaxson.lib.gdx.util.GdxMath;
-import com.jaxson.lib.util.RandomNumber;
+import com.jaxson.lib.gdx.math.GdxMath;
+import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends BulletState

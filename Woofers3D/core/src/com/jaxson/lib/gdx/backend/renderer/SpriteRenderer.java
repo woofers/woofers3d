@@ -3,9 +3,9 @@ package com.jaxson.lib.gdx.backend.renderer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
+import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 
-public class SpriteRenderer extends Renderer<GdxSprite>
+public class SpriteRenderer extends Renderer<Sprite>
 {
 	public SpriteRenderer()
 	{
@@ -18,7 +18,7 @@ public class SpriteRenderer extends Renderer<GdxSprite>
 		if (isEmpty()) return;
 		checkAgruments(spriteBatch, modelBatch, camera);
 		spriteBatch.begin();
-		for (GdxSprite sprite: getObjects())
+		for (Sprite sprite: getObjects())
 		{
 			sprite.draw(spriteBatch);
 		}

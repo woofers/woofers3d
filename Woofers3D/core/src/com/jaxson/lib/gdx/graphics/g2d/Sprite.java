@@ -1,29 +1,29 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.MyColor;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.gdx.util.GdxFile;
 
-public class GdxSprite extends GameObject
+public class Sprite extends GameObject
 {
-	private Sprite sprite;
+	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	private float alpha = 1f;
 	private float depth = 1f;
 
-	public GdxSprite(String path)
+	public Sprite(String path)
 	{
-		this(new Texture(GdxFile.getInternalFile(path)));
+		this(new Texture(new GdxFile(path, FileType.Internal).getFileHandle()));
 	}
 
-	public GdxSprite(Texture texture)
+	public Sprite(Texture texture)
 	{
-		this.sprite = new Sprite(texture);
+		this.sprite = new com.badlogic.gdx.graphics.g2d.Sprite(texture);
 	}
 
 	@Override

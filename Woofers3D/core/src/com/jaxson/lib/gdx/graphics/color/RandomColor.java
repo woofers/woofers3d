@@ -1,7 +1,7 @@
-package com.jaxson.lib.gdx.graphics;
+package com.jaxson.lib.gdx.graphics.color;
 
 import com.badlogic.gdx.graphics.Color;
-import com.jaxson.lib.util.RandomNumber;
+import com.jaxson.lib.math.random.RandomNumber;
 
 public class RandomColor extends MyColor
 {
@@ -12,7 +12,9 @@ public class RandomColor extends MyColor
 
 	public RandomColor(Color minColor, Color maxColor)
 	{
-		super(new RandomNumber(minColor.r, maxColor.r).floatValue(), new RandomNumber(minColor.g, maxColor.g).floatValue(), new RandomNumber(minColor.b, maxColor.b).floatValue());
+		super(  new RandomNumber(minColor.r, maxColor.r).floatValue(),
+				new RandomNumber(minColor.g, maxColor.g).floatValue(),
+				new RandomNumber(minColor.b, maxColor.b).floatValue());
 	}
 
 	public RandomColor(int minRGB, int maxRGB)

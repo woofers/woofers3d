@@ -1,8 +1,13 @@
-package com.jaxson.lib.util;
+package com.jaxson.lib.math.random;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * An immutable {@link Object} used to define the a random number.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public class RandomNumber extends Number
 {
 	private static int DEFAULT_MIN = 0;
@@ -11,24 +16,38 @@ public class RandomNumber extends Number
 
 	private Number min;
 	private Number max;
-	private Number[] exclude;
+	private Number[] excluded;
 
+	/**
+	 * Construct a {@link RandomNumber} between {@code 0} and {@code 100}.
+	 */
 	public RandomNumber()
 	{
 		this(DEFAULT_MIN, DEFAULT_MAX);
 	}
 
+	/**
+	 * Construct a {@link RandomNumber} between the min and max.
+	 * @param min The min value of the {@link Number}
+	 * @param max The max value of the {@link Number}
+	 */
 	public RandomNumber(Number min, Number max)
 	{
 		this(min, max, (Number) null);
 	}
 
-	public RandomNumber(Number min, Number max, Number... exclude)
+	/**
+	 * Construct a {@link RandomNumber} between the min and max.
+	 * @param min The min value of the {@link Number}
+	 * @param max The max value of the {@link Number}
+	 * @param excluded Array of excluded {@link Number}s from the range
+	 */
+	public RandomNumber(Number min, Number max, Number... excluded)
 	{
 		if (max.floatValue() < min.floatValue()) throw new IllegalArgumentException(MIN_EXCEEDS_MAX);
 		this.min = min;
 		this.max = max;
-		this.exclude = exclude;
+		this.excluded = excluded;
 	}
 
 	@Override
@@ -47,16 +66,28 @@ public class RandomNumber extends Number
 		return value;
 	}
 
+	/**
+	 * Gets the excluded range.
+	 * @return {@link Number}[] - The rxcluded range
+	 */
 	public Number[] getExclude()
 	{
-		return exclude;
+		return excluded;
 	}
 
+	/**
+	 * Gets the max value of the range.
+	 * @return {@link Number} - The max value of the range
+	 */
 	public Number getMax()
 	{
 		return max;
 	}
 
+	/**
+	 * Gets the min value of the range.
+	 * @return {@link Number} - The min value of the range
+	 */
 	public Number getMin()
 	{
 		return min;

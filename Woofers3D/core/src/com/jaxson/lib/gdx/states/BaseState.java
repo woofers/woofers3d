@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.backend.GameManager;
 import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
-import com.jaxson.lib.gdx.graphics.g2d.GdxSprite;
+import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
 import com.jaxson.lib.gdx.util.GameObject;
@@ -30,7 +30,7 @@ public abstract class BaseState extends GameObject
 		renderer.add(entity);
 	}
 
-	public void add(GdxSprite sprite)
+	public void add(Sprite sprite)
 	{
 		renderer.add(sprite);
 	}
@@ -86,7 +86,7 @@ public abstract class BaseState extends GameObject
 		renderer.remove(entity);
 	}
 
-	public void remove(GdxSprite sprite)
+	public void remove(Sprite sprite)
 	{
 		renderer.remove(sprite);
 	}

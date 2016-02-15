@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
+import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.gdx.util.GdxFile;
-import com.jaxson.lib.gdx.util.GdxMath;
-import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.math.MyMath;
 
 public abstract class Entity extends GameObject
 {

@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.jaxson.lib.gdx.util.GdxMath;
+import com.jaxson.lib.gdx.math.GdxMath;
 
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 {

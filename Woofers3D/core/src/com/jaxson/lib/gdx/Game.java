@@ -49,8 +49,8 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	}
 
 	/**
-	 * Gets the config of the game.
-	 * @return {@link GameConfig} - Config
+	 * Gets the config of the {@link Game}.
+	 * @return {@link GameConfig} - The config
 	 */
 	public GameConfig getConfig()
 	{

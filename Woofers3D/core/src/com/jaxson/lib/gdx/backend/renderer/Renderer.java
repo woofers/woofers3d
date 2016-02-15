@@ -3,9 +3,9 @@ package com.jaxson.lib.gdx.backend.renderer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.jaxson.lib.gdx.util.ExceptionBuilder;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
+import com.jaxson.lib.util.exceptions.NegativeValueException;
 
 public abstract class Renderer<T extends GameObject> extends GameObject
 {
@@ -23,9 +23,9 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 
 	protected void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
-		if (modelBatch == null) throw ExceptionBuilder.cannotBeNull("spriteBatch");
-		if (spriteBatch == null) throw ExceptionBuilder.cannotBeNull("modelBatch");
-		if (camera == null) throw ExceptionBuilder.cannotBeNull("camera");
+		if (modelBatch == null) throw new NegativeValueException("spriteBatch");
+		if (spriteBatch == null) throw new NegativeValueException("modelBatch");
+		if (camera == null) throw new NegativeValueException("camera");
 	}
 
 	@Override

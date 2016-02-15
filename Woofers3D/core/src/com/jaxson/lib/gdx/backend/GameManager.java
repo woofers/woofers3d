@@ -22,7 +22,7 @@ public class GameManager
 {
 	private GameConfig config;
 	private GameStateManager gameStateManager;
-	private DisplayManager displayManager;
+	private Display displayManager;
 	private InputHandler inputHandler;
 	private float dt;
 	private float accumulator;
@@ -33,7 +33,7 @@ public class GameManager
 		this.config = config;
 		this.inputHandler = new InputHandler();
 		this.gameStateManager = new GameStateManager(this);
-		this.displayManager = new DisplayManager(this);
+		this.displayManager = new Display(this);
 		setInputProcessor(InputHandler.getInputProcessor());
 		InputHandler.setSensitivity(getConfig().getSensitivity());
 	}

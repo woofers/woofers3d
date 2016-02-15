@@ -1,9 +1,8 @@
-package com.jaxson.lib.gdx.util;
+package com.jaxson.lib.gdx.io;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
-import com.jaxson.lib.util.File;
+import com.jaxson.lib.io.File;
 
 public class GdxFile extends File
 {
@@ -42,22 +41,22 @@ public class GdxFile extends File
 	@Override
 	public boolean exists()
 	{
-		return fileHandle.exists();
+		return getFileHandle().exists();
 	}
 
-	public FileHandle getAbsoluteFile()
+	private FileHandle getAbsoluteFile()
 	{
-		return getAbsoluteFile(getPath());
+		return getFiles().absolute(getPath());
 	}
 
-	public FileHandle getClasspathFile()
+	private FileHandle getClasspathFile()
 	{
-		return getClasspathFile(getPath());
+		return getFiles().classpath(getPath());
 	}
 
-	public FileHandle getExternalFile()
+	private FileHandle getExternalFile()
 	{
-		return getExternalFile(getPath());
+		return getFiles().external(getPath());
 	}
 
 	public FileHandle getFileHandle()
@@ -81,15 +80,14 @@ public class GdxFile extends File
 		return getLocalFile();
 	}
 
-	public FileHandle getInternalFile()
+	private FileHandle getInternalFile()
 	{
-		return getInternalFile(getPath());
-
+		return getFiles().internal(getPath());
 	}
 
-	public FileHandle getLocalFile()
+	private FileHandle getLocalFile()
 	{
-		return getLocalFile(getPath());
+		return getFiles().local(getPath());
 	}
 
 	public Model loadG3db()
@@ -138,70 +136,8 @@ public class GdxFile extends File
 		getFileHandle().writeString(contents, !overwrite);
 	}
 
-	public static FileHandle getAbsoluteFile(String path)
-	{
-		return getFiles().absolute(path);
-	}
-
-	public static FileHandle getClasspathFile(String path)
-	{
-		return getFiles().classpath(path);
-	}
-
-	public static FileHandle getExternalFile(String path)
-	{
-		return getFiles().external(path);
-	}
-
 	private static Files getFiles()
 	{
 		return Gdx.files;
 	}
-
-	private static Graphics getGraphics()
-	{
-		return Gdx.graphics;
-	}
-
-	public static FileHandle getInternalFile(String path)
-	{
-		return getFiles().internal(path);
-	}
-
-	public static FileHandle getLocalFile(String path)
-	{
-		return getFiles().local(path);
-	}
-
-	/*
-	 * public static Pixmap getScreenshot(int width, int height)
-	 * {
-	 * return getScreenshot(0, 0, width, height);
-	 * }
-	 * public static Pixmap getScreenshot(int x, int y, int width, int height)
-	 * {
-	 * return getScreenshot(x, y, width, height, true);
-	 * }
-	 * public static Pixmap getScreenshot(int x, int y, int width, int height,
-	 * boolean yDown)
-	 * {
-	 * Pixmap pixmap = ScreenUtils.getFrameBufferPixmap(x, y, width, height);
-	 * if (yDown) pixmap = flipPixmap(pixmap, width, height);
-	 * return pixmap;
-	 * }
-	 * public static GdxSprite getScreenshotSprite(int width, int height)
-	 * {
-	 * return new GdxSprite(getScreenshotTexture(width, height));
-	 * }
-	 * private static Texture getScreenshotTexture(int width, int height)
-	 * {
-	 * return new Texture(getScreenshotTextureData(width, height));
-	 * }
-	 * private static TextureData getScreenshotTextureData(int width, int
-	 * height)
-	 * {
-	 * Pixmap pixmap = getScreenshot(width, height);
-	 * return new PixmapTextureData(pixmap, pixmap.getFormat(), true, true);
-	 * }
-	 */
 }

@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.jaxson.lib.gdx.Game;
 
+/**
+ * Abstract class to base {@link GameObject}s on.
+ * @author Jaxson Van Doorn
+ * @since 1.0
+ */
 public abstract class GameObject implements Disposable, Renderable, Pauseable
 {
 	/**

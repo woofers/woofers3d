@@ -1,14 +1,17 @@
-package com.jaxson.lib.util;
+package com.jaxson.lib.io;
+
+import com.jaxson.lib.util.exceptions.NullValueException;
 
 /**
  * Default implementation of {@link Saveable}
  * Used to save any {@link Object}.
+ * @param <F> the type of file used to save
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class SaveObject implements Saveable
+public abstract class SaveObject<F extends File> implements Saveable<F>
 {
-	private transient File saveFile;
+	private transient F saveFile;
 	private SaveBehavior saveBehavior = SaveBehavior.Manual;
 
 	/**
@@ -32,7 +35,7 @@ public abstract class SaveObject implements Saveable
 	/**
 	 * Gets the {@link SaveBehavior} of the {@link Object}.
 	 * @return {@link SaveBehavior} - The {@link SaveBehavior} of the
-	 * {@link Object};
+	 * {@link Object}
 	 */
 	@Override
 	public SaveBehavior getSaveBehavior()
@@ -41,13 +44,13 @@ public abstract class SaveObject implements Saveable
 	}
 
 	/**
-	 * Gets the save saveFile of the {@link Object}.
-	 * @return {@link saveFile} - The save saveFile of the {@link Object}
+	 * Gets the save file of the {@link Object}.
+	 * @return {@link F} - The save file of the {@link Object}
 	 */
 	@Override
-	public File getSaveFile()
+	public F getSaveFile()
 	{
-		if (saveFile == null) saveFile = new File(toString().replace("@", "_"));
+		if (saveFile == null) throw new NullValueException("saveFile");
 		return saveFile;
 	}
 
@@ -61,8 +64,8 @@ public abstract class SaveObject implements Saveable
 	}
 
 	/**
-	 * Gets whether the {@link Object} has a save saveFile.
-	 * @return {@link boolean} - Whether the {@link Object} has a save saveFile
+	 * Gets whether the {@link Object} has save data.
+	 * @return {@link boolean} - Whether the {@link Object} has a save file
 	 */
 	@Override
 	public boolean hasSaveData()
@@ -71,9 +74,9 @@ public abstract class SaveObject implements Saveable
 	}
 
 	/**
-	 * Reads the save saveFile and sets the {@link Object}'s instance to it's
+	 * Reads the save file and sets the {@link Object}'s instance to it's
 	 * values.
-	 * @return {@link String} - The save saveFile as a string
+	 * @return {@link String} - The save file as a string
 	 */
 	@Override
 	public String read()
@@ -82,13 +85,13 @@ public abstract class SaveObject implements Saveable
 	}
 
 	/**
-	 * Saves the current {@link Object} to a saveFile.
+	 * Saves the current {@link Object} to a {@link File}.
 	 */
 	@Override
 	public abstract void save();
 
 	/**
-	 * Saves the given data to the save saveFile.
+	 * Saves the given data to the {@link File}.
 	 * @param data The data to write
 	 */
 	protected void save(String data)
@@ -109,25 +112,16 @@ public abstract class SaveObject implements Saveable
 
 	/**
 	 * Sets the save path where the {@link Object} saves.
-	 * @param saveFile The saveFile that the {@link Object} saves to
+	 * @param saveFile The {@link File} that the {@link Object} saves to
 	 */
 	@Override
-	public void setSaveFile(File saveFile)
+	public void setSaveFile(F saveFile)
 	{
 		this.saveFile = saveFile;
 	}
 
 	/**
-	 * Sets the save path where the {@link Object} saves.
-	 * @param savePath The save path where the {@link Object} saves
-	 */
-	public void setSavePath(String savePath)
-	{
-		this.saveFile = new File(savePath);
-	}
-
-	/**
-	 * Searches for a save saveFile and if one exists it reads it.
+	 * Searches for a {@link File} and if one exists it reads it.
 	 * Otherwise it creates one.
 	 */
 	@Override

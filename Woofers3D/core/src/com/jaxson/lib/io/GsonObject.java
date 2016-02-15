@@ -1,13 +1,15 @@
-package com.jaxson.lib.util;
+package com.jaxson.lib.io;
 
 import com.google.gson.Gson;
 
 /**
  * Class to serialize any {@link Object} into a string.
+ * @param <T> the type of {@link Object} being saved
+ * @param <F> the type of file used to save
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class GsonObject<T> extends SaveObject
+public abstract class GsonObject<T, F extends File> extends SaveObject<F>
 {
 	/**
 	 * Stores the class type for obect parsing.

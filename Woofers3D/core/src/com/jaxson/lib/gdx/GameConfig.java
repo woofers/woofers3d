@@ -4,8 +4,9 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
-import com.jaxson.lib.util.GsonObject;
-import com.jaxson.lib.util.MyMath;
+import com.jaxson.lib.io.File;
+import com.jaxson.lib.io.GsonObject;
+import com.jaxson.lib.math.MyMath;
 
 /**
  * A universal config file that can be converted to other config types.
@@ -14,7 +15,7 @@ import com.jaxson.lib.util.MyMath;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class GameConfig extends GsonObject<GameConfig>
+public class GameConfig extends GsonObject<GameConfig, File>
 {
 	/**
 	 * The minimum step interval that the {@link Game} cannot skip.
@@ -60,6 +61,10 @@ public class GameConfig extends GsonObject<GameConfig>
 	private boolean invertMouseX = true;
 	private boolean invertMouseY = true;
 
+	{
+		setSaveFile(new File(SAVE_PATH));
+	}
+
 	/**
 	 * Constructs a default config.
 	 */
@@ -74,7 +79,6 @@ public class GameConfig extends GsonObject<GameConfig>
 	public GameConfig(GameConfig config)
 	{
 		super(GameConfig.class);
-		setSavePath(SAVE_PATH);
 		set(config);
 	}
 
@@ -92,7 +96,6 @@ public class GameConfig extends GsonObject<GameConfig>
 		setHeight(height);
 		setMaxFps(fps);
 		setStep(step);
-		setSavePath(SAVE_PATH);
 	}
 
 	/**
@@ -306,7 +309,7 @@ public class GameConfig extends GsonObject<GameConfig>
 		setFullscreenStartup(config.startsFullscreen());
 		setStatusBar(config.hasStatusBar());
 		setImmersiveMode(config.isImmersive());
-		setSavePath(config.getSavePath());
+		setSaveFile(config.getSaveFile());
 		setIconPath(config.getIconPath());
 		setShowFps(config.showsFps());
 		setAntiAliasing(config.getAntiAliasing());
