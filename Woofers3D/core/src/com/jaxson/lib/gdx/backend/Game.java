@@ -18,21 +18,22 @@ import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.states.State;
 
-public class GameManager
+public class Game
 {
 	private GameConfig config;
-	private GameStateManager gameStateManager;
+	private GameStates gameStateManager;
 	private Display displayManager;
 	private InputHandler inputHandler;
 	private float dt;
 	private float accumulator;
 	private float step;
+	private float clamp;
 
-	public GameManager(GameConfig config)
+	public Game(GameConfig config)
 	{
 		this.config = config;
 		this.inputHandler = new InputHandler();
-		this.gameStateManager = new GameStateManager(this);
+		this.gameStateManager = new GameStates(this);
 		this.displayManager = new Display(this);
 		setInputProcessor(InputHandler.getInputProcessor());
 		InputHandler.setSensitivity(getConfig().getSensitivity());
@@ -114,6 +115,11 @@ public class GameManager
 		return getConfig().getStepInterval();
 	}
 
+	public float getClampInterval()
+	{
+		return getConfig().getClampInterval();
+	}
+
 	public TargetCamera getTargetCamera()
 	{
 		return displayManager.getTargetCamera();
@@ -193,9 +199,10 @@ public class GameManager
 	public void render()
 	{
 		dt = getDeltaTime();
-		if (dt > GameConfig.CLAMP) dt = GameConfig.CLAMP;
 		if (hasFixedTimeStamp())
 		{
+			clamp = getClampInterval();
+			if (dt > clamp) dt = clamp;
 			step = getStepInterval();
 			accumulator += dt;
 			while (accumulator >= step)

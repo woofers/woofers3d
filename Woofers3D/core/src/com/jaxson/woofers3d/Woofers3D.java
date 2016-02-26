@@ -1,25 +1,25 @@
 package com.jaxson.woofers3d;
 
-import com.jaxson.lib.gdx.Game;
+import com.jaxson.lib.gdx.GameInstance;
 import com.jaxson.woofers3d.states.PlayState;
+import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.lib.io.File;
 
-public class Woofers3D extends Game
+public class Woofers3D extends GameInstance
 {
 	private static final String TITLE = "Woofers 3D";
-	private static final String ICON_PATH = "icon.png";
 
 	public Woofers3D()
 	{
 		super();
 		getConfig().setTitle(TITLE);
-		getConfig().setIconPath(ICON_PATH);
-		// getConfig().smartRead();
+		getConfig().smartRead();
 	}
 
 	@Override
 	public void create()
 	{
 		super.create();
-		push(new PlayState(getGameManager()));
+		push(new PlayState(getGame()));
 	}
 }

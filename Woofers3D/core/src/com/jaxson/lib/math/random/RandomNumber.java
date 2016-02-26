@@ -2,13 +2,14 @@ package com.jaxson.lib.math.random;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import com.jaxson.lib.math.ComparableNumber;
 
 /**
  * An immutable {@link Object} used to define the a random number.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class RandomNumber extends Number
+public class RandomNumber extends ComparableNumber
 {
 	private static int DEFAULT_MIN = 0;
 	private static int DEFAULT_MAX = 100;

@@ -5,26 +5,26 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
 
 /**
- * A Game class containing a {@link GameManager} and a {@link GameConfig}.
- * Extends this and push states to your game.
+ * A {@link GameInstance} containing a {@link Game} and a {@link GameConfig}.
+ * Extends this and push states to your {@link Game}.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class Game extends ApplicationAdapter implements Pauseable, Resizeable
+public abstract class GameInstance extends ApplicationAdapter implements Pauseable, Resizeable
 {
 	private GameConfig config;
-	private GameManager gameManager;
+	private Game game;
 
 	/**
 	 * Constructs a game containing a default {@link GameConfig}.
 	 */
-	public Game()
+	public GameInstance()
 	{
 		this.config = new GameConfig();
 	}
@@ -35,7 +35,7 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	@Override
 	public void create()
 	{
-		this.gameManager = new GameManager(getConfig());
+		this.game = new Game(getConfig());
 	}
 
 	/**
@@ -45,7 +45,7 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	@Override
 	public void dispose()
 	{
-		getGameManager().dispose();
+		getGame().dispose();
 	}
 
 	/**
@@ -58,12 +58,12 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	}
 
 	/**
-	 * Gets the game manager of the game.
-	 * @return {@link GameManager} - Game Manager
+	 * Gets the {@link Game}.
+	 * @return {@link Game} - Game
 	 */
-	public GameManager getGameManager()
+	public Game getGame()
 	{
-		return gameManager;
+		return game;
 	}
 
 	/**
@@ -83,16 +83,16 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	@Override
 	public void pause()
 	{
-		getGameManager().pause();
+		getGame().pause();
 	}
 
 	/**
-	 * Pushes a {@link State} to the top {@link GameManager}.
+	 * Pushes a {@link State} to the top {@link Game}.
 	 * @param state The state to add
 	 */
 	public void push(State state)
 	{
-		getGameManager().push(state);
+		getGame().push(state);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	@Override
 	public void render()
 	{
-		getGameManager().render();
+		getGame().render();
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	@Override
 	public void resize(int width, int height)
 	{
-		getGameManager().resize(width, height);
+		getGame().resize(width, height);
 	}
 
 	/**
@@ -124,18 +124,18 @@ public abstract class Game extends ApplicationAdapter implements Pauseable, Resi
 	@Override
 	public void resume()
 	{
-		getGameManager().resume();
+		getGame().resume();
 	}
 
 	/**
 	 * Starts the game on desktop.
 	 * @param launcher Android launcher to receive the {@link Game}
-	 * @deprecated not working
+	 * @deprecated Does nothing
 	 */
 	@Deprecated
 	public void startAndroid(AndroidApplication launcher)
 	{
-		// launcher.initialize(this, toAndroidConfig());
+		//launcher.initialize(this, toAndroidConfig());
 	}
 
 	/**

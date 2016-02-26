@@ -1,6 +1,6 @@
 package com.jaxson.lib.gdx.util;
 
-import com.jaxson.lib.gdx.Game;
+import com.jaxson.lib.gdx.backend.Game;
 
 /**
  * Interface for resizeable {@link Object}s.

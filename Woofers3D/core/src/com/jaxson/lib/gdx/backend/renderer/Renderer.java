@@ -21,7 +21,7 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 		getObjects().add(object);
 	}
 
-	protected void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	protected static void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
 	{
 		if (modelBatch == null) throw new NegativeValueException("spriteBatch");
 		if (spriteBatch == null) throw new NegativeValueException("modelBatch");

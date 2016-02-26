@@ -34,9 +34,7 @@ public class File
 
 	/**
 	 * Gets the file extension of the {@link File}. Returns an empty string if
-	 * the
-	 * {@link File} has no
-	 * extension.
+	 * the {@link File} has no extension.
 	 * @return {@link String} - The file extension
 	 */
 	public String getExtension()

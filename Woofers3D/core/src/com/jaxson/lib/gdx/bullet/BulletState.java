@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
@@ -18,7 +18,7 @@ public abstract class BulletState extends State
 
 	private PhysicsWorld world;
 
-	public BulletState(GameManager gameManager)
+	public BulletState(Game gameManager)
 	{
 		super(gameManager);
 		this.world = new PhysicsWorld();
@@ -93,7 +93,12 @@ public abstract class BulletState extends State
 	public void setCamera(Camera camera)
 	{
 		super.setCamera(camera);
-		if (camera instanceof TargetCamera) getTargetCamera().setWorld(getPhysicsWorld());
+	}
+
+	public void setCamera(TargetCamera camera)
+	{
+		setCamera((Camera)camera);
+		camera.setWorld(getPhysicsWorld());
 	}
 
 	public void setShadows(boolean shadows)

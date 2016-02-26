@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.io.GsonObject;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.math.Reciprocal;
 
 /**
  * A universal config file that can be converted to other config types.
@@ -17,11 +18,6 @@ import com.jaxson.lib.math.MyMath;
  */
 public class GameConfig extends GsonObject<GameConfig, File>
 {
-	/**
-	 * The minimum step interval that the {@link Game} cannot skip.
-	 */
-	public static final float CLAMP = 1f / 4f;
-
 	/**
 	 * Used in {@link #setBackgroundFps(int)} to pause the {@link Game} on
 	 * minimize.
@@ -41,6 +37,7 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	private static final FileType ICON_TYPE = FileType.Internal;
 	private static final float SENSITIVITY = 1.3f;
 	private static final String SAVE_PATH = "config.json";
+	private static final String ICON_PATH = "icon.png";
 
 	private String title = "New Game";
 	private int width = 1280;
@@ -50,19 +47,19 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	private boolean vsync = false;
 	private boolean resizable = false;
 	private transient int step = 120;
+	private transient int clamp = 4;
 	private boolean allowFullscreen = true;
 	private boolean startFullscreen = false;
 	private int antiAliasing = 4;
 	private boolean statusBar = false;
 	private boolean immersive = true;
-	private String iconPath;
+	private File icon;
 	private boolean showFps = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
-	private boolean invertMouseX = true;
-	private boolean invertMouseY = true;
 
 	{
 		setSaveFile(new File(SAVE_PATH));
+		setIcon(new File(ICON_PATH));
 	}
 
 	/**
@@ -96,6 +93,33 @@ public class GameConfig extends GsonObject<GameConfig, File>
 		setHeight(height);
 		setMaxFps(fps);
 		setStep(step);
+	}
+
+	/**
+	 * Sets the number of logic updates per second that the {@link Game} cannot skip.
+	 * @param clamp The number of logic updates per second that the {@link Game} cannot skip
+	 */
+	public void setClamp(int clamp)
+	{
+		this.clamp = clamp;
+	}
+
+	/**
+	 * Gets the number of logic updates per second that the {@link Game} cannot skip.
+	 * @return {@link int} - The number of logic updates per second that the {@link Game} cannot skip
+	 */
+	public int getClamp()
+	{
+		return clamp;
+	}
+
+	/**
+	 * Gets the interval between {@link Game} logic updates in milliseconds that cannot be skipped.
+	 * @return {@link float} - The interval between {@link Game} logic updates in milliseconds that cannot be skipped in milliseconds
+	 */
+	public float getClampInterval()
+	{
+		return new Reciprocal(getClamp()).floatValue();
 	}
 
 	/**
@@ -146,13 +170,12 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	}
 
 	/**
-	 * Gets the path of the {@link Game} icon.
-	 * Returns {@code null} if the {@link Game} has no icon.
-	 * @return {@link String} - The path of the {@link Game} icon
+	 * Gets the {@link Game} icon.
+	 * @return {@link File} - The {@link Game} icon.
 	 */
-	public String getIconPath()
+	public File getIcon()
 	{
-		return iconPath;
+		return icon;
 	}
 
 	/**
@@ -190,7 +213,7 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	 */
 	public float getStepInterval()
 	{
-		return MyMath.reciprocal(step);
+		return new Reciprocal(step).floatValue();
 	}
 
 	/**
@@ -228,15 +251,6 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	public boolean hasFpsCap()
 	{
 		return getMaxFps() != VARIBLE_FRAME_RATE;
-	}
-
-	/**
-	 * Gets whether the {@link Game} has an icon.
-	 * @return {@link boolean} - Whether the {@link Game} has an icon
-	 */
-	public boolean hasIcon()
-	{
-		return getIconPath() != null;
 	}
 
 	/**
@@ -302,6 +316,7 @@ public class GameConfig extends GsonObject<GameConfig, File>
 		setHeight(config.getHeight());
 		setMaxFps(config.getMaxFps());
 		setStep(config.getStep());
+		setClamp(config.getClamp());
 		setBackgroundFps(config.getBackgroundFps());
 		setVsync(config.isVsync());
 		setResizable(config.isResizable());
@@ -310,7 +325,7 @@ public class GameConfig extends GsonObject<GameConfig, File>
 		setStatusBar(config.hasStatusBar());
 		setImmersiveMode(config.isImmersive());
 		setSaveFile(config.getSaveFile());
-		setIconPath(config.getIconPath());
+		setIcon(config.getIcon());
 		setShowFps(config.showsFps());
 		setAntiAliasing(config.getAntiAliasing());
 		setSaveBehavior(config.getSaveBehavior());
@@ -370,13 +385,12 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	}
 
 	/**
-	 * Sets the path of the {@link Game} icon.
-	 * Set to {@code null} to use the default icon.
-	 * @param iconPath The path of the {@link Game} icon
+	 * Sets the icon of the {@link Game}.
+	 * @param icon The icon of the {@link Game}
 	 */
-	public void setIconPath(String iconPath)
+	public void setIcon(File icon)
 	{
-		this.iconPath = iconPath;
+		this.icon = icon;
 		autoSave();
 	}
 
@@ -541,7 +555,7 @@ public class GameConfig extends GsonObject<GameConfig, File>
 		config.backgroundFPS = getBackgroundFps();
 		config.resizable = isResizable();
 		config.samples = getAntiAliasing();
-		if (hasIcon()) config.addIcon(getIconPath(), ICON_TYPE);
+		if (getIcon().exists()) config.addIcon(getIcon().getPath(), ICON_TYPE);
 		return config;
 	}
 }

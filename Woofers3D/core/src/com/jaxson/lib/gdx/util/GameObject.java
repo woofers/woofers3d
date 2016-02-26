@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Disposable;
-import com.jaxson.lib.gdx.Game;
+import com.jaxson.lib.gdx.backend.Game;
 
 /**
  * Abstract class to base {@link GameObject}s on.

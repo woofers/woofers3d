@@ -40,7 +40,7 @@ public class Display extends GameObject
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
 
-	private GameManager gameManager;
+	private Game gameManager;
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
 	private BitmapFont font;
@@ -51,9 +51,9 @@ public class Display extends GameObject
 
 	/**
 	 * Constructs the display.
-	 * @param gameManager Reference to the {@link GameManager}
+	 * @param gameManager Reference to the {@link Game}
 	 */
-	public Display(GameManager gameManager)
+	public Display(Game gameManager)
 	{
 		this.gameManager = gameManager;
 		this.modelBatch = new ModelBatch();

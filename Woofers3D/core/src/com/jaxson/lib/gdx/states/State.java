@@ -1,12 +1,12 @@
 package com.jaxson.lib.gdx.states;
 
-import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.Game;
 
 public abstract class State extends BaseState
 {
 	private SubState subState;
 
-	public State(GameManager gameManager)
+	public State(Game gameManager)
 	{
 		super(gameManager);
 	}

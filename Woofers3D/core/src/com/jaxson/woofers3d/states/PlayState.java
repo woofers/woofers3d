@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.bullet.BulletState;
 import com.jaxson.lib.gdx.bullet.bodies.EntityBody;
 import com.jaxson.lib.gdx.bullet.bodies.Floor;
@@ -17,6 +17,8 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
+import java.sql.Time;
+import com.jaxson.lib.util.ComparableComparator;
 
 public class PlayState extends BulletState
 {
@@ -30,7 +32,7 @@ public class PlayState extends BulletState
 	private SoftBox softBox;
 	private Player player;
 
-	public PlayState(GameManager gameManager)
+	public PlayState(Game gameManager)
 	{
 		super(gameManager);
 		setSubState(new PauseState(gameManager));

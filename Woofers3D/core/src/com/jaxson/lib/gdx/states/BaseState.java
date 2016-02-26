@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
@@ -16,10 +16,10 @@ import com.jaxson.lib.gdx.util.GameObject;
 
 public abstract class BaseState extends GameObject
 {
-	private GameManager gameManager;
+	private Game gameManager;
 	private MixedRenderer renderer;
 
-	protected BaseState(GameManager gameManager)
+	protected BaseState(Game gameManager)
 	{
 		this.gameManager = gameManager;
 		this.renderer = new MixedRenderer();

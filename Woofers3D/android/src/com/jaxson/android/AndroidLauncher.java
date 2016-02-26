@@ -8,7 +8,7 @@ import com.jaxson.woofers3d.Woofers3D;
 public class AndroidLauncher extends AndroidApplication
 {
 	@Override
-	protected void onCreate (Bundle savedInstanceState)
+	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		Woofers3D game = new Woofers3D();

@@ -11,16 +11,16 @@ import java.util.Stack;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class GameStateManager extends GameObject
+public class GameStates extends GameObject
 {
-	private GameManager gameManager;
+	private Game gameManager;
 	private Stack<State> states;
 
 	/**
-	 * Constructs a empty {@link GameStateManager}
-	 * @param gameManager Reference to the {@link GameManager}
+	 * Constructs a empty {@link GameStates}
+	 * @param gameManager Reference to the {@link Game}
 	 */
-	public GameStateManager(GameManager gameManager)
+	public GameStates(Game gameManager)
 	{
 		this.gameManager = gameManager;
 		this.states = new Stack<State>();
@@ -45,8 +45,8 @@ public class GameStateManager extends GameObject
 	}
 
 	/**
-	 * Gets whether the {@link GameStateManager} is empty.
-	 * @return {@link boolean} - Whether the {@link GameStateManager} is empty
+	 * Gets whether the {@link GameStates} is empty.
+	 * @return {@link boolean} - Whether the {@link GameStates} is empty
 	 */
 	public boolean isEmpty()
 	{
@@ -100,7 +100,7 @@ public class GameStateManager extends GameObject
 	}
 
 	/**
-	 * Pushes a {@link State} to the top {@link GameStateManager}.
+	 * Pushes a {@link State} to the top {@link GameStates}.
 	 * @param state The state to add
 	 */
 	public void push(State state)
@@ -146,9 +146,9 @@ public class GameStateManager extends GameObject
 	}
 
 	/**
-	 * Gets the number of states in the {@link GameStateManager}.
+	 * Gets the number of states in the {@link GameStates}.
 	 * @return {@link int} - The amount of states in the
-	 * {@link GameStateManager}
+	 * {@link GameStates}
 	 */
 	public int size()
 	{

@@ -97,7 +97,6 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 	protected void save(String data)
 	{
 		saveFile.write(data);
-
 	}
 
 	/**

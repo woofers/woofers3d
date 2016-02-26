@@ -1,6 +1,6 @@
 package com.jaxson.lib.gdx.states;
 
-import com.jaxson.lib.gdx.backend.GameManager;
+import com.jaxson.lib.gdx.backend.Game;
 
 public abstract class SubState extends BaseState
 {
@@ -19,7 +19,7 @@ public abstract class SubState extends BaseState
 
 	private SubStateBehavior behavior = SubStateBehavior.Pause;
 
-	public SubState(GameManager gameManager)
+	public SubState(Game gameManager)
 	{
 		super(gameManager);
 	}

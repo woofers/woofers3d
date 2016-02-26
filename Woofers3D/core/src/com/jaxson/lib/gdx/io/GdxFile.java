@@ -30,7 +30,7 @@ public class GdxFile extends File
 	public GdxFile(String path, FileType fileType)
 	{
 		super(path);
-		this.fileHandle = getFileHandle(fileType);
+		setFileType(fileType);
 	}
 
 	public void add(String contents)
@@ -64,6 +64,11 @@ public class GdxFile extends File
 		return fileHandle;
 	}
 
+	public FileType getType()
+	{
+		return getFileHandle().type();
+	}
+
 	private FileHandle getFileHandle(FileType fileType)
 	{
 		switch (fileType)
@@ -88,6 +93,11 @@ public class GdxFile extends File
 	private FileHandle getLocalFile()
 	{
 		return getFiles().local(getPath());
+	}
+
+	public void setFileType(FileType fileType)
+	{
+		this.fileHandle = getFileHandle(fileType);
 	}
 
 	public Model loadG3db()
