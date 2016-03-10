@@ -70,6 +70,11 @@ public class Game
 		return displayManager.getCamera();
 	}
 
+	public float getClampInterval()
+	{
+		return getConfig().getClampInterval();
+	}
+
 	public Clipboard getClipboard()
 	{
 		return getApplication().getClipboard();
@@ -113,11 +118,6 @@ public class Game
 	public float getStepInterval()
 	{
 		return getConfig().getStepInterval();
-	}
-
-	public float getClampInterval()
-	{
-		return getConfig().getClampInterval();
 	}
 
 	public TargetCamera getTargetCamera()

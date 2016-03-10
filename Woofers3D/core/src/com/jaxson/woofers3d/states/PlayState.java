@@ -17,8 +17,6 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
-import java.sql.Time;
-import com.jaxson.lib.util.ComparableComparator;
 
 public class PlayState extends BulletState
 {

@@ -97,7 +97,7 @@ public abstract class BulletState extends State
 
 	public void setCamera(TargetCamera camera)
 	{
-		setCamera((Camera)camera);
+		setCamera((Camera) camera);
 		camera.setWorld(getPhysicsWorld());
 	}
 

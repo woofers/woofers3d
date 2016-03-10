@@ -1,8 +1,8 @@
 package com.jaxson.lib.math.random;
 
+import com.jaxson.lib.math.ComparableNumber;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import com.jaxson.lib.math.ComparableNumber;
 
 /**
  * An immutable {@link Object} used to define the a random number.

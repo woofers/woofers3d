@@ -115,6 +115,7 @@ public class GameStates extends GameObject
 	 */
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
+		if (isEmpty()) return;
 		peek().render(spriteBatch, modelBatch);
 		if (isPaused() && hasPausedState()) peek().getSubState().render(spriteBatch, modelBatch);
 	}
@@ -161,6 +162,7 @@ public class GameStates extends GameObject
 	@Override
 	public void update(float dt)
 	{
+		if (isEmpty()) return;
 		if (!isPaused())
 		{
 			peek().update(dt);

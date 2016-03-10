@@ -21,13 +21,6 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 		getObjects().add(object);
 	}
 
-	protected static void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
-	{
-		if (modelBatch == null) throw new NegativeValueException("spriteBatch");
-		if (spriteBatch == null) throw new NegativeValueException("modelBatch");
-		if (camera == null) throw new NegativeValueException("camera");
-	}
-
 	@Override
 	public void dispose()
 	{
@@ -59,5 +52,12 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 		{
 			object.update(dt);
 		}
+	}
+
+	protected static void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	{
+		if (modelBatch == null) throw new NegativeValueException("spriteBatch");
+		if (spriteBatch == null) throw new NegativeValueException("modelBatch");
+		if (camera == null) throw new NegativeValueException("camera");
 	}
 }

@@ -1,8 +1,12 @@
 package com.jaxson.lib.io;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
 
 /**
@@ -13,6 +17,7 @@ import java.util.regex.Pattern;
 public class File
 {
 	public static final String FOWARD_SLASH = "/";
+	public static final String BACK_SLASH = "\\";
 	public static final String DOT = Pattern.quote(".");
 	public static final String NEW_LINE = System.lineSeparator();
 
@@ -20,7 +25,7 @@ public class File
 
 	public File(String path)
 	{
-		this.path = path;
+		setPath(path);
 	}
 
 	/**
@@ -29,7 +34,21 @@ public class File
 	 */
 	public boolean exists()
 	{
-		return new java.io.File(getPath()).exists();
+		return getJavaFile().exists();
+	}
+
+	public BufferedReader getBufferedReader() throws FileNotFoundException
+	{
+		FileReader fileReader = null;
+		try
+		{
+			fileReader = getFileReader();
+		}
+		catch (FileNotFoundException ex)
+		{
+			throw ex;
+		}
+		return new BufferedReader(fileReader);
 	}
 
 	/**
@@ -40,12 +59,37 @@ public class File
 	public String getExtension()
 	{
 		String[] fileNames = getName().split(DOT);
-		if (fileNames.length == 1)
-		{
-			if (fileNames[0].contains(DOT)) return fileNames[0];
-			return "";
-		}
+		if (fileNames.length == 1) return "";
 		return fileNames[1];
+	}
+
+	public FileType getExtensionType()
+	{
+		return FileType.getType(getExtension());
+	}
+
+	public FileInputStream getFileInputStream() throws FileNotFoundException
+	{
+		return new FileInputStream(getJavaFile());
+	}
+
+	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException
+	{
+		return new FileOutputStream(getPath());
+	}
+
+	public FileReader getFileReader() throws FileNotFoundException
+	{
+		return new FileReader(getPath());
+	}
+
+	/**
+	 * Gets the {@link java.io.File} of the {@link File}.
+	 * @return {@link java.io.File} - The file
+	 */
+	public java.io.File getJavaFile()
+	{
+		return new java.io.File(getPath());
 	}
 
 	/**
@@ -54,8 +98,8 @@ public class File
 	 */
 	public String getName()
 	{
-		String[] directories = getPath().split(FOWARD_SLASH);
-		return directories[directories.length - 1];
+		int index = getPath().lastIndexOf(FOWARD_SLASH);
+		return getPath().substring(index + 1);
 	}
 
 	/**
@@ -67,17 +111,71 @@ public class File
 		return path;
 	}
 
+	public String getPathWithoutName()
+	{
+		int index = getPath().lastIndexOf(FOWARD_SLASH);
+		if (index == -1) return "";
+		return getPath().substring(0, index + 1);
+	}
+
+	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
+	{
+		return new PrintWriter(getPath());
+	}
+
+	public boolean isDirectory()
+	{
+		return getJavaFile().isDirectory();
+	}
+
+	public boolean isFile()
+	{
+		return !isDirectory();
+	}
+
+	public long length()
+	{
+		return getJavaFile().length();
+	}
+
+	public byte[] readBytes()
+	{
+		FileInputStream stream = null;
+		byte bytes[] = new byte[(int) length()];
+		try
+		{
+			stream = getFileInputStream();
+			stream.read(bytes);
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				stream.close();
+			}
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return bytes;
+	}
+
 	/**
 	 * Parses a the {@link File}.
 	 * @return {@link String} - The contents of the file
 	 */
-	public String read()
+	public String readString()
 	{
 		BufferedReader reader = null;
 		String output = "";
 		try
 		{
-			reader = new BufferedReader(new FileReader(getPath()));
+			reader = getBufferedReader();
 			String nextLine = "";
 			do
 			{
@@ -105,6 +203,11 @@ public class File
 		return output;
 	}
 
+	private void setPath(String path)
+	{
+		this.path = path.replace(BACK_SLASH, FOWARD_SLASH);
+	}
+
 	/**
 	 * Writes to the {@link File}.
 	 * @param contents The contents to write
@@ -114,9 +217,8 @@ public class File
 		PrintWriter writer = null;
 		try
 		{
-			writer = new PrintWriter(getPath());
+			writer = getPrintWriter();
 			writer.print(contents);
-
 		}
 		catch (Exception ex)
 		{

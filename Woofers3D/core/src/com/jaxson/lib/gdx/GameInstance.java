@@ -135,7 +135,7 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	@Deprecated
 	public void startAndroid(AndroidApplication launcher)
 	{
-		//launcher.initialize(this, toAndroidConfig());
+		// launcher.initialize(this, toAndroidConfig());
 	}
 
 	/**

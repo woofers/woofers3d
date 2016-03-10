@@ -8,6 +8,7 @@ import com.jaxson.lib.util.exceptions.NullValueException;
  * @param <F> the type of file used to save
  * @author Jaxson Van Doorn
  * @since 1.0
+ * @todo Fix null saveFile
  */
 public abstract class SaveObject<F extends File> implements Saveable<F>
 {
@@ -81,7 +82,7 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 	@Override
 	public String read()
 	{
-		return saveFile.read();
+		return saveFile.readString();
 	}
 
 	/**

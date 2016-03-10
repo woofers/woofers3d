@@ -6,7 +6,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.io.GsonObject;
-import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.math.Reciprocal;
 
 /**
@@ -96,33 +95,6 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	}
 
 	/**
-	 * Sets the number of logic updates per second that the {@link Game} cannot skip.
-	 * @param clamp The number of logic updates per second that the {@link Game} cannot skip
-	 */
-	public void setClamp(int clamp)
-	{
-		this.clamp = clamp;
-	}
-
-	/**
-	 * Gets the number of logic updates per second that the {@link Game} cannot skip.
-	 * @return {@link int} - The number of logic updates per second that the {@link Game} cannot skip
-	 */
-	public int getClamp()
-	{
-		return clamp;
-	}
-
-	/**
-	 * Gets the interval between {@link Game} logic updates in milliseconds that cannot be skipped.
-	 * @return {@link float} - The interval between {@link Game} logic updates in milliseconds that cannot be skipped in milliseconds
-	 */
-	public float getClampInterval()
-	{
-		return new Reciprocal(getClamp()).floatValue();
-	}
-
-	/**
 	 * Gets whether the {@link Game} supports fullscreen.
 	 * @return {@link boolean} - Whether the {@link Game} supports fullscreen
 	 */
@@ -158,6 +130,28 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	public int getBackgroundFps()
 	{
 		return backgroundFps;
+	}
+
+	/**
+	 * Gets the number of logic updates per second that the {@link Game} cannot
+	 * skip.
+	 * @return {@link int} - The number of logic updates per second that the
+	 * {@link Game} cannot skip
+	 */
+	public int getClamp()
+	{
+		return clamp;
+	}
+
+	/**
+	 * Gets the interval between {@link Game} logic updates in milliseconds that
+	 * cannot be skipped.
+	 * @return {@link float} - The interval between {@link Game} logic updates
+	 * in milliseconds that cannot be skipped in milliseconds
+	 */
+	public float getClampInterval()
+	{
+		return new Reciprocal(getClamp()).floatValue();
 	}
 
 	/**
@@ -352,6 +346,17 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	{
 		this.backgroundFps = backgroundFps;
 		autoSave();
+	}
+
+	/**
+	 * Sets the number of logic updates per second that the {@link Game} cannot
+	 * skip.
+	 * @param clamp The number of logic updates per second that the {@link Game}
+	 * cannot skip
+	 */
+	public void setClamp(int clamp)
+	{
+		this.clamp = clamp;
 	}
 
 	/**

@@ -4,6 +4,7 @@ import com.jaxson.lib.util.MyComparable;
 
 public abstract class ComparableNumber extends Number implements MyComparable<Number>
 {
+	@Override
 	public int compareTo(Number number)
 	{
 		float current = this.floatValue();
@@ -19,11 +20,15 @@ public abstract class ComparableNumber extends Number implements MyComparable<Nu
 		return MyComparable.EQUAL;
 	}
 
-    public abstract int intValue();
+	@Override
+	public abstract double doubleValue();
 
-    public abstract long longValue();
+	@Override
+	public abstract float floatValue();
 
-    public abstract float floatValue();
+	@Override
+	public abstract int intValue();
 
-    public abstract double doubleValue();
+	@Override
+	public abstract long longValue();
 }

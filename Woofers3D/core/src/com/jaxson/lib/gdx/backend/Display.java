@@ -156,7 +156,8 @@ public class Display extends GameObject
 
 	/**
 	 * Gets the {@link BufferFormat} of the {@link Display}.
-	 * @return {@link BufferFormat} - The {@link BufferFormat} of the {@link Display}
+	 * @return {@link BufferFormat} - The {@link BufferFormat} of the
+	 * {@link Display}
 	 */
 	public BufferFormat getBufferFormat()
 	{
@@ -246,7 +247,8 @@ public class Display extends GameObject
 
 	/**
 	 * Gets all possible {@link DisplayMode}s of the {@link Display}.
-	 * @return {@link float} - All possible {@link DisplayMode}s of the {@link Display}
+	 * @return {@link float} - All possible {@link DisplayMode}s of the
+	 * {@link Display}
 	 */
 	public DisplayMode[] getDisplayModes()
 	{
@@ -264,7 +266,8 @@ public class Display extends GameObject
 
 	/**
 	 * Gets the best fullscreen {@link DisplayMode} of the {@link Display}.
-	 * @return {@link DisplayMode} - The best fullscreen {@link DisplayMode} of the {@link Display}
+	 * @return {@link DisplayMode} - The best fullscreen {@link DisplayMode} of
+	 * the {@link Display}
 	 */
 	public DisplayMode getFullscreenDisplayMode()
 	{
@@ -297,7 +300,8 @@ public class Display extends GameObject
 
 	/**
 	 * Gets the starting height of the {@link Display} in pixels.
-	 * @return {@link int} - The starting height of the {@link Display} in pixels
+	 * @return {@link int} - The starting height of the {@link Display} in
+	 * pixels
 	 */
 	public int getHeight()
 	{
@@ -401,8 +405,10 @@ public class Display extends GameObject
 
 	/**
 	 * Gets whether the {@link Display} uses coverage sampling.
-	 * @return {@link boolean} - Whether the {@link Display} uses coverage sampling
-	 * @see <a href="http://www.nvidia.com/object/coverage-sampled-aa.html">CoverageSampling</a>
+	 * @return {@link boolean} - Whether the {@link Display} uses coverage
+	 * sampling
+	 * @see <a href="http://www.nvidia.com/object/coverage-sampled-aa.html">
+	 * CoverageSampling</a>
 	 */
 	public boolean hasCoverageSampling()
 	{
@@ -560,7 +566,8 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Sets the {@link DisplayMode} of the {@link Display} by width and height in windowed mode.
+	 * Sets the {@link DisplayMode} of the {@link Display} by width and height
+	 * in windowed mode.
 	 * @param width The width
 	 * @param height The height
 	 */

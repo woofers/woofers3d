@@ -64,11 +64,6 @@ public class GdxFile extends File
 		return fileHandle;
 	}
 
-	public FileType getType()
-	{
-		return getFileHandle().type();
-	}
-
 	private FileHandle getFileHandle(FileType fileType)
 	{
 		switch (fileType)
@@ -90,44 +85,61 @@ public class GdxFile extends File
 		return getFiles().internal(getPath());
 	}
 
+	@Override
+	public java.io.File getJavaFile()
+	{
+		return getFileHandle().file();
+	}
+
 	private FileHandle getLocalFile()
 	{
 		return getFiles().local(getPath());
 	}
 
-	public void setFileType(FileType fileType)
+	public FileType getType()
 	{
-		this.fileHandle = getFileHandle(fileType);
-	}
-
-	public Model loadG3db()
-	{
-		return new G3dModelLoader(new UBJsonReader()).loadModel(fileHandle);
-	}
-
-	public Model loadG3dj()
-	{
-		return new G3dModelLoader(new JsonReader()).loadModel(fileHandle);
-	}
-
-	public Model loadModel()
-	{
-		String extension = getExtension();
-		if (extension.equals(G3DB_EXTENSION)) return loadG3db();
-		if (extension.equals(G3DJ_EXTENSION)) return loadG3dj();
-		if (extension.equals(OBJ_EXTENSION)) return loadObj();
-		throw new IllegalArgumentException(LOADER_NOT_FOUND);
-	}
-
-	public Model loadObj()
-	{
-		return new ObjLoader().loadModel(fileHandle);
+		return getFileHandle().type();
 	}
 
 	@Override
-	public String read()
+	public boolean isDirectory()
+	{
+		return getFileHandle().isDirectory();
+	}
+
+	private Model readG3db()
+	{
+		return new G3dModelLoader(new UBJsonReader()).loadModel(getFileHandle());
+	}
+
+	private Model readG3dj()
+	{
+		return new G3dModelLoader(new JsonReader()).loadModel(getFileHandle());
+	}
+
+	public Model readModel()
+	{
+		String extension = getExtension();
+		if (extension.equals(G3DB_EXTENSION)) return readG3db();
+		if (extension.equals(G3DJ_EXTENSION)) return readG3dj();
+		if (extension.equals(OBJ_EXTENSION)) return readObj();
+		throw new IllegalArgumentException(LOADER_NOT_FOUND);
+	}
+
+	private Model readObj()
+	{
+		return new ObjLoader().loadModel(getFileHandle());
+	}
+
+	@Override
+	public String readString()
 	{
 		return getFileHandle().readString();
+	}
+
+	public void setFileType(FileType fileType)
+	{
+		this.fileHandle = getFileHandle(fileType);
 	}
 
 	public void write(Pixmap pixmap)
