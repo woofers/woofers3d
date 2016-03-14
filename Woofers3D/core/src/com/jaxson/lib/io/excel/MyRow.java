@@ -1,13 +1,13 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.io.excel.MyCell.CellLocation;
+import com.jaxson.lib.io.excel.MyCell.CellOutOfBoundsException;
+import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
-import com.jaxson.lib.io.excel.MyCell.CellLocation;
-import com.jaxson.lib.io.excel.MyCell.CellOutOfBoundsException;
-import com.jaxson.lib.util.MyArrayList;
 
 public class MyRow implements Iterable<MyCell>
 {

@@ -5,37 +5,41 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.jaxson.lib.gdx.graphics.g3d.environment.Light;
+import com.jaxson.lib.gdx.graphics.g3d.environment.MyDirectionalLight;
+import com.jaxson.lib.gdx.graphics.g3d.environment.MyDirectionalShadowLight;
 import com.jaxson.lib.util.MyArrayList;
 
 public class MyEnvironment extends Environment
 {
-	private static final long LIGHT_TYPE = ColorAttribute.AmbientLight;
-	private static final Color LIGHT_COLOR = new MyColor(200, 200, 200);
-	private static final Vector3 LIGHT_DIRECTION = new Vector3(-1f, -0.8f, -0.2f);
-	private static final int SHADOW_RESOLUTION = 4096;
-	private static final float SHADOW_NEAR = 1f;
-	private static final float SHADOW_FAR = 100f;
-
 	private ColorAttribute color;
-	private DirectionalLight light;
+	private Light light;
 	private ModelBatch shadowBatch;
 	private Vector3 worldSize;
 
 	public MyEnvironment()
 	{
-		this(LIGHT_COLOR, LIGHT_DIRECTION);
+		this(Light.COLOR, Light.DIRECTION);
 	}
 
 	public MyEnvironment(Color lightColor, Vector3 lightDirection)
 	{
 		super();
-		setLight(createLight(lightColor, lightDirection));
+		setLight(new MyDirectionalLight(lightColor, lightDirection));
+	}
+
+	public MyEnvironment(MyDirectionalLight light)
+	{
+		super();
+		setLight(light);
+	}
+
+	public void add(Light light)
+	{
+		add(light.getLight());
 	}
 
 	public void begin(Camera camera)
@@ -61,19 +65,9 @@ public class MyEnvironment extends Environment
 		return color;
 	}
 
-	public DirectionalLight getLight()
+	public Light getLight()
 	{
 		return light;
-	}
-
-	public Color getLightColor()
-	{
-		return getLight().color;
-	}
-
-	public Vector3 getLightDirection()
-	{
-		return getLight().direction;
 	}
 
 	public ModelBatch getShadowBatch()
@@ -81,20 +75,15 @@ public class MyEnvironment extends Environment
 		return shadowBatch;
 	}
 
-	public DirectionalShadowLight getShadowLight()
+	public MyDirectionalShadowLight getShadowLight()
 	{
-		if (hasShawdowLight()) return (DirectionalShadowLight) getLight();
+		if (hasShawdowLight()) return (MyDirectionalShadowLight) getLight();
 		return null;
 	}
 
 	public Vector3 getWorldSize()
 	{
 		return worldSize;
-	}
-
-	public boolean hasColor()
-	{
-		return getColor() != null;
 	}
 
 	public boolean hasLight()
@@ -109,12 +98,17 @@ public class MyEnvironment extends Environment
 
 	private boolean hasShawdowLight()
 	{
-		return getLight() instanceof DirectionalShadowLight;
+		return getLight() instanceof MyDirectionalShadowLight;
 	}
 
 	public boolean hasShawdows()
 	{
 		return hasShawdowLight();
+	}
+
+	public void remove(Light light)
+	{
+		remove(light.getLight());
 	}
 
 	public void render(MyArrayList<Entity> entities, Camera camera)
@@ -130,7 +124,7 @@ public class MyEnvironment extends Environment
 
 	public void setColor(Color color)
 	{
-		setColor(color, LIGHT_TYPE);
+		setColor(color, Light.TYPE);
 	}
 
 	public void setColor(Color color, long attribute)
@@ -144,18 +138,23 @@ public class MyEnvironment extends Environment
 		set(color);
 	}
 
-	public void setLight(DirectionalLight light)
+	public void setColor(Light light)
+	{
+		setColor(light.getColor());
+	}
+
+	public void setLight(Light light)
 	{
 		if (light == getLight()) return;
 		if (hasLight()) remove(light);
 		setShawdowMap(null);
 		this.light = light;
 		add(light);
-		setColor(light.color);
+		setColor(light);
 		if (hasShawdowLight()) setShadowLight(getShadowLight());
 	}
 
-	private void setShadowLight(DirectionalShadowLight light)
+	private void setShadowLight(MyDirectionalShadowLight light)
 	{
 		setShawdowMap(light);
 		createShadowBatch();
@@ -168,68 +167,18 @@ public class MyEnvironment extends Environment
 
 	public void setShawdows(boolean shawdows)
 	{
-		if (shawdows == hasShawdows()) return;
 		if (shawdows)
 		{
-			if (getWorldSize() == null)
-			{
-				setLight(createShadowLight(getLightColor(), getLightDirection()));
-			}
-			else
-			{
-				setLight(createShadowLight(getLightColor(), getLightDirection(), getWorldSize()));
-			}
+			setLight(getLight().toShadow());
 		}
 		else
 		{
-			setLight(createLight(getLightColor(), getLightDirection()));
+			setLight(getLight().toLight());
 		}
 	}
 
 	public void setWorldSize(Vector3 worldSize)
 	{
 		this.worldSize = worldSize;
-	}
-
-	public static DirectionalLight createLight(Color color, Vector3 direction)
-	{
-		return new DirectionalLight().set(color, direction);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction)
-	{
-		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, float worldWidth, float worldDepth)
-	{
-		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION, worldWidth, worldDepth);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth, int shadowResolutionHeight, float worldWidth, float worldDepth)
-	{
-		return createShadowLight(color, direction, shadowResolutionHeight, shadowResolutionHeight, worldWidth, worldDepth, SHADOW_NEAR, SHADOW_FAR);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth, int shadowResolutionHeight, float worldWidth, float worldDepth, float near, float far)
-	{
-		DirectionalShadowLight light = new DirectionalShadowLight(shadowResolutionWidth, shadowResolutionHeight, worldWidth, worldDepth, near, far);
-		light.set(color, direction);
-		return light;
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, int shadowResolutionWidth, int shadowResolutionHeight, Vector3 worldSize, Camera camera)
-	{
-		return createShadowLight(color, direction, shadowResolutionHeight, shadowResolutionHeight, worldSize.x, worldSize.z, camera.near, camera.far);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, Vector3 worldSize)
-	{
-		return createShadowLight(color, direction, worldSize.x, worldSize.z);
-	}
-
-	public static DirectionalShadowLight createShadowLight(Color color, Vector3 direction, Vector3 worldSize, Camera camera)
-	{
-		return createShadowLight(color, direction, SHADOW_RESOLUTION, SHADOW_RESOLUTION, worldSize, camera);
 	}
 }

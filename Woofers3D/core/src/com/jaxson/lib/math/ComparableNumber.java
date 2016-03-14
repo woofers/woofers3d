@@ -9,15 +9,7 @@ public abstract class ComparableNumber extends Number implements MyComparable<Nu
 	{
 		float current = this.floatValue();
 		float other = number.floatValue();
-		if (current > other)
-		{
-			return MyComparable.GREATHER;
-		}
-		else if (current < other)
-		{
-			return MyComparable.LESS;
-		}
-		return MyComparable.EQUAL;
+		return (int) (current - other);
 	}
 
 	@Override

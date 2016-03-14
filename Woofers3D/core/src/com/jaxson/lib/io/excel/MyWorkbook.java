@@ -1,5 +1,7 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.io.File;
+import com.jaxson.lib.util.MyArrayList;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,8 +18,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import com.jaxson.lib.io.File;
-import com.jaxson.lib.util.MyArrayList;
 
 public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 {
@@ -45,6 +45,11 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	public int addPicture(byte[] pictureData, int format)
 	{
 		return getWorkbook().addPicture(pictureData, format);
+	}
+
+	public int addPicture(File picture)
+	{
+		return addPicture(picture, PICTURE_PNG);
 	}
 
 	public int addPicture(File picture, int format)

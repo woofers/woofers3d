@@ -1,5 +1,8 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.io.excel.MyCell.CellLocation;
+import com.jaxson.lib.io.excel.MyCell.CellOutOfBoundsException;
+import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.hssf.util.PaneInformation;
@@ -18,9 +21,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
 import org.apache.poi.ss.util.CellRangeAddress;
-import com.jaxson.lib.io.excel.MyCell.CellLocation;
-import com.jaxson.lib.io.excel.MyCell.CellOutOfBoundsException;
-import com.jaxson.lib.util.MyArrayList;
 
 public class MySheet implements Iterable<MyRow>
 {

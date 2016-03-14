@@ -1,9 +1,6 @@
 package com.jaxson.woofers3d;
 
 import com.jaxson.lib.gdx.GameInstance;
-import com.jaxson.lib.io.excel.ExcelFile;
-import com.jaxson.lib.io.excel.MySheet;
-import com.jaxson.lib.io.excel.MyWorkbook;
 import com.jaxson.woofers3d.states.PlayState;
 
 public class Woofers3D extends GameInstance
@@ -15,6 +12,8 @@ public class Woofers3D extends GameInstance
 		super();
 		getConfig().setTitle(TITLE);
 		getConfig().smartRead();
+
+		System.out.println(-20000 & 0xff);
 	}
 
 	@Override

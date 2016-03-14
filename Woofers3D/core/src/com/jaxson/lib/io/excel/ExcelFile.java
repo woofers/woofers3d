@@ -1,12 +1,12 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.io.File;
+import com.jaxson.lib.io.FileType;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.jaxson.lib.io.File;
-import com.jaxson.lib.io.FileType;
 
 public class ExcelFile extends File
 {

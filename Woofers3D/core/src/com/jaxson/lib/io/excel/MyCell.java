@@ -1,5 +1,8 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.math.geom.Point;
+import com.jaxson.lib.util.exceptions.NegativeValueException;
+import com.jaxson.lib.util.exceptions.NullValueException;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,9 +13,6 @@ import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.util.CellRangeAddress;
-import com.jaxson.lib.math.geom.Point;
-import com.jaxson.lib.util.exceptions.NegativeValueException;
-import com.jaxson.lib.util.exceptions.NullValueException;
 
 public class MyCell
 {
