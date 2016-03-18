@@ -17,6 +17,7 @@ import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
+import com.jaxson.lib.io.File;
 
 public class PlayState extends BulletState
 {
@@ -72,6 +73,9 @@ public class PlayState extends BulletState
 		player = new Player(getTargetCamera());
 		applyPhysics(player);
 		add(player);
+
+		File file = new File("");
+		file.createDirectory();
 	}
 
 	@Override

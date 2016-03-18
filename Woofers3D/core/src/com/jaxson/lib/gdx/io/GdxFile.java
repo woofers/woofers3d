@@ -30,12 +30,18 @@ public class GdxFile extends File
 	public GdxFile(String path, FileType fileType)
 	{
 		super(path);
-		setFileType(fileType);
+		this.fileHandle = getFileHandle(fileType);
 	}
 
+	@Override
 	public void add(String contents)
 	{
 		write(contents, false);
+	}
+
+	public GdxFile createFile()
+	{
+		return (GdxFile)super.createFile();
 	}
 
 	@Override
@@ -137,9 +143,9 @@ public class GdxFile extends File
 		return getFileHandle().readString();
 	}
 
-	public void setFileType(FileType fileType)
+	public GdxFile setFileType(FileType fileType)
 	{
-		this.fileHandle = getFileHandle(fileType);
+		return new GdxFile(getPath(), fileType);
 	}
 
 	public void write(Pixmap pixmap)
@@ -153,7 +159,7 @@ public class GdxFile extends File
 		write(contents, true);
 	}
 
-	public void write(String contents, boolean overwrite)
+	private void write(String contents, boolean overwrite)
 	{
 		getFileHandle().writeString(contents, !overwrite);
 	}

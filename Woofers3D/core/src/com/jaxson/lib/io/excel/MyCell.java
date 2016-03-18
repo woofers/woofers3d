@@ -201,6 +201,7 @@ public class MyCell
 
 	public static class CellOutOfBoundsException extends IndexOutOfBoundsException
 	{
+		private static final long serialVersionUID = 2679031450699578322L;
 		private static final String OUT_OF_RANGE = " is out of range";
 
 		public CellOutOfBoundsException()
@@ -237,7 +238,7 @@ public class MyCell
 		return getCell().getArrayFormulaRange();
 	}
 
-	public boolean getBooleanCellValue()
+	public boolean getBooleanValue()
 	{
 		return getCell().getBooleanCellValue();
 	}
@@ -282,12 +283,12 @@ public class MyCell
 		return getCell().getColumnIndex();
 	}
 
-	public Date getDateCellValue()
+	public Date getDateValue()
 	{
 		return getCell().getDateCellValue();
 	}
 
-	public byte getErrorCellValue()
+	public byte getErrorValue()
 	{
 		return getCell().getErrorCellValue();
 	}
@@ -302,7 +303,7 @@ public class MyCell
 		return new CellLocation(getColumnIndex(), getRowIndex());
 	}
 
-	public double getNumericCellValue()
+	public double getNumericValue()
 	{
 		return getCell().getNumericCellValue();
 	}
@@ -327,7 +328,7 @@ public class MyCell
 		return new MySheet(getCell().getSheet());
 	}
 
-	public String getStringCellValue()
+	public String getStringValue()
 	{
 		return getCell().getStringCellValue();
 	}
@@ -344,13 +345,13 @@ public class MyCell
 			case TYPE_BLANK:
 				return "";
 			case TYPE_BOOLEAN:
-				return new Boolean(getCell().getBooleanCellValue()).toString();
+				return new Boolean(getBooleanValue()).toString();
 			case TYPE_FORMULA:
-				return getCell().getCellFormula();
+				return getCellFormula();
 			case TYPE_NUMERIC:
-				return new Double(getCell().getNumericCellValue()).toString();
+				return new Double(getNumericValue()).toString();
 			case TYPE_STRING:
-				return getCell().getStringCellValue();
+				return getStringValue();
 		}
 		return new String(new byte[]{ getCell().getErrorCellValue() }, StandardCharsets.UTF_8);
 	}

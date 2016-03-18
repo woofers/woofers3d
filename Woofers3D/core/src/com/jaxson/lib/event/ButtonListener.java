@@ -3,7 +3,7 @@ package com.jaxson.lib.event;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonListener<T> implements ActionListener
+public abstract class ButtonListener<T> implements ActionListener
 {
 	private T object;
 
@@ -13,8 +13,5 @@ public class ButtonListener<T> implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event)
-	{
-		System.out.println(event);
-	}
+	public abstract void actionPerformed(ActionEvent event);
 }

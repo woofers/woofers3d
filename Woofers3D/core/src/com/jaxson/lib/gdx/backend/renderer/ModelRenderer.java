@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
+import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 
 public class ModelRenderer extends Renderer<Entity>
 {

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame
 {
+	private static final long serialVersionUID = 3014320502345236945L;
 	private static final String TITLE = "Window";
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;

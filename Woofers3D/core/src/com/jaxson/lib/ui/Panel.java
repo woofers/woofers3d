@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 public class Panel extends JPanel
 {
+	private static final long serialVersionUID = -4619465942050023020L;
 	private static final LayoutManager LAYOUT = new FlowLayout();
 
 	public Panel()

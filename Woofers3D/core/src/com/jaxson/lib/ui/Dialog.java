@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 
 public class Dialog<T extends Window> extends JDialog
 {
+	private static final long serialVersionUID = 721758959369708988L;
 	private static final String TITLE = "Dialog";
 	private static final int WIDTH = 200;
 	private static final int HEIGHT = 100;

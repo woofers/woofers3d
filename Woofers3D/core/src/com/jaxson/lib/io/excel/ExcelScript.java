@@ -3,7 +3,6 @@ package com.jaxson.lib.io.excel;
 public abstract class ExcelScript
 {
 	protected static final String SAVE_PREFIX = "output ";
-	private static final boolean SAVES = true;
 
 	private ExcelFile file;
 	private MyWorkbook workbook;
@@ -30,7 +29,7 @@ public abstract class ExcelScript
 
 	public void save()
 	{
-		System.out.println(file.getPathWithoutName() + SAVE_PREFIX + file.getName());
-		file.setPath(file.getPathWithoutName() + SAVE_PREFIX + file.getName()).write(workbook);
+		System.out.println(file.getParentPath() + SAVE_PREFIX + file.getName());
+		file.setPath(file.getParentPath() + SAVE_PREFIX + file.getName()).write(workbook);
 	}
 }

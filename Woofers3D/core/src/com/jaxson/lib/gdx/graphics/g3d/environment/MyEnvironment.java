@@ -1,23 +1,21 @@
-package com.jaxson.lib.gdx.graphics.g3d;
+package com.jaxson.lib.gdx.graphics.g3d.environment;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
-import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.g3d.environment.Light;
-import com.jaxson.lib.gdx.graphics.g3d.environment.MyDirectionalLight;
-import com.jaxson.lib.gdx.graphics.g3d.environment.MyDirectionalShadowLight;
+import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.environment.light.Light;
+import com.jaxson.lib.gdx.graphics.g3d.environment.light.MyDirectionalLight;
+import com.jaxson.lib.gdx.graphics.g3d.environment.light.MyDirectionalShadowLight;
 import com.jaxson.lib.util.MyArrayList;
 
 public class MyEnvironment extends Environment
 {
 	private ColorAttribute color;
 	private Light light;
-	private ModelBatch shadowBatch;
 	private Vector3 worldSize;
 
 	public MyEnvironment()
@@ -27,8 +25,7 @@ public class MyEnvironment extends Environment
 
 	public MyEnvironment(Color lightColor, Vector3 lightDirection)
 	{
-		super();
-		setLight(new MyDirectionalLight(lightColor, lightDirection));
+		this(new MyDirectionalLight(lightColor, lightDirection));
 	}
 
 	public MyEnvironment(MyDirectionalLight light)
@@ -44,19 +41,13 @@ public class MyEnvironment extends Environment
 
 	public void begin(Camera camera)
 	{
+		if (!hasShadows()) return;
 		getShadowLight().begin(Vector3.Zero, camera.direction);
-		getShadowBatch().begin(getShadowLight().getCamera());
-	}
-
-	private void createShadowBatch()
-	{
-		if (hasShawdowBatch()) return;
-		this.shadowBatch = new ModelBatch(new DepthShaderProvider());
 	}
 
 	public void end()
 	{
-		getShadowBatch().end();
+		if (!hasShadows()) return;
 		getShadowLight().end();
 	}
 
@@ -70,15 +61,9 @@ public class MyEnvironment extends Environment
 		return light;
 	}
 
-	public ModelBatch getShadowBatch()
-	{
-		return shadowBatch;
-	}
-
 	public MyDirectionalShadowLight getShadowLight()
 	{
-		if (hasShawdowLight()) return (MyDirectionalShadowLight) getLight();
-		return null;
+		return light.toShadow();
 	}
 
 	public Vector3 getWorldSize()
@@ -91,19 +76,9 @@ public class MyEnvironment extends Environment
 		return getLight() != null;
 	}
 
-	private boolean hasShawdowBatch()
+	public boolean hasShadows()
 	{
-		return shadowBatch != null;
-	}
-
-	private boolean hasShawdowLight()
-	{
-		return getLight() instanceof MyDirectionalShadowLight;
-	}
-
-	public boolean hasShawdows()
-	{
-		return hasShawdowLight();
+		return getLight().hasShadows();
 	}
 
 	public void remove(Light light)
@@ -113,11 +88,11 @@ public class MyEnvironment extends Environment
 
 	public void render(MyArrayList<Entity> entities, Camera camera)
 	{
-		if (!hasShawdows()) return;
+		if (!hasShadows()) return;
 		begin(camera);
 		for (Entity entity: entities)
 		{
-			getShadowBatch().render(entity.getModelInstance());
+			getShadowLight().render(entity.getModelInstance());
 		}
 		end();
 	}
@@ -147,20 +122,20 @@ public class MyEnvironment extends Environment
 	{
 		if (light == getLight()) return;
 		if (hasLight()) remove(light);
-		setShawdowMap(null);
+		setShadowMap((ShadowMap) null);
 		this.light = light;
 		add(light);
 		setColor(light);
-		if (hasShawdowLight()) setShadowLight(getShadowLight());
+		if (hasShadows()) setShadowMap(light.toShadow());
 	}
 
-	private void setShadowLight(MyDirectionalShadowLight light)
+	private void setShadowMap(MyDirectionalShadowLight light)
 	{
-		setShawdowMap(light);
-		createShadowBatch();
+		setShadowMap(light.getShadowMap());
 	}
 
-	public void setShawdowMap(ShadowMap shadowMap)
+	@SuppressWarnings("deprecation")
+	private void setShadowMap(ShadowMap shadowMap)
 	{
 		this.shadowMap = shadowMap;
 	}

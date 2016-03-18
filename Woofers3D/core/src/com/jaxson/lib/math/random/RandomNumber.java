@@ -11,9 +11,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class RandomNumber extends ComparableNumber
 {
-	private static int DEFAULT_MIN = 0;
-	private static int DEFAULT_MAX = 100;
-	private static String MIN_EXCEEDS_MAX = "Min cannot be greather or equal to max";
+	private static final long serialVersionUID = 3858351995041829520L;
+	private static final int DEFAULT_MIN = 0;
+	private static final int DEFAULT_MAX = 100;
+	private static final String MIN_EXCEEDS_MAX = "Min cannot be greather or equal to max";
 
 	private Number min;
 	private Number max;

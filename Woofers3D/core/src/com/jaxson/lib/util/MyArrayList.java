@@ -12,6 +12,8 @@ import java.util.Iterator;
  */
 public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 {
+	private static final long serialVersionUID = -477606372247151069L;
+
 	/**
 	 * Constructs an empty list with an initial capacity of {@code 10}.
 	 */

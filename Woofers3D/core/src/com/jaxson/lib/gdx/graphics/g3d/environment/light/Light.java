@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.graphics.g3d.environment;
+package com.jaxson.lib.gdx.graphics.g3d.environment.light;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;

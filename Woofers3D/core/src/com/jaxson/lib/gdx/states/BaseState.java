@@ -11,7 +11,7 @@ import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.g3d.MyEnvironment;
+import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.util.GameObject;
 
 public abstract class BaseState extends GameObject

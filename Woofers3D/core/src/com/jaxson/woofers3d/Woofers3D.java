@@ -12,8 +12,6 @@ public class Woofers3D extends GameInstance
 		super();
 		getConfig().setTitle(TITLE);
 		getConfig().smartRead();
-
-		System.out.println(-20000 & 0xff);
 	}
 
 	@Override

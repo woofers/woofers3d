@@ -7,6 +7,7 @@ import com.jaxson.lib.gdx.backend.Game;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
+@FunctionalInterface
 public interface Resizeable
 {
 	/**

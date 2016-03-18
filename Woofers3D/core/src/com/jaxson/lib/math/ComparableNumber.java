@@ -4,6 +4,8 @@ import com.jaxson.lib.util.MyComparable;
 
 public abstract class ComparableNumber extends Number implements MyComparable<Number>
 {
+	private static final long serialVersionUID = 31941563675690416L;
+
 	@Override
 	public int compareTo(Number number)
 	{

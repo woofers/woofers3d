@@ -4,24 +4,26 @@ import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-class ResizeAdapter extends ComponentAdapter
-{
-	private ScaleContainer<?> object;
-
-	public ResizeAdapter(ScaleContainer<?> object)
-	{
-		this.object = object;
-	}
-
-	@Override
-	public void componentResized(ComponentEvent e)
-	{
-		object.keepAspectRatio();
-	}
-}
-
 public class ScaleContainer<T extends Panel> extends Panel
 {
+	private static final long serialVersionUID = -944738295720014954L;
+
+	private static class ResizeAdapter extends ComponentAdapter
+	{
+		private ScaleContainer<?> object;
+
+		public ResizeAdapter(ScaleContainer<?> object)
+		{
+			this.object = object;
+		}
+
+		@Override
+		public void componentResized(ComponentEvent e)
+		{
+			object.keepAspectRatio();
+		}
+	}
+
 	private T panel;
 
 	public ScaleContainer(T panel)

@@ -1,7 +1,9 @@
 package com.jaxson.lib.math;
 
-public class Reciprocal extends Number
+public class Reciprocal extends ComparableNumber
 {
+	private static final long serialVersionUID = -2798907559979933715L;
+
 	private Number number;
 
 	public Reciprocal(Number number)
