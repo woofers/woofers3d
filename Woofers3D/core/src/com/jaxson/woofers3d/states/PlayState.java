@@ -15,9 +15,14 @@ import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.GdxMath;
+import com.jaxson.lib.io.excel.ExcelFile;
+import com.jaxson.lib.io.excel.MyCell;
+import com.jaxson.lib.io.excel.MyCellStyle;
+import com.jaxson.lib.io.excel.MyRow;
+import com.jaxson.lib.io.excel.MySheet;
+import com.jaxson.lib.io.excel.MyWorkbook;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.lib.io.File;
 
 public class PlayState extends BulletState
 {
@@ -54,16 +59,18 @@ public class PlayState extends BulletState
 			add(boxs[i]);
 		}
 
-		spheres = new RigidSphere[SPHERE_AMOUNT];
-		for (int i = 0; i < SPHERE_AMOUNT; i ++)
+		if (getGame().isDesktop())
 		{
-			if (InputHandler.hasTouchScreen()) break;
-			spheres[i] = new RigidSphere(new MyColor().random());
-			spheres[i].setLocation(GdxMath.randVector3(6f, 30f));
-			spheres[i].setSize(new Vector3(2f, 2f, 2f));
-			spheres[i].setMass(massRange.floatValue());
-			applyPhysics(spheres[i]);
-			add(spheres[i]);
+			spheres = new RigidSphere[SPHERE_AMOUNT];
+			for (int i = 0; i < SPHERE_AMOUNT; i ++)
+			{
+				spheres[i] = new RigidSphere(new MyColor().random());
+				spheres[i].setLocation(GdxMath.randVector3(6f, 30f));
+				spheres[i].setSize(new Vector3(2f, 2f, 2f));
+				spheres[i].setMass(massRange.floatValue());
+				applyPhysics(spheres[i]);
+				add(spheres[i]);
+			}
 		}
 
 		softBox = new SoftBox(getPhysicsWorld());
@@ -74,8 +81,16 @@ public class PlayState extends BulletState
 		applyPhysics(player);
 		add(player);
 
-		File file = new File("");
-		file.createDirectory();
+		ExcelFile file = new ExcelFile("woofers.xlsx");
+		MyWorkbook excelDoc = new MyWorkbook();
+		MySheet sheet = excelDoc.createSheet();
+		MyRow row = sheet.createRow(0);
+		MyCell cell = row.createCell(0);
+		MyCellStyle style = excelDoc.createCellStyle();
+		style.setFillForegroundColor(com.jaxson.lib.io.excel.MyColor.RED);
+		cell.setValue("woofers");
+		cell.setStyle(style);
+		file.write(excelDoc);
 	}
 
 	@Override

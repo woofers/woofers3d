@@ -45,6 +45,11 @@ public class MyEnvironment extends Environment
 		getShadowLight().begin(Vector3.Zero, camera.direction);
 	}
 
+	private void clearShadowMap()
+	{
+		setShadowMap((ShadowMap) null);
+	}
+
 	public void end()
 	{
 		if (!hasShadows()) return;
@@ -122,7 +127,7 @@ public class MyEnvironment extends Environment
 	{
 		if (light == getLight()) return;
 		if (hasLight()) remove(light);
-		setShadowMap((ShadowMap) null);
+		clearShadowMap();
 		this.light = light;
 		add(light);
 		setColor(light);

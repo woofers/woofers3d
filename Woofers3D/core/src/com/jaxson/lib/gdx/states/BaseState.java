@@ -19,9 +19,9 @@ public abstract class BaseState extends GameObject
 	private Game gameManager;
 	private MixedRenderer renderer;
 
-	protected BaseState(Game gameManager)
+	protected BaseState(Game game)
 	{
-		this.gameManager = gameManager;
+		this.gameManager = game;
 		this.renderer = new MixedRenderer();
 	}
 
@@ -49,6 +49,11 @@ public abstract class BaseState extends GameObject
 	public MyEnvironment getEnvironment()
 	{
 		return renderer.getEnvironment();
+	}
+
+	public Game getGame()
+	{
+		return gameManager;
 	}
 
 	private Graphics getGraphics()

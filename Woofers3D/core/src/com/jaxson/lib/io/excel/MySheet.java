@@ -1,7 +1,5 @@
 package com.jaxson.lib.io.excel;
 
-import com.jaxson.lib.io.excel.MyCell.CellLocation;
-import com.jaxson.lib.io.excel.MyCell.CellOutOfBoundsException;
 import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -96,9 +94,9 @@ public class MySheet implements Iterable<MyRow>
 		getSheet().createFreezePane(columnSplit, rowSplit, leftmostColumn, topRow);
 	}
 
-	public Row createRow(int index)
+	public MyRow createRow(int index)
 	{
-		return getSheet().createRow(index);
+		return new MyRow(getSheet().createRow(index));
 	}
 
 	public void createSplitPane(int xSplit, int ySplit, int leftMostColumn, int topRow, int activePane)
@@ -666,11 +664,6 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void showInPane(int arg0, int arg1)
-	{
-		getSheet().showInPane(arg0, arg1);
-	}
-
-	public void showInPane(short arg0, short arg1)
 	{
 		getSheet().showInPane(arg0, arg1);
 	}

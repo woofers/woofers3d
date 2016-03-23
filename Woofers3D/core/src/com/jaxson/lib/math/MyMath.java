@@ -30,7 +30,7 @@ public class MyMath
 	 */
 	public static final float DIAMETER_TO_RADIUS = new Reciprocal(RADIUS_TO_DIAMETER).floatValue();
 
-	public static final float PI = (float)Math.PI;
+	public static final float PI = (float) Math.PI;
 	public static final float DEGREES_TO_RADIANS = PI / 180f;
 	public static final float RADIANS_TO_DEGREES = 180f / PI;
 

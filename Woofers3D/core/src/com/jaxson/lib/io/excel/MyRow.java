@@ -1,7 +1,5 @@
 package com.jaxson.lib.io.excel;
 
-import com.jaxson.lib.io.excel.MyCell.CellLocation;
-import com.jaxson.lib.io.excel.MyCell.CellOutOfBoundsException;
 import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
@@ -33,8 +31,7 @@ public class MyRow implements Iterable<MyCell>
 	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
 	{
 		int x = location.getX();
-		MyCell cell = getCell(x);
-		return cell;
+		return getCell(x);
 	}
 
 	public MyCell getCell(int row) throws CellOutOfBoundsException
@@ -51,7 +48,7 @@ public class MyRow implements Iterable<MyCell>
 
 	public CellLocation getCellLocation(int column)
 	{
-		return new CellLocation(column, getRowIndex());
+		return new CellLocation(column, getIndex());
 	}
 
 	public short getFirstCellIndex()
@@ -67,6 +64,11 @@ public class MyRow implements Iterable<MyCell>
 	public float getHeightInPoints()
 	{
 		return getRow().getHeightInPoints();
+	}
+
+	public int getIndex()
+	{
+		return getRow().getRowNum();
 	}
 
 	public int getLastCellIndex()
@@ -87,11 +89,6 @@ public class MyRow implements Iterable<MyCell>
 	protected Row getRow()
 	{
 		return row;
-	}
-
-	public int getRowIndex()
-	{
-		return getRow().getRowNum();
 	}
 
 	public CellStyle getRowStyle()

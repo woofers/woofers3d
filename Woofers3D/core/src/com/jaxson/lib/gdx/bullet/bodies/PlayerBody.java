@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.GdxMath;
+import com.jaxson.lib.math.MyMath;
 
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 {
@@ -76,7 +77,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 
 	public float getMaxSlope()
 	{
-		return getMaxSlopeRad() * GdxMath.RADIANS_TO_DEGREES;
+		return getMaxSlopeRad() * MyMath.RADIANS_TO_DEGREES;
 	}
 
 	public float getMaxSlopeRad()
@@ -176,7 +177,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject>
 
 	public void setMaxSlope(float maxSlope)
 	{
-		setMaxSlope(maxSlope * GdxMath.DEGREES_TO_RADIANS);
+		setMaxSlope(maxSlope * MyMath.DEGREES_TO_RADIANS);
 	}
 
 	public void setMaxSlopeRad(float maxSlope)

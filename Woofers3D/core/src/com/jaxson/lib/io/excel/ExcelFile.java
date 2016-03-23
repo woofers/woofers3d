@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class ExcelFile extends File
 {
@@ -39,9 +41,14 @@ public class ExcelFile extends File
 			stream = getFileInputStream();
 			workbook = new HSSFWorkbook(stream);
 		}
-		catch (Exception ex)
+		catch (FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+		}
+		catch (SecurityException ex)
+		{
+		}
+		catch (IOException ex)
+		{
 		}
 		return workbook;
 	}
@@ -55,13 +62,19 @@ public class ExcelFile extends File
 			stream = getFileInputStream();
 			workbook = new XSSFWorkbook(stream);
 		}
-		catch (Exception ex)
+		catch (FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+		}
+		catch (SecurityException ex)
+		{
+		}
+		catch (IOException ex)
+		{
 		}
 		return workbook;
 	}
 
+	@Override
 	public ExcelFile setPath(String path)
 	{
 		return new ExcelFile(path);
@@ -75,19 +88,23 @@ public class ExcelFile extends File
 			stream = getFileOutputStream();
 			workbook.write(stream);
 		}
-		catch (Exception ex)
+		catch (FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+		}
+		catch (SecurityException ex)
+		{
+		}
+		catch (IOException ex)
+		{
 		}
 		finally
 		{
 			try
 			{
-				stream.close();
+				if (stream != null) stream.close();
 			}
-			catch (Exception ex)
+			catch (IOException ex)
 			{
-				ex.printStackTrace();
 			}
 		}
 	}

@@ -18,6 +18,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 {
@@ -35,6 +36,11 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	protected static final MissingCellPolicy POLICY = Row.CREATE_NULL_AS_BLANK;
 
 	private Workbook workbook;
+
+	public MyWorkbook()
+	{
+		this(new XSSFWorkbook());
+	}
 
 	public MyWorkbook(Workbook workbook)
 	{
@@ -73,9 +79,9 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		getWorkbook().close();
 	}
 
-	public CellStyle createCellStyle()
+	public MyCellStyle createCellStyle()
 	{
-		return getWorkbook().createCellStyle();
+		return new MyCellStyle(getWorkbook().createCellStyle());
 	}
 
 	public DataFormat createDataFormat()

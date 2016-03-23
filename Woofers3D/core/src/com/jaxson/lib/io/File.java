@@ -8,19 +8,22 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
+import java.io.IOException;
 
 /**
  * A File that handles writing and reading.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class File
+public class File implements IFile<File>
 {
 	public static final String FOWARD_SLASH = "/";
 	public static final String BACK_SLASH = "\\";
 	public static final String NO_EXTENSION = "";
 	public static final String DOT = Pattern.quote(".");
 	public static final String NEXT_LINE = System.lineSeparator();
+
+	private static final String PATH_EMPTY = "Path can not be empty";
 
 	private String path;
 
@@ -30,25 +33,25 @@ public class File
 	 */
 	public File(String path)
 	{
-		setPath(path);
+		this.path = path;
+		validatePath();
 	}
 
-	public void add(String contents)
+	@Override
+	public File append(String contents)
 	{
-		write(readString() + contents);
+		return write(readString() + contents);
 	}
 
-	public File createFile()
+	@Override
+	public File copy(File file)
 	{
-		if (exists())
-		{
-			if (isFile()) return this;
-			delete();
-		}
-		write("");
-		return this;
+		if (equals(file)) return this;
+		file.write(readBytes());
+		return file;
 	}
 
+	@Override
 	public File createDirectory()
 	{
 		if (exists())
@@ -62,11 +65,23 @@ public class File
 		}
 		catch (SecurityException ex)
 		{
-			ex.printStackTrace();
 		}
 		return this;
 	}
 
+	@Override
+	public File createFile()
+	{
+		if (exists())
+		{
+			if (isFile()) return this;
+			delete();
+		}
+		write("");
+		return this;
+	}
+
+	@Override
 	public File delete()
 	{
 		if (!exists()) return this;
@@ -76,27 +91,9 @@ public class File
 		}
 		catch (SecurityException ex)
 		{
-			ex.printStackTrace();
+			//throw new SecurityException(ex);
 		}
 		return this;
-	}
-
-	public File copy(String path)
-	{
-		return copy(new File(path));
-	}
-
-	public File copy(File file)
-	{
-		if (equals(file)) return this;
-		file.write(readBytes());
-		return file;
-	}
-
-	public boolean equals(Object file)
-	{
-		if (file instanceof File) return equals((File)file);
-		return false;
 	}
 
 	public boolean equals(File file)
@@ -104,7 +101,14 @@ public class File
 		return equals(file.getPath());
 	}
 
-	public boolean equals(String path)
+	@Override
+	public boolean equals(Object file)
+	{
+		if (file instanceof File) return equals((File) file);
+		return false;
+	}
+
+	private boolean equals(String path)
 	{
 		return getPath().equals(path);
 	}
@@ -113,6 +117,7 @@ public class File
 	 * Gets whether the {@link File} exists.
 	 * @return {@link boolean} - Whether the {@link File} exists
 	 */
+	@Override
 	public boolean exists()
 	{
 		return getJavaFile().exists();
@@ -124,6 +129,7 @@ public class File
 	 * @throws FileNotFoundException If the file is not found
 	 */
 
+	@Override
 	public BufferedReader getBufferedReader() throws FileNotFoundException
 	{
 		FileReader fileReader = null;
@@ -138,11 +144,18 @@ public class File
 		return new BufferedReader(fileReader);
 	}
 
+	public File getChild(String child)
+	{
+		if (child.charAt(0) != FOWARD_SLASH.charAt(0)) child = FOWARD_SLASH + child;
+		return new File(getPath() + child);
+	}
+
 	/**
 	 * Gets the file extension of the {@link File}. Returns an empty string if
 	 * the {@link File} has no extension.
 	 * @return {@link String} - The file extension
 	 */
+	@Override
 	public String getExtension()
 	{
 		String[] fileNames = getName().split(DOT);
@@ -150,30 +163,35 @@ public class File
 		return fileNames[1];
 	}
 
+	@Override
 	public FileType getExtensionType()
 	{
-		return FileType.getType(getExtension());
+		return new FileType(getExtension());
 	}
 
+	@Override
 	public FileInputStream getFileInputStream() throws FileNotFoundException
 	{
 		return new FileInputStream(getJavaFile());
 	}
 
+	@Override
 	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException
 	{
-		return new FileOutputStream(getPath());
+		return new FileOutputStream(getJavaFile());
 	}
 
+	@Override
 	public FileReader getFileReader() throws FileNotFoundException
 	{
-		return new FileReader(getPath());
+		return new FileReader(getJavaFile());
 	}
 
 	/**
 	 * Gets the {@link java.io.File} of the {@link File}.
 	 * @return {@link java.io.File} - The file
 	 */
+	@Override
 	public java.io.File getJavaFile()
 	{
 		return new java.io.File(getPath());
@@ -183,21 +201,20 @@ public class File
 	 * Gets the file name of the {@link File}.
 	 * @return {@link String} - The file name
 	 */
+	@Override
 	public String getName()
 	{
 		int index = getPath().lastIndexOf(FOWARD_SLASH);
 		return getPath().substring(index + 1);
 	}
 
-	/**
-	 * Gets the file path of the {@link File}.
-	 * @return {@link String} - The file path
-	 */
-	public String getPath()
+	@Override
+	public File getParent()
 	{
-		return path;
+		return new File(getParentPath());
 	}
 
+	@Override
 	public String getParentPath()
 	{
 		int index = getPath().lastIndexOf(FOWARD_SLASH);
@@ -205,15 +222,27 @@ public class File
 		return getPath().substring(0, index + 1);
 	}
 
+	/**
+	 * Gets the file path of the {@link File}.
+	 * @return {@link String} - The file path
+	 */
+	@Override
+	public String getPath()
+	{
+		return path;
+	}
+
+	@Override
 	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
 	{
-		return new PrintWriter(getPath());
+		return new PrintWriter(getJavaFile());
 	}
 
 	/**
 	 * Gets whether the {@link File} is a directory.
 	 * @return {@link boolean} - Whether the {@link File} is a directory
 	 */
+	@Override
 	public boolean isDirectory()
 	{
 		return getJavaFile().isDirectory();
@@ -223,6 +252,7 @@ public class File
 	 * Gets whether the {@link File} is a file.
 	 * @return {@link boolean} - Whether the {@link File} is a file
 	 */
+	@Override
 	public boolean isFile()
 	{
 		return !isDirectory();
@@ -232,6 +262,7 @@ public class File
 	 * Gets the size of the {@link File} in {@link byte}s.
 	 * @return {@link long} - The size in {@link byte}s
 	 */
+	@Override
 	public long length()
 	{
 		return getJavaFile().length();
@@ -241,6 +272,7 @@ public class File
 	 * Parses a the {@link File} as a {@link byte} array.
 	 * @return {@link byte[]} - The contents of the file as a {@link byte} array
 	 */
+	@Override
 	public byte[] readBytes()
 	{
 		FileInputStream stream = null;
@@ -250,19 +282,23 @@ public class File
 			stream = getFileInputStream();
 			stream.read(bytes);
 		}
-		catch (Exception ex)
+		catch (FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+		}
+		catch (SecurityException ex)
+		{
+		}
+		catch (IOException ex)
+		{
 		}
 		finally
 		{
 			try
 			{
-				stream.close();
+				if (stream != null) stream.close();
 			}
-			catch (Exception ex)
+			catch (IOException ex)
 			{
-				ex.printStackTrace();
 			}
 		}
 		return bytes;
@@ -272,6 +308,7 @@ public class File
 	 * Parses a the {@link File} as a {@link String}.
 	 * @return {@link String} - The contents of the file
 	 */
+	@Override
 	public String readString()
 	{
 		BufferedReader reader = null;
@@ -288,29 +325,26 @@ public class File
 			}
 			while (nextLine != null);
 		}
-		catch (Exception ex)
+		catch (FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+		}
+		catch (IOException ex)
+		{
 		}
 		finally
 		{
 			try
 			{
-				reader.close();
+				if (reader != null) reader.close();
 			}
-			catch (Exception ex)
+			catch (IOException ex)
 			{
-				ex.printStackTrace();
 			}
 		}
 		return output;
 	}
 
-	public File rename(String path)
-	{
-		return rename(new File(path));
-	}
-
+	@Override
 	public File rename(File file)
 	{
 		if (equals(file)) return this;
@@ -318,38 +352,39 @@ public class File
 		return this;
 	}
 
-	private void setPath(String path)
+	@Override
+	public File rename(String name)
 	{
-		this.path = path.replace(BACK_SLASH, FOWARD_SLASH);
+		return rename(new File(name));
 	}
 
-	/**
-	 * Writes to the {@link File}.
-	 * @param contents The contents to write as a {@link String}
-	 */
-	public void write(String contents)
+	public File setPath(String path)
 	{
-		PrintWriter writer = null;
-		try
+		return new File(path);
+	}
+
+	private void validatePath()
+	{
+		path = path.replace(BACK_SLASH, FOWARD_SLASH).trim();
+		String[] dirs = path.split(FOWARD_SLASH);
+		String newDir = "";
+		for (String dir: dirs)
 		{
-			writer = getPrintWriter();
-			writer.print(contents);
+			dir = dir.trim();
+			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
 		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-		finally
-		{
-			writer.close();
-		}
+		if (!newDir.isEmpty())
+			path = newDir.substring(0, newDir.length() - 1);
+		else
+			throw new IllegalArgumentException(PATH_EMPTY);
 	}
 
 	/**
 	 * Writes to the {@link File}.
 	 * @param contents The contents to write as {@link byte}s
 	 */
-	public void write(byte[] contents)
+	@Override
+	public File write(byte[] contents)
 	{
 		FileOutputStream stream = null;
 		try
@@ -357,25 +392,54 @@ public class File
 			stream = getFileOutputStream();
 			stream.write(contents);
 		}
-		catch (Exception ex)
+		catch (FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+		}
+		catch (SecurityException ex)
+		{
+		}
+		catch (IOException ex)
+		{
 		}
 		finally
 		{
 			try
 			{
-				stream.close();
+				if (stream != null) stream.close();
 			}
-			catch (Exception ex)
+			catch (IOException ex)
 			{
-				ex.printStackTrace();
 			}
 		}
+		return this;
 	}
 
-	public File getParent()
+	/**
+	 * Writes to the {@link File}.
+	 * @param contents The contents to write as a {@link String}
+	 */
+	@Override
+	public File write(String contents)
 	{
-		return new File(getParentPath());
+		PrintWriter writer = null;
+		try
+		{
+			writer = getPrintWriter();
+			writer.print(contents);
+		}
+		catch (FileNotFoundException ex)
+		{
+		}
+		catch (SecurityException ex)
+		{
+		}
+		catch (UnsupportedEncodingException ex)
+		{
+		}
+		finally
+		{
+			if (writer != null) writer.close();
+		}
+		return this;
 	}
 }

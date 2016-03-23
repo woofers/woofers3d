@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.g3d.Entity;
 
+@SuppressWarnings("deprecation")
 public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 {
 	private static final int SHADOW_RESOLUTION = 4096;
@@ -20,11 +21,6 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 	public MyDirectionalShadowLight()
 	{
 		this(Light.DIRECTION);
-	}
-
-	public MyDirectionalShadowLight(BaseLight<?> light)
-	{
-		this(light.getColor(), light.getDirection());
 	}
 
 	public MyDirectionalShadowLight(Color color, Vector3 direction)
@@ -69,6 +65,11 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 	{
 		super(light);
 		this.shadowBatch = new ShadowBatch();
+	}
+
+	public MyDirectionalShadowLight(Light light)
+	{
+		this(light.getColor(), light.getDirection());
 	}
 
 	public MyDirectionalShadowLight(Vector3 direction)

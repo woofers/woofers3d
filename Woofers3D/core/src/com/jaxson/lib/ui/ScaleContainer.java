@@ -6,8 +6,6 @@ import java.awt.event.ComponentEvent;
 
 public class ScaleContainer<T extends Panel> extends Panel
 {
-	private static final long serialVersionUID = -944738295720014954L;
-
 	private static class ResizeAdapter extends ComponentAdapter
 	{
 		private ScaleContainer<?> object;
@@ -23,6 +21,8 @@ public class ScaleContainer<T extends Panel> extends Panel
 			object.keepAspectRatio();
 		}
 	}
+
+	private static final long serialVersionUID = -944738295720014954L;
 
 	private T panel;
 

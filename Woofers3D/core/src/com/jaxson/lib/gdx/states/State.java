@@ -6,9 +6,9 @@ public abstract class State extends BaseState
 {
 	private SubState subState;
 
-	public State(Game gameManager)
+	public State(Game game)
 	{
-		super(gameManager);
+		super(game);
 	}
 
 	public SubState getSubState()

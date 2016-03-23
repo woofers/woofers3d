@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.io.File;
+import java.io.IOException;
+
 
 public class GdxFile extends File
 {
@@ -34,14 +36,15 @@ public class GdxFile extends File
 	}
 
 	@Override
-	public void add(String contents)
+	public GdxFile append(String contents)
 	{
-		write(contents, false);
+		return write(contents, false);
 	}
 
+	@Override
 	public GdxFile createFile()
 	{
-		return (GdxFile)super.createFile();
+		return (GdxFile) super.createFile();
 	}
 
 	@Override
@@ -148,20 +151,22 @@ public class GdxFile extends File
 		return new GdxFile(getPath(), fileType);
 	}
 
-	public void write(Pixmap pixmap)
+	public GdxFile write(Pixmap pixmap)
 	{
 		PixmapIO.writePNG(getFileHandle(), pixmap);
+		return this;
 	}
 
 	@Override
-	public void write(String contents)
+	public GdxFile write(String contents)
 	{
-		write(contents, true);
+		return write(contents, true);
 	}
 
-	private void write(String contents, boolean overwrite)
+	private GdxFile write(String contents, boolean overwrite)
 	{
 		getFileHandle().writeString(contents, !overwrite);
+		return this;
 	}
 
 	private static Files getFiles()

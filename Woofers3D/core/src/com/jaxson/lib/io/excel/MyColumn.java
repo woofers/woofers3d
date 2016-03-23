@@ -8,10 +8,15 @@ public class MyColumn implements Iterable<MyCell>
 	private MySheet sheet;
 	private MyArrayList<MyCell> cells;
 
-	protected MyColumn(MySheet sheet, MyArrayList cells)
+	protected MyColumn(MySheet sheet, MyArrayList<MyCell> cells)
 	{
 		this.sheet = sheet;
 		this.cells = cells;
+	}
+
+	public MyCell getCell(CellLocation cell)
+	{
+		return getCell(cell.getY());
 	}
 
 	public MyCell getCell(int row)
