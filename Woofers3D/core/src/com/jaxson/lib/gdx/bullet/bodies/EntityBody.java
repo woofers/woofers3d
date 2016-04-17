@@ -79,7 +79,7 @@ public abstract class EntityBody<T extends btCollisionObject> extends AnimatedEn
 
 	public boolean isBody(btCollisionObject body)
 	{
-		return getBody() == body;
+		return getBody().equals(body);
 	}
 
 	@Override

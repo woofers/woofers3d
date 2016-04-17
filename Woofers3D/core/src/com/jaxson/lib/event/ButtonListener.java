@@ -14,4 +14,9 @@ public abstract class ButtonListener<T> implements ActionListener
 
 	@Override
 	public abstract void actionPerformed(ActionEvent event);
+
+	protected T getObject()
+	{
+		return object;
+	}
 }

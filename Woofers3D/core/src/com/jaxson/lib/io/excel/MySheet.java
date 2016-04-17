@@ -22,6 +22,8 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 public class MySheet implements Iterable<MyRow>
 {
+	public static final int NO_ROWS = -1;
+
 	private Sheet sheet;
 
 	public MySheet(Sheet sheet)
@@ -92,6 +94,11 @@ public class MySheet implements Iterable<MyRow>
 	public void createFreezePane(int columnSplit, int rowSplit, int leftmostColumn, int topRow)
 	{
 		getSheet().createFreezePane(columnSplit, rowSplit, leftmostColumn, topRow);
+	}
+
+	public MyRow createRow()
+	{
+		return createRow(getLastRowIndex() + 1);
 	}
 
 	public MyRow createRow(int index)
@@ -279,6 +286,7 @@ public class MySheet implements Iterable<MyRow>
 
 	public int getLastRowIndex()
 	{
+		if (!hasRow()) return NO_ROWS;
 		return getSheet().getLastRowNum();
 	}
 
@@ -395,6 +403,11 @@ public class MySheet implements Iterable<MyRow>
 	public void groupRow(int startRow, int endStart)
 	{
 		getSheet().groupRow(startRow, endStart);
+	}
+
+	public boolean hasRow()
+	{
+		return getFirstRow().getRow() != null;
 	}
 
 	public boolean isColumnBroken(int column)

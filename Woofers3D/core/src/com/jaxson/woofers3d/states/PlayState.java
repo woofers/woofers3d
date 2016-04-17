@@ -14,7 +14,7 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.input.InputHandler;
-import com.jaxson.lib.gdx.math.GdxMath;
+import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.io.excel.ExcelFile;
 import com.jaxson.lib.io.excel.MyCell;
 import com.jaxson.lib.io.excel.MyCellStyle;
@@ -23,6 +23,7 @@ import com.jaxson.lib.io.excel.MySheet;
 import com.jaxson.lib.io.excel.MyWorkbook;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
+import org.apache.poi.ss.usermodel.IndexedColors;
 
 public class PlayState extends BulletState
 {
@@ -52,7 +53,7 @@ public class PlayState extends BulletState
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
 			boxs[i] = new RigidBox(new MyColor().random(255, 255, 95, 165, 0, 50));
-			boxs[i].setLocation(GdxMath.randVector3(6f, 30f));
+			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(), boxSizeRange.floatValue(), boxSizeRange.floatValue()));
 			boxs[i].setMass(massRange.floatValue());
 			applyPhysics(boxs[i]);
@@ -65,7 +66,7 @@ public class PlayState extends BulletState
 			for (int i = 0; i < SPHERE_AMOUNT; i ++)
 			{
 				spheres[i] = new RigidSphere(new MyColor().random());
-				spheres[i].setLocation(GdxMath.randVector3(6f, 30f));
+				spheres[i].setLocation(new RandomVector3(6f, 30f));
 				spheres[i].setSize(new Vector3(2f, 2f, 2f));
 				spheres[i].setMass(massRange.floatValue());
 				applyPhysics(spheres[i]);
@@ -84,12 +85,15 @@ public class PlayState extends BulletState
 		ExcelFile file = new ExcelFile("woofers.xlsx");
 		MyWorkbook excelDoc = new MyWorkbook();
 		MySheet sheet = excelDoc.createSheet();
-		MyRow row = sheet.createRow(0);
-		MyCell cell = row.createCell(0);
-		MyCellStyle style = excelDoc.createCellStyle();
-		style.setFillForegroundColor(com.jaxson.lib.io.excel.MyColor.RED);
-		cell.setValue("woofers");
-		cell.setStyle(style);
+		MyRow row = sheet.createRow();
+		for (IndexedColors color: IndexedColors.values())
+		{
+			MyCell cell = row.createCell();
+			MyCellStyle style = excelDoc.createCellStyle();
+			style.setFillForegroundColor(new com.jaxson.lib.io.excel.MyColor(color));
+			cell.setValue(color.getIndex());
+			cell.setStyle(style);
+		}
 		file.write(excelDoc);
 	}
 
@@ -110,7 +114,7 @@ public class PlayState extends BulletState
 			if (body instanceof RigidBody)
 			{
 				RigidBody rigidBody = (RigidBody) body;
-				rigidBody.applyCentralImpulse(ray.direction.scl(IMPULSE_SPEED));
+				rigidBody.applyCentralImpulse(ray.direction.scl(-IMPULSE_SPEED));
 			}
 		}
 	}

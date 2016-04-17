@@ -499,6 +499,7 @@ public class Display extends GameObject
 		clearScreen();
 	}
 
+	@Override
 	public void resize(int width, int height)
 	{
 		viewport.update(width, height);

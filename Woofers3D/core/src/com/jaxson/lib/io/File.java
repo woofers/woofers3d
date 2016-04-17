@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
-import java.io.IOException;
 
 /**
  * A File that handles writing and reading.
@@ -17,12 +19,7 @@ import java.io.IOException;
  */
 public class File implements IFile<File>
 {
-	public static final String FOWARD_SLASH = "/";
-	public static final String BACK_SLASH = "\\";
-	public static final String NO_EXTENSION = "";
-	public static final String DOT = Pattern.quote(".");
-	public static final String NEXT_LINE = System.lineSeparator();
-
+	public static final File NOTHING = new File("");
 	private static final String PATH_EMPTY = "Path can not be empty";
 
 	private String path;
@@ -43,12 +40,21 @@ public class File implements IFile<File>
 		return write(readString() + contents);
 	}
 
+	public boolean canRead()
+	{
+		return getJavaFile().canRead();
+	}
+
+	public boolean canWrite()
+	{
+		return getJavaFile().canWrite();
+	}
+
 	@Override
 	public File copy(File file)
 	{
 		if (equals(file)) return this;
-		file.write(readBytes());
-		return file;
+		return file.write(readBytes());
 	}
 
 	@Override
@@ -63,8 +69,9 @@ public class File implements IFile<File>
 		{
 			getJavaFile().mkdirs();
 		}
-		catch (SecurityException ex)
+		catch (Exception ex)
 		{
+			return File.NOTHING;
 		}
 		return this;
 	}
@@ -77,23 +84,22 @@ public class File implements IFile<File>
 			if (isFile()) return this;
 			delete();
 		}
-		write("");
-		return this;
+		return write("");
 	}
 
 	@Override
 	public File delete()
 	{
-		if (!exists()) return this;
+		if (!exists()) return File.NOTHING;
 		try
 		{
 			getJavaFile().delete();
 		}
-		catch (SecurityException ex)
+		catch (Exception ex)
 		{
-			//throw new SecurityException(ex);
+			return this;
 		}
-		return this;
+		return File.NOTHING;
 	}
 
 	public boolean equals(File file)
@@ -108,7 +114,7 @@ public class File implements IFile<File>
 		return false;
 	}
 
-	private boolean equals(String path)
+	protected boolean equals(String path)
 	{
 		return getPath().equals(path);
 	}
@@ -218,7 +224,7 @@ public class File implements IFile<File>
 	public String getParentPath()
 	{
 		int index = getPath().lastIndexOf(FOWARD_SLASH);
-		if (index == -1) return NO_EXTENSION;
+		if (index == -1) return "";
 		return getPath().substring(0, index + 1);
 	}
 
@@ -236,6 +242,13 @@ public class File implements IFile<File>
 	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return new PrintWriter(getJavaFile());
+	}
+
+	public Date getWhenLastModified()
+	{
+		Calendar calendar = Calendar.getInstance();
+		int utcOffset = calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET);
+		return new Date(getJavaFile().lastModified() - utcOffset);
 	}
 
 	/**
@@ -268,6 +281,14 @@ public class File implements IFile<File>
 		return getJavaFile().length();
 	}
 
+	public File move(File file)
+	{
+		File copy = copy(file);
+		if (copy.equals(File.NOTHING)) return this;
+		delete();
+		return copy;
+	}
+
 	/**
 	 * Parses a the {@link File} as a {@link byte} array.
 	 * @return {@link byte[]} - The contents of the file as a {@link byte} array
@@ -282,14 +303,9 @@ public class File implements IFile<File>
 			stream = getFileInputStream();
 			stream.read(bytes);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (SecurityException ex)
-		{
-		}
-		catch (IOException ex)
-		{
+
 		}
 		finally
 		{
@@ -299,6 +315,7 @@ public class File implements IFile<File>
 			}
 			catch (IOException ex)
 			{
+
 			}
 		}
 		return bytes;
@@ -325,11 +342,9 @@ public class File implements IFile<File>
 			}
 			while (nextLine != null);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (IOException ex)
-		{
+
 		}
 		finally
 		{
@@ -339,13 +354,13 @@ public class File implements IFile<File>
 			}
 			catch (IOException ex)
 			{
+
 			}
 		}
 		return output;
 	}
 
-	@Override
-	public File rename(File file)
+	private File rename(File file)
 	{
 		if (equals(file)) return this;
 		if (getJavaFile().renameTo(file.getJavaFile())) return file;
@@ -373,10 +388,7 @@ public class File implements IFile<File>
 			dir = dir.trim();
 			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
 		}
-		if (!newDir.isEmpty())
-			path = newDir.substring(0, newDir.length() - 1);
-		else
-			throw new IllegalArgumentException(PATH_EMPTY);
+		if (!newDir.isEmpty()) path = newDir.substring(0, newDir.length() - 1);
 	}
 
 	/**
@@ -392,14 +404,9 @@ public class File implements IFile<File>
 			stream = getFileOutputStream();
 			stream.write(contents);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (SecurityException ex)
-		{
-		}
-		catch (IOException ex)
-		{
+			return File.NOTHING;
 		}
 		finally
 		{
@@ -409,6 +416,7 @@ public class File implements IFile<File>
 			}
 			catch (IOException ex)
 			{
+
 			}
 		}
 		return this;
@@ -427,14 +435,9 @@ public class File implements IFile<File>
 			writer = getPrintWriter();
 			writer.print(contents);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (SecurityException ex)
-		{
-		}
-		catch (UnsupportedEncodingException ex)
-		{
+			return File.NOTHING;
 		}
 		finally
 		{

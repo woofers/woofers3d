@@ -2,6 +2,7 @@ package com.jaxson.lib.io;
 
 public class FileType
 {
+	public static final FileType NONE = new FileType("");
 	public static final FileType DIB = new FileType("dib");
 	public static final FileType EMF = new FileType("emf");
 	public static final FileType JPEG = new FileType("jpg");
@@ -22,7 +23,7 @@ public class FileType
 
 	public FileType(String extension)
 	{
-		this.extension = extension.toLowerCase().replace(File.DOT, "");
+		this.extension = new File(extension).getExtension().toLowerCase();
 		if (extension.equals("jpeg")) this.extension = "jpg";
 		if (extension.length() >= MAX_CHARACTER) throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}
@@ -30,6 +31,13 @@ public class FileType
 	public boolean equals(FileType other)
 	{
 		return getExtension().equals(other.getExtension());
+	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if (other instanceof FileType) return equals((FileType) other);
+		return false;
 	}
 
 	public String getExtension()

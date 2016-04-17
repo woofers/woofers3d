@@ -8,14 +8,14 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
-import java.io.IOException;
+import java.util.Date;
 
 /**
  * A File that handles writing and reading.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public interface IFile<F extends File>
+public interface IFile<F extends IFile>
 {
 	public static final String FOWARD_SLASH = "/";
 	public static final String BACK_SLASH = "\\";
@@ -24,6 +24,10 @@ public interface IFile<F extends File>
 	public static final String NEXT_LINE = System.lineSeparator();
 
 	public F append(String contents);
+
+	public boolean canRead();
+
+	public boolean canWrite();
 
 	public F copy(F file);
 
@@ -39,12 +43,16 @@ public interface IFile<F extends File>
 	 */
 	public boolean exists();
 
+	public boolean equals(F file);
+
 	/**
 	 * Return a {@link BufferedReader} from the {@link File}
 	 * @return {@link BufferedReader} - The buffered reader
 	 * @throws FileNotFoundException If the file is not found
 	 */
 	public BufferedReader getBufferedReader() throws FileNotFoundException;
+
+	public File getChild(String child);
 
 	/**
 	 * Gets the file extension of the {@link File}. Returns an empty string if
@@ -85,6 +93,8 @@ public interface IFile<F extends File>
 
 	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException;
 
+	public Date getWhenLastModified();
+
 	/**
 	 * Gets whether the {@link File} is a directory.
 	 * @return {@link boolean} - Whether the {@link File} is a directory
@@ -99,6 +109,8 @@ public interface IFile<F extends File>
 
 	public long length();
 
+	public File move(F file);
+
 	/**
 	 * Parses a the {@link File} as a {@link byte} array.
 	 * @return {@link byte[]} - The contents of the file as a {@link byte} array
@@ -110,8 +122,6 @@ public interface IFile<F extends File>
 	 * @return {@link String} - The contents of the file
 	 */
 	public String readString();
-
-	public F rename(F file);
 
 	public F rename(String path);
 

@@ -18,6 +18,11 @@ public class MyRow implements Iterable<MyCell>
 		this.row = row;
 	}
 
+	public MyCell createCell()
+	{
+		return createCell(getLastCellIndex() + 1);
+	}
+
 	public MyCell createCell(int column)
 	{
 		return new MyCell(getRow().createCell(column));
@@ -73,7 +78,9 @@ public class MyRow implements Iterable<MyCell>
 
 	public int getLastCellIndex()
 	{
-		return getRow().getLastCellNum() - 1;
+		int value = getRow().getLastCellNum();
+		if (value == -1) return value;
+		return value - 1;
 	}
 
 	public int getOutlineLevel()

@@ -35,6 +35,8 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 
 	protected static final MissingCellPolicy POLICY = Row.CREATE_NULL_AS_BLANK;
 
+	public static final MyWorkbook NOTHING = new MyWorkbook();
+
 	private Workbook workbook;
 
 	public MyWorkbook()
@@ -104,9 +106,9 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		return new MySheet(getWorkbook().createSheet());
 	}
 
-	public MySheet createSheet(String arg0)
+	public MySheet createSheet(String name)
 	{
-		return new MySheet(getWorkbook().createSheet(arg0));
+		return new MySheet(getWorkbook().createSheet(name));
 	}
 
 	public Font findFont(short boldWeight, short color, short fontHeight, String name, boolean italic, boolean strikeout, short typeOffset, byte underline)

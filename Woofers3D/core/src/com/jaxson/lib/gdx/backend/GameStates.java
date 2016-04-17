@@ -123,6 +123,7 @@ public class GameStates extends GameObject
 	/**
 	 * Resizes the current {@link State}.
 	 */
+	@Override
 	public void resize(int width, int height)
 	{
 		peek().resize(width, height);

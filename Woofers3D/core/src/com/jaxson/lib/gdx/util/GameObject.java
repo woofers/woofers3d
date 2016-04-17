@@ -11,7 +11,7 @@ import com.jaxson.lib.gdx.backend.Game;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class GameObject implements Disposable, Renderable, Pauseable
+public abstract class GameObject implements Disposable, Renderable, Pauseable, Resizeable
 {
 	/**
 	 * Called when the {@link GameObject} is destroyed.
@@ -47,6 +47,12 @@ public abstract class GameObject implements Disposable, Renderable, Pauseable
 	 */
 	@Override
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	{
+
+	}
+
+	@Override
+	public void resize(int width, int height)
 	{
 
 	}

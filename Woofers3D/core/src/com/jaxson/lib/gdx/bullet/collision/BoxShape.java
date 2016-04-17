@@ -6,7 +6,7 @@ import com.jaxson.lib.math.MyMath;
 
 public class BoxShape extends btBoxShape
 {
-	private static Vector3 DEFAULT_SIZE = new Vector3(1f, 1f, 1f);
+	private static final Vector3 DEFAULT_SIZE = new Vector3(1f, 1f, 1f);
 
 	public BoxShape()
 	{

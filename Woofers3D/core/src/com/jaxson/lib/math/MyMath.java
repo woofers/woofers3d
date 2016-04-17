@@ -32,7 +32,7 @@ public class MyMath
 
 	public static final float PI = (float) Math.PI;
 	public static final float DEGREES_TO_RADIANS = PI / 180f;
-	public static final float RADIANS_TO_DEGREES = 180f / PI;
+	public static final float RADIANS_TO_DEGREES = new Reciprocal(DEGREES_TO_RADIANS).floatValue();
 
 	/**
 	 * Acceleration due to graviy on Earth.

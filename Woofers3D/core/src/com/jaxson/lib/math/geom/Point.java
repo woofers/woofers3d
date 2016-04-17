@@ -60,6 +60,6 @@ public class Point
 	@Override
 	public String toString()
 	{
-		return X_PREFIX + Integer.toString(x) + Y_PREFIX + Integer.toString(y);
+		return X_PREFIX + new Integer(x).toString() + Y_PREFIX + new Integer(y).toString();
 	}
 }

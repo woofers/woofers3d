@@ -20,9 +20,12 @@ public class KeyList
 		this.keyCombinations = new MyArrayList<KeyCombination>();
 		for (Object key: keys)
 		{
-			if (!isValidKey(key)) throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-			if (key instanceof Integer) add((Integer) key);
-			if (key instanceof KeyCombination) add((KeyCombination) key);
+			if (key instanceof Integer)
+				add((Integer) key);
+			else if (key instanceof KeyCombination)
+				add((KeyCombination) key);
+			else
+				throw new IllegalArgumentException(EXCEPTION_MESSAGE);
 		}
 	}
 

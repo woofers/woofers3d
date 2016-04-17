@@ -101,11 +101,6 @@ public abstract class BaseState extends GameObject
 		renderer.render(spriteBatch, modelBatch, getCamera());
 	}
 
-	public void resize(int width, int height)
-	{
-
-	}
-
 	public void setCamera(Camera camera)
 	{
 		gameManager.setCamera(camera);

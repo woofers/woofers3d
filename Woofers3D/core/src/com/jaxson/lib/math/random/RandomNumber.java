@@ -21,7 +21,7 @@ public class RandomNumber extends ComparableNumber
 	private Number[] excluded;
 
 	/**
-	 * Construct a {@link RandomNumber} between {@code 0} and {@code 100}.
+	 * Constructs a {@link RandomNumber} between {@code 0} and {@code 100}.
 	 */
 	public RandomNumber()
 	{
@@ -46,7 +46,7 @@ public class RandomNumber extends ComparableNumber
 	 */
 	public RandomNumber(Number min, Number max, Number... excluded)
 	{
-		if (max.floatValue() < min.floatValue()) throw new IllegalArgumentException(MIN_EXCEEDS_MAX);
+		if (max.doubleValue() < min.doubleValue()) throw new IllegalArgumentException(MIN_EXCEEDS_MAX);
 		this.min = min;
 		this.max = max;
 		this.excluded = excluded;

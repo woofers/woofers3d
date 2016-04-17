@@ -69,7 +69,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		boolean result = super.addAll(collection);
 		if (!result) return false;
 		removeNull();
-		return oldSize == size();
+		return oldSize != size();
 	}
 
 	/**

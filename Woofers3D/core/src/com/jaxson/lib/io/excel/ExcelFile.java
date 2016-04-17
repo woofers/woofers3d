@@ -4,11 +4,10 @@ import com.jaxson.lib.io.File;
 import com.jaxson.lib.io.FileType;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.IOException;
-import java.io.FileNotFoundException;
 
 public class ExcelFile extends File
 {
@@ -22,8 +21,8 @@ public class ExcelFile extends File
 	private Workbook loadWordbook()
 	{
 		FileType type = getExtensionType();
-		if (type == FileType.XLS) return readXlsxWorkbook();
-		if (type == FileType.XLSX) return readXlsxWorkbook();
+		if (type.equals(FileType.XLS)) return readXlsxWorkbook();
+		if (type.equals(FileType.XLSX)) return readXlsxWorkbook();
 		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
 	}
 
@@ -41,14 +40,9 @@ public class ExcelFile extends File
 			stream = getFileInputStream();
 			workbook = new HSSFWorkbook(stream);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (SecurityException ex)
-		{
-		}
-		catch (IOException ex)
-		{
+			return new HSSFWorkbook();
 		}
 		return workbook;
 	}
@@ -62,14 +56,9 @@ public class ExcelFile extends File
 			stream = getFileInputStream();
 			workbook = new XSSFWorkbook(stream);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (SecurityException ex)
-		{
-		}
-		catch (IOException ex)
-		{
+			return new XSSFWorkbook();
 		}
 		return workbook;
 	}
@@ -80,7 +69,12 @@ public class ExcelFile extends File
 		return new ExcelFile(path);
 	}
 
-	public void write(MyWorkbook workbook)
+	public ExcelFile write()
+	{
+		return write(new MyWorkbook());
+	}
+
+	public ExcelFile write(MyWorkbook workbook)
 	{
 		FileOutputStream stream = null;
 		try
@@ -88,14 +82,9 @@ public class ExcelFile extends File
 			stream = getFileOutputStream();
 			workbook.write(stream);
 		}
-		catch (FileNotFoundException ex)
+		catch (Exception ex)
 		{
-		}
-		catch (SecurityException ex)
-		{
-		}
-		catch (IOException ex)
-		{
+
 		}
 		finally
 		{
@@ -105,7 +94,9 @@ public class ExcelFile extends File
 			}
 			catch (IOException ex)
 			{
+
 			}
 		}
+		return this;
 	}
 }

@@ -1,8 +1,8 @@
 package com.jaxson.lib.gdx.math;
 
 import com.badlogic.gdx.math.Vector3;
+import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.MyMath;
-import com.jaxson.lib.math.random.RandomNumber;
 
 public class GdxMath extends MyMath
 {
@@ -28,8 +28,7 @@ public class GdxMath extends MyMath
 
 	public static Vector3 randVector3(float min, float max)
 	{
-		RandomNumber range = new RandomNumber(min, max);
-		return new Vector3(range.floatValue(), range.floatValue(), range.floatValue());
+		return new RandomVector3(min, max);
 	}
 
 	public static Vector3 reciprocalVector(Vector3 vector)

@@ -68,13 +68,13 @@ public class MyCellStyle implements Cloneable
 	public MyCellStyle clone() throws CloneNotSupportedException
 	{
 		XSSFCellStyle style = null;
-		if (style instanceof XSSFCellStyle)
+		if (getStyle() instanceof XSSFCellStyle)
 		{
 			style = (XSSFCellStyle) getStyle();
 			style = (XSSFCellStyle) style.clone();
 			return new MyCellStyle(style);
 		}
-		throw new CloneNotSupportedException();
+		throw new CloneNotSupportedException("HSSFWorkbook clones not supported");
 	}
 
 	public short getAlignment()
@@ -207,9 +207,9 @@ public class MyCellStyle implements Cloneable
 		return getStyle().getWrapText();
 	}
 
-	public void set(CellStyle style)
+	public void set(MyCellStyle style)
 	{
-		getStyle().cloneStyleFrom(style);
+		getStyle().cloneStyleFrom(style.getStyle());
 	}
 
 	public void setAlignment(short alignment)

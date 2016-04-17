@@ -21,6 +21,11 @@ public interface Saveable<F extends File>
 		Automatic,
 
 		/**
+		 * Saved on a interval.
+		 */
+		Timer,
+
+		/**
 		 * Never saved unless the user calls {@link #save()}.
 		 */
 		Manual;
