@@ -4,7 +4,7 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
-import com.jaxson.lib.io.File;
+import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.GsonObject;
 import com.jaxson.lib.math.Reciprocal;
 
@@ -15,7 +15,7 @@ import com.jaxson.lib.math.Reciprocal;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class GameConfig extends GsonObject<GameConfig, File>
+public class GameConfig extends GsonObject<GameConfig, DefaultFile>
 {
 	/**
 	 * Used in {@link #setBackgroundFps(int)} to pause the {@link Game} on
@@ -52,13 +52,13 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	private int antiAliasing = 4;
 	private boolean statusBar = false;
 	private boolean immersive = true;
-	private File icon;
+	private DefaultFile icon;
 	private boolean showFps = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
 
 	{
-		setSaveFile(new File(SAVE_PATH));
-		setIcon(new File(ICON_PATH));
+		setSaveFile(new DefaultFile(SAVE_PATH));
+		setIcon(new DefaultFile(ICON_PATH));
 	}
 
 	/**
@@ -165,9 +165,9 @@ public class GameConfig extends GsonObject<GameConfig, File>
 
 	/**
 	 * Gets the {@link Game} icon.
-	 * @return {@link File} - The {@link Game} icon.
+	 * @return {@link DefaultFile} - The {@link Game} icon.
 	 */
-	public File getIcon()
+	public DefaultFile getIcon()
 	{
 		return icon;
 	}
@@ -393,7 +393,7 @@ public class GameConfig extends GsonObject<GameConfig, File>
 	 * Sets the icon of the {@link Game}.
 	 * @param icon The icon of the {@link Game}
 	 */
-	public void setIcon(File icon)
+	public void setIcon(DefaultFile icon)
 	{
 		this.icon = icon;
 		autoSave();

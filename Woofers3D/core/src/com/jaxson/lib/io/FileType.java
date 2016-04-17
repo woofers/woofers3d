@@ -23,7 +23,7 @@ public class FileType
 
 	public FileType(String extension)
 	{
-		this.extension = new File(extension).getExtension().toLowerCase();
+		this.extension = new DefaultFile(extension).getExtension().toLowerCase();
 		if (extension.equals("jpeg")) this.extension = "jpg";
 		if (extension.length() >= MAX_CHARACTER) throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}

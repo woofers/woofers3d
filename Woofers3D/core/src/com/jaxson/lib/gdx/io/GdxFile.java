@@ -9,18 +9,37 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
+import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.File;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
-public class GdxFile extends File
+public class GdxFile implements File<GdxFile>
 {
 	private static final String G3DJ_EXTENSION = "g3dj";
 	private static final String G3DB_EXTENSION = "g3db";
 	private static final String OBJ_EXTENSION = "obj";
 	private static final String LOADER_NOT_FOUND = "Loader could not be found for given filetype.";
 
+	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING, FileType.Absolute);
+
+	private File file;
 	private FileHandle fileHandle;
+
+	public GdxFile(File file, FileType fileType)
+	{
+		this.file = file;
+		this.fileHandle = getFileHandle(fileType);
+	}
 
 	public GdxFile(String path)
 	{
@@ -29,8 +48,7 @@ public class GdxFile extends File
 
 	public GdxFile(String path, FileType fileType)
 	{
-		super(path);
-		this.fileHandle = getFileHandle(fileType);
+		this(new DefaultFile(path), fileType);
 	}
 
 	@Override
@@ -40,9 +58,64 @@ public class GdxFile extends File
 	}
 
 	@Override
+	public boolean canRead()
+	{
+		return getJavaFile().canRead();
+	}
+
+	@Override
+	public boolean canWrite()
+	{
+		return getJavaFile().canWrite();
+	}
+
+	@Override
+	public GdxFile copy(GdxFile file)
+	{
+		if (equals(file)) return this;
+		try
+		{
+			getFileHandle().copyTo(file.getFileHandle());
+		}
+		catch (Exception ex)
+		{
+			return GdxFile.NOTHING;
+		}
+		return file;
+	}
+
+	@Override
+	public GdxFile createDirectory()
+	{
+		if (getType() == FileType.Classpath) throw new GdxRuntimeException("Cannot mkdirs with a classpath file: " + getPath());
+		if (getType() == FileType.Internal) throw new GdxRuntimeException("Cannot mkdirs with an internal file: " + getPath());
+		return new GdxFile(getFile().createDirectory(), getType());
+	}
+
+	@Override
 	public GdxFile createFile()
 	{
-		return (GdxFile) super.createFile();
+		if (exists())
+		{
+			if (isFile()) return this;
+			delete();
+		}
+		return write("");
+	}
+
+	@Override
+	public GdxFile delete()
+	{
+		if (!exists()) return GdxFile.NOTHING;
+		try
+		{
+			if (!getFileHandle().deleteDirectory()) return this;
+		}
+		catch (Exception ex)
+		{
+			return this;
+		}
+		return GdxFile.NOTHING;
 	}
 
 	private boolean equals(FileType fileType)
@@ -50,6 +123,7 @@ public class GdxFile extends File
 		return fileType == getType();
 	}
 
+	@Override
 	public boolean equals(GdxFile file)
 	{
 		return equals(file.getPath()) && equals(file.getType());
@@ -58,7 +132,7 @@ public class GdxFile extends File
 	@Override
 	public boolean equals(Object file)
 	{
-		if (file instanceof File) return equals((File) file);
+		if (file instanceof DefaultFile) return equals(file);
 		return false;
 	}
 
@@ -73,14 +147,43 @@ public class GdxFile extends File
 		return getFiles().absolute(getPath());
 	}
 
+	@Override
+	public BufferedReader getBufferedReader() throws FileNotFoundException
+	{
+		return getFile().getBufferedReader();
+	}
+
+	@Override
+	public GdxFile getChild(String child)
+	{
+		return new GdxFile(getFile().getChild(child), getType());
+	}
+
 	private FileHandle getClasspathFile()
 	{
 		return getFiles().classpath(getPath());
 	}
 
+	@Override
+	public String getExtension()
+	{
+		return getFile().getExtension();
+	}
+
+	@Override
+	public com.jaxson.lib.io.FileType getExtensionType()
+	{
+		return getFile().getExtensionType();
+	}
+
 	private FileHandle getExternalFile()
 	{
 		return getFiles().external(getPath());
+	}
+
+	private File getFile()
+	{
+		return file;
 	}
 
 	public FileHandle getFileHandle()
@@ -104,6 +207,24 @@ public class GdxFile extends File
 		return getLocalFile();
 	}
 
+	@Override
+	public FileInputStream getFileInputStream() throws FileNotFoundException
+	{
+		return getFile().getFileInputStream();
+	}
+
+	@Override
+	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException
+	{
+		return getFile().getFileOutputStream();
+	}
+
+	@Override
+	public FileReader getFileReader() throws FileNotFoundException
+	{
+		return getFile().getFileReader();
+	}
+
 	private FileHandle getInternalFile()
 	{
 		return getFiles().internal(getPath());
@@ -120,15 +241,78 @@ public class GdxFile extends File
 		return getFiles().local(getPath());
 	}
 
+	@Override
+	public String getName()
+	{
+		return getFile().getName();
+	}
+
+	@Override
+	public GdxFile getParent()
+	{
+		return new GdxFile(getFile().getParent(), getType());
+	}
+
+	@Override
+	public String getParentPath()
+	{
+		return getFile().getParentPath();
+	}
+
+	@Override
+	public String getPath()
+	{
+		return getFile().getPath();
+	}
+
+	@Override
+	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
+	{
+		return getFile().getPrintWriter();
+	}
+
 	public FileType getType()
 	{
 		return getFileHandle().type();
 	}
 
 	@Override
+	public Date getWhenLastModified()
+	{
+		return getFile().getWhenLastModified();
+	}
+
+	@Override
 	public boolean isDirectory()
 	{
 		return getFileHandle().isDirectory();
+	}
+
+	@Override
+	public boolean isFile()
+	{
+		return getFile().isFile();
+	}
+
+	@Override
+	public long length()
+	{
+		return getFileHandle().length();
+	}
+
+	@Override
+	public GdxFile move(GdxFile file)
+	{
+		GdxFile copy = copy(file);
+		if (copy.equals(GdxFile.NOTHING)) return this;
+		delete();
+		return copy;
+	}
+
+	@Override
+	public byte[] readBytes()
+	{
+		return getFileHandle().readBytes();
 	}
 
 	private Model readG3db()
@@ -161,6 +345,20 @@ public class GdxFile extends File
 		return getFileHandle().readString();
 	}
 
+	private GdxFile rename(GdxFile file)
+	{
+		if (equals(file)) return this;
+		GdxFile copy = copy(file);
+		if (copy.equals(GdxFile.NOTHING)) return this;
+		return copy;
+	}
+
+	@Override
+	public GdxFile rename(String name)
+	{
+		return rename(new GdxFile(name, getType()));
+	}
+
 	public GdxFile setFileType(FileType fileType)
 	{
 		return new GdxFile(getPath(), fileType);
@@ -170,6 +368,12 @@ public class GdxFile extends File
 	public GdxFile setPath(String path)
 	{
 		return new GdxFile(path, getType());
+	}
+
+	@Override
+	public GdxFile write(byte[] contents)
+	{
+		return new GdxFile(getFile().write(contents), getType());
 	}
 
 	public GdxFile write(Pixmap pixmap)

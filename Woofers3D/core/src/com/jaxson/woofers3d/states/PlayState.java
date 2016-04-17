@@ -16,6 +16,7 @@ import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.io.excel.ExcelFile;
+import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.io.excel.MyCell;
 import com.jaxson.lib.io.excel.MyCellStyle;
 import com.jaxson.lib.io.excel.MyRow;
@@ -82,7 +83,7 @@ public class PlayState extends BulletState
 		applyPhysics(player);
 		add(player);
 
-		ExcelFile file = new ExcelFile("woofers.xlsx");
+		ExcelFile file = new ExcelFile(new GdxFile("woozz.xlsx"));
 		MyWorkbook excelDoc = new MyWorkbook();
 		MySheet sheet = excelDoc.createSheet();
 		MyRow row = sheet.createRow();
@@ -97,7 +98,7 @@ public class PlayState extends BulletState
 		file.write(excelDoc);
 	}
 
-	@Override
+	@Override1
 	public void dispose()
 	{
 		super.dispose();

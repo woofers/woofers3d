@@ -1,21 +1,198 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.io.FileType;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelFile extends File
+public class ExcelFile implements File<ExcelFile>
 {
 	private static final String EXTENSION_NOT_FOUND = "The file is not an Excel file.";
 
+	public static final ExcelFile NOTHING = new ExcelFile(DefaultFile.NOTHING);
+
+	private File file;
+
+	public ExcelFile(File file)
+	{
+		this.file = file;
+	}
+
 	public ExcelFile(String path)
 	{
-		super(path);
+		this(new DefaultFile(path));
+	}
+
+	@Override
+	public ExcelFile append(String contents)
+	{
+		return new ExcelFile(getFile().append(contents));
+	}
+
+	@Override
+	public boolean canRead()
+	{
+		return getFile().canRead();
+	}
+
+	@Override
+	public boolean canWrite()
+	{
+		return getFile().canWrite();
+	}
+
+	@Override
+	public ExcelFile copy(ExcelFile file)
+	{
+		return new ExcelFile(getFile().copy(file));
+	}
+
+	@Override
+	public ExcelFile createDirectory()
+	{
+		return new ExcelFile(getFile().createDirectory());
+	}
+
+	@Override
+	public ExcelFile createFile()
+	{
+		return new ExcelFile(getFile().createFile());
+	}
+
+	@Override
+	public ExcelFile delete()
+	{
+		return new ExcelFile(getFile().delete());
+	}
+
+	@Override
+	public boolean equals(ExcelFile file)
+	{
+		return getFile().equals(file);
+	}
+
+	@Override
+	public boolean exists()
+	{
+		return getFile().exists();
+	}
+
+	@Override
+	public BufferedReader getBufferedReader() throws FileNotFoundException
+	{
+		return getFile().getBufferedReader();
+	}
+
+	@Override
+	public ExcelFile getChild(String child)
+	{
+		return new ExcelFile(getFile().getChild(child));
+	}
+
+	@Override
+	public String getExtension()
+	{
+		return getFile().getExtension();
+	}
+
+	@Override
+	public FileType getExtensionType()
+	{
+		return getFile().getExtensionType();
+	}
+
+	private File getFile()
+	{
+		return file;
+	}
+
+	@Override
+	public FileInputStream getFileInputStream() throws FileNotFoundException
+	{
+		return getFile().getFileInputStream();
+	}
+
+	@Override
+	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException
+	{
+		return getFile().getFileOutputStream();
+	}
+
+	@Override
+	public FileReader getFileReader() throws FileNotFoundException
+	{
+		return getFile().getFileReader();
+	}
+
+	@Override
+	public java.io.File getJavaFile()
+	{
+		return getFile().getJavaFile();
+	}
+
+	@Override
+	public String getName()
+	{
+		return getFile().getName();
+	}
+
+	@Override
+	public ExcelFile getParent()
+	{
+		return new ExcelFile(getFile().getParent());
+	}
+
+	@Override
+	public String getParentPath()
+	{
+		return getFile().getParentPath();
+	}
+
+	@Override
+	public String getPath()
+	{
+		return getFile().getPath();
+	}
+
+	@Override
+	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
+	{
+		return getFile().getPrintWriter();
+	}
+
+	@Override
+	public Date getWhenLastModified()
+	{
+		return getFile().getWhenLastModified();
+	}
+
+	@Override
+	public boolean isDirectory()
+	{
+		return getFile().isDirectory();
+	}
+
+	@Override
+	public boolean isFile()
+	{
+		return getFile().isFile();
+	}
+
+	@Override
+	public long length()
+	{
+		return getFile().length();
 	}
 
 	private Workbook loadWordbook()
@@ -24,6 +201,24 @@ public class ExcelFile extends File
 		if (type.equals(FileType.XLS)) return readXlsxWorkbook();
 		if (type.equals(FileType.XLSX)) return readXlsxWorkbook();
 		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
+	}
+
+	@Override
+	public ExcelFile move(ExcelFile file)
+	{
+		return new ExcelFile(getFile().move(file));
+	}
+
+	@Override
+	public byte[] readBytes()
+	{
+		return getFile().readBytes();
+	}
+
+	@Override
+	public String readString()
+	{
+		return getFile().readString();
 	}
 
 	public MyWorkbook readWorkbook()
@@ -64,6 +259,12 @@ public class ExcelFile extends File
 	}
 
 	@Override
+	public ExcelFile rename(String path)
+	{
+		return new ExcelFile(getFile().rename(path));
+	}
+
+	@Override
 	public ExcelFile setPath(String path)
 	{
 		return new ExcelFile(path);
@@ -72,6 +273,12 @@ public class ExcelFile extends File
 	public ExcelFile write()
 	{
 		return write(new MyWorkbook());
+	}
+
+	@Override
+	public ExcelFile write(byte[] contents)
+	{
+		return new ExcelFile(getFile().write(contents));
 	}
 
 	public ExcelFile write(MyWorkbook workbook)
@@ -98,5 +305,11 @@ public class ExcelFile extends File
 			}
 		}
 		return this;
+	}
+
+	@Override
+	public ExcelFile write(String contents)
+	{
+		return new ExcelFile(getFile().write(contents));
 	}
 }

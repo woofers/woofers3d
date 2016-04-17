@@ -86,13 +86,13 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 	}
 
 	/**
-	 * Saves the current {@link Object} to a {@link File}.
+	 * Saves the current {@link Object} to a {@link DefaultFile}.
 	 */
 	@Override
 	public abstract void save();
 
 	/**
-	 * Saves the given data to the {@link File}.
+	 * Saves the given data to the {@link DefaultFile}.
 	 * @param data The data to write
 	 */
 	protected void save(String data)
@@ -112,7 +112,7 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 
 	/**
 	 * Sets the save path where the {@link Object} saves.
-	 * @param saveFile The {@link File} that the {@link Object} saves to
+	 * @param saveFile The {@link DefaultFile} that the {@link Object} saves to
 	 */
 	@Override
 	public void setSaveFile(F saveFile)
@@ -121,7 +121,7 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 	}
 
 	/**
-	 * Searches for a {@link File} and if one exists it reads it.
+	 * Searches for a {@link DefaultFile} and if one exists it reads it.
 	 * Otherwise it creates one.
 	 */
 	@Override
