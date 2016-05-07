@@ -10,9 +10,9 @@ import com.jaxson.lib.util.exceptions.NullValueException;
  * @since 1.0
  * @todo Fix null saveFile
  */
-public abstract class SaveObject<F extends File> implements Saveable<F>
+public abstract class SaveObject implements Saveable
 {
-	private transient F saveFile;
+	private transient File saveFile;
 	private SaveBehavior saveBehavior = SaveBehavior.Manual;
 
 	/**
@@ -49,7 +49,7 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 	 * @return {@link F} - The save file of the {@link Object}
 	 */
 	@Override
-	public F getSaveFile()
+	public File getSaveFile()
 	{
 		if (saveFile == null) throw new NullValueException("saveFile");
 		return saveFile;
@@ -115,13 +115,13 @@ public abstract class SaveObject<F extends File> implements Saveable<F>
 	 * @param saveFile The {@link DefaultFile} that the {@link Object} saves to
 	 */
 	@Override
-	public void setSaveFile(F saveFile)
+	public void setSaveFile(File saveFile)
 	{
 		this.saveFile = saveFile;
 	}
 
 	/**
-	 * Searches for a {@link DefaultFile} and if one exists it reads it.
+	 * Searches for a {@link File} and if one exists it reads it.
 	 * Otherwise it creates one.
 	 */
 	@Override

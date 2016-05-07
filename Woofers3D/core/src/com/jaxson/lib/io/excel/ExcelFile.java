@@ -77,7 +77,7 @@ public class ExcelFile implements File<ExcelFile>
 	}
 
 	@Override
-	public boolean equals(ExcelFile file)
+	public boolean equals(File file)
 	{
 		return getFile().equals(file);
 	}

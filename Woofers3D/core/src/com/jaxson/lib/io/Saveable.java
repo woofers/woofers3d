@@ -6,7 +6,7 @@ package com.jaxson.lib.io;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public interface Saveable<F extends File>
+public interface Saveable
 {
 	/**
 	 * Indicate the {@link SaveBehavior} of a {@link Object}.
@@ -46,9 +46,9 @@ public interface Saveable<F extends File>
 
 	/**
 	 * Gets the save file of the {@link Object}.
-	 * @return {@link F} - The save file of the {@link Object}
+	 * @return {@link File} - The save file of the {@link Object}
 	 */
-	public F getSaveFile();
+	public File getSaveFile();
 
 	/**
 	 * Gets whether the {@link Object} has save data.
@@ -78,7 +78,7 @@ public interface Saveable<F extends File>
 	 * Sets the save path where the {@link Object} saves.
 	 * @param saveFile The file that the {@link Object} saves to
 	 */
-	public void setSaveFile(F saveFile);
+	public void setSaveFile(File saveFile);
 
 	/**
 	 * Searches for a save file and if one exists it reads it.

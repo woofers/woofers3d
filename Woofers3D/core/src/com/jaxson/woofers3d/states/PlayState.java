@@ -12,7 +12,7 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
 import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
-import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.jaxson.lib.gdx.graphics.color.RandomColor;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.io.excel.ExcelFile;
@@ -25,6 +25,7 @@ import com.jaxson.lib.io.excel.MyWorkbook;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import com.jaxson.lib.io.excel.MyColor;
 
 public class PlayState extends BulletState
 {
@@ -53,7 +54,7 @@ public class PlayState extends BulletState
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] = new RigidBox(new MyColor().random(255, 255, 95, 165, 0, 50));
+			boxs[i] = new RigidBox(new RandomColor(255, 255, 95, 165, 0, 50));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(), boxSizeRange.floatValue(), boxSizeRange.floatValue()));
 			boxs[i].setMass(massRange.floatValue());
@@ -66,7 +67,7 @@ public class PlayState extends BulletState
 			spheres = new RigidSphere[SPHERE_AMOUNT];
 			for (int i = 0; i < SPHERE_AMOUNT; i ++)
 			{
-				spheres[i] = new RigidSphere(new MyColor().random());
+				spheres[i] = new RigidSphere(new RandomColor());
 				spheres[i].setLocation(new RandomVector3(6f, 30f));
 				spheres[i].setSize(new Vector3(2f, 2f, 2f));
 				spheres[i].setMass(massRange.floatValue());
@@ -87,18 +88,14 @@ public class PlayState extends BulletState
 		MyWorkbook excelDoc = new MyWorkbook();
 		MySheet sheet = excelDoc.createSheet();
 		MyRow row = sheet.createRow();
-		for (IndexedColors color: IndexedColors.values())
-		{
-			MyCell cell = row.createCell();
-			MyCellStyle style = excelDoc.createCellStyle();
-			style.setFillForegroundColor(new com.jaxson.lib.io.excel.MyColor(color));
-			cell.setValue(color.getIndex());
-			cell.setStyle(style);
-		}
+		MyCell cell = row.createCell();
+		MyCellStyle style = excelDoc.createCellStyle();
+		style.setFillForegroundColor(MyColor.CORRECT);
+		cell.setStyle(style);
 		file.write(excelDoc);
 	}
 
-	@Override1
+	@Override
 	public void dispose()
 	{
 		super.dispose();
@@ -109,7 +106,7 @@ public class PlayState extends BulletState
 	{
 		if (InputHandler.justTouched())
 		{
-			Ray ray = player.getForwardRay();
+			Ray ray = player.getBackwardRay();
 			if (InputHandler.hasTouchScreen()) ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)

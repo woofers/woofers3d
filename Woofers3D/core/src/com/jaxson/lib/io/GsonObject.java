@@ -9,7 +9,7 @@ import com.google.gson.Gson;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class GsonObject<T, F extends DefaultFile> extends SaveObject<F>
+public abstract class GsonObject<T> extends SaveObject
 {
 	/**
 	 * Stores the class type for obect parsing.

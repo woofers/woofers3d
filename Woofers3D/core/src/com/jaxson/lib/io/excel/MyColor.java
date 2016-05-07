@@ -70,10 +70,20 @@ public class MyColor
 
 	public MyColor(Color color)
 	{
-		this.color = color;
+		this((Object)color);
 	}
 
 	public MyColor(IndexedColors color)
+	{
+		this((Object)color);
+	}
+
+	public MyColor(int color)
+	{
+		this((Object)color);
+	}
+
+	private MyColor(Object color)
 	{
 		this.color = color;
 	}
@@ -99,6 +109,11 @@ public class MyColor
 		{
 			IndexedColors color = (IndexedColors) getColor();
 			return color.getIndex();
+		}
+		if (getColor() instanceof Integer)
+		{
+			int color = (Integer) getColor();
+			return (short) color;
 		}
 		return DEFAULT.getIndex();
 	}

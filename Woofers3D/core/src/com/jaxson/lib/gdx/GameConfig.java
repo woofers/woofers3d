@@ -15,7 +15,7 @@ import com.jaxson.lib.math.Reciprocal;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class GameConfig extends GsonObject<GameConfig, DefaultFile>
+public class GameConfig extends GsonObject<GameConfig>
 {
 	/**
 	 * Used in {@link #setBackgroundFps(int)} to pause the {@link Game} on
@@ -71,6 +71,7 @@ public class GameConfig extends GsonObject<GameConfig, DefaultFile>
 
 	/**
 	 * Constructs from another config.
+	 * @param config The config
 	 */
 	public GameConfig(GameConfig config)
 	{

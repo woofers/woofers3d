@@ -37,7 +37,7 @@ public interface File<F extends File>
 
 	public F delete();
 
-	public boolean equals(F file);
+	public boolean equals(File file);
 
 	/**
 	 * Gets whether the {@link DefaultFile} exists.

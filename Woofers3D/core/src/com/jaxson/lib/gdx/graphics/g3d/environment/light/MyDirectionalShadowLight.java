@@ -20,7 +20,7 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 
 	public MyDirectionalShadowLight()
 	{
-		this(Light.DIRECTION);
+		this(DIRECTION);
 	}
 
 	public MyDirectionalShadowLight(Color color, Vector3 direction)
@@ -74,7 +74,7 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 
 	public MyDirectionalShadowLight(Vector3 direction)
 	{
-		this(Light.COLOR, direction);
+		this(COLOR, direction);
 	}
 
 	public void begin(Camera camera)

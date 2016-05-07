@@ -104,16 +104,15 @@ public class DefaultFile implements File<DefaultFile>
 	}
 
 	@Override
-	public boolean equals(DefaultFile file)
-	{
-		return equals(file.getPath());
-	}
-
-	@Override
 	public boolean equals(Object file)
 	{
 		if (file instanceof DefaultFile) return equals((DefaultFile) file);
 		return false;
+	}
+
+	public boolean equals(File file)
+	{
+		return equals(file.getPath());
 	}
 
 	protected boolean equals(String path)
@@ -155,8 +154,11 @@ public class DefaultFile implements File<DefaultFile>
 	@Override
 	public DefaultFile getChild(String child)
 	{
+		if (!exists() || isFile()) return DefaultFile.NOTHING;
 		if (child.charAt(0) != FOWARD_SLASH.charAt(0)) child = FOWARD_SLASH + child;
-		return new DefaultFile(getPath() + child);
+		DefaultFile file =  new DefaultFile(getPath() + child);
+		if (file.exists()) return file;
+		return DefaultFile.NOTHING;
 	}
 
 	/**

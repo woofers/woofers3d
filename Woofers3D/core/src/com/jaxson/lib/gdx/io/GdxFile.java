@@ -30,10 +30,15 @@ public class GdxFile implements File<GdxFile>
 	private static final String OBJ_EXTENSION = "obj";
 	private static final String LOADER_NOT_FOUND = "Loader could not be found for given filetype.";
 
-	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING, FileType.Absolute);
+	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING);
 
 	private File file;
 	private FileHandle fileHandle;
+
+	public GdxFile(File file)
+	{
+		this(file, FileType.Absolute);
+	}
 
 	public GdxFile(File file, FileType fileType)
 	{
@@ -43,7 +48,7 @@ public class GdxFile implements File<GdxFile>
 
 	public GdxFile(String path)
 	{
-		this(path, FileType.Absolute);
+		this(new DefaultFile(path));
 	}
 
 	public GdxFile(String path, FileType fileType)
@@ -87,8 +92,8 @@ public class GdxFile implements File<GdxFile>
 	@Override
 	public GdxFile createDirectory()
 	{
-		if (getType() == FileType.Classpath) throw new GdxRuntimeException("Cannot mkdirs with a classpath file: " + getPath());
-		if (getType() == FileType.Internal) throw new GdxRuntimeException("Cannot mkdirs with an internal file: " + getPath());
+		if (exists() && isDirectory()) return this;
+		if (getType() == FileType.Classpath || getType() == FileType.Internal) return GdxFile.NOTHING;
 		return new GdxFile(getFile().createDirectory(), getType());
 	}
 
@@ -123,16 +128,23 @@ public class GdxFile implements File<GdxFile>
 		return fileType == getType();
 	}
 
-	@Override
 	public boolean equals(GdxFile file)
 	{
 		return equals(file.getPath()) && equals(file.getType());
 	}
 
 	@Override
+	public boolean equals(File file)
+	{
+		return equals(file.getPath());
+	}
+
+	@Override
 	public boolean equals(Object file)
 	{
-		if (file instanceof DefaultFile) return equals(file);
+		if (file instanceof DefaultFile) return equals((DefaultFile)file);
+		if (file instanceof GdxFile) return equals((GdxFile)file);
+		if (file instanceof File) return equals((File)file);
 		return false;
 	}
 
@@ -390,7 +402,14 @@ public class GdxFile implements File<GdxFile>
 
 	private GdxFile write(String contents, boolean overwrite)
 	{
-		getFileHandle().writeString(contents, !overwrite);
+		try
+		{
+			getFileHandle().writeString(contents, !overwrite);
+		}
+		catch (Exception ex)
+		{
+			return GdxFile.NOTHING;
+		}
 		return this;
 	}
 

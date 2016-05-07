@@ -12,7 +12,7 @@ public class RandomColor extends MyColor
 
 	public RandomColor(Color minColor, Color maxColor)
 	{
-		super(new RandomNumber(minColor.r, maxColor.r).floatValue(),
+		super(	new RandomNumber(minColor.r, maxColor.r).floatValue(),
 				new RandomNumber(minColor.g, maxColor.g).floatValue(),
 				new RandomNumber(minColor.b, maxColor.b).floatValue());
 	}

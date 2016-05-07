@@ -13,7 +13,7 @@ import com.jaxson.lib.io.File;
 import com.jaxson.lib.io.SaveObject;
 import java.nio.ByteBuffer;
 
-public class Screenshot extends SaveObject<GdxFile> implements Disposable
+public class Screenshot extends SaveObject implements Disposable
 {
 	private static final String NAME = "Screenshot ";
 	private static final String FOLDER = "screenshots";
@@ -29,7 +29,7 @@ public class Screenshot extends SaveObject<GdxFile> implements Disposable
 
 	public Screenshot(GdxFile file)
 	{
-		saveScreenshot(getGraphics().getWidth(), getGraphics().getHeight());
+		saveScreenshot();
 		setSaveFile(file);
 	}
 
@@ -83,7 +83,13 @@ public class Screenshot extends SaveObject<GdxFile> implements Disposable
 	@Override
 	public void save()
 	{
-		getSaveFile().write(image);
+		GdxFile file = (GdxFile)getSaveFile();
+		file.write(image);
+	}
+
+	private void saveScreenshot()
+	{
+		saveScreenshot(getGraphics().getWidth(), getGraphics().getHeight());
 	}
 
 	private void saveScreenshot(int width, int height)

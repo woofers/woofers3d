@@ -2,7 +2,7 @@ package com.jaxson.lib.gdx.graphics;
 
 public enum DisplayOrientation
 {
-	Portrait, Landscape, ReversePortrait, ReverseLandscape;
+	Portrait(0), Landscape(90), ReversePortrait(180), ReverseLandscape(270);
 
 	private static final int PORTRAIT_ANGLE = 0;
 	private static final int LANDSCAPE_ANGLE = 90;
@@ -10,18 +10,16 @@ public enum DisplayOrientation
 	private static final int REVERSE_LANDSCAPE_ANGLE = 270;
 	private static final int MAX_ANGLE = 360;
 
+	private int angle;
+
+	private DisplayOrientation(int angle)
+	{
+		this.angle = angle;
+	}
+
 	public int getAngle()
 	{
-		switch (this)
-		{
-			case Landscape:
-				return LANDSCAPE_ANGLE;
-			case ReversePortrait:
-				return REVERSE_PORTRAIT_ANGLE;
-			case ReverseLandscape:
-				return REVERSE_LANDSCAPE_ANGLE;
-		}
-		return PORTRAIT_ANGLE;
+		return angle;
 	}
 
 	public boolean isLandscape()

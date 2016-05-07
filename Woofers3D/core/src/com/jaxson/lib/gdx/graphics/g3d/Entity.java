@@ -82,7 +82,17 @@ public abstract class Entity extends GameObject
 
 	public Ray getForwardRay()
 	{
-		return new Ray(getLocation(), getDirection());
+		return getRay(0f);
+	}
+
+	public Ray getBackwardRay()
+	{
+		return getRay(180f);
+	}
+
+	public Ray getRay(float direction)
+	{
+		return new Ray(getLocation(), getDirection().rotate(Vector3.Y, direction));
 	}
 
 	public Vector3 getLocation()
@@ -120,7 +130,7 @@ public abstract class Entity extends GameObject
 		return new Ray(getCenterLocation(), getDeltaLocation(location));
 	}
 
-	public Quaternion getRoationQuat()
+	public Quaternion getRoationQuaternion()
 	{
 		return getTransform().getRotation(new Quaternion());
 	}
@@ -132,7 +142,7 @@ public abstract class Entity extends GameObject
 
 	public Vector3 getRotation()
 	{
-		Quaternion rotation = getRoationQuat();
+		Quaternion rotation = getRoationQuaternion();
 		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
 	}
 

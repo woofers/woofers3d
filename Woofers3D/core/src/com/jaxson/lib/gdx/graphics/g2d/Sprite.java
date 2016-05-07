@@ -37,7 +37,12 @@ public class Sprite extends GameObject
 		sprite.draw(spriteBatch, getAlpha());
 	}
 
-	public void flip(boolean flipX, boolean flipY)
+	public void flip()
+	{
+		flip(true, true);
+	}
+
+	private void flip(boolean flipX, boolean flipY)
 	{
 		sprite.flip(flipX, flipY);
 	}

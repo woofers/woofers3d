@@ -8,10 +8,10 @@ public class MyDirectionalLight extends BaseLight<DirectionalLight>
 {
 	public MyDirectionalLight()
 	{
-		this(Light.DIRECTION);
+		this(DIRECTION);
 	}
 
-	public MyDirectionalLight(BaseLight<?> light)
+	public MyDirectionalLight(Light light)
 	{
 		this(light.getColor(), light.getDirection());
 	}
@@ -28,7 +28,7 @@ public class MyDirectionalLight extends BaseLight<DirectionalLight>
 
 	public MyDirectionalLight(Vector3 direction)
 	{
-		this(Light.COLOR, direction);
+		this(COLOR, direction);
 	}
 
 	@Override
