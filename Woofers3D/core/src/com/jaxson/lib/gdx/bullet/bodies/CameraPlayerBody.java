@@ -46,8 +46,6 @@ public class CameraPlayerBody extends PlayerBody
 	protected void input(float dt)
 	{
 		super.input(dt);
-		int scroll = 5;
-		getCamera().setZoom(new Vector3(1f, scroll, scroll));
 	}
 
 	public void lockCamera()

@@ -24,6 +24,7 @@ public abstract class BulletState extends State
 		this.world = new PhysicsWorld();
 		setWorldSize();
 		setShadows(SHADOWS);
+		setCamera(new TargetCamera(getWidth(), getHeight()));
 	}
 
 	public void applyPhysics(Floor entity)
@@ -49,6 +50,11 @@ public abstract class BulletState extends State
 	public void applyPhysics(SoftBody entity)
 	{
 		world.add(entity);
+	}
+
+	public void applyPhysics(TargetCamera camera)
+	{
+		world.add(camera);
 	}
 
 	@Override
@@ -93,12 +99,6 @@ public abstract class BulletState extends State
 	public void setCamera(Camera camera)
 	{
 		super.setCamera(camera);
-	}
-
-	public void setCamera(TargetCamera camera)
-	{
-		setCamera((Camera) camera);
-		camera.setWorld(getPhysicsWorld());
 	}
 
 	public void setShadows(boolean shadows)

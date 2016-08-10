@@ -13,7 +13,6 @@ public class PauseState extends SubState
 	private static final float PAUSE_ALPHA = 3f / 4f;
 
 	private Sprite image;
-	private Box box;
 
 	public PauseState(Game gameManager)
 	{

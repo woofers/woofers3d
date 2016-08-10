@@ -25,17 +25,21 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		indexMap = BufferUtils.newShortBuffer(meshPart.size);
 		positionOffset = meshPart.mesh.getVertexAttribute(Usage.Position).offset;
 		normalOffset = meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
-		setBody(new btSoftBody(world.getWorldInfo(), meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(), positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0));
+		setBody(new btSoftBody(world.getWorldInfo(), meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(),
+			positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0));
+		getBody().setMass(0, 0);
 		Material material = getBody().appendMaterial();
 		material.setKLST(0.2f);
 		material.setFlags(0);
-		getBody().setMass(0, 0);
 		getBody().generateBendingConstraints(2, material);
 		getBody().setConfig_piterations(7);
 		getBody().setConfig_kDF(0.2f);
 		getBody().randomizeConstraints();
 		getBody().setTotalMass(mass);
-		getBody().translate(new Vector3(50f, 25f / 3f, 5f));
+		getBody().translate(new Vector3(50f, 25f / 3f, 5f).scl(0.5f));
+		getTransform().setToTranslation(new Vector3(50f, 25f / 3f, 5f).scl(0.5f));
+		getBoundingBox();
+		transformToBody();
 	}
 
 	public SoftBody(Model model, PhysicsWorld world)
@@ -62,7 +66,8 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	@Override
 	public void update(float dt)
 	{
-		getBody().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(), positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0);
+		getBody().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh.getVertexSize(),
+			positionOffset, normalOffset, meshPart.mesh.getIndicesBuffer(), meshPart.offset, meshPart.size, indexMap, 0);
 		bodyToTransform();
 	}
 }

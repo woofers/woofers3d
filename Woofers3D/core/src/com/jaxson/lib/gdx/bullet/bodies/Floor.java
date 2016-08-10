@@ -12,8 +12,6 @@ public class Floor extends RigidBox
 	private static final float MASS = 0f;
 	private static final Color COLOR = new MyColor(81, 101, 107);
 
-	private float angle;
-
 	public Floor()
 	{
 		this(WIDTH, HEIGHT, COLOR);
@@ -27,7 +25,6 @@ public class Floor extends RigidBox
 	public Floor(float width, float height, Color color)
 	{
 		super(color);
-		this.angle = 90f;
 		setMass(MASS);
 		setScale(new Vector3(width, THICKNESS, height));
 	}
@@ -41,7 +38,6 @@ public class Floor extends RigidBox
 	@Override
 	public void update(float dt)
 	{
-		// angle = (angle + dt * 90f) % 360f;
-		// translate(new Vector3(0, MathUtils.sinDeg(angle) * 2.5f, 0f));
+
 	}
 }

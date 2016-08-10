@@ -6,7 +6,7 @@ import java.awt.event.ComponentEvent;
 
 public class ScaleContainer<T extends Panel> extends Panel
 {
-	private static class ResizeAdapter extends ComponentAdapter
+	private static class ResizeAdapter<T> extends ComponentAdapter
 	{
 		private ScaleContainer<?> object;
 

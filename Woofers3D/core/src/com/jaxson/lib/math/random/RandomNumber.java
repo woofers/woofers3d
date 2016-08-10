@@ -60,9 +60,11 @@ public class RandomNumber extends ComparableNumber
 		return value;
 	}
 
+	// Issue Here
 	@Override
 	public float floatValue()
 	{
+		if (max.floatValue() == min.floatValue()) return max.floatValue();
 		float value = getRandom().nextFloat() * (getMax().floatValue() - getMin().floatValue() + 1) + getMin().floatValue();
 		if (isExcluded(value)) return floatValue();
 		return value;

@@ -21,7 +21,6 @@ public class TargetCamera extends PerspectiveCamera
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;
-	private Vector3 combinedOffset;
 	private Vector3 offset;
 	private Vector3 zoom;
 	private Vector3 oldTargetLocation;
@@ -57,16 +56,10 @@ public class TargetCamera extends PerspectiveCamera
 		if (point == null) point = STAGE_LOCATION;
 		Vector3 newOffset = offset.cpy();
 		if (hasTarget()) newOffset.rotate(Vector3.Y, getTargetRotation().x);
-		// newOffset.scl(zoom);
 		setLocation(point);
 		translate(newOffset);
 		lookAt(point);
 		oldTargetLocation = point;
-	}
-
-	private Vector3 getCombinedOffset()
-	{
-		return combinedOffset.set(offset).scl(zoom);
 	}
 
 	public Vector3 getDeltaLocation(Vector3 location)
@@ -300,6 +293,7 @@ public class TargetCamera extends PerspectiveCamera
 	public void setWorld(PhysicsWorld world)
 	{
 		this.world = world;
+		System.out.println("w");
 	}
 
 	public void setZoom(Vector3 zoom)

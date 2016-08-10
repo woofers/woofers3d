@@ -5,10 +5,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
+import com.jaxson.lib.gdx.math.GdxMath;
 
 public abstract class ShapeBody<T extends btCollisionObject> extends EntityBody<T>
 {
 	private btConvexShape shape;
+	private Vector3 shapeScale = new Vector3(1f, 1f, 1f);
 
 	public ShapeBody(Model model, btConvexShape shape)
 	{
@@ -64,18 +66,23 @@ public abstract class ShapeBody<T extends btCollisionObject> extends EntityBody<
 
 	public void setCollisionShapeScale(float scale)
 	{
-		getCollisionShape().setLocalScaling(new Vector3(scale, scale, scale));
+		setCollisionShapeScale(new Vector3(scale, scale, scale));
 	}
 
 	public void setCollisionShapeScale(Vector3 scale)
 	{
-		getCollisionShape().setLocalScaling(scale);
+		setLocalScaling(scale.scl(getScale()));
 	}
 
 	@Override
 	public void setScale(Vector3 scale)
 	{
 		super.setScale(scale);
-		setCollisionShapeScale(scale);
+		setLocalScaling(scale);
+	}
+
+	private void setLocalScaling(Vector3 scale)
+	{
+		getCollisionShape().setLocalScaling(scale);
 	}
 }

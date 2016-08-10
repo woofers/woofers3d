@@ -19,8 +19,8 @@ public class Player extends CameraPlayerBody
 	public Player(TargetCamera camera)
 	{
 		super(PATH, SHAPE, camera);
-		setCollisionShapeScale(HITBOX_SCALE);
 		setScale(SCALE);
+		setCollisionShapeScale(HITBOX_SCALE);
 	}
 
 	@Override

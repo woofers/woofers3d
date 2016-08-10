@@ -26,6 +26,7 @@ import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.util.MyArrayList;
 
 public class PhysicsWorld
@@ -90,6 +91,11 @@ public class PhysicsWorld
 		this.worldInfo.getSparsesdf().Initialize();
 
 		setGravity(GRAVITY);
+	}
+
+	public void add(TargetCamera camera)
+	{
+		camera.setWorld(this);
 	}
 
 	public void add(Floor entity)

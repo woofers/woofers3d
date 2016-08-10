@@ -13,16 +13,16 @@ import java.util.Stack;
  */
 public class GameStates extends GameObject
 {
-	private Game gameManager;
+	private Game game;
 	private Stack<State> states;
 
 	/**
 	 * Constructs a empty {@link GameStates}
-	 * @param gameManager Reference to the {@link Game}
+	 * @param game Reference to the {@link Game}
 	 */
-	public GameStates(Game gameManager)
+	public GameStates(Game game)
 	{
-		this.gameManager = gameManager;
+		this.game = game;
 		this.states = new Stack<State>();
 	}
 
@@ -55,17 +55,17 @@ public class GameStates extends GameObject
 
 	private boolean isFocused()
 	{
-		return gameManager.isFocused();
+		return game.isFocused();
 	}
 
 	private boolean isMinimized()
 	{
-		return gameManager.isMinimized();
+		return game.isMinimized();
 	}
 
 	private boolean isPaused()
 	{
-		return gameManager.isPaused();
+		return game.isPaused();
 	}
 
 	private void makeEmpty()
@@ -79,7 +79,7 @@ public class GameStates extends GameObject
 	public void pause()
 	{
 		peek().pause();
-		if (isPaused() && hasPausedState()) peek().getSubState().pause();
+		if (updatesSubState()) peek().getSubState().pause();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class GameStates extends GameObject
 	{
 		if (isEmpty()) return;
 		peek().render(spriteBatch, modelBatch);
-		if (isPaused() && hasPausedState()) peek().getSubState().render(spriteBatch, modelBatch);
+		if (updatesSubState()) peek().getSubState().render(spriteBatch, modelBatch);
 	}
 
 	/**
@@ -127,14 +127,19 @@ public class GameStates extends GameObject
 	public void resize(int width, int height)
 	{
 		peek().resize(width, height);
-		if (isPaused() && hasPausedState()) peek().getSubState().resize(width, height);
+		if (updatesSubState()) peek().getSubState().resize(width, height);
 	}
 
 	@Override
 	public void resume()
 	{
 		peek().resume();
-		if (isPaused() && hasPausedState()) peek().getSubState().resume();
+		if (updatesSubState()) peek().getSubState().resume();
+	}
+
+	public boolean updatesSubState()
+	{
+		return isPaused() && hasPausedState();
 	}
 
 	/**

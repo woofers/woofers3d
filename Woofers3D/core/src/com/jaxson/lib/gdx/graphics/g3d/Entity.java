@@ -20,7 +20,10 @@ public abstract class Entity extends GameObject
 	private static final int MATRIX_DIRECTION_Y = 9;
 	private static final int MATRIX_DIRECTION_Z = 10;
 	private static final int ROOT_NODE_LOCATION = 0;
+	private static final float FORWARD_DIRECTION = 0f;
+	private static final float BACKWARD_DIRECTION = 180f;
 
+	private Vector3 scale = new Vector3(1f, 1f, 1f);
 	private ModelInstance modelInstance;
 
 	public Entity(Model model)
@@ -82,12 +85,12 @@ public abstract class Entity extends GameObject
 
 	public Ray getForwardRay()
 	{
-		return getRay(0f);
+		return getRay(FORWARD_DIRECTION);
 	}
 
 	public Ray getBackwardRay()
 	{
-		return getRay(180f);
+		return getRay(BACKWARD_DIRECTION);
 	}
 
 	public Ray getRay(float direction)
@@ -148,7 +151,7 @@ public abstract class Entity extends GameObject
 
 	public Vector3 getScale()
 	{
-		return getTransform().getScale(new Vector3());
+		return getRootNode().scale;
 	}
 
 	public Vector3 getSize()

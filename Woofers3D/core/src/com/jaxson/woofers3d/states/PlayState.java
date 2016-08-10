@@ -13,6 +13,7 @@ import com.jaxson.lib.gdx.bullet.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.bodies.SoftBox;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.io.excel.ExcelFile;
@@ -25,7 +26,7 @@ import com.jaxson.lib.io.excel.MyWorkbook;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import com.jaxson.lib.io.excel.MyColor;
+import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 
 public class PlayState extends BulletState
 {
@@ -38,12 +39,16 @@ public class PlayState extends BulletState
 	private RigidSphere[] spheres;
 	private SoftBox softBox;
 	private Player player;
+	private TargetCamera camera;
 
-	public PlayState(Game gameManager)
+	public PlayState(Game game)
 	{
-		super(gameManager);
-		setSubState(new PauseState(gameManager));
-		getTargetCamera().setWorld(getPhysicsWorld());
+		super(game);
+		setSubState(new PauseState(game));
+
+		camera = new TargetCamera(getWidth(), getHeight());
+		applyPhysics(camera);
+		setCamera(camera);
 
 		floor = new Floor();
 		applyPhysics(floor);
@@ -54,6 +59,7 @@ public class PlayState extends BulletState
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
+			//boxs[i] = new RigidBox(new RandomColor(new MyColor(255, 95, 0), new MyColor(255, 95, 0)));
 			boxs[i] = new RigidBox(new RandomColor(255, 255, 95, 165, 0, 50));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(), boxSizeRange.floatValue(), boxSizeRange.floatValue()));
@@ -80,19 +86,9 @@ public class PlayState extends BulletState
 		applyPhysics(softBox);
 		add(softBox);
 
-		player = new Player(getTargetCamera());
+		player = new Player(camera);
 		applyPhysics(player);
 		add(player);
-
-		ExcelFile file = new ExcelFile(new GdxFile("woozz.xlsx"));
-		MyWorkbook excelDoc = new MyWorkbook();
-		MySheet sheet = excelDoc.createSheet();
-		MyRow row = sheet.createRow();
-		MyCell cell = row.createCell();
-		MyCellStyle style = excelDoc.createCellStyle();
-		style.setFillForegroundColor(MyColor.CORRECT);
-		cell.setStyle(style);
-		file.write(excelDoc);
 	}
 
 	@Override
@@ -106,13 +102,13 @@ public class PlayState extends BulletState
 	{
 		if (InputHandler.justTouched())
 		{
-			Ray ray = player.getBackwardRay();
+			Ray ray = player.getForwardRay();
 			if (InputHandler.hasTouchScreen()) ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{
 				RigidBody rigidBody = (RigidBody) body;
-				rigidBody.applyCentralImpulse(ray.direction.scl(-IMPULSE_SPEED));
+				rigidBody.applyCentralImpulse(ray, IMPULSE_SPEED);
 			}
 		}
 	}

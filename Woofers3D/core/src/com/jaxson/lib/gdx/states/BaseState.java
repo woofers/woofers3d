@@ -16,12 +16,12 @@ import com.jaxson.lib.gdx.util.GameObject;
 
 public abstract class BaseState extends GameObject
 {
-	private Game gameManager;
+	private Game game;
 	private MixedRenderer renderer;
 
 	protected BaseState(Game game)
 	{
-		this.gameManager = game;
+		this.game = game;
 		this.renderer = new MixedRenderer();
 	}
 
@@ -43,7 +43,7 @@ public abstract class BaseState extends GameObject
 
 	public Camera getCamera()
 	{
-		return gameManager.getCamera();
+		return getGame().getCamera();
 	}
 
 	public MyEnvironment getEnvironment()
@@ -53,12 +53,12 @@ public abstract class BaseState extends GameObject
 
 	public Game getGame()
 	{
-		return gameManager;
+		return game;
 	}
 
 	private Graphics getGraphics()
 	{
-		return gameManager.getGraphics();
+		return getGame().getGraphics();
 	}
 
 	public int getHeight()
@@ -68,17 +68,12 @@ public abstract class BaseState extends GameObject
 
 	private Input getInput()
 	{
-		return gameManager.getInput();
-	}
-
-	public TargetCamera getTargetCamera()
-	{
-		return gameManager.getTargetCamera();
+		return getGame().getInput();
 	}
 
 	public Viewport getViewport()
 	{
-		return gameManager.getViewport();
+		return getGame().getViewport();
 	}
 
 	public int getWidth()
@@ -103,12 +98,12 @@ public abstract class BaseState extends GameObject
 
 	public void setCamera(Camera camera)
 	{
-		gameManager.setCamera(camera);
+		getGame().setCamera(camera);
 	}
 
 	public void setViewport(Viewport viewport)
 	{
-		gameManager.setViewport(viewport);
+		getGame().setViewport(viewport);
 	}
 
 	@Override

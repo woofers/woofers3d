@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.g2d.Screenshot;
 import com.jaxson.lib.gdx.input.InputHandler;
@@ -58,7 +58,7 @@ public class Display extends GameObject
 		this.gameManager = gameManager;
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
-		this.camera = new TargetCamera(getWidth(), getHeight());
+		this.camera = new OrthographicCamera(getWidth(), getHeight());
 		this.viewport = new FillViewport(getWidth(), getHeight(), getCamera());
 		this.font = new BitmapFont();
 
@@ -358,16 +358,6 @@ public class Display extends GameObject
 	public SpriteBatch getSpriteBatch()
 	{
 		return spriteBatch;
-	}
-
-	/**
-	 * Gets the {@link TargetCamera} if it exists.
-	 * @return {@link SpriteBatch} - The {@link TargetCamera}
-	 */
-	public TargetCamera getTargetCamera()
-	{
-		if (camera instanceof TargetCamera) return (TargetCamera) camera;
-		return null;
 	}
 
 	public int getTopGutterHeight()

@@ -21,8 +21,8 @@ import com.jaxson.lib.gdx.states.State;
 public class Game
 {
 	private GameConfig config;
-	private GameStates gameStateManager;
-	private Display displayManager;
+	private GameStates gameStates;
+	private Display display;
 	private InputHandler inputHandler;
 	private float dt;
 	private float accumulator;
@@ -33,16 +33,16 @@ public class Game
 	{
 		this.config = config;
 		this.inputHandler = new InputHandler();
-		this.gameStateManager = new GameStates(this);
-		this.displayManager = new Display(this);
+		this.gameStates = new GameStates(this);
+		this.display = new Display(this);
 		setInputProcessor(InputHandler.getInputProcessor());
 		InputHandler.setSensitivity(getConfig().getSensitivity());
 	}
 
 	public void dispose()
 	{
-		gameStateManager.dispose();
-		displayManager.dispose();
+		gameStates.dispose();
+		display.dispose();
 	}
 
 	public void exit()
@@ -67,7 +67,7 @@ public class Game
 
 	public Camera getCamera()
 	{
-		return displayManager.getCamera();
+		return display.getCamera();
 	}
 
 	public float getClampInterval()
@@ -97,7 +97,7 @@ public class Game
 
 	public GL20 getGl()
 	{
-		return displayManager.getGl();
+		return display.getGl();
 	}
 
 	public Graphics getGraphics()
@@ -120,14 +120,9 @@ public class Game
 		return getConfig().getStepInterval();
 	}
 
-	public TargetCamera getTargetCamera()
-	{
-		return displayManager.getTargetCamera();
-	}
-
 	public Viewport getViewport()
 	{
-		return displayManager.getViewport();
+		return display.getViewport();
 	}
 
 	public boolean hasFixedTimeStamp()
@@ -147,7 +142,7 @@ public class Game
 
 	public boolean isFocused()
 	{
-		return displayManager.isFocused();
+		return display.isFocused();
 	}
 
 	public boolean isIOS()
@@ -157,7 +152,7 @@ public class Game
 
 	public boolean isMinimized()
 	{
-		return displayManager.isMinimized();
+		return display.isMinimized();
 	}
 
 	public boolean isMobile()
@@ -167,7 +162,7 @@ public class Game
 
 	public boolean isPaused()
 	{
-		return displayManager.isPaused();
+		return display.isPaused();
 	}
 
 	public boolean isSmartPhone()
@@ -187,13 +182,13 @@ public class Game
 
 	public void pause()
 	{
-		gameStateManager.pause();
-		displayManager.pause();
+		gameStates.pause();
+		display.pause();
 	}
 
 	public void push(State state)
 	{
-		gameStateManager.push(state);
+		gameStates.push(state);
 	}
 
 	public void render()
@@ -215,26 +210,26 @@ public class Game
 		{
 			update(dt);
 		}
-		displayManager.render();
-		gameStateManager.render(displayManager.getSpriteBatch(), displayManager.getModelBatch());
-		displayManager.drawFps();
+		display.render();
+		gameStates.render(display.getSpriteBatch(), display.getModelBatch());
+		display.drawFps();
 	}
 
 	public void resize(int width, int height)
 	{
-		displayManager.resize(width, height);
-		gameStateManager.resize(width, height);
+		gameStates.resize(width, height);
+		display.resize(width, height);
 	}
 
 	public void resume()
 	{
-		gameStateManager.resume();
-		displayManager.resume();
+		gameStates.resume();
+		display.resume();
 	}
 
 	public void setCamera(Camera camera)
 	{
-		displayManager.setCamera(camera);
+		display.setCamera(camera);
 	}
 
 	public void setInputProcessor(InputProcessor inputProcessor)
@@ -244,18 +239,18 @@ public class Game
 
 	public void setState(State state)
 	{
-		gameStateManager.set(state);
+		gameStates.set(state);
 	}
 
 	public void setViewport(Viewport viewport)
 	{
-		displayManager.setViewport(viewport);
+		display.setViewport(viewport);
 	}
 
 	public void update(float step)
 	{
-		gameStateManager.update(step);
-		displayManager.update(step);
+		gameStates.update(step);
+		display.update(step);
 		InputHandler.update(step);
 	}
 }
