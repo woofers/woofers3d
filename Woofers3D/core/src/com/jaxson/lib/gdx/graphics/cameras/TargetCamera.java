@@ -293,7 +293,6 @@ public class TargetCamera extends PerspectiveCamera
 	public void setWorld(PhysicsWorld world)
 	{
 		this.world = world;
-		System.out.println("w");
 	}
 
 	public void setZoom(Vector3 zoom)
