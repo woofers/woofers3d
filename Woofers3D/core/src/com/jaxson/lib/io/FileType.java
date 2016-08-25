@@ -15,6 +15,7 @@ public class FileType
 	public static final FileType OBJ = new FileType("obj");
 	public static final FileType XLS = new FileType("xls");
 	public static final FileType XLSX = new FileType("xlsx");
+	public static final FileType HTML = new FileType("html");
 
 	private static final int MAX_CHARACTER = 55;
 	private static final String MAX_CHARACTER_EXCEEDED = "Max character limit exceeded";
@@ -23,9 +24,11 @@ public class FileType
 
 	public FileType(String extension)
 	{
-		this.extension = new DefaultFile(extension).getExtension().toLowerCase();
-		if (extension.equals("jpeg")) this.extension = "jpg";
-		if (extension.length() >= MAX_CHARACTER) throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
+		DefaultFile file = new DefaultFile(extension);
+		this.extension = file.getExtension();
+		if (this.extension.isEmpty()) this.extension = file.getName();
+		if (this.extension.equals("jpeg")) this.extension = "jpg";
+		if (length() >= MAX_CHARACTER) throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}
 
 	public boolean equals(FileType other)
@@ -58,5 +61,16 @@ public class FileType
 	public boolean isSpreadSheet()
 	{
 		return equals(XLS) || equals(XLSX);
+	}
+
+	public int length()
+	{
+		return getExtension().length();
+	}
+
+	@Override
+	public String toString()
+	{
+		return getExtension();
 	}
 }

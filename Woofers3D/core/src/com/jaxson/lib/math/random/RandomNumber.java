@@ -16,8 +16,18 @@ public class RandomNumber extends ComparableNumber
 	private static final int DEFAULT_MAX = 100;
 	private static final String MIN_EXCEEDS_MAX = "Min cannot be greather or equal to max";
 
+	/**
+	 * Returns the current Random instance.
+	 * @return {@link Random} - The Random instance
+	 */
+	private static Random getRandom()
+	{
+		return ThreadLocalRandom.current();
+	}
+
 	private Number min;
 	private Number max;
+
 	private Number[] excluded;
 
 	/**
@@ -121,14 +131,5 @@ public class RandomNumber extends ComparableNumber
 		long value = getRandom().nextLong() * (getMax().longValue() - getMin().longValue() + 1) + getMin().longValue();
 		if (isExcluded(value)) return longValue();
 		return value;
-	}
-
-	/**
-	 * Returns the current Random instance.
-	 * @return {@link Random} - The Random instance
-	 */
-	private static Random getRandom()
-	{
-		return ThreadLocalRandom.current();
 	}
 }

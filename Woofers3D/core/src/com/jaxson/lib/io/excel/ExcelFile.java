@@ -3,6 +3,7 @@ package com.jaxson.lib.io.excel;
 import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.io.FileType;
+import com.jaxson.lib.io.excel.workbook.MyWorkbook;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -265,6 +266,18 @@ public class ExcelFile implements File<ExcelFile>
 	}
 
 	@Override
+	public ExcelFile setExtension(FileType extension)
+	{
+		return new ExcelFile(getFile().setExtension(extension));
+	}
+
+	@Override
+	public ExcelFile setExtension(String extension)
+	{
+		return new ExcelFile(file.setExtension(extension));
+	}
+
+	@Override
 	public ExcelFile setPath(String path)
 	{
 		return new ExcelFile(path);
@@ -291,7 +304,7 @@ public class ExcelFile implements File<ExcelFile>
 		}
 		catch (Exception ex)
 		{
-
+			return ExcelFile.NOTHING;
 		}
 		finally
 		{

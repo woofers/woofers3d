@@ -23,7 +23,7 @@ public class GameStates extends GameObject
 	public GameStates(Game game)
 	{
 		this.game = game;
-		this.states = new Stack<State>();
+		this.states = new Stack<>();
 	}
 
 	/**
@@ -137,11 +137,6 @@ public class GameStates extends GameObject
 		if (updatesSubState()) peek().getSubState().resume();
 	}
 
-	public boolean updatesSubState()
-	{
-		return isPaused() && hasPausedState();
-	}
-
 	/**
 	 * Sets the current {@link State} and disposes the previous one.
 	 * @param state The state
@@ -177,5 +172,10 @@ public class GameStates extends GameObject
 		{
 			if (hasPausedState()) peek().getSubState().update(dt);
 		}
+	}
+
+	public boolean updatesSubState()
+	{
+		return isPaused() && hasPausedState();
 	}
 }

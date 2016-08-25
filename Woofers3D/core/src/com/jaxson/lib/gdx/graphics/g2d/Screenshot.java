@@ -20,6 +20,29 @@ public class Screenshot extends SaveObject implements Disposable
 	private static final String EXTENSION = ".png";
 	private static final int BYTES_PER_PIXEL = 4;
 
+	private static Graphics getGraphics()
+	{
+		return Gdx.graphics;
+	}
+
+	private static GdxFile getScreenshotFile()
+	{
+		int counter = 0;
+		GdxFile file;
+		do
+		{
+			counter ++;
+			file = new GdxFile(getScreenshotPath(counter));
+		}
+		while (file.exists());
+		return file;
+	}
+
+	private static String getScreenshotPath(int index)
+	{
+		return FOLDER + File.FOWARD_SLASH + NAME + index + EXTENSION;
+	}
+
 	private Pixmap image;
 
 	public Screenshot()
@@ -83,7 +106,7 @@ public class Screenshot extends SaveObject implements Disposable
 	@Override
 	public void save()
 	{
-		GdxFile file = (GdxFile)getSaveFile();
+		GdxFile file = (GdxFile) getSaveFile();
 		file.write(image);
 	}
 
@@ -116,28 +139,5 @@ public class Screenshot extends SaveObject implements Disposable
 	public TextureData toTextureData()
 	{
 		return new PixmapTextureData(getPixmap(), getPixmap().getFormat(), true, true);
-	}
-
-	private static Graphics getGraphics()
-	{
-		return Gdx.graphics;
-	}
-
-	private static GdxFile getScreenshotFile()
-	{
-		int counter = 0;
-		GdxFile file;
-		do
-		{
-			counter ++;
-			file = new GdxFile(getScreenshotPath(counter));
-		}
-		while (file.exists());
-		return file;
-	}
-
-	private static String getScreenshotPath(int index)
-	{
-		return FOLDER + File.FOWARD_SLASH + NAME + index + EXTENSION;
 	}
 }

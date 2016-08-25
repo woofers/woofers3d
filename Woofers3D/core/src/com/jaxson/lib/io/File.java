@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /**
  * A File that handles writing and reading.
@@ -20,33 +19,65 @@ public interface File<F extends File>
 	public static final String FOWARD_SLASH = "/";
 	public static final String BACK_SLASH = "\\";
 	public static final String NO_EXTENSION = "";
-	public static final String DOT = Pattern.quote(".");
 	public static final String NEXT_LINE = System.lineSeparator();
 
+	/**
+	 * Appends string to the {@link File}.
+	 * @param contents The contents to append
+	 */
 	public F append(String contents);
 
+	/**
+	 * Gets whether the {@link File} can be read.
+	 * @return {@link boolean} - Whether the {@link File} can be read
+	 */
 	public boolean canRead();
 
+	/**
+	 * Gets whether the {@link File} can be written to.
+	 * @return {@link boolean} - Whether the {@link File} can be written to
+	 */
 	public boolean canWrite();
 
+	/**
+	 * Copies the file to another {@link File}.
+	 * @param file The new location
+	 * @return {@link F} - The {@link File} that was created.
+	 * If the copy failied the original location is returned.
+	 */
 	public F copy(F file);
 
+	/**
+	 * Creates a directory in the {@link File} location.
+	 * @return {@link F} - The {@link File} where the directory was created.
+	 * If no directory was created an empty {@link File} is returned.
+	 */
 	public F createDirectory();
 
+	/**
+	 * Creates a file in the {@link File} location.
+	 * @return {@link F} - The {@link File} where the file was created.
+	 * If no file was created an empty {@link File} is returned
+	 */
 	public F createFile();
 
+	/**
+	 * Deletes the {@link File} from the disk.
+	 * @return {@link F} - On success an empty {@link File} is returned.
+	 * Otherwise the original {@link File} is returned
+	 */
 	public F delete();
 
 	public boolean equals(File file);
 
 	/**
-	 * Gets whether the {@link DefaultFile} exists.
-	 * @return {@link boolean} - Whether the {@link DefaultFile} exists
+	 * Gets whether the {@link File} exists.
+	 * @return {@link boolean} - Whether the {@link File} exists
 	 */
 	public boolean exists();
 
 	/**
-	 * Return a {@link BufferedReader} from the {@link DefaultFile}
+	 * Return a {@link BufferedReader} from the {@link File}
 	 * @return {@link BufferedReader} - The buffered reader
 	 * @throws FileNotFoundException If the file is not found
 	 */
@@ -55,87 +86,160 @@ public interface File<F extends File>
 	public F getChild(String child);
 
 	/**
-	 * Gets the file extension of the {@link DefaultFile}. Returns an empty
-	 * string if
-	 * the {@link DefaultFile} has no extension.
+	 * Gets the file extension of the {@link File}. Returns an empty
+	 * string if the {@link File} has no extension.
 	 * @return {@link String} - The file extension
 	 */
 	public String getExtension();
 
+	/**
+	 * Gets the file extension of the {@link File} as a {@link FileType}.
+	 * @return {@link FileType} - The file extension
+	 */
 	public FileType getExtensionType();
 
+	/**
+	 * Returns a {@link FileInputStream} from the {@link File}
+	 * @return {@link FileInputStream} - The file input stream
+	 * @throws FileNotFoundException If the file is not found
+	 */
 	public FileInputStream getFileInputStream() throws FileNotFoundException;
 
+	/**
+	 * Returns a {@link FileOutputStream} from the {@link File}
+	 * @return {@link FileOutputStream} - The file output stream
+	 * @throws FileNotFoundException If the file is not found
+	 * @throws SecurityException If the access to the file denied
+	 */
 	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException;
 
+	/**
+	 * Returns a {@link FileInputStream} from the {@link File}
+	 * @return {@link FileInputStream} - The file input stream
+	 * @throws FileNotFoundException If the file is not found
+	 */
 	public FileReader getFileReader() throws FileNotFoundException;
 
 	/**
-	 * Gets the {@link java.io.File} of the {@link DefaultFile}.
+	 * Gets the {@link java.io.File} of the {@link File}.
 	 * @return {@link java.io.File} - The file
 	 */
 	public java.io.File getJavaFile();
 
 	/**
-	 * Gets the file name of the {@link DefaultFile}.
+	 * Gets the file name of the {@link File}.
 	 * @return {@link String} - The file name
 	 */
 	public String getName();
 
+	/**
+	 * Gets the parent directory of the {@link File}.
+	 * @return {@link F} - The parent directory
+	 */
 	public F getParent();
 
+	/**
+	 * Gets the parent directory's path of the {@link File}.
+	 * @return {@link String} - The parent directory's path
+	 */
 	public String getParentPath();
 
 	/**
-	 * Gets the file path of the {@link DefaultFile}.
+	 * Gets the file path of the {@link File}.
 	 * @return {@link String} - The file path
 	 */
 	public String getPath();
 
+	/**
+	 * Returns a {@link PrintWriter} from the {@link File}
+	 * @return {@link PrintWriter} - The print writer
+	 * @throws FileNotFoundException If the file is not found
+	 * @throws UnsupportedEncodingException If the charset is not supported
+	 */
 	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException;
 
+	/**
+	 * Gets when the {@link File} was last changed.
+	 * @return {@link Date} - When the {@link File} was last changed
+	 */
 	public Date getWhenLastModified();
 
 	/**
-	 * Gets whether the {@link DefaultFile} is a directory.
-	 * @return {@link boolean} - Whether the {@link DefaultFile} is a directory
+	 * Gets whether the {@link File} is a directory.
+	 * @return {@link boolean} - Whether the {@link File} is a directory
 	 */
 	public boolean isDirectory();
 
 	/**
-	 * Gets whether the {@link DefaultFile} is a file.
-	 * @return {@link boolean} - Whether the {@link DefaultFile} is a file
+	 * Gets whether the {@link File} is a file.
+	 * @return {@link boolean} - Whether the {@link File} is a file
 	 */
 	public boolean isFile();
 
+	/**
+	 * Gets the length of {@link File}'s abstract path in bytes.
+	 * @return {@link long} - The length of {@link File}'s abstract path in
+	 * bytes
+	 */
 	public long length();
 
+	/**
+	 * Moves the {@link File} to another location.
+	 * @param file The new location
+	 * @return {@link F} - The {@link File} in its new location.
+	 * If the move failied the original location is returned.
+	 */
 	public F move(F file);
 
 	/**
-	 * Parses a the {@link DefaultFile} as a {@link byte} array.
+	 * Parses a the {@link File} as a {@link byte} array.
 	 * @return {@link byte[]} - The contents of the file as a {@link byte} array
 	 */
 	public byte[] readBytes();
 
 	/**
-	 * Parses a the {@link DefaultFile} as a {@link String}.
+	 * Parses a the {@link File} as a {@link String}.
 	 * @return {@link String} - The contents of the file
 	 */
 	public String readString();
 
-	public F rename(String path);
+	/**
+	 * Renames the {@link File}.
+	 * @param name The new name
+	 * @return {@link F} - The {@link File} with its new name.
+	 * If the rename failed the original is returned
+	 */
+	public F rename(String name);
 
+	/**
+	 * Changes the {@link FileType} extension of the {@link File}.
+	 * @param extension The new fileType
+	 * @return {@link F} - The {@link File} with its changed extension.
+	 */
+	public F setExtension(FileType extension);
+
+	/**
+	 * Changes the extension of the {@link File}.
+	 * @param extension The new extension
+	 * @return {@link F} - The {@link File} with its changed extension.
+	 */
+	public F setExtension(String extension);
+
+	/**
+	 * Changes the path of the {@link File} representation.
+	 * @param path The new path
+	 * @return {@link F} - The {@link File} with its new path.
+	 */
 	public F setPath(String path);
 
 	/**
-	 * Writes to the {@link DefaultFile}.
+	 * Writes to the {@link File}.
 	 * @param contents The contents to write as {@link byte}s
 	 */
 	public F write(byte[] contents);
 
 	/**
-	 * Writes to the {@link DefaultFile}.
+	 * Writes to the {@link File}.
 	 * @param contents The contents to write as a {@link String}
 	 */
 	public F write(String contents);

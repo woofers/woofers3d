@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.jaxson.lib.io.DefaultFile;
@@ -32,7 +31,13 @@ public class GdxFile implements File<GdxFile>
 
 	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING);
 
+	private static Files getFiles()
+	{
+		return Gdx.files;
+	}
+
 	private File file;
+
 	private FileHandle fileHandle;
 
 	public GdxFile(File file)
@@ -123,6 +128,12 @@ public class GdxFile implements File<GdxFile>
 		return GdxFile.NOTHING;
 	}
 
+	@Override
+	public boolean equals(File file)
+	{
+		return equals(file.getPath());
+	}
+
 	private boolean equals(FileType fileType)
 	{
 		return fileType == getType();
@@ -134,17 +145,11 @@ public class GdxFile implements File<GdxFile>
 	}
 
 	@Override
-	public boolean equals(File file)
-	{
-		return equals(file.getPath());
-	}
-
-	@Override
 	public boolean equals(Object file)
 	{
-		if (file instanceof DefaultFile) return equals((DefaultFile)file);
-		if (file instanceof GdxFile) return equals((GdxFile)file);
-		if (file instanceof File) return equals((File)file);
+		if (file instanceof DefaultFile) return equals((DefaultFile) file);
+		if (file instanceof GdxFile) return equals((GdxFile) file);
+		if (file instanceof File) return equals((File) file);
 		return false;
 	}
 
@@ -371,6 +376,18 @@ public class GdxFile implements File<GdxFile>
 		return rename(new GdxFile(name, getType()));
 	}
 
+	@Override
+	public GdxFile setExtension(com.jaxson.lib.io.FileType extension)
+	{
+		return new GdxFile(getFile().setExtension(extension), getType());
+	}
+
+	@Override
+	public GdxFile setExtension(String extension)
+	{
+		return new GdxFile(getFile().setExtension(extension), getType());
+	}
+
 	public GdxFile setFileType(FileType fileType)
 	{
 		return new GdxFile(getPath(), fileType);
@@ -411,10 +428,5 @@ public class GdxFile implements File<GdxFile>
 			return GdxFile.NOTHING;
 		}
 		return this;
-	}
-
-	private static Files getFiles()
-	{
-		return Gdx.files;
 	}
 }

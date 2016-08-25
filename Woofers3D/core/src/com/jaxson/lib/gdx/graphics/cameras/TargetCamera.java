@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.jaxson.lib.gdx.bullet.PhysicsWorld;
-import com.jaxson.lib.gdx.graphics.g3d.Entity;
+import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
+import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
 

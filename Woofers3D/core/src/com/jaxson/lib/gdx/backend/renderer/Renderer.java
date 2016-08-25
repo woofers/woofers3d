@@ -9,11 +9,18 @@ import com.jaxson.lib.util.exceptions.NullValueException;
 
 public abstract class Renderer<T extends GameObject> extends GameObject
 {
+	protected static void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	{
+		if (modelBatch == null) throw new NullValueException("spriteBatch");
+		if (spriteBatch == null) throw new NullValueException("modelBatch");
+		if (camera == null) throw new NullValueException("camera");
+	}
+
 	private MyArrayList<T> objects;
 
 	public Renderer()
 	{
-		this.objects = new MyArrayList<T>();
+		this.objects = new MyArrayList<>();
 	}
 
 	public void add(T object)
@@ -52,12 +59,5 @@ public abstract class Renderer<T extends GameObject> extends GameObject
 		{
 			object.update(dt);
 		}
-	}
-
-	protected static void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
-	{
-		if (modelBatch == null) throw new NullValueException("spriteBatch");
-		if (spriteBatch == null) throw new NullValueException("modelBatch");
-		if (camera == null) throw new NullValueException("camera");
 	}
 }

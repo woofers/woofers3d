@@ -6,11 +6,6 @@ import com.jaxson.lib.math.MyMath;
 
 public class GdxMath extends MyMath
 {
-	private GdxMath()
-	{
-
-	}
-
 	public static Vector3 absVector(Vector3 vector)
 	{
 		return vector.set(abs(vector.x), abs(vector.y), abs(vector.z));
@@ -34,5 +29,10 @@ public class GdxMath extends MyMath
 	public static Vector3 reciprocalVector(Vector3 vector)
 	{
 		return vector.set(reciprocal(vector.x), reciprocal(vector.y), reciprocal(vector.z));
+	}
+
+	private GdxMath()
+	{
+
 	}
 }

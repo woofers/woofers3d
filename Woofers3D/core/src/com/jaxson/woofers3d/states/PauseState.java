@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
-import com.jaxson.lib.gdx.graphics.g3d.Box;
 import com.jaxson.lib.gdx.states.SubState;
 
 public class PauseState extends SubState

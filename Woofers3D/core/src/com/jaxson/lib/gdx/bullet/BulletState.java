@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.backend.Game;
-import com.jaxson.lib.gdx.bullet.bodies.Floor;
-import com.jaxson.lib.gdx.bullet.bodies.PlayerBody;
-import com.jaxson.lib.gdx.bullet.bodies.RigidBody;
-import com.jaxson.lib.gdx.bullet.bodies.SoftBody;
+import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.Floor;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.types.PlayerBody;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.types.SoftBody;
 import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.states.State;
 
 public abstract class BulletState extends State
@@ -60,6 +62,7 @@ public abstract class BulletState extends State
 	@Override
 	public void dispose()
 	{
+		world.dispose();
 		super.dispose();
 	}
 
@@ -71,6 +74,20 @@ public abstract class BulletState extends State
 	public Vector3 getWorldSize()
 	{
 		return getPhysicsWorld().getWorldSize();
+	}
+
+	public void load(GdxFile file)
+	{
+		load(file, true);
+	}
+
+	public void load(GdxFile file, boolean applyPhysics)
+	{
+		for (RigidBody entity: getPhysicsWorld().load(file))
+		{
+			add(entity);
+			if (applyPhysics) applyPhysics(entity);
+		}
 	}
 
 	public void removePhysics(PlayerBody entity)

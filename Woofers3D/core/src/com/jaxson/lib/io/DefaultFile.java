@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * A File that handles writing and reading.
@@ -18,7 +19,7 @@ import java.util.Date;
  */
 public class DefaultFile implements File<DefaultFile>
 {
-	public static final DefaultFile NOTHING = new DefaultFile("");
+	public static final DefaultFile NOTHING = new EmptyFile();
 	private static final String PATH_EMPTY = "Path can not be empty";
 
 	private String path;
@@ -104,15 +105,16 @@ public class DefaultFile implements File<DefaultFile>
 	}
 
 	@Override
+	public boolean equals(File file)
+	{
+		return equals(file.getPath());
+	}
+
+	@Override
 	public boolean equals(Object file)
 	{
 		if (file instanceof DefaultFile) return equals((DefaultFile) file);
 		return false;
-	}
-
-	public boolean equals(File file)
-	{
-		return equals(file.getPath());
 	}
 
 	protected boolean equals(String path)
@@ -156,7 +158,7 @@ public class DefaultFile implements File<DefaultFile>
 	{
 		if (!exists() || isFile()) return DefaultFile.NOTHING;
 		if (child.charAt(0) != FOWARD_SLASH.charAt(0)) child = FOWARD_SLASH + child;
-		DefaultFile file =  new DefaultFile(getPath() + child);
+		DefaultFile file = new DefaultFile(getPath() + child);
 		if (file.exists()) return file;
 		return DefaultFile.NOTHING;
 	}
@@ -170,8 +172,10 @@ public class DefaultFile implements File<DefaultFile>
 	@Override
 	public String getExtension()
 	{
-		String[] fileNames = getName().split(DOT);
-		if (fileNames.length == 1) return "";
+		String name = getName();
+		if (name.lastIndexOf(".") == -1) return NO_EXTENSION;
+		String[] fileNames = name.split(Pattern.quote("."));
+		if (fileNames.length == 1) return fileNames[0];
 		return fileNames[1];
 	}
 
@@ -382,6 +386,21 @@ public class DefaultFile implements File<DefaultFile>
 	}
 
 	@Override
+	public DefaultFile setExtension(FileType extension)
+	{
+		if (extension.equals(getExtensionType())) return this;
+		int index = getPath().lastIndexOf(".");
+		if (index == -1) index = getPath().length();
+		return new DefaultFile(getPath().substring(0, index) + "." + extension.getExtension());
+	}
+
+	@Override
+	public DefaultFile setExtension(String extension)
+	{
+		return setExtension(new FileType(extension));
+	}
+
+	@Override
 	public DefaultFile setPath(String path)
 	{
 		return new DefaultFile(path);
@@ -397,7 +416,7 @@ public class DefaultFile implements File<DefaultFile>
 			dir = dir.trim();
 			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
 		}
-		if (!newDir.isEmpty()) path = newDir.substring(0, newDir.length() - 1);
+		if (!newDir.isEmpty()) path = newDir.substring(0, newDir.length() - 1).toLowerCase();
 	}
 
 	/**

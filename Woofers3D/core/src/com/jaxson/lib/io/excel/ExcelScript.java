@@ -1,8 +1,10 @@
 package com.jaxson.lib.io.excel;
 
+import com.jaxson.lib.io.excel.workbook.MyWorkbook;
+
 public abstract class ExcelScript
 {
-	protected static final String SAVE_PREFIX = "output ";
+	protected static final String SAVE_PREFIX = "Output ";
 
 	private ExcelFile file;
 	private MyWorkbook workbook;
@@ -10,6 +12,7 @@ public abstract class ExcelScript
 	public ExcelScript(ExcelFile file)
 	{
 		this.file = file;
+		this.workbook = file.readWorkbook();
 	}
 
 	public ExcelScript(String path)
@@ -22,10 +25,7 @@ public abstract class ExcelScript
 		return workbook;
 	}
 
-	public void run()
-	{
-		this.workbook = file.readWorkbook();
-	}
+	public abstract void run();
 
 	public void save()
 	{

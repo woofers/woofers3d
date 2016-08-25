@@ -80,7 +80,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	@Override
 	public boolean addAll(E[] array)
 	{
-		return super.addAll(new MyArrayList<E>(array));
+		return super.addAll(new MyArrayList<>(array));
 	}
 
 	@Override

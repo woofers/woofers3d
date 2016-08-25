@@ -16,8 +16,8 @@ public class KeyList
 
 	public KeyList(Object... keys)
 	{
-		this.keycodes = new MyArrayList<Integer>();
-		this.keyCombinations = new MyArrayList<KeyCombination>();
+		this.keycodes = new MyArrayList<>();
+		this.keyCombinations = new MyArrayList<>();
 		for (Object key: keys)
 		{
 			if (key instanceof Integer)

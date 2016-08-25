@@ -116,7 +116,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	/**
 	 * Gets the number of MSAA samples.
 	 * Returns {@code 0} when MSAA is off.
-	 * @return {@link boolean} - The number of MSAA samples.
+	 * @return {@link int} - The number of MSAA samples.
 	 */
 	public int getAntiAliasing()
 	{
@@ -289,6 +289,7 @@ public class GameConfig extends GsonObject<GameConfig>
 
 	/**
 	 * Reads the saved config file and sets the instance to it's values.
+	 * @return {@link String} - The read config file
 	 */
 	@Override
 	public String read()

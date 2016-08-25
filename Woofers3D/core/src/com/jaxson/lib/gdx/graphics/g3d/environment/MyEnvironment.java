@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.ShadowMap;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.g3d.Entity;
-import com.jaxson.lib.gdx.graphics.g3d.environment.light.Light;
-import com.jaxson.lib.gdx.graphics.g3d.environment.light.MyDirectionalLight;
-import com.jaxson.lib.gdx.graphics.g3d.environment.light.MyDirectionalShadowLight;
+import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
+import com.jaxson.lib.gdx.graphics.g3d.environment.lighting.Light;
+import com.jaxson.lib.gdx.graphics.g3d.environment.lighting.MyDirectionalLight;
+import com.jaxson.lib.gdx.graphics.g3d.environment.lighting.MyDirectionalShadowLight;
 import com.jaxson.lib.util.MyArrayList;
 
 public class MyEnvironment extends Environment
