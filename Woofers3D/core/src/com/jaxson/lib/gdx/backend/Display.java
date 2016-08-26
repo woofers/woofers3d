@@ -14,13 +14,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.g2d.Screenshot;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
+import com.jaxson.lib.io.Jsonable;
 import com.jaxson.lib.math.MyMath;
 
 /**
@@ -40,7 +41,7 @@ public class Display extends GameObject
 	private static final int FONT_PADDING = 20;
 	private static final Color FPS_COLOR = Color.WHITE;
 
-	private Game gameManager;
+	private Game game;
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
 	private BitmapFont font;
@@ -51,15 +52,15 @@ public class Display extends GameObject
 
 	/**
 	 * Constructs the display.
-	 * @param gameManager Reference to the {@link Game}
+	 * @param game Reference to the {@link Game}
 	 */
-	public Display(Game gameManager)
+	public Display(Game game)
 	{
-		this.gameManager = gameManager;
+		this.game = game;
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
 		this.camera = new OrthographicCamera(getWidth(), getHeight());
-		this.viewport = new FillViewport(getWidth(), getHeight(), getCamera());
+		this.viewport = new ExtendViewport(getWidth(), getHeight(), getCamera());
 		this.font = new BitmapFont();
 
 		font.setColor(FPS_COLOR);
@@ -197,7 +198,7 @@ public class Display extends GameObject
 	 */
 	public GameConfig getConfig()
 	{
-		return gameManager.getConfig();
+		return game.getConfig();
 	}
 
 	/**
@@ -295,7 +296,7 @@ public class Display extends GameObject
 	 */
 	public Graphics getGraphics()
 	{
-		return gameManager.getGraphics();
+		return game.getGraphics();
 	}
 
 	/**
@@ -314,7 +315,7 @@ public class Display extends GameObject
 	 */
 	public Input getInput()
 	{
-		return gameManager.getInput();
+		return game.getInput();
 	}
 
 	public int getLeftGutterWidth()
@@ -349,6 +350,11 @@ public class Display extends GameObject
 	public int getRightGutterWidth()
 	{
 		return getViewport().getRightGutterWidth();
+	}
+
+	public Jsonable<GameConfig> getSaveableConfig()
+	{
+		return game.getSaveableConfig();
 	}
 
 	/**
@@ -465,7 +471,7 @@ public class Display extends GameObject
 	 */
 	private boolean isMobile()
 	{
-		return gameManager.isMobile();
+		return game.isMobile();
 	}
 
 	/**
@@ -680,7 +686,7 @@ public class Display extends GameObject
 	{
 		setFullscreen(!isFullscreen());
 		getConfig().setFullscreenStartup(isFullscreen());
-		getConfig().save();
+		getSaveableConfig().save();
 	}
 
 	/**

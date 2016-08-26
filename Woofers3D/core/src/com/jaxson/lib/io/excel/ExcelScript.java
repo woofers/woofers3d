@@ -12,7 +12,7 @@ public abstract class ExcelScript
 	public ExcelScript(ExcelFile file)
 	{
 		this.file = file;
-		this.workbook = file.readWorkbook();
+		this.workbook = file.readObject();
 	}
 
 	public ExcelScript(String path)

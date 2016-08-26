@@ -16,10 +16,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.states.State;
+import com.jaxson.lib.io.Jsonable;
 
 public class Game
 {
-	private GameConfig config;
+	private Jsonable<GameConfig> config;
 	private GameStates gameStates;
 	private Display display;
 	private InputHandler inputHandler;
@@ -28,7 +29,7 @@ public class Game
 	private float step;
 	private float clamp;
 
-	public Game(GameConfig config)
+	public Game(Jsonable<GameConfig> config)
 	{
 		this.config = config;
 		this.inputHandler = new InputHandler();
@@ -81,7 +82,7 @@ public class Game
 
 	public GameConfig getConfig()
 	{
-		return config;
+		return getSaveableConfig().get();
 	}
 
 	private float getDeltaTime()
@@ -112,6 +113,11 @@ public class Game
 	public Net getNetwork()
 	{
 		return getApplication().getNet();
+	}
+
+	public Jsonable<GameConfig> getSaveableConfig()
+	{
+		return config;
 	}
 
 	public float getStepInterval()

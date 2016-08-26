@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
+import com.jaxson.lib.gdx.graphics.g2d.Screenshot;
 import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.File;
 import java.io.BufferedReader;
@@ -22,7 +23,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
-public class GdxFile implements File<GdxFile>
+public class GdxFile implements File<GdxFile, Model, Pixmap>
 {
 	private static final String G3DJ_EXTENSION = "g3dj";
 	private static final String G3DB_EXTENSION = "g3db";
@@ -37,7 +38,6 @@ public class GdxFile implements File<GdxFile>
 	}
 
 	private File file;
-
 	private FileHandle fileHandle;
 
 	public GdxFile(File file)
@@ -342,7 +342,7 @@ public class GdxFile implements File<GdxFile>
 		return new G3dModelLoader(new JsonReader()).loadModel(getFileHandle());
 	}
 
-	public Model readModel()
+	public Model readObject()
 	{
 		String extension = getExtension();
 		if (extension.equals(G3DB_EXTENSION)) return readG3db();
@@ -400,6 +400,12 @@ public class GdxFile implements File<GdxFile>
 	}
 
 	@Override
+	public GdxFile write()
+	{
+		return write("");
+	}
+
+	@Override
 	public GdxFile write(byte[] contents)
 	{
 		return new GdxFile(getFile().write(contents), getType());
@@ -409,6 +415,11 @@ public class GdxFile implements File<GdxFile>
 	{
 		PixmapIO.writePNG(getFileHandle(), pixmap);
 		return this;
+	}
+
+	public GdxFile write(Screenshot screenshot)
+	{
+		return write(screenshot.getPixmap());
 	}
 
 	@Override

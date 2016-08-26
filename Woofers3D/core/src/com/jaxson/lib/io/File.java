@@ -11,10 +11,13 @@ import java.util.Date;
 
 /**
  * A File that handles writing and reading.
+ * @param <T> the implementing {@link Object} for chaining
+ * @param <R> the {@link Object} to be read
+ * @param <W> the {@link Object} to write
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public interface File<F extends File>
+public interface File<F extends File, R, W>
 {
 	public static final String FOWARD_SLASH = "/";
 	public static final String BACK_SLASH = "\\";
@@ -243,4 +246,21 @@ public interface File<F extends File>
 	 * @param contents The contents to write as a {@link String}
 	 */
 	public F write(String contents);
+
+	/**
+	 * Writes a blank document to the {@link File}.
+	 */
+	public F write();
+
+	/**
+	 * Writes a {@link Object} to the {@link File}.
+	 * @param object The object
+	 */
+	public F write(W object);
+
+	/**
+	 * Reads the fil as a {@link R}.
+	 * @return {@link R} - The {@link Object} read.
+	 */
+	public R readObject();
 }

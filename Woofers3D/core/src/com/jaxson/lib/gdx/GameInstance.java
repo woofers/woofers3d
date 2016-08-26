@@ -9,6 +9,8 @@ import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
+import com.jaxson.lib.io.DefaultFile;
+import com.jaxson.lib.io.Jsonable;
 
 /**
  * A {@link GameInstance} containing a {@link Game} and a {@link GameConfig}.
@@ -18,7 +20,7 @@ import com.jaxson.lib.gdx.util.Resizeable;
  */
 public abstract class GameInstance extends ApplicationAdapter implements Pauseable, Resizeable
 {
-	private GameConfig config;
+	private Jsonable<GameConfig> config;
 	private Game game;
 
 	/**
@@ -26,7 +28,9 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	 */
 	public GameInstance()
 	{
-		this.config = new GameConfig();
+		this.config = new Jsonable<>(new DefaultFile("config.json"),
+									 GameConfig.class,
+									 new GameConfig());
 	}
 
 	/**
@@ -35,7 +39,7 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	@Override
 	public void create()
 	{
-		this.game = new Game(getConfig());
+		this.game = new Game(getSaveableConfig());
 	}
 
 	/**
@@ -54,7 +58,7 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	 */
 	public GameConfig getConfig()
 	{
-		return config;
+		return getSaveableConfig().get();
 	}
 
 	/**
@@ -73,6 +77,15 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	public LwjglApplicationConfiguration getLwjglConfig()
 	{
 		return getConfig().toLwjglConfig();
+	}
+
+	/**
+	 * Gets the {@link Jsonable} config of the {@link Game}.
+	 * @return {@link GameConfig} - The config
+	 */
+	public Jsonable<GameConfig> getSaveableConfig()
+	{
+		return config;
 	}
 
 	/**

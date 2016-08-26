@@ -1,4 +1,4 @@
-package com.jaxson.lib.io.excel;
+package com.jaxson.lib.io;
 
 import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.File;
@@ -16,28 +16,31 @@ import java.util.Date;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.google.gson.Gson;
 
-public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
+public class JsonFile<T extends Object> implements File<JsonFile<T>, T, T>
 {
-	private static final String EXTENSION_NOT_FOUND = "The file is not an Excel file.";
-	public static final ExcelFile NOTHING = new ExcelFile(DefaultFile.NOTHING);
+	public static final JsonFile NOTHING = new JsonFile(DefaultFile.NOTHING, Object.class);
+	private static final String EMPTY = "{" + NEXT_LINE + "}";
 
 	private File file;
+	private Class<T> type;
 
-	public ExcelFile(File file)
+	public JsonFile(File file, Class<T> type)
 	{
 		this.file = file;
+		this.type = type;
 	}
 
-	public ExcelFile(String path)
+	public JsonFile(String path, Class<T> type)
 	{
-		this(new DefaultFile(path));
+		this(new DefaultFile(path), type);
 	}
 
 	@Override
-	public ExcelFile append(String contents)
+	public JsonFile<T> append(String contents)
 	{
-		return new ExcelFile(getFile().append(contents));
+		return new JsonFile<T>(getFile().append(contents), type);
 	}
 
 	@Override
@@ -53,27 +56,27 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public ExcelFile copy(ExcelFile file)
+	public JsonFile<T> copy(JsonFile<T> file)
 	{
-		return new ExcelFile(getFile().copy(file));
+		return new JsonFile<T>(getFile().copy(file), type);
 	}
 
 	@Override
-	public ExcelFile createDirectory()
+	public JsonFile<T> createDirectory()
 	{
-		return new ExcelFile(getFile().createDirectory());
+		return new JsonFile<T>(getFile().createDirectory(), type);
 	}
 
 	@Override
-	public ExcelFile createFile()
+	public JsonFile<T> createFile()
 	{
-		return new ExcelFile(getFile().createFile());
+		return new JsonFile<T>(getFile().createFile(), type);
 	}
 
 	@Override
-	public ExcelFile delete()
+	public JsonFile<T> delete()
 	{
-		return new ExcelFile(getFile().delete());
+		return new JsonFile<T>(getFile().delete(), type);
 	}
 
 	@Override
@@ -95,9 +98,9 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public ExcelFile getChild(String child)
+	public JsonFile<T> getChild(String child)
 	{
-		return new ExcelFile(getFile().getChild(child));
+		return new JsonFile<T>(getFile().getChild(child), type);
 	}
 
 	@Override
@@ -148,9 +151,9 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public ExcelFile getParent()
+	public JsonFile<T> getParent()
 	{
-		return new ExcelFile(getFile().getParent());
+		return new JsonFile<T>(getFile().getParent(), type);
 	}
 
 	@Override
@@ -195,18 +198,10 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return getFile().length();
 	}
 
-	private Workbook loadWordbook()
-	{
-		FileType type = getExtensionType();
-		if (type.equals(FileType.XLS)) return readXlsxWorkbook();
-		if (type.equals(FileType.XLSX)) return readXlsxWorkbook();
-		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
-	}
-
 	@Override
-	public ExcelFile move(ExcelFile file)
+	public JsonFile<T> move(JsonFile<T> file)
 	{
-		return new ExcelFile(getFile().move(file));
+		return new JsonFile<T>(getFile().move(file), type);
 	}
 
 	@Override
@@ -221,107 +216,64 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return getFile().readString();
 	}
 
-	public MyWorkbook readObject()
+	@Override
+	public T readObject()
 	{
-		return new MyWorkbook(loadWordbook());
+		return new Gson().fromJson(readString(), type);
 	}
 
-	private HSSFWorkbook readXlsWorkbook()
+	@Override
+	public JsonFile<T> rename(String path)
 	{
-		HSSFWorkbook workbook = null;
-		FileInputStream stream = null;
+		return new JsonFile<T>(getFile().rename(path), type);
+	}
+
+	@Override
+	public JsonFile<T> setExtension(FileType extension)
+	{
+		return new JsonFile<T>(getFile().setExtension(extension), type);
+	}
+
+	@Override
+	public JsonFile<T> setExtension(String extension)
+	{
+		return new JsonFile<T>(file.setExtension(extension), type);
+	}
+
+	@Override
+	public JsonFile<T> setPath(String path)
+	{
+		return new JsonFile<T>(path, type);
+	}
+
+	@Override
+	public JsonFile<T> write()
+	{
+		return write(EMPTY);
+	}
+
+	@Override
+	public JsonFile<T> write(byte[] contents)
+	{
+		return new JsonFile<T>(getFile().write(contents), type);
+	}
+
+	public JsonFile<T> write(T object)
+	{
 		try
 		{
-			stream = getFileInputStream();
-			workbook = new HSSFWorkbook(stream);
+			write(new Gson().toJson(object));
 		}
 		catch (Exception ex)
 		{
-			return new HSSFWorkbook();
-		}
-		return workbook;
-	}
-
-	private XSSFWorkbook readXlsxWorkbook()
-	{
-		XSSFWorkbook workbook = null;
-		FileInputStream stream = null;
-		try
-		{
-			stream = getFileInputStream();
-			workbook = new XSSFWorkbook(stream);
-		}
-		catch (Exception ex)
-		{
-			return new XSSFWorkbook();
-		}
-		return workbook;
-	}
-
-	@Override
-	public ExcelFile rename(String path)
-	{
-		return new ExcelFile(getFile().rename(path));
-	}
-
-	@Override
-	public ExcelFile setExtension(FileType extension)
-	{
-		return new ExcelFile(getFile().setExtension(extension));
-	}
-
-	@Override
-	public ExcelFile setExtension(String extension)
-	{
-		return new ExcelFile(file.setExtension(extension));
-	}
-
-	@Override
-	public ExcelFile setPath(String path)
-	{
-		return new ExcelFile(path);
-	}
-
-	public ExcelFile write()
-	{
-		return write(new MyWorkbook());
-	}
-
-	@Override
-	public ExcelFile write(byte[] contents)
-	{
-		return new ExcelFile(getFile().write(contents));
-	}
-
-	public ExcelFile write(MyWorkbook workbook)
-	{
-		FileOutputStream stream = null;
-		try
-		{
-			stream = getFileOutputStream();
-			workbook.write(stream);
-		}
-		catch (Exception ex)
-		{
-			return ExcelFile.NOTHING;
-		}
-		finally
-		{
-			try
-			{
-				if (stream != null) stream.close();
-			}
-			catch (IOException ex)
-			{
-
-			}
+			return JsonFile.NOTHING;
 		}
 		return this;
 	}
 
 	@Override
-	public ExcelFile write(String contents)
+	public JsonFile<T> write(String contents)
 	{
-		return new ExcelFile(getFile().write(contents));
+		return new JsonFile<T>(getFile().write(contents), type);
 	}
 }

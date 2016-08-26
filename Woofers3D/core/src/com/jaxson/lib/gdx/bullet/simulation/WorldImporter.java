@@ -61,15 +61,7 @@ public class WorldImporter
 
 	public WorldImporter(GdxFile model, GdxFile physics, btDynamicsWorld world)
 	{
-		/*
-		 * PrintStream originalStream = System.out;
-		 * PrintStream dummyStream = new PrintStream(new OutputStream() {
-		 * public void write(int b){}
-		 * });
-		 * System.setOut(dummyStream);
-		 * System.setOut(originalStream);
-		 */
-		this.importer = new WorldImporterHelper(world, model.readModel());
+		this.importer = new WorldImporterHelper(world, model.readObject());
 		importer.loadFile(physics.getFileHandle());
 	}
 

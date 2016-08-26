@@ -25,7 +25,7 @@ public abstract class Entity extends GameObject
 
 	protected static Model readModel(String modelPath)
 	{
-		return new GdxFile(modelPath).readModel();
+		return new GdxFile(modelPath).readObject();
 	}
 
 	private ModelInstance modelInstance;

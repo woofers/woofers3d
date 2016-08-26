@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.io.DefaultFile;
-import com.jaxson.lib.io.GsonObject;
+import com.jaxson.lib.io.File;
 import com.jaxson.lib.math.Reciprocal;
 
 /**
@@ -15,7 +15,7 @@ import com.jaxson.lib.math.Reciprocal;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class GameConfig extends GsonObject<GameConfig>
+public class GameConfig
 {
 	/**
 	 * Used in {@link #setBackgroundFps(int)} to pause the {@link Game} on
@@ -35,7 +35,6 @@ public class GameConfig extends GsonObject<GameConfig>
 
 	private static final FileType ICON_TYPE = FileType.Internal;
 	private static final float SENSITIVITY = 1.3f;
-	private static final String SAVE_PATH = "config.json";
 	private static final String ICON_PATH = "icon.png";
 
 	private String title = "New Game";
@@ -44,7 +43,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	private int fps = 600;
 	private transient int backgroundFps = PAUSE_ON_LOST_FOCUS;
 	private boolean vsync = false;
-	private boolean resizable = false;
+	private boolean resizable = true;
 	private transient int step = 120;
 	private transient int clamp = 4;
 	private boolean allowFullscreen = true;
@@ -52,14 +51,9 @@ public class GameConfig extends GsonObject<GameConfig>
 	private int antiAliasing = 4;
 	private boolean statusBar = false;
 	private boolean immersive = true;
-	private DefaultFile icon;
 	private boolean showFps = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
-
-	{
-		setSaveFile(new DefaultFile(SAVE_PATH));
-		setIcon(new DefaultFile(ICON_PATH));
-	}
+	private transient File icon = new DefaultFile("icon.png");
 
 	/**
 	 * Constructs a default config.
@@ -75,7 +69,6 @@ public class GameConfig extends GsonObject<GameConfig>
 	 */
 	public GameConfig(GameConfig config)
 	{
-		super(GameConfig.class);
 		set(config);
 	}
 
@@ -88,7 +81,6 @@ public class GameConfig extends GsonObject<GameConfig>
 	 */
 	public GameConfig(int width, int height, int fps, int step)
 	{
-		super(GameConfig.class);
 		setWidth(width);
 		setHeight(height);
 		setMaxFps(fps);
@@ -102,6 +94,10 @@ public class GameConfig extends GsonObject<GameConfig>
 	public boolean allowsFullscreen()
 	{
 		return allowFullscreen;
+	}
+
+	private void autoSave()
+	{
 	}
 
 	/**
@@ -166,9 +162,9 @@ public class GameConfig extends GsonObject<GameConfig>
 
 	/**
 	 * Gets the {@link Game} icon.
-	 * @return {@link DefaultFile} - The {@link Game} icon.
+	 * @return {@link File} - The {@link Game} icon.
 	 */
-	public DefaultFile getIcon()
+	public File getIcon()
 	{
 		return icon;
 	}
@@ -287,16 +283,9 @@ public class GameConfig extends GsonObject<GameConfig>
 		return vsync;
 	}
 
-	/**
-	 * Reads the saved config file and sets the instance to it's values.
-	 * @return {@link String} - The read config file
-	 */
-	@Override
-	public String read()
+	public void obtain()
 	{
-		String file = super.read();
-		set(fromJson(file));
-		return file;
+
 	}
 
 	/**
@@ -306,7 +295,6 @@ public class GameConfig extends GsonObject<GameConfig>
 	public void set(GameConfig config)
 	{
 		if (config == null) return;
-		setSaveBehavior(SaveBehavior.Manual);
 		setTitle(config.getTitle());
 		setWidth(config.getWidth());
 		setHeight(config.getHeight());
@@ -320,11 +308,9 @@ public class GameConfig extends GsonObject<GameConfig>
 		setFullscreenStartup(config.startsFullscreen());
 		setStatusBar(config.hasStatusBar());
 		setImmersiveMode(config.isImmersive());
-		setSaveFile(config.getSaveFile());
 		setIcon(config.getIcon());
 		setShowFps(config.showsFps());
 		setAntiAliasing(config.getAntiAliasing());
-		setSaveBehavior(config.getSaveBehavior());
 		autoSave();
 	}
 
@@ -395,7 +381,7 @@ public class GameConfig extends GsonObject<GameConfig>
 	 * Sets the icon of the {@link Game}.
 	 * @param icon The icon of the {@link Game}
 	 */
-	public void setIcon(DefaultFile icon)
+	public void setIcon(File icon)
 	{
 		this.icon = icon;
 		autoSave();

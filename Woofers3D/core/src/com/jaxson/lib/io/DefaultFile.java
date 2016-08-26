@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class DefaultFile implements File<DefaultFile>
+public class DefaultFile implements File<DefaultFile, String, String>
 {
 	public static final DefaultFile NOTHING = new EmptyFile();
 	private static final String PATH_EMPTY = "Path can not be empty";
@@ -419,6 +419,12 @@ public class DefaultFile implements File<DefaultFile>
 		if (!newDir.isEmpty()) path = newDir.substring(0, newDir.length() - 1).toLowerCase();
 	}
 
+	@Override
+	public String readObject()
+	{
+		return readString();
+	}
+
 	/**
 	 * Writes to the {@link DefaultFile}.
 	 * @param contents The contents to write as {@link byte}s
@@ -448,6 +454,11 @@ public class DefaultFile implements File<DefaultFile>
 			}
 		}
 		return this;
+	}
+
+	public DefaultFile write()
+	{
+		return write("");
 	}
 
 	/**

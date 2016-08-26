@@ -10,10 +10,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.io.File;
-import com.jaxson.lib.io.SaveObject;
 import java.nio.ByteBuffer;
 
-public class Screenshot extends SaveObject implements Disposable
+public class Screenshot implements Disposable
 {
 	private static final String NAME = "Screenshot ";
 	private static final String FOLDER = "screenshots";
@@ -43,22 +42,13 @@ public class Screenshot extends SaveObject implements Disposable
 		return FOLDER + File.FOWARD_SLASH + NAME + index + EXTENSION;
 	}
 
+	private GdxFile file;
 	private Pixmap image;
 
 	public Screenshot()
 	{
-		this(getScreenshotFile());
-	}
-
-	public Screenshot(GdxFile file)
-	{
 		saveScreenshot();
-		setSaveFile(file);
-	}
-
-	public Screenshot(String path)
-	{
-		this(new GdxFile(path));
+		this.file = getScreenshotFile();
 	}
 
 	@Override
@@ -103,11 +93,9 @@ public class Screenshot extends SaveObject implements Disposable
 		return getPixmap().getWidth();
 	}
 
-	@Override
 	public void save()
 	{
-		GdxFile file = (GdxFile) getSaveFile();
-		file.write(image);
+		file.write(this);
 	}
 
 	private void saveScreenshot()
