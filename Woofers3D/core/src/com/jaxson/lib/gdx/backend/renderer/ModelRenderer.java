@@ -1,11 +1,10 @@
 package com.jaxson.lib.gdx.backend.renderer;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
+import com.jaxson.lib.gdx.graphics.views.View;
 
 public class ModelRenderer extends Renderer<Entity>
 {
@@ -28,16 +27,16 @@ public class ModelRenderer extends Renderer<Entity>
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Viewport viewport)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view)
 	{
 		if (isEmpty()) return;
-		checkAgruments(spriteBatch, modelBatch, viewport.getCamera());
-		viewport.apply();
-		environment.render(getObjects(), viewport.getCamera());
-		modelBatch.begin(viewport.getCamera());
+		checkAgruments(spriteBatch, modelBatch, view.getModelView().getCamera());
+		view.getModelView().apply();
+		environment.render(getObjects(), view.getModelView().getCamera());
+		modelBatch.begin(view.getModelView().getCamera());
 		for (Entity entity: getObjects())
 		{
-			if (entity.isVisible(viewport.getCamera())) modelBatch.render(entity.getModelInstance(), environment);
+			if (entity.isVisible(view.getModelView().getCamera())) modelBatch.render(entity.getModelInstance(), environment);
 		}
 		modelBatch.end();
 	}

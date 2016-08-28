@@ -1,7 +1,5 @@
 package com.jaxson.lib.io;
 
-import com.google.gson.Gson;
-
 /**
  * Decorator to save any {@link Object}.
  * @param <T> the type of {@link Object} being saved
@@ -20,7 +18,7 @@ public class Jsonable<T>
 
 	public Jsonable(File file, Class<T> type, T object)
 	{
-		this(new JsonFile<T>(file, type), object);
+		this(new JsonFile<>(file, type), object);
 	}
 
 	public Jsonable(JsonFile<T> file, T object)
@@ -55,7 +53,7 @@ public class Jsonable<T>
 
 	public void read()
 	{
-		this.object = (T)getSaveFile().readObject();
+		this.object = (T) getSaveFile().readObject();
 	}
 
 	public void save()

@@ -3,14 +3,14 @@ package com.jaxson.lib.gdx.graphics.g2d;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Sprite extends GameObject
 {
@@ -23,9 +23,10 @@ public class Sprite extends GameObject
 			this.sprite = sprite;
 		}
 
+		@Override
 		public void draw(Batch batch, float parentAlpha)
 		{
-			sprite.draw((SpriteBatch)batch);
+			sprite.draw((SpriteBatch) batch);
 		}
 	}
 
@@ -270,6 +271,11 @@ public class Sprite extends GameObject
 		setTint(new MyColor(r, g, b, a));
 	}
 
+	public Actor toActor()
+	{
+		return new SpriteActor(this);
+	}
+
 	public void translate(float x, float y)
 	{
 		sprite.translate(x, y);
@@ -294,10 +300,5 @@ public class Sprite extends GameObject
 	public void update(float dt)
 	{
 
-	}
-
-	public Actor toActor()
-	{
-		return new SpriteActor(this);
 	}
 }

@@ -1,9 +1,9 @@
 package com.jaxson.woofers3d;
 
 import com.jaxson.lib.gdx.GameInstance;
+import com.jaxson.lib.io.EmptyOutputStream;
 import com.jaxson.woofers3d.states.PlayState;
 import java.io.PrintStream;
-import com.jaxson.lib.io.EmptyOutputStream;
 
 public class Woofers3D extends GameInstance
 {

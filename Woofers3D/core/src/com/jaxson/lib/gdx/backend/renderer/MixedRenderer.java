@@ -1,24 +1,22 @@
 package com.jaxson.lib.gdx.backend.renderer;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class MixedRenderer extends GameObject
 {
 	private SpriteRenderer spriteRenderer;
 	private ModelRenderer modelRenderer;
 
-	public MixedRenderer(Viewport viewport)
+	public MixedRenderer(View view)
 	{
-		this.spriteRenderer = new SpriteRenderer(viewport);
+		this.spriteRenderer = new SpriteRenderer(view);
 		this.modelRenderer = new ModelRenderer();
 	}
 
@@ -59,23 +57,23 @@ public class MixedRenderer extends GameObject
 		modelRenderer.remove(model);
 	}
 
-	@Override
-	public void resize(int width, int height)
-	{
-		spriteRenderer.resize(width, height);
-		modelRenderer.resize(width, height);
-	}
-
 	public void remove(Sprite sprite)
 	{
 		spriteRenderer.add(sprite);
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Viewport viewport)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view)
 	{
-		spriteRenderer.render(spriteBatch, modelBatch, viewport);
-		modelRenderer.render(spriteBatch, modelBatch, viewport);
+		spriteRenderer.render(spriteBatch, modelBatch, view);
+		modelRenderer.render(spriteBatch, modelBatch, view);
+	}
+
+	@Override
+	public void resize(int width, int height)
+	{
+		spriteRenderer.resize(width, height);
+		modelRenderer.resize(width, height);
 	}
 
 	@Override

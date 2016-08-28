@@ -2,22 +2,15 @@ package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public abstract class BaseState extends GameObject
 {
@@ -27,7 +20,7 @@ public abstract class BaseState extends GameObject
 	protected BaseState(Game game)
 	{
 		this.game = game;
-		this.renderer = new MixedRenderer(new ExtendViewport(getWidth(), getHeight()));
+		this.renderer = new MixedRenderer(getView());
 	}
 
 	public void add(Entity entity)
@@ -44,11 +37,6 @@ public abstract class BaseState extends GameObject
 	public void dispose()
 	{
 		renderer.dispose();
-	}
-
-	public Camera getCamera()
-	{
-		return getGame().getCamera();
 	}
 
 	public MyEnvironment getEnvironment()
@@ -76,9 +64,9 @@ public abstract class BaseState extends GameObject
 		return getGame().getInput();
 	}
 
-	public Viewport getViewport()
+	public View getView()
 	{
-		return getGame().getViewport();
+		return getGame().getView();
 	}
 
 	public int getWidth()
@@ -96,25 +84,15 @@ public abstract class BaseState extends GameObject
 		renderer.remove(sprite);
 	}
 
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	{
+		renderer.render(spriteBatch, modelBatch, getView());
+	}
+
 	@Override
 	public void resize(int width, int height)
 	{
 		renderer.resize(width, height);
-	}
-
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
-	{
-		renderer.render(spriteBatch, modelBatch,  getViewport());
-	}
-
-	public void setCamera(Camera camera)
-	{
-		getGame().setCamera(camera);
-	}
-
-	public void setViewport(Viewport viewport)
-	{
-		getGame().setViewport(viewport);
 	}
 
 	@Override

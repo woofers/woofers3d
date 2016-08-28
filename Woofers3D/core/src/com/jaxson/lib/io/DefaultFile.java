@@ -333,6 +333,12 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return bytes;
 	}
 
+	@Override
+	public String readObject()
+	{
+		return readString();
+	}
+
 	/**
 	 * Parses a the {@link DefaultFile} as a {@link String}.
 	 * @return {@link String} - The contents of the file
@@ -420,9 +426,9 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public String readObject()
+	public DefaultFile write()
 	{
-		return readString();
+		return write("");
 	}
 
 	/**
@@ -454,11 +460,6 @@ public class DefaultFile implements File<DefaultFile, String, String>
 			}
 		}
 		return this;
-	}
-
-	public DefaultFile write()
-	{
-		return write("");
 	}
 
 	/**

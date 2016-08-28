@@ -342,6 +342,12 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return new G3dModelLoader(new JsonReader()).loadModel(getFileHandle());
 	}
 
+	private Model readObj()
+	{
+		return new ObjLoader().loadModel(getFileHandle());
+	}
+
+	@Override
 	public Model readObject()
 	{
 		String extension = getExtension();
@@ -349,11 +355,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		if (extension.equals(G3DJ_EXTENSION)) return readG3dj();
 		if (extension.equals(OBJ_EXTENSION)) return readObj();
 		throw new IllegalArgumentException(LOADER_NOT_FOUND);
-	}
-
-	private Model readObj()
-	{
-		return new ObjLoader().loadModel(getFileHandle());
 	}
 
 	@Override
@@ -411,6 +412,7 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return new GdxFile(getFile().write(contents), getType());
 	}
 
+	@Override
 	public GdxFile write(Pixmap pixmap)
 	{
 		PixmapIO.writePNG(getFileHandle(), pixmap);

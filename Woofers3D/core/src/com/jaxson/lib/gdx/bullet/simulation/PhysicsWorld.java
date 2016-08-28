@@ -23,7 +23,8 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.PlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.SoftBody;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.graphics.views.TargetCamera;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
@@ -254,9 +255,9 @@ public class PhysicsWorld
 		world.removeSoftBody(entity.getBody());
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view)
 	{
-		debugDrawer.render(spriteBatch, modelBatch, camera);
+		debugDrawer.render(spriteBatch, modelBatch, view.getModelView().getCamera());
 	}
 
 	public void setDebugMode(int mode)

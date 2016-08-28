@@ -18,22 +18,6 @@ public final class Optional<T>
 		this.value = value;
 	}
 
-	public T get()
-	{
-		if (!isPresent()) throw new NoSuchElementException("No value present");
-		return value;
-	}
-
-	public boolean isPresent()
-	{
-		return value != null;
-	}
-
-	public T orElse(T other)
-	{
-		return isPresent() ? get() : other;
-	}
-
 	@Override
 	public boolean equals(Object object)
 	{
@@ -50,6 +34,22 @@ public final class Optional<T>
 		}
 		if (isPresent()) return origin.equals(end);
 		return end == null;
+	}
+
+	public T get()
+	{
+		if (!isPresent()) throw new NoSuchElementException("No value present");
+		return value;
+	}
+
+	public boolean isPresent()
+	{
+		return value != null;
+	}
+
+	public T orElse(T other)
+	{
+		return isPresent() ? get() : other;
 	}
 
 	@Override

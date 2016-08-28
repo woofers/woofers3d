@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 
 public class Player extends CameraPlayerBody

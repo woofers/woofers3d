@@ -201,6 +201,12 @@ public interface File<F extends File, R, W>
 	public byte[] readBytes();
 
 	/**
+	 * Reads the fil as a {@link R}.
+	 * @return {@link R} - The {@link Object} read.
+	 */
+	public R readObject();
+
+	/**
 	 * Parses a the {@link File} as a {@link String}.
 	 * @return {@link String} - The contents of the file
 	 */
@@ -236,6 +242,11 @@ public interface File<F extends File, R, W>
 	public F setPath(String path);
 
 	/**
+	 * Writes a blank document to the {@link File}.
+	 */
+	public F write();
+
+	/**
 	 * Writes to the {@link File}.
 	 * @param contents The contents to write as {@link byte}s
 	 */
@@ -248,19 +259,8 @@ public interface File<F extends File, R, W>
 	public F write(String contents);
 
 	/**
-	 * Writes a blank document to the {@link File}.
-	 */
-	public F write();
-
-	/**
 	 * Writes a {@link Object} to the {@link File}.
 	 * @param object The object
 	 */
 	public F write(W object);
-
-	/**
-	 * Reads the fil as a {@link R}.
-	 * @return {@link R} - The {@link Object} read.
-	 */
-	public R readObject();
 }

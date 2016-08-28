@@ -1,22 +1,14 @@
 package com.jaxson.lib.io;
 
-import com.jaxson.lib.io.DefaultFile;
-import com.jaxson.lib.io.File;
-import com.jaxson.lib.io.FileType;
-import com.jaxson.lib.io.excel.workbook.MyWorkbook;
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.google.gson.Gson;
 
 public class JsonFile<T> implements File<JsonFile<T>, T, T>
 {
@@ -40,7 +32,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public JsonFile<T> append(String contents)
 	{
-		return new JsonFile<T>(getFile().append(contents), type);
+		return new JsonFile<>(getFile().append(contents), type);
 	}
 
 	@Override
@@ -58,25 +50,25 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public JsonFile<T> copy(JsonFile<T> file)
 	{
-		return new JsonFile<T>(getFile().copy(file), type);
+		return new JsonFile<>(getFile().copy(file), type);
 	}
 
 	@Override
 	public JsonFile<T> createDirectory()
 	{
-		return new JsonFile<T>(getFile().createDirectory(), type);
+		return new JsonFile<>(getFile().createDirectory(), type);
 	}
 
 	@Override
 	public JsonFile<T> createFile()
 	{
-		return new JsonFile<T>(getFile().createFile(), type);
+		return new JsonFile<>(getFile().createFile(), type);
 	}
 
 	@Override
 	public JsonFile<T> delete()
 	{
-		return new JsonFile<T>(getFile().delete(), type);
+		return new JsonFile<>(getFile().delete(), type);
 	}
 
 	@Override
@@ -100,7 +92,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public JsonFile<T> getChild(String child)
 	{
-		return new JsonFile<T>(getFile().getChild(child), type);
+		return new JsonFile<>(getFile().getChild(child), type);
 	}
 
 	@Override
@@ -153,7 +145,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public JsonFile<T> getParent()
 	{
-		return new JsonFile<T>(getFile().getParent(), type);
+		return new JsonFile<>(getFile().getParent(), type);
 	}
 
 	@Override
@@ -201,7 +193,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public JsonFile<T> move(JsonFile<T> file)
 	{
-		return new JsonFile<T>(getFile().move(file), type);
+		return new JsonFile<>(getFile().move(file), type);
 	}
 
 	@Override
@@ -211,39 +203,39 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public String readString()
-	{
-		return getFile().readString();
-	}
-
-	@Override
 	public T readObject()
 	{
 		return new Gson().fromJson(readString(), type);
 	}
 
 	@Override
+	public String readString()
+	{
+		return getFile().readString();
+	}
+
+	@Override
 	public JsonFile<T> rename(String path)
 	{
-		return new JsonFile<T>(getFile().rename(path), type);
+		return new JsonFile<>(getFile().rename(path), type);
 	}
 
 	@Override
 	public JsonFile<T> setExtension(FileType extension)
 	{
-		return new JsonFile<T>(getFile().setExtension(extension), type);
+		return new JsonFile<>(getFile().setExtension(extension), type);
 	}
 
 	@Override
 	public JsonFile<T> setExtension(String extension)
 	{
-		return new JsonFile<T>(file.setExtension(extension), type);
+		return new JsonFile<>(file.setExtension(extension), type);
 	}
 
 	@Override
 	public JsonFile<T> setPath(String path)
 	{
-		return new JsonFile<T>(path, type);
+		return new JsonFile<>(path, type);
 	}
 
 	@Override
@@ -255,9 +247,16 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public JsonFile<T> write(byte[] contents)
 	{
-		return new JsonFile<T>(getFile().write(contents), type);
+		return new JsonFile<>(getFile().write(contents), type);
 	}
 
+	@Override
+	public JsonFile<T> write(String contents)
+	{
+		return new JsonFile<>(getFile().write(contents), type);
+	}
+
+	@Override
 	public JsonFile<T> write(T object)
 	{
 		try
@@ -269,11 +268,5 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 			return JsonFile.NOTHING;
 		}
 		return this;
-	}
-
-	@Override
-	public JsonFile<T> write(String contents)
-	{
-		return new JsonFile<T>(getFile().write(contents), type);
 	}
 }

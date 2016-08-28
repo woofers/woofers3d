@@ -216,14 +216,15 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public String readString()
-	{
-		return getFile().readString();
-	}
-
 	public MyWorkbook readObject()
 	{
 		return new MyWorkbook(loadWordbook());
+	}
+
+	@Override
+	public String readString()
+	{
+		return getFile().readString();
 	}
 
 	private HSSFWorkbook readXlsWorkbook()
@@ -282,6 +283,7 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return new ExcelFile(path);
 	}
 
+	@Override
 	public ExcelFile write()
 	{
 		return write(new MyWorkbook());
@@ -293,6 +295,7 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return new ExcelFile(getFile().write(contents));
 	}
 
+	@Override
 	public ExcelFile write(MyWorkbook workbook)
 	{
 		FileOutputStream stream = null;

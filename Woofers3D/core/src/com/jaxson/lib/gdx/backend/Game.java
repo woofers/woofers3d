@@ -9,11 +9,10 @@ import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Net;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Clipboard;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.io.Jsonable;
@@ -63,11 +62,6 @@ public class Game
 	public Audio getAudio()
 	{
 		return getApplication().getAudio();
-	}
-
-	public Camera getCamera()
-	{
-		return display.getCamera();
 	}
 
 	public float getClampInterval()
@@ -125,9 +119,9 @@ public class Game
 		return getConfig().getStepInterval();
 	}
 
-	public Viewport getViewport()
+	public View getView()
 	{
-		return display.getViewport();
+		return display.getView();
 	}
 
 	public boolean hasFixedTimeStamp()
@@ -232,11 +226,6 @@ public class Game
 		display.resume();
 	}
 
-	public void setCamera(Camera camera)
-	{
-		display.setCamera(camera);
-	}
-
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
 		getInput().setInputProcessor(inputProcessor);
@@ -245,11 +234,6 @@ public class Game
 	public void setState(State state)
 	{
 		gameStates.set(state);
-	}
-
-	public void setViewport(Viewport viewport)
-	{
-		display.setViewport(viewport);
 	}
 
 	public void update(float step)

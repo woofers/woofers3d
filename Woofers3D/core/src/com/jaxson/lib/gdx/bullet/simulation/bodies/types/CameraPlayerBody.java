@@ -2,7 +2,7 @@ package com.jaxson.lib.gdx.bullet.simulation.bodies.types;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 
 public class CameraPlayerBody extends PlayerBody
 {

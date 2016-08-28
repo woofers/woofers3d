@@ -9,16 +9,15 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.g2d.Screenshot;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.io.Jsonable;
@@ -45,8 +44,7 @@ public class Display extends GameObject
 	private ModelBatch modelBatch;
 	private SpriteBatch spriteBatch;
 	private BitmapFont font;
-	private Viewport viewport;
-	private Camera camera;
+	private View view;
 	private boolean minimized;
 	private boolean paused;
 
@@ -59,8 +57,7 @@ public class Display extends GameObject
 		this.game = game;
 		this.modelBatch = new ModelBatch();
 		this.spriteBatch = new SpriteBatch();
-		this.camera = new OrthographicCamera(getWidth(), getHeight());
-		this.viewport = new ExtendViewport(getWidth(), getHeight(), getCamera());
+		this.view = new View(getWidth(), getHeight());
 		this.font = new BitmapFont();
 
 		font.setColor(FPS_COLOR);
@@ -137,7 +134,7 @@ public class Display extends GameObject
 	{
 		if (!showsFps()) return;
 		getSpriteBatch().begin();
-		font.draw(getSpriteBatch(), "Fps: " + getFps(), getOriginX() + FONT_PADDING, getOriginY() + FONT_PADDING);
+		font.draw(getSpriteBatch(), "Fps: " + getFps(), FONT_PADDING, FONT_PADDING);
 		getSpriteBatch().end();
 	}
 
@@ -150,11 +147,6 @@ public class Display extends GameObject
 		return (float) getWidth() / (float) getHeight();
 	}
 
-	public int getBottomGutterHeight()
-	{
-		return getViewport().getBottomGutterHeight();
-	}
-
 	/**
 	 * Gets the {@link BufferFormat} of the {@link Display}.
 	 * @return {@link BufferFormat} - The {@link BufferFormat} of the
@@ -163,15 +155,6 @@ public class Display extends GameObject
 	public BufferFormat getBufferFormat()
 	{
 		return getGraphics().getBufferFormat();
-	}
-
-	/**
-	 * Gets the {@link Camera} of the {@link Display}.
-	 * @return {@link Camera} - The {@link Camera} of the {@link Display}
-	 */
-	public Camera getCamera()
-	{
-		return camera;
 	}
 
 	/**
@@ -318,11 +301,6 @@ public class Display extends GameObject
 		return game.getInput();
 	}
 
-	public int getLeftGutterWidth()
-	{
-		return getViewport().getLeftGutterWidth();
-	}
-
 	/**
 	 * Gets the {@link ModelBatch} reference.
 	 * @return {@link ModelBatch} - The {@link ModelBatch} reference
@@ -330,26 +308,6 @@ public class Display extends GameObject
 	public ModelBatch getModelBatch()
 	{
 		return modelBatch;
-	}
-
-	public Vector2 getOrigin()
-	{
-		return new Vector2(getOriginX(), getOriginY());
-	}
-
-	public int getOriginX()
-	{
-		return Math.abs((int) (getLeftGutterWidth() * MyMath.reciprocal(getDefaultAspectRatio())));
-	}
-
-	public int getOriginY()
-	{
-		return Math.abs((int) (getBottomGutterHeight() * MyMath.reciprocal(getDefaultAspectRatio())));
-	}
-
-	public int getRightGutterWidth()
-	{
-		return getViewport().getRightGutterWidth();
 	}
 
 	public Jsonable<GameConfig> getSaveableConfig()
@@ -366,28 +324,13 @@ public class Display extends GameObject
 		return spriteBatch;
 	}
 
-	public int getTopGutterHeight()
-	{
-		return getViewport().getTopGutterHeight();
-	}
-
-	public int getTotalGutterHeight()
-	{
-		return getTopGutterHeight() + getBottomGutterHeight();
-	}
-
-	public int getTotalGutterWidth()
-	{
-		return getLeftGutterWidth() + getRightGutterWidth();
-	}
-
 	/**
-	 * Gets the {@link Viewport} of the {@link Display}.
-	 * @return {@link Viewport} - The {@link Viewport} of the {@link Display}
+	 * Gets the {@link View} of the {@link Display}.
+	 * @return {@link View} - The {@link View} of the {@link Display}
 	 */
-	public Viewport getViewport()
+	public View getView()
 	{
-		return viewport;
+		return view;
 	}
 
 	/**
@@ -498,7 +441,7 @@ public class Display extends GameObject
 	@Override
 	public void resize(int width, int height)
 	{
-		viewport.update(width, height);
+		view.resize(width, height);
 		getSpriteBatch().dispose();
 		getModelBatch().dispose();
 		spriteBatch = new SpriteBatch();
@@ -510,16 +453,6 @@ public class Display extends GameObject
 	{
 		if (!isPaused()) setCursorCatched(minimized);
 		minimized = false;
-	}
-
-	/**
-	 * Sets the {@link Camera} of the {@link Display}.
-	 * @param camera The {@link Camera}.
-	 */
-	public void setCamera(Camera camera)
-	{
-		this.camera = camera;
-		getViewport().setCamera(camera);
 	}
 
 	/**
@@ -634,16 +567,6 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Sets the {@link Viewport} of the {@link Display}.
-	 * @param viewport The {@link Viewport}.
-	 */
-	public void setViewport(Viewport viewport)
-	{
-		this.viewport = viewport;
-		getViewport().setCamera(camera);
-	}
-
-	/**
 	 * Sets whether the {@link Game} uses vertical sync.
 	 * @param vsync Whether the {@link Game} uses vertical sync
 	 */
@@ -701,7 +624,7 @@ public class Display extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
-		if (!isPaused()) camera.update();
+		if (!isPaused()) getView().update();
 	}
 
 	/**

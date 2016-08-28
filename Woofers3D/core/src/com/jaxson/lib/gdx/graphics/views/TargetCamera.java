@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.graphics.cameras;
+package com.jaxson.lib.gdx.graphics.views;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.PerspectiveCamera;

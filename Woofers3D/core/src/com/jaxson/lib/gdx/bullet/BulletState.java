@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.bullet;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -10,7 +9,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.PlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.SoftBody;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
+import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.states.State;
 
@@ -26,7 +25,6 @@ public abstract class BulletState extends State
 		this.world = new PhysicsWorld();
 		setWorldSize();
 		setShadows(SHADOWS);
-		setCamera(new TargetCamera(getWidth(), getHeight()));
 	}
 
 	public void applyPhysics(Floor entity)
@@ -109,13 +107,7 @@ public abstract class BulletState extends State
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
 		super.render(spriteBatch, modelBatch);
-		world.render(spriteBatch, modelBatch, getCamera());
-	}
-
-	@Override
-	public void setCamera(Camera camera)
-	{
-		super.setCamera(camera);
+		world.render(spriteBatch, modelBatch, getView());
 	}
 
 	public void setShadows(boolean shadows)

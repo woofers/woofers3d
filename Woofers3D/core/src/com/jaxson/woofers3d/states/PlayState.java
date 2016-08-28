@@ -12,8 +12,8 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.SoftBox;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
-import com.jaxson.lib.gdx.graphics.cameras.TargetCamera;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
+import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.InputHandler;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
@@ -40,7 +40,7 @@ public class PlayState extends BulletState
 
 		camera = new TargetCamera(getWidth(), getHeight());
 		applyPhysics(camera);
-		setCamera(camera);
+		getView().getModelView().setCamera(camera);
 
 		load(new GdxFile("btscene1.g3dj"));
 
@@ -100,7 +100,7 @@ public class PlayState extends BulletState
 		if (InputHandler.justTouched())
 		{
 			Ray ray = player.getForwardRay();
-			if (InputHandler.hasTouchScreen()) ray = getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
+			if (InputHandler.hasTouchScreen()) ray = getView().getModelView().getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{
