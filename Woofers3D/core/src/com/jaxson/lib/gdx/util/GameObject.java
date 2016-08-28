@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.jaxson.lib.gdx.backend.Game;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 /**
  * Abstract class to base {@link GameObject}s on.
@@ -46,7 +48,7 @@ public abstract class GameObject implements Disposable, Renderable, Pauseable, R
 	 * @param camera Camera
 	 */
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Viewport viewport)
 	{
 
 	}

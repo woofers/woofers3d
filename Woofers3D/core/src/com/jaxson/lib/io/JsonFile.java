@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.google.gson.Gson;
 
-public class JsonFile<T extends Object> implements File<JsonFile<T>, T, T>
+public class JsonFile<T> implements File<JsonFile<T>, T, T>
 {
 	public static final JsonFile NOTHING = new JsonFile(DefaultFile.NOTHING, Object.class);
 	private static final String EMPTY = "{" + NEXT_LINE + "}";

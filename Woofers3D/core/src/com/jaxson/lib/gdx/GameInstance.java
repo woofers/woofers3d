@@ -11,6 +11,7 @@ import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
 import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.Jsonable;
+import com.jaxson.lib.util.Optional;
 
 /**
  * A {@link GameInstance} containing a {@link Game} and a {@link GameConfig}.
@@ -28,7 +29,7 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	 */
 	public GameInstance()
 	{
-		this.config = new Jsonable<>(new DefaultFile("config.json"),
+		this.config = new Jsonable<GameConfig>(new DefaultFile("config.json"),
 									 GameConfig.class,
 									 new GameConfig());
 	}

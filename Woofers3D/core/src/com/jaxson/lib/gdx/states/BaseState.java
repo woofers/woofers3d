@@ -12,6 +12,12 @@ import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.util.GameObject;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public abstract class BaseState extends GameObject
 {
@@ -21,7 +27,7 @@ public abstract class BaseState extends GameObject
 	protected BaseState(Game game)
 	{
 		this.game = game;
-		this.renderer = new MixedRenderer();
+		this.renderer = new MixedRenderer(new ExtendViewport(getWidth(), getHeight()));
 	}
 
 	public void add(Entity entity)
@@ -90,9 +96,15 @@ public abstract class BaseState extends GameObject
 		renderer.remove(sprite);
 	}
 
+	@Override
+	public void resize(int width, int height)
+	{
+		renderer.resize(width, height);
+	}
+
 	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
 	{
-		renderer.render(spriteBatch, modelBatch, getCamera());
+		renderer.render(spriteBatch, modelBatch,  getViewport());
 	}
 
 	public void setCamera(Camera camera)

@@ -4,14 +4,31 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.util.GameObject;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Sprite extends GameObject
 {
+	public static class SpriteActor extends Actor
+	{
+		private Sprite sprite;
+
+		public SpriteActor(Sprite sprite)
+		{
+			this.sprite = sprite;
+		}
+
+		public void draw(Batch batch, float parentAlpha)
+		{
+			sprite.draw((SpriteBatch)batch);
+		}
+	}
+
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	private float alpha = 1f;
 	private float depth = 1f;
@@ -277,5 +294,10 @@ public class Sprite extends GameObject
 	public void update(float dt)
 	{
 
+	}
+
+	public Actor toActor()
+	{
+		return new SpriteActor(this);
 	}
 }

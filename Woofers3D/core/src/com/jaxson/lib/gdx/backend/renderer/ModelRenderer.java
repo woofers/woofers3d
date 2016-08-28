@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.backend.renderer;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
@@ -27,15 +28,16 @@ public class ModelRenderer extends Renderer<Entity>
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Viewport viewport)
 	{
 		if (isEmpty()) return;
-		checkAgruments(spriteBatch, modelBatch, camera);
-		environment.render(getObjects(), camera);
-		modelBatch.begin(camera);
+		checkAgruments(spriteBatch, modelBatch, viewport.getCamera());
+		viewport.apply();
+		environment.render(getObjects(), viewport.getCamera());
+		modelBatch.begin(viewport.getCamera());
 		for (Entity entity: getObjects())
 		{
-			if (entity.isVisible(camera)) modelBatch.render(entity.getModelInstance(), environment);
+			if (entity.isVisible(viewport.getCamera())) modelBatch.render(entity.getModelInstance(), environment);
 		}
 		modelBatch.end();
 	}
