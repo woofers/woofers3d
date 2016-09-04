@@ -1,7 +1,5 @@
 package com.jaxson.lib.gdx.util;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.graphics.views.View;
@@ -41,16 +39,19 @@ public abstract class GameObject implements Disposable, Renderable, Pauseable, R
 
 	/**
 	 * Called when the {@link GameObject} should update the game logic.
-	 * @param spriteBatch SpriteBatch
-	 * @param modelBatch ModelBatch
-	 * @param camera Camera
+	 * @param view View
 	 */
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view)
+	public void render(View view)
 	{
 
 	}
 
+	/**
+	 * Called when the {@link Game} is resized.
+	 * @param width The new width in pixels
+	 * @param height The new height in pixels
+	 */
 	@Override
 	public void resize(int width, int height)
 	{

@@ -31,7 +31,7 @@ public class KeyList
 
 	public void add(Integer keycode)
 	{
-		if (!InputHandler.isKeyInRange(keycode)) throw new KeyOutOfRangeException();
+		if (!Inputs.isKeyInRange(keycode)) throw new KeyOutOfRangeException();
 		keycodes.add(keycode);
 	}
 

@@ -6,58 +6,19 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.util.exceptions.NullValueException;
+import com.jaxson.lib.gdx.graphics.views.View;
 
-public abstract class Renderer<T extends GameObject> extends GameObject
+public interface Renderer<T extends GameObject>
 {
-	protected static void checkAgruments(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
-	{
-		if (modelBatch == null) throw new NullValueException("spriteBatch");
-		if (spriteBatch == null) throw new NullValueException("modelBatch");
-		if (camera == null) throw new NullValueException("camera");
-	}
+	public void add(T object);
 
-	private MyArrayList<T> objects;
+	public void dispose();
 
-	public Renderer()
-	{
-		this.objects = new MyArrayList<>();
-	}
+	public boolean isEmpty();
 
-	public void add(T object)
-	{
-		getObjects().add(object);
-	}
+	public void render(View view);
 
-	@Override
-	public void dispose()
-	{
-		for (T object: getObjects())
-		{
-			object.dispose();
-		}
-	}
+	public void remove(T object);
 
-	protected MyArrayList<T> getObjects()
-	{
-		return objects;
-	}
-
-	public boolean isEmpty()
-	{
-		return getObjects().isEmpty();
-	}
-
-	public void remove(T object)
-	{
-		getObjects().remove(object);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-		for (T object: getObjects())
-		{
-			object.update(dt);
-		}
-	}
+	public void update(float dt);
 }

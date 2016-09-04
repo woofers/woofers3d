@@ -65,7 +65,7 @@ public class MySheet implements Iterable<MyRow>
 			do
 			{
 				cells.add(cellRow);
-				location = location.nextRow(1);
+				location = location.nextRow();
 				try
 				{
 					cellRow = getCell(location);

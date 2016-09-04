@@ -9,7 +9,7 @@ package com.jaxson.lib.io;
 public class Jsonable<T>
 {
 	private T object;
-	private File file;
+	private JsonFile<T> file;
 
 	public Jsonable(File file, Class<T> type)
 	{
@@ -18,7 +18,7 @@ public class Jsonable<T>
 
 	public Jsonable(File file, Class<T> type, T object)
 	{
-		this(new JsonFile<>(file, type), object);
+		this(new JsonFile<T>(file, type), object);
 	}
 
 	public Jsonable(JsonFile<T> file, T object)
@@ -33,7 +33,7 @@ public class Jsonable<T>
 		return object;
 	}
 
-	public File getSaveFile()
+	public JsonFile<T> getSaveFile()
 	{
 		return file;
 	}
@@ -53,7 +53,7 @@ public class Jsonable<T>
 
 	public void read()
 	{
-		this.object = (T) getSaveFile().readObject();
+		this.object = getSaveFile().readObject();
 	}
 
 	public void save()
@@ -61,7 +61,7 @@ public class Jsonable<T>
 		getSaveFile().write(get());
 	}
 
-	public void setSaveFile(File file)
+	public void setSaveFile(JsonFile<T> file)
 	{
 		this.file = file;
 	}

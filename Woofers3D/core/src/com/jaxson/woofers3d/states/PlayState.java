@@ -1,7 +1,5 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.Game;
@@ -14,11 +12,13 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.graphics.views.View;
+import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
+import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
 
 public class PlayState extends BulletState
 {
@@ -45,9 +45,9 @@ public class PlayState extends BulletState
 		load(new GdxFile("btscene1.g3dj"));
 
 		/*
-		 * floor = new Floor();
-		 * applyPhysics(floor);
-		 * add(floor);
+		 floor = new Floor();
+		 applyPhysics(floor);
+		 add(floor);
 		 */
 
 		RandomNumber boxSizeRange = new RandomNumber(1, 4);
@@ -86,6 +86,8 @@ public class PlayState extends BulletState
 		player = new Player(camera);
 		applyPhysics(player);
 		add(player);
+
+		add(new FPSCounter());
 	}
 
 	@Override
@@ -97,10 +99,10 @@ public class PlayState extends BulletState
 	@Override
 	protected void input(float dt)
 	{
-		if (InputHandler.justTouched())
+		if (Inputs.justTouched())
 		{
 			Ray ray = player.getForwardRay();
-			if (InputHandler.hasTouchScreen()) ray = getView().getModelView().getCamera().getPickRay(InputHandler.getMouseX(), InputHandler.getMouseY());
+			if (Inputs.hasTouchScreen()) ray = getView().getModelView().getCamera().getPickRay(Inputs.getMouseX(), Inputs.getMouseY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{
@@ -111,9 +113,9 @@ public class PlayState extends BulletState
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void render(View view)
 	{
-		super.render(spriteBatch, modelBatch);
+		super.render(view);
 	}
 
 	@Override

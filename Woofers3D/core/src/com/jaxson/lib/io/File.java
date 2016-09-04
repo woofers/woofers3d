@@ -86,6 +86,10 @@ public interface File<F extends File, R, W>
 	 */
 	public BufferedReader getBufferedReader() throws FileNotFoundException;
 
+	/**
+	 * Returns a child of the {@link File} if it exists.
+	 * @return {@link F} - The child
+	 */
 	public F getChild(String child);
 
 	/**

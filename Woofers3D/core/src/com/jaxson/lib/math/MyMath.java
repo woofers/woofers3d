@@ -160,7 +160,7 @@ public class MyMath
 	 */
 	public static float reciprocal(float value)
 	{
-		return 1f / value;
+		return new Reciprocal(value).floatValue();
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class MyMath
 	 */
 	public static float reciprocal(int value)
 	{
-		return 1f / value;
+		return new Reciprocal(value).intValue();
 	}
 
 	protected MyMath()

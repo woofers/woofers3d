@@ -1,7 +1,5 @@
 package com.jaxson.lib.gdx.bullet;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
@@ -10,6 +8,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.PlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.SoftBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.states.State;
 
@@ -104,10 +103,10 @@ public abstract class BulletState extends State
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void render(View view)
 	{
-		super.render(spriteBatch, modelBatch);
-		world.render(spriteBatch, modelBatch, getView());
+		super.render(view);
+		world.render(view);
 	}
 
 	public void setShadows(boolean shadows)

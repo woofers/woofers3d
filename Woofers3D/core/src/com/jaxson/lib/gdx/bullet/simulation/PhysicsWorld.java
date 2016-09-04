@@ -3,8 +3,6 @@ package com.jaxson.lib.gdx.bullet.simulation;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -25,7 +23,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.SoftBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
@@ -255,9 +253,9 @@ public class PhysicsWorld
 		world.removeSoftBody(entity.getBody());
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view)
+	public void render(View view)
 	{
-		debugDrawer.render(spriteBatch, modelBatch, view.getModelView().getCamera());
+		debugDrawer.render(view);
 	}
 
 	public void setDebugMode(int mode)
@@ -278,7 +276,7 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (InputHandler.hasHardwareKeyboard() && InputHandler.isPressed(Keys.F5)) toggleDebugMode();
-		if (InputHandler.hasTouchScreen() && InputHandler.twoFingerTouched()) toggleDebugMode();
+		if (Inputs.hasHardwareKeyboard() && Inputs.isPressed(Keys.F5)) toggleDebugMode();
+		if (Inputs.hasTouchScreen() && Inputs.twoFingerTouched()) toggleDebugMode();
 	}
 }

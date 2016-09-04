@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Clipboard;
 import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.views.View;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.io.Jsonable;
 
@@ -22,7 +22,7 @@ public class Game
 	private Jsonable<GameConfig> config;
 	private GameStates gameStates;
 	private Display display;
-	private InputHandler inputHandler;
+	private Inputs inputHandler;
 	private float dt;
 	private float accumulator;
 	private float step;
@@ -31,11 +31,11 @@ public class Game
 	public Game(Jsonable<GameConfig> config)
 	{
 		this.config = config;
-		this.inputHandler = new InputHandler();
+		this.inputHandler = new Inputs();
 		this.gameStates = new GameStates(this);
 		this.display = new Display(this);
-		setInputProcessor(InputHandler.getInputProcessor());
-		InputHandler.setSensitivity(getConfig().getSensitivity());
+		setInputProcessor(Inputs.getInputProcessor());
+		Inputs.setSensitivity(getConfig().getSensitivity());
 	}
 
 	public void dispose()
@@ -209,9 +209,8 @@ public class Game
 		{
 			update(dt);
 		}
-		display.render();
-		gameStates.render(display.getSpriteBatch(), display.getModelBatch());
-		display.drawFps();
+		display.render(getView());
+		gameStates.render(getView());
 	}
 
 	public void resize(int width, int height)
@@ -240,6 +239,6 @@ public class Game
 	{
 		gameStates.update(step);
 		display.update(step);
-		InputHandler.update(step);
+		Inputs.update(step);
 	}
 }

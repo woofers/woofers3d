@@ -23,6 +23,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 	}
 
 	private static final long serialVersionUID = -944738295720014954L;
+	private static final boolean TRNASPARENT = true;
 
 	private T panel;
 
@@ -31,7 +32,7 @@ public class ScaleContainer<T extends Panel> extends Panel
 		super();
 		this.panel = panel;
 		add(panel);
-		setOpaque(false);
+		setOpaque(!TRNASPARENT);
 		addComponentListener(new ResizeAdapter(this));
 	}
 

@@ -1,8 +1,7 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.backend.Game;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.states.State;
 
 public class MenuState extends State
@@ -25,9 +24,9 @@ public class MenuState extends State
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void render(View view)
 	{
-		super.render(spriteBatch, modelBatch);
+		super.render(view);
 	}
 
 	@Override

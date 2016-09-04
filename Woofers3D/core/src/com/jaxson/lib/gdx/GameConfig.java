@@ -33,6 +33,11 @@ public class GameConfig
 	 */
 	public static final int VARIBLE_FRAME_RATE = 0;
 
+	/**
+	 * Used in {@link #setX(int)} and {@link #setY(int)} to center the window.
+	 */
+	public static final int WINDOW_CENTER = -1;
+
 	private static final FileType ICON_TYPE = FileType.Internal;
 	private static final float SENSITIVITY = 1.3f;
 	private static final String ICON_PATH = "icon.png";
@@ -40,6 +45,8 @@ public class GameConfig
 	private String title = "New Game";
 	private int width = 1280;
 	private int height = 720;
+	private int x = WINDOW_CENTER;
+	private int y = WINDOW_CENTER;
 	private int fps = 600;
 	private transient int backgroundFps = PAUSE_ON_LOST_FOCUS;
 	private boolean vsync = false;
@@ -226,6 +233,24 @@ public class GameConfig
 	}
 
 	/**
+	 * Gets the starting x location of the window.
+	 * @return {@link int} - The starting x location of the window
+	 */
+	public int getX()
+	{
+		return x;
+	}
+
+	/**
+	 * Gets the starting y location of the window.
+	 * @return {@link int} - The starting y location of the window
+	 */
+	public int getY()
+	{
+		return y;
+	}
+
+	/**
 	 * Gets whether the {@link Game} uses a fixed time step.
 	 * @return {@link boolean} - Whether the {@link Game} uses a fixed time
 	 * step
@@ -298,6 +323,8 @@ public class GameConfig
 		setTitle(config.getTitle());
 		setWidth(config.getWidth());
 		setHeight(config.getHeight());
+		setX(config.getX());
+		setY(config.getY());
 		setMaxFps(config.getMaxFps());
 		setStep(config.getStep());
 		setClamp(config.getClamp());
@@ -502,6 +529,24 @@ public class GameConfig
 	}
 
 	/**
+	 * Sets the starting x location of the window.
+	 * @param x The x location of the window
+	 */
+	public void setX(int x)
+	{
+		this.x = x;
+	}
+
+	/**
+	 * Sets the starting y location of the window.
+	 * @param y The y location of the window
+	 */
+	public void setY(int y)
+	{
+		this.y = y;
+	}
+
+	/**
 	 * Gets whether the {@link Game} shows its frame rate.
 	 * @return {@link boolean} - Whether the {@link Game} shows its frame rate
 	 */
@@ -548,6 +593,8 @@ public class GameConfig
 		config.backgroundFPS = getBackgroundFps();
 		config.resizable = isResizable();
 		config.samples = getAntiAliasing();
+		config.x = getX();
+		config.y = getY();
 		if (getIcon().exists()) config.addIcon(getIcon().getPath(), ICON_TYPE);
 		return config;
 	}

@@ -18,10 +18,11 @@ import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.g2d.Screenshot;
 import com.jaxson.lib.gdx.graphics.views.View;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.io.Jsonable;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.gdx.graphics.views.View;
 
 /**
  * A class that handles the display and rendering.
@@ -41,12 +42,12 @@ public class Display extends GameObject
 	private static final Color FPS_COLOR = Color.WHITE;
 
 	private Game game;
-	private ModelBatch modelBatch;
-	private SpriteBatch spriteBatch;
 	private BitmapFont font;
 	private View view;
 	private boolean minimized;
 	private boolean paused;
+	private int lastWindowedWidth;
+	private int lastWindowedHeight;
 
 	/**
 	 * Constructs the display.
@@ -55,10 +56,10 @@ public class Display extends GameObject
 	public Display(Game game)
 	{
 		this.game = game;
-		this.modelBatch = new ModelBatch();
-		this.spriteBatch = new SpriteBatch();
 		this.view = new View(getWidth(), getHeight());
 		this.font = new BitmapFont();
+		this.lastWindowedWidth = getDefaultWidth();
+		this.lastWindowedHeight = getDefaultHeight();
 
 		font.setColor(FPS_COLOR);
 		setFullscreen(startsFullscreen());
@@ -126,16 +127,15 @@ public class Display extends GameObject
 	@Override
 	public void dispose()
 	{
-		spriteBatch.dispose();
-		modelBatch.dispose();
+		view.dispose();
 	}
 
 	public void drawFps()
 	{
 		if (!showsFps()) return;
-		getSpriteBatch().begin();
-		font.draw(getSpriteBatch(), "Fps: " + getFps(), FONT_PADDING, FONT_PADDING);
-		getSpriteBatch().end();
+		getView().getSpriteBatch().begin();
+		font.draw(getView().getSpriteBatch(), "Fps: " + getFps(), FONT_PADDING, FONT_PADDING);
+		getView().getSpriteBatch().end();
 	}
 
 	/**
@@ -283,8 +283,8 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Gets the starting height of the {@link Display} in pixels.
-	 * @return {@link int} - The starting height of the {@link Display} in
+	 * Gets the height of the {@link Display} in pixels.
+	 * @return {@link int} - The height of the {@link Display} in
 	 * pixels
 	 */
 	public int getHeight()
@@ -301,27 +301,19 @@ public class Display extends GameObject
 		return game.getInput();
 	}
 
-	/**
-	 * Gets the {@link ModelBatch} reference.
-	 * @return {@link ModelBatch} - The {@link ModelBatch} reference
-	 */
-	public ModelBatch getModelBatch()
+	public int getLastWindowedHeight()
 	{
-		return modelBatch;
+		return lastWindowedHeight;
+	}
+
+	public int getLastWindowedWidth()
+	{
+		return lastWindowedWidth;
 	}
 
 	public Jsonable<GameConfig> getSaveableConfig()
 	{
 		return game.getSaveableConfig();
-	}
-
-	/**
-	 * Gets the {@link SpriteBatch} reference.
-	 * @return {@link SpriteBatch} - The {@link SpriteBatch} reference
-	 */
-	public SpriteBatch getSpriteBatch()
-	{
-		return spriteBatch;
 	}
 
 	/**
@@ -334,8 +326,8 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Gets the starting width of the {@link Display} in pixels.
-	 * @return {@link int} - The starting width of the {@link Display} in pixels
+	 * Gets the width of the {@link Display} in pixels.
+	 * @return {@link int} - The starting of the {@link Display} in pixels
 	 */
 	public int getWidth()
 	{
@@ -357,13 +349,13 @@ public class Display extends GameObject
 	@Override
 	protected void input(float dt)
 	{
-		if (canFullscreen() && InputHandler.isDown(InputHandler.FULLSCREEN)) toggleFullscreen();
-		if (!isCursorCatched() && !isPaused() && InputHandler.justTouched()) setCursorCatched(true);
-		if (InputHandler.hasTouchScreen() && InputHandler.threeFingerTouched()) togglePaused();
-		if (InputHandler.hasHardwareKeyboard())
+		if (canFullscreen() && Inputs.isDown(Inputs.FULLSCREEN)) toggleFullscreen();
+		if (!isCursorCatched() && !isPaused() && Inputs.justTouched()) setCursorCatched(true);
+		if (Inputs.hasTouchScreen() && Inputs.threeFingerTouched()) togglePaused();
+		if (Inputs.hasHardwareKeyboard())
 		{
-			if (InputHandler.isPressed(Keys.ESCAPE)) togglePaused();
-			if (InputHandler.isPressed(Keys.F12))
+			if (Inputs.isPressed(Keys.ESCAPE)) togglePaused();
+			if (Inputs.isPressed(Keys.F12))
 			{
 				Screenshot screenshot = new Screenshot();
 				screenshot.save();
@@ -433,7 +425,7 @@ public class Display extends GameObject
 		minimized = true;
 	}
 
-	public void render()
+	public void render(View view)
 	{
 		clearScreen();
 	}
@@ -442,10 +434,10 @@ public class Display extends GameObject
 	public void resize(int width, int height)
 	{
 		view.resize(width, height);
-		getSpriteBatch().dispose();
-		getModelBatch().dispose();
-		spriteBatch = new SpriteBatch();
-		modelBatch = new ModelBatch();
+		System.out.println("getWidth() " + getWidth() + " X " + getHeight());
+		System.out.println("getDefaultWidth() " + getDefaultWidth() + " X " + getDefaultHeight());
+		System.out.println("width " + width + " X " + height);
+		System.out.println("------------------------------");
 	}
 
 	@Override
@@ -496,25 +488,13 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Sets the {@link DisplayMode} of the {@link Display} by width and height
-	 * in windowed mode.
+	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
 	 * @param width The width
 	 * @param height The height
 	 */
 	public void setDisplayMode(int width, int height)
 	{
-		setDisplayMode(width, height, false);
-	}
-
-	/**
-	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
-	 * @param width The width
-	 * @param height The height
-	 * @param fullscreen Whether the window is fullscreen
-	 */
-	public void setDisplayMode(int width, int height, boolean fullscreen)
-	{
-		getGraphics().setDisplayMode(width, height, fullscreen);
+		getGraphics().setDisplayMode(width, height, false);
 		updateViewport();
 	}
 
@@ -527,13 +507,15 @@ public class Display extends GameObject
 		if (isFullscreen() == fullscreen) return;
 		if (fullscreen)
 		{
+			lastWindowedWidth = getWidth();
+			lastWindowedHeight = getHeight();
 			setDisplayMode(getFullscreenDisplayMode());
 		}
 		else
 		{
-			setDisplayMode(getDefaultWidth(), getDefaultHeight());
+			setDisplayMode(getLastWindowedWidth(), getLastWindowedHeight());
 		}
-		InputHandler.reset();
+		Inputs.reset();
 	}
 
 	/**
@@ -556,12 +538,12 @@ public class Display extends GameObject
 		getConfig().setTitle(title);
 	}
 
-	public void setViewport(int width, int height)
+	private void setViewport(int width, int height)
 	{
 		setViewport(0, 0, width, height);
 	}
 
-	public void setViewport(int x, int y, int width, int height)
+	private void setViewport(int x, int y, int width, int height)
 	{
 		getGl().glViewport(x, y, width, height);
 	}
@@ -630,7 +612,7 @@ public class Display extends GameObject
 	/**
 	 * Updates the {@link Viewport}
 	 */
-	public void updateViewport()
+	private void updateViewport()
 	{
 		setViewport(getWidth(), getHeight());
 	}

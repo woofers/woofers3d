@@ -6,7 +6,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.input.Inputs;
 
 public class Player extends CameraPlayerBody
 {
@@ -33,7 +33,7 @@ public class Player extends CameraPlayerBody
 	protected void input(float dt)
 	{
 		super.input(dt);
-		if (InputHandler.isPressed(Keys.T)) toggleCamera();
+		if (Inputs.isPressed(Keys.T)) toggleCamera();
 	}
 
 	@Override

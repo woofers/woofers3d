@@ -1,9 +1,7 @@
 package com.jaxson.woofers3d;
 
 import com.jaxson.lib.gdx.GameInstance;
-import com.jaxson.lib.io.EmptyOutputStream;
 import com.jaxson.woofers3d.states.PlayState;
-import java.io.PrintStream;
 
 public class Woofers3D extends GameInstance
 {
@@ -15,8 +13,8 @@ public class Woofers3D extends GameInstance
 		getConfig().setTitle(TITLE);
 		getSaveableConfig().save();
 
-		PrintStream originalStream = System.out;
-		System.setOut(new PrintStream(new EmptyOutputStream()));
+		// PrintStream originalStream = System.out;
+		// System.setOut(new PrintStream(new EmptyOutputStream()));
 	}
 
 	@Override

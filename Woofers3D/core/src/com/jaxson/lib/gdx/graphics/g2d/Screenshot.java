@@ -114,9 +114,9 @@ public class Screenshot implements Disposable
 		if (yDown) flipY();
 	}
 
-	public Sprite toSprite()
+	public SpriteActor toSprite()
 	{
-		return new Sprite(toTexture());
+		return new SpriteActor(toTexture());
 	}
 
 	public Texture toTexture()

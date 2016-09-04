@@ -1,7 +1,5 @@
 package com.jaxson.lib.gdx.util;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.graphics.views.View;
 
 /**
@@ -13,11 +11,9 @@ public interface Renderable
 {
 	/**
 	 * Called when the {@link Object} should render itself.
-	 * @param spriteBatch SpriteBatch
-	 * @param modelBatch ModelBatch
-	 * @param camera Camera
+	 * @param view View
 	 */
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view);
+	public void render(View view);
 
 	/**
 	 * Called when the {@link Object} should update the game logic.

@@ -27,7 +27,6 @@ public class RandomNumber extends ComparableNumber
 
 	private Number min;
 	private Number max;
-
 	private Number[] excluded;
 
 	/**

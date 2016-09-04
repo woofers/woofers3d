@@ -1,7 +1,6 @@
 package com.jaxson.lib.gdx.backend;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GameObject;
 import java.util.Stack;
@@ -110,14 +109,14 @@ public class GameStates extends GameObject
 
 	/**
 	 * Renders the current {@link State} and sub state.
-	 * @param spriteBatch SpriteBatch
-	 * @param modelBatch ModelBatch
+	 * @param view The view
 	 */
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	@Override
+	public void render(View view)
 	{
 		if (isEmpty()) return;
-		peek().render(spriteBatch, modelBatch);
-		if (updatesSubState()) peek().getSubState().render(spriteBatch, modelBatch);
+		peek().render(view);
+		if (updatesSubState()) peek().getSubState().render(view);
 	}
 
 	/**

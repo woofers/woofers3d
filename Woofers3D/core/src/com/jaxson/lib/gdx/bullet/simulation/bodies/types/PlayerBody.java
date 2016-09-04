@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
 
@@ -110,50 +110,50 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 	protected void input(float dt)
 	{
 		walkDirection.setZero();
-		if (InputHandler.hasHardwareKeyboard())
+		if (Inputs.hasHardwareKeyboard())
 		{
 			if (onGround())
 			{
-				if (InputHandler.isDown(InputHandler.ANY_LEFT))
+				if (Inputs.isDown(Inputs.ANY_LEFT))
 				{
 					rotate(getRotationSpeed(), 0f, 0f);
 				}
-				if (InputHandler.isDown(InputHandler.ANY_RIGHT))
+				if (Inputs.isDown(Inputs.ANY_RIGHT))
 				{
 					rotate(-getRotationSpeed(), 0f, 0f);
 				}
 			}
-			if (InputHandler.isDown(InputHandler.ANY_UP))
+			if (Inputs.isDown(Inputs.ANY_UP))
 			{
 				walkDirection.add(getDirection());
 			}
-			if (InputHandler.isDown(InputHandler.ANY_DOWN))
+			if (Inputs.isDown(Inputs.ANY_DOWN))
 			{
 				walkDirection.sub(getDirection());
 			}
-			if (InputHandler.isDown(Keys.SPACE))
+			if (Inputs.isDown(Keys.SPACE))
 			{
 				jump();
 			}
 		}
-		if (InputHandler.hasTouchScreen())
+		if (Inputs.hasTouchScreen())
 		{
-			if (InputHandler.justTouched())
+			if (Inputs.justTouched())
 			{
 				jump();
 			}
 		}
-		if (InputHandler.hasAccelerometer())
+		if (Inputs.hasAccelerometer())
 		{
-			if (InputHandler.isAccelerometerForward())
+			if (Inputs.isAccelerometerForward())
 			{
 				walkDirection.add(getDirection());
-				walkDirection.scl(InputHandler.getAccelerometerForward());
+				walkDirection.scl(Inputs.getAccelerometerForward());
 			}
-			if (InputHandler.isAccelerometerBack())
+			if (Inputs.isAccelerometerBack())
 			{
 				walkDirection.sub(getDirection());
-				walkDirection.scl(InputHandler.getAccelerometerBack());
+				walkDirection.scl(Inputs.getAccelerometerBack());
 			}
 		}
 		walkDirection.scl(getSpeed());

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
-import com.jaxson.lib.gdx.input.InputHandler;
+import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
 
 public class TargetCamera extends PerspectiveCamera
@@ -94,7 +94,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Vector2 getMouse()
 	{
-		return InputHandler.getScaledMouse();
+		return Inputs.getScaledMouse();
 	}
 
 	public float getNear()
@@ -172,7 +172,7 @@ public class TargetCamera extends PerspectiveCamera
 		rotateAround(getTargetLocation(), getMouse());
 		translate(getDeltaTargetLocation());
 		resetUp();
-		if (InputHandler.isPressed(Keys.R))
+		if (Inputs.isPressed(Keys.R))
 		{
 			center(getTargetLocation());
 		}

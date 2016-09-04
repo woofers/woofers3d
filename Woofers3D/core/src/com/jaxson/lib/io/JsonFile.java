@@ -13,7 +13,7 @@ import java.util.Date;
 public class JsonFile<T> implements File<JsonFile<T>, T, T>
 {
 	public static final JsonFile NOTHING = new JsonFile(DefaultFile.NOTHING, Object.class);
-	private static final String EMPTY = "{" + NEXT_LINE + "}";
+	private static final String EMPTY = "{" + NEXT_LINE + NEXT_LINE + "}";
 
 	private File file;
 	private Class<T> type;

@@ -1,8 +1,5 @@
 package com.jaxson.lib.gdx.backend.renderer;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
@@ -11,13 +8,15 @@ import com.jaxson.lib.gdx.util.GameObject;
 
 public class MixedRenderer extends GameObject
 {
-	private SpriteRenderer spriteRenderer;
 	private ModelRenderer modelRenderer;
+	private SpriteRenderer spriteRenderer;
+	private HudRenderer hudRenderer;
 
 	public MixedRenderer(View view)
 	{
-		this.spriteRenderer = new SpriteRenderer(view);
 		this.modelRenderer = new ModelRenderer();
+		this.spriteRenderer = new SpriteRenderer();
+		this.hudRenderer = new HudRenderer();
 	}
 
 	public void add(Entity model)
@@ -30,11 +29,17 @@ public class MixedRenderer extends GameObject
 		spriteRenderer.add(sprite);
 	}
 
+	public void addHud(Sprite sprite)
+	{
+		hudRenderer.add(sprite);
+	}
+
 	@Override
 	public void dispose()
 	{
-		spriteRenderer.dispose();
 		modelRenderer.dispose();
+		spriteRenderer.dispose();
+		hudRenderer.dispose();
 	}
 
 	public MyEnvironment getEnvironment()
@@ -42,14 +47,9 @@ public class MixedRenderer extends GameObject
 		return modelRenderer.getEnvironment();
 	}
 
-	public Stage getStage()
-	{
-		return spriteRenderer.getStage();
-	}
-
 	public boolean isEmpty()
 	{
-		return spriteRenderer.isEmpty() && modelRenderer.isEmpty();
+		return spriteRenderer.isEmpty() && modelRenderer.isEmpty() && hudRenderer.isEmpty();
 	}
 
 	public void remove(Entity model)
@@ -62,24 +62,32 @@ public class MixedRenderer extends GameObject
 		spriteRenderer.add(sprite);
 	}
 
-	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, View view)
+	public void removeHud(Sprite sprite)
 	{
-		spriteRenderer.render(spriteBatch, modelBatch, view);
-		modelRenderer.render(spriteBatch, modelBatch, view);
+		hudRenderer.add(sprite);
+	}
+
+	@Override
+	public void render(View view)
+	{
+		modelRenderer.render(view);
+		spriteRenderer.render(view);
+		hudRenderer.render(view);
 	}
 
 	@Override
 	public void resize(int width, int height)
 	{
-		spriteRenderer.resize(width, height);
 		modelRenderer.resize(width, height);
+		spriteRenderer.resize(width, height);
+		hudRenderer.resize(width, height);
 	}
 
 	@Override
 	public void update(float dt)
 	{
-		spriteRenderer.update(dt);
 		modelRenderer.update(dt);
+		spriteRenderer.update(dt);
+		hudRenderer.update(dt);
 	}
 }

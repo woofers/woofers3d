@@ -13,7 +13,7 @@ public class KeyCombination
 		if (keys.length > MAX_KEY_ROLLOVER) throw new IllegalArgumentException(EXCEEDED_KEY_ROLLOVER);
 		for (int key: keys)
 		{
-			if (!InputHandler.isKeyInRange(key)) throw new KeyOutOfRangeException();
+			if (!Inputs.isKeyInRange(key)) throw new KeyOutOfRangeException();
 		}
 	}
 

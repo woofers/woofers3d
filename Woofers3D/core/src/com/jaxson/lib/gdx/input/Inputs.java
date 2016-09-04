@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.DisplayOrientation;
 import com.jaxson.lib.math.MyMath;
 
-public class InputHandler extends Keys implements InputProcessor, GestureListener
+public class Inputs extends Keys implements InputProcessor, GestureListener
 {
 	public static final int MOVE_UP = W;
 	public static final int MOVE_FORWARD = W;
@@ -629,7 +629,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void setInvertMouse(Vector2 invertMouse)
 	{
-		InputHandler.invertMouse = invertMouse;
+		Inputs.invertMouse = invertMouse;
 	}
 
 	public static void setSensitivity(float sensitivity)
@@ -639,7 +639,7 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 
 	public static void setSensitivity(Vector2 sensitivity)
 	{
-		InputHandler.sensitivity = sensitivity;
+		Inputs.sensitivity = sensitivity;
 	}
 
 	public static boolean threeFingerTouched()
@@ -676,18 +676,18 @@ public class InputHandler extends Keys implements InputProcessor, GestureListene
 		orientation = getOrientation();
 	}
 
-	public InputHandler()
+	public Inputs()
 	{
-		InputHandler.keys = new boolean[KEY_MAX];
-		InputHandler.prevKeys = new boolean[KEY_MAX];
-		InputHandler.touches = new boolean[MULTITOUCH_SUPPORT];
-		InputHandler.prevTouches = new boolean[MULTITOUCH_SUPPORT];
-		InputHandler.mouse = new Vector2();
-		InputHandler.deltaMouse = new Vector2();
-		InputHandler.invertMouse = new Vector2(1f, 1f);
-		InputHandler.sensitivity = new Vector2(1f, 1f);
-		InputHandler.orientation = getOrientation();
-		InputHandler.prevOrientation = orientation;
+		Inputs.keys = new boolean[KEY_MAX];
+		Inputs.prevKeys = new boolean[KEY_MAX];
+		Inputs.touches = new boolean[MULTITOUCH_SUPPORT];
+		Inputs.prevTouches = new boolean[MULTITOUCH_SUPPORT];
+		Inputs.mouse = new Vector2();
+		Inputs.deltaMouse = new Vector2();
+		Inputs.invertMouse = new Vector2(1f, 1f);
+		Inputs.sensitivity = new Vector2(1f, 1f);
+		Inputs.orientation = getOrientation();
+		Inputs.prevOrientation = orientation;
 		setInvertMouse(INVERT_MOUSE_X, INVERT_MOUSE_Y);
 		setSensitivity(SENSITIVITY);
 		inputProcessor = new InputMultiplexer();

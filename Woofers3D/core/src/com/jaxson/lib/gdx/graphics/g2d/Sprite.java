@@ -1,79 +1,13 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
-import com.badlogic.gdx.Files.FileType;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.jaxson.lib.gdx.graphics.color.MyColor;
-import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.util.GameObject;
 
-public class Sprite extends GameObject
+public abstract class Sprite extends GameObject
 {
-	public static class SpriteActor extends Actor
-	{
-		private Sprite sprite;
-
-		public SpriteActor(Sprite sprite)
-		{
-			this.sprite = sprite;
-		}
-
-		@Override
-		public void draw(Batch batch, float parentAlpha)
-		{
-			sprite.draw((SpriteBatch) batch);
-		}
-	}
-
-	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 	private float alpha = 1f;
 	private float depth = 1f;
-
-	public Sprite(String path)
-	{
-		this(new Texture(new GdxFile(path, FileType.Internal).getFileHandle()));
-	}
-
-	public Sprite(Texture texture)
-	{
-		this.sprite = new com.badlogic.gdx.graphics.g2d.Sprite(texture);
-	}
-
-	@Override
-	public void dispose()
-	{
-
-	}
-
-	public void draw(SpriteBatch spriteBatch)
-	{
-		sprite.draw(spriteBatch, getAlpha());
-	}
-
-	public void flip()
-	{
-		flip(true, true);
-	}
-
-	private void flip(boolean flipX, boolean flipY)
-	{
-		sprite.flip(flipX, flipY);
-	}
-
-	public void flipX()
-	{
-		flip(true, false);
-	}
-
-	public void flipY()
-	{
-		flip(false, true);
-	}
 
 	public float getAlpha()
 	{
@@ -82,7 +16,7 @@ public class Sprite extends GameObject
 
 	public Vector2 getCenter()
 	{
-		return getLocation().add(getOrigin());
+		return getLocation().add(getLocation().cpy().scl(0.5f));
 	}
 
 	public float getDepth()
@@ -90,95 +24,50 @@ public class Sprite extends GameObject
 		return depth;
 	}
 
-	public float getHeight()
-	{
-		return sprite.getHeight();
-	}
+	public abstract float getHeight();
 
 	public Vector2 getLocation()
 	{
 		return new Vector2(getLocationX(), getLocationY());
 	}
 
-	public float getLocationX()
-	{
-		return sprite.getX();
-	}
+	public abstract float getLocationX();
 
-	public float getLocationY()
-	{
-		return sprite.getY();
-	}
+	public abstract float getLocationY();
 
 	public Vector2 getOrigin()
 	{
 		return new Vector2(getOriginX(), getOriginY());
 	}
 
-	public float getOriginX()
-	{
-		return sprite.getOriginX();
-	}
+	public abstract float getOriginX();
 
-	public float getOriginY()
-	{
-		return sprite.getOriginY();
-	}
+	public abstract float getOriginY();
 
-	public float getRotation()
-	{
-		return sprite.getRotation();
-	}
+	public abstract float getRotation();
 
 	public Vector2 getScale()
 	{
 		return new Vector2(getScaleX(), getScaleY());
 	}
 
-	public float getScaleX()
-	{
-		return sprite.getScaleX();
-	}
+	public abstract float getScaleX();
 
-	public float getScaleY()
-	{
-		return sprite.getScaleY();
-	}
+	public abstract float getScaleY();
 
 	public Vector2 getSize()
 	{
 		return new Vector2(getWidth(), getHeight());
 	}
 
-	public Color getTint()
-	{
-		return sprite.getColor();
-	}
-
-	public float getWidth()
-	{
-		return sprite.getWidth();
-	}
+	public abstract float getWidth();
 
 	public void setAlpha(float alpha)
 	{
 		this.alpha = alpha;
 	}
 
-	public void setAlphaTint(float alpha)
-	{
-		sprite.setAlpha(alpha);
-	}
-
-	public void setBounds(float x, float y, float width, float height)
-	{
-		sprite.setBounds(x, y, width, height);
-	}
-
-	public void setCenter(float x, float y)
-	{
-		sprite.setCenter(x, y);
-	}
+	public abstract void setCenter(float x, float y);
 
 	public void setDepth(float depth)
 	{
@@ -190,10 +79,7 @@ public class Sprite extends GameObject
 		setFlip(flipX, flipY);
 	}
 
-	public void setLocation(float x, float y)
-	{
-		sprite.setPosition(x, y);
-	}
+	public abstract void setLocation(float x, float y);
 
 	public void setLocation(float x, float y, float z)
 	{
@@ -211,30 +97,18 @@ public class Sprite extends GameObject
 		setLocation(location.x, location.y, location.z);
 	}
 
-	public void setOrigin()
-	{
-		sprite.setOriginCenter();
-	}
+	public abstract void setOrigin();
 
-	public void setOrigin(float originX, float originY)
-	{
-		sprite.setOrigin(originX, originY);
-	}
+	public abstract void setOrigin(float originX, float originY);
 
-	public void setRotation(float roll)
-	{
-		sprite.setRotation(roll);
-	}
+	public abstract void setRotation(float roll);
 
 	public void setScale(float scale)
 	{
-		sprite.setScale(scale);
+		setScale(scale, scale);
 	}
 
-	public void setScale(float scaleX, float scaleY)
-	{
-		sprite.setScale(scaleX, scaleY);
-	}
+	public abstract void setScale(float scaleX, float scaleY);
 
 	public void setScale(Vector2 scale)
 	{
@@ -251,34 +125,17 @@ public class Sprite extends GameObject
 		setScale(getScaleX(), scale);
 	}
 
-	public void setSize(float width, float height)
-	{
-		sprite.setSize(width, height);
-	}
+	public abstract void setSize(float width, float height);
 
 	public void setSize(Vector2 size)
 	{
 		setSize(size.x, size.y);
 	}
 
-	public void setTint(Color color)
-	{
-		sprite.setColor(color);
-	}
-
-	public void setTint(int r, int g, int b, int a)
-	{
-		setTint(new MyColor(r, g, b, a));
-	}
-
-	public Actor toActor()
-	{
-		return new SpriteActor(this);
-	}
-
 	public void translate(float x, float y)
 	{
-		sprite.translate(x, y);
+		translateX(x);
+		translateY(y);
 	}
 
 	public void translate(Vector2 translation)
@@ -286,19 +143,7 @@ public class Sprite extends GameObject
 		translate(translation.x, translation.y);
 	}
 
-	public void translateX(float x)
-	{
-		sprite.translateX(x);
-	}
+	public abstract void translateX(float x);
 
-	public void translateY(float y)
-	{
-		sprite.translateY(y);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-
-	}
+	public abstract void translateY(float y);
 }

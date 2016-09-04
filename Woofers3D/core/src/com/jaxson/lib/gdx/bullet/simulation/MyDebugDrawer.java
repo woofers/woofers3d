@@ -1,11 +1,9 @@
 package com.jaxson.lib.gdx.bullet.simulation;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
+import com.jaxson.lib.gdx.graphics.views.View;
 
 public class MyDebugDrawer
 {
@@ -49,13 +47,12 @@ public class MyDebugDrawer
 		debugDrawer = null;
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch, Camera camera)
+	public void render(View view)
 	{
 		if (!hasDebugDrawer()) return;
-		if (modelBatch == null) return;
-		if (camera == null) return;
-		modelBatch.flush();
-		debugDrawer.begin(camera);
+		view.getModelView().apply();
+		view.getModelBatch().flush();
+		debugDrawer.begin(view.getModelView().getCamera());
 		world.debugDrawWorld();
 		debugDrawer.end();
 	}

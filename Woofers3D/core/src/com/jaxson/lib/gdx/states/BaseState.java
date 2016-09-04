@@ -2,8 +2,6 @@ package com.jaxson.lib.gdx.states;
 
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
@@ -29,6 +27,11 @@ public abstract class BaseState extends GameObject
 	}
 
 	public void add(Sprite sprite)
+	{
+		renderer.add(sprite);
+	}
+
+	public void addHud(Sprite sprite)
 	{
 		renderer.add(sprite);
 	}
@@ -84,9 +87,15 @@ public abstract class BaseState extends GameObject
 		renderer.remove(sprite);
 	}
 
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void removeHud(Sprite sprite)
 	{
-		renderer.render(spriteBatch, modelBatch, getView());
+		renderer.removeHud(sprite);
+	}
+
+	@Override
+	public void render(View view)
+	{
+		renderer.render(view);
 	}
 
 	@Override

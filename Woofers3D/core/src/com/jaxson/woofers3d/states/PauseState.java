@@ -1,9 +1,10 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.jaxson.lib.gdx.backend.Game;
-import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
+import com.jaxson.lib.gdx.graphics.g2d.Text;
+import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.states.SubState;
 
 public class PauseState extends SubState
@@ -11,13 +12,13 @@ public class PauseState extends SubState
 	private static final String PAUSE_SCREEN_PATH = "pauseScreen.png";
 	private static final float PAUSE_ALPHA = 3f / 4f;
 
-	private Sprite image;
+	private SpriteActor image;
 
 	public PauseState(Game gameManager)
 	{
 		super(gameManager);
 
-		image = new Sprite(PAUSE_SCREEN_PATH);
+		image = new SpriteActor(PAUSE_SCREEN_PATH);
 		image.setAlpha(PAUSE_ALPHA);
 		add(image);
 	}
@@ -35,9 +36,9 @@ public class PauseState extends SubState
 	}
 
 	@Override
-	public void render(SpriteBatch spriteBatch, ModelBatch modelBatch)
+	public void render(View view)
 	{
-		super.render(spriteBatch, modelBatch);
+		super.render(view);
 	}
 
 	@Override
