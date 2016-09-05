@@ -50,11 +50,6 @@ public class MyCell
 		return getCell().getCachedFormulaResultType();
 	}
 
-	protected Cell getCell()
-	{
-		return cell;
-	}
-
 	public MyColumn getColumn()
 	{
 		return getSheet().getColumn(getColumnIndex());
@@ -231,5 +226,10 @@ public class MyCell
 	public void setValue(String value)
 	{
 		getCell().setCellValue(value);
+	}
+
+	protected Cell getCell()
+	{
+		return cell;
 	}
 }

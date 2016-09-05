@@ -59,11 +59,6 @@ public abstract class EntityBody<B extends btCollisionObject> extends AnimatedEn
 		setCollisionFlags(getCollisionFlags() | flag);
 	}
 
-	protected void bodyToTransform()
-	{
-		getBody().getWorldTransform(getTransform());
-	}
-
 	public void deactivate()
 	{
 		getBody().setActivationState(DISABLE_SIMULATION);
@@ -123,11 +118,6 @@ public abstract class EntityBody<B extends btCollisionObject> extends AnimatedEn
 		getBody().setActivationState(state);
 	}
 
-	protected void setBody(B body)
-	{
-		this.body = body;
-	}
-
 	public void setCollisionFlags(int flags)
 	{
 		getBody().setCollisionFlags(flags);
@@ -162,11 +152,6 @@ public abstract class EntityBody<B extends btCollisionObject> extends AnimatedEn
 		transformToBody();
 	}
 
-	protected void transformToBody()
-	{
-		getBody().setWorldTransform(getTransform());
-	}
-
 	@Override
 	public void translate(Vector3 translation)
 	{
@@ -185,5 +170,20 @@ public abstract class EntityBody<B extends btCollisionObject> extends AnimatedEn
 	{
 		Integer i = (Integer) getModelInstance().userData;
 		return i != null && i == WorldImporter.IMPORTED;
+	}
+
+	protected void bodyToTransform()
+	{
+		getBody().getWorldTransform(getTransform());
+	}
+
+	protected void setBody(B body)
+	{
+		this.body = body;
+	}
+
+	protected void transformToBody()
+	{
+		getBody().setWorldTransform(getTransform());
 	}
 }

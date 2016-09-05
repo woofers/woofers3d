@@ -39,6 +39,11 @@ public class MyMath
 	 */
 	public static final float GRAVITY_EARTH = 9.80665f;
 
+	protected MyMath()
+	{
+
+	}
+
 	/**
 	 * Get the absoulute value of the number.
 	 * @param value Number The number
@@ -171,10 +176,5 @@ public class MyMath
 	public static float reciprocal(int value)
 	{
 		return new Reciprocal(value).intValue();
-	}
-
-	protected MyMath()
-	{
-
 	}
 }

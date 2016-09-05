@@ -52,19 +52,9 @@ public abstract class BaseState extends GameObject
 		return game;
 	}
 
-	private Graphics getGraphics()
-	{
-		return getGame().getGraphics();
-	}
-
 	public int getHeight()
 	{
 		return getGraphics().getHeight();
-	}
-
-	private Input getInput()
-	{
-		return getGame().getInput();
 	}
 
 	public View getView()
@@ -109,5 +99,15 @@ public abstract class BaseState extends GameObject
 	{
 		super.update(dt);
 		renderer.update(dt);
+	}
+
+	private Graphics getGraphics()
+	{
+		return getGame().getGraphics();
+	}
+
+	private Input getInput()
+	{
+		return getGame().getInput();
 	}
 }

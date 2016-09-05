@@ -45,11 +45,6 @@ public class MyEnvironment extends Environment
 		getShadowLight().begin(Vector3.Zero, camera.direction);
 	}
 
-	private void clearShadowMap()
-	{
-		setShadowMap((ShadowMap) null);
-	}
-
 	public void end()
 	{
 		if (!hasShadows()) return;
@@ -134,17 +129,6 @@ public class MyEnvironment extends Environment
 		if (hasShadows()) setShadowMap(light.toShadow());
 	}
 
-	private void setShadowMap(MyDirectionalShadowLight light)
-	{
-		setShadowMap(light.getShadowMap());
-	}
-
-	@SuppressWarnings("deprecation")
-	private void setShadowMap(ShadowMap shadowMap)
-	{
-		this.shadowMap = shadowMap;
-	}
-
 	public void setShawdows(boolean shawdows)
 	{
 		if (shawdows)
@@ -160,5 +144,21 @@ public class MyEnvironment extends Environment
 	public void setWorldSize(Vector3 worldSize)
 	{
 		this.worldSize = worldSize;
+	}
+
+	private void clearShadowMap()
+	{
+		setShadowMap((ShadowMap) null);
+	}
+
+	private void setShadowMap(MyDirectionalShadowLight light)
+	{
+		setShadowMap(light.getShadowMap());
+	}
+
+	@SuppressWarnings("deprecation")
+	private void setShadowMap(ShadowMap shadowMap)
+	{
+		this.shadowMap = shadowMap;
 	}
 }

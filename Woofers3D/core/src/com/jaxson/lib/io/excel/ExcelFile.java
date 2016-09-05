@@ -112,11 +112,6 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return getFile().getExtensionType();
 	}
 
-	private File getFile()
-	{
-		return file;
-	}
-
 	@Override
 	public FileInputStream getFileInputStream() throws FileNotFoundException
 	{
@@ -195,14 +190,6 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return getFile().length();
 	}
 
-	private Workbook loadWordbook()
-	{
-		FileType type = getExtensionType();
-		if (type.equals(FileType.XLS)) return readXlsxWorkbook();
-		if (type.equals(FileType.XLSX)) return readXlsxWorkbook();
-		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
-	}
-
 	@Override
 	public ExcelFile move(ExcelFile file)
 	{
@@ -225,38 +212,6 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	public String readString()
 	{
 		return getFile().readString();
-	}
-
-	private HSSFWorkbook readXlsWorkbook()
-	{
-		HSSFWorkbook workbook = null;
-		FileInputStream stream = null;
-		try
-		{
-			stream = getFileInputStream();
-			workbook = new HSSFWorkbook(stream);
-		}
-		catch (Exception ex)
-		{
-			return new HSSFWorkbook();
-		}
-		return workbook;
-	}
-
-	private XSSFWorkbook readXlsxWorkbook()
-	{
-		XSSFWorkbook workbook = null;
-		FileInputStream stream = null;
-		try
-		{
-			stream = getFileInputStream();
-			workbook = new XSSFWorkbook(stream);
-		}
-		catch (Exception ex)
-		{
-			return new XSSFWorkbook();
-		}
-		return workbook;
 	}
 
 	@Override
@@ -326,5 +281,50 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	public ExcelFile write(String contents)
 	{
 		return new ExcelFile(getFile().write(contents));
+	}
+
+	private File getFile()
+	{
+		return file;
+	}
+
+	private Workbook loadWordbook()
+	{
+		FileType type = getExtensionType();
+		if (type.equals(FileType.XLS)) return readXlsxWorkbook();
+		if (type.equals(FileType.XLSX)) return readXlsxWorkbook();
+		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
+	}
+
+	private HSSFWorkbook readXlsWorkbook()
+	{
+		HSSFWorkbook workbook = null;
+		FileInputStream stream = null;
+		try
+		{
+			stream = getFileInputStream();
+			workbook = new HSSFWorkbook(stream);
+		}
+		catch (Exception ex)
+		{
+			return new HSSFWorkbook();
+		}
+		return workbook;
+	}
+
+	private XSSFWorkbook readXlsxWorkbook()
+	{
+		XSSFWorkbook workbook = null;
+		FileInputStream stream = null;
+		try
+		{
+			stream = getFileInputStream();
+			workbook = new XSSFWorkbook(stream);
+		}
+		catch (Exception ex)
+		{
+			return new XSSFWorkbook();
+		}
+		return workbook;
 	}
 }

@@ -2,8 +2,6 @@ package com.jaxson.woofers3d.states;
 
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
-import com.jaxson.lib.gdx.graphics.g2d.Text;
-import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.states.SubState;
 
@@ -30,12 +28,6 @@ public class PauseState extends SubState
 	}
 
 	@Override
-	protected void input(float dt)
-	{
-
-	}
-
-	@Override
 	public void render(View view)
 	{
 		super.render(view);
@@ -45,5 +37,11 @@ public class PauseState extends SubState
 	public void update(float dt)
 	{
 		super.update(dt);
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+
 	}
 }

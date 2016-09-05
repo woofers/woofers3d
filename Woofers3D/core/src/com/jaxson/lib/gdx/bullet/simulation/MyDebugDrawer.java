@@ -35,18 +35,6 @@ public class MyDebugDrawer
 		return debugDrawer.getDebugMode();
 	}
 
-	private boolean hasDebugDrawer()
-	{
-		return debugDrawer != null;
-	}
-
-	private void removeDebugDrawer()
-	{
-		if (!hasDebugDrawer()) return;
-		debugDrawer.dispose();
-		debugDrawer = null;
-	}
-
 	public void render(View view)
 	{
 		if (!hasDebugDrawer()) return;
@@ -84,5 +72,17 @@ public class MyDebugDrawer
 		{
 			setDebugMode(NO_DEBUG);
 		}
+	}
+
+	private boolean hasDebugDrawer()
+	{
+		return debugDrawer != null;
+	}
+
+	private void removeDebugDrawer()
+	{
+		if (!hasDebugDrawer()) return;
+		debugDrawer.dispose();
+		debugDrawer = null;
 	}
 }

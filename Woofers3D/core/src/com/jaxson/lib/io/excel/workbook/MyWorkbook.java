@@ -221,11 +221,6 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		return getWorkbook().getSheetName(sheet);
 	}
 
-	protected Workbook getWorkbook()
-	{
-		return workbook;
-	}
-
 	public boolean hasForcedFormulaRecalculation()
 	{
 		return getWorkbook().getForceFormulaRecalculation();
@@ -365,5 +360,10 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	public void write(OutputStream stream) throws IOException
 	{
 		getWorkbook().write(stream);
+	}
+
+	protected Workbook getWorkbook()
+	{
+		return workbook;
 	}
 }

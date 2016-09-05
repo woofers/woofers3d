@@ -93,11 +93,6 @@ public class MyRow implements Iterable<MyCell>
 		return getRow().getPhysicalNumberOfCells();
 	}
 
-	protected Row getRow()
-	{
-		return row;
-	}
-
 	public CellStyle getRowStyle()
 	{
 		return getRow().getRowStyle();
@@ -162,5 +157,10 @@ public class MyRow implements Iterable<MyCell>
 	public void setZeroHeight(boolean height)
 	{
 		getRow().setZeroHeight(height);
+	}
+
+	protected Row getRow()
+	{
+		return row;
 	}
 }

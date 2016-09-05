@@ -1,12 +1,8 @@
 package com.jaxson.lib.gdx.backend.renderer;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
-import com.jaxson.lib.util.exceptions.NullValueException;
-import com.jaxson.lib.gdx.graphics.views.View;
 
 public abstract class BaseRenderer<T extends GameObject> extends GameObject implements Renderer<T>
 {
@@ -17,6 +13,7 @@ public abstract class BaseRenderer<T extends GameObject> extends GameObject impl
 		this.objects = new MyArrayList<>();
 	}
 
+	@Override
 	public void add(T object)
 	{
 		getObjects().add(object);
@@ -31,22 +28,20 @@ public abstract class BaseRenderer<T extends GameObject> extends GameObject impl
 		}
 	}
 
-	protected MyArrayList<T> getObjects()
-	{
-		return objects;
-	}
-
+	@Override
 	public boolean isEmpty()
 	{
 		return getObjects().isEmpty();
 	}
 
-	public abstract void render(View view);
-
+	@Override
 	public void remove(T object)
 	{
 		getObjects().remove(object);
 	}
+
+	@Override
+	public abstract void render(View view);
 
 	@Override
 	public void update(float dt)
@@ -55,5 +50,10 @@ public abstract class BaseRenderer<T extends GameObject> extends GameObject impl
 		{
 			object.update(dt);
 		}
+	}
+
+	protected MyArrayList<T> getObjects()
+	{
+		return objects;
 	}
 }

@@ -370,11 +370,6 @@ public class MySheet implements Iterable<MyRow>
 		return getSheet().getScenarioProtect();
 	}
 
-	protected Sheet getSheet()
-	{
-		return sheet;
-	}
-
 	public SheetConditionalFormatting getSheetConditionalFormatting()
 	{
 		return getSheet().getSheetConditionalFormatting();
@@ -689,5 +684,10 @@ public class MySheet implements Iterable<MyRow>
 	public void ungroupRow(int arg0, int arg1)
 	{
 		getSheet().ungroupRow(arg0, arg1);
+	}
+
+	protected Sheet getSheet()
+	{
+		return sheet;
 	}
 }

@@ -52,28 +52,6 @@ public class GameStates extends GameObject
 		return states.isEmpty();
 	}
 
-	private boolean isFocused()
-	{
-		return game.isFocused();
-	}
-
-	private boolean isMinimized()
-	{
-		return game.isMinimized();
-	}
-
-	private boolean isPaused()
-	{
-		return game.isPaused();
-	}
-
-	private void makeEmpty()
-	{
-		if (isEmpty()) return;
-		pop();
-		makeEmpty();
-	}
-
 	@Override
 	public void pause()
 	{
@@ -176,5 +154,27 @@ public class GameStates extends GameObject
 	public boolean updatesSubState()
 	{
 		return isPaused() && hasPausedState();
+	}
+
+	private boolean isFocused()
+	{
+		return game.isFocused();
+	}
+
+	private boolean isMinimized()
+	{
+		return game.isMinimized();
+	}
+
+	private boolean isPaused()
+	{
+		return game.isPaused();
+	}
+
+	private void makeEmpty()
+	{
+		if (isEmpty()) return;
+		pop();
+		makeEmpty();
 	}
 }

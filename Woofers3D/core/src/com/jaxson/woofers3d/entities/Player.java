@@ -30,15 +30,15 @@ public class Player extends CameraPlayerBody
 	}
 
 	@Override
-	protected void input(float dt)
-	{
-		super.input(dt);
-		if (Inputs.isPressed(Keys.T)) toggleCamera();
-	}
-
-	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+		super.input(dt);
+		if (Inputs.getKeyboard().getKey(Keys.T).isPressed()) toggleCamera();
 	}
 }

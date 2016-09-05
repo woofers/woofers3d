@@ -103,10 +103,6 @@ public class GameConfig
 		return allowFullscreen;
 	}
 
-	private void autoSave()
-	{
-	}
-
 	/**
 	 * Creates a copy of the {@link GameConfig}.
 	 * @return {@link GameConfig} - The copy
@@ -597,5 +593,9 @@ public class GameConfig
 		config.y = getY();
 		if (getIcon().exists()) config.addIcon(getIcon().getPath(), ICON_TYPE);
 		return config;
+	}
+
+	private void autoSave()
+	{
 	}
 }

@@ -1,24 +1,67 @@
 package com.jaxson.lib.gdx.input;
 
-public class KeyCombination
+import com.jaxson.lib.util.MyArrayList;
+import java.util.Iterator;
+
+public class KeyCombination implements Key, Iterable<Key>
 {
-	private static final String EXCEEDED_KEY_ROLLOVER = "Max key roll over exceeded";
-	private static final int MAX_KEY_ROLLOVER = 6;
+	private MyArrayList<Key> keys;
 
-	private int[] keys;
-
-	public KeyCombination(int... keys)
+	public KeyCombination()
 	{
-		this.keys = keys;
-		if (keys.length > MAX_KEY_ROLLOVER) throw new IllegalArgumentException(EXCEEDED_KEY_ROLLOVER);
-		for (int key: keys)
-		{
-			if (!Inputs.isKeyInRange(key)) throw new KeyOutOfRangeException();
-		}
+		this((Key) null);
 	}
 
-	public int[] getKeys()
+	public KeyCombination(Key... keys)
+	{
+		this.keys = new MyArrayList<>(keys);
+	}
+
+	public void add(Key... keys)
+	{
+		getKeys().addAll(keys);
+	}
+
+	public MyArrayList<Key> getKeys()
 	{
 		return keys;
+	}
+
+	@Override
+	public boolean isDown()
+	{
+		for (Key key: getKeys())
+		{
+			if (!key.isDown()) return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean isPressed()
+	{
+		boolean wasPressed = false;
+		for (Key key: getKeys())
+		{
+			if (!key.isDown()) return false;
+			if (key.isPressed()) wasPressed = true;
+		}
+		return wasPressed;
+	}
+
+	@Override
+	public boolean isReleased()
+	{
+		for (Key key: getKeys())
+		{
+			if (!key.isReleased()) return false;
+		}
+		return true;
+	}
+
+	@Override
+	public Iterator<Key> iterator()
+	{
+		return getKeys().iterator();
 	}
 }

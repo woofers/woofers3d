@@ -60,11 +60,6 @@ public class Dialog<T extends Window> extends JDialog
 		getContentPane().repaint();
 	}
 
-	private Dimension getScreenSize()
-	{
-		return Toolkit.getDefaultToolkit().getScreenSize();
-	}
-
 	public void setDialogSize(int width, int height)
 	{
 		int minWidth, minHeight;
@@ -79,5 +74,10 @@ public class Dialog<T extends Window> extends JDialog
 	public void showWindow()
 	{
 		setVisible(true);
+	}
+
+	private Dimension getScreenSize()
+	{
+		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 }

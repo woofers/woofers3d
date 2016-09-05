@@ -187,11 +187,6 @@ public class MyCellStyle implements Cloneable
 		return getStyle().getShrinkToFit();
 	}
 
-	protected CellStyle getStyle()
-	{
-		return style;
-	}
-
 	public short getTopBorderColor()
 	{
 		return getStyle().getTopBorderColor();
@@ -345,5 +340,10 @@ public class MyCellStyle implements Cloneable
 	public void setWrapText(boolean wrapped)
 	{
 		getStyle().setWrapText(wrapped);
+	}
+
+	protected CellStyle getStyle()
+	{
+		return style;
 	}
 }

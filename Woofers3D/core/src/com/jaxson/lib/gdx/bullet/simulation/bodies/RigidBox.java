@@ -9,16 +9,6 @@ import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class RigidBox extends RigidBody
 {
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
-	}
-
-	protected static Shape getShape()
-	{
-		return new BoxShape();
-	}
-
 	public RigidBox()
 	{
 		this(COLOR);
@@ -27,5 +17,15 @@ public class RigidBox extends RigidBody
 	public RigidBox(Color color)
 	{
 		super(getModel(color), getShape());
+	}
+
+	protected static Model getModel(Color color)
+	{
+		return new MyModelBuilder().createBox(color);
+	}
+
+	protected static Shape getShape()
+	{
+		return new BoxShape();
 	}
 }

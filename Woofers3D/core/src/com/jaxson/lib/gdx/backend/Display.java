@@ -22,7 +22,6 @@ import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.io.Jsonable;
 import com.jaxson.lib.math.MyMath;
-import com.jaxson.lib.gdx.graphics.views.View;
 
 /**
  * A class that handles the display and rendering.
@@ -346,24 +345,6 @@ public class Display extends GameObject
 		return getBufferFormat().coverageSampling;
 	}
 
-	@Override
-	protected void input(float dt)
-	{
-		if (canFullscreen() && Inputs.isDown(Inputs.FULLSCREEN)) toggleFullscreen();
-		if (!isCursorCatched() && !isPaused() && Inputs.justTouched()) setCursorCatched(true);
-		if (Inputs.hasTouchScreen() && Inputs.threeFingerTouched()) togglePaused();
-		if (Inputs.hasHardwareKeyboard())
-		{
-			if (Inputs.isPressed(Keys.ESCAPE)) togglePaused();
-			if (Inputs.isPressed(Keys.F12))
-			{
-				Screenshot screenshot = new Screenshot();
-				screenshot.save();
-				screenshot.dispose();
-			}
-		}
-	}
-
 	/**
 	 * Gets whether the {@link Cursor} is catched.
 	 * @return {@link boolean} - Whether the {@link Cursor} is catched
@@ -401,15 +382,6 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Gets whether the {@link Game} is mobile.
-	 * @return {@link boolean} - Whether the {@link Game} is mobile
-	 */
-	private boolean isMobile()
-	{
-		return game.isMobile();
-	}
-
-	/**
 	 * Gets whether the {@link Display} is paused.
 	 * @return {@link boolean} - Whether the {@link Display} is paused
 	 */
@@ -425,6 +397,7 @@ public class Display extends GameObject
 		minimized = true;
 	}
 
+	@Override
 	public void render(View view)
 	{
 		clearScreen();
@@ -538,16 +511,6 @@ public class Display extends GameObject
 		getConfig().setTitle(title);
 	}
 
-	private void setViewport(int width, int height)
-	{
-		setViewport(0, 0, width, height);
-	}
-
-	private void setViewport(int x, int y, int width, int height)
-	{
-		getGl().glViewport(x, y, width, height);
-	}
-
 	/**
 	 * Sets whether the {@link Game} uses vertical sync.
 	 * @param vsync Whether the {@link Game} uses vertical sync
@@ -607,6 +570,43 @@ public class Display extends GameObject
 	{
 		super.update(dt);
 		if (!isPaused()) getView().update();
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+		if (canFullscreen() && Inputs.getKeyboard().getKey(Keys.F11).isDown()) toggleFullscreen();
+		if (!isCursorCatched() && !isPaused() && Inputs.getTouchScreen().justTouched()) setCursorCatched(true);
+		if (Inputs.getTouchScreen().exists() && Inputs.getTouchScreen().threeFingerTouched()) togglePaused();
+		if (Inputs.getKeyboard().exists())
+		{
+			if (Inputs.getKeyboard().getKey(Keys.ESCAPE).isPressed()) togglePaused();
+			if (Inputs.getKeyboard().getKey(Keys.F12).isPressed())
+			{
+				Screenshot screenshot = new Screenshot();
+				screenshot.save();
+				screenshot.dispose();
+			}
+		}
+	}
+
+	/**
+	 * Gets whether the {@link Game} is mobile.
+	 * @return {@link boolean} - Whether the {@link Game} is mobile
+	 */
+	private boolean isMobile()
+	{
+		return game.isMobile();
+	}
+
+	private void setViewport(int width, int height)
+	{
+		setViewport(0, 0, width, height);
+	}
+
+	private void setViewport(int x, int y, int width, int height)
+	{
+		getGl().glViewport(x, y, width, height);
 	}
 
 	/**

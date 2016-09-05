@@ -3,8 +3,6 @@ package com.jaxson.lib.gdx.graphics.g2d;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.io.GdxFile;
@@ -32,11 +30,6 @@ public class SpriteActor extends Sprite
 	public void flip()
 	{
 		flip(true, true);
-	}
-
-	private void flip(boolean flipX, boolean flipY)
-	{
-		sprite.flip(flipX, flipY);
 	}
 
 	public void flipX()
@@ -192,5 +185,10 @@ public class SpriteActor extends Sprite
 	public void update(float dt)
 	{
 
+	}
+
+	private void flip(boolean flipX, boolean flipY)
+	{
+		sprite.flip(flipX, flipY);
 	}
 }

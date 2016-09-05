@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.bullet.simulation.bodies.types;
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
@@ -8,6 +7,8 @@ import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
 import com.jaxson.lib.gdx.input.Inputs;
+import com.jaxson.lib.gdx.input.Key;
+import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
 
@@ -29,6 +30,13 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 	private float rotationSpeed;
 	private float stepHeight;
 
+	private Keyboard keyboard;
+	private Key forwardKey;
+	private Key backwardKey;
+	private Key leftKey;
+	private Key rightKey;
+	private Key jumpKey;
+
 	public PlayerBody(Model model, ConvexShape shape)
 	{
 		super(model, shape, GHOST_MASS);
@@ -42,6 +50,14 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 		setRotationSpeed(ROTATION_SPEED);
 		setJumpSpeed(JUMP_SPEED);
 		setFallSpeed(FALL_SPEED);
+
+		this.keyboard = Inputs.getKeyboard();
+		this.forwardKey = keyboard.getKey("W");
+		this.backwardKey = keyboard.getKey("S");
+		this.leftKey = keyboard.getKey("A");
+		this.rightKey = keyboard.getKey("D");
+		this.jumpKey = keyboard.getKey("Space");
+		System.out.println(forwardKey);
 	}
 
 	public PlayerBody(String modelPath, ConvexShape shape)
@@ -52,12 +68,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 	public boolean canJump()
 	{
 		return getCharacterController().canJump();
-	}
-
-	private btKinematicCharacterController createController(float stepHeight)
-	{
-		ConvexShape shape = getCollisionShape();
-		return new btKinematicCharacterController(getBody(), shape.getCollisionShape(), stepHeight);
 	}
 
 	@Override
@@ -104,61 +114,6 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 	public float getStepHeight()
 	{
 		return stepHeight;
-	}
-
-	@Override
-	protected void input(float dt)
-	{
-		walkDirection.setZero();
-		if (Inputs.hasHardwareKeyboard())
-		{
-			if (onGround())
-			{
-				if (Inputs.isDown(Inputs.ANY_LEFT))
-				{
-					rotate(getRotationSpeed(), 0f, 0f);
-				}
-				if (Inputs.isDown(Inputs.ANY_RIGHT))
-				{
-					rotate(-getRotationSpeed(), 0f, 0f);
-				}
-			}
-			if (Inputs.isDown(Inputs.ANY_UP))
-			{
-				walkDirection.add(getDirection());
-			}
-			if (Inputs.isDown(Inputs.ANY_DOWN))
-			{
-				walkDirection.sub(getDirection());
-			}
-			if (Inputs.isDown(Keys.SPACE))
-			{
-				jump();
-			}
-		}
-		if (Inputs.hasTouchScreen())
-		{
-			if (Inputs.justTouched())
-			{
-				jump();
-			}
-		}
-		if (Inputs.hasAccelerometer())
-		{
-			if (Inputs.isAccelerometerForward())
-			{
-				walkDirection.add(getDirection());
-				walkDirection.scl(Inputs.getAccelerometerForward());
-			}
-			if (Inputs.isAccelerometerBack())
-			{
-				walkDirection.sub(getDirection());
-				walkDirection.scl(Inputs.getAccelerometerBack());
-			}
-		}
-		walkDirection.scl(getSpeed());
-		getCharacterController().setWalkDirection(walkDirection);
-		bodyToTransform();
 	}
 
 	public void jump()
@@ -223,5 +178,66 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 	public void update(float dt)
 	{
 		super.update(dt);
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+		walkDirection.setZero();
+		if (keyboard.exists())
+		{
+			if (onGround())
+			{
+				if (leftKey.isDown())
+				{
+					rotate(getRotationSpeed(), 0f, 0f);
+				}
+				if (rightKey.isDown())
+				{
+					rotate(-getRotationSpeed(), 0f, 0f);
+				}
+			}
+			if (forwardKey.isDown())
+			{
+				walkDirection.add(getDirection());
+			}
+			if (backwardKey.isDown())
+			{
+				walkDirection.sub(getDirection());
+			}
+			if (jumpKey.isDown())
+			{
+				jump();
+			}
+		}
+		if (Inputs.getTouchScreen().exists())
+		{
+			if (Inputs.getTouchScreen().justTouched())
+			{
+				jump();
+			}
+		}
+		if (Inputs.getAccelerometer().exists())
+		{
+			if (Inputs.getAccelerometer().isAccelerometerForward())
+			{
+				walkDirection.add(getDirection());
+				walkDirection.scl(Inputs.getAccelerometer().getAccelerometerForward());
+			}
+			if (Inputs.getAccelerometer().isAccelerometerBack())
+			{
+				walkDirection.sub(getDirection());
+				walkDirection.scl(Inputs.getAccelerometer().getAccelerometerBack());
+			}
+		}
+		walkDirection.scl(getSpeed());
+		getCharacterController().setWalkDirection(walkDirection);
+		bodyToTransform();
+	}
+
+	private btKinematicCharacterController createController(float stepHeight)
+	{
+		ConvexShape shape = getCollisionShape();
+		return new btKinematicCharacterController(getBody(), shape.getCollisionShape(), stepHeight);
 	}
 }

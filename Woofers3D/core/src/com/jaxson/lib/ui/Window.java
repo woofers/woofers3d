@@ -54,40 +54,14 @@ public class Window extends JFrame
 		getContentPane().repaint();
 	}
 
-	private double getAspectRatio()
-	{
-		return getAspectRatio(width, height);
-	}
-
-	private double getAspectRatio(int width, int height)
-	{
-		if (height == 0) return 1;
-		return (double) width / (double) height;
-	}
-
-	private Dimension getScreenSize()
-	{
-		return Toolkit.getDefaultToolkit().getScreenSize();
-	}
-
 	public int getWindowHeight()
 	{
 		return height;
 	}
 
-	private int getWindowHeight(double scale)
-	{
-		return (int) (getScreenSize().height * scale);
-	}
-
 	public int getWindowWidth()
 	{
 		return width;
-	}
-
-	private int getWindowWidth(double scale)
-	{
-		return (int) (getScreenSize().height * scale * getAspectRatio());
 	}
 
 	public void setIcon(String iconPath)
@@ -125,5 +99,31 @@ public class Window extends JFrame
 	{
 		setVisible(true);
 		draw();
+	}
+
+	private double getAspectRatio()
+	{
+		return getAspectRatio(width, height);
+	}
+
+	private double getAspectRatio(int width, int height)
+	{
+		if (height == 0) return 1;
+		return (double) width / (double) height;
+	}
+
+	private Dimension getScreenSize()
+	{
+		return Toolkit.getDefaultToolkit().getScreenSize();
+	}
+
+	private int getWindowHeight(double scale)
+	{
+		return (int) (getScreenSize().height * scale);
+	}
+
+	private int getWindowWidth(double scale)
+	{
+		return (int) (getScreenSize().height * scale * getAspectRatio());
 	}
 }

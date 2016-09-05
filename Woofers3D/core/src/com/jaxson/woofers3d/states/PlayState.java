@@ -11,6 +11,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.SoftBox;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
+import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
@@ -18,7 +19,6 @@ import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
 
 public class PlayState extends BulletState
 {
@@ -44,11 +44,9 @@ public class PlayState extends BulletState
 
 		load(new GdxFile("btscene1.g3dj"));
 
-		/*
-		 floor = new Floor();
-		 applyPhysics(floor);
-		 add(floor);
-		 */
+		floor = new Floor();
+		applyPhysics(floor);
+		add(floor);
 
 		RandomNumber boxSizeRange = new RandomNumber(1, 4);
 		RandomNumber massRange = new RandomNumber(0.9f, 1.2f);
@@ -97,22 +95,6 @@ public class PlayState extends BulletState
 	}
 
 	@Override
-	protected void input(float dt)
-	{
-		if (Inputs.justTouched())
-		{
-			Ray ray = player.getForwardRay();
-			if (Inputs.hasTouchScreen()) ray = getView().getModelView().getCamera().getPickRay(Inputs.getMouseX(), Inputs.getMouseY());
-			EntityBody<?> body = getPhysicsWorld().getBody(ray);
-			if (body instanceof RigidBody)
-			{
-				RigidBody rigidBody = (RigidBody) body;
-				rigidBody.applyCentralImpulse(ray, IMPULSE_SPEED);
-			}
-		}
-	}
-
-	@Override
 	public void render(View view)
 	{
 		super.render(view);
@@ -122,5 +104,21 @@ public class PlayState extends BulletState
 	public void update(float dt)
 	{
 		super.update(dt);
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+		if (Inputs.getTouchScreen().justTouched())
+		{
+			Ray ray = player.getForwardRay();
+			if (Inputs.getTouchScreen().exists()) ray = getView().getModelView().getCamera().getPickRay(Inputs.getMouse().getX(), Inputs.getMouse().getY());
+			EntityBody<?> body = getPhysicsWorld().getBody(ray);
+			if (body instanceof RigidBody)
+			{
+				RigidBody rigidBody = (RigidBody) body;
+				rigidBody.applyCentralImpulse(ray, IMPULSE_SPEED);
+			}
+		}
 	}
 }

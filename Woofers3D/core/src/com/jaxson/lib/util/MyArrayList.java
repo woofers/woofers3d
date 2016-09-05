@@ -83,10 +83,22 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		return super.addAll(new MyArrayList<>(array));
 	}
 
+	public boolean addAll(MyArrayList<E> list)
+	{
+		if (list == null) return false;
+		return super.addAll(list);
+	}
+
 	@Override
 	public int length()
 	{
 		return size() - 1;
+	}
+
+	@Override
+	public void removeRange(int startIndex)
+	{
+		removeRange(startIndex, size());
 	}
 
 	private void removeNull()
@@ -96,11 +108,5 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		{
 			if (iterator.next() == null) iterator.remove();
 		}
-	}
-
-	@Override
-	public void removeRange(int startIndex)
-	{
-		removeRange(startIndex, size());
 	}
 }

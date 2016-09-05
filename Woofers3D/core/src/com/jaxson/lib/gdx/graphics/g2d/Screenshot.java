@@ -19,30 +19,8 @@ public class Screenshot implements Disposable
 	private static final String EXTENSION = ".png";
 	private static final int BYTES_PER_PIXEL = 4;
 
-	private static Graphics getGraphics()
-	{
-		return Gdx.graphics;
-	}
-
-	private static GdxFile getScreenshotFile()
-	{
-		int counter = 0;
-		GdxFile file;
-		do
-		{
-			counter ++;
-			file = new GdxFile(getScreenshotPath(counter));
-		}
-		while (file.exists());
-		return file;
-	}
-
-	private static String getScreenshotPath(int index)
-	{
-		return FOLDER + File.FOWARD_SLASH + NAME + index + EXTENSION;
-	}
-
 	private GdxFile file;
+
 	private Pixmap image;
 
 	public Screenshot()
@@ -98,6 +76,21 @@ public class Screenshot implements Disposable
 		file.write(this);
 	}
 
+	public SpriteActor toSprite()
+	{
+		return new SpriteActor(toTexture());
+	}
+
+	public Texture toTexture()
+	{
+		return new Texture(toTextureData());
+	}
+
+	public TextureData toTextureData()
+	{
+		return new PixmapTextureData(getPixmap(), getPixmap().getFormat(), true, true);
+	}
+
 	private void saveScreenshot()
 	{
 		saveScreenshot(getGraphics().getWidth(), getGraphics().getHeight());
@@ -114,18 +107,26 @@ public class Screenshot implements Disposable
 		if (yDown) flipY();
 	}
 
-	public SpriteActor toSprite()
+	private static Graphics getGraphics()
 	{
-		return new SpriteActor(toTexture());
+		return Gdx.graphics;
 	}
 
-	public Texture toTexture()
+	private static GdxFile getScreenshotFile()
 	{
-		return new Texture(toTextureData());
+		int counter = 0;
+		GdxFile file;
+		do
+		{
+			counter ++;
+			file = new GdxFile(getScreenshotPath(counter));
+		}
+		while (file.exists());
+		return file;
 	}
 
-	public TextureData toTextureData()
+	private static String getScreenshotPath(int index)
 	{
-		return new PixmapTextureData(getPixmap(), getPixmap().getFormat(), true, true);
+		return FOLDER + File.FOWARD_SLASH + NAME + index + EXTENSION;
 	}
 }

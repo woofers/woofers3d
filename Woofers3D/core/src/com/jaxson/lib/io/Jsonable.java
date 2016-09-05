@@ -18,7 +18,7 @@ public class Jsonable<T>
 
 	public Jsonable(File file, Class<T> type, T object)
 	{
-		this(new JsonFile<T>(file, type), object);
+		this(new JsonFile<>(file, type), object);
 	}
 
 	public Jsonable(JsonFile<T> file, T object)

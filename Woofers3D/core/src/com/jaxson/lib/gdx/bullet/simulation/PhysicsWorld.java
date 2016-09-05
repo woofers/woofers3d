@@ -226,11 +226,6 @@ public class PhysicsWorld
 		return load(new GdxFile(path, FileType.Internal));
 	}
 
-	protected void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)
-	{
-		world.rayTest(rayStart, rayEnd, callback);
-	}
-
 	public void remove(PlayerBody entity)
 	{
 		if (!contains(entity)) return;
@@ -276,7 +271,12 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (Inputs.hasHardwareKeyboard() && Inputs.isPressed(Keys.F5)) toggleDebugMode();
-		if (Inputs.hasTouchScreen() && Inputs.twoFingerTouched()) toggleDebugMode();
+		if (Inputs.getKeyboard().exists() && Inputs.getKeyboard().getKey(Keys.F5).isPressed()) toggleDebugMode();
+		if (Inputs.getTouchScreen().exists() && Inputs.getTouchScreen().twoFingerTouched()) toggleDebugMode();
+	}
+
+	protected void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)
+	{
+		world.rayTest(rayStart, rayEnd, callback);
 	}
 }

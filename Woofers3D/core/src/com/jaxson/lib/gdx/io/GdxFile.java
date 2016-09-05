@@ -32,12 +32,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 
 	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING);
 
-	private static Files getFiles()
-	{
-		return Gdx.files;
-	}
-
 	private File file;
+
 	private FileHandle fileHandle;
 
 	public GdxFile(File file)
@@ -134,11 +130,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return equals(file.getPath());
 	}
 
-	private boolean equals(FileType fileType)
-	{
-		return fileType == getType();
-	}
-
 	public boolean equals(GdxFile file)
 	{
 		return equals(file.getPath()) && equals(file.getType());
@@ -159,11 +150,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return getFileHandle().exists();
 	}
 
-	private FileHandle getAbsoluteFile()
-	{
-		return getFiles().absolute(getPath());
-	}
-
 	@Override
 	public BufferedReader getBufferedReader() throws FileNotFoundException
 	{
@@ -174,11 +160,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	public GdxFile getChild(String child)
 	{
 		return new GdxFile(getFile().getChild(child), getType());
-	}
-
-	private FileHandle getClasspathFile()
-	{
-		return getFiles().classpath(getPath());
 	}
 
 	@Override
@@ -193,35 +174,9 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return getFile().getExtensionType();
 	}
 
-	private FileHandle getExternalFile()
-	{
-		return getFiles().external(getPath());
-	}
-
-	private File getFile()
-	{
-		return file;
-	}
-
 	public FileHandle getFileHandle()
 	{
 		return fileHandle;
-	}
-
-	private FileHandle getFileHandle(FileType fileType)
-	{
-		switch (fileType)
-		{
-			case Absolute:
-				return getAbsoluteFile();
-			case Classpath:
-				return getClasspathFile();
-			case External:
-				return getExternalFile();
-			case Internal:
-				return getInternalFile();
-		}
-		return getLocalFile();
 	}
 
 	@Override
@@ -242,20 +197,10 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return getFile().getFileReader();
 	}
 
-	private FileHandle getInternalFile()
-	{
-		return getFiles().internal(getPath());
-	}
-
 	@Override
 	public java.io.File getJavaFile()
 	{
 		return getFileHandle().file();
-	}
-
-	private FileHandle getLocalFile()
-	{
-		return getFiles().local(getPath());
 	}
 
 	@Override
@@ -332,21 +277,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return getFileHandle().readBytes();
 	}
 
-	private Model readG3db()
-	{
-		return new G3dModelLoader(new UBJsonReader()).loadModel(getFileHandle());
-	}
-
-	private Model readG3dj()
-	{
-		return new G3dModelLoader(new JsonReader()).loadModel(getFileHandle());
-	}
-
-	private Model readObj()
-	{
-		return new ObjLoader().loadModel(getFileHandle());
-	}
-
 	@Override
 	public Model readObject()
 	{
@@ -361,14 +291,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	public String readString()
 	{
 		return getFileHandle().readString();
-	}
-
-	private GdxFile rename(GdxFile file)
-	{
-		if (equals(file)) return this;
-		GdxFile copy = copy(file);
-		if (copy.equals(GdxFile.NOTHING)) return this;
-		return copy;
 	}
 
 	@Override
@@ -430,6 +352,80 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return write(contents, true);
 	}
 
+	private boolean equals(FileType fileType)
+	{
+		return fileType == getType();
+	}
+
+	private FileHandle getAbsoluteFile()
+	{
+		return getFiles().absolute(getPath());
+	}
+
+	private FileHandle getClasspathFile()
+	{
+		return getFiles().classpath(getPath());
+	}
+
+	private FileHandle getExternalFile()
+	{
+		return getFiles().external(getPath());
+	}
+
+	private File getFile()
+	{
+		return file;
+	}
+
+	private FileHandle getFileHandle(FileType fileType)
+	{
+		switch (fileType)
+		{
+			case Absolute:
+				return getAbsoluteFile();
+			case Classpath:
+				return getClasspathFile();
+			case External:
+				return getExternalFile();
+			case Internal:
+				return getInternalFile();
+		}
+		return getLocalFile();
+	}
+
+	private FileHandle getInternalFile()
+	{
+		return getFiles().internal(getPath());
+	}
+
+	private FileHandle getLocalFile()
+	{
+		return getFiles().local(getPath());
+	}
+
+	private Model readG3db()
+	{
+		return new G3dModelLoader(new UBJsonReader()).loadModel(getFileHandle());
+	}
+
+	private Model readG3dj()
+	{
+		return new G3dModelLoader(new JsonReader()).loadModel(getFileHandle());
+	}
+
+	private Model readObj()
+	{
+		return new ObjLoader().loadModel(getFileHandle());
+	}
+
+	private GdxFile rename(GdxFile file)
+	{
+		if (equals(file)) return this;
+		GdxFile copy = copy(file);
+		if (copy.equals(GdxFile.NOTHING)) return this;
+		return copy;
+	}
+
 	private GdxFile write(String contents, boolean overwrite)
 	{
 		try
@@ -441,5 +437,10 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 			return GdxFile.NOTHING;
 		}
 		return this;
+	}
+
+	private static Files getFiles()
+	{
+		return Gdx.files;
 	}
 }

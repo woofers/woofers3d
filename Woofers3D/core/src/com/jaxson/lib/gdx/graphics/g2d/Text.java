@@ -1,9 +1,7 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.jaxson.lib.gdx.graphics.views.View;
 
 public class Text extends Sprite
@@ -35,60 +33,35 @@ public class Text extends Sprite
 		this.scale = new Vector2(1f, 1f);
 	}
 
-	public void render(View view)
+	@Override
+	public void dispose()
 	{
-		font.draw(view.getSpriteBatch(), getText(), getLocationX(), getLocationY());
-	}
+		// TODO Auto-generated method stub
 
-	public Vector2 getLocation()
-	{
-		return location;
-	}
-
-	public float getLocationX()
-	{
-		return getLocation().x;
-	}
-
-	public float getLocationY()
-	{
-		return getLocation().y;
-	}
-
-	public String getText()
-	{
-		return text;
-	}
-
-	public void setLocation(float x, float y)
-	{
-		setLocation(new Vector2(x, y));
-	}
-
-	public void setLocation(Vector2 location)
-	{
-		this.location = location;
-	}
-
-	public void setText(String text)
-	{
-		this.text = text;
-	}
-
-	public void translateX(float x)
-	{
-		location.x += x;
-	}
-
-	public void translateY(float y)
-	{
-		location.y += y;
 	}
 
 	@Override
 	public float getHeight()
 	{
 		return size.y;
+	}
+
+	@Override
+	public Vector2 getLocation()
+	{
+		return location;
+	}
+
+	@Override
+	public float getLocationX()
+	{
+		return getLocation().x;
+	}
+
+	@Override
+	public float getLocationY()
+	{
+		return getLocation().y;
 	}
 
 	@Override
@@ -121,6 +94,11 @@ public class Text extends Sprite
 		return scale.y;
 	}
 
+	public String getText()
+	{
+		return text;
+	}
+
 	@Override
 	public float getWidth()
 	{
@@ -128,9 +106,27 @@ public class Text extends Sprite
 	}
 
 	@Override
+	public void render(View view)
+	{
+		font.draw(view.getSpriteBatch(), getText(), getLocationX(), getLocationY());
+	}
+
+	@Override
 	public void setCenter(float x, float y)
 	{
 
+	}
+
+	@Override
+	public void setLocation(float x, float y)
+	{
+		setLocation(new Vector2(x, y));
+	}
+
+	@Override
+	public void setLocation(Vector2 location)
+	{
+		this.location = location;
 	}
 
 	@Override
@@ -163,10 +159,20 @@ public class Text extends Sprite
 		size.set(width, height);
 	}
 
-	@Override
-	public void dispose()
+	public void setText(String text)
 	{
-		// TODO Auto-generated method stub
+		this.text = text;
+	}
 
+	@Override
+	public void translateX(float x)
+	{
+		location.x += x;
+	}
+
+	@Override
+	public void translateY(float y)
+	{
+		location.y += y;
 	}
 }

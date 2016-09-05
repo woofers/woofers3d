@@ -10,7 +10,7 @@ public class Floor extends RigidBox
 	private static final float WIDTH = 100f;
 	private static final float HEIGHT = 100f;
 	private static final float MASS = 0f;
-	private static final Color COLOR = new MyColor(81, 101, 107);
+	private static final Color COLOR = new MyColor(102, 107, 121);
 
 	public Floor()
 	{

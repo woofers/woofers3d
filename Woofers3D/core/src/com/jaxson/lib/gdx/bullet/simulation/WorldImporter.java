@@ -26,11 +26,6 @@ public class WorldImporter
 			this.entities = new MyArrayList<>();
 		}
 
-		private void add(RigidBody entitiy)
-		{
-			entities.add(entitiy);
-		}
-
 		@Override
 		public btRigidBody createRigidBody(boolean isDynamic, float mass, Matrix4 startTransform, btCollisionShape shape, String bodyName)
 		{
@@ -46,6 +41,11 @@ public class WorldImporter
 		public MyArrayList<RigidBody> getEntities()
 		{
 			return entities;
+		}
+
+		private void add(RigidBody entitiy)
+		{
+			entities.add(entitiy);
 		}
 	}
 

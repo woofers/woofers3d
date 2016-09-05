@@ -94,7 +94,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public Vector2 getMouse()
 	{
-		return Inputs.getScaledMouse();
+		return Inputs.getMouse().getScaledLocation();
 	}
 
 	public float getNear()
@@ -164,18 +164,6 @@ public class TargetCamera extends PerspectiveCamera
 	public boolean hasWorld()
 	{
 		return world != null;
-	}
-
-	private void input()
-	{
-		if (!hasTarget()) return;
-		rotateAround(getTargetLocation(), getMouse());
-		translate(getDeltaTargetLocation());
-		resetUp();
-		if (Inputs.isPressed(Keys.R))
-		{
-			center(getTargetLocation());
-		}
 	}
 
 	public void resetDirection()
@@ -306,5 +294,17 @@ public class TargetCamera extends PerspectiveCamera
 		input();
 		oldTargetLocation = getTargetLocation();
 		super.update();
+	}
+
+	private void input()
+	{
+		if (!hasTarget()) return;
+		rotateAround(getTargetLocation(), getMouse());
+		translate(getDeltaTargetLocation());
+		resetUp();
+		if (Inputs.getKeyboard().getKey(Keys.R).isPressed())
+		{
+			center(getTargetLocation());
+		}
 	}
 }

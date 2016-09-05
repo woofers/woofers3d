@@ -11,67 +11,8 @@ public class CellLocation
 	private static final char CHAR_MAX = '9';
 	private static final char CHAR_MIN = '0';
 
-	private static void checkAmount(int amount)
-	{
-		if (amount < 0) throw new NegativeValueException("amount");
-	}
-
-	public static int columnToInt(String column)
-	{
-		if (column == null || column.isEmpty()) throw new NullValueException("column");
-		char[] columnArray = column.toUpperCase().toCharArray();
-		int sum = 0;
-		for (int i = 0; i < columnArray.length; i ++)
-		{
-			sum *= ALPHABET_MAX;
-			sum += new Integer(columnArray[i] - 'A' + 1);
-		}
-
-		return sum - 1;
-	}
-
-	private static Point getPoint(String cell)
-	{
-		cell = cell.trim();
-		char[] characters = cell.toUpperCase().toCharArray();
-		String numbers = "";
-		String letters = "";
-		for (char character: characters)
-		{
-			if (isNumber(character))
-			{
-				numbers += character;
-			}
-			else
-			{
-				letters += character;
-			}
-		}
-		return new Point(columnToInt(letters), new Integer(numbers).intValue() - 1);
-	}
-
-	private static String intToChar(int columnNumber)
-	{
-		String columnName = "";
-		int dividend = columnNumber + 1;
-		int modulo = 0;
-		int newCharValue = 0;
-		while (dividend > 0)
-		{
-			modulo = (dividend - 1) % ALPHABET_MAX;
-			newCharValue = 'A' + modulo;
-			columnName = new String(new char[]{ (char) newCharValue }) + columnName;
-			dividend = (dividend - modulo) / ALPHABET_MAX;
-		}
-		return columnName;
-	}
-
-	private static boolean isNumber(char character)
-	{
-		return character >= CHAR_MIN && character <= CHAR_MAX;
-	}
-
 	private int x;
+
 	private int y;
 
 	public CellLocation(int x, int y)
@@ -86,14 +27,14 @@ public class CellLocation
 		this(cell.getColumnIndex(), cell.getRowIndex());
 	}
 
-	private CellLocation(Point point)
-	{
-		this(point.getX(), point.getY());
-	}
-
 	public CellLocation(String cell)
 	{
 		this(getPoint(cell));
+	}
+
+	private CellLocation(Point point)
+	{
+		this(point.getX(), point.getY());
 	}
 
 	public Point getPoint()
@@ -190,5 +131,65 @@ public class CellLocation
 	public String toString()
 	{
 		return getString();
+	}
+
+	public static int columnToInt(String column)
+	{
+		if (column == null || column.isEmpty()) throw new NullValueException("column");
+		char[] columnArray = column.toUpperCase().toCharArray();
+		int sum = 0;
+		for (int i = 0; i < columnArray.length; i ++)
+		{
+			sum *= ALPHABET_MAX;
+			sum += new Integer(columnArray[i] - 'A' + 1);
+		}
+
+		return sum - 1;
+	}
+
+	private static void checkAmount(int amount)
+	{
+		if (amount < 0) throw new NegativeValueException("amount");
+	}
+
+	private static Point getPoint(String cell)
+	{
+		cell = cell.trim();
+		char[] characters = cell.toUpperCase().toCharArray();
+		String numbers = "";
+		String letters = "";
+		for (char character: characters)
+		{
+			if (isNumber(character))
+			{
+				numbers += character;
+			}
+			else
+			{
+				letters += character;
+			}
+		}
+		return new Point(columnToInt(letters), new Integer(numbers).intValue() - 1);
+	}
+
+	private static String intToChar(int columnNumber)
+	{
+		String columnName = "";
+		int dividend = columnNumber + 1;
+		int modulo = 0;
+		int newCharValue = 0;
+		while (dividend > 0)
+		{
+			modulo = (dividend - 1) % ALPHABET_MAX;
+			newCharValue = 'A' + modulo;
+			columnName = new String(new char[]{ (char) newCharValue }) + columnName;
+			dividend = (dividend - modulo) / ALPHABET_MAX;
+		}
+		return columnName;
+	}
+
+	private static boolean isNumber(char character)
+	{
+		return character >= CHAR_MIN && character <= CHAR_MAX;
 	}
 }

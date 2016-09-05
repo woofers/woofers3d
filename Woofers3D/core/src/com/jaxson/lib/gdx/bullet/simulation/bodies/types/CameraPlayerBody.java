@@ -41,12 +41,6 @@ public class CameraPlayerBody extends PlayerBody
 		return getCamera() != null;
 	}
 
-	@Override
-	protected void input(float dt)
-	{
-		super.input(dt);
-	}
-
 	public void lockCamera()
 	{
 		if (hasCamera()) getCamera().setTarget(null);
@@ -81,5 +75,11 @@ public class CameraPlayerBody extends PlayerBody
 	public void update(float dt)
 	{
 		super.update(dt);
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+		super.input(dt);
 	}
 }

@@ -32,13 +32,6 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 		this(modelInstance, shape, mass, new btRigidBody(mass, null, shape.getCollisionShape(), shape.getInertia(mass)));
 	}
 
-	private RigidBody(ModelInstance modelInstance, Shape shape, float mass, btRigidBody body)
-	{
-		super(modelInstance, shape, mass);
-		setBody(body);
-		setMotionState(new MyMotionState(getTransform()));
-	}
-
 	public RigidBody(String modelPath, Shape shape)
 	{
 		this(modelPath, shape, MASS);
@@ -47,6 +40,13 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 	public RigidBody(String modelPath, Shape shape, float mass)
 	{
 		this(readModel(modelPath), shape, mass);
+	}
+
+	private RigidBody(ModelInstance modelInstance, Shape shape, float mass, btRigidBody body)
+	{
+		super(modelInstance, shape, mass);
+		setBody(body);
+		setMotionState(new MyMotionState(getTransform()));
 	}
 
 	public void applyCentralImpulse(Ray ray)

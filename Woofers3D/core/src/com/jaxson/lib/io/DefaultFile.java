@@ -117,11 +117,6 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return false;
 	}
 
-	protected boolean equals(String path)
-	{
-		return getPath().equals(path);
-	}
-
 	/**
 	 * Gets whether the {@link DefaultFile} exists.
 	 * @return {@link boolean} - Whether the {@link DefaultFile} exists
@@ -378,13 +373,6 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return output;
 	}
 
-	private DefaultFile rename(DefaultFile file)
-	{
-		if (equals(file)) return this;
-		if (getJavaFile().renameTo(file.getJavaFile())) return file;
-		return this;
-	}
-
 	@Override
 	public DefaultFile rename(String name)
 	{
@@ -410,19 +398,6 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	public DefaultFile setPath(String path)
 	{
 		return new DefaultFile(path);
-	}
-
-	private void validatePath()
-	{
-		path = path.replace(BACK_SLASH, FOWARD_SLASH).trim();
-		String[] dirs = path.split(FOWARD_SLASH);
-		String newDir = "";
-		for (String dir: dirs)
-		{
-			dir = dir.trim();
-			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
-		}
-		if (!newDir.isEmpty()) path = newDir.substring(0, newDir.length() - 1).toLowerCase();
 	}
 
 	@Override
@@ -484,5 +459,30 @@ public class DefaultFile implements File<DefaultFile, String, String>
 			if (writer != null) writer.close();
 		}
 		return this;
+	}
+
+	protected boolean equals(String path)
+	{
+		return getPath().equals(path);
+	}
+
+	private DefaultFile rename(DefaultFile file)
+	{
+		if (equals(file)) return this;
+		if (getJavaFile().renameTo(file.getJavaFile())) return file;
+		return this;
+	}
+
+	private void validatePath()
+	{
+		path = path.replace(BACK_SLASH, FOWARD_SLASH).trim();
+		String[] dirs = path.split(FOWARD_SLASH);
+		String newDir = "";
+		for (String dir: dirs)
+		{
+			dir = dir.trim();
+			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
+		}
+		if (!newDir.isEmpty()) path = newDir.substring(0, newDir.length() - 1).toLowerCase();
 	}
 }

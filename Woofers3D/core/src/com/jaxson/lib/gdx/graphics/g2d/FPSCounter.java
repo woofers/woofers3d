@@ -19,6 +19,7 @@ public class FPSCounter extends Text
 		setLocation(FONT_PADDING, FONT_PADDING);
 	}
 
+	@Override
 	public void update(float dt)
 	{
 		setText(FPS + Gdx.graphics.getFramesPerSecond());

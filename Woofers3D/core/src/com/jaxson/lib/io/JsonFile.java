@@ -107,11 +107,6 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 		return getFile().getExtensionType();
 	}
 
-	private File getFile()
-	{
-		return file;
-	}
-
 	@Override
 	public FileInputStream getFileInputStream() throws FileNotFoundException
 	{
@@ -268,5 +263,10 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 			return JsonFile.NOTHING;
 		}
 		return this;
+	}
+
+	private File getFile()
+	{
+		return file;
 	}
 }

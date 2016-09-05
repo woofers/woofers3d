@@ -85,15 +85,15 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape> ex
 		setLocalScaling(scale.scl(getScale()));
 	}
 
-	private void setLocalScaling(Vector3 scale)
-	{
-		getCollisionShape().setScale(scale);
-	}
-
 	@Override
 	public void setScale(Vector3 scale)
 	{
 		super.setScale(scale);
 		setLocalScaling(scale.scl(getCollisionShapeScale()));
+	}
+
+	private void setLocalScaling(Vector3 scale)
+	{
+		getCollisionShape().setScale(scale);
 	}
 }

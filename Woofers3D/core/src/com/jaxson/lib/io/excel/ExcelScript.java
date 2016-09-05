@@ -20,15 +20,15 @@ public abstract class ExcelScript
 		this(new ExcelFile(path));
 	}
 
-	protected MyWorkbook getWorkbook()
-	{
-		return workbook;
-	}
-
 	public abstract void run();
 
 	public void save()
 	{
 		file.setPath(file.getParentPath() + SAVE_PREFIX + file.getName()).write(workbook);
+	}
+
+	protected MyWorkbook getWorkbook()
+	{
+		return workbook;
 	}
 }

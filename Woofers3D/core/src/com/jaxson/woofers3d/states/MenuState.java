@@ -18,12 +18,6 @@ public class MenuState extends State
 	}
 
 	@Override
-	protected void input(float dt)
-	{
-
-	}
-
-	@Override
 	public void render(View view)
 	{
 		super.render(view);
@@ -33,5 +27,11 @@ public class MenuState extends State
 	public void update(float dt)
 	{
 		super.update(dt);
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+
 	}
 }

@@ -12,18 +12,6 @@ public class MyColor extends Color
 	public static final float RGB_TO_FLOAT = MAX_VALUE_FLOAT / MAX_VALUE_INT;
 	public static final int FLOAT_TO_RGB = MAX_VALUE_INT;
 
-	private static float toFloat(int channel)
-	{
-		channel = MyMath.max(MIN_VALUE_INT, channel);
-		channel = MyMath.min(MAX_VALUE_INT, channel);
-		return channel * RGB_TO_FLOAT;
-	}
-
-	private static int toInt(float channel)
-	{
-		return (int) (channel * FLOAT_TO_RGB);
-	}
-
 	public MyColor()
 	{
 		this(BLACK);
@@ -110,5 +98,17 @@ public class MyColor extends Color
 	{
 		set(new RandomColor(minR, maxR, minG, maxG, minB, maxB));
 		return this;
+	}
+
+	private static float toFloat(int channel)
+	{
+		channel = MyMath.max(MIN_VALUE_INT, channel);
+		channel = MyMath.min(MAX_VALUE_INT, channel);
+		return channel * RGB_TO_FLOAT;
+	}
+
+	private static int toInt(float channel)
+	{
+		return (int) (channel * FLOAT_TO_RGB);
 	}
 }

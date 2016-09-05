@@ -8,11 +8,6 @@ import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class SoftBox extends SoftBody
 {
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
-	}
-
 	public SoftBox(Color color, PhysicsWorld world)
 	{
 		super(getModel(color), MASS, world);
@@ -21,5 +16,10 @@ public class SoftBox extends SoftBody
 	public SoftBox(PhysicsWorld world)
 	{
 		this(COLOR, world);
+	}
+
+	protected static Model getModel(Color color)
+	{
+		return new MyModelBuilder().createBox(color);
 	}
 }

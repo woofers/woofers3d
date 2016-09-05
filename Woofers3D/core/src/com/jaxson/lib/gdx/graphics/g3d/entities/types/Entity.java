@@ -23,11 +23,6 @@ public abstract class Entity extends GameObject
 	private static final float FORWARD_DIRECTION = 0f;
 	private static final float BACKWARD_DIRECTION = 180f;
 
-	protected static Model readModel(String modelPath)
-	{
-		return new GdxFile(modelPath).readObject();
-	}
-
 	private ModelInstance modelInstance;
 
 	public Entity(Model model)
@@ -43,11 +38,6 @@ public abstract class Entity extends GameObject
 	public Entity(String modelPath)
 	{
 		this(readModel(modelPath));
-	}
-
-	protected void calculateTransforms()
-	{
-		getModelInstance().calculateTransforms();
 	}
 
 	@Override
@@ -239,5 +229,15 @@ public abstract class Entity extends GameObject
 	public void translateABS(Vector3 translation)
 	{
 		getTransform().trn(translation);
+	}
+
+	protected void calculateTransforms()
+	{
+		getModelInstance().calculateTransforms();
+	}
+
+	protected static Model readModel(String modelPath)
+	{
+		return new GdxFile(modelPath).readObject();
 	}
 }

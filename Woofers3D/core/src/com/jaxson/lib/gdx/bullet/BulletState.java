@@ -119,15 +119,15 @@ public abstract class BulletState extends State
 		setWorldSize(getWorldSize());
 	}
 
-	private void setWorldSize(Vector3 worldSize)
-	{
-		getEnvironment().setWorldSize(worldSize);
-	}
-
 	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
 		world.update(dt);
+	}
+
+	private void setWorldSize(Vector3 worldSize)
+	{
+		getEnvironment().setWorldSize(worldSize);
 	}
 }

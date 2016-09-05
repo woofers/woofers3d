@@ -12,6 +12,16 @@ public class RigidSphere extends RigidBody
 {
 	protected static final Color COLOR = new MyColor(81, 101, 107);
 
+	public RigidSphere()
+	{
+		this(COLOR);
+	}
+
+	public RigidSphere(Color color)
+	{
+		super(getModel(color), getShape());
+	}
+
 	protected static Model getModel(Color color)
 	{
 		return new MyModelBuilder().createSphere(color);
@@ -25,15 +35,5 @@ public class RigidSphere extends RigidBody
 	protected static SphereShape getShape()
 	{
 		return new SphereShape();
-	}
-
-	public RigidSphere()
-	{
-		this(COLOR);
-	}
-
-	public RigidSphere(Color color)
-	{
-		super(getModel(color), getShape());
 	}
 }

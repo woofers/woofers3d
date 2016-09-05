@@ -89,11 +89,6 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 		being();
 	}
 
-	private void being()
-	{
-		getShadowBatch().begin(this);
-	}
-
 	@Override
 	public MyDirectionalShadowLight copy()
 	{
@@ -147,5 +142,10 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 	public MyDirectionalShadowLight toShadow()
 	{
 		return this;
+	}
+
+	private void being()
+	{
+		getShadowBatch().begin(this);
 	}
 }

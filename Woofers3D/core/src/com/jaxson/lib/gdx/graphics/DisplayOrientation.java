@@ -10,28 +10,6 @@ public enum DisplayOrientation
 	private static final int REVERSE_LANDSCAPE_ANGLE = 270;
 	private static final int MAX_ANGLE = 360;
 
-	public static DisplayOrientation getOrientation(int angle)
-	{
-		while (angle >= MAX_ANGLE)
-		{
-			angle -= MAX_ANGLE;
-		}
-		while (angle < 0)
-		{
-			angle += MAX_ANGLE;
-		}
-		switch (angle)
-		{
-			case LANDSCAPE_ANGLE:
-				return Landscape;
-			case REVERSE_PORTRAIT_ANGLE:
-				return ReversePortrait;
-			case REVERSE_LANDSCAPE_ANGLE:
-				return ReverseLandscape;
-		}
-		return Portrait;
-	}
-
 	private int angle;
 
 	private DisplayOrientation(int angle)
@@ -52,5 +30,27 @@ public enum DisplayOrientation
 	public boolean isPortrait()
 	{
 		return this == Portrait || this == ReversePortrait;
+	}
+
+	public static DisplayOrientation getOrientation(int angle)
+	{
+		while (angle >= MAX_ANGLE)
+		{
+			angle -= MAX_ANGLE;
+		}
+		while (angle < 0)
+		{
+			angle += MAX_ANGLE;
+		}
+		switch (angle)
+		{
+			case LANDSCAPE_ANGLE:
+				return Landscape;
+			case REVERSE_PORTRAIT_ANGLE:
+				return ReversePortrait;
+			case REVERSE_LANDSCAPE_ANGLE:
+				return ReverseLandscape;
+		}
+		return Portrait;
 	}
 }

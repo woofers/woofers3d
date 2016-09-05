@@ -6,25 +6,22 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.HashMap;
-import java.util.Map;
 
 public class View
 {
 	private Viewport sprite;
 	private Viewport model;
 	private Viewport hud;
-	private Map<String, Viewport> extras;
+	private HashMap<String, Viewport> extras;
 	private SpriteBatch spriteBatch;
 	private ModelBatch modelBatch;
 
 	public View(int width, int height)
 	{
 		this(new ExtendViewport(width, height),
-			 new ExtendViewport(width, height, new TargetCamera(width, height)),
-			 new FitViewport(width, height));
+				new ExtendViewport(width, height, new TargetCamera(width, height)),
+				new FitViewport(width, height));
 	}
 
 	public View(Viewport sprite, Viewport model, Viewport hud)
@@ -37,8 +34,10 @@ public class View
 		this.modelBatch = new ModelBatch();
 
 		OrthographicCamera camera = null;
-		if (getSpriteView().getCamera() instanceof OrthographicCamera) camera = (OrthographicCamera) getSpriteView().getCamera();
-		else camera = new OrthographicCamera();
+		if (getSpriteView().getCamera() instanceof OrthographicCamera)
+			camera = (OrthographicCamera) getSpriteView().getCamera();
+		else
+			camera = new OrthographicCamera();
 		camera.setToOrtho(false);
 		getSpriteView().setCamera(camera);
 	}
@@ -130,7 +129,7 @@ public class View
 	public void update()
 	{
 		getSpriteView().getCamera().update();
-		//getModelView().getCamera().update();
+		// getModelView().getCamera().update();
 		getHudView().getCamera().update();
 		for (Viewport viewport: extras.values())
 		{

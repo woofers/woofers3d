@@ -35,7 +35,7 @@ public class Game
 		this.gameStates = new GameStates(this);
 		this.display = new Display(this);
 		setInputProcessor(Inputs.getInputProcessor());
-		Inputs.setSensitivity(getConfig().getSensitivity());
+		Inputs.getMouse().setSensitivity(getConfig().getSensitivity());
 	}
 
 	public void dispose()
@@ -77,11 +77,6 @@ public class Game
 	public GameConfig getConfig()
 	{
 		return getSaveableConfig().get();
-	}
-
-	private float getDeltaTime()
-	{
-		return getGraphics().getDeltaTime();
 	}
 
 	public Files getFiles()
@@ -240,5 +235,10 @@ public class Game
 		gameStates.update(step);
 		display.update(step);
 		Inputs.update(step);
+	}
+
+	private float getDeltaTime()
+	{
+		return getGraphics().getDeltaTime();
 	}
 }
