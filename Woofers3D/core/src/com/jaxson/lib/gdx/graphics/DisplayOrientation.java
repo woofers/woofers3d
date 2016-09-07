@@ -1,38 +1,17 @@
 package com.jaxson.lib.gdx.graphics;
 
-public enum DisplayOrientation
+public class DisplayOrientation
 {
-	Portrait(0), Landscape(90), ReversePortrait(180), ReverseLandscape(270);
-
-	private static final int PORTRAIT_ANGLE = 0;
-	private static final int LANDSCAPE_ANGLE = 90;
-	private static final int REVERSE_PORTRAIT_ANGLE = 180;
-	private static final int REVERSE_LANDSCAPE_ANGLE = 270;
 	private static final int MAX_ANGLE = 360;
+
+	public static final DisplayOrientation PORTRAIT = new DisplayOrientation(0);
+	public static final DisplayOrientation LANDSCAPE = new DisplayOrientation(90);
+	public static final DisplayOrientation REVERSE_PORTRAIT = new DisplayOrientation(180);
+	public static final DisplayOrientation REVERSE_LANDSCAPE = new DisplayOrientation(270);
 
 	private int angle;
 
-	private DisplayOrientation(int angle)
-	{
-		this.angle = angle;
-	}
-
-	public int getAngle()
-	{
-		return angle;
-	}
-
-	public boolean isLandscape()
-	{
-		return this == Landscape || this == ReverseLandscape;
-	}
-
-	public boolean isPortrait()
-	{
-		return this == Portrait || this == ReversePortrait;
-	}
-
-	public static DisplayOrientation getOrientation(int angle)
+	public DisplayOrientation(int angle)
 	{
 		while (angle >= MAX_ANGLE)
 		{
@@ -42,15 +21,42 @@ public enum DisplayOrientation
 		{
 			angle += MAX_ANGLE;
 		}
-		switch (angle)
+		this.angle = round(angle, 90);
+	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if (other instanceof DisplayOrientation)
 		{
-			case LANDSCAPE_ANGLE:
-				return Landscape;
-			case REVERSE_PORTRAIT_ANGLE:
-				return ReversePortrait;
-			case REVERSE_LANDSCAPE_ANGLE:
-				return ReverseLandscape;
+			DisplayOrientation otherOrientation = (DisplayOrientation) other;
+			return getAngle() == otherOrientation.getAngle();
 		}
-		return Portrait;
+		if (other instanceof Number)
+		{
+			Number otherNumber = (Number) other;
+			return getAngle() == otherNumber.intValue();
+		}
+		return false;
+	}
+
+	public int getAngle()
+	{
+		return angle;
+	}
+
+	public boolean isLandscape()
+	{
+		return equals(LANDSCAPE) || equals(REVERSE_LANDSCAPE);
+	}
+
+	public boolean isPortrait()
+	{
+		return equals(PORTRAIT) || equals(REVERSE_PORTRAIT);
+	}
+
+	private static int round(int angle, int multiple)
+	{
+		return (int) (Math.round((double) angle / multiple) * multiple);
 	}
 }

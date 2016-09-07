@@ -200,7 +200,16 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	@Override
 	public T readObject()
 	{
-		return new Gson().fromJson(readString(), type);
+		T object = null;
+		try
+		{
+			object = new Gson().fromJson(readString(), type);
+		}
+		catch (Exception ex)
+		{
+			return null;
+		}
+		return object;
 	}
 
 	@Override

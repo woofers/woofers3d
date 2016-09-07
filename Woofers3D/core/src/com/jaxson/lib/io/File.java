@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * A File that handles writing and reading.
- * @param <T> the implementing {@link Object} for chaining
+ * @param <F> the implementing {@link Object} for chaining
  * @param <R> the {@link Object} to be read
  * @param <W> the {@link Object} to write
  * @author Jaxson Van Doorn
@@ -27,6 +27,7 @@ public interface File<F extends File, R, W>
 	/**
 	 * Appends string to the {@link File}.
 	 * @param contents The contents to append
+	 * @return {@link F} The file
 	 */
 	public F append(String contents);
 
@@ -88,6 +89,7 @@ public interface File<F extends File, R, W>
 
 	/**
 	 * Returns a child of the {@link File} if it exists.
+	 * @param child The Child
 	 * @return {@link F} - The child
 	 */
 	public F getChild(String child);
@@ -247,24 +249,28 @@ public interface File<F extends File, R, W>
 
 	/**
 	 * Writes a blank document to the {@link File}.
+	 * @return {@link F} The file
 	 */
 	public F write();
 
 	/**
 	 * Writes to the {@link File}.
 	 * @param contents The contents to write as {@link byte}s
+	 * @return {@link F} The file
 	 */
 	public F write(byte[] contents);
 
 	/**
 	 * Writes to the {@link File}.
 	 * @param contents The contents to write as a {@link String}
+	 * @return {@link F} The file
 	 */
 	public F write(String contents);
 
 	/**
 	 * Writes a {@link Object} to the {@link File}.
 	 * @param object The object
+	 * @return {@link F} The file
 	 */
 	public F write(W object);
 }

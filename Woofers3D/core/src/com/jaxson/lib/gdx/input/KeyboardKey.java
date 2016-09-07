@@ -2,9 +2,6 @@ package com.jaxson.lib.gdx.input;
 
 public class KeyboardKey implements Key
 {
-	public static final int MIN = -1;
-	public static final int MAX = 256;
-
 	private int keycode;
 	private String name;
 	private boolean down;
@@ -14,6 +11,7 @@ public class KeyboardKey implements Key
 	{
 		this.keycode = keycode;
 		this.name = name;
+		if (!keycodeIsValid()) throw new InvalidKeyException(keycode);
 	}
 
 	public int getKeycode()
@@ -65,8 +63,8 @@ public class KeyboardKey implements Key
 		this.wasDown = down;
 	}
 
-	private static boolean isKeyInRange(int keycode)
+	private boolean keycodeIsValid()
 	{
-		return MIN <= keycode && keycode < MAX;
+		return Keys.MIN <= getKeycode() && getKeycode() < Keys.MAX;
 	}
 }

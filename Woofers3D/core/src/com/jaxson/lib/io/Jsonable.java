@@ -53,7 +53,8 @@ public class Jsonable<T>
 
 	public void read()
 	{
-		this.object = getSaveFile().readObject();
+		T newObject = getSaveFile().readObject();
+		if (newObject != null) this.object = newObject;
 	}
 
 	public void save()

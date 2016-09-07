@@ -1,7 +1,6 @@
 package com.jaxson.lib.gdx.bullet.simulation;
 
 import com.badlogic.gdx.Files.FileType;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -24,6 +23,9 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.SoftBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
+import com.jaxson.lib.gdx.input.Keyboard;
+import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
@@ -60,6 +62,10 @@ public class PhysicsWorld
 	private RayCallback rayCallback;
 	private WorldImporter importer;
 
+	private Keyboard keyboard;
+	private TouchScreen touchScreen;
+	private KeyboardKey debugKey;
+
 	public PhysicsWorld()
 	{
 		this(WORLD_SIZE);
@@ -89,6 +95,10 @@ public class PhysicsWorld
 		this.worldInfo.setBroadphase(broadphase);
 		this.worldInfo.setDispatcher(dispatcher);
 		this.worldInfo.getSparsesdf().Initialize();
+
+		this.keyboard = Inputs.getKeyboard();
+		this.touchScreen = Inputs.getTouchScreen();
+		this.debugKey = keyboard.getKey("F5");
 
 		setGravity(GRAVITY);
 	}
@@ -271,8 +281,8 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (Inputs.getKeyboard().exists() && Inputs.getKeyboard().getKey(Keys.F5).isPressed()) toggleDebugMode();
-		if (Inputs.getTouchScreen().exists() && Inputs.getTouchScreen().twoFingerTouched()) toggleDebugMode();
+		if (keyboard.exists() && debugKey.isPressed()) toggleDebugMode();
+		if (touchScreen.exists() && touchScreen.twoFingerTouched()) toggleDebugMode();
 	}
 
 	protected void rayTest(Vector3 rayStart, Vector3 rayEnd, RayCallback callback)

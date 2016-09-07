@@ -14,9 +14,19 @@ public class CameraPlayerBody extends PlayerBody
 		setCamera(camera);
 	}
 
+	public CameraPlayerBody(Model model, TargetCamera camera)
+	{
+		this(model, getFittedHitbox(model), camera);
+	}
+
 	public CameraPlayerBody(String modelPath, ConvexShape shape, TargetCamera camera)
 	{
 		this(readModel(modelPath), shape, camera);
+	}
+
+	public CameraPlayerBody(String modelPath, TargetCamera camera)
+	{
+		this(readModel(modelPath), camera);
 	}
 
 	public boolean cameraIsLocked()

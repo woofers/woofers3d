@@ -2,6 +2,8 @@ package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
+import com.jaxson.lib.gdx.backend.Display;
+import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.math.MyMath;
 
 public class Accelerometer implements Peripheral
@@ -13,13 +15,11 @@ public class Accelerometer implements Peripheral
 	private static final float ACCELEROMETER_MIN = -ACCELEROMETER_MAX;
 	private static final float ACCELEROMETER_RANGE = ACCELEROMETER_MAX - ACCELEROMETER_MIN;
 
-	private Input input;
-	private Screen screen;
+	private Game game;
 
-	Accelerometer(Input input, Screen screen)
+	Accelerometer(Game game)
 	{
-		this.input = input;
-		this.screen = screen;
+		this.game = game;
 	}
 
 	@Override
@@ -28,127 +28,132 @@ public class Accelerometer implements Peripheral
 		return getInput().isPeripheralAvailable(Input.Peripheral.Accelerometer);
 	}
 
-	public Vector3 getAccelerometer()
-	{
-		return new Vector3(getAccelerometerX(), getAccelerometerY(), getAccelerometerZ());
-	}
-
-	public float getAccelerometerBack()
+	public float getBack()
 	{
 		float value = 0;
-		float y = getAccelerometerY();
-		if (y > getAccelerometerNullMaxY()) value = MyMath.abs((y - getAccelerometerNullMaxY()) / getAccelerometerMinRangeY());
+		float y = getY();
+		if (y > getNullMaxY()) value = MyMath.abs((y - getNullMaxY()) / getMinRangeY());
 		return MyMath.min(value, 1f);
 	}
 
-	public float getAccelerometerBackRangeY()
+	public float getBackRangeY()
 	{
-		return ACCELEROMETER_MAX - getAccelerometerNullMaxY();
+		return ACCELEROMETER_MAX - getNullMaxY();
 	}
 
-	public float getAccelerometerForward()
+	public float getForward()
 	{
 		float value = 0;
-		float y = getAccelerometerY();
-		if (y < getAccelerometerNullMinY()) value = MyMath.abs((y - getAccelerometerNullMinY()) / getAccelerometerMinRangeY());
+		float y = getY();
+		if (y < getNullMinY()) value = MyMath.abs((y - getNullMinY()) / getMinRangeY());
 		return MyMath.min(value, 1f);
 	}
 
-	public float getAccelerometerForwardRangeY()
+	public float getForwardRangeY()
 	{
-		return getAccelerometerNullMinY() - ACCELEROMETER_MIN;
+		return getNullMinY() - ACCELEROMETER_MIN;
 	}
 
-	public float getAccelerometerMinRangeY()
+	public float getMinRangeY()
 	{
-		float back = getAccelerometerBackRangeY();
-		float forward = getAccelerometerForwardRangeY();
+		float back = getBackRangeY();
+		float forward = getForwardRangeY();
 		if (back > forward) return forward;
 		return back;
 	}
 
-	public float getAccelerometerNullMaxY()
+	public float getNullMaxY()
 	{
 		return ACCELEROMETER_MAX - getScaledAccelerometerRange(ACCELEROMETER_BACK_SCALE);
 	}
 
-	public float getAccelerometerNullMinY()
+	public float getNullMinY()
 	{
 		return ACCELEROMETER_MIN + getScaledAccelerometerRange(ACCELEROMETER_FORWARD_SCALE);
 	}
 
-	public float getAccelerometerX()
+	public Vector3 getValues()
+	{
+		return new Vector3(getX(), getY(), getZ());
+	}
+
+	public float getX()
 	{
 		float x;
-		if (screen.isLandscape())
+		if (getDisplay().isLandscape())
 		{
-			x = getAbsouluteAccelerometerY();
-			if (screen.isReverseLandscape()) x *= -1f;
+			x = getAbsouluteY();
+			if (getDisplay().isReverseLandscape()) x *= -1f;
 
 		}
 		else
 		{
-			x = getAbsouluteAccelerometerX();
-			if (screen.isReversePortrait()) x *= -1f;
+			x = getAbsouluteX();
+			if (getDisplay().isReversePortrait()) x *= -1f;
 		}
 		return x;
 	}
 
-	public float getAccelerometerY()
+	public float getY()
 	{
 		float y;
-		if (screen.isLandscape())
+		if (getDisplay().isLandscape())
 		{
-			y = getAbsouluteAccelerometerX();
-			if (screen.isReverseLandscape()) y *= -1f;
+			y = getAbsouluteX();
+			if (getDisplay().isReverseLandscape()) y *= -1f;
 
 		}
 		else
 		{
-			y = getAbsouluteAccelerometerY();
-			if (screen.isReversePortrait()) y *= -1f;
+			y = getAbsouluteY();
+			if (getDisplay().isReversePortrait()) y *= -1f;
 		}
 		return y;
 	}
 
-	public float getAccelerometerZ()
+	public float getZ()
 	{
-		return getAbsouluteAccelerometerZ();
+		return getAbsouluteZ();
 	}
 
-	public boolean isAccelerometerBack()
+	public boolean tiltsBackward()
 	{
-		return getAccelerometerBack() != 0;
+		return getBack() != 0;
 	}
 
-	public boolean isAccelerometerForward()
+	public boolean tiltsForward()
 	{
-		return getAccelerometerForward() != 0;
+		return getForward() != 0;
 	}
 
-	private Vector3 getAbsouluteAccelerometer()
+	private Vector3 getAbsouluteValues()
 	{
-		return new Vector3(getAbsouluteAccelerometerX(), getAbsouluteAccelerometerY(), getAbsouluteAccelerometerZ());
+		return new Vector3(getAbsouluteX(), getAbsouluteY(), getAbsouluteZ());
 	}
 
-	private float getAbsouluteAccelerometerX()
+	private float getAbsouluteX()
 	{
 		return getInput().getAccelerometerX();
 	}
 
-	private float getAbsouluteAccelerometerY()
+	private float getAbsouluteY()
 	{
 		return getInput().getAccelerometerY();
 	}
 
-	private float getAbsouluteAccelerometerZ()
+	private float getAbsouluteZ()
 	{
 		return getInput().getAccelerometerZ();
 	}
 
+	private Display getDisplay()
+	{
+		return game.getDisplay();
+	}
+
 	private Input getInput()
 	{
-		return input;
+		return game.getInput();
 	}
 
 	private static float getScaledAccelerometerRange(float scale)

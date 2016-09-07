@@ -3,6 +3,8 @@ package com.jaxson.lib.gdx.input;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.gdx.backend.Display;
+import com.jaxson.lib.gdx.backend.Game;
 import java.util.HashMap;
 
 public class Mouse
@@ -17,7 +19,6 @@ public class Mouse
 
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float TOUCH_MOUSE_SCALE = 1f / 3f;
-	private static final float SENSITIVITY = 1.3f;
 
 	private static final boolean INVERT_MOUSE_X = true;
 	private static final boolean INVERT_MOUSE_Y = true;
@@ -27,12 +28,12 @@ public class Mouse
 	private Vector2 sensitivity;
 	private int scrollWheel;
 	private HashMap<Integer, MouseButton> buttons;
-	private Input input;
+	private Game game;
 	private TouchScreen touchScreen;
 
-	Mouse(Input input, TouchScreen touchScreen)
+	Mouse(Game game, TouchScreen touchScreen)
 	{
-		this.input = input;
+		this.game = game;
 		this.touchScreen = touchScreen;
 		this.location = new Vector2();
 		this.delta = new Vector2();
@@ -135,6 +136,17 @@ public class Mouse
 		return button.isPressed();
 	}
 
+	/**
+	 * Sets whether the {@link Mouse} is catched.
+	 * @param catched Whether the {@link Mouse} should be catched
+	 */
+	public void setCatched(boolean catched)
+	{
+		if (catched == isCatched()) return;
+		getInput().setCursorCatched(catched);
+		if (!catched) setPosition(getDisplay().getCenter());
+	}
+
 	public void setInvert(boolean invert)
 	{
 		setInvertX(invert);
@@ -149,6 +161,25 @@ public class Mouse
 	public void setInvertY(boolean invertY)
 	{
 		if (invertY != isInvertY()) getSensitivity().scl(1f, -1f);
+	}
+
+	/**
+	 * Sets the location of the {@link Mouse}.
+	 * @param x The x location of the {@link Mouse}
+	 * @param y The y location of the {@link Mouse}
+	 */
+	public void setPosition(int x, int y)
+	{
+		getInput().setCursorPosition(x, y);
+	}
+
+	/**
+	 * Sets the location of the {@link Mouse}.
+	 * @param location The location of the {@link Mouse}
+	 */
+	public void setPosition(Vector2 location)
+	{
+		setPosition((int) location.x, (int) location.y);
 	}
 
 	public void setSensitivity(float sensitivity)
@@ -188,8 +219,13 @@ public class Mouse
 		this.scrollWheel += scrollWheel;
 	}
 
+	private Display getDisplay()
+	{
+		return game.getDisplay();
+	}
+
 	private Input getInput()
 	{
-		return input;
+		return game.getInput();
 	}
 }

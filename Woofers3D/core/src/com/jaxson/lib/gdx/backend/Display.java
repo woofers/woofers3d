@@ -5,20 +5,26 @@ import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.BufferFormat;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.Orientation;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
+import com.jaxson.lib.gdx.graphics.DisplayOrientation;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.g2d.Screenshot;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
+import com.jaxson.lib.gdx.input.KeyCombination;
+import com.jaxson.lib.gdx.input.Keyboard;
+import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.Keys;
+import com.jaxson.lib.gdx.input.Mouse;
+import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.io.Jsonable;
 import com.jaxson.lib.math.MyMath;
@@ -36,17 +42,21 @@ public class Display extends GameObject
 	private static final int COVERAGE_SAMPLING_MASK = GL20.GL_COVERAGE_BUFFER_BIT_NV;
 	private static final int EMPTY_MASK = GL20.GL_ZERO;
 	private static final Color CLEAR_COLOR = Color.ROYAL;
-
-	private static final int FONT_PADDING = 20;
-	private static final Color FPS_COLOR = Color.WHITE;
+	private static final int NATIVE_ROTATION_OFFSET = 90;
 
 	private Game game;
-	private BitmapFont font;
 	private View view;
 	private boolean minimized;
 	private boolean paused;
 	private int lastWindowedWidth;
 	private int lastWindowedHeight;
+
+	private Keyboard keyboard;
+	private Mouse mouse;
+	private Keys fullscreenKey;
+	private KeyboardKey pauseKey;
+	private KeyboardKey screenshotKey;
+	private TouchScreen touchScreen;
 
 	/**
 	 * Constructs the display.
@@ -56,11 +66,19 @@ public class Display extends GameObject
 	{
 		this.game = game;
 		this.view = new View(getWidth(), getHeight());
-		this.font = new BitmapFont();
 		this.lastWindowedWidth = getDefaultWidth();
 		this.lastWindowedHeight = getDefaultHeight();
 
-		font.setColor(FPS_COLOR);
+		this.keyboard = Inputs.getKeyboard();
+		this.mouse = Inputs.getMouse();
+		this.touchScreen = Inputs.getTouchScreen();
+		this.pauseKey = keyboard.getKey("Escape");
+		this.screenshotKey = keyboard.getKey("F12");
+		this.fullscreenKey = new Keys(keyboard.getKey("F11"),
+				new KeyCombination(new Keys(keyboard.getKey("L-Alt"),
+						keyboard.getKey("R-Alt")),
+						keyboard.getKey("Enter")));
+
 		setFullscreen(startsFullscreen());
 	}
 
@@ -127,14 +145,6 @@ public class Display extends GameObject
 	public void dispose()
 	{
 		view.dispose();
-	}
-
-	public void drawFps()
-	{
-		if (!showsFps()) return;
-		getView().getSpriteBatch().begin();
-		font.draw(getView().getSpriteBatch(), "Fps: " + getFps(), FONT_PADDING, FONT_PADDING);
-		getView().getSpriteBatch().end();
 	}
 
 	/**
@@ -310,6 +320,28 @@ public class Display extends GameObject
 		return lastWindowedWidth;
 	}
 
+	public Orientation getNativeOrientation()
+	{
+		return getInput().getNativeOrientation();
+	}
+
+	public int getNativeRotation()
+	{
+		return getInput().getRotation();
+	}
+
+	public DisplayOrientation getOrientation()
+	{
+		return new DisplayOrientation(getRotation());
+	}
+
+	public int getRotation()
+	{
+		int rotation = getNativeRotation();
+		if (getNativeOrientation() == Orientation.Portrait) return rotation;
+		return rotation + NATIVE_ROTATION_OFFSET;
+	}
+
 	public Jsonable<GameConfig> getSaveableConfig()
 	{
 		return game.getSaveableConfig();
@@ -346,21 +378,12 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Gets whether the {@link Cursor} is catched.
-	 * @return {@link boolean} - Whether the {@link Cursor} is catched
-	 */
-	public boolean isCursorCatched()
-	{
-		return getInput().isCursorCatched();
-	}
-
-	/**
 	 * Gets whether the {@link Display} is focused.
 	 * @return {@link boolean} - Whether the {@link Display} is focused
 	 */
 	public boolean isFocused()
 	{
-		return !isMinimized() && isCursorCatched() || isMobile();
+		return !isMinimized() && mouse.isCatched() || isMobile();
 	}
 
 	/**
@@ -370,6 +393,11 @@ public class Display extends GameObject
 	public boolean isFullscreen()
 	{
 		return getGraphics().isFullscreen();
+	}
+
+	public boolean isLandscape()
+	{
+		return getOrientation().isLandscape();
 	}
 
 	/**
@@ -390,10 +418,35 @@ public class Display extends GameObject
 		return paused;
 	}
 
+	public boolean isPortrait()
+	{
+		return getOrientation().isPortrait();
+	}
+
+	public boolean isReverseLandscape()
+	{
+		return getOrientation().equals(DisplayOrientation.REVERSE_LANDSCAPE);
+	}
+
+	public boolean isReversePortrait()
+	{
+		return getOrientation().equals(DisplayOrientation.REVERSE_PORTRAIT);
+	}
+
+	public boolean isStandardLandscape()
+	{
+		return getOrientation().equals(DisplayOrientation.LANDSCAPE);
+	}
+
+	public boolean isStandardPortrait()
+	{
+		return getOrientation().equals(DisplayOrientation.PORTRAIT);
+	}
+
 	@Override
 	public void pause()
 	{
-		if (!isPaused()) setCursorCatched(minimized);
+		if (!isPaused()) mouse.setCatched(minimized);
 		minimized = true;
 	}
 
@@ -407,6 +460,7 @@ public class Display extends GameObject
 	public void resize(int width, int height)
 	{
 		view.resize(width, height);
+
 		System.out.println("getWidth() " + getWidth() + " X " + getHeight());
 		System.out.println("getDefaultWidth() " + getDefaultWidth() + " X " + getDefaultHeight());
 		System.out.println("width " + width + " X " + height);
@@ -416,38 +470,8 @@ public class Display extends GameObject
 	@Override
 	public void resume()
 	{
-		if (!isPaused()) setCursorCatched(minimized);
+		if (!isPaused()) mouse.setCatched(minimized);
 		minimized = false;
-	}
-
-	/**
-	 * Sets whether the {@link Cursor} is catched.
-	 * @param catched Whether the {@link Cursor} should be catched
-	 */
-	public void setCursorCatched(boolean catched)
-	{
-		if (catched == isCursorCatched()) return;
-		getInput().setCursorCatched(catched);
-		if (!catched) setCursorPosition(getCenter());
-	}
-
-	/**
-	 * Sets the location of the {@link Cursor}.
-	 * @param x The x location of the {@link Cursor}
-	 * @param x The y location of the {@link Cursor}
-	 */
-	public void setCursorPosition(int x, int y)
-	{
-		getInput().setCursorPosition(x, y);
-	}
-
-	/**
-	 * Sets the location of the {@link Cursor}.
-	 * @param location The location of the {@link Cursor}
-	 */
-	public void setCursorPosition(Vector2 location)
-	{
-		setCursorPosition((int) location.x, (int) location.y);
 	}
 
 	/**
@@ -498,7 +522,7 @@ public class Display extends GameObject
 	public void setPaused(boolean paused)
 	{
 		this.paused = paused;
-		setCursorCatched(!isPaused());
+		mouse.setCatched(!isPaused());
 	}
 
 	/**
@@ -540,14 +564,6 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Toggles whether the {@link Cursor} is catched.
-	 */
-	public void toggleCursorCatched()
-	{
-		setCursorCatched(!isCursorCatched());
-	}
-
-	/**
 	 * Toggles whether the {@link Display} is fullscreen.
 	 */
 	public void toggleFullscreen()
@@ -575,13 +591,13 @@ public class Display extends GameObject
 	@Override
 	protected void input(float dt)
 	{
-		if (canFullscreen() && Inputs.getKeyboard().getKey(Keys.F11).isDown()) toggleFullscreen();
-		if (!isCursorCatched() && !isPaused() && Inputs.getTouchScreen().justTouched()) setCursorCatched(true);
-		if (Inputs.getTouchScreen().exists() && Inputs.getTouchScreen().threeFingerTouched()) togglePaused();
-		if (Inputs.getKeyboard().exists())
+		if (canFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
+		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched()) mouse.setCatched(true);
+		if (touchScreen.exists() && touchScreen.threeFingerTouched()) togglePaused();
+		if (keyboard.exists())
 		{
-			if (Inputs.getKeyboard().getKey(Keys.ESCAPE).isPressed()) togglePaused();
-			if (Inputs.getKeyboard().getKey(Keys.F12).isPressed())
+			if (pauseKey.isPressed()) togglePaused();
+			if (screenshotKey.isPressed())
 			{
 				Screenshot screenshot = new Screenshot();
 				screenshot.save();

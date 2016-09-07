@@ -17,11 +17,6 @@ public class KeyCombination implements Key, Iterable<Key>
 		this.keys = new MyArrayList<>(keys);
 	}
 
-	public void add(Key... keys)
-	{
-		getKeys().addAll(keys);
-	}
-
 	public MyArrayList<Key> getKeys()
 	{
 		return keys;

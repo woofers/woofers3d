@@ -6,16 +6,18 @@ import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
+import com.jaxson.lib.gdx.input.Accelerometer;
 import com.jaxson.lib.gdx.input.Inputs;
-import com.jaxson.lib.gdx.input.Key;
 import com.jaxson.lib.gdx.input.Keyboard;
+import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
 
 public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 {
 	private static final float GHOST_MASS = -1f;
-	private static final float STEP_HEIGHT = 1f / 4f;
+	private static final float STEP_HEIGHT = 1f / 5f;
 	private static final float SPEED = 0.2f;
 	private static final float ROTATION_SPEED = 2f;
 	private static final float GRAVITY_SCALE = 3f;
@@ -31,11 +33,18 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 	private float stepHeight;
 
 	private Keyboard keyboard;
-	private Key forwardKey;
-	private Key backwardKey;
-	private Key leftKey;
-	private Key rightKey;
-	private Key jumpKey;
+	private Accelerometer accelerometer;
+	private TouchScreen touchScreen;
+	private KeyboardKey forwardKey;
+	private KeyboardKey backwardKey;
+	private KeyboardKey leftKey;
+	private KeyboardKey rightKey;
+	private KeyboardKey jumpKey;
+
+	public PlayerBody(Model model)
+	{
+		this(model, getFittedHitbox(model));
+	}
 
 	public PlayerBody(Model model, ConvexShape shape)
 	{
@@ -52,12 +61,13 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 		setFallSpeed(FALL_SPEED);
 
 		this.keyboard = Inputs.getKeyboard();
+		this.accelerometer = Inputs.getAccelerometer();
+		this.touchScreen = Inputs.getTouchScreen();
 		this.forwardKey = keyboard.getKey("W");
 		this.backwardKey = keyboard.getKey("S");
 		this.leftKey = keyboard.getKey("A");
 		this.rightKey = keyboard.getKey("D");
 		this.jumpKey = keyboard.getKey("Space");
-		System.out.println(forwardKey);
 	}
 
 	public PlayerBody(String modelPath, ConvexShape shape)
@@ -180,6 +190,11 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 		super.update(dt);
 	}
 
+	protected Keyboard getKeyboard()
+	{
+		return keyboard;
+	}
+
 	@Override
 	protected void input(float dt)
 	{
@@ -210,24 +225,24 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 				jump();
 			}
 		}
-		if (Inputs.getTouchScreen().exists())
+		if (touchScreen.exists())
 		{
-			if (Inputs.getTouchScreen().justTouched())
+			if (touchScreen.justTouched())
 			{
 				jump();
 			}
 		}
-		if (Inputs.getAccelerometer().exists())
+		if (accelerometer.exists())
 		{
-			if (Inputs.getAccelerometer().isAccelerometerForward())
+			if (accelerometer.tiltsForward())
 			{
 				walkDirection.add(getDirection());
-				walkDirection.scl(Inputs.getAccelerometer().getAccelerometerForward());
+				walkDirection.scl(accelerometer.getForward());
 			}
-			if (Inputs.getAccelerometer().isAccelerometerBack())
+			if (accelerometer.tiltsBackward())
 			{
 				walkDirection.sub(getDirection());
-				walkDirection.scl(Inputs.getAccelerometer().getAccelerometerBack());
+				walkDirection.scl(accelerometer.getBack());
 			}
 		}
 		walkDirection.scl(getSpeed());

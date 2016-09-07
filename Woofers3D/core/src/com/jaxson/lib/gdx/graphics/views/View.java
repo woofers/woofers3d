@@ -89,6 +89,11 @@ public class View
 		return extras.remove(name);
 	}
 
+	public Viewport remove(Viewport viewport)
+	{
+		return extras.remove(viewport);
+	}
+
 	public Viewport rename(String oldName, String newName)
 	{
 		if (oldName.equals(newName)) return get(oldName);
@@ -129,7 +134,7 @@ public class View
 	public void update()
 	{
 		getSpriteView().getCamera().update();
-		// getModelView().getCamera().update();
+		getModelView().getCamera().update();
 		getHudView().getCamera().update();
 		for (Viewport viewport: extras.values())
 		{

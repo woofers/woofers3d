@@ -17,7 +17,6 @@ public class RandomNumber extends ComparableNumber
 	private static final String MIN_EXCEEDS_MAX = "Min cannot be greather or equal to max";
 
 	private Number min;
-
 	private Number max;
 	private Number[] excluded;
 
@@ -56,17 +55,15 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public double doubleValue()
 	{
-		double value = getRandom().nextDouble() * (getMax().doubleValue() - getMin().doubleValue() + 1) + getMin().doubleValue();
+		double value = getRandom().nextDouble() * (getMax().doubleValue() - getMin().doubleValue()) + getMin().doubleValue();
 		if (isExcluded(value)) return doubleValue();
 		return value;
 	}
 
-	// Issue Here
 	@Override
 	public float floatValue()
 	{
-		if (max.floatValue() == min.floatValue()) return max.floatValue();
-		float value = getRandom().nextFloat() * (getMax().floatValue() - getMin().floatValue() + 1) + getMin().floatValue();
+		float value = getRandom().nextFloat() * (getMax().floatValue() - getMin().floatValue()) + getMin().floatValue();
 		if (isExcluded(value)) return floatValue();
 		return value;
 	}
@@ -119,7 +116,7 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public long longValue()
 	{
-		long value = getRandom().nextLong() * (getMax().longValue() - getMin().longValue() + 1) + getMin().longValue();
+		long value = getRandom().nextLong() * (getMax().longValue() - getMin().longValue()) + getMin().longValue();
 		if (isExcluded(value)) return longValue();
 		return value;
 	}
@@ -128,7 +125,7 @@ public class RandomNumber extends ComparableNumber
 	 * Returns the current Random instance.
 	 * @return {@link Random} - The Random instance
 	 */
-	private static Random getRandom()
+	public static ThreadLocalRandom getRandom()
 	{
 		return ThreadLocalRandom.current();
 	}

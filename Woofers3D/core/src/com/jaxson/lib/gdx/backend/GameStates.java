@@ -151,7 +151,7 @@ public class GameStates extends GameObject
 		}
 	}
 
-	public boolean updatesSubState()
+	private boolean updatesSubState()
 	{
 		return isPaused() && hasPausedState();
 	}

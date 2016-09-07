@@ -6,10 +6,7 @@ import java.util.HashMap;
 
 public class Keyboard implements Peripheral
 {
-	public static final String ANY_KEY = "Any Key";
-
 	private HashMap<Integer, KeyboardKey> keycodeKeys;
-
 	private HashMap<String, KeyboardKey> stringKeys;
 	private Input input;
 	private TouchKeyboard touchKeyboard;
@@ -20,13 +17,15 @@ public class Keyboard implements Peripheral
 		this.touchKeyboard = new TouchKeyboard(getInput());
 		this.keycodeKeys = new HashMap<>();
 		this.stringKeys = new HashMap<>();
-		for (int i = KeyboardKey.MIN; i < KeyboardKey.MAX; i ++)
+		for (int i = Keys.MIN; i < Keys.MAX; i ++)
 		{
-			KeyboardKey key = new KeyboardKey(i, keyCodeToString(i));
+			KeyboardKey key = new KeyboardKey(i, Keys.toString(i));
 			String name = key.getName();
 			keycodeKeys.put(key.getKeycode(), key);
 			if (name != null) stringKeys.put(name.toLowerCase(), key);
 		}
+		for (Key key: getKeys())
+			System.out.println(key);
 	}
 
 	@Override
@@ -42,7 +41,9 @@ public class Keyboard implements Peripheral
 
 	public KeyboardKey getKey(String name)
 	{
-		return stringKeys.get(name.toLowerCase().trim());
+		KeyboardKey key = stringKeys.get(name.toLowerCase().trim());
+		if (key == null) throw new InvalidKeyException(name);
+		return key;
 	}
 
 	public Collection<KeyboardKey> getKeys()
@@ -58,10 +59,5 @@ public class Keyboard implements Peripheral
 	private Input getInput()
 	{
 		return input;
-	}
-
-	private static String keyCodeToString(int keycode)
-	{
-		return keycode == -1 ? ANY_KEY : Input.Keys.toString(keycode);
 	}
 }

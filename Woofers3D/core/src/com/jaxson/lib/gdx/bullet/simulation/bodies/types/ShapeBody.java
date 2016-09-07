@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.bullet.simulation.bodies.types;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
@@ -95,5 +96,10 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape> ex
 	private void setLocalScaling(Vector3 scale)
 	{
 		getCollisionShape().setScale(scale);
+	}
+
+	protected static BoxShape getFittedHitbox(Model model)
+	{
+		return new BoxShape(model.calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3()));
 	}
 }

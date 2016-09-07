@@ -10,12 +10,12 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.SoftBox;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
 import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
-import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
@@ -42,7 +42,7 @@ public class PlayState extends BulletState
 		applyPhysics(camera);
 		getView().getModelView().setCamera(camera);
 
-		load(new GdxFile("btscene1.g3dj"));
+		// load(new GdxFile("btscene1.g3dj"));
 
 		floor = new Floor();
 		applyPhysics(floor);
@@ -53,9 +53,7 @@ public class PlayState extends BulletState
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			// boxs[i] = new RigidBox(new RandomColor(new MyColor(255, 95, 0),
-			// new MyColor(255, 95, 0)));
-			boxs[i] = new RigidBox(new RandomColor(255, 255, 95, 165, 0, 50));
+			boxs[i] = new RigidBox(new RandomColor(new MyColor(255, 95, 0), new MyColor(255, 165, 50)));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(), boxSizeRange.floatValue(), boxSizeRange.floatValue()));
 			boxs[i].setMass(massRange.floatValue());
@@ -86,6 +84,7 @@ public class PlayState extends BulletState
 		add(player);
 
 		add(new FPSCounter());
+
 	}
 
 	@Override
@@ -112,7 +111,7 @@ public class PlayState extends BulletState
 		if (Inputs.getTouchScreen().justTouched())
 		{
 			Ray ray = player.getForwardRay();
-			if (Inputs.getTouchScreen().exists()) ray = getView().getModelView().getCamera().getPickRay(Inputs.getMouse().getX(), Inputs.getMouse().getY());
+			if (Inputs.getTouchScreen().exists()) ray = camera.getPickRay(Inputs.getMouse().getX(), Inputs.getMouse().getY());
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{

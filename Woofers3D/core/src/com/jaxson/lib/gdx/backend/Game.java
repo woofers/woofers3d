@@ -31,7 +31,7 @@ public class Game
 	public Game(Jsonable<GameConfig> config)
 	{
 		this.config = config;
-		this.inputHandler = new Inputs();
+		this.inputHandler = new Inputs(this);
 		this.gameStates = new GameStates(this);
 		this.display = new Display(this);
 		setInputProcessor(Inputs.getInputProcessor());
@@ -41,7 +41,7 @@ public class Game
 	public void dispose()
 	{
 		gameStates.dispose();
-		display.dispose();
+		getDisplay().dispose();
 	}
 
 	public void exit()
@@ -79,6 +79,11 @@ public class Game
 		return getSaveableConfig().get();
 	}
 
+	public Display getDisplay()
+	{
+		return display;
+	}
+
 	public Files getFiles()
 	{
 		return getApplication().getFiles();
@@ -86,7 +91,7 @@ public class Game
 
 	public GL20 getGl()
 	{
-		return display.getGl();
+		return getDisplay().getGl();
 	}
 
 	public Graphics getGraphics()
@@ -116,7 +121,7 @@ public class Game
 
 	public View getView()
 	{
-		return display.getView();
+		return getDisplay().getView();
 	}
 
 	public boolean hasFixedTimeStamp()
@@ -136,7 +141,7 @@ public class Game
 
 	public boolean isFocused()
 	{
-		return display.isFocused();
+		return getDisplay().isFocused();
 	}
 
 	public boolean isIOS()
@@ -146,7 +151,7 @@ public class Game
 
 	public boolean isMinimized()
 	{
-		return display.isMinimized();
+		return getDisplay().isMinimized();
 	}
 
 	public boolean isMobile()
@@ -156,7 +161,7 @@ public class Game
 
 	public boolean isPaused()
 	{
-		return display.isPaused();
+		return getDisplay().isPaused();
 	}
 
 	public boolean isSmartPhone()
@@ -177,7 +182,7 @@ public class Game
 	public void pause()
 	{
 		gameStates.pause();
-		display.pause();
+		getDisplay().pause();
 	}
 
 	public void push(State state)
@@ -204,20 +209,20 @@ public class Game
 		{
 			update(dt);
 		}
-		display.render(getView());
+		getDisplay().render(getView());
 		gameStates.render(getView());
 	}
 
 	public void resize(int width, int height)
 	{
 		gameStates.resize(width, height);
-		display.resize(width, height);
+		getDisplay().resize(width, height);
 	}
 
 	public void resume()
 	{
 		gameStates.resume();
-		display.resume();
+		getDisplay().resume();
 	}
 
 	public void setInputProcessor(InputProcessor inputProcessor)
@@ -233,7 +238,7 @@ public class Game
 	public void update(float step)
 	{
 		gameStates.update(step);
-		display.update(step);
+		getDisplay().update(step);
 		Inputs.update(step);
 	}
 

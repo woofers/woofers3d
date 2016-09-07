@@ -24,7 +24,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 
 	/**
 	 * Constructs a list of an {@link Collection}.
-	 * @parm collection The collection
+	 * @param collection The collection
 	 */
 	public MyArrayList(Collection<? extends E> collection)
 	{
@@ -34,7 +34,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 
 	/**
 	 * Constructs a list of a array.
-	 * @parm array The array
+	 * @param array The array
 	 */
 	public MyArrayList(E... array)
 	{
@@ -43,7 +43,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 
 	/**
 	 * Constructs a list of a specified size.
-	 * @parm size The initial size
+	 * @param size The initial size
 	 */
 	public MyArrayList(int size)
 	{
@@ -74,7 +74,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 
 	/**
 	 * Adds element to the list. Does nothing if element is null.
-	 * @param e Element to add
+	 * @param array Elements to add
 	 * @return {@link boolean} - Whether element was added
 	 */
 	@Override

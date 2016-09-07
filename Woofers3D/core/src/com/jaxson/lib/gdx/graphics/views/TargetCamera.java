@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.graphics.views;
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -302,7 +301,7 @@ public class TargetCamera extends PerspectiveCamera
 		rotateAround(getTargetLocation(), getMouse());
 		translate(getDeltaTargetLocation());
 		resetUp();
-		if (Inputs.getKeyboard().getKey(Keys.R).isPressed())
+		if (Inputs.getKeyboard().getKey("R").isPressed())
 		{
 			center(getTargetLocation());
 		}

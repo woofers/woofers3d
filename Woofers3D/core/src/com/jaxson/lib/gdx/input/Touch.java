@@ -1,6 +1,6 @@
 package com.jaxson.lib.gdx.input;
 
-public class Touch
+public class Touch implements Key
 {
 	private boolean touched;
 	private boolean wasTouched;
@@ -16,16 +16,19 @@ public class Touch
 		return finger;
 	}
 
+	@Override
 	public boolean isDown()
 	{
 		return touched;
 	}
 
+	@Override
 	public boolean isPressed()
 	{
 		return !wasTouched && isDown();
 	}
 
+	@Override
 	public boolean isReleased()
 	{
 		return wasTouched && !isDown();
@@ -34,11 +37,6 @@ public class Touch
 	void setTouched(boolean touched)
 	{
 		this.touched = touched;
-	}
-
-	void setWasTouched(boolean wasTouched)
-	{
-		this.wasTouched = wasTouched;
 	}
 
 	void transfer()
