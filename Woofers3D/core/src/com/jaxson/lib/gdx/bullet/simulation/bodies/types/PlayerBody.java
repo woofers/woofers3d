@@ -48,9 +48,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject, Con
 
 	public PlayerBody(Model model, ConvexShape shape)
 	{
-		super(model, shape, GHOST_MASS);
-		setBody(new btPairCachingGhostObject());
-		setCollisionShape(shape);
+		super(model, new btPairCachingGhostObject(), shape, GHOST_MASS);
 		setStepHeight(STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
 		this.walkDirection = new Vector3();

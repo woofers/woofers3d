@@ -12,35 +12,35 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape> ex
 {
 	private S shape;
 
-	public ShapeBody(Model model, S shape)
+	public ShapeBody(Model model, B body, S shape)
 	{
-		this(model, shape, MASS);
+		this(model, body, shape, MASS);
 	}
 
-	public ShapeBody(Model model, S shape, float mass)
+	public ShapeBody(Model model, B body, S shape, float mass)
 	{
-		this(new ModelInstance(model), shape, mass);
+		this(new ModelInstance(model), body, shape, mass);
 	}
 
-	public ShapeBody(ModelInstance modelInstance, S shape)
+	public ShapeBody(ModelInstance modelInstance, B body, S shape)
 	{
-		this(modelInstance, shape, MASS);
+		this(modelInstance, body, shape, MASS);
 	}
 
-	public ShapeBody(ModelInstance modelInstance, S shape, float mass)
+	public ShapeBody(ModelInstance modelInstance, B body, S shape, float mass)
 	{
-		super(modelInstance, mass);
-		this.shape = shape;
+		super(modelInstance, body, mass);
+		setCollisionShape(shape);
 	}
 
-	public ShapeBody(String modelPath, S shape)
+	public ShapeBody(String modelPath, B body, S shape)
 	{
-		this(modelPath, shape, MASS);
+		this(modelPath, body, shape, MASS);
 	}
 
-	public ShapeBody(String modelPath, S shape, float mass)
+	public ShapeBody(String modelPath, B body, S shape, float mass)
 	{
-		this(readModel(modelPath), shape, mass);
+		this(readModel(modelPath), body, shape, mass);
 	}
 
 	@Override
@@ -72,8 +72,15 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape> ex
 
 	public void setCollisionShape(S shape)
 	{
+		if (getCollisionShape() != null && getCollisionShape() == shape)
+		{
+			System.out.println("Stopped");
+			return;
+		}
+		Shape oldShape = getCollisionShape();
 		this.shape = shape;
 		getBody().setCollisionShape(shape.getCollisionShape());
+		if (oldShape != null) oldShape.dispose();
 	}
 
 	public void setCollisionShapeScale(float scale)

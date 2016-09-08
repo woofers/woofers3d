@@ -22,30 +22,31 @@ public abstract class EntityBody<B extends btCollisionObject> extends AnimatedEn
 	private float mass;
 	private B body;
 
-	public EntityBody(Model model, float mass)
+	public EntityBody(Model model, B body, float mass)
 	{
-		this(new ModelInstance(model), mass);
+		this(new ModelInstance(model), body, mass);
 	}
 
-	public EntityBody(ModelInstance modelInstance)
+	public EntityBody(ModelInstance modelInstance, B body)
 	{
-		this(modelInstance, MASS);
+		this(modelInstance, body, MASS);
 	}
 
-	public EntityBody(ModelInstance modelInstance, float mass)
+	public EntityBody(ModelInstance modelInstance, B body, float mass)
 	{
 		super(modelInstance);
 		this.mass = mass;
+		setBody(body);
 	}
 
-	public EntityBody(String modelPath)
+	public EntityBody(String modelPath, B body)
 	{
-		this(readModel(modelPath), MASS);
+		this(modelPath, body, MASS);
 	}
 
-	public EntityBody(String modelPath, float mass)
+	public EntityBody(String modelPath, B body, float mass)
 	{
-		this(readModel(modelPath), mass);
+		this(readModel(modelPath), body, mass);
 	}
 
 	public void activate()

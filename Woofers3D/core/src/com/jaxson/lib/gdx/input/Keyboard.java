@@ -24,8 +24,8 @@ public class Keyboard implements Peripheral
 			keycodeKeys.put(key.getKeycode(), key);
 			if (name != null) stringKeys.put(name.toLowerCase(), key);
 		}
-		for (Key key: getKeys())
-			System.out.println(key);
+		//for (Key key: getKeys())
+		//	System.out.println(key);
 	}
 
 	@Override

@@ -19,9 +19,21 @@ public class Shape<S extends btCollisionShape> implements Disposable
 		getCollisionShape().dispose();
 	}
 
+	public boolean equals(Object other)
+	{
+		if (!(other instanceof Shape<?>)) return false;
+		Shape<?> otherShape = (Shape<?>)other;
+		return getScale().equals(otherShape.getScale()) && getType() == otherShape.getType();
+	}
+
 	public S getCollisionShape()
 	{
 		return shape;
+	}
+
+	public int getType()
+	{
+		return getCollisionShape().getShapeType();
 	}
 
 	public Vector3 getInertia(float mass)

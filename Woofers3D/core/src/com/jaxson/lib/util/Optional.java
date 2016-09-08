@@ -53,7 +53,6 @@ public final class Optional<T>
 	@Override
 	public String toString()
 	{
-		;
 		return String.format("Optional[%s]", get());
 	}
 }
