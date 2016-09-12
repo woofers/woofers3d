@@ -75,9 +75,9 @@ public class Display extends GameObject
 		this.pauseKey = keyboard.getKey("Escape");
 		this.screenshotKey = keyboard.getKey("F12");
 		this.fullscreenKey = new Keys(keyboard.getKey("F11"),
-				new KeyCombination(new Keys(keyboard.getKey("L-Alt"),
-						keyboard.getKey("R-Alt")),
-						keyboard.getKey("Enter")));
+									  new KeyCombination(new Keys(keyboard.getKey("L-Alt"),
+									  							  keyboard.getKey("R-Alt")),
+									  				     keyboard.getKey("Enter")));
 
 		setFullscreen(startsFullscreen());
 	}
@@ -86,7 +86,7 @@ public class Display extends GameObject
 	 * Gets whether the {@link Game} supports fullscreen.
 	 * @return {@link boolean} - Whether the {@link Game} supports fullscreen
 	 */
-	public boolean canFullscreen()
+	public boolean allowsFullscreen()
 	{
 		return getConfig().allowsFullscreen();
 	}
@@ -383,7 +383,7 @@ public class Display extends GameObject
 	 */
 	public boolean isFocused()
 	{
-		return !isMinimized() && mouse.isCatched() || isMobile();
+		return !isMinimized() && mouse.isCatched();
 	}
 
 	/**
@@ -502,6 +502,8 @@ public class Display extends GameObject
 	public void setFullscreen(boolean fullscreen)
 	{
 		if (isFullscreen() == fullscreen) return;
+		getConfig().setFullscreenStartup(fullscreen);
+		getSaveableConfig().save();
 		if (fullscreen)
 		{
 			lastWindowedWidth = getWidth();
@@ -533,6 +535,7 @@ public class Display extends GameObject
 	{
 		getGraphics().setTitle(title);
 		getConfig().setTitle(title);
+		getSaveableConfig().save();
 	}
 
 	/**
@@ -543,15 +546,7 @@ public class Display extends GameObject
 	{
 		getGraphics().setVSync(vsync);
 		getConfig().setVsync(vsync);
-	}
-
-	/**
-	 * Gets whether the {@link Game} shows its frame rate.
-	 * @return {@link boolean} - Whether the {@link Game} shows its frame rate
-	 */
-	public boolean showsFps()
-	{
-		return getConfig().showsFps();
+		getSaveableConfig().save();
 	}
 
 	/**
@@ -569,8 +564,6 @@ public class Display extends GameObject
 	public void toggleFullscreen()
 	{
 		setFullscreen(!isFullscreen());
-		getConfig().setFullscreenStartup(isFullscreen());
-		getSaveableConfig().save();
 	}
 
 	/**
@@ -591,7 +584,7 @@ public class Display extends GameObject
 	@Override
 	protected void input(float dt)
 	{
-		if (canFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
+		if (allowsFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
 		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched()) mouse.setCatched(true);
 		if (touchScreen.exists() && touchScreen.threeFingerTouched()) togglePaused();
 		if (keyboard.exists())
@@ -604,15 +597,6 @@ public class Display extends GameObject
 				screenshot.dispose();
 			}
 		}
-	}
-
-	/**
-	 * Gets whether the {@link Game} is mobile.
-	 * @return {@link boolean} - Whether the {@link Game} is mobile
-	 */
-	private boolean isMobile()
-	{
-		return game.isMobile();
 	}
 
 	private void setViewport(int width, int height)

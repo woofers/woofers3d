@@ -22,7 +22,7 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	private static final String EXTENSION_NOT_FOUND = "The file is not an Excel file.";
 	public static final ExcelFile NOTHING = new ExcelFile(DefaultFile.NOTHING);
 
-	private File file;
+	private final File file;
 
 	public ExcelFile(File file)
 	{

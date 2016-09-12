@@ -12,15 +12,12 @@ public class Woofers3D extends GameInstance
 		super();
 		getConfig().setTitle(TITLE);
 		getSaveableConfig().save();
-
-		// PrintStream originalStream = System.out;
-		// System.setOut(new PrintStream(new EmptyOutputStream()));
 	}
 
 	@Override
 	public void create()
 	{
 		super.create();
-		push(new PlayState(getGame()));
+		pushState(new PlayState(getGame()));
 	}
 }

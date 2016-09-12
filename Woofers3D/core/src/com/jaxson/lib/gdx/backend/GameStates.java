@@ -55,6 +55,7 @@ public class GameStates extends GameObject
 	@Override
 	public void pause()
 	{
+		if (isEmpty()) return;
 		peek().pause();
 		if (updatesSubState()) peek().getSubState().pause();
 	}
@@ -103,6 +104,7 @@ public class GameStates extends GameObject
 	@Override
 	public void resize(int width, int height)
 	{
+		if (isEmpty()) return;
 		peek().resize(width, height);
 		if (updatesSubState()) peek().getSubState().resize(width, height);
 	}
@@ -110,6 +112,7 @@ public class GameStates extends GameObject
 	@Override
 	public void resume()
 	{
+		if (isEmpty()) return;
 		peek().resume();
 		if (updatesSubState()) peek().getSubState().resume();
 	}

@@ -188,6 +188,7 @@ public class PhysicsWorld
 	public EntityBody getBody(Ray ray)
 	{
 		btCollisionObject object = rayCallback.getCollisionObject(ray, this);
+		if (object == null) return null;
 		for (EntityBody entity: objects)
 		{
 			if (entity.isBody(object)) return entity;

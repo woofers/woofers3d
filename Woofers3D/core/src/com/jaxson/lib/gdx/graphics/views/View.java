@@ -20,8 +20,8 @@ public class View
 	public View(int width, int height)
 	{
 		this(new ExtendViewport(width, height),
-				new ExtendViewport(width, height, new TargetCamera(width, height)),
-				new FitViewport(width, height));
+			 new ExtendViewport(width, height, new TargetCamera(width, height)),
+			 new FitViewport(width, height));
 	}
 
 	public View(Viewport sprite, Viewport model, Viewport hud)
@@ -35,9 +35,13 @@ public class View
 
 		OrthographicCamera camera = null;
 		if (getSpriteView().getCamera() instanceof OrthographicCamera)
+		{
 			camera = (OrthographicCamera) getSpriteView().getCamera();
+		}
 		else
+		{
 			camera = new OrthographicCamera();
+		}
 		camera.setToOrtho(false);
 		getSpriteView().setCamera(camera);
 	}

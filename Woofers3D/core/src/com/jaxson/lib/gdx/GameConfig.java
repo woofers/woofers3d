@@ -59,7 +59,6 @@ public class GameConfig
 	private int antiAliasing = 4;
 	private boolean statusBar = false;
 	private boolean immersive = true;
-	private boolean showFps = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
 	private transient File icon = new DefaultFile("icon.png");
 
@@ -333,7 +332,6 @@ public class GameConfig
 		setStatusBar(config.hasStatusBar());
 		setImmersiveMode(config.isImmersive());
 		setIcon(config.getIcon());
-		setShowFps(config.showsFps());
 		setAntiAliasing(config.getAntiAliasing());
 		autoSave();
 	}
@@ -466,16 +464,6 @@ public class GameConfig
 	}
 
 	/**
-	 * Gets whether the {@link Game} shows its frame rate.
-	 * @param showFps Whether the {@link Game} shows its frame rate
-	 */
-	public void setShowFps(boolean showFps)
-	{
-		this.showFps = showFps;
-		autoSave();
-	}
-
-	/**
 	 * Sets whether the {@link Game} shows a status bar.
 	 * @param statusBar Whether the {@link Game} shows a status bar
 	 */
@@ -541,15 +529,6 @@ public class GameConfig
 	public void setY(int y)
 	{
 		this.y = y;
-	}
-
-	/**
-	 * Gets whether the {@link Game} shows its frame rate.
-	 * @return {@link boolean} - Whether the {@link Game} shows its frame rate
-	 */
-	public boolean showsFps()
-	{
-		return showFps;
 	}
 
 	/**

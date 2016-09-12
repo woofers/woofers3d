@@ -164,6 +164,14 @@ public class Inputs
 			return this;
 		}
 
+		public InputMultiplexer toInputMultiplexer()
+		{
+			InputMultiplexer inputMultiplexer = new InputMultiplexer();
+			inputMultiplexer.addProcessor(toInputProcessor());
+			inputMultiplexer.addProcessor(toGestureDetector());
+			return inputMultiplexer;
+		}
+
 		@Override
 		public boolean touchDown(float x, float y, int pointer, int button)
 		{
@@ -219,10 +227,9 @@ public class Inputs
 
 	public Inputs(Game game)
 	{
-		inputMultiplexer = new InputMultiplexer();
 		inputListener = new InputListener(game);
-		inputMultiplexer.addProcessor(inputListener.toInputProcessor());
-		inputMultiplexer.addProcessor(inputListener.toGestureDetector());
+		inputMultiplexer = inputListener.toInputMultiplexer();
+		game.setInputProcessor(getInputProcessor());
 	}
 
 	public static Accelerometer getAccelerometer()

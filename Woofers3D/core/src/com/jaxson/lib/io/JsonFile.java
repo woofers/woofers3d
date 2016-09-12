@@ -15,8 +15,8 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	public static final JsonFile NOTHING = new JsonFile(DefaultFile.NOTHING, Object.class);
 	private static final String EMPTY = "{" + NEXT_LINE + NEXT_LINE + "}";
 
-	private File file;
-	private Class<T> type;
+	private final File file;
+	private final Class<T> type;
 
 	public JsonFile(File file, Class<T> type)
 	{

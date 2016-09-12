@@ -32,9 +32,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 
 	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING);
 
-	private File file;
-
-	private FileHandle fileHandle;
+	private final File file;
+	private final FileHandle fileHandle;
 
 	public GdxFile(File file)
 	{

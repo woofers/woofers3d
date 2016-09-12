@@ -22,7 +22,7 @@ public class Game
 	private Jsonable<GameConfig> config;
 	private GameStates gameStates;
 	private Display display;
-	private Inputs inputHandler;
+	private Inputs inputs;
 	private float dt;
 	private float accumulator;
 	private float step;
@@ -31,11 +31,9 @@ public class Game
 	public Game(Jsonable<GameConfig> config)
 	{
 		this.config = config;
-		this.inputHandler = new Inputs(this);
+		this.inputs = new Inputs(this);
 		this.gameStates = new GameStates(this);
 		this.display = new Display(this);
-		setInputProcessor(Inputs.getInputProcessor());
-		Inputs.getMouse().setSensitivity(getConfig().getSensitivity());
 	}
 
 	public void dispose()
@@ -185,7 +183,7 @@ public class Game
 		getDisplay().pause();
 	}
 
-	public void push(State state)
+	public void pushState(State state)
 	{
 		gameStates.push(state);
 	}

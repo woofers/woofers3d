@@ -11,6 +11,7 @@ import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
 import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.Jsonable;
+import com.badlogic.gdx.Gdx;
 
 /**
  * A {@link GameInstance} containing a {@link Game} and a {@link GameConfig}.
@@ -103,9 +104,9 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	 * Pushes a {@link State} to the top {@link Game}.
 	 * @param state The state to add
 	 */
-	public void push(State state)
+	public void pushState(State state)
 	{
-		getGame().push(state);
+		getGame().pushState(state);
 	}
 
 	/**

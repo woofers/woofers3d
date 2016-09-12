@@ -3,8 +3,9 @@ package com.jaxson.lib.gdx.input;
 import com.badlogic.gdx.Input;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
-public class Keyboard implements Peripheral
+public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 {
 	private HashMap<Integer, KeyboardKey> keycodeKeys;
 	private HashMap<String, KeyboardKey> stringKeys;
@@ -19,13 +20,11 @@ public class Keyboard implements Peripheral
 		this.stringKeys = new HashMap<>();
 		for (int i = Keys.MIN; i < Keys.MAX; i ++)
 		{
-			KeyboardKey key = new KeyboardKey(i, Keys.toString(i));
+			KeyboardKey key = new KeyboardKey(i);
 			String name = key.getName();
 			keycodeKeys.put(key.getKeycode(), key);
 			if (name != null) stringKeys.put(name.toLowerCase(), key);
 		}
-		//for (Key key: getKeys())
-		//	System.out.println(key);
 	}
 
 	@Override
@@ -36,7 +35,9 @@ public class Keyboard implements Peripheral
 
 	public KeyboardKey getKey(int keycode)
 	{
-		return keycodeKeys.get(keycode);
+		KeyboardKey key = keycodeKeys.get(keycode);
+		if (key == null) throw new InvalidKeyException(keycode);
+		return key;
 	}
 
 	public KeyboardKey getKey(String name)
@@ -59,5 +60,11 @@ public class Keyboard implements Peripheral
 	private Input getInput()
 	{
 		return input;
+	}
+
+	@Override
+	public Iterator<KeyboardKey> iterator()
+	{
+		return getKeys().iterator();
 	}
 }

@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.Iterator;
 
-public class Mouse
+public class Mouse implements Iterable<MouseButton>
 {
 	public static final int MOUSE_LEFT = Buttons.LEFT;
 	public static final int MOUSE_RIGHT = Buttons.RIGHT;
@@ -39,11 +41,12 @@ public class Mouse
 		this.delta = new Vector2();
 		this.sensitivity = new Vector2(1f, -1f);
 		this.buttons = new HashMap<>();
+		setSensitivity(game.getConfig().getSensitivity());
 		setInvertX(INVERT_MOUSE_X);
 		setInvertY(INVERT_MOUSE_X);
 		for (int button: MOUSE_BUTTONS)
 		{
-			addButton(button);
+			buttons.put(button, new MouseButton(button, getInput()));
 		}
 	}
 
@@ -113,12 +116,22 @@ public class Mouse
 
 	public boolean isCatched()
 	{
-		return getInput().isCursorCatched();
+		return getInput().isCursorCatched() || isMobile();
 	}
 
 	public boolean isClicked()
 	{
-		return isPressed(getButton(MOUSE_LEFT));
+		return isLeftClicked() || isRightClicked();
+	}
+
+	public boolean isLeftClicked()
+	{
+		return getButton(MOUSE_LEFT).isPressed();
+	}
+
+	public boolean isRightClicked()
+	{
+		return getButton(MOUSE_RIGHT).isPressed();
 	}
 
 	public boolean isInvertX()
@@ -129,11 +142,6 @@ public class Mouse
 	public boolean isInvertY()
 	{
 		return getSensitivityY() > 0f;
-	}
-
-	public boolean isPressed(MouseButton button)
-	{
-		return button.isPressed();
 	}
 
 	/**
@@ -202,16 +210,20 @@ public class Mouse
 		getSensitivity().set(getSensitivityX(), y);
 	}
 
-	protected MouseButton addButton(int buttonCode)
-	{
-		MouseButton button = new MouseButton(buttonCode, getInput());
-		buttons.put(buttonCode, button);
-		return button;
-	}
-
-	protected MouseButton getButton(int button)
+	public MouseButton getButton(int button)
 	{
 		return buttons.get(button);
+	}
+
+	public Collection<MouseButton> getButtons()
+	{
+		return buttons.values();
+	}
+
+	@Override
+	public Iterator<MouseButton> iterator()
+	{
+		return getButtons().iterator();
 	}
 
 	void addScrollWheel(int scrollWheel)
@@ -227,5 +239,10 @@ public class Mouse
 	private Input getInput()
 	{
 		return game.getInput();
+	}
+
+	private boolean isMobile()
+	{
+		return game.isMobile();
 	}
 }

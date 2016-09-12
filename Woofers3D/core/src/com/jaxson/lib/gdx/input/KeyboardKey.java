@@ -7,10 +7,10 @@ public class KeyboardKey implements Key
 	private boolean down;
 	private boolean wasDown;
 
-	KeyboardKey(int keycode, String name)
+	KeyboardKey(int keycode)
 	{
 		this.keycode = keycode;
-		this.name = name;
+		this.name = Keys.toString(keycode);
 		if (!keycodeIsValid()) throw new InvalidKeyException(keycode);
 	}
 
