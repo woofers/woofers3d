@@ -10,6 +10,9 @@ import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
+import com.jaxson.lib.gdx.input.Inputs;
+import com.jaxson.lib.gdx.input.Keyboard;
+import com.jaxson.lib.gdx.input.KeyboardKey;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -24,6 +27,9 @@ public class TargetCamera extends PerspectiveCamera
 	private Vector3 zoom;
 	private Vector3 oldTargetLocation;
 	private PhysicsWorld world;
+
+	private Keyboard keyboard;
+	private KeyboardKey centerKey;
 
 	public TargetCamera(float width, float height)
 	{
@@ -43,6 +49,9 @@ public class TargetCamera extends PerspectiveCamera
 		setNear(NEAR);
 		setFar(FAR);
 		center();
+
+		this.keyboard = Inputs.getKeyboard();
+		this.centerKey = keyboard.getKey("R");
 	}
 
 	public void center()
@@ -109,7 +118,8 @@ public class TargetCamera extends PerspectiveCamera
 	public Ray getRay()
 	{
 		if (!hasTarget()) return null;
-		return new Ray(getLocation(), getDeltaLocation(getTarget().getLocation()));
+		return new Ray(getLocation(),
+				getDeltaLocation(getTarget().getLocation()));
 	}
 
 	public Quaternion getRoationQuat()
@@ -120,7 +130,9 @@ public class TargetCamera extends PerspectiveCamera
 	public Vector3 getRotation()
 	{
 		Quaternion rotation = getRoationQuat();
-		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
+		return new Vector3(rotation.getYaw(),
+				rotation.getPitch(),
+				rotation.getRoll());
 	}
 
 	public Entity getTarget()
@@ -192,12 +204,19 @@ public class TargetCamera extends PerspectiveCamera
 		rotate(angles.x, angles.y, angles.z);
 	}
 
-	public void rotateAround(Vector3 location, float yaw, float pitch, float roll)
+	public void rotateAround(Vector3 location,
+			float yaw,
+			float pitch,
+			float roll)
 	{
 		rotateAround(location, yaw, pitch, roll, true);
 	}
 
-	public void rotateAround(Vector3 location, float yaw, float pitch, float roll, boolean keepInBounds)
+	public void rotateAround(Vector3 location,
+			float yaw,
+			float pitch,
+			float roll,
+			boolean keepInBounds)
 	{
 		rotateAround(location, Vector3.X, pitch);
 		rotateAround(location, Vector3.Y, yaw);
@@ -301,7 +320,7 @@ public class TargetCamera extends PerspectiveCamera
 		rotateAround(getTargetLocation(), getMouse());
 		translate(getDeltaTargetLocation());
 		resetUp();
-		if (Inputs.getKeyboard().getKey("R").isPressed())
+		if (centerKey.isPressed())
 		{
 			center(getTargetLocation());
 		}

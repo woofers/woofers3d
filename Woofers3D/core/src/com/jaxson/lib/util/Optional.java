@@ -5,8 +5,8 @@ import java.util.NoSuchElementException;
 public final class Optional<T>
 {
 	private static final String NO_VALUE_PRESENT = "No value present";
-
-	private static final Optional<?> EMPTY = new Optional<>();
+	private static final String OPTIONAL_TYPE = "Optional[%s]";
+	public static final Optional<?> EMPTY = new Optional<>();
 
 	private T value;
 
@@ -53,6 +53,6 @@ public final class Optional<T>
 	@Override
 	public String toString()
 	{
-		return String.format("Optional[%s]", get());
+		return String.format(OPTIONAL_TYPE, get());
 	}
 }

@@ -48,7 +48,8 @@ public class TouchScreen implements Peripheral
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(Input.Peripheral.MultitouchScreen);
+		return getInput().isPeripheralAvailable(
+				Input.Peripheral.MultitouchScreen);
 	}
 
 	public int getAmmountOfTouches()
@@ -58,7 +59,8 @@ public class TouchScreen implements Peripheral
 
 	public int getAmmountOfTouches(int min, int max)
 	{
-		if (min < 0 || MULTITOUCH_SUPPORT < max) throw new IllegalArgumentException("Pointers out of range");
+		if (min < 0 || MULTITOUCH_SUPPORT < max)
+			throw new IllegalArgumentException("Pointers out of range");
 		int touches = 0;
 		for (int i = min; i < max; i ++)
 		{

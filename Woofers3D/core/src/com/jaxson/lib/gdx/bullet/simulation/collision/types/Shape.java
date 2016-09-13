@@ -19,21 +19,18 @@ public class Shape<S extends btCollisionShape> implements Disposable
 		getCollisionShape().dispose();
 	}
 
+	@Override
 	public boolean equals(Object other)
 	{
 		if (!(other instanceof Shape<?>)) return false;
-		Shape<?> otherShape = (Shape<?>)other;
-		return getScale().equals(otherShape.getScale()) && getType() == otherShape.getType();
+		Shape<?> otherShape = (Shape<?>) other;
+		return getScale().equals(otherShape.getScale())
+				&& getType() == otherShape.getType();
 	}
 
 	public S getCollisionShape()
 	{
 		return shape;
-	}
-
-	public int getType()
-	{
-		return getCollisionShape().getShapeType();
 	}
 
 	public Vector3 getInertia(float mass)
@@ -47,6 +44,11 @@ public class Shape<S extends btCollisionShape> implements Disposable
 	public Vector3 getScale()
 	{
 		return getCollisionShape().getLocalScaling();
+	}
+
+	public int getType()
+	{
+		return getCollisionShape().getShapeType();
 	}
 
 	public void setScale(Vector3 scale)

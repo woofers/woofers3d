@@ -12,8 +12,9 @@ import java.util.Date;
 
 public class JsonFile<T> implements File<JsonFile<T>, T, T>
 {
-	public static final JsonFile NOTHING = new JsonFile(DefaultFile.NOTHING, Object.class);
 	private static final String EMPTY = "{" + NEXT_LINE + NEXT_LINE + "}";
+	public static final JsonFile NOTHING =
+			new JsonFile(DefaultFile.NOTHING, Object.class);
 
 	private final File file;
 	private final Class<T> type;
@@ -114,7 +115,8 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException
+	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
+			SecurityException
 	{
 		return getFile().getFileOutputStream();
 	}
@@ -156,7 +158,8 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
+	public PrintWriter getPrintWriter() throws FileNotFoundException,
+			UnsupportedEncodingException
 	{
 		return getFile().getPrintWriter();
 	}

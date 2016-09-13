@@ -1,27 +1,30 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.jaxson.lib.gdx.backend.Game;
 
 public class FPSCounter extends Text
 {
 	private static final String FPS = "FPS: ";
 	private static final int FONT_PADDING = 20;
 
-	public FPSCounter()
-	{
-		this(new BitmapFont());
-	}
+	private Game game;
 
-	public FPSCounter(BitmapFont font)
+	public FPSCounter(BitmapFont font, Game game)
 	{
 		super(FPS, font);
+		this.game = game;
 		setLocation(FONT_PADDING, FONT_PADDING);
+	}
+
+	public FPSCounter(Game game)
+	{
+		this(new BitmapFont(), game);
 	}
 
 	@Override
 	public void update(float dt)
 	{
-		setText(FPS + Gdx.graphics.getFramesPerSecond());
+		setText(FPS + game.getDisplay().getFps());
 	}
 }

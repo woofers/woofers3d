@@ -1,4 +1,4 @@
-package com.jaxson.lib.gdx.backend.renderer;
+package com.jaxson.lib.gdx.backend.objects;
 
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
@@ -6,17 +6,17 @@ import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 
-public class MixedRenderer extends GameObject
+public class MixedObjects extends GameObject
 {
-	private ModelRenderer modelRenderer;
-	private SpriteRenderer spriteRenderer;
-	private HudRenderer hudRenderer;
+	private Models modelRenderer;
+	private Sprites spriteRenderer;
+	private HudSprites hudRenderer;
 
-	public MixedRenderer(View view)
+	public MixedObjects(View view)
 	{
-		this.modelRenderer = new ModelRenderer();
-		this.spriteRenderer = new SpriteRenderer();
-		this.hudRenderer = new HudRenderer();
+		this.modelRenderer = new Models();
+		this.spriteRenderer = new Sprites();
+		this.hudRenderer = new HudSprites();
 	}
 
 	public void add(Entity model)
@@ -49,7 +49,9 @@ public class MixedRenderer extends GameObject
 
 	public boolean isEmpty()
 	{
-		return spriteRenderer.isEmpty() && modelRenderer.isEmpty() && hudRenderer.isEmpty();
+		return spriteRenderer.isEmpty()
+				&& modelRenderer.isEmpty()
+				&& hudRenderer.isEmpty();
 	}
 
 	public void remove(Entity model)
@@ -81,6 +83,20 @@ public class MixedRenderer extends GameObject
 		modelRenderer.resize(width, height);
 		spriteRenderer.resize(width, height);
 		hudRenderer.resize(width, height);
+	}
+
+	public void resume()
+	{
+		modelRenderer.resume();
+		spriteRenderer.resume();
+		hudRenderer.resume();
+	}
+
+	public void pause()
+	{
+		modelRenderer.pause();
+		spriteRenderer.pause();
+		hudRenderer.pause();
 	}
 
 	@Override

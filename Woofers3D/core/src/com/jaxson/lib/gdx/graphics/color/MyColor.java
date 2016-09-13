@@ -94,7 +94,12 @@ public class MyColor extends Color
 		return this;
 	}
 
-	public MyColor random(int minR, int maxR, int minG, int maxG, int minB, int maxB)
+	public MyColor random(int minR,
+			int maxR,
+			int minG,
+			int maxG,
+			int minB,
+			int maxB)
 	{
 		set(new RandomColor(minR, maxR, minG, maxG, minB, maxB));
 		return this;

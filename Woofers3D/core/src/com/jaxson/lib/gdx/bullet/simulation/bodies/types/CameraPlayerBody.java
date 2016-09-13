@@ -19,7 +19,9 @@ public class CameraPlayerBody extends PlayerBody
 		this(model, getFittedHitbox(model), camera);
 	}
 
-	public CameraPlayerBody(String modelPath, ConvexShape shape, TargetCamera camera)
+	public CameraPlayerBody(String modelPath,
+			ConvexShape shape,
+			TargetCamera camera)
 	{
 		this(readModel(modelPath), shape, camera);
 	}

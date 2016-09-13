@@ -9,7 +9,8 @@ import com.jaxson.lib.gdx.graphics.views.View;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class GameObject implements Disposable, Renderable, Pauseable, Resizeable
+public abstract class GameObject
+		implements Disposable, Renderable, Pauseable, Resizeable
 {
 	/**
 	 * Called when the {@link GameObject} is destroyed.

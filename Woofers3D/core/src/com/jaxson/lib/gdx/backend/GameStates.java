@@ -66,6 +66,7 @@ public class GameStates extends GameObject
 	 */
 	public State peek()
 	{
+		if (isEmpty()) return null;
 		return states.peek();
 	}
 
@@ -74,6 +75,7 @@ public class GameStates extends GameObject
 	 */
 	public void pop()
 	{
+		if (isEmpty()) return;
 		states.pop().dispose();
 	}
 
@@ -83,6 +85,7 @@ public class GameStates extends GameObject
 	 */
 	public void push(State state)
 	{
+		if (state == null) return;
 		states.push(state);
 	}
 
@@ -123,6 +126,7 @@ public class GameStates extends GameObject
 	 */
 	public void set(State state)
 	{
+		if (state == null) return;
 		pop();
 		push(state);
 	}
@@ -154,11 +158,6 @@ public class GameStates extends GameObject
 		}
 	}
 
-	private boolean updatesSubState()
-	{
-		return isPaused() && hasPausedState();
-	}
-
 	private boolean isFocused()
 	{
 		return game.isFocused();
@@ -179,5 +178,10 @@ public class GameStates extends GameObject
 		if (isEmpty()) return;
 		pop();
 		makeEmpty();
+	}
+
+	private boolean updatesSubState()
+	{
+		return isPaused() && hasPausedState();
 	}
 }

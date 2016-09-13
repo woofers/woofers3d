@@ -29,7 +29,10 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
 	public RigidBody(ModelInstance modelInstance, Shape shape, float mass)
 	{
-		this(modelInstance, shape, mass, new btRigidBody(mass, null, null, shape.getInertia(mass)));
+		this(modelInstance,
+				shape,
+				mass,
+				new btRigidBody(mass, null, null, shape.getInertia(mass)));
 	}
 
 	public RigidBody(String modelPath, Shape shape)
@@ -42,7 +45,10 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 		this(readModel(modelPath), shape, mass);
 	}
 
-	private RigidBody(ModelInstance modelInstance, Shape shape, float mass, btRigidBody body)
+	private RigidBody(ModelInstance modelInstance,
+			Shape shape,
+			float mass,
+			btRigidBody body)
 	{
 		super(modelInstance, body, shape, mass);
 		setMotionState(new MyMotionState(getTransform()));

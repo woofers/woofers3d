@@ -90,7 +90,8 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
+	public PrintWriter getPrintWriter() throws FileNotFoundException,
+			UnsupportedEncodingException
 	{
 		return new PrintWriter(getJavaFile());
 	}

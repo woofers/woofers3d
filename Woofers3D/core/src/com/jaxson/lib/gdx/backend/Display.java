@@ -38,8 +38,12 @@ import com.jaxson.lib.math.MyMath;
  */
 public class Display extends GameObject
 {
-	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
-	private static final int COVERAGE_SAMPLING_MASK = GL20.GL_COVERAGE_BUFFER_BIT_NV;
+	private static final int CLEAR_MASK =
+			GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
+
+	private static final int COVERAGE_SAMPLING_MASK =
+			GL20.GL_COVERAGE_BUFFER_BIT_NV;
+
 	private static final int EMPTY_MASK = GL20.GL_ZERO;
 	private static final Color CLEAR_COLOR = Color.ROYAL;
 	private static final int NATIVE_ROTATION_OFFSET = 90;
@@ -74,10 +78,11 @@ public class Display extends GameObject
 		this.touchScreen = Inputs.getTouchScreen();
 		this.pauseKey = keyboard.getKey("Escape");
 		this.screenshotKey = keyboard.getKey("F12");
-		this.fullscreenKey = new Keys(keyboard.getKey("F11"),
-									  new KeyCombination(new Keys(keyboard.getKey("L-Alt"),
-									  							  keyboard.getKey("R-Alt")),
-									  				     keyboard.getKey("Enter")));
+		this.fullscreenKey =
+				new Keys(keyboard.getKey("F11"),
+						new KeyCombination(new Keys(keyboard.getKey("L-Alt"),
+								keyboard.getKey("R-Alt")),
+								keyboard.getKey("Enter")));
 
 		setFullscreen(startsFullscreen());
 	}
@@ -462,7 +467,10 @@ public class Display extends GameObject
 		view.resize(width, height);
 
 		System.out.println("getWidth() " + getWidth() + " X " + getHeight());
-		System.out.println("getDefaultWidth() " + getDefaultWidth() + " X " + getDefaultHeight());
+		System.out.println("getDefaultWidth() "
+				+ getDefaultWidth()
+				+ " X "
+				+ getDefaultHeight());
 		System.out.println("width " + width + " X " + height);
 		System.out.println("------------------------------");
 	}
@@ -585,11 +593,16 @@ public class Display extends GameObject
 	protected void input(float dt)
 	{
 		if (allowsFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
-		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched()) mouse.setCatched(true);
-		if (touchScreen.exists() && touchScreen.threeFingerTouched()) togglePaused();
+		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched())
+			mouse.setCatched(true);
+		if (touchScreen.exists() && touchScreen.threeFingerTouched())
+			togglePaused();
 		if (keyboard.exists())
 		{
-			if (pauseKey.isPressed()) togglePaused();
+			if (pauseKey.isPressed()
+					&& game.getCurrentState() != null
+					&& game.getCurrentState().hasPauseState())
+				togglePaused();
 			if (screenshotKey.isPressed())
 			{
 				Screenshot screenshot = new Screenshot();

@@ -13,7 +13,8 @@ public class MyCellStyle implements Cloneable
 	public final static short ALIGN_RIGHT = CellStyle.ALIGN_RIGHT;
 	public final static short ALIGN_FILL = CellStyle.ALIGN_FILL;
 	public final static short ALIGN_JUSTIFY = CellStyle.ALIGN_JUSTIFY;
-	public final static short ALIGN_CENTER_SELECTION = CellStyle.ALIGN_CENTER_SELECTION;
+	public final static short ALIGN_CENTER_SELECTION =
+			CellStyle.ALIGN_CENTER_SELECTION;
 	public final static short VERTICAL_TOP = CellStyle.VERTICAL_TOP;
 	public final static short VERTICAL_CENTER = CellStyle.VERTICAL_CENTER;
 	public final static short VERTICAL_BOTTOM = CellStyle.VERTICAL_BOTTOM;
@@ -27,12 +28,17 @@ public class MyCellStyle implements Cloneable
 	public final static short BORDER_THICK = CellStyle.BORDER_THICK;
 	public final static short BORDER_DOUBLE = CellStyle.BORDER_DOUBLE;
 	public final static short BORDER_DOTTED = CellStyle.BORDER_DOTTED;
-	public final static short BORDER_MEDIUM_DASHED = CellStyle.BORDER_MEDIUM_DASHED;
+	public final static short BORDER_MEDIUM_DASHED =
+			CellStyle.BORDER_MEDIUM_DASHED;
 	public final static short BORDER_DASH_DOT = CellStyle.BORDER_DASH_DOT;
-	public final static short BORDER_MEDIUM_DASH_DOT = CellStyle.BORDER_MEDIUM_DASH_DOT;
-	public final static short BORDER_DASH_DOT_DOT = CellStyle.BORDER_DASH_DOT_DOT;
-	public final static short BORDER_MEDIUM_DASH_DOT_DOT = CellStyle.BORDER_MEDIUM_DASH_DOT_DOT;
-	public final static short BORDER_SLANTED_DASH_DOT = CellStyle.BORDER_SLANTED_DASH_DOT;
+	public final static short BORDER_MEDIUM_DASH_DOT =
+			CellStyle.BORDER_MEDIUM_DASH_DOT;
+	public final static short BORDER_DASH_DOT_DOT =
+			CellStyle.BORDER_DASH_DOT_DOT;
+	public final static short BORDER_MEDIUM_DASH_DOT_DOT =
+			CellStyle.BORDER_MEDIUM_DASH_DOT_DOT;
+	public final static short BORDER_SLANTED_DASH_DOT =
+			CellStyle.BORDER_SLANTED_DASH_DOT;
 
 	public final static short NO_FILL = CellStyle.NO_FILL;
 	public final static short SOLID_FOREGROUND = CellStyle.SOLID_FOREGROUND;
@@ -41,7 +47,8 @@ public class MyCellStyle implements Cloneable
 	public final static short SPARSE_DOTS = CellStyle.SPARSE_DOTS;
 	public final static short THICK_HORZ_BANDS = CellStyle.THICK_HORZ_BANDS;
 	public final static short THICK_VERT_BANDS = CellStyle.THICK_VERT_BANDS;
-	public final static short THICK_BACKWARD_DIAG = CellStyle.THICK_BACKWARD_DIAG;
+	public final static short THICK_BACKWARD_DIAG =
+			CellStyle.THICK_BACKWARD_DIAG;
 	public final static short THICK_FORWARD_DIAG = CellStyle.THICK_FORWARD_DIAG;
 	public final static short BIG_SPOTS = CellStyle.BIG_SPOTS;
 	public final static short BRICKS = CellStyle.BRICKS;
@@ -74,7 +81,8 @@ public class MyCellStyle implements Cloneable
 			style = (XSSFCellStyle) style.clone();
 			return new MyCellStyle(style);
 		}
-		throw new CloneNotSupportedException("HSSFWorkbook clones not supported");
+		throw new CloneNotSupportedException(
+				"HSSFWorkbook clones not supported");
 	}
 
 	public short getAlignment()

@@ -14,7 +14,8 @@ public class TouchKeyboard implements Peripheral
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(Input.Peripheral.OnscreenKeyboard);
+		return getInput().isPeripheralAvailable(
+				Input.Peripheral.OnscreenKeyboard);
 	}
 
 	private Input getInput()

@@ -4,10 +4,17 @@ public class DisplayOrientation
 {
 	private static final int MAX_ANGLE = 360;
 
-	public static final DisplayOrientation PORTRAIT = new DisplayOrientation(0);
-	public static final DisplayOrientation LANDSCAPE = new DisplayOrientation(90);
-	public static final DisplayOrientation REVERSE_PORTRAIT = new DisplayOrientation(180);
-	public static final DisplayOrientation REVERSE_LANDSCAPE = new DisplayOrientation(270);
+	public static final DisplayOrientation PORTRAIT =
+			new DisplayOrientation(0);
+
+	public static final DisplayOrientation LANDSCAPE =
+			new DisplayOrientation(90);
+
+	public static final DisplayOrientation REVERSE_PORTRAIT =
+			new DisplayOrientation(180);
+
+	public static final DisplayOrientation REVERSE_LANDSCAPE =
+			new DisplayOrientation(270);
 
 	private int angle;
 

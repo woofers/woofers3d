@@ -22,29 +22,20 @@ public class RayCallback extends ClosestRayResultCallback
 		set();
 	}
 
-	public btCollisionObject getCollisionObject(Ray ray, PhysicsWorld world)
-	{
-		set(ray);
-		rayTest(world);
-		return getHitObject();
-	}
-
-	public btCollisionObject getCollisionObject(Ray ray, float distance, PhysicsWorld world)
+	public btCollisionObject getCollisionObject(Ray ray,
+			float distance,
+			PhysicsWorld world)
 	{
 		set(ray, distance);
 		rayTest(world);
 		return getHitObject();
 	}
 
-	private btCollisionObject getHitObject()
+	public btCollisionObject getCollisionObject(Ray ray, PhysicsWorld world)
 	{
-		if (hasHit()) return getCollisionObject();
-		return null;
-	}
-
-	private void rayTest(PhysicsWorld world)
-	{
-		world.rayTest(rayStart, rayEnd, this);
+		set(ray);
+		rayTest(world);
+		return getHitObject();
 	}
 
 	public void releaseCollisionObject()
@@ -75,6 +66,17 @@ public class RayCallback extends ClosestRayResultCallback
 		rayEnd.scl(distance);
 		rayEnd.add(rayStart);
 		set(rayStart, rayEnd);
+	}
+
+	private btCollisionObject getHitObject()
+	{
+		if (hasHit()) return getCollisionObject();
+		return null;
+	}
+
+	private void rayTest(PhysicsWorld world)
+	{
+		world.rayTest(rayStart, rayEnd, this);
 	}
 
 	private void set(Vector3 rayStart, Vector3 rayEnd)

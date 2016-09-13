@@ -8,13 +8,24 @@ import com.jaxson.lib.gdx.graphics.views.View;
 public class MyDebugDrawer
 {
 	public final static int NO_DEBUG = btIDebugDraw.DebugDrawModes.DBG_NoDebug;
-	public final static int WIREFRAME = btIDebugDraw.DebugDrawModes.DBG_DrawWireframe;
-	public final static int CONSTRAINTS = btIDebugDraw.DebugDrawModes.DBG_DrawConstraints;
-	public final static int NORMALS = btIDebugDraw.DebugDrawModes.DBG_DrawNormals;
+	public final static int WIREFRAME =
+			btIDebugDraw.DebugDrawModes.DBG_DrawWireframe;
+
+	public final static int CONSTRAINTS =
+			btIDebugDraw.DebugDrawModes.DBG_DrawConstraints;
+
+	public final static int NORMALS =
+			btIDebugDraw.DebugDrawModes.DBG_DrawNormals;
+
 	public final static int TEXT = btIDebugDraw.DebugDrawModes.DBG_DrawText;
-	public final static int CONTACT_POINTS = btIDebugDraw.DebugDrawModes.DBG_DrawContactPoints;
-	public final static int FEATURES_TEXT = btIDebugDraw.DebugDrawModes.DBG_DrawFeaturesText;
-	public final static int MIXED = WIREFRAME | FEATURES_TEXT | TEXT | CONTACT_POINTS;
+	public final static int CONTACT_POINTS =
+			btIDebugDraw.DebugDrawModes.DBG_DrawContactPoints;
+
+	public final static int FEATURES_TEXT =
+			btIDebugDraw.DebugDrawModes.DBG_DrawFeaturesText;
+
+	public final static int MIXED =
+			WIREFRAME | FEATURES_TEXT | TEXT | CONTACT_POINTS;
 
 	private DebugDrawer debugDrawer;
 	private btCollisionWorld world;

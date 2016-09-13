@@ -84,7 +84,9 @@ public abstract class Entity extends GameObject
 	public Vector3 getDirection()
 	{
 		float[] matrix = getTransformValues();
-		return new Vector3(matrix[MATRIX_DIRECTION_X], matrix[MATRIX_DIRECTION_Y], matrix[MATRIX_DIRECTION_Z]);
+		return new Vector3(matrix[MATRIX_DIRECTION_X],
+				matrix[MATRIX_DIRECTION_Y],
+				matrix[MATRIX_DIRECTION_Z]);
 	}
 
 	public Ray getForwardRay()
@@ -124,7 +126,8 @@ public abstract class Entity extends GameObject
 
 	public Ray getRay(float direction)
 	{
-		return new Ray(getLocation(), getDirection().rotate(Vector3.Y, direction));
+		return new Ray(getLocation(),
+				getDirection().rotate(Vector3.Y, direction));
 	}
 
 	public Ray getRay(Vector3 location)
@@ -145,7 +148,9 @@ public abstract class Entity extends GameObject
 	public Vector3 getRotation()
 	{
 		Quaternion rotation = getRoationQuaternion();
-		return new Vector3(rotation.getYaw(), rotation.getPitch(), rotation.getRoll());
+		return new Vector3(rotation.getYaw(),
+				rotation.getPitch(),
+				rotation.getRoll());
 	}
 
 	public Vector3 getScale()

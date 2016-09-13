@@ -120,7 +120,8 @@ public interface File<F extends File, R, W>
 	 * @throws FileNotFoundException If the file is not found
 	 * @throws SecurityException If the access to the file denied
 	 */
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException;
+	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
+			SecurityException;
 
 	/**
 	 * Returns a {@link FileInputStream} from the {@link File}
@@ -165,7 +166,8 @@ public interface File<F extends File, R, W>
 	 * @throws FileNotFoundException If the file is not found
 	 * @throws UnsupportedEncodingException If the charset is not supported
 	 */
-	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException;
+	public PrintWriter getPrintWriter() throws FileNotFoundException,
+			UnsupportedEncodingException;
 
 	/**
 	 * Gets when the {@link File} was last changed.

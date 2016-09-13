@@ -8,7 +8,8 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.jaxson.lib.gdx.bullet.simulation.WorldImporter;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.AnimatedEntity;
 
-public abstract class EntityBody<B extends btCollisionObject> extends AnimatedEntity
+public abstract class EntityBody<
+	B extends btCollisionObject> extends AnimatedEntity
 {
 	public static final int ACTIVE_TAG = 1;
 	public static final int ISLAND_SLEEPING = 2;

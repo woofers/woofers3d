@@ -11,7 +11,6 @@ import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
 import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.io.Jsonable;
-import com.badlogic.gdx.Gdx;
 
 /**
  * A {@link GameInstance} containing a {@link Game} and a {@link GameConfig}.
@@ -19,7 +18,8 @@ import com.badlogic.gdx.Gdx;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public abstract class GameInstance extends ApplicationAdapter implements Pauseable, Resizeable
+public abstract class GameInstance extends ApplicationAdapter
+		implements Pauseable, Resizeable
 {
 	private Jsonable<GameConfig> config;
 	private Game game;
@@ -29,9 +29,10 @@ public abstract class GameInstance extends ApplicationAdapter implements Pauseab
 	 */
 	public GameInstance()
 	{
-		this.config = new Jsonable<>(new DefaultFile("config.json"),
-				GameConfig.class,
-				new GameConfig());
+		this.config =
+				new Jsonable<>(new DefaultFile("config.json"),
+						GameConfig.class,
+						new GameConfig());
 	}
 
 	/**

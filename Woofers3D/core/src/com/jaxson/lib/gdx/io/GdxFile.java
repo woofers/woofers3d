@@ -28,7 +28,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	private static final String G3DJ_EXTENSION = "g3dj";
 	private static final String G3DB_EXTENSION = "g3db";
 	private static final String OBJ_EXTENSION = "obj";
-	private static final String LOADER_NOT_FOUND = "Loader could not be found for given filetype.";
+	private static final String LOADER_NOT_FOUND =
+			"Loader could not be found for given filetype.";
 
 	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING);
 
@@ -93,7 +94,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	public GdxFile createDirectory()
 	{
 		if (exists() && isDirectory()) return this;
-		if (getType() == FileType.Classpath || getType() == FileType.Internal) return GdxFile.NOTHING;
+		if (getType() == FileType.Classpath || getType() == FileType.Internal)
+			return GdxFile.NOTHING;
 		return new GdxFile(getFile().createDirectory(), getType());
 	}
 
@@ -185,7 +187,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException, SecurityException
+	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
+			SecurityException
 	{
 		return getFile().getFileOutputStream();
 	}
@@ -227,7 +230,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException, UnsupportedEncodingException
+	public PrintWriter getPrintWriter() throws FileNotFoundException,
+			UnsupportedEncodingException
 	{
 		return getFile().getPrintWriter();
 	}
@@ -404,7 +408,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 
 	private Model readG3db()
 	{
-		return new G3dModelLoader(new UBJsonReader()).loadModel(getFileHandle());
+		return new G3dModelLoader(new UBJsonReader()).loadModel(
+				getFileHandle());
 	}
 
 	private Model readG3dj()

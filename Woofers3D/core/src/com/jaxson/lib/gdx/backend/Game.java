@@ -77,6 +77,11 @@ public class Game
 		return getSaveableConfig().get();
 	}
 
+	public State getCurrentState()
+	{
+		return gameStates.peek();
+	}
+
 	public Display getDisplay()
 	{
 		return display;

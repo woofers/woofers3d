@@ -18,7 +18,8 @@ public class FileType
 	public static final FileType HTML = new FileType("html");
 
 	private static final int MAX_CHARACTER = 55;
-	private static final String MAX_CHARACTER_EXCEEDED = "Max character limit exceeded";
+	private static final String MAX_CHARACTER_EXCEEDED =
+			"Max character limit exceeded";
 
 	private String extension;
 
@@ -28,7 +29,8 @@ public class FileType
 		this.extension = file.getExtension();
 		if (this.extension.isEmpty()) this.extension = file.getName();
 		if (this.extension.equals("jpeg")) this.extension = "jpg";
-		if (length() >= MAX_CHARACTER) throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
+		if (length() >= MAX_CHARACTER) throw new IllegalArgumentException(
+				MAX_CHARACTER_EXCEEDED);
 	}
 
 	public boolean equals(FileType other)

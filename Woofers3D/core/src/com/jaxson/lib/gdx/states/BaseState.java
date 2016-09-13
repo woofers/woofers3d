@@ -3,7 +3,7 @@ package com.jaxson.lib.gdx.states;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.jaxson.lib.gdx.backend.Game;
-import com.jaxson.lib.gdx.backend.renderer.MixedRenderer;
+import com.jaxson.lib.gdx.backend.objects.MixedObjects;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
@@ -13,38 +13,38 @@ import com.jaxson.lib.gdx.util.GameObject;
 public abstract class BaseState extends GameObject
 {
 	private Game game;
-	private MixedRenderer renderer;
+	private MixedObjects objects;
 
 	protected BaseState(Game game)
 	{
 		this.game = game;
-		this.renderer = new MixedRenderer(getView());
+		this.objects = new MixedObjects(getView());
 	}
 
 	public void add(Entity entity)
 	{
-		renderer.add(entity);
+		objects.add(entity);
 	}
 
 	public void add(Sprite sprite)
 	{
-		renderer.add(sprite);
+		objects.add(sprite);
 	}
 
 	public void addHud(Sprite sprite)
 	{
-		renderer.add(sprite);
+		objects.add(sprite);
 	}
 
 	@Override
 	public void dispose()
 	{
-		renderer.dispose();
+		objects.dispose();
 	}
 
 	public MyEnvironment getEnvironment()
 	{
-		return renderer.getEnvironment();
+		return objects.getEnvironment();
 	}
 
 	public Game getGame()
@@ -69,36 +69,36 @@ public abstract class BaseState extends GameObject
 
 	public void remove(Entity entity)
 	{
-		renderer.remove(entity);
+		objects.remove(entity);
 	}
 
 	public void remove(Sprite sprite)
 	{
-		renderer.remove(sprite);
+		objects.remove(sprite);
 	}
 
 	public void removeHud(Sprite sprite)
 	{
-		renderer.removeHud(sprite);
+		objects.removeHud(sprite);
 	}
 
 	@Override
 	public void render(View view)
 	{
-		renderer.render(view);
+		objects.render(view);
 	}
 
 	@Override
 	public void resize(int width, int height)
 	{
-		renderer.resize(width, height);
+		objects.resize(width, height);
 	}
 
 	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
-		renderer.update(dt);
+		objects.update(dt);
 	}
 
 	private Graphics getGraphics()

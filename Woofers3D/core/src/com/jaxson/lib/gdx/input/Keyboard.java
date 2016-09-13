@@ -30,7 +30,8 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(Input.Peripheral.HardwareKeyboard);
+		return getInput().isPeripheralAvailable(
+				Input.Peripheral.HardwareKeyboard);
 	}
 
 	public KeyboardKey getKey(int keycode)
@@ -57,14 +58,14 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 		return touchKeyboard;
 	}
 
-	private Input getInput()
-	{
-		return input;
-	}
-
 	@Override
 	public Iterator<KeyboardKey> iterator()
 	{
 		return getKeys().iterator();
+	}
+
+	private Input getInput()
+	{
+		return input;
 	}
 }

@@ -11,7 +11,8 @@ import com.jaxson.lib.gdx.backend.Game;
 
 public class Inputs
 {
-	private static class InputListener implements InputProcessor, GestureListener
+	private static class InputListener
+			implements InputProcessor, GestureListener
 	{
 		private Game game;
 		private Accelerometer accelerometer;
@@ -127,7 +128,10 @@ public class Inputs
 		}
 
 		@Override
-		public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2)
+		public boolean pinch(Vector2 initialPointer1,
+				Vector2 initialPointer2,
+				Vector2 pointer1,
+				Vector2 pointer2)
 		{
 			return true;
 		}
@@ -159,17 +163,17 @@ public class Inputs
 			return new GestureDetector(inputListener);
 		}
 
-		public InputProcessor toInputProcessor()
-		{
-			return this;
-		}
-
 		public InputMultiplexer toInputMultiplexer()
 		{
 			InputMultiplexer inputMultiplexer = new InputMultiplexer();
 			inputMultiplexer.addProcessor(toInputProcessor());
 			inputMultiplexer.addProcessor(toGestureDetector());
 			return inputMultiplexer;
+		}
+
+		public InputProcessor toInputProcessor()
+		{
+			return this;
 		}
 
 		@Override

@@ -22,8 +22,15 @@ public class RandomColor extends MyColor
 		this(minRGB, maxRGB, minRGB, maxRGB, minRGB, maxRGB);
 	}
 
-	public RandomColor(int minR, int maxR, int minG, int maxG, int minB, int maxB)
+	public RandomColor(int minR,
+			int maxR,
+			int minG,
+			int maxG,
+			int minB,
+			int maxB)
 	{
-		super(new RandomNumber(minR, maxR).intValue(), new RandomNumber(minG, maxG).intValue(), new RandomNumber(minB, maxB).intValue());
+		super(new RandomNumber(minR, maxR).intValue(),
+				new RandomNumber(minG, maxG).intValue(),
+				new RandomNumber(minB, maxB).intValue());
 	}
 }

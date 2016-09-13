@@ -1,14 +1,15 @@
-package com.jaxson.lib.gdx.backend.renderer;
+package com.jaxson.lib.gdx.backend.objects;
 
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
-public abstract class BaseRenderer<T extends GameObject> extends GameObject implements Renderer<T>
+public abstract class ObjectsBase<
+	T extends GameObject> extends GameObject implements GameObjects<T>
 {
 	private MyArrayList<T> objects;
 
-	public BaseRenderer()
+	public ObjectsBase()
 	{
 		this.objects = new MyArrayList<>();
 	}
@@ -38,6 +39,30 @@ public abstract class BaseRenderer<T extends GameObject> extends GameObject impl
 	public void remove(T object)
 	{
 		getObjects().remove(object);
+	}
+
+	public void resize(int width, int height)
+	{
+		for (T object: getObjects())
+		{
+			object.resize(width, height);
+		}
+	}
+
+	public void pause()
+	{
+		for (T object: getObjects())
+		{
+			object.pause();
+		}
+	}
+
+	public void resume()
+	{
+		for (T object: getObjects())
+		{
+			object.resume();
+		}
 	}
 
 	@Override

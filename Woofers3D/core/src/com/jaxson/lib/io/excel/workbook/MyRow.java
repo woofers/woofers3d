@@ -44,10 +44,12 @@ public class MyRow implements Iterable<MyCell>
 		return getCell(row, POLICY);
 	}
 
-	public MyCell getCell(int row, MissingCellPolicy policy) throws CellOutOfBoundsException
+	public MyCell getCell(int row, MissingCellPolicy policy)
+			throws CellOutOfBoundsException
 	{
 		Cell cell = getRow().getCell(row, policy);
-		if (cell == null) throw new CellOutOfBoundsException(getCellLocation(row));
+		if (cell == null) throw new CellOutOfBoundsException(getCellLocation(
+				row));
 		return new MyCell(cell);
 	}
 

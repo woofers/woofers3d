@@ -36,8 +36,7 @@ public class Text extends Sprite
 	@Override
 	public void dispose()
 	{
-		// TODO Auto-generated method stub
-
+		font.dispose();
 	}
 
 	@Override
@@ -50,18 +49,6 @@ public class Text extends Sprite
 	public Vector2 getLocation()
 	{
 		return location;
-	}
-
-	@Override
-	public float getLocationX()
-	{
-		return getLocation().x;
-	}
-
-	@Override
-	public float getLocationY()
-	{
-		return getLocation().y;
 	}
 
 	@Override
@@ -106,9 +93,21 @@ public class Text extends Sprite
 	}
 
 	@Override
+	public float getX()
+	{
+		return getLocation().x;
+	}
+
+	@Override
+	public float getY()
+	{
+		return getLocation().y;
+	}
+
+	@Override
 	public void render(View view)
 	{
-		font.draw(view.getSpriteBatch(), getText(), getLocationX(), getLocationY());
+		font.draw(view.getSpriteBatch(), getText(), getX(), getY());
 	}
 
 	@Override

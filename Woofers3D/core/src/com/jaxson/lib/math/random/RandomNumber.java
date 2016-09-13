@@ -14,7 +14,8 @@ public class RandomNumber extends ComparableNumber
 	private static final long serialVersionUID = 3858351995041829520L;
 	private static final int DEFAULT_MIN = 0;
 	private static final int DEFAULT_MAX = 100;
-	private static final String MIN_EXCEEDS_MAX = "Min cannot be greather or equal to max";
+	private static final String MIN_EXCEEDS_MAX =
+			"Min cannot be greather or equal to max";
 
 	private Number min;
 	private Number max;
@@ -46,7 +47,8 @@ public class RandomNumber extends ComparableNumber
 	 */
 	public RandomNumber(Number min, Number max, Number... excluded)
 	{
-		if (max.doubleValue() < min.doubleValue()) throw new IllegalArgumentException(MIN_EXCEEDS_MAX);
+		// if (max.doubleValue() < min.doubleValue()) throw new
+		// IllegalArgumentException(MIN_EXCEEDS_MAX);
 		this.min = min;
 		this.max = max;
 		this.excluded = excluded;
@@ -55,7 +57,10 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public double doubleValue()
 	{
-		double value = getRandom().nextDouble() * (getMax().doubleValue() - getMin().doubleValue()) + getMin().doubleValue();
+		double value =
+				getRandom().nextDouble()
+						* (getMax().doubleValue() - getMin().doubleValue())
+						+ getMin().doubleValue();
 		if (isExcluded(value)) return doubleValue();
 		return value;
 	}
@@ -63,7 +68,10 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public float floatValue()
 	{
-		float value = getRandom().nextFloat() * (getMax().floatValue() - getMin().floatValue()) + getMin().floatValue();
+		float value =
+				getRandom().nextFloat()
+						* (getMax().floatValue() - getMin().floatValue())
+						+ getMin().floatValue();
 		if (isExcluded(value)) return floatValue();
 		return value;
 	}
@@ -98,14 +106,16 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public int intValue()
 	{
-		int value = getRandom().nextInt(getMax().intValue() - getMin().intValue() + 1) + getMin().intValue();
+		int value =
+				getRandom().nextInt(getMax().intValue()
+						- getMin().intValue()
+						+ 1) + getMin().intValue();
 		if (isExcluded(value)) return intValue();
 		return value;
 	}
 
 	public boolean isExcluded(Number value)
 	{
-		if (value.floatValue() < getMin().floatValue() || value.floatValue() > getMax().floatValue()) return false;
 		for (Number number: getExclude())
 		{
 			if (value.equals(number)) return true;
@@ -116,7 +126,10 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public long longValue()
 	{
-		long value = getRandom().nextLong() * (getMax().longValue() - getMin().longValue()) + getMin().longValue();
+		long value =
+				getRandom().nextLong()
+						* (getMax().longValue() - getMin().longValue())
+						+ getMin().longValue();
 		if (isExcluded(value)) return longValue();
 		return value;
 	}

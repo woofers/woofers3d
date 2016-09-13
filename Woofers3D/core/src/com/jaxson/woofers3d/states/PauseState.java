@@ -9,15 +9,19 @@ public class PauseState extends SubState
 {
 	private static final String PAUSE_SCREEN_PATH = "pauseScreen.png";
 	private static final float PAUSE_ALPHA = 3f / 4f;
+	private static final float RES_SCALE = 720f / 1080f;
 
 	private SpriteActor image;
 
-	public PauseState(Game gameManager)
+	public PauseState(Game game)
 	{
-		super(gameManager);
+		super(game);
 
 		image = new SpriteActor(PAUSE_SCREEN_PATH);
 		image.setAlpha(PAUSE_ALPHA);
+		image.setY(getGame().getDisplay().getCenter().y
+				- image.getHeight() / 2);
+		image.setScale(RES_SCALE);
 		add(image);
 	}
 

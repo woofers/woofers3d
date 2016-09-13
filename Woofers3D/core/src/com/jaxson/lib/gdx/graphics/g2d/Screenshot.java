@@ -88,7 +88,10 @@ public class Screenshot implements Disposable
 
 	public TextureData toTextureData()
 	{
-		return new PixmapTextureData(getPixmap(), getPixmap().getFormat(), true, true);
+		return new PixmapTextureData(getPixmap(),
+				getPixmap().getFormat(),
+				true,
+				true);
 	}
 
 	private void saveScreenshot()
@@ -101,7 +104,11 @@ public class Screenshot implements Disposable
 		saveScreenshot(0, 0, width, height, true);
 	}
 
-	private void saveScreenshot(int x, int y, int width, int height, boolean yDown)
+	private void saveScreenshot(int x,
+			int y,
+			int width,
+			int height,
+			boolean yDown)
 	{
 		this.image = ScreenUtils.getFrameBufferPixmap(x, y, width, height);
 		if (yDown) flipY();

@@ -12,7 +12,6 @@ public class CellLocation
 	private static final char CHAR_MIN = '0';
 
 	private int x;
-
 	private int y;
 
 	public CellLocation(int x, int y)
@@ -135,7 +134,8 @@ public class CellLocation
 
 	public static int columnToInt(String column)
 	{
-		if (column == null || column.isEmpty()) throw new NullValueException("column");
+		if (column == null || column.isEmpty()) throw new NullValueException(
+				"column");
 		char[] columnArray = column.toUpperCase().toCharArray();
 		int sum = 0;
 		for (int i = 0; i < columnArray.length; i ++)
@@ -169,7 +169,8 @@ public class CellLocation
 				letters += character;
 			}
 		}
-		return new Point(columnToInt(letters), new Integer(numbers).intValue() - 1);
+		return new Point(columnToInt(letters),
+				new Integer(numbers).intValue() - 1);
 	}
 
 	private static String intToChar(int columnNumber)
@@ -182,7 +183,8 @@ public class CellLocation
 		{
 			modulo = (dividend - 1) % ALPHABET_MAX;
 			newCharValue = 'A' + modulo;
-			columnName = new String(new char[]{ (char) newCharValue }) + columnName;
+			columnName =
+					new String(new char[]{ (char) newCharValue }) + columnName;
 			dividend = (dividend - modulo) / ALPHABET_MAX;
 		}
 		return columnName;

@@ -16,7 +16,7 @@ public abstract class Sprite extends GameObject
 
 	public Vector2 getCenter()
 	{
-		return getLocation().add(getLocation().cpy().scl(0.5f));
+		return getLocation().add(getLocation().scl(0.5f));
 	}
 
 	public float getDepth()
@@ -28,12 +28,8 @@ public abstract class Sprite extends GameObject
 
 	public Vector2 getLocation()
 	{
-		return new Vector2(getLocationX(), getLocationY());
+		return new Vector2(getX(), getY());
 	}
-
-	public abstract float getLocationX();
-
-	public abstract float getLocationY();
 
 	public Vector2 getOrigin()
 	{
@@ -61,6 +57,10 @@ public abstract class Sprite extends GameObject
 	}
 
 	public abstract float getWidth();
+
+	public abstract float getX();
+
+	public abstract float getY();
 
 	public void setAlpha(float alpha)
 	{
@@ -130,6 +130,16 @@ public abstract class Sprite extends GameObject
 	public void setSize(Vector2 size)
 	{
 		setSize(size.x, size.y);
+	}
+
+	public void setX(float x)
+	{
+		setLocation(x, getY(), getDepth());
+	}
+
+	public void setY(float y)
+	{
+		setLocation(getX(), y, getDepth());
 	}
 
 	public void translate(float x, float y)

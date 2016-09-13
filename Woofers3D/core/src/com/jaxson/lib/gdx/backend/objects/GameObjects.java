@@ -1,9 +1,9 @@
-package com.jaxson.lib.gdx.backend.renderer;
+package com.jaxson.lib.gdx.backend.objects;
 
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 
-public interface Renderer<T extends GameObject>
+public interface GameObjects<T extends GameObject>
 {
 	public void add(T object);
 
@@ -16,4 +16,10 @@ public interface Renderer<T extends GameObject>
 	public void render(View view);
 
 	public void update(float dt);
+
+	public void resize(int width, int height);
+
+	public void pause();
+
+	public void resume();
 }

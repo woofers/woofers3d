@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
-import java.util.HashMap;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Mouse implements Iterable<MouseButton>
@@ -16,8 +16,14 @@ public class Mouse implements Iterable<MouseButton>
 	public static final int MOUSE_MIDDLE = Buttons.MIDDLE;
 	public static final int MOUSE_BACK = Buttons.BACK;
 	public static final int MOUSE_FORWARD = Buttons.FORWARD;
-	public static final int[] MOUSE_BUTTONS = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE, MOUSE_BACK, MOUSE_FORWARD };
-	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
+	public static final int[] MOUSE_BUTTONS = {
+			MOUSE_LEFT,
+			MOUSE_RIGHT,
+			MOUSE_MIDDLE,
+			MOUSE_BACK,
+			MOUSE_FORWARD };
+	public static final int[] PRIMARY_MOUSE =
+			{ MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
 
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float TOUCH_MOUSE_SCALE = 1f / 3f;
@@ -48,6 +54,16 @@ public class Mouse implements Iterable<MouseButton>
 		{
 			buttons.put(button, new MouseButton(button, getInput()));
 		}
+	}
+
+	public MouseButton getButton(int button)
+	{
+		return buttons.get(button);
+	}
+
+	public Collection<MouseButton> getButtons()
+	{
+		return buttons.values();
 	}
 
 	public int getDeltaX()
@@ -124,16 +140,6 @@ public class Mouse implements Iterable<MouseButton>
 		return isLeftClicked() || isRightClicked();
 	}
 
-	public boolean isLeftClicked()
-	{
-		return getButton(MOUSE_LEFT).isPressed();
-	}
-
-	public boolean isRightClicked()
-	{
-		return getButton(MOUSE_RIGHT).isPressed();
-	}
-
 	public boolean isInvertX()
 	{
 		return getSensitivityX() < 0f;
@@ -144,6 +150,22 @@ public class Mouse implements Iterable<MouseButton>
 		return getSensitivityY() > 0f;
 	}
 
+	public boolean isLeftClicked()
+	{
+		return getButton(MOUSE_LEFT).isPressed();
+	}
+
+	public boolean isRightClicked()
+	{
+		return getButton(MOUSE_RIGHT).isPressed();
+	}
+
+	@Override
+	public Iterator<MouseButton> iterator()
+	{
+		return getButtons().iterator();
+	}
+
 	/**
 	 * Sets whether the {@link Mouse} is catched.
 	 * @param catched Whether the {@link Mouse} should be catched
@@ -152,7 +174,7 @@ public class Mouse implements Iterable<MouseButton>
 	{
 		if (catched == isCatched()) return;
 		getInput().setCursorCatched(catched);
-		if (!catched) setPosition(getDisplay().getCenter());
+		if (!catched) setLocation(getDisplay().getCenter());
 	}
 
 	public void setInvert(boolean invert)
@@ -176,7 +198,7 @@ public class Mouse implements Iterable<MouseButton>
 	 * @param x The x location of the {@link Mouse}
 	 * @param y The y location of the {@link Mouse}
 	 */
-	public void setPosition(int x, int y)
+	public void setLocation(int x, int y)
 	{
 		getInput().setCursorPosition(x, y);
 	}
@@ -185,9 +207,9 @@ public class Mouse implements Iterable<MouseButton>
 	 * Sets the location of the {@link Mouse}.
 	 * @param location The location of the {@link Mouse}
 	 */
-	public void setPosition(Vector2 location)
+	public void setLocation(Vector2 location)
 	{
-		setPosition((int) location.x, (int) location.y);
+		setLocation((int) location.x, (int) location.y);
 	}
 
 	public void setSensitivity(float sensitivity)
@@ -208,22 +230,6 @@ public class Mouse implements Iterable<MouseButton>
 	public void setSensitivityY(float y)
 	{
 		getSensitivity().set(getSensitivityX(), y);
-	}
-
-	public MouseButton getButton(int button)
-	{
-		return buttons.get(button);
-	}
-
-	public Collection<MouseButton> getButtons()
-	{
-		return buttons.values();
-	}
-
-	@Override
-	public Iterator<MouseButton> iterator()
-	{
-		return getButtons().iterator();
 	}
 
 	void addScrollWheel(int scrollWheel)

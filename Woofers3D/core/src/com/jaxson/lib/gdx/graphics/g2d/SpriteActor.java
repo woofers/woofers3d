@@ -49,18 +49,6 @@ public class SpriteActor extends Sprite
 	}
 
 	@Override
-	public float getLocationX()
-	{
-		return sprite.getX();
-	}
-
-	@Override
-	public float getLocationY()
-	{
-		return sprite.getY();
-	}
-
-	@Override
 	public float getOriginX()
 	{
 		return sprite.getOriginX();
@@ -99,6 +87,18 @@ public class SpriteActor extends Sprite
 	public float getWidth()
 	{
 		return sprite.getWidth();
+	}
+
+	@Override
+	public float getX()
+	{
+		return sprite.getX();
+	}
+
+	@Override
+	public float getY()
+	{
+		return sprite.getY();
 	}
 
 	@Override

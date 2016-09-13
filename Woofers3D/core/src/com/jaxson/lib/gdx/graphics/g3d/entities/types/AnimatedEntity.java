@@ -27,17 +27,31 @@ public abstract class AnimatedEntity extends Entity
 		this(readModel(modelPath));
 	}
 
-	public void action(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void action(String id,
+			float offset,
+			float duration,
+			int loopCount,
+			float speed,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().action(id, offset, duration, loopCount, speed, listener, transitionTime);
+		getAnimationController().action(id, offset, duration, loopCount, speed,
+				listener, transitionTime);
 	}
 
-	public void action(String id, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void action(String id,
+			int loopCount,
+			float speed,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().action(id, loopCount, speed, listener, transitionTime);
+		getAnimationController().action(id, loopCount, speed, listener,
+				transitionTime);
 	}
 
-	public void animate(String id, AnimationListener listener, float transitionTime)
+	public void animate(String id,
+			AnimationListener listener,
+			float transitionTime)
 	{
 		getAnimationController().animate(id, listener, transitionTime);
 	}
@@ -47,19 +61,35 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().animate(id, transitionTime);
 	}
 
-	public void animate(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void animate(String id,
+			float offset,
+			float duration,
+			int loopCount,
+			float speed,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().animate(id, offset, duration, loopCount, speed, listener, transitionTime);
+		getAnimationController().animate(id, offset, duration, loopCount, speed,
+				listener, transitionTime);
 	}
 
-	public void animate(String id, int loopCount, AnimationListener listener, float transitionTime)
+	public void animate(String id,
+			int loopCount,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().animate(id, loopCount, listener, transitionTime);
+		getAnimationController().animate(id, loopCount, listener,
+				transitionTime);
 	}
 
-	public void animate(String id, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void animate(String id,
+			int loopCount,
+			float speed,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().animate(id, loopCount, speed, listener, transitionTime);
+		getAnimationController().animate(id, loopCount, speed, listener,
+				transitionTime);
 	}
 
 	public Animation getAnimation()
@@ -92,14 +122,26 @@ public abstract class AnimatedEntity extends Entity
 		return getAnimationController().paused;
 	}
 
-	public void queue(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void queue(String id,
+			float offset,
+			float duration,
+			int loopCount,
+			float speed,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().queue(id, offset, duration, loopCount, speed, listener, transitionTime);
+		getAnimationController().queue(id, offset, duration, loopCount, speed,
+				listener, transitionTime);
 	}
 
-	public void queue(String id, int loopCount, float speed, AnimationListener listener, float transitionTime)
+	public void queue(String id,
+			int loopCount,
+			float speed,
+			AnimationListener listener,
+			float transitionTime)
 	{
-		getAnimationController().queue(id, loopCount, speed, listener, transitionTime);
+		getAnimationController().queue(id, loopCount, speed, listener,
+				transitionTime);
 	}
 
 	public void setAnimation(String id)
@@ -112,9 +154,15 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().setAnimation(id, listener);
 	}
 
-	public void setAnimation(String id, float offset, float duration, int loopCount, float speed, AnimationListener listener)
+	public void setAnimation(String id,
+			float offset,
+			float duration,
+			int loopCount,
+			float speed,
+			AnimationListener listener)
 	{
-		getAnimationController().setAnimation(id, offset, duration, loopCount, speed, listener);
+		getAnimationController().setAnimation(id, offset, duration, loopCount,
+				speed, listener);
 	}
 
 	public void setAnimation(String id, int loopCount)
@@ -122,12 +170,17 @@ public abstract class AnimatedEntity extends Entity
 		getAnimationController().setAnimation(id, loopCount);
 	}
 
-	public void setAnimation(String id, int loopCount, AnimationListener listener)
+	public void setAnimation(String id,
+			int loopCount,
+			AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, loopCount, listener);
 	}
 
-	public void setAnimation(String id, int loopCount, float speed, AnimationListener listener)
+	public void setAnimation(String id,
+			int loopCount,
+			float speed,
+			AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, loopCount, speed, listener);
 	}

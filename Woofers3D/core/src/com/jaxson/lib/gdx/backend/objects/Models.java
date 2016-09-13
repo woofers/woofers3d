@@ -1,19 +1,19 @@
-package com.jaxson.lib.gdx.backend.renderer;
+package com.jaxson.lib.gdx.backend.objects;
 
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.graphics.views.View;
 
-public class ModelRenderer extends BaseRenderer<Entity>
+public class Models extends ObjectsBase<Entity>
 {
 	private MyEnvironment environment;
 
-	public ModelRenderer()
+	public Models()
 	{
 		this(new MyEnvironment());
 	}
 
-	public ModelRenderer(MyEnvironment environment)
+	public Models(MyEnvironment environment)
 	{
 		super();
 		this.environment = environment;
@@ -33,7 +33,9 @@ public class ModelRenderer extends BaseRenderer<Entity>
 		view.getModelBatch().begin(view.getModelView().getCamera());
 		for (Entity entity: getObjects())
 		{
-			if (entity.isVisible(view.getModelView().getCamera())) view.getModelBatch().render(entity.getModelInstance(), environment);
+			if (entity.isVisible(view.getModelView().getCamera())) view
+					.getModelBatch().render(entity.getModelInstance(),
+							environment);
 		}
 		view.getModelBatch().end();
 	}

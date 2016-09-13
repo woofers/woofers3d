@@ -53,9 +53,13 @@ public class PlayState extends BulletState
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] = new RigidBox(new RandomColor(new MyColor(255, 95, 0), new MyColor(255, 165, 50)));
+			boxs[i] =
+					new RigidBox(new RandomColor(new MyColor(255, 95, 0),
+							new MyColor(255, 165, 50)));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
-			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(), boxSizeRange.floatValue(), boxSizeRange.floatValue()));
+			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(),
+					boxSizeRange.floatValue(),
+					boxSizeRange.floatValue()));
 			boxs[i].setMass(massRange.floatValue());
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
@@ -83,8 +87,7 @@ public class PlayState extends BulletState
 		applyPhysics(player);
 		add(player);
 
-		add(new FPSCounter());
-
+		add(new FPSCounter(getGame()));
 	}
 
 	@Override
@@ -111,7 +114,11 @@ public class PlayState extends BulletState
 		if (Inputs.getTouchScreen().justTouched())
 		{
 			Ray ray = player.getForwardRay();
-			if (Inputs.getTouchScreen().exists()) ray = camera.getPickRay(Inputs.getMouse().getX(), Inputs.getMouse().getY());
+			if (Inputs.getTouchScreen().exists())
+			{
+				ray = camera.getPickRay(Inputs.getMouse().getX(),
+						Inputs.getMouse().getY());
+			}
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)
 			{

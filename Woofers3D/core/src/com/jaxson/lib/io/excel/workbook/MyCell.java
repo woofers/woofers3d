@@ -145,7 +145,8 @@ public class MyCell
 			case TYPE_STRING:
 				return getStringValue();
 		}
-		return new String(new byte[]{ getCell().getErrorCellValue() }, StandardCharsets.UTF_8);
+		return new String(new byte[]{ getCell().getErrorCellValue() },
+				StandardCharsets.UTF_8);
 	}
 
 	public boolean isPartOfArrayFormulaGroup()
