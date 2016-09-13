@@ -138,10 +138,10 @@ public class CellLocation
 				"column");
 		char[] columnArray = column.toUpperCase().toCharArray();
 		int sum = 0;
-		for (int i = 0; i < columnArray.length; i ++)
+		for (char element: columnArray)
 		{
 			sum *= ALPHABET_MAX;
-			sum += new Integer(columnArray[i] - 'A' + 1);
+			sum += new Integer(element - 'A' + 1);
 		}
 
 		return sum - 1;

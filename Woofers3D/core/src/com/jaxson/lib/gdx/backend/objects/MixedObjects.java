@@ -8,102 +8,104 @@ import com.jaxson.lib.gdx.util.GameObject;
 
 public class MixedObjects extends GameObject
 {
-	private Models modelRenderer;
-	private Sprites spriteRenderer;
-	private HudSprites hudRenderer;
+	private Models models;
+	private Sprites sprites;
+	private HudElements hud;
 
 	public MixedObjects(View view)
 	{
-		this.modelRenderer = new Models();
-		this.spriteRenderer = new Sprites();
-		this.hudRenderer = new HudSprites();
+		this.models = new Models();
+		this.sprites = new Sprites();
+		this.hud = new HudElements();
 	}
 
 	public void add(Entity model)
 	{
-		modelRenderer.add(model);
+		models.add(model);
 	}
 
 	public void add(Sprite sprite)
 	{
-		spriteRenderer.add(sprite);
+		sprites.add(sprite);
 	}
 
 	public void addHud(Sprite sprite)
 	{
-		hudRenderer.add(sprite);
+		hud.add(sprite);
 	}
 
 	@Override
 	public void dispose()
 	{
-		modelRenderer.dispose();
-		spriteRenderer.dispose();
-		hudRenderer.dispose();
+		models.dispose();
+		sprites.dispose();
+		hud.dispose();
 	}
 
 	public MyEnvironment getEnvironment()
 	{
-		return modelRenderer.getEnvironment();
+		return models.getEnvironment();
 	}
 
 	public boolean isEmpty()
 	{
-		return spriteRenderer.isEmpty()
-				&& modelRenderer.isEmpty()
-				&& hudRenderer.isEmpty();
+		return sprites.isEmpty()
+				&& models.isEmpty()
+				&& hud.isEmpty();
+	}
+
+	@Override
+	public void pause()
+	{
+		models.pause();
+		sprites.pause();
+		hud.pause();
 	}
 
 	public void remove(Entity model)
 	{
-		modelRenderer.remove(model);
+		models.remove(model);
 	}
 
 	public void remove(Sprite sprite)
 	{
-		spriteRenderer.add(sprite);
+		sprites.add(sprite);
 	}
 
 	public void removeHud(Sprite sprite)
 	{
-		hudRenderer.add(sprite);
+		hud.add(sprite);
 	}
 
 	@Override
 	public void render(View view)
 	{
-		modelRenderer.render(view);
-		spriteRenderer.render(view);
-		hudRenderer.render(view);
+		models.render(view);
+		sprites.render(view);
+		hud.render(view);
 	}
 
 	@Override
 	public void resize(int width, int height)
 	{
-		modelRenderer.resize(width, height);
-		spriteRenderer.resize(width, height);
-		hudRenderer.resize(width, height);
+		models.resize(width, height);
+		sprites.resize(width, height);
+		hud.resize(width, height);
 	}
 
+	@Override
 	public void resume()
 	{
-		modelRenderer.resume();
-		spriteRenderer.resume();
-		hudRenderer.resume();
-	}
-
-	public void pause()
-	{
-		modelRenderer.pause();
-		spriteRenderer.pause();
-		hudRenderer.pause();
+		models.resume();
+		sprites.resume();
+		hud.resume();
 	}
 
 	@Override
 	public void update(float dt)
 	{
-		modelRenderer.update(dt);
-		spriteRenderer.update(dt);
-		hudRenderer.update(dt);
+		models.update(dt);
+		sprites.update(dt);
+		hud.update(dt);
 	}
 }

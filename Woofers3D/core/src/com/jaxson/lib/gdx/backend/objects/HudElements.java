@@ -3,9 +3,9 @@ package com.jaxson.lib.gdx.backend.objects;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
 import com.jaxson.lib.gdx.graphics.views.View;
 
-public class HudSprites extends ObjectsBase<Sprite>
+public class HudElements extends ObjectsBase<Sprite>
 {
-	public HudSprites()
+	public HudElements()
 	{
 		super();
 	}

@@ -11,15 +11,15 @@ public interface GameObjects<T extends GameObject>
 
 	public boolean isEmpty();
 
+	public void pause();
+
 	public void remove(T object);
 
 	public void render(View view);
 
-	public void update(float dt);
-
 	public void resize(int width, int height);
 
-	public void pause();
-
 	public void resume();
+
+	public void update(float dt);
 }

@@ -53,9 +53,9 @@ public class PlayState extends BulletState
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] =
-					new RigidBox(new RandomColor(new MyColor(255, 95, 0),
-							new MyColor(255, 165, 50)));
+			boxs[i] = new RigidBox(
+					new RandomColor(new MyColor(255, 95, 0),
+									new MyColor(255, 165, 50)));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(),
 					boxSizeRange.floatValue(),

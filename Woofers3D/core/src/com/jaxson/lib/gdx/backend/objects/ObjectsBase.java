@@ -36,19 +36,6 @@ public abstract class ObjectsBase<
 	}
 
 	@Override
-	public void remove(T object)
-	{
-		getObjects().remove(object);
-	}
-
-	public void resize(int width, int height)
-	{
-		for (T object: getObjects())
-		{
-			object.resize(width, height);
-		}
-	}
-
 	public void pause()
 	{
 		for (T object: getObjects())
@@ -57,6 +44,25 @@ public abstract class ObjectsBase<
 		}
 	}
 
+	@Override
+	public void remove(T object)
+	{
+		getObjects().remove(object);
+	}
+
+	@Override
+	public abstract void render(View view);
+
+	@Override
+	public void resize(int width, int height)
+	{
+		for (T object: getObjects())
+		{
+			object.resize(width, height);
+		}
+	}
+
+	@Override
 	public void resume()
 	{
 		for (T object: getObjects())
@@ -64,9 +70,6 @@ public abstract class ObjectsBase<
 			object.resume();
 		}
 	}
-
-	@Override
-	public abstract void render(View view);
 
 	@Override
 	public void update(float dt)
