@@ -8,7 +8,7 @@ public final class Optional<T>
 	private static final String OPTIONAL_TYPE = "Optional[%s]";
 	public static final Optional<?> EMPTY = new Optional<>();
 
-	private T value;
+	private final T value;
 
 	public Optional()
 	{
@@ -23,14 +23,13 @@ public final class Optional<T>
 	@Override
 	public boolean equals(Object object)
 	{
-		Object origin = get();
 		Object end = object;
 		if (end instanceof Optional)
 		{
 			Optional<?> other = (Optional<?>) end;
 			end = other.get();
 		}
-		if (isPresent()) return origin.equals(end);
+		if (isPresent()) return get().equals(end);
 		return end == null;
 	}
 
@@ -53,6 +52,8 @@ public final class Optional<T>
 	@Override
 	public String toString()
 	{
-		return String.format(OPTIONAL_TYPE, get());
+		String object = "Empty";
+		if (isPresent()) object = get().toString();
+		return String.format(OPTIONAL_TYPE, object);
 	}
 }

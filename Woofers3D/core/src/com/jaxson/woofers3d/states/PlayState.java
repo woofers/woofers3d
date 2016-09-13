@@ -19,6 +19,7 @@ import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
+import com.jaxson.lib.util.Optional;
 
 public class PlayState extends BulletState
 {
@@ -54,8 +55,9 @@ public class PlayState extends BulletState
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
 			boxs[i] = new RigidBox(
-					new RandomColor(new MyColor(255, 95, 0),
-									new MyColor(255, 165, 50)));
+					new RandomColor(
+						new MyColor(255, 95, 0),
+						new MyColor(255, 165, 50)));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(),
 					boxSizeRange.floatValue(),
@@ -88,6 +90,8 @@ public class PlayState extends BulletState
 		add(player);
 
 		add(new FPSCounter(getGame()));
+
+		System.out.println(new Optional<String>().toString());
 	}
 
 	@Override

@@ -83,6 +83,11 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		return super.addAll(new MyArrayList<>(array));
 	}
 
+	/**
+	 * Adds element to the list. Does nothing if element is null.
+	 * @param list Elements to add
+	 * @return {@link boolean} - Whether element was added
+	 */
 	public boolean addAll(MyArrayList<E> list)
 	{
 		if (list == null) return false;
@@ -95,6 +100,12 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		return size() - 1;
 	}
 
+	/**
+	 * Removes elements from the {@code startIndex} to the end
+	 * of the list.
+	 * @param startIndex Elements to add
+	 * @return {@link boolean} - Whether element was added
+	 */
 	@Override
 	public void removeRange(int startIndex)
 	{
