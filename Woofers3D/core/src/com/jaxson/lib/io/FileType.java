@@ -1,12 +1,13 @@
 package com.jaxson.lib.io;
 
+import java.util.HashMap;
+
 public class FileType
 {
 	public static final FileType NONE = new FileType("");
 	public static final FileType DIB = new FileType("dib");
 	public static final FileType EMF = new FileType("emf");
-	public static final FileType JPEG = new FileType("jpg");
-	public static final FileType JPG = JPEG;
+	public static final FileType JPG = new FileType("jpg");
 	public static final FileType PICT = new FileType("pict");
 	public static final FileType PNG = new FileType("png");
 	public static final FileType WMP = new FileType("wmp");
@@ -20,17 +21,23 @@ public class FileType
 	private static final int MAX_CHARACTER = 55;
 	private static final String MAX_CHARACTER_EXCEEDED =
 			"Max character limit exceeded";
+	private static final HashMap<String, String> exceptions;
 
-	private String extension;
+
+	private final String extension;
+
+	static
+	{
+		exceptions = new HashMap<>();
+		addException("jpeg", "jpg");
+		addException("htm", "html");
+	}
 
 	public FileType(String extension)
 	{
-		DefaultFile file = new DefaultFile(extension);
-		this.extension = file.getExtension();
-		if (this.extension.isEmpty()) this.extension = file.getName();
-		if (this.extension.equals("jpeg")) this.extension = "jpg";
-		if (length() >= MAX_CHARACTER) throw new IllegalArgumentException(
-				MAX_CHARACTER_EXCEEDED);
+		this.extension = formatExtension(extension);
+		if (length() >= MAX_CHARACTER)
+			throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}
 
 	public boolean equals(FileType other)
@@ -52,7 +59,7 @@ public class FileType
 
 	public boolean isImage()
 	{
-		return equals(JPEG) || equals(PICT) || equals(PNG);
+		return equals(JPG) || equals(PICT) || equals(PNG);
 	}
 
 	public boolean isModel()
@@ -74,5 +81,31 @@ public class FileType
 	public String toString()
 	{
 		return getExtension();
+	}
+
+	private static String formatExtension(String extension)
+	{
+		DefaultFile file = new DefaultFile(extension);
+		String newExtension = file.getExtension();
+		if (newExtension.isEmpty()) newExtension = file.getName();
+		//String rule = getException(newExtension);
+		//if (rule != null) newExtension = rule;
+		return newExtension;
+	}
+
+	public static void addException(String original, String translated)
+	{
+		if (original != null) exceptions.put(original, translated);
+	}
+
+	private static String getException(String exception)
+	{
+		if (!exceptions.containsKey(exception)) return null;
+		return exceptions.get(exception);
+	}
+
+	public static void removeException(String exception)
+	{
+		exceptions.remove(exceptions);
 	}
 }

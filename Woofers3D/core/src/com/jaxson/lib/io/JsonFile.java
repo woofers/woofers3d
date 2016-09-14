@@ -55,6 +55,12 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
+	public String getNameWithoutExtension()
+	{
+		return getFile().getNameWithoutExtension();
+	}
+
+	@Override
 	public JsonFile<T> createDirectory()
 	{
 		return new JsonFile<>(getFile().createDirectory(), type);

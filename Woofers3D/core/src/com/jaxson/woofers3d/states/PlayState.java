@@ -20,6 +20,7 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
 import com.jaxson.lib.util.Optional;
+import com.jaxson.lib.io.DefaultFile;
 
 public class PlayState extends BulletState
 {
@@ -92,6 +93,8 @@ public class PlayState extends BulletState
 		add(new FPSCounter(getGame()));
 
 		System.out.println(new Optional<String>().toString());
+		DefaultFile file = new DefaultFile("liam/sam/dog.jpg").setExtension("png");
+		System.out.println(file);
 	}
 
 	@Override

@@ -151,9 +151,17 @@ public class TouchScreen implements Peripheral
 		return getAmmountOfTouches() >= 2;
 	}
 
-	protected Touch getTouch(int finger)
+	public Touch getTouch(int finger)
 	{
 		return touchs.get(finger);
+	}
+
+	void transfer()
+	{
+		for (Touch touch: getTouchs())
+		{
+			touch.transfer();
+		}
 	}
 
 	private Input getInput()

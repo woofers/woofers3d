@@ -143,6 +143,12 @@ public interface File<F extends File, R, W>
 	public String getName();
 
 	/**
+	 * Gets the file name of the {@link File} without the type.
+	 * @return {@link String} - The file name
+	 */
+	public String getNameWithoutExtension();
+
+	/**
 	 * Gets the parent directory of the {@link File}.
 	 * @return {@link F} - The parent directory
 	 */

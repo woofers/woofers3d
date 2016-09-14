@@ -136,13 +136,9 @@ public class Inputs
 			return true;
 		}
 
-		public void reset()
+		void reset()
 		{
-			for (KeyboardKey key: keyboard.getKeys())
-			{
-				key.setDown(false);
-				key.setWasDown(false);
-			}
+			keyboard.reset();
 		}
 
 		@Override
@@ -202,16 +198,10 @@ public class Inputs
 			return true;
 		}
 
-		public void update(float dt)
+		void update(float dt)
 		{
-			for (KeyboardKey key: keyboard.getKeys())
-			{
-				key.transfer();
-			}
-			for (Touch touch: touchScreen.getTouchs())
-			{
-				touch.transfer();
-			}
+			keyboard.transfer();
+			touchScreen.transfer();
 		}
 
 		@Override

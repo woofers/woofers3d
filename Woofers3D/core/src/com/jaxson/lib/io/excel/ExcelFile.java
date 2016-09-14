@@ -199,6 +199,11 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return new ExcelFile(getFile().move(file));
 	}
 
+	public String getNameWithoutExtension()
+	{
+		return getFile().getNameWithoutExtension();
+	}
+
 	@Override
 	public byte[] readBytes()
 	{

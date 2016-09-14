@@ -465,14 +465,6 @@ public class Display extends GameObject
 	public void resize(int width, int height)
 	{
 		view.resize(width, height);
-
-		System.out.println("getWidth() " + getWidth() + " X " + getHeight());
-		System.out.println("getDefaultWidth() "
-				+ getDefaultWidth()
-				+ " X "
-				+ getDefaultHeight());
-		System.out.println("width " + width + " X " + height);
-		System.out.println("------------------------------");
 	}
 
 	@Override

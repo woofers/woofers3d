@@ -6,9 +6,9 @@ import com.jaxson.lib.gdx.states.State;
 
 public class MenuState extends State
 {
-	public MenuState(Game gameManager)
+	public MenuState(Game game)
 	{
-		super(gameManager);
+		super(game);
 	}
 
 	@Override

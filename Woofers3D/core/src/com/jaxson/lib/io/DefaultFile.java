@@ -338,6 +338,14 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return readString();
 	}
 
+	public String getNameWithoutExtension()
+	{
+		String name = getName();
+		int index = name.lastIndexOf(".");
+		if (index == -1) return name;
+		return name.substring(0, index);
+	}
+
 	/**
 	 * Parses a the {@link DefaultFile} as a {@link String}.
 	 * @return {@link String} - The contents of the file
@@ -387,9 +395,8 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	public DefaultFile setExtension(FileType extension)
 	{
 		if (extension.equals(getExtensionType())) return this;
-		int index = getPath().lastIndexOf(".");
-		if (index == -1) index = getPath().length();
-		return new DefaultFile(getPath().substring(0, index)
+		return new DefaultFile(getParentPath()
+				+ getNameWithoutExtension()
 				+ "."
 				+ extension.getExtension());
 	}
@@ -410,6 +417,11 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	public DefaultFile write()
 	{
 		return write("");
+	}
+
+	public String toString()
+	{
+		return getPath();
 	}
 
 	/**

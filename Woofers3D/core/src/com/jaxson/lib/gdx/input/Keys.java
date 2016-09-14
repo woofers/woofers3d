@@ -36,7 +36,7 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 		}
 	}
 
-	public MyArrayList<Key> getKeys()
+	private MyArrayList<Key> getKeys()
 	{
 		return keys;
 	}
