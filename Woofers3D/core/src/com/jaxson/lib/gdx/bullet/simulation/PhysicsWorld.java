@@ -299,8 +299,11 @@ public class PhysicsWorld
 	public void update(float dt)
 	{
 		world.stepSimulation(dt);
-		if (keyboard.exists() && debugKey.isPressed()) toggleDebugMode();
-		if (touchScreen.exists() && touchScreen.twoFingerTouched())
+
+		if (keyboard.exists()
+				&& debugKey.isPressed()
+				|| touchScreen.exists()
+						&& touchScreen.twoFingerTouched())
 			toggleDebugMode();
 	}
 

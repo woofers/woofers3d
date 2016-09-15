@@ -4,6 +4,14 @@ import java.util.HashMap;
 
 public class FileType
 {
+	private static HashMap<String, String> exceptions = new HashMap<>();
+
+	static
+	{
+		addException("jpeg", "jpg");
+		addException("htm", "html");
+	}
+
 	public static final FileType NONE = new FileType("");
 	public static final FileType DIB = new FileType("dib");
 	public static final FileType EMF = new FileType("emf");
@@ -21,17 +29,8 @@ public class FileType
 	private static final int MAX_CHARACTER = 55;
 	private static final String MAX_CHARACTER_EXCEEDED =
 			"Max character limit exceeded";
-	private static final HashMap<String, String> exceptions;
-
 
 	private final String extension;
-
-	static
-	{
-		exceptions = new HashMap<>();
-		addException("jpeg", "jpg");
-		addException("htm", "html");
-	}
 
 	public FileType(String extension)
 	{
@@ -83,29 +82,29 @@ public class FileType
 		return getExtension();
 	}
 
-	private static String formatExtension(String extension)
-	{
-		DefaultFile file = new DefaultFile(extension);
-		String newExtension = file.getExtension();
-		if (newExtension.isEmpty()) newExtension = file.getName();
-		//String rule = getException(newExtension);
-		//if (rule != null) newExtension = rule;
-		return newExtension;
-	}
-
 	public static void addException(String original, String translated)
 	{
 		if (original != null) exceptions.put(original, translated);
 	}
 
-	private static String getException(String exception)
+	public static void removeException(String exception)
 	{
-		if (!exceptions.containsKey(exception)) return null;
+		if (!exceptions.containsKey(exception)) return;
+		exceptions.remove(exceptions);
+	}
+
+	private static String findBestExtension(String exception)
+	{
+		if (!exceptions.containsKey(exception)) return exception;
 		return exceptions.get(exception);
 	}
 
-	public static void removeException(String exception)
+	private static String formatExtension(String extension)
 	{
-		exceptions.remove(exceptions);
+		DefaultFile file = new DefaultFile(extension);
+		String newExtension = file.getExtension();
+		if (newExtension.isEmpty()) newExtension = file.getName();
+		newExtension = findBestExtension(newExtension);
+		return newExtension;
 	}
 }

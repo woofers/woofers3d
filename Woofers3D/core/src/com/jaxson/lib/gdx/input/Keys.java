@@ -36,11 +36,6 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 		}
 	}
 
-	private MyArrayList<Key> getKeys()
-	{
-		return keys;
-	}
-
 	@Override
 	public boolean isDown()
 	{
@@ -75,6 +70,11 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 	public Iterator<Key> iterator()
 	{
 		return getKeys().iterator();
+	}
+
+	private MyArrayList<Key> getKeys()
+	{
+		return keys;
 	}
 
 	public static String toString(int keycode)

@@ -17,11 +17,6 @@ public class KeyCombination implements Key, Iterable<Key>
 		this.keys = new MyArrayList<>(keys);
 	}
 
-	private MyArrayList<Key> getKeys()
-	{
-		return keys;
-	}
-
 	@Override
 	public boolean isDown()
 	{
@@ -58,5 +53,10 @@ public class KeyCombination implements Key, Iterable<Key>
 	public Iterator<Key> iterator()
 	{
 		return getKeys().iterator();
+	}
+
+	private MyArrayList<Key> getKeys()
+	{
+		return keys;
 	}
 }

@@ -145,6 +145,12 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
+	public String getNameWithoutExtension()
+	{
+		return getFile().getNameWithoutExtension();
+	}
+
+	@Override
 	public ExcelFile getParent()
 	{
 		return new ExcelFile(getFile().getParent());
@@ -197,11 +203,6 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	public ExcelFile move(ExcelFile file)
 	{
 		return new ExcelFile(getFile().move(file));
-	}
-
-	public String getNameWithoutExtension()
-	{
-		return getFile().getNameWithoutExtension();
 	}
 
 	@Override

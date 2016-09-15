@@ -136,11 +136,6 @@ public class Inputs
 			return true;
 		}
 
-		void reset()
-		{
-			keyboard.reset();
-		}
-
 		@Override
 		public boolean scrolled(int amount)
 		{
@@ -198,16 +193,21 @@ public class Inputs
 			return true;
 		}
 
-		void update(float dt)
-		{
-			keyboard.transfer();
-			touchScreen.transfer();
-		}
-
 		@Override
 		public boolean zoom(float initialDistance, float distance)
 		{
 			return false;
+		}
+
+		void reset()
+		{
+			keyboard.reset();
+		}
+
+		void update(float dt)
+		{
+			keyboard.transfer();
+			touchScreen.transfer();
 		}
 
 		private Input getInput()

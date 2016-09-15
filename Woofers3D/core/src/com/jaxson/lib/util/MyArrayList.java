@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * An ArrayList that will not add null.
@@ -15,7 +16,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	private static final long serialVersionUID = -477606372247151069L;
 
 	/**
-	 * Constructs an empty list with an initial capacity of {@code 10}.
+	 * Constructs an empty {@link List} with an initial capacity of {@code 10}.
 	 */
 	public MyArrayList()
 	{
@@ -23,7 +24,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	}
 
 	/**
-	 * Constructs a list of an {@link Collection}.
+	 * Constructs a {@link List} of an {@link Collection}.
 	 * @param collection The collection
 	 */
 	public MyArrayList(Collection<? extends E> collection)
@@ -33,7 +34,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	}
 
 	/**
-	 * Constructs a list of a array.
+	 * Constructs a {@link List} of a array.
 	 * @param array The array
 	 */
 	public MyArrayList(E... array)
@@ -42,7 +43,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	}
 
 	/**
-	 * Constructs a list of a specified size.
+	 * Constructs a {@link List} of a specified size.
 	 * @param size The initial size
 	 */
 	public MyArrayList(int size)
@@ -51,7 +52,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	}
 
 	/**
-	 * Adds element to the list. Does nothing if element is null.
+	 * Adds element to the {@link List}. Does nothing if element is null.
 	 * @param e Element to add
 	 * @return {@link boolean} - Whether element was added
 	 */
@@ -73,7 +74,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	}
 
 	/**
-	 * Adds element to the list. Does nothing if element is null.
+	 * Adds element to the {@link List}. Does nothing if element is null.
 	 * @param array Elements to add
 	 * @return {@link boolean} - Whether element was added
 	 */
@@ -84,8 +85,8 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	}
 
 	/**
-	 * Adds element to the list. Does nothing if element is null.
-	 * @param list Elements to add
+	 * Adds element to the {@link List}. Does nothing if element is null.
+	 * @param {@link List} Elements to add
 	 * @return {@link boolean} - Whether element was added
 	 */
 	public boolean addAll(MyArrayList<E> list)
@@ -102,7 +103,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 
 	/**
 	 * Removes elements from the {@code startIndex} to the end
-	 * of the list.
+	 * of the {@link List}.
 	 * @param startIndex Elements to add
 	 * @return {@link boolean} - Whether element was added
 	 */

@@ -69,6 +69,11 @@ public class TouchScreen implements Peripheral
 		return touches;
 	}
 
+	public Touch getTouch(int finger)
+	{
+		return touchs.get(finger);
+	}
+
 	public Collection<Touch> getTouchs()
 	{
 		return touchs.values();
@@ -149,11 +154,6 @@ public class TouchScreen implements Peripheral
 	public boolean twoFingerTouching()
 	{
 		return getAmmountOfTouches() >= 2;
-	}
-
-	public Touch getTouch(int finger)
-	{
-		return touchs.get(finger);
 	}
 
 	void transfer()

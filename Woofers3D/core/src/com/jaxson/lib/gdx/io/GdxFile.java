@@ -211,6 +211,7 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 		return getFile().getName();
 	}
 
+	@Override
 	public String getNameWithoutExtension()
 	{
 		return getFile().getNameWithoutExtension();

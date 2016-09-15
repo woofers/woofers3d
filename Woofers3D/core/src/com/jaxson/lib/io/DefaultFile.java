@@ -221,6 +221,15 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
+	public String getNameWithoutExtension()
+	{
+		String name = getName();
+		int index = name.lastIndexOf(".");
+		if (index == -1) return name;
+		return name.substring(0, index);
+	}
+
+	@Override
 	public DefaultFile getParent()
 	{
 		return new DefaultFile(getParentPath());
@@ -338,14 +347,6 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return readString();
 	}
 
-	public String getNameWithoutExtension()
-	{
-		String name = getName();
-		int index = name.lastIndexOf(".");
-		if (index == -1) return name;
-		return name.substring(0, index);
-	}
-
 	/**
 	 * Parses a the {@link DefaultFile} as a {@link String}.
 	 * @return {@link String} - The contents of the file
@@ -414,14 +415,15 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public DefaultFile write()
-	{
-		return write("");
-	}
-
 	public String toString()
 	{
 		return getPath();
+	}
+
+	@Override
+	public DefaultFile write()
+	{
+		return write("");
 	}
 
 	/**

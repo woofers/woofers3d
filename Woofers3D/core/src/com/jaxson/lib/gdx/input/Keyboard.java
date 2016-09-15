@@ -48,11 +48,6 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 		return key;
 	}
 
-	private Collection<KeyboardKey> getKeys()
-	{
-		return keycodeKeys.values();
-	}
-
 	public TouchKeyboard getTouchKeyboard()
 	{
 		return touchKeyboard;
@@ -64,14 +59,6 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 		return getKeys().iterator();
 	}
 
-	void transfer()
-	{
-		for (KeyboardKey key: getKeys())
-		{
-			key.transfer();
-		}
-	}
-
 	void reset()
 	{
 		for (KeyboardKey key: getKeys())
@@ -81,8 +68,21 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 		}
 	}
 
+	void transfer()
+	{
+		for (KeyboardKey key: getKeys())
+		{
+			key.transfer();
+		}
+	}
+
 	private Input getInput()
 	{
 		return input;
+	}
+
+	private Collection<KeyboardKey> getKeys()
+	{
+		return keycodeKeys.values();
 	}
 }

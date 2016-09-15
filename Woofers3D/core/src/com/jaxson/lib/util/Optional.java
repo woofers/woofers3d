@@ -4,9 +4,10 @@ import java.util.NoSuchElementException;
 
 public final class Optional<T>
 {
+	public static final Optional<?> EMPTY = new Optional<>();
+
 	private static final String NO_VALUE_PRESENT = "No value present";
 	private static final String OPTIONAL_TYPE = "Optional[%s]";
-	public static final Optional<?> EMPTY = new Optional<>();
 
 	private final T value;
 
@@ -24,7 +25,7 @@ public final class Optional<T>
 	public boolean equals(Object object)
 	{
 		Object end = object;
-		if (end instanceof Optional)
+		if (end instanceof Optional<?>)
 		{
 			Optional<?> other = (Optional<?>) end;
 			end = other.get();
@@ -35,7 +36,8 @@ public final class Optional<T>
 
 	public T get()
 	{
-		if (!isPresent()) throw new NoSuchElementException(NO_VALUE_PRESENT);
+		if (!isPresent())
+			throw new NoSuchElementException(NO_VALUE_PRESENT);
 		return value;
 	}
 

@@ -34,7 +34,8 @@ public class Models extends ObjectsBase<Entity>
 		for (Entity entity: getObjects())
 		{
 			if (entity.isVisible(view.getModelView().getCamera()))
-				view.getModelBatch().render(entity.getModelInstance(), environment);
+				view.getModelBatch().render(entity.getModelInstance(),
+						environment);
 		}
 		view.getModelBatch().end();
 	}
