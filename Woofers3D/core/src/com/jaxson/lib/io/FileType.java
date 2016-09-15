@@ -93,7 +93,7 @@ public class FileType
 		exceptions.remove(exceptions);
 	}
 
-	private static String findBestExtension(String exception)
+	private static String findStandardExtension(String exception)
 	{
 		if (!exceptions.containsKey(exception)) return exception;
 		return exceptions.get(exception);
@@ -104,7 +104,7 @@ public class FileType
 		DefaultFile file = new DefaultFile(extension);
 		String newExtension = file.getExtension();
 		if (newExtension.isEmpty()) newExtension = file.getName();
-		newExtension = findBestExtension(newExtension);
+		newExtension = findStandardExtension(newExtension);
 		return newExtension;
 	}
 }

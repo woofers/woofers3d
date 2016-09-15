@@ -14,8 +14,8 @@ public class Sprites extends ObjectsBase<Sprite>
 	public void render(View view)
 	{
 		if (isEmpty()) return;
-		view.getSpriteBatch().setProjectionMatrix(view.getSpriteView()
-				.getCamera().combined);
+		view.getSpriteBatch().setProjectionMatrix(
+			view.getSpriteView().getCamera().combined);
 		view.getSpriteView().apply();
 		view.getSpriteBatch().begin();
 		for (Sprite sprite: getObjects())

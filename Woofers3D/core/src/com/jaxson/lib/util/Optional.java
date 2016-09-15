@@ -24,14 +24,13 @@ public final class Optional<T>
 	@Override
 	public boolean equals(Object object)
 	{
-		Object end = object;
-		if (end instanceof Optional<?>)
+		if (object instanceof Optional<?>)
 		{
-			Optional<?> other = (Optional<?>) end;
-			end = other.get();
+			Optional<?> optional = (Optional<?>) object;
+			object = optional.get();
 		}
-		if (isPresent()) return get().equals(end);
-		return end == null;
+		if (isPresent()) return get().equals(object);
+		return object == null;
 	}
 
 	public T get()
