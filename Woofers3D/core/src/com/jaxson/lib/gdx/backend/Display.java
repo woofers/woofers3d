@@ -38,11 +38,11 @@ import com.jaxson.lib.math.MyMath;
  */
 public class Display extends GameObject
 {
-	private static final int CLEAR_MASK =
-			GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
+	private static final int CLEAR_MASK
+			= GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
 
-	private static final int COVERAGE_SAMPLING_MASK =
-			GL20.GL_COVERAGE_BUFFER_BIT_NV;
+	private static final int COVERAGE_SAMPLING_MASK
+			= GL20.GL_COVERAGE_BUFFER_BIT_NV;
 
 	private static final int EMPTY_MASK = GL20.GL_ZERO;
 	private static final Color CLEAR_COLOR = Color.ROYAL;
@@ -78,11 +78,12 @@ public class Display extends GameObject
 		this.touchScreen = Inputs.getTouchScreen();
 		this.pauseKey = keyboard.getKey("Escape");
 		this.screenshotKey = keyboard.getKey("F12");
-		this.fullscreenKey =
-				new Keys(keyboard.getKey("F11"),
-						new KeyCombination(new Keys(keyboard.getKey("L-Alt"),
-								keyboard.getKey("R-Alt")),
-								keyboard.getKey("Enter")));
+		this.fullscreenKey
+			= new Keys(keyboard.getKey("F11"),
+					   new KeyCombination(
+					   		new Keys(keyboard.getKey("L-Alt"),
+									 keyboard.getKey("R-Alt")),
+							keyboard.getKey("Enter")));
 
 		setFullscreen(startsFullscreen());
 	}
@@ -591,16 +592,8 @@ public class Display extends GameObject
 			togglePaused();
 		if (keyboard.exists())
 		{
-			if (pauseKey.isPressed()
-					&& game.getCurrentState() != null
-					&& game.getCurrentState().hasPauseState())
-				togglePaused();
-			if (screenshotKey.isPressed())
-			{
-				Screenshot screenshot = new Screenshot();
-				screenshot.save();
-				screenshot.dispose();
-			}
+			if (pauseKey.isPressed() && hasPauseScreen()) togglePaused();
+			if (screenshotKey.isPressed()) new Screenshot().save().dispose();
 		}
 	}
 
@@ -620,5 +613,11 @@ public class Display extends GameObject
 	private void updateViewport()
 	{
 		setViewport(getWidth(), getHeight());
+	}
+
+	private boolean hasPauseScreen()
+	{
+		return game.getCurrentState() != null
+			&& game.getCurrentState().hasPauseState();
 	}
 }

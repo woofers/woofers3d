@@ -10,8 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class MyModelBuilder extends ModelBuilder
 {
-	private static final long ATTRIBUTES =
-			VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
+	private static final long ATTRIBUTES
+	= VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal;
 
 	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
 	private static final int DIVISIONS = 16;
@@ -29,7 +29,7 @@ public class MyModelBuilder extends ModelBuilder
 	public Model createBox(Vector3 size, Color color)
 	{
 		return createBox(size.x, size.y, size.z, new Material(ColorAttribute
-				.createDiffuse(color)), ATTRIBUTES);
+		.createDiffuse(color)), ATTRIBUTES);
 	}
 
 	public Model createSphere(Color color)
@@ -40,6 +40,6 @@ public class MyModelBuilder extends ModelBuilder
 	public Model createSphere(Vector3 size, Color color)
 	{
 		return createSphere(size.x, size.y, size.z, DIVISIONS, DIVISIONS,
-				new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES);
+		new Material(ColorAttribute.createDiffuse(color)), ATTRIBUTES);
 	}
 }

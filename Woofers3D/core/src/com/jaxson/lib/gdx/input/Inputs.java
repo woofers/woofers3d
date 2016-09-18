@@ -12,7 +12,7 @@ import com.jaxson.lib.gdx.backend.Game;
 public class Inputs
 {
 	private static class InputListener
-			implements InputProcessor, GestureListener
+	implements InputProcessor, GestureListener
 	{
 		private Game game;
 		private Accelerometer accelerometer;
@@ -129,9 +129,9 @@ public class Inputs
 
 		@Override
 		public boolean pinch(Vector2 initialPointer1,
-				Vector2 initialPointer2,
-				Vector2 pointer1,
-				Vector2 pointer2)
+		Vector2 initialPointer2,
+		Vector2 pointer1,
+		Vector2 pointer2)
 		{
 			return true;
 		}

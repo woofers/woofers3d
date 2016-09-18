@@ -28,30 +28,30 @@ public abstract class AnimatedEntity extends Entity
 	}
 
 	public void action(String id,
-			float offset,
-			float duration,
-			int loopCount,
-			float speed,
-			AnimationListener listener,
-			float transitionTime)
+	float offset,
+	float duration,
+	int loopCount,
+	float speed,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().action(id, offset, duration, loopCount, speed,
-				listener, transitionTime);
+		listener, transitionTime);
 	}
 
 	public void action(String id,
-			int loopCount,
-			float speed,
-			AnimationListener listener,
-			float transitionTime)
+	int loopCount,
+	float speed,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().action(id, loopCount, speed, listener,
-				transitionTime);
+		transitionTime);
 	}
 
 	public void animate(String id,
-			AnimationListener listener,
-			float transitionTime)
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().animate(id, listener, transitionTime);
 	}
@@ -62,34 +62,34 @@ public abstract class AnimatedEntity extends Entity
 	}
 
 	public void animate(String id,
-			float offset,
-			float duration,
-			int loopCount,
-			float speed,
-			AnimationListener listener,
-			float transitionTime)
+	float offset,
+	float duration,
+	int loopCount,
+	float speed,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().animate(id, offset, duration, loopCount, speed,
-				listener, transitionTime);
+		listener, transitionTime);
 	}
 
 	public void animate(String id,
-			int loopCount,
-			AnimationListener listener,
-			float transitionTime)
+	int loopCount,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().animate(id, loopCount, listener,
-				transitionTime);
+		transitionTime);
 	}
 
 	public void animate(String id,
-			int loopCount,
-			float speed,
-			AnimationListener listener,
-			float transitionTime)
+	int loopCount,
+	float speed,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().animate(id, loopCount, speed, listener,
-				transitionTime);
+		transitionTime);
 	}
 
 	public Animation getAnimation()
@@ -123,25 +123,25 @@ public abstract class AnimatedEntity extends Entity
 	}
 
 	public void queue(String id,
-			float offset,
-			float duration,
-			int loopCount,
-			float speed,
-			AnimationListener listener,
-			float transitionTime)
+	float offset,
+	float duration,
+	int loopCount,
+	float speed,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().queue(id, offset, duration, loopCount, speed,
-				listener, transitionTime);
+		listener, transitionTime);
 	}
 
 	public void queue(String id,
-			int loopCount,
-			float speed,
-			AnimationListener listener,
-			float transitionTime)
+	int loopCount,
+	float speed,
+	AnimationListener listener,
+	float transitionTime)
 	{
 		getAnimationController().queue(id, loopCount, speed, listener,
-				transitionTime);
+		transitionTime);
 	}
 
 	public void setAnimation(String id)
@@ -155,14 +155,14 @@ public abstract class AnimatedEntity extends Entity
 	}
 
 	public void setAnimation(String id,
-			float offset,
-			float duration,
-			int loopCount,
-			float speed,
-			AnimationListener listener)
+	float offset,
+	float duration,
+	int loopCount,
+	float speed,
+	AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, offset, duration, loopCount,
-				speed, listener);
+		speed, listener);
 	}
 
 	public void setAnimation(String id, int loopCount)
@@ -171,16 +171,16 @@ public abstract class AnimatedEntity extends Entity
 	}
 
 	public void setAnimation(String id,
-			int loopCount,
-			AnimationListener listener)
+	int loopCount,
+	AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, loopCount, listener);
 	}
 
 	public void setAnimation(String id,
-			int loopCount,
-			float speed,
-			AnimationListener listener)
+	int loopCount,
+	float speed,
+	AnimationListener listener)
 	{
 		getAnimationController().setAnimation(id, loopCount, speed, listener);
 	}

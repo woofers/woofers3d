@@ -10,12 +10,13 @@ public class Accelerometer implements Peripheral
 {
 	private static final float ACCELEROMETER_FORWARD_SCALE = 70f / 100f;
 	private static final float ACCELEROMETER_BACK_SCALE = 20f / 100f;
-	private static final float ACCELEROMETER_NULL_SCALE =
-			100f - ACCELEROMETER_FORWARD_SCALE - ACCELEROMETER_BACK_SCALE;
+	private static final float ACCELEROMETER_NULL_SCALE
+			= 100f - ACCELEROMETER_FORWARD_SCALE - ACCELEROMETER_BACK_SCALE;
+
 	private static final float ACCELEROMETER_MAX = 10f;
 	private static final float ACCELEROMETER_MIN = -ACCELEROMETER_MAX;
-	private static final float ACCELEROMETER_RANGE =
-			ACCELEROMETER_MAX - ACCELEROMETER_MIN;
+	private static final float ACCELEROMETER_RANGE
+			= ACCELEROMETER_MAX - ACCELEROMETER_MIN;
 
 	private Game game;
 
@@ -34,8 +35,8 @@ public class Accelerometer implements Peripheral
 	{
 		float value = 0;
 		float y = getY();
-		if (y > getNullMaxY()) value =
-				MyMath.abs((y - getNullMaxY()) / getMinRangeY());
+		if (y > getNullMaxY())
+			value = MyMath.abs((y - getNullMaxY()) / getMinRangeY());
 		return MyMath.min(value, 1f);
 	}
 
@@ -48,8 +49,8 @@ public class Accelerometer implements Peripheral
 	{
 		float value = 0;
 		float y = getY();
-		if (y < getNullMinY()) value =
-				MyMath.abs((y - getNullMinY()) / getMinRangeY());
+		if (y < getNullMinY())
+			value = MyMath.abs((y - getNullMinY()) / getMinRangeY());
 		return MyMath.min(value, 1f);
 	}
 

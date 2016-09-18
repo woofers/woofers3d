@@ -20,7 +20,6 @@ public class Screenshot implements Disposable
 	private static final int BYTES_PER_PIXEL = 4;
 
 	private GdxFile file;
-
 	private Pixmap image;
 
 	public Screenshot()
@@ -35,7 +34,7 @@ public class Screenshot implements Disposable
 		image.dispose();
 	}
 
-	public void flipY()
+	public Screenshot flipY()
 	{
 		ByteBuffer pixels = getPixmap().getPixels();
 		int bytesPerLine = getWidth() * BYTES_PER_PIXEL;
@@ -49,6 +48,7 @@ public class Screenshot implements Disposable
 		pixels.clear();
 		pixels.put(lines);
 		pixels.clear();
+		return this;
 	}
 
 	public int getArea()
@@ -71,9 +71,10 @@ public class Screenshot implements Disposable
 		return getPixmap().getWidth();
 	}
 
-	public void save()
+	public Screenshot save()
 	{
 		file.write(this);
+		return this;
 	}
 
 	public SpriteActor toSprite()
@@ -88,10 +89,8 @@ public class Screenshot implements Disposable
 
 	public TextureData toTextureData()
 	{
-		return new PixmapTextureData(getPixmap(),
-				getPixmap().getFormat(),
-				true,
-				true);
+		return new PixmapTextureData(getPixmap(), getPixmap().getFormat(),
+				true, true);
 	}
 
 	private void saveScreenshot()
@@ -104,11 +103,8 @@ public class Screenshot implements Disposable
 		saveScreenshot(0, 0, width, height, true);
 	}
 
-	private void saveScreenshot(int x,
-			int y,
-			int width,
-			int height,
-			boolean yDown)
+	private void saveScreenshot(int x, int y, int width, int height,
+								boolean yDown)
 	{
 		this.image = ScreenUtils.getFrameBufferPixmap(x, y, width, height);
 		if (yDown) flipY();

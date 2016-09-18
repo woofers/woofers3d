@@ -27,8 +27,8 @@ public class FileType
 	public static final FileType HTML = new FileType("html");
 
 	private static final int MAX_CHARACTER = 55;
-	private static final String MAX_CHARACTER_EXCEEDED =
-			"Max character limit exceeded";
+	private static final String MAX_CHARACTER_EXCEEDED
+			= "Max character limit exceeded";
 
 	private final String extension;
 
@@ -84,7 +84,8 @@ public class FileType
 
 	public static void addException(String original, String translated)
 	{
-		if (original != null) exceptions.put(original, translated);
+		if (original != null && translated != null)
+			exceptions.put(original, translated);
 	}
 
 	public static void removeException(String exception)

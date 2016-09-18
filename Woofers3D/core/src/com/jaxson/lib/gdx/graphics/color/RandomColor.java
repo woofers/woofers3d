@@ -13,8 +13,8 @@ public class RandomColor extends MyColor
 	public RandomColor(Color minColor, Color maxColor)
 	{
 		super(new RandomNumber(minColor.r, maxColor.r).floatValue(),
-				new RandomNumber(minColor.g, maxColor.g).floatValue(),
-				new RandomNumber(minColor.b, maxColor.b).floatValue());
+		new RandomNumber(minColor.g, maxColor.g).floatValue(),
+		new RandomNumber(minColor.b, maxColor.b).floatValue());
 	}
 
 	public RandomColor(int minRGB, int maxRGB)
@@ -23,14 +23,14 @@ public class RandomColor extends MyColor
 	}
 
 	public RandomColor(int minR,
-			int maxR,
-			int minG,
-			int maxG,
-			int minB,
-			int maxB)
+	int maxR,
+	int minG,
+	int maxG,
+	int minB,
+	int maxB)
 	{
 		super(new RandomNumber(minR, maxR).intValue(),
-				new RandomNumber(minG, maxG).intValue(),
-				new RandomNumber(minB, maxB).intValue());
+		new RandomNumber(minG, maxG).intValue(),
+		new RandomNumber(minB, maxB).intValue());
 	}
 }

@@ -1,6 +1,10 @@
 package com.jaxson.lib.io;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -66,9 +70,38 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
+	public BufferedReader getBufferedReader()
+			throws FileNotFoundException
+	{
+		return null;
+	}
+
+	@Override
 	public DefaultFile getChild(String child)
 	{
 		return this;
+	}
+
+	@Override
+	public FileInputStream getFileInputStream()
+			throws FileNotFoundException
+	{
+		return null;
+	}
+
+	@Override
+	public FileOutputStream getFileOutputStream()
+			throws FileNotFoundException,
+				   SecurityException
+	{
+		return null;
+	}
+
+	@Override
+	public FileReader getFileReader()
+			throws FileNotFoundException
+	{
+		return null;
 	}
 
 	@Override
@@ -80,7 +113,7 @@ public class EmptyFile extends DefaultFile
 	@Override
 	public DefaultFile getParent()
 	{
-		return new DefaultFile(getParentPath());
+		return this;
 	}
 
 	@Override
@@ -90,10 +123,11 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException,
-			UnsupportedEncodingException
+	public PrintWriter getPrintWriter()
+			throws FileNotFoundException,
+				   UnsupportedEncodingException
 	{
-		return new PrintWriter(getJavaFile());
+		return null;
 	}
 
 	@Override

@@ -28,8 +28,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	private static final String G3DJ_EXTENSION = "g3dj";
 	private static final String G3DB_EXTENSION = "g3db";
 	private static final String OBJ_EXTENSION = "obj";
-	private static final String LOADER_NOT_FOUND =
-			"Loader could not be found for given filetype.";
+	private static final String LOADER_NOT_FOUND
+			= "Loader could not be found for given filetype.";
 
 	public static final GdxFile NOTHING = new GdxFile(DefaultFile.NOTHING);
 
@@ -139,7 +139,6 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	@Override
 	public boolean equals(Object file)
 	{
-		if (file instanceof DefaultFile) return equals((DefaultFile) file);
 		if (file instanceof GdxFile) return equals((GdxFile) file);
 		if (file instanceof File) return equals((File) file);
 		return false;
@@ -181,20 +180,23 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public FileInputStream getFileInputStream() throws FileNotFoundException
+	public FileInputStream getFileInputStream()
+			throws FileNotFoundException
 	{
 		return getFile().getFileInputStream();
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
-			SecurityException
+	public FileOutputStream getFileOutputStream()
+			throws FileNotFoundException,
+				   SecurityException
 	{
 		return getFile().getFileOutputStream();
 	}
 
 	@Override
-	public FileReader getFileReader() throws FileNotFoundException
+	public FileReader getFileReader()
+			throws FileNotFoundException
 	{
 		return getFile().getFileReader();
 	}
@@ -237,7 +239,7 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 
 	@Override
 	public PrintWriter getPrintWriter() throws FileNotFoundException,
-			UnsupportedEncodingException
+	UnsupportedEncodingException
 	{
 		return getFile().getPrintWriter();
 	}
@@ -415,7 +417,7 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	private Model readG3db()
 	{
 		return new G3dModelLoader(new UBJsonReader()).loadModel(
-				getFileHandle());
+		getFileHandle());
 	}
 
 	private Model readG3dj()

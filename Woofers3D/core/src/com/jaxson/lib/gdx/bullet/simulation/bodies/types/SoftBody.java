@@ -24,8 +24,8 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		meshPart = model.nodes.get(0).parts.get(0).meshPart;
 		meshPart.mesh.scale(3, 3, 3);
 		indexMap = BufferUtils.newShortBuffer(meshPart.size);
-		positionOffset =
-				meshPart.mesh.getVertexAttribute(Usage.Position).offset;
+		positionOffset
+				= meshPart.mesh.getVertexAttribute(Usage.Position).offset;
 		normalOffset = meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
 		Material material = getBody().appendMaterial();
 		material.setKLST(0.2f);
@@ -77,10 +77,10 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		MeshPart meshPart = model.nodes.get(0).parts.get(0).meshPart;
 		meshPart.mesh.scale(3, 3, 3);
 		ShortBuffer indexMap = BufferUtils.newShortBuffer(meshPart.size);
-		int positionOffset =
-				meshPart.mesh.getVertexAttribute(Usage.Position).offset;
-		int normalOffset =
-				meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
+		int positionOffset
+				= meshPart.mesh.getVertexAttribute(Usage.Position).offset;
+		int normalOffset
+				= meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
 		return new btSoftBody(world.getWorldInfo(),
 				meshPart.mesh.getVerticesBuffer(),
 				meshPart.mesh.getVertexSize(),

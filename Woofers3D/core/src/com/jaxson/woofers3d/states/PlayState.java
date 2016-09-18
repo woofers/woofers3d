@@ -1,5 +1,6 @@
 package com.jaxson.woofers3d.states;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.Game;
@@ -17,7 +18,6 @@ import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
-import com.jaxson.lib.io.DefaultFile;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
 
@@ -54,14 +54,12 @@ public class PlayState extends BulletState
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] = new RigidBox(
-					new RandomColor(
-							new MyColor(255, 95, 0),
-							new MyColor(255, 165, 50)));
-			boxs[i].setLocation(new RandomVector3(6f, 30f));
+			boxs[i] = new RigidBox(new RandomColor(new MyColor(255, 95, 0),
+												   new MyColor(255, 165, 50)));
 			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(),
-					boxSizeRange.floatValue(),
-					boxSizeRange.floatValue()));
+										boxSizeRange.floatValue(),
+										boxSizeRange.floatValue()));
+			boxs[i].setLocation(new RandomVector3(6f, 30f));
 			boxs[i].setMass(massRange.floatValue());
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
@@ -90,8 +88,6 @@ public class PlayState extends BulletState
 		add(player);
 
 		add(new FPSCounter(getGame()));
-
-		System.out.println(new DefaultFile("woof.htm").getExtensionType());
 	}
 
 	@Override
@@ -120,8 +116,8 @@ public class PlayState extends BulletState
 			Ray ray = player.getForwardRay();
 			if (Inputs.getTouchScreen().exists())
 			{
-				ray = camera.getPickRay(Inputs.getMouse().getX(),
-						Inputs.getMouse().getY());
+				Vector2 mouse = Inputs.getMouse().getLocation();
+				ray = camera.getPickRay(mouse.x, mouse.y);
 			}
 			EntityBody<?> body = getPhysicsWorld().getBody(ray);
 			if (body instanceof RigidBody)

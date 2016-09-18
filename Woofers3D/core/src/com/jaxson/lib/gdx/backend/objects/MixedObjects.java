@@ -6,7 +6,7 @@ import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 
-public class MixedObjects extends GameObject
+public class MixedObjects extends GameObject implements GameObjects<Entity>
 {
 	private Models models;
 	private Sprites sprites;
@@ -19,6 +19,7 @@ public class MixedObjects extends GameObject
 		this.hud = new HudElements();
 	}
 
+	@Override
 	public void add(Entity model)
 	{
 		models.add(model);
@@ -47,11 +48,12 @@ public class MixedObjects extends GameObject
 		return models.getEnvironment();
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		return sprites.isEmpty()
-				&& models.isEmpty()
-				&& hud.isEmpty();
+		&& models.isEmpty()
+		&& hud.isEmpty();
 	}
 
 	@Override
@@ -62,6 +64,7 @@ public class MixedObjects extends GameObject
 		hud.pause();
 	}
 
+	@Override
 	public void remove(Entity model)
 	{
 		models.remove(model);

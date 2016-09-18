@@ -14,8 +14,8 @@ import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
 
-public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject,
-	ConvexShape>
+public abstract class PlayerBody
+extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 {
 	private static final float GHOST_MASS = -1f;
 	private static final float STEP_HEIGHT = 1f / 5f;
@@ -253,7 +253,7 @@ public abstract class PlayerBody extends ShapeBody<btPairCachingGhostObject,
 	{
 		ConvexShape shape = getCollisionShape();
 		return new btKinematicCharacterController(getBody(),
-				shape.getCollisionShape(),
-				stepHeight);
+		shape.getCollisionShape(),
+		stepHeight);
 	}
 }

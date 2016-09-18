@@ -28,14 +28,14 @@ public class MyMath
 	/**
 	 * Constant to convert a diamiater to as radius.
 	 */
-	public static final float DIAMETER_TO_RADIUS =
-			new Reciprocal(RADIUS_TO_DIAMETER).floatValue();
+	public static final float DIAMETER_TO_RADIUS
+			= new Reciprocal(RADIUS_TO_DIAMETER).floatValue();
 
 	public static final float PI = (float) Math.PI;
 	public static final float DEGREES_TO_RADIANS = PI / 180f;
 
-	public static final float RADIANS_TO_DEGREES =
-			new Reciprocal(DEGREES_TO_RADIANS).floatValue();
+	public static final float RADIANS_TO_DEGREES
+			= new Reciprocal(DEGREES_TO_RADIANS).floatValue();
 
 	/**
 	 * Acceleration due to graviy on Earth.
@@ -159,25 +159,5 @@ public class MyMath
 	public static int min(int a, int b)
 	{
 		return Math.min(a, b);
-	}
-
-	/**
-	 * Returns the reciprocal of an {@link float}.
-	 * @param value Number
-	 * @return {@link float} - Reciprocal
-	 */
-	public static float reciprocal(float value)
-	{
-		return new Reciprocal(value).floatValue();
-	}
-
-	/**
-	 * Returns the reciprocal of an {@link int}.
-	 * @param value Number
-	 * @return {@link float} - Reciprocal
-	 */
-	public static float reciprocal(int value)
-	{
-		return new Reciprocal(value).intValue();
 	}
 }

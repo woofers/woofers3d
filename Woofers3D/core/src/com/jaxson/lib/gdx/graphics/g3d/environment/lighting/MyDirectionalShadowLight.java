@@ -29,88 +29,88 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 	}
 
 	public MyDirectionalShadowLight(Color color,
-			Vector3 direction,
-			float worldWidth,
-			float worldDepth)
+	Vector3 direction,
+	float worldWidth,
+	float worldDepth)
 	{
 		this(color,
-				direction,
-				SHADOW_RESOLUTION,
-				SHADOW_RESOLUTION,
-				worldWidth,
-				worldDepth);
+		direction,
+		SHADOW_RESOLUTION,
+		SHADOW_RESOLUTION,
+		worldWidth,
+		worldDepth);
 	}
 
 	public MyDirectionalShadowLight(Color color,
-			Vector3 direction,
-			int shadowResolutionWidth,
-			int shadowResolutionHeight,
-			float worldWidth,
-			float worldDepth)
+	Vector3 direction,
+	int shadowResolutionWidth,
+	int shadowResolutionHeight,
+	float worldWidth,
+	float worldDepth)
 	{
 		this(color,
-				direction,
-				shadowResolutionHeight,
-				shadowResolutionHeight,
-				worldWidth,
-				worldDepth,
-				SHADOW_NEAR,
-				SHADOW_FAR);
+		direction,
+		shadowResolutionHeight,
+		shadowResolutionHeight,
+		worldWidth,
+		worldDepth,
+		SHADOW_NEAR,
+		SHADOW_FAR);
 	}
 
 	public MyDirectionalShadowLight(Color color,
-			Vector3 direction,
-			int shadowResolutionWidth,
-			int shadowResolutionHeight,
-			float worldWidth,
-			float worldDepth,
-			float near,
-			float far)
+	Vector3 direction,
+	int shadowResolutionWidth,
+	int shadowResolutionHeight,
+	float worldWidth,
+	float worldDepth,
+	float near,
+	float far)
 	{
 		this((DirectionalShadowLight) new DirectionalShadowLight(
-				shadowResolutionWidth,
-				shadowResolutionHeight,
-				worldWidth,
-				worldDepth,
-				near,
-				far).set(color, direction));
+		shadowResolutionWidth,
+		shadowResolutionHeight,
+		worldWidth,
+		worldDepth,
+		near,
+		far).set(color, direction));
 	}
 
 	public MyDirectionalShadowLight(Color color,
-			Vector3 direction,
-			int shadowResolutionWidth,
-			int shadowResolutionHeight,
-			Vector3 worldSize,
-			Camera camera)
+	Vector3 direction,
+	int shadowResolutionWidth,
+	int shadowResolutionHeight,
+	Vector3 worldSize,
+	Camera camera)
 	{
 		this(color,
-				direction,
-				shadowResolutionHeight,
-				shadowResolutionHeight,
-				worldSize.x,
-				worldSize.z,
-				camera.near,
-				camera.far);
+		direction,
+		shadowResolutionHeight,
+		shadowResolutionHeight,
+		worldSize.x,
+		worldSize.z,
+		camera.near,
+		camera.far);
 	}
 
 	public MyDirectionalShadowLight(Color color,
-			Vector3 direction,
-			Vector3 worldSize)
+	Vector3 direction,
+	Vector3 worldSize)
 	{
 		this(color, direction, worldSize.x, worldSize.z);
 	}
 
 	public MyDirectionalShadowLight(Color color,
-			Vector3 direction,
-			Vector3 worldSize,
-			Camera camera)
+	Vector3 direction,
+	Vector3 worldSize,
+	Camera camera)
 	{
 		this(color,
-				direction,
-				SHADOW_RESOLUTION,
-				SHADOW_RESOLUTION,
-				worldSize,
-				camera);
+		direction,
+		SHADOW_RESOLUTION,
+		SHADOW_RESOLUTION,
+		worldSize,
+		camera);
 	}
 
 	public MyDirectionalShadowLight(DirectionalShadowLight light)

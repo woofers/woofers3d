@@ -146,7 +146,7 @@ public class MyCell
 				return getStringValue();
 		}
 		return new String(new byte[]{ getCell().getErrorCellValue() },
-				StandardCharsets.UTF_8);
+						  StandardCharsets.UTF_8);
 	}
 
 	public boolean isPartOfArrayFormulaGroup()
@@ -179,7 +179,8 @@ public class MyCell
 		getCell().setCellErrorValue(error);
 	}
 
-	public void setFormula(String formula) throws FormulaParseException
+	public void setFormula(String formula)
+		throws FormulaParseException
 	{
 		getCell().setCellFormula(formula);
 	}

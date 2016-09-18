@@ -92,12 +92,12 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void createFreezePane(int columnSplit,
-			int rowSplit,
-			int leftmostColumn,
-			int topRow)
+								 int rowSplit,
+								 int leftmostColumn,
+								 int topRow)
 	{
 		getSheet().createFreezePane(columnSplit, rowSplit, leftmostColumn,
-				topRow);
+		topRow);
 	}
 
 	public MyRow createRow()
@@ -111,13 +111,13 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void createSplitPane(int xSplit,
-			int ySplit,
-			int leftMostColumn,
-			int topRow,
-			int activePane)
+								int ySplit,
+								int leftMostColumn,
+								int topRow,
+								int activePane)
 	{
 		getSheet().createSplitPane(xSplit, ySplit, leftMostColumn, topRow,
-				activePane);
+		activePane);
 	}
 
 	public int getAmountMergedRegions()
@@ -130,7 +130,8 @@ public class MySheet implements Iterable<MyRow>
 		return getSheet().getAutobreaks();
 	}
 
-	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
+	public MyCell getCell(CellLocation location)
+			throws CellOutOfBoundsException
 	{
 		int y = location.getY() + 1;
 		Iterator<MyRow> iterator = iterator();
@@ -516,7 +517,7 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public CellRange<? extends Cell> setArrayFormula(String formula,
-			CellRangeAddress range)
+													 CellRangeAddress range)
 	{
 		return getSheet().setArrayFormula(formula, range);
 	}
@@ -677,10 +678,10 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void shiftRows(int arg0,
-			int arg1,
-			int arg2,
-			boolean arg3,
-			boolean arg4)
+						  int arg1,
+						  int arg2,
+						  boolean arg3,
+						  boolean arg4)
 	{
 		getSheet().shiftRows(arg0, arg1, arg2, arg3, arg4);
 	}

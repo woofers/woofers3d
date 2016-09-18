@@ -85,7 +85,8 @@ public interface File<F extends File, R, W>
 	 * @return {@link BufferedReader} - The buffered reader
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public BufferedReader getBufferedReader() throws FileNotFoundException;
+	public BufferedReader getBufferedReader()
+			throws FileNotFoundException;
 
 	/**
 	 * Returns a child of the {@link File} if it exists.
@@ -112,7 +113,8 @@ public interface File<F extends File, R, W>
 	 * @return {@link FileInputStream} - The file input stream
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public FileInputStream getFileInputStream() throws FileNotFoundException;
+	public FileInputStream getFileInputStream()
+			throws FileNotFoundException;
 
 	/**
 	 * Returns a {@link FileOutputStream} from the {@link File}
@@ -120,15 +122,17 @@ public interface File<F extends File, R, W>
 	 * @throws FileNotFoundException If the file is not found
 	 * @throws SecurityException If the access to the file denied
 	 */
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
-			SecurityException;
+	public FileOutputStream getFileOutputStream()
+			throws FileNotFoundException,
+				   SecurityException;
 
 	/**
 	 * Returns a {@link FileInputStream} from the {@link File}
 	 * @return {@link FileInputStream} - The file input stream
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public FileReader getFileReader() throws FileNotFoundException;
+	public FileReader getFileReader()
+			throws FileNotFoundException;
 
 	/**
 	 * Gets the {@link java.io.File} of the {@link File}.
@@ -172,8 +176,9 @@ public interface File<F extends File, R, W>
 	 * @throws FileNotFoundException If the file is not found
 	 * @throws UnsupportedEncodingException If the charset is not supported
 	 */
-	public PrintWriter getPrintWriter() throws FileNotFoundException,
-			UnsupportedEncodingException;
+	public PrintWriter getPrintWriter()
+			throws FileNotFoundException,
+				   UnsupportedEncodingException;
 
 	/**
 	 * Gets when the {@link File} was last changed.

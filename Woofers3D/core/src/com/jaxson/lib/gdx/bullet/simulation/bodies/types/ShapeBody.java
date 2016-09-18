@@ -9,7 +9,7 @@ import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 
 public abstract class ShapeBody<B extends btCollisionObject,
-	S extends Shape> extends EntityBody<B>
+S extends Shape> extends EntityBody<B>
 {
 	private S shape;
 
@@ -106,6 +106,6 @@ public abstract class ShapeBody<B extends btCollisionObject,
 	protected static BoxShape getFittedHitbox(Model model)
 	{
 		return new BoxShape(model.calculateBoundingBox(new BoundingBox())
-				.getDimensions(new Vector3()));
+		.getDimensions(new Vector3()));
 	}
 }

@@ -28,14 +28,14 @@ public class WorldImporter
 
 		@Override
 		public btRigidBody createRigidBody(boolean isDynamic,
-				float mass,
-				Matrix4 startTransform,
-				btCollisionShape shape,
-				String bodyName)
+		float mass,
+		Matrix4 startTransform,
+		btCollisionShape shape,
+		String bodyName)
 		{
 			String nodeName = bodyName.split("_", 2)[0] + "_model";
-			ModelInstance instance =
-					new ModelInstance(model, nodeName, true, true);
+			ModelInstance instance
+			= new ModelInstance(model, nodeName, true, true);
 			instance.userData = IMPORTED;
 			instance.transform.set(startTransform);
 			RigidBody body = new RigidBody(instance, new Shape(shape), mass);

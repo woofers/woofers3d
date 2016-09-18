@@ -170,7 +170,7 @@ public class CellLocation
 			}
 		}
 		return new Point(columnToInt(letters),
-				new Integer(numbers).intValue() - 1);
+						 new Integer(numbers).intValue() - 1);
 	}
 
 	private static String intToChar(int columnNumber)
@@ -183,8 +183,8 @@ public class CellLocation
 		{
 			modulo = (dividend - 1) % ALPHABET_MAX;
 			newCharValue = 'A' + modulo;
-			columnName =
-					new String(new char[]{ (char) newCharValue }) + columnName;
+			columnName = new String(new char[]{ (char) newCharValue })
+						 + columnName;
 			dividend = (dividend - modulo) / ALPHABET_MAX;
 		}
 		return columnName;

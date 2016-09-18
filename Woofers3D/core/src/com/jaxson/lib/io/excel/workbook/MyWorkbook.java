@@ -31,8 +31,8 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 
 	public static final int SHEET_VISIBLE = Workbook.SHEET_STATE_VISIBLE;
 	public static final int SHEET_HIDDEN = Workbook.SHEET_STATE_HIDDEN;
-	public static final int SHEET_VERY_HIDDEN =
-			Workbook.SHEET_STATE_VERY_HIDDEN;
+	public static final int SHEET_VERY_HIDDEN
+			= Workbook.SHEET_STATE_VERY_HIDDEN;
 
 	protected static final MissingCellPolicy POLICY = Row.CREATE_NULL_AS_BLANK;
 
@@ -113,16 +113,16 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	}
 
 	public Font findFont(short boldWeight,
-			short color,
-			short fontHeight,
-			String name,
-			boolean italic,
-			boolean strikeout,
-			short typeOffset,
-			byte underline)
+						 short color,
+						 short fontHeight,
+						 String name,
+						 boolean italic,
+						 boolean strikeout,
+						 short typeOffset,
+						 byte underline)
 	{
 		return getWorkbook().findFont(boldWeight, color, fontHeight, name,
-				italic, strikeout, typeOffset, underline);
+		italic, strikeout, typeOffset, underline);
 	}
 
 	public MySheet getActiveSheet()
@@ -332,13 +332,13 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	}
 
 	public void setPrintArea(int sheet,
-			int startColumn,
-			int endColumn,
-			int startRow,
-			int endRow)
+							 int startColumn,
+							 int endColumn,
+							 int startRow,
+							 int endRow)
 	{
 		getWorkbook().setPrintArea(sheet, startColumn, endColumn, startRow,
-				endRow);
+		endRow);
 	}
 
 	public void setPrintArea(int sheet, String reference)
@@ -371,7 +371,8 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		getWorkbook().setSheetOrder(sheetName, index);
 	}
 
-	public void write(OutputStream stream) throws IOException
+	public void write(OutputStream stream)
+			throws IOException
 	{
 		getWorkbook().write(stream);
 	}

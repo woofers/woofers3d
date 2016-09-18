@@ -33,7 +33,8 @@ public class MyRow implements Iterable<MyCell>
 		return new MyCell(getRow().createCell(column, type));
 	}
 
-	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
+	public MyCell getCell(CellLocation location)
+			throws CellOutOfBoundsException
 	{
 		int x = location.getX();
 		return getCell(x);
@@ -49,7 +50,7 @@ public class MyRow implements Iterable<MyCell>
 	{
 		Cell cell = getRow().getCell(row, policy);
 		if (cell == null) throw new CellOutOfBoundsException(getCellLocation(
-				row));
+		row));
 		return new MyCell(cell);
 	}
 

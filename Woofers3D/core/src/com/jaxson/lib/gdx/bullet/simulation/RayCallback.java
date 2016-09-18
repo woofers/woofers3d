@@ -23,8 +23,8 @@ public class RayCallback extends ClosestRayResultCallback
 	}
 
 	public btCollisionObject getCollisionObject(Ray ray,
-			float distance,
-			PhysicsWorld world)
+	float distance,
+	PhysicsWorld world)
 	{
 		set(ray, distance);
 		rayTest(world);

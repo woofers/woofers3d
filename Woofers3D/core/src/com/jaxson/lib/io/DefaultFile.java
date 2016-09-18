@@ -131,9 +131,9 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	 * @return {@link BufferedReader} - The buffered reader
 	 * @throws FileNotFoundException If the file is not found
 	 */
-
 	@Override
-	public BufferedReader getBufferedReader() throws FileNotFoundException
+	public BufferedReader getBufferedReader()
+			throws FileNotFoundException
 	{
 		FileReader fileReader = null;
 		try
@@ -151,8 +151,8 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	public DefaultFile getChild(String child)
 	{
 		if (!exists() || isFile()) return DefaultFile.NOTHING;
-		if (child.charAt(0) != FOWARD_SLASH.charAt(0)) child =
-				FOWARD_SLASH + child;
+		if (child.charAt(0) != FOWARD_SLASH.charAt(0))
+			child = FOWARD_SLASH + child;
 		DefaultFile file = new DefaultFile(getPath() + child);
 		if (file.exists()) return file;
 		return DefaultFile.NOTHING;
@@ -181,14 +181,16 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public FileInputStream getFileInputStream() throws FileNotFoundException
+	public FileInputStream getFileInputStream()
+			throws FileNotFoundException
 	{
 		return new FileInputStream(getJavaFile());
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
-			SecurityException
+	public FileOutputStream getFileOutputStream()
+			throws FileNotFoundException,
+				   SecurityException
 	{
 		return new FileOutputStream(getJavaFile());
 	}
@@ -254,8 +256,9 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException,
-			UnsupportedEncodingException
+	public PrintWriter getPrintWriter()
+			throws FileNotFoundException,
+				   UnsupportedEncodingException
 	{
 		return new PrintWriter(getJavaFile());
 	}
@@ -264,9 +267,8 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	public Date getWhenLastModified()
 	{
 		Calendar calendar = Calendar.getInstance();
-		int utcOffset =
-				calendar.get(Calendar.ZONE_OFFSET)
-						+ calendar.get(Calendar.DST_OFFSET);
+		int utcOffset = calendar.get(Calendar.ZONE_OFFSET)
+		+ calendar.get(Calendar.DST_OFFSET);
 		return new Date(getJavaFile().lastModified() - utcOffset);
 	}
 
@@ -397,9 +399,9 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	{
 		if (extension.equals(getExtensionType())) return this;
 		return new DefaultFile(getParentPath()
-				+ getNameWithoutExtension()
-				+ "."
-				+ extension.getExtension());
+		+ getNameWithoutExtension()
+		+ "."
+		+ extension.getExtension());
 	}
 
 	@Override
@@ -503,8 +505,8 @@ public class DefaultFile implements File<DefaultFile, String, String>
 			dir = dir.trim();
 			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
 		}
-		if (!newDir.isEmpty()) path =
-				newDir.substring(0, newDir.length() - 1).toLowerCase();
+		if (!newDir.isEmpty())
+			path = newDir.substring(0, newDir.length() - 1).toLowerCase();
 		return path;
 	}
 }

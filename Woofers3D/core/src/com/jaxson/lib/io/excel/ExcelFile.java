@@ -20,8 +20,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 {
 	public static final ExcelFile NOTHING = new ExcelFile(DefaultFile.NOTHING);
-	private static final String EXTENSION_NOT_FOUND =
-			"The file is not an Excel file.";
+	private static final String EXTENSION_NOT_FOUND
+			= "The file is not an Excel file.";
 
 	private final File file;
 
@@ -121,7 +121,7 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 
 	@Override
 	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
-			SecurityException
+	SecurityException
 	{
 		return getFile().getFileOutputStream();
 	}
@@ -170,7 +170,7 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 
 	@Override
 	public PrintWriter getPrintWriter() throws FileNotFoundException,
-			UnsupportedEncodingException
+	UnsupportedEncodingException
 	{
 		return getFile().getPrintWriter();
 	}

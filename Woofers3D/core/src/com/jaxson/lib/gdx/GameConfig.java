@@ -547,8 +547,8 @@ public class GameConfig
 	 */
 	public AndroidApplicationConfiguration toAndroidConfig()
 	{
-		AndroidApplicationConfiguration config =
-				new AndroidApplicationConfiguration();
+		AndroidApplicationConfiguration config
+				= new AndroidApplicationConfiguration();
 		config.hideStatusBar = hasStatusBar();
 		config.useImmersiveMode = isImmersive();
 		config.numSamples = getAntiAliasing();
@@ -561,8 +561,8 @@ public class GameConfig
 	 */
 	public LwjglApplicationConfiguration toLwjglConfig()
 	{
-		LwjglApplicationConfiguration config =
-				new LwjglApplicationConfiguration();
+		LwjglApplicationConfiguration config
+				= new LwjglApplicationConfiguration();
 		config.title = getTitle();
 		config.width = getWidth();
 		config.height = getHeight();
