@@ -6,6 +6,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
+import com.jaxson.lib.gdx.graphics.g3d.entities.Box;
 
 public class RigidBox extends RigidBody
 {
@@ -16,12 +17,7 @@ public class RigidBox extends RigidBody
 
 	public RigidBox(Color color)
 	{
-		super(getModel(color), getShape());
-	}
-
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
+		super(new Box(color).getModelInstance(), getShape());
 	}
 
 	protected static Shape getShape()

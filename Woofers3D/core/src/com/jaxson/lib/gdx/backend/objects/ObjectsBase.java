@@ -4,8 +4,8 @@ import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
-public abstract class ObjectsBase<
-T extends GameObject> extends GameObject implements GameObjects<T>
+public abstract class ObjectsBase<T extends GameObject>
+	extends GameObject implements GameObjects<T>
 {
 	private MyArrayList<T> objects;
 

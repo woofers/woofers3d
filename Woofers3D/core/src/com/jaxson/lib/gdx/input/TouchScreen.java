@@ -32,7 +32,7 @@ public class TouchScreen implements Peripheral
 		return false;
 	}
 
-	public boolean areTouchedPressed(int amount)
+	public boolean fingersTouched(int amount)
 	{
 		int touched = 0;
 		boolean wasTouched = false;
@@ -133,27 +133,32 @@ public class TouchScreen implements Peripheral
 
 	public boolean oneFingerTouching()
 	{
-		return getAmmountOfTouches() >= 1;
+		return fingersToucing(1);
 	}
 
 	public boolean threeFingerTouched()
 	{
-		return areTouchedPressed(3);
+		return fingersTouched(3);
 	}
 
 	public boolean threeFingerTouching()
 	{
-		return getAmmountOfTouches() >= 3;
+		return fingersToucing(3);
 	}
 
 	public boolean twoFingerTouched()
 	{
-		return areTouchedPressed(2);
+		return fingersTouched(2);
 	}
 
 	public boolean twoFingerTouching()
 	{
-		return getAmmountOfTouches() >= 2;
+		return fingersToucing(3);
+	}
+
+	public boolean fingersToucing(int amount)
+	{
+		return getAmmountOfTouches() >= amount;
 	}
 
 	void transfer()

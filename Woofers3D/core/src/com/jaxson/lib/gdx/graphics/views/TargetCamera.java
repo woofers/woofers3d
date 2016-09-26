@@ -130,8 +130,8 @@ public class TargetCamera extends PerspectiveCamera
 	{
 		Quaternion rotation = getRoationQuat();
 		return new Vector3(rotation.getYaw(),
-				rotation.getPitch(),
-				rotation.getRoll());
+						   rotation.getPitch(),
+						   rotation.getRoll());
 	}
 
 	public Entity getTarget()
@@ -204,18 +204,18 @@ public class TargetCamera extends PerspectiveCamera
 	}
 
 	public void rotateAround(Vector3 location,
-			float yaw,
-			float pitch,
-			float roll)
+							 float yaw,
+							 float pitch,
+							 float roll)
 	{
 		rotateAround(location, yaw, pitch, roll, true);
 	}
 
 	public void rotateAround(Vector3 location,
-			float yaw,
-			float pitch,
-			float roll,
-			boolean keepInBounds)
+							 float yaw,
+							 float pitch,
+							 float roll,
+							 boolean keepInBounds)
 	{
 		rotateAround(location, Vector3.X, pitch);
 		rotateAround(location, Vector3.Y, yaw);

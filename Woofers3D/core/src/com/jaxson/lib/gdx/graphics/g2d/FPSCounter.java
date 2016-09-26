@@ -5,14 +5,14 @@ import com.jaxson.lib.gdx.backend.Game;
 
 public class FPSCounter extends Text
 {
-	private static final String FPS = "FPS: ";
+	private static final String FPS_LABEL = "FPS: ";
 	private static final int FONT_PADDING = 20;
 
 	private Game game;
 
 	public FPSCounter(BitmapFont font, Game game)
 	{
-		super(FPS, font);
+		super(FPS_LABEL, font);
 		this.game = game;
 		setLocation(FONT_PADDING, FONT_PADDING);
 	}
@@ -25,6 +25,6 @@ public class FPSCounter extends Text
 	@Override
 	public void update(float dt)
 	{
-		setText(FPS + game.getDisplay().getFps());
+		setText(FPS_LABEL + game.getDisplay().getFps());
 	}
 }

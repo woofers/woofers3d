@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.math;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.math.Reciprocal;
 
 public class GdxMath extends MyMath
 {
@@ -18,7 +19,7 @@ public class GdxMath extends MyMath
 
 	public static Vector3 divideVector(Vector3 vector, float scalar)
 	{
-		return vector.scl(reciprocal(scalar));
+		return vector.scl(new Reciprocal(scalar).floatValue());
 	}
 
 	public static Vector3 divideVector(Vector3 vector, Vector3 vector2)
@@ -35,8 +36,8 @@ public class GdxMath extends MyMath
 
 	public static Vector3 reciprocalVector(Vector3 vector)
 	{
-		return vector.set(reciprocal(vector.x),
-						  reciprocal(vector.y),
-						  reciprocal(vector.z));
+		return vector.set(new Reciprocal(vector.x).floatValue(),
+						  new Reciprocal(vector.y).floatValue(),
+						  new Reciprocal(vector.z).floatValue());
 	}
 }

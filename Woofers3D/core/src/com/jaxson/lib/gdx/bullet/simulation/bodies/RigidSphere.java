@@ -7,6 +7,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.collision.SphereShape;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
+import com.jaxson.lib.gdx.graphics.g3d.entities.Sphere;
 
 public class RigidSphere extends RigidBody
 {
@@ -19,17 +20,7 @@ public class RigidSphere extends RigidBody
 
 	public RigidSphere(Color color)
 	{
-		super(getModel(color), getShape());
-	}
-
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createSphere(color);
-	}
-
-	protected static Model getModel(Vector3 size, Color color)
-	{
-		return new MyModelBuilder().createSphere(size, color);
+		super(new Sphere(color).getModelInstance(), getShape());
 	}
 
 	protected static SphereShape getShape()

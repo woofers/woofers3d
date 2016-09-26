@@ -15,7 +15,7 @@ import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
 
 public abstract class PlayerBody
-extends ShapeBody<btPairCachingGhostObject, ConvexShape>
+		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 {
 	private static final float GHOST_MASS = -1f;
 	private static final float STEP_HEIGHT = 1f / 5f;
@@ -251,9 +251,8 @@ extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 
 	private btKinematicCharacterController createController(float stepHeight)
 	{
-		ConvexShape shape = getCollisionShape();
 		return new btKinematicCharacterController(getBody(),
-		shape.getCollisionShape(),
-		stepHeight);
+				getCollisionShape().getCollisionShape(),
+				stepHeight);
 	}
 }

@@ -34,6 +34,7 @@ public class GameStates extends GameObject
 		makeEmpty();
 	}
 
+
 	/**
 	 * Gets whether the current state has a sub state.
 	 * @return {@link boolean} - Whether the state has a paused state
@@ -85,7 +86,6 @@ public class GameStates extends GameObject
 	 */
 	public void push(State state)
 	{
-		if (state == null) return;
 		states.push(state);
 	}
 
@@ -126,7 +126,6 @@ public class GameStates extends GameObject
 	 */
 	public void set(State state)
 	{
-		if (state == null) return;
 		pop();
 		push(state);
 	}

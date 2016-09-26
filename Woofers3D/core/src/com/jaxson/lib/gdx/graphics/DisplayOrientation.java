@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.graphics;
 public class DisplayOrientation
 {
 	private static final int MAX_ANGLE = 360;
+	private static final int FULL_ROTATION = MAX_ANGLE / 4;
 
 	public static final DisplayOrientation PORTRAIT
 			= new DisplayOrientation(0);
@@ -28,7 +29,7 @@ public class DisplayOrientation
 		{
 			angle += MAX_ANGLE;
 		}
-		this.angle = round(angle, 90);
+		this.angle = round(angle, FULL_ROTATION);
 	}
 
 	@Override

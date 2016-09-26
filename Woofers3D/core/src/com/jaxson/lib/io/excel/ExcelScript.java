@@ -24,8 +24,7 @@ public abstract class ExcelScript
 
 	public void save()
 	{
-		file.setPath(file.getParentPath() + SAVE_PREFIX
-					 + file.getName()).write(workbook);
+		file.rename(SAVE_PREFIX + file.getName()).write(workbook);
 	}
 
 	protected MyWorkbook getWorkbook()

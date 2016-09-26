@@ -38,8 +38,8 @@ import com.jaxson.lib.math.MyMath;
  */
 public class Display extends GameObject
 {
-	private static final int CLEAR_MASK
-			= GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
+	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT
+										| GL20.GL_DEPTH_BUFFER_BIT;
 
 	private static final int COVERAGE_SAMPLING_MASK
 			= GL20.GL_COVERAGE_BUFFER_BIT_NV;
@@ -326,12 +326,12 @@ public class Display extends GameObject
 		return lastWindowedWidth;
 	}
 
-	public Orientation getNativeOrientation()
+	private Orientation getNativeOrientation()
 	{
 		return getInput().getNativeOrientation();
 	}
 
-	public int getNativeRotation()
+	private int getNativeRotation()
 	{
 		return getInput().getRotation();
 	}
@@ -588,11 +588,11 @@ public class Display extends GameObject
 		if (allowsFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
 		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched())
 			mouse.setCatched(true);
-		if (touchScreen.exists() && touchScreen.threeFingerTouched())
+		if (touchScreen.exists() && touchScreen.fingersToucing(3))
 			togglePaused();
 		if (keyboard.exists())
 		{
-			if (pauseKey.isPressed() && hasPauseScreen()) togglePaused();
+			if (hasPauseScreen() && pauseKey.isPressed()) togglePaused();
 			if (screenshotKey.isPressed()) new Screenshot().save().dispose();
 		}
 	}

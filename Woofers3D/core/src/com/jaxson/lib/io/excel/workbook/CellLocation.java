@@ -134,8 +134,8 @@ public class CellLocation
 
 	public static int columnToInt(String column)
 	{
-		if (column == null || column.isEmpty()) throw new NullValueException(
-				"column");
+		if (column == null || column.isEmpty())
+			throw new NullValueException("column");
 		char[] columnArray = column.toUpperCase().toCharArray();
 		int sum = 0;
 		for (char element: columnArray)

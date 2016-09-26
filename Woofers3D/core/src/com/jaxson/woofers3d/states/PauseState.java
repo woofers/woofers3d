@@ -20,7 +20,7 @@ public class PauseState extends SubState
 		image = new SpriteActor(PAUSE_SCREEN_PATH);
 		image.setAlpha(PAUSE_ALPHA);
 		image.setY(getGame().getDisplay().getCenter().y
-		- image.getHeight() / 2);
+				 - image.getHeight() / 2);
 		image.setScale(RES_SCALE);
 		add(image);
 	}

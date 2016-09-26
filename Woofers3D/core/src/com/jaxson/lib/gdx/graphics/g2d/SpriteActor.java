@@ -13,7 +13,8 @@ public class SpriteActor extends Sprite
 
 	public SpriteActor(String path)
 	{
-		this(new Texture(new GdxFile(path, FileType.Internal).getFileHandle()));
+		this(new Texture(
+				new GdxFile(path, FileType.Internal).getFileHandle()));
 	}
 
 	public SpriteActor(Texture texture)

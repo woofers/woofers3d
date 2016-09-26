@@ -7,11 +7,6 @@ public class KeyCombination implements Key, Iterable<Key>
 {
 	private MyArrayList<Key> keys;
 
-	public KeyCombination()
-	{
-		this((Key) null);
-	}
-
 	public KeyCombination(Key... keys)
 	{
 		this.keys = new MyArrayList<>(keys);

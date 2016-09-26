@@ -84,8 +84,7 @@ public class FileType
 
 	public static void addException(String original, String translated)
 	{
-		if (original != null && translated != null)
-			exceptions.put(original, translated);
+		exceptions.put(original, translated);
 	}
 
 	public static void removeException(String exception)

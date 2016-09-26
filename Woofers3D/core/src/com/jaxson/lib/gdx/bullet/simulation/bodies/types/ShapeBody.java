@@ -7,9 +7,11 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
+import com.jaxson.lib.util.Optional;
 
-public abstract class ShapeBody<B extends btCollisionObject,
-S extends Shape> extends EntityBody<B>
+public abstract class ShapeBody
+		<B extends btCollisionObject, S extends Shape>
+			extends EntityBody<B>
 {
 	private S shape;
 
@@ -73,8 +75,7 @@ S extends Shape> extends EntityBody<B>
 
 	public void setCollisionShape(S shape)
 	{
-		if (getCollisionShape() != null && getCollisionShape() == shape)
-			return;
+		if (new Optional<S>(shape).equals(getCollisionShape())) return;
 		Shape oldShape = getCollisionShape();
 		this.shape = shape;
 		getBody().setCollisionShape(shape.getCollisionShape());
@@ -105,7 +106,7 @@ S extends Shape> extends EntityBody<B>
 
 	protected static BoxShape getFittedHitbox(Model model)
 	{
-		return new BoxShape(model.calculateBoundingBox(new BoundingBox())
-		.getDimensions(new Vector3()));
+		return new BoxShape(model.calculateBoundingBox(
+				new BoundingBox()).getDimensions(new Vector3()));
 	}
 }

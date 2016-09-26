@@ -31,7 +31,7 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 	public boolean exists()
 	{
 		return getInput().isPeripheralAvailable(
-		Input.Peripheral.HardwareKeyboard);
+			Input.Peripheral.HardwareKeyboard);
 	}
 
 	public KeyboardKey getKey(int keycode)

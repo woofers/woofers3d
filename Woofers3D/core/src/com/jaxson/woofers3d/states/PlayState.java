@@ -49,18 +49,16 @@ public class PlayState extends BulletState
 		applyPhysics(floor);
 		add(floor);
 
-		RandomNumber boxSizeRange = new RandomNumber(1, 4);
-		RandomNumber massRange = new RandomNumber(0.9f, 1.2f);
+		RandomNumber mass = new RandomNumber(0.9f, 1.2f);
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
-			boxs[i] = new RigidBox(new RandomColor(new MyColor(255, 95, 0),
-												   new MyColor(255, 165, 50)));
-			boxs[i].setSize(new Vector3(boxSizeRange.floatValue(),
-										boxSizeRange.floatValue(),
-										boxSizeRange.floatValue()));
+			boxs[i] = new RigidBox(
+						new RandomColor(new MyColor(255, 95, 0),
+										new MyColor(255, 165, 50)));
+			boxs[i].setSize(new RandomVector3(1f, 4f));
 			boxs[i].setLocation(new RandomVector3(6f, 30f));
-			boxs[i].setMass(massRange.floatValue());
+			boxs[i].setMass(mass.floatValue());
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
 		}
@@ -73,7 +71,7 @@ public class PlayState extends BulletState
 				spheres[i] = new RigidSphere(new RandomColor());
 				spheres[i].setLocation(new RandomVector3(6f, 30f));
 				spheres[i].setSize(new Vector3(2f, 2f, 2f));
-				spheres[i].setMass(massRange.floatValue());
+				spheres[i].setMass(mass.floatValue());
 				applyPhysics(spheres[i]);
 				add(spheres[i]);
 			}
@@ -87,7 +85,7 @@ public class PlayState extends BulletState
 		applyPhysics(player);
 		add(player);
 
-		add(new FPSCounter(getGame()));
+		addHud(new FPSCounter(getGame()));
 	}
 
 	@Override

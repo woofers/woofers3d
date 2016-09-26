@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.bullet.softbody.btSoftBody.Material;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
 import java.nio.ShortBuffer;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 public abstract class SoftBody extends EntityBody<btSoftBody>
 {
@@ -19,9 +20,19 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 
 	public SoftBody(Model model, float mass, PhysicsWorld world)
 	{
-		super(model, getBody(model, world), mass);
+		this(new ModelInstance(model), mass, world);
+	}
+
+	public SoftBody(Model model, PhysicsWorld world)
+	{
+		this(model, MASS, world);
+	}
+
+	public SoftBody(ModelInstance modelInstance, float mass, PhysicsWorld world)
+	{
+		super(modelInstance, getBody(modelInstance.model, world), mass);
 		getBody().setMass(0, 0);
-		meshPart = model.nodes.get(0).parts.get(0).meshPart;
+		meshPart = modelInstance.model.nodes.get(0).parts.get(0).meshPart;
 		meshPart.mesh.scale(3, 3, 3);
 		indexMap = BufferUtils.newShortBuffer(meshPart.size);
 		positionOffset
@@ -38,11 +49,6 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		getBody().translate(new Vector3(50f, 14f, 5f).scl(0.5f));
 		// getBoundingBox();
 		// transformToBody();
-	}
-
-	public SoftBody(Model model, PhysicsWorld world)
-	{
-		this(model, MASS, world);
 	}
 
 	public SoftBody(String modelPath, float mass, PhysicsWorld world)

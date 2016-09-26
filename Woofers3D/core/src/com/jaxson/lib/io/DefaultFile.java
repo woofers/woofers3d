@@ -106,7 +106,7 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	@Override
 	public boolean equals(File file)
 	{
-		return equals(file.getPath());
+		return getPath().equals(file.getPath());
 	}
 
 	@Override
@@ -399,9 +399,8 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	{
 		if (extension.equals(getExtensionType())) return this;
 		return new DefaultFile(getParentPath()
-		+ getNameWithoutExtension()
-		+ "."
-		+ extension.getExtension());
+							   + getNameWithoutExtension()
+							   + "." + extension.getExtension());
 	}
 
 	@Override
@@ -483,15 +482,10 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return this;
 	}
 
-	protected boolean equals(String path)
-	{
-		return getPath().equals(path);
-	}
-
 	private DefaultFile rename(DefaultFile file)
 	{
 		if (equals(file)) return this;
-		if (getJavaFile().renameTo(file.getJavaFile())) return file;
+		if (!exists() || getJavaFile().renameTo(file.getJavaFile())) return file;
 		return this;
 	}
 

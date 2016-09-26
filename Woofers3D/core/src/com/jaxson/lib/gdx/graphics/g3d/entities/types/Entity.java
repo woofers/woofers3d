@@ -85,8 +85,8 @@ public abstract class Entity extends GameObject
 	{
 		float[] matrix = getTransformValues();
 		return new Vector3(matrix[MATRIX_DIRECTION_X],
-				matrix[MATRIX_DIRECTION_Y],
-				matrix[MATRIX_DIRECTION_Z]);
+						   matrix[MATRIX_DIRECTION_Y],
+						   matrix[MATRIX_DIRECTION_Z]);
 	}
 
 	public Ray getForwardRay()
@@ -149,8 +149,8 @@ public abstract class Entity extends GameObject
 	{
 		Quaternion rotation = getRoationQuaternion();
 		return new Vector3(rotation.getYaw(),
-				rotation.getPitch(),
-				rotation.getRoll());
+						   rotation.getPitch(),
+						   rotation.getRoll());
 	}
 
 	public Vector3 getScale()

@@ -30,8 +30,8 @@ public abstract class GameInstance extends ApplicationAdapter
 	public GameInstance()
 	{
 		this.config = new Jsonable<>(new DefaultFile("config.json"),
-		GameConfig.class,
-		new GameConfig());
+									 GameConfig.class,
+									 new GameConfig());
 	}
 
 	/**

@@ -55,9 +55,9 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public double doubleValue()
 	{
-		double value = getRandom().nextDouble()
-				* (getMax().doubleValue() - getMin().doubleValue())
-				+ getMin().doubleValue();
+		double value = getRandom().nextDouble();
+		value *= getMax().doubleValue() - getMin().doubleValue();
+		value += getMin().doubleValue();
 		if (isExcluded(value)) return doubleValue();
 		return value;
 	}
@@ -65,9 +65,9 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public float floatValue()
 	{
-		float value = getRandom().nextFloat()
-				* (getMax().floatValue() - getMin().floatValue())
-				+ getMin().floatValue();
+		float value = getRandom().nextFloat();
+		value *= getMax().floatValue() - getMin().floatValue();
+		value += getMin().floatValue();
 		if (isExcluded(value)) return floatValue();
 		return value;
 	}
@@ -102,9 +102,9 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public int intValue()
 	{
-		int value = getRandom().nextInt(getMax().intValue()
-				- getMin().intValue()
-				+ 1) + getMin().intValue();
+		int value = getRandom().nextInt(
+				getMax().intValue() - getMin().intValue() + 1);
+		value += getMin().intValue();
 		if (isExcluded(value)) return intValue();
 		return value;
 	}
@@ -121,9 +121,9 @@ public class RandomNumber extends ComparableNumber
 	@Override
 	public long longValue()
 	{
-		long value = getRandom().nextLong()
-				* (getMax().longValue() - getMin().longValue())
-				+ getMin().longValue();
+		long value = getRandom().nextLong();
+		value *= getMax().longValue() - getMin().longValue();
+		value += getMin().longValue();
 		if (isExcluded(value)) return longValue();
 		return value;
 	}

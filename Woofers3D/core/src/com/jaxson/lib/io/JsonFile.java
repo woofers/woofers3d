@@ -85,7 +85,8 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public BufferedReader getBufferedReader() throws FileNotFoundException
+	public BufferedReader getBufferedReader()
+			throws FileNotFoundException
 	{
 		return getFile().getBufferedReader();
 	}
@@ -109,20 +110,23 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public FileInputStream getFileInputStream() throws FileNotFoundException
+	public FileInputStream getFileInputStream()
+			throws FileNotFoundException
 	{
 		return getFile().getFileInputStream();
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream() throws FileNotFoundException,
-			SecurityException
+	public FileOutputStream getFileOutputStream()
+			throws FileNotFoundException,
+				   SecurityException
 	{
 		return getFile().getFileOutputStream();
 	}
 
 	@Override
-	public FileReader getFileReader() throws FileNotFoundException
+	public FileReader getFileReader()
+			throws FileNotFoundException
 	{
 		return getFile().getFileReader();
 	}
@@ -164,8 +168,9 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException,
-			UnsupportedEncodingException
+	public PrintWriter getPrintWriter()
+			throws FileNotFoundException,
+				   UnsupportedEncodingException
 	{
 		return getFile().getPrintWriter();
 	}

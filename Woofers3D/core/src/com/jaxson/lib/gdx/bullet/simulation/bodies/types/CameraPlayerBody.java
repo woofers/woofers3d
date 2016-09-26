@@ -20,8 +20,8 @@ public class CameraPlayerBody extends PlayerBody
 	}
 
 	public CameraPlayerBody(String modelPath,
-	ConvexShape shape,
-	TargetCamera camera)
+							ConvexShape shape,
+							TargetCamera camera)
 	{
 		this(readModel(modelPath), shape, camera);
 	}

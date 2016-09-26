@@ -16,14 +16,15 @@ public class Mouse implements Iterable<MouseButton>
 	public static final int MOUSE_MIDDLE = Buttons.MIDDLE;
 	public static final int MOUSE_BACK = Buttons.BACK;
 	public static final int MOUSE_FORWARD = Buttons.FORWARD;
-	public static final int[] MOUSE_BUTTONS = {
-	MOUSE_LEFT,
-	MOUSE_RIGHT,
-	MOUSE_MIDDLE,
-	MOUSE_BACK,
-	MOUSE_FORWARD };
-	public static final int[] PRIMARY_MOUSE
-	= { MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE };
+	public static final int[] MOUSE_BUTTONS = { MOUSE_LEFT,
+												MOUSE_RIGHT,
+												MOUSE_MIDDLE,
+												MOUSE_BACK,
+												MOUSE_FORWARD };
+
+	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT,
+												MOUSE_RIGHT,
+												MOUSE_MIDDLE };
 
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float TOUCH_MOUSE_SCALE = 1f / 3f;

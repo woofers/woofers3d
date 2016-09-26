@@ -151,7 +151,8 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public BufferedReader getBufferedReader() throws FileNotFoundException
+	public BufferedReader getBufferedReader()
+			throws FileNotFoundException
 	{
 		return getFile().getBufferedReader();
 	}
@@ -238,8 +239,9 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public PrintWriter getPrintWriter() throws FileNotFoundException,
-	UnsupportedEncodingException
+	public PrintWriter getPrintWriter()
+			throws FileNotFoundException,
+				   UnsupportedEncodingException
 	{
 		return getFile().getPrintWriter();
 	}

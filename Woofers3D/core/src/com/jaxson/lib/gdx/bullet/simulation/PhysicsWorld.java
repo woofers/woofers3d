@@ -37,28 +37,28 @@ public class PhysicsWorld
 	protected static final short ALL_FLAG = -1;
 
 	protected static final int KINEMATIC_FLAG
-	= btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
+			= btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT;
 
 	protected static final int CALLBACK_FLAG
-	= btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
+			= btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK;
 
 	protected static final int CHARACTER_FLAG
-	= btCollisionObject.CollisionFlags.CF_CHARACTER_OBJECT;
+			= btCollisionObject.CollisionFlags.CF_CHARACTER_OBJECT;
 
 	protected static final int CHARACTER_FILTER
-	= btBroadphaseProxy.CollisionFilterGroups.CharacterFilter;
+			= btBroadphaseProxy.CollisionFilterGroups.CharacterFilter;
 
 	protected static final int STATIC_FILTER
-	= btBroadphaseProxy.CollisionFilterGroups.StaticFilter;
+			= btBroadphaseProxy.CollisionFilterGroups.StaticFilter;
 
 	protected static final int DEFAULT_FILTER
-	= btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
+			= btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
 
 	protected static final float VECOTR_TO_MAX = GdxMath.HALF;
 	protected static final float VECOTR_TO_MIN = -GdxMath.HALF;
 	protected static final Vector3 WORLD_SIZE = new Vector3(100f, 100f, 100f);
 	protected static final Vector3 GRAVITY
-	= new Vector3(0, -GdxMath.GRAVITY_EARTH, 0);
+			= new Vector3(0, -GdxMath.GRAVITY_EARTH, 0);
 
 	private MyArrayList<EntityBody> objects;
 	private MyContactListener contactListener;
@@ -99,9 +99,9 @@ public class PhysicsWorld
 		this.broadphase = new btAxisSweep3(minSize, maxSize);
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.world = new btSoftRigidDynamicsWorld(dispatcher,
-		broadphase,
-		constraintSolver,
-		collisionConfig);
+												  broadphase,
+												  constraintSolver,
+												  collisionConfig);
 		this.debugDrawer = new MyDebugDrawer(world);
 		this.rayCallback = new RayCallback();
 
@@ -137,8 +137,9 @@ public class PhysicsWorld
 		entity.setCollisionFlags(CHARACTER_FLAG);
 		broadphase.getOverlappingPairCache().setInternalGhostPairCallback(entity
 		.getCallback());
-		world.addCollisionObject(entity.getBody(), (short) CHARACTER_FILTER,
-		(short) (STATIC_FILTER | DEFAULT_FILTER));
+		world.addCollisionObject(entity.getBody(),
+								(short) CHARACTER_FILTER,
+								(short) (STATIC_FILTER | DEFAULT_FILTER));
 		world.addAction(entity.getCharacterController());
 	}
 
@@ -206,9 +207,7 @@ public class PhysicsWorld
 		btCollisionObject object = rayCallback.getCollisionObject(ray, this);
 		if (object == null) return null;
 		for (EntityBody entity: objects)
-		{
 			if (entity.isBody(object)) return entity;
-		}
 		return null;
 	}
 
@@ -299,16 +298,16 @@ public class PhysicsWorld
 	{
 		world.stepSimulation(dt);
 
-		if (keyboard.exists()
-		&& debugKey.isPressed()
-		|| touchScreen.exists()
-		&& touchScreen.twoFingerTouched())
+		if (keyboard.exists() && debugKey.isPressed()
+		 || touchScreen.exists() && touchScreen.fingersTouched(3))
+		{
 			toggleDebugMode();
+		}
 	}
 
 	protected void rayTest(Vector3 rayStart,
-	Vector3 rayEnd,
-	RayCallback callback)
+							Vector3 rayEnd,
+							RayCallback callback)
 	{
 		world.rayTest(rayStart, rayEnd, callback);
 	}

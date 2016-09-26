@@ -10,19 +10,19 @@ public class EmptyOutputStream extends OutputStream
 	}
 
 	@Override
-	public void write(byte[] b)
+	public void write(byte[] bytes)
 	{
 
 	}
 
 	@Override
-	public void write(byte[] b, int off, int len)
+	public void write(byte[] bytes, int offset, int length)
 	{
 
 	}
 
 	@Override
-	public void write(int b)
+	public void write(int bytes)
 	{
 
 	}

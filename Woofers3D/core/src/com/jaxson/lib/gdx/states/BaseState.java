@@ -54,7 +54,7 @@ public abstract class BaseState extends GameObject
 
 	public int getHeight()
 	{
-		return getGraphics().getHeight();
+		return getGame().getDisplay().getHeight();
 	}
 
 	public View getView()
@@ -64,7 +64,7 @@ public abstract class BaseState extends GameObject
 
 	public int getWidth()
 	{
-		return getGraphics().getWidth();
+		return getGame().getDisplay().getWidth();
 	}
 
 	public void remove(Entity entity)
@@ -99,15 +99,5 @@ public abstract class BaseState extends GameObject
 	{
 		super.update(dt);
 		objects.update(dt);
-	}
-
-	private Graphics getGraphics()
-	{
-		return getGame().getGraphics();
-	}
-
-	private Input getInput()
-	{
-		return getGame().getInput();
 	}
 }
