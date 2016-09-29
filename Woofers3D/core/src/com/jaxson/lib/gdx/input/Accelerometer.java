@@ -6,7 +6,7 @@ import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.math.MyMath;
 
-public class Accelerometer implements Peripheral
+public class Accelerometer extends Peripheral
 {
 	private static final float ACCELEROMETER_FORWARD_SCALE = 70f / 100f;
 	private static final float ACCELEROMETER_BACK_SCALE = 20f / 100f;
@@ -22,13 +22,14 @@ public class Accelerometer implements Peripheral
 
 	Accelerometer(Game game)
 	{
+		super(game.input());
 		this.game = game;
 	}
 
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(Input.Peripheral.Accelerometer);
+		return input().isPeripheralAvailable(Input.Peripheral.Accelerometer);
 	}
 
 	public float getBack()
@@ -140,27 +141,22 @@ public class Accelerometer implements Peripheral
 
 	private float getAbsouluteX()
 	{
-		return getInput().getAccelerometerX();
+		return input().getAccelerometerX();
 	}
 
 	private float getAbsouluteY()
 	{
-		return getInput().getAccelerometerY();
+		return input().getAccelerometerY();
 	}
 
 	private float getAbsouluteZ()
 	{
-		return getInput().getAccelerometerZ();
+		return input().getAccelerometerZ();
 	}
 
 	private Display getDisplay()
 	{
-		return game.getDisplay();
-	}
-
-	private Input getInput()
-	{
-		return game.getInput();
+		return game.display();
 	}
 
 	private static float getScaledAccelerometerRange(float scale)

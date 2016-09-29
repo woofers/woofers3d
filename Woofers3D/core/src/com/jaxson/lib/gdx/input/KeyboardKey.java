@@ -14,12 +14,12 @@ public class KeyboardKey implements Key
 		if (!keycodeIsValid()) throw new InvalidKeyException(keycode);
 	}
 
-	public int getKeycode()
+	public int keycode()
 	{
 		return keycode;
 	}
 
-	public String getName()
+	public String name()
 	{
 		return name;
 	}
@@ -45,7 +45,7 @@ public class KeyboardKey implements Key
 	@Override
 	public String toString()
 	{
-		return "Key: " + getName() + ", Keycode: " + getKeycode();
+		return "Key: " + name() + ", Keycode: " + keycode();
 	}
 
 	void setDown(boolean down)
@@ -65,6 +65,6 @@ public class KeyboardKey implements Key
 
 	private boolean keycodeIsValid()
 	{
-		return Keys.MIN <= getKeycode() && getKeycode() < Keys.MAX;
+		return Keys.MIN <= keycode() && keycode() < Keys.MAX;
 	}
 }

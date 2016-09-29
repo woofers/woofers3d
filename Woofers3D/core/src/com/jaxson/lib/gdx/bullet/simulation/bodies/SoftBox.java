@@ -12,7 +12,7 @@ public class SoftBox extends SoftBody
 {
 	public SoftBox(Color color, PhysicsWorld world)
 	{
-		super(new Box(color).getModelInstance(), MASS, world);
+		super(new Box(color).modelInstance(), MASS, world);
 	}
 
 	public SoftBox(PhysicsWorld world)

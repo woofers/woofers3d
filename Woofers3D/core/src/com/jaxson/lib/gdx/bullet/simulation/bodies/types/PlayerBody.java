@@ -44,7 +44,7 @@ public abstract class PlayerBody
 
 	public PlayerBody(Model model)
 	{
-		this(model, getFittedHitbox(model));
+		this(model, fittedHitbox(model));
 	}
 
 	public PlayerBody(Model model, ConvexShape shape)
@@ -59,24 +59,19 @@ public abstract class PlayerBody
 		setJumpSpeed(JUMP_SPEED);
 		setFallSpeed(FALL_SPEED);
 
-		this.keyboard = Inputs.getKeyboard();
-		this.accelerometer = Inputs.getAccelerometer();
-		this.touchScreen = Inputs.getTouchScreen();
-		this.forwardKey = keyboard.getKey("W");
-		this.backwardKey = keyboard.getKey("S");
-		this.leftKey = keyboard.getKey("A");
-		this.rightKey = keyboard.getKey("D");
-		this.jumpKey = keyboard.getKey("Space");
-	}
-
-	public PlayerBody(String modelPath, ConvexShape shape)
-	{
-		this(readModel(modelPath), shape);
+		this.keyboard = Inputs.keyboard();
+		this.accelerometer = Inputs.accelerometer();
+		this.touchScreen = Inputs.touchScreen();
+		this.forwardKey = keyboard.key("W");
+		this.backwardKey = keyboard.key("S");
+		this.leftKey = keyboard.key("A");
+		this.rightKey = keyboard.key("D");
+		this.jumpKey = keyboard.key("Space");
 	}
 
 	public boolean canJump()
 	{
-		return getCharacterController().canJump();
+		return characterController().canJump();
 	}
 
 	@Override
@@ -85,76 +80,76 @@ public abstract class PlayerBody
 		super.dispose();
 	}
 
-	public btGhostPairCallback getCallback()
+	public btGhostPairCallback callback()
 	{
 		return callback;
 	}
 
-	public btKinematicCharacterController getCharacterController()
+	public btKinematicCharacterController characterController()
 	{
 		return characterController;
 	}
 
-	public float getGravity()
+	public float gravity()
 	{
-		return getCharacterController().getGravity();
+		return characterController().getGravity();
 	}
 
-	public float getMaxSlope()
+	public float maxSlope()
 	{
-		return getMaxSlopeRad() * MyMath.RADIANS_TO_DEGREES;
+		return maxSlopeRad() * MyMath.RADIANS_TO_DEGREES;
 	}
 
-	public float getMaxSlopeRad()
+	public float maxSlopeRad()
 	{
-		return getCharacterController().getMaxSlope();
+		return characterController().getMaxSlope();
 	}
 
-	public float getRotationSpeed()
+	public float rotationSpeed()
 	{
 		return rotationSpeed;
 	}
 
-	public float getSpeed()
+	public float speed()
 	{
 		return speed;
 	}
 
-	public float getStepHeight()
+	public float stepHeight()
 	{
 		return stepHeight;
 	}
 
 	public void jump()
 	{
-		getCharacterController().jump();
+		characterController().jump();
 	}
 
 	public boolean onGround()
 	{
-		return getCharacterController().onGround();
+		return characterController().onGround();
 	}
 
 	public void setFallSpeed(float fallSpeed)
 	{
-		getCharacterController().setFallSpeed(fallSpeed);
+		characterController().setFallSpeed(fallSpeed);
 	}
 
 	public void setGravity(float gravity)
 	{
-		getCharacterController().setGravity(gravity);
+		characterController().setGravity(gravity);
 	}
 
 	public void setJumpSpeed(float jumpSpeed)
 	{
-		getCharacterController().setJumpSpeed(jumpSpeed);
+		characterController().setJumpSpeed(jumpSpeed);
 	}
 
 	@Override
-	public void setLocation(Vector3 location)
+	public void moveTo(Vector3 location)
 	{
-		super.setLocation(location);
-		getCharacterController().warp(location);
+		super.moveTo(location);
+		characterController().warp(location);
 	}
 
 	public void setMaxSlope(float maxSlope)
@@ -164,7 +159,7 @@ public abstract class PlayerBody
 
 	public void setMaxSlopeRad(float maxSlope)
 	{
-		getCharacterController().setMaxSlope(maxSlope);
+		characterController().setMaxSlope(maxSlope);
 	}
 
 	public void setRotationSpeed(float rotationSpeed)
@@ -189,7 +184,7 @@ public abstract class PlayerBody
 		super.update(dt);
 	}
 
-	protected Keyboard getKeyboard()
+	protected Keyboard keyboard()
 	{
 		return keyboard;
 	}
@@ -204,20 +199,20 @@ public abstract class PlayerBody
 			{
 				if (leftKey.isDown())
 				{
-					rotate(getRotationSpeed(), 0f, 0f);
+					rotate(rotationSpeed(), 0f, 0f);
 				}
 				if (rightKey.isDown())
 				{
-					rotate(-getRotationSpeed(), 0f, 0f);
+					rotate(-rotationSpeed(), 0f, 0f);
 				}
 			}
 			if (forwardKey.isDown())
 			{
-				walkDirection.add(getDirection());
+				walkDirection.add(direction());
 			}
 			if (backwardKey.isDown())
 			{
-				walkDirection.sub(getDirection());
+				walkDirection.sub(direction());
 			}
 			if (jumpKey.isDown())
 			{
@@ -235,24 +230,24 @@ public abstract class PlayerBody
 		{
 			if (accelerometer.tiltsForward())
 			{
-				walkDirection.add(getDirection());
+				walkDirection.add(direction());
 				walkDirection.scl(accelerometer.getForward());
 			}
 			if (accelerometer.tiltsBackward())
 			{
-				walkDirection.sub(getDirection());
+				walkDirection.sub(direction());
 				walkDirection.scl(accelerometer.getBack());
 			}
 		}
-		walkDirection.scl(getSpeed());
-		getCharacterController().setWalkDirection(walkDirection);
+		walkDirection.scl(speed());
+		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();
 	}
 
 	private btKinematicCharacterController createController(float stepHeight)
 	{
-		return new btKinematicCharacterController(getBody(),
-				getCollisionShape().getCollisionShape(),
+		return new btKinematicCharacterController(body(),
+				shape().shape(),
 				stepHeight);
 	}
 }

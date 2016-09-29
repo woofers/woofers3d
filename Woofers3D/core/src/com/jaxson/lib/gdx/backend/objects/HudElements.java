@@ -9,14 +9,14 @@ public class HudElements extends ObjectsBase<Sprite>
 	public void render(View view)
 	{
 		if (isEmpty()) return;
-		view.getSpriteBatch().setProjectionMatrix(
-				view.getHudView().getCamera().combined);
-		view.getHudView().apply();
-		view.getSpriteBatch().begin();
+		view.spriteBatch().setProjectionMatrix(
+				view.hudView().getCamera().combined);
+		view.hudView().apply();
+		view.spriteBatch().begin();
 		for (Sprite sprite: getObjects())
 		{
 			sprite.render(view);
 		}
-		view.getSpriteBatch().end();
+		view.spriteBatch().end();
 	}
 }

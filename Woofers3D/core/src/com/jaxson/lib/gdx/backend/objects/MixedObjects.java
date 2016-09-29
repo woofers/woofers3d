@@ -43,9 +43,9 @@ public class MixedObjects extends GameObject implements GameObjects<Entity>
 		hud.dispose();
 	}
 
-	public MyEnvironment getEnvironment()
+	public MyEnvironment environment()
 	{
-		return models.getEnvironment();
+		return models.environment();
 	}
 
 	@Override

@@ -36,54 +36,54 @@ public class MyEnvironment extends Environment
 
 	public void add(Light light)
 	{
-		add(light.getLight());
+		add(light.light());
 	}
 
 	public void begin(Camera camera)
 	{
 		if (!hasShadows()) return;
-		getShadowLight().begin(Vector3.Zero, camera.direction);
+		shadowLight().begin(Vector3.Zero, camera.direction);
 	}
 
 	public void end()
 	{
 		if (!hasShadows()) return;
-		getShadowLight().end();
+		shadowLight().end();
 	}
 
-	public ColorAttribute getColor()
+	public ColorAttribute color()
 	{
 		return color;
 	}
 
-	public Light getLight()
+	public Light light()
 	{
 		return light;
 	}
 
-	public MyDirectionalShadowLight getShadowLight()
+	public MyDirectionalShadowLight shadowLight()
 	{
 		return light.toShadow();
 	}
 
-	public Vector3 getWorldSize()
+	public Vector3 worldSize()
 	{
 		return worldSize;
 	}
 
 	public boolean hasLight()
 	{
-		return getLight() != null;
+		return light() != null;
 	}
 
 	public boolean hasShadows()
 	{
-		return getLight().hasShadows();
+		return light().hasShadows();
 	}
 
 	public void remove(Light light)
 	{
-		remove(light.getLight());
+		remove(light.light());
 	}
 
 	public void render(MyArrayList<Entity> entities, Camera camera)
@@ -92,7 +92,7 @@ public class MyEnvironment extends Environment
 		begin(camera);
 		for (Entity entity: entities)
 		{
-			getShadowLight().render(entity.getModelInstance());
+			shadowLight().render(entity.modelInstance());
 		}
 		end();
 	}
@@ -115,12 +115,12 @@ public class MyEnvironment extends Environment
 
 	public void setColor(Light light)
 	{
-		setColor(light.getColor());
+		setColor(light.color());
 	}
 
 	public void setLight(Light light)
 	{
-		if (light == getLight()) return;
+		if (light == light()) return;
 		if (hasLight()) remove(light);
 		clearShadowMap();
 		this.light = light;
@@ -133,11 +133,11 @@ public class MyEnvironment extends Environment
 	{
 		if (shawdows)
 		{
-			setLight(getLight().toShadow());
+			setLight(light().toShadow());
 		}
 		else
 		{
-			setLight(getLight().toLight());
+			setLight(light().toLight());
 		}
 	}
 

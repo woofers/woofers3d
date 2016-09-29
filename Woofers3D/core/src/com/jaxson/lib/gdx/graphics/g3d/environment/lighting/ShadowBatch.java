@@ -12,6 +12,6 @@ public class ShadowBatch extends ModelBatch
 
 	public void begin(MyDirectionalShadowLight light)
 	{
-		begin(light.getCamera());
+		begin(light.camera());
 	}
 }

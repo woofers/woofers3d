@@ -2,24 +2,17 @@ package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Input;
 
-public class TouchKeyboard implements Peripheral
+public class TouchKeyboard extends Peripheral
 {
-	private Input input;
-
 	TouchKeyboard(Input input)
 	{
-		this.input = input;
+		super(input);
 	}
 
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(
+		return input().isPeripheralAvailable(
 				Input.Peripheral.OnscreenKeyboard);
-	}
-
-	private Input getInput()
-	{
-		return input;
 	}
 }

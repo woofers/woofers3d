@@ -121,7 +121,7 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 
 	public MyDirectionalShadowLight(Light light)
 	{
-		this(light.getColor(), light.getDirection());
+		this(light.color(), light.direction());
 	}
 
 	public MyDirectionalShadowLight(Vector3 direction)
@@ -131,13 +131,13 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 
 	public void begin(Camera camera)
 	{
-		getLight().begin(camera);
+		light().begin(camera);
 		being();
 	}
 
 	public void begin(Vector3 center, Vector3 forward)
 	{
-		getLight().begin(center, forward);
+		light().begin(center, forward);
 		being();
 	}
 
@@ -150,12 +150,12 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 	public void end()
 	{
 		getShadowBatch().end();
-		getLight().end();
+		light().end();
 	}
 
-	public Camera getCamera()
+	public Camera camera()
 	{
-		return getLight().getCamera();
+		return light().getCamera();
 	}
 
 	public ShadowBatch getShadowBatch()
@@ -165,7 +165,7 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 
 	public ShadowMap getShadowMap()
 	{
-		return getLight();
+		return light();
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 
 	public void render(Entity entity)
 	{
-		render(entity.getModelInstance());
+		render(entity.modelInstance());
 	}
 
 	public void render(ModelInstance modelInstance)

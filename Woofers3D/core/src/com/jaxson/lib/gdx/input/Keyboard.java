@@ -5,24 +5,23 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Keyboard implements Peripheral, Iterable<KeyboardKey>
+public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 {
 	private HashMap<Integer, KeyboardKey> keycodeKeys;
 	private HashMap<String, KeyboardKey> stringKeys;
-	private Input input;
 	private TouchKeyboard touchKeyboard;
 
 	Keyboard(Input input)
 	{
-		this.input = input;
-		this.touchKeyboard = new TouchKeyboard(getInput());
+		super(input);
+		this.touchKeyboard = new TouchKeyboard(input());
 		this.keycodeKeys = new HashMap<>();
 		this.stringKeys = new HashMap<>();
 		for (int i = Keys.MIN; i < Keys.MAX; i ++)
 		{
 			KeyboardKey key = new KeyboardKey(i);
-			String name = key.getName();
-			keycodeKeys.put(key.getKeycode(), key);
+			String name = key.name();
+			keycodeKeys.put(key.keycode(), key);
 			if (name != null) stringKeys.put(name.toLowerCase(), key);
 		}
 	}
@@ -30,25 +29,25 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(
+		return input().isPeripheralAvailable(
 			Input.Peripheral.HardwareKeyboard);
 	}
 
-	public KeyboardKey getKey(int keycode)
+	public KeyboardKey key(int keycode)
 	{
 		KeyboardKey key = keycodeKeys.get(keycode);
 		if (key == null) throw new InvalidKeyException(keycode);
 		return key;
 	}
 
-	public KeyboardKey getKey(String name)
+	public KeyboardKey key(String name)
 	{
 		KeyboardKey key = stringKeys.get(name.toLowerCase().trim());
 		if (key == null) throw new InvalidKeyException(name);
 		return key;
 	}
 
-	public TouchKeyboard getTouchKeyboard()
+	public TouchKeyboard touchKeyboard()
 	{
 		return touchKeyboard;
 	}
@@ -56,12 +55,12 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 	@Override
 	public Iterator<KeyboardKey> iterator()
 	{
-		return getKeys().iterator();
+		return keys().iterator();
 	}
 
 	void reset()
 	{
-		for (KeyboardKey key: getKeys())
+		for (KeyboardKey key: keys())
 		{
 			key.setDown(false);
 			key.setWasDown(false);
@@ -70,18 +69,13 @@ public class Keyboard implements Peripheral, Iterable<KeyboardKey>
 
 	void transfer()
 	{
-		for (KeyboardKey key: getKeys())
+		for (KeyboardKey key: keys())
 		{
 			key.transfer();
 		}
 	}
 
-	private Input getInput()
-	{
-		return input;
-	}
-
-	private Collection<KeyboardKey> getKeys()
+	private Collection<KeyboardKey> keys()
 	{
 		return keycodeKeys.values();
 	}

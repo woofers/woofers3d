@@ -12,7 +12,7 @@ public class MouseButton implements Button
 		this.button = button;
 	}
 
-	public int getButton()
+	public int button()
 	{
 		return button;
 	}
@@ -20,10 +20,10 @@ public class MouseButton implements Button
 	@Override
 	public boolean isPressed()
 	{
-		return getInput().isButtonPressed(getButton());
+		return input().isButtonPressed(button());
 	}
 
-	private Input getInput()
+	private Input input()
 	{
 		return input;
 	}

@@ -15,7 +15,7 @@ public class KeyCombination implements Key, Iterable<Key>
 	@Override
 	public boolean isDown()
 	{
-		for (Key key: getKeys())
+		for (Key key: keys())
 		{
 			if (!key.isDown()) return false;
 		}
@@ -26,7 +26,7 @@ public class KeyCombination implements Key, Iterable<Key>
 	public boolean isPressed()
 	{
 		boolean wasPressed = false;
-		for (Key key: getKeys())
+		for (Key key: keys())
 		{
 			if (!key.isDown()) return false;
 			if (key.isPressed()) wasPressed = true;
@@ -37,7 +37,7 @@ public class KeyCombination implements Key, Iterable<Key>
 	@Override
 	public boolean isReleased()
 	{
-		for (Key key: getKeys())
+		for (Key key: keys())
 		{
 			if (!key.isReleased()) return false;
 		}
@@ -47,10 +47,10 @@ public class KeyCombination implements Key, Iterable<Key>
 	@Override
 	public Iterator<Key> iterator()
 	{
-		return getKeys().iterator();
+		return keys().iterator();
 	}
 
-	private MyArrayList<Key> getKeys()
+	private MyArrayList<Key> keys()
 	{
 		return keys;
 	}

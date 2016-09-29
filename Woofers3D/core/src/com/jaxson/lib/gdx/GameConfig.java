@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Game;
-import com.jaxson.lib.io.DefaultFile;
+import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.math.Reciprocal;
 
@@ -60,7 +60,7 @@ public class GameConfig
 	private boolean statusBar = false;
 	private boolean immersive = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
-	private transient File icon = new DefaultFile("icon.png");
+	private transient File icon = new DataFile("icon.png");
 
 	/**
 	 * Constructs a default config.
@@ -573,7 +573,7 @@ public class GameConfig
 		config.samples = getAntiAliasing();
 		config.x = getX();
 		config.y = getY();
-		if (getIcon().exists()) config.addIcon(getIcon().getPath(), ICON_TYPE);
+		if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
 		return config;
 	}
 

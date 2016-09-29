@@ -49,8 +49,8 @@ public class MyRow implements Iterable<MyCell>
 			throws CellOutOfBoundsException
 	{
 		Cell cell = getRow().getCell(row, policy);
-		if (cell == null) throw new CellOutOfBoundsException(getCellLocation(
-		row));
+		if (cell == null)
+			throw new CellOutOfBoundsException(getCellLocation(row));
 		return new MyCell(cell);
 	}
 

@@ -25,21 +25,21 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 
 	public void add(Key... keys)
 	{
-		getKeys().addAll(keys);
+		keys().addAll(keys);
 	}
 
 	public void add(Keys... keys)
 	{
 		for (Keys keyList: keys)
 		{
-			getKeys().addAll(keyList.getKeys());
+			keys().addAll(keyList.keys());
 		}
 	}
 
 	@Override
 	public boolean isDown()
 	{
-		for (Key key: getKeys())
+		for (Key key: keys())
 		{
 			if (key.isDown()) return true;
 		}
@@ -49,7 +49,7 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 	@Override
 	public boolean isPressed()
 	{
-		for (Key key: getKeys())
+		for (Key key: keys())
 		{
 			if (key.isPressed()) return true;
 		}
@@ -59,7 +59,7 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 	@Override
 	public boolean isReleased()
 	{
-		for (Key key: getKeys())
+		for (Key key: keys())
 		{
 			if (key.isReleased()) return true;
 		}
@@ -69,10 +69,10 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 	@Override
 	public Iterator<Key> iterator()
 	{
-		return getKeys().iterator();
+		return keys().iterator();
 	}
 
-	private MyArrayList<Key> getKeys()
+	private MyArrayList<Key> keys()
 	{
 		return keys;
 	}

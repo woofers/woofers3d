@@ -21,8 +21,7 @@ public abstract class BulletState extends State
 	public BulletState(Game gameManager)
 	{
 		super(gameManager);
-		this.world = new PhysicsWorld();
-		setWorldSize();
+		this.world = new PhysicsWorld(environment());
 		setShadows(SHADOWS);
 	}
 
@@ -63,14 +62,14 @@ public abstract class BulletState extends State
 		super.dispose();
 	}
 
-	public PhysicsWorld getPhysicsWorld()
+	public PhysicsWorld physicsWorld()
 	{
 		return world;
 	}
 
-	public Vector3 getWorldSize()
+	public Vector3 worldSize()
 	{
-		return getPhysicsWorld().getWorldSize();
+		return physicsWorld().worldSize();
 	}
 
 	public void load(GdxFile file)
@@ -80,7 +79,7 @@ public abstract class BulletState extends State
 
 	public void load(GdxFile file, boolean applyPhysics)
 	{
-		for (RigidBody entity: getPhysicsWorld().load(file))
+		for (RigidBody entity: physicsWorld().load(file))
 		{
 			add(entity);
 			if (applyPhysics) applyPhysics(entity);
@@ -111,12 +110,7 @@ public abstract class BulletState extends State
 
 	public void setShadows(boolean shadows)
 	{
-		getEnvironment().setShawdows(shadows);
-	}
-
-	public void setWorldSize()
-	{
-		setWorldSize(getWorldSize());
+		environment().setShawdows(shadows);
 	}
 
 	@Override
@@ -124,10 +118,5 @@ public abstract class BulletState extends State
 	{
 		super.update(dt);
 		world.update(dt);
-	}
-
-	private void setWorldSize(Vector3 worldSize)
-	{
-		getEnvironment().setWorldSize(worldSize);
 	}
 }

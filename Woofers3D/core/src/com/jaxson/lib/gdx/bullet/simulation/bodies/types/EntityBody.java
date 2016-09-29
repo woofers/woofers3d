@@ -40,30 +40,20 @@ public abstract class EntityBody<B extends btCollisionObject>
 		setBody(body);
 	}
 
-	public EntityBody(String modelPath, B body)
-	{
-		this(modelPath, body, MASS);
-	}
-
-	public EntityBody(String modelPath, B body, float mass)
-	{
-		this(readModel(modelPath), body, mass);
-	}
-
 	public void activate()
 	{
-		getBody().activate();
-		getBody().setActivationState(ACTIVE_TAG);
+		body().activate();
+		body().setActivationState(ACTIVE_TAG);
 	}
 
 	public void addCollisionFlag(int flag)
 	{
-		setCollisionFlags(getCollisionFlags() | flag);
+		setCollisionFlags(collisionFlags() | flag);
 	}
 
 	public void deactivate()
 	{
-		getBody().setActivationState(DISABLE_SIMULATION);
+		body().setActivationState(DISABLE_SIMULATION);
 	}
 
 	@Override
@@ -73,39 +63,39 @@ public abstract class EntityBody<B extends btCollisionObject>
 		body.dispose();
 	}
 
-	public int getActivationState()
+	public int activationState()
 	{
-		return getBody().getActivationState();
+		return body().getActivationState();
 	}
 
-	public B getBody()
+	public B body()
 	{
 		return body;
 	}
 
-	public int getCollisionFlags()
+	public int collisionFlags()
 	{
-		return getBody().getCollisionFlags();
+		return body().getCollisionFlags();
 	}
 
-	public int getContactCallbackFilter()
+	public int contactCallbackFilter()
 	{
-		return getBody().getContactCallbackFilter();
+		return body().getContactCallbackFilter();
 	}
 
-	public int getContactCallbackFlag()
+	public int contactCallbackFlag()
 	{
-		return getBody().getContactCallbackFlag();
+		return body().getContactCallbackFlag();
 	}
 
-	public float getMass()
+	public float mass()
 	{
 		return mass;
 	}
 
 	public boolean isBody(btCollisionObject body)
 	{
-		return getBody().equals(body);
+		return body().equals(body);
 	}
 
 	@Override
@@ -117,28 +107,28 @@ public abstract class EntityBody<B extends btCollisionObject>
 
 	public void setActivationState(int state)
 	{
-		getBody().setActivationState(state);
+		body().setActivationState(state);
 	}
 
 	public void setCollisionFlags(int flags)
 	{
-		getBody().setCollisionFlags(flags);
+		body().setCollisionFlags(flags);
 	}
 
 	public void setContactCallbackFilter(int flag)
 	{
-		getBody().setContactCallbackFilter(flag);
+		body().setContactCallbackFilter(flag);
 	}
 
 	public void setContactCallbackFlag(int flag)
 	{
-		getBody().setContactCallbackFlag(flag);
+		body().setContactCallbackFlag(flag);
 	}
 
 	@Override
-	public void setLocation(Vector3 location)
+	public void moveTo(Vector3 location)
 	{
-		super.setLocation(location);
+		super.moveTo(location);
 		transformToBody();
 	}
 
@@ -170,13 +160,13 @@ public abstract class EntityBody<B extends btCollisionObject>
 
 	public boolean wasImpoted()
 	{
-		Integer i = (Integer) getModelInstance().userData;
+		Integer i = (Integer) modelInstance().userData;
 		return i != null && i == WorldImporter.IMPORTED;
 	}
 
 	protected void bodyToTransform()
 	{
-		getBody().getWorldTransform(getTransform());
+		body().getWorldTransform(transform());
 	}
 
 	protected void setBody(B body)
@@ -186,6 +176,6 @@ public abstract class EntityBody<B extends btCollisionObject>
 
 	protected void transformToBody()
 	{
-		getBody().setWorldTransform(getTransform());
+		body().setWorldTransform(transform());
 	}
 }

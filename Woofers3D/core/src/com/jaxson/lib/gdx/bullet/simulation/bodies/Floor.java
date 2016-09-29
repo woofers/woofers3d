@@ -26,7 +26,7 @@ public class Floor extends RigidBox
 	{
 		super(color);
 		setMass(MASS);
-		setScale(new Vector3(width, THICKNESS, height));
+		scale(new Vector3(width, THICKNESS, height));
 	}
 
 	@Override

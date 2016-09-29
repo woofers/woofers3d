@@ -26,12 +26,12 @@ public class Inputs
 		private InputListener(Game game)
 		{
 			this.game = game;
-			this.compass = new Compass(getInput());
-			this.touchScreen = new TouchScreen(getInput());
-			this.keyboard = new Keyboard(getInput());
-			this.display = game.getDisplay();
+			this.compass = new Compass(input());
+			this.touchScreen = new TouchScreen(input());
+			this.keyboard = new Keyboard(input());
+			this.display = game.display();
 			this.mouse = new Mouse(game, touchScreen);
-			this.vibrator = new Vibrator(getInput());
+			this.vibrator = new Vibrator(input());
 			this.accelerometer = new Accelerometer(game);
 		}
 
@@ -41,42 +41,42 @@ public class Inputs
 			return true;
 		}
 
-		public Accelerometer getAccelerometer()
+		public Accelerometer accelerometer()
 		{
 			return accelerometer;
 		}
 
-		public Compass getCompass()
+		public Compass compass()
 		{
 			return compass;
 		}
 
-		public Display getDisplay()
+		public Display display()
 		{
 			return display;
 		}
 
-		public InputMultiplexer getInputProcessor()
+		public InputMultiplexer inputProcessor()
 		{
 			return inputMultiplexer;
 		}
 
-		public Keyboard getKeyboard()
+		public Keyboard keyboard()
 		{
 			return keyboard;
 		}
 
-		public Mouse getMouse()
+		public Mouse mouse()
 		{
 			return mouse;
 		}
 
-		public TouchScreen getTouchScreen()
+		public TouchScreen touchScreen()
 		{
 			return touchScreen;
 		}
 
-		public Vibrator getVibrator()
+		public Vibrator vibrator()
 		{
 			return vibrator;
 		}
@@ -84,8 +84,8 @@ public class Inputs
 		@Override
 		public boolean keyDown(int keycode)
 		{
-			keyboard.getKey(keycode).setDown(true);
-			keyboard.getKey(Keys.ANY_KEY).setDown(true);
+			keyboard.key(keycode).setDown(true);
+			keyboard.key(Keys.ANY_KEY).setDown(true);
 			return true;
 		}
 
@@ -98,8 +98,8 @@ public class Inputs
 		@Override
 		public boolean keyUp(int keycode)
 		{
-			keyboard.getKey(keycode).setDown(false);
-			keyboard.getKey(Keys.ANY_KEY).setDown(false);
+			keyboard.key(keycode).setDown(false);
+			keyboard.key(Keys.ANY_KEY).setDown(false);
 			return true;
 		}
 
@@ -170,7 +170,7 @@ public class Inputs
 		@Override
 		public boolean touchDown(float x, float y, int pointer, int button)
 		{
-			touchScreen.getTouch(pointer).setTouched(true);
+			touchScreen.touch(pointer).setTouched(true);
 			return true;
 		}
 
@@ -189,7 +189,7 @@ public class Inputs
 		@Override
 		public boolean touchUp(int x, int y, int pointer, int button)
 		{
-			touchScreen.getTouch(pointer).setTouched(false);
+			touchScreen.touch(pointer).setTouched(false);
 			return true;
 		}
 
@@ -210,9 +210,9 @@ public class Inputs
 			touchScreen.transfer();
 		}
 
-		private Input getInput()
+		private Input input()
 		{
-			return game.getInput();
+			return game.input();
 		}
 	}
 
@@ -223,47 +223,47 @@ public class Inputs
 	{
 		inputListener = new InputListener(game);
 		inputMultiplexer = inputListener.toInputMultiplexer();
-		game.setInputProcessor(getInputProcessor());
+		game.setInputProcessor(inputProcessor());
 	}
 
-	public static Accelerometer getAccelerometer()
+	public static Accelerometer accelerometer()
 	{
-		return inputListener.getAccelerometer();
+		return inputListener.accelerometer();
 	}
 
-	public static Compass getCompass()
+	public static Compass compass()
 	{
-		return inputListener.getCompass();
+		return inputListener.compass();
 	}
 
-	public static Display getDisplay()
+	public static Display display()
 	{
-		return inputListener.getDisplay();
+		return inputListener.display();
 	}
 
-	public static InputMultiplexer getInputProcessor()
+	public static InputMultiplexer inputProcessor()
 	{
 		return inputMultiplexer;
 	}
 
-	public static Keyboard getKeyboard()
+	public static Keyboard keyboard()
 	{
-		return inputListener.getKeyboard();
+		return inputListener.keyboard();
 	}
 
-	public static Mouse getMouse()
+	public static Mouse mouse()
 	{
-		return inputListener.getMouse();
+		return inputListener.mouse();
 	}
 
-	public static TouchScreen getTouchScreen()
+	public static TouchScreen touchScreen()
 	{
-		return inputListener.getTouchScreen();
+		return inputListener.touchScreen();
 	}
 
-	public static Vibrator getVibrator()
+	public static Vibrator vibrator()
 	{
-		return inputListener.getVibrator();
+		return inputListener.vibrator();
 	}
 
 	public static void reset()

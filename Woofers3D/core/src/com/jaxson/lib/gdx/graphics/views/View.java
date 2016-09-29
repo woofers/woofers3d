@@ -35,17 +35,17 @@ public class View
 		this.modelBatch = new ModelBatch();
 
 		OrthographicCamera camera = null;
-		if (getSpriteView().getCamera() instanceof OrthographicCamera)
+		if (spriteView().getCamera() instanceof OrthographicCamera)
 		{
-			camera = (OrthographicCamera) getSpriteView().getCamera();
+			camera = (OrthographicCamera) spriteView().getCamera();
 		}
 		else
 		{
 			camera = new OrthographicCamera();
 		}
 		camera.setToOrtho(false);
-		getSpriteView().setCamera(camera);
-	}
+		spriteView().setCamera(camera);
+}
 
 	public Viewport add(Viewport viewport, String name)
 	{
@@ -55,8 +55,8 @@ public class View
 
 	public void dispose()
 	{
-		getSpriteBatch().dispose();
-		getModelBatch().dispose();
+		spriteBatch().dispose();
+		modelBatch().dispose();
 	}
 
 	public Viewport get(String name)
@@ -64,27 +64,27 @@ public class View
 		return extras.get(name);
 	}
 
-	public Viewport getHudView()
+	public Viewport hudView()
 	{
 		return hud;
 	}
 
-	public ModelBatch getModelBatch()
+	public ModelBatch modelBatch()
 	{
 		return modelBatch;
 	}
 
-	public Viewport getModelView()
+	public Viewport modelView()
 	{
 		return model;
 	}
 
-	public SpriteBatch getSpriteBatch()
+	public SpriteBatch spriteBatch()
 	{
 		return spriteBatch;
 	}
 
-	public Viewport getSpriteView()
+	public Viewport spriteView()
 	{
 		return sprite;
 	}
@@ -108,13 +108,13 @@ public class View
 
 	public void resize(int width, int height)
 	{
-		getSpriteBatch().dispose();
-		getModelBatch().dispose();
+		spriteBatch().dispose();
+		modelBatch().dispose();
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
-		getSpriteView().update(width, height);
-		getModelView().update(width, height);
-		getHudView().update(width, height);
+		spriteView().update(width, height);
+		modelView().update(width, height);
+		hudView().update(width, height);
 		for (Viewport viewport: extras.values())
 		{
 			viewport.update(width, height);
@@ -138,9 +138,9 @@ public class View
 
 	public void update()
 	{
-		getSpriteView().getCamera().update();
-		getModelView().getCamera().update();
-		getHudView().getCamera().update();
+		spriteView().getCamera().update();
+		modelView().getCamera().update();
+		hudView().getCamera().update();
 		for (Viewport viewport: extras.values())
 		{
 			viewport.getCamera().update();

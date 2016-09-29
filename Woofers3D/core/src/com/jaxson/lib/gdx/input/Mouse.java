@@ -16,6 +16,7 @@ public class Mouse implements Iterable<MouseButton>
 	public static final int MOUSE_MIDDLE = Buttons.MIDDLE;
 	public static final int MOUSE_BACK = Buttons.BACK;
 	public static final int MOUSE_FORWARD = Buttons.FORWARD;
+
 	public static final int[] MOUSE_BUTTONS = { MOUSE_LEFT,
 												MOUSE_RIGHT,
 												MOUSE_MIDDLE,
@@ -48,49 +49,49 @@ public class Mouse implements Iterable<MouseButton>
 		this.delta = new Vector2();
 		this.sensitivity = new Vector2(1f, -1f);
 		this.buttons = new HashMap<>();
-		setSensitivity(game.getConfig().getSensitivity());
+		setSensitivity(game.config().getSensitivity());
 		setInvertX(INVERT_MOUSE_X);
 		setInvertY(INVERT_MOUSE_X);
 		for (int button: MOUSE_BUTTONS)
 		{
-			buttons.put(button, new MouseButton(button, getInput()));
+			buttons.put(button, new MouseButton(button, input()));
 		}
 	}
 
-	public MouseButton getButton(int button)
+	public MouseButton button(int button)
 	{
 		return buttons.get(button);
 	}
 
-	public Collection<MouseButton> getButtons()
+	public Collection<MouseButton> buttons()
 	{
 		return buttons.values();
 	}
 
-	public int getDeltaX()
+	public int deltaX()
 	{
-		return getInput().getDeltaX();
+		return input().getDeltaX();
 	}
 
-	public int getDeltaY()
+	public int deltaY()
 	{
-		return getInput().getDeltaY();
+		return input().getDeltaY();
 	}
 
-	public Vector2 getLocation()
+	public Vector2 location()
 	{
-		return location.set(getX(), getY());
+		return location.set(x(), y());
 	}
 
-	public Vector2 getLocationDelta()
+	public Vector2 locationDelta()
 	{
-		return delta.set(getDeltaX(), getDeltaY());
+		return delta.set(deltaX(), deltaY());
 	}
 
-	public Vector2 getScaledLocation()
+	public Vector2 scaledLocation()
 	{
 		if (!isCatched() && !touchScreen.exists()) return Vector2.Zero;
-		Vector2 mouse = getLocationDelta();
+		Vector2 mouse = locationDelta();
 		mouse.scl(MOUSE_SCALE);
 		mouse.scl(sensitivity);
 		if (touchScreen.exists())
@@ -101,39 +102,39 @@ public class Mouse implements Iterable<MouseButton>
 		return mouse;
 	}
 
-	public int getScrollWheel()
+	public int scrollWheel()
 	{
 		return scrollWheel;
 	}
 
-	public Vector2 getSensitivity()
+	public Vector2 sensitivity()
 	{
 		return sensitivity;
 	}
 
-	public float getSensitivityX()
+	public float sensitivityX()
 	{
-		return getSensitivity().x;
+		return sensitivity().x;
 	}
 
-	public float getSensitivityY()
+	public float sensitivityY()
 	{
-		return getSensitivity().y;
+		return sensitivity().y;
 	}
 
-	public int getX()
+	public int x()
 	{
-		return getInput().getX();
+		return input().getX();
 	}
 
-	public int getY()
+	public int y()
 	{
-		return getInput().getY();
+		return input().getY();
 	}
 
 	public boolean isCatched()
 	{
-		return getInput().isCursorCatched() || isMobile();
+		return input().isCursorCatched() || isMobile();
 	}
 
 	public boolean isClicked()
@@ -143,28 +144,28 @@ public class Mouse implements Iterable<MouseButton>
 
 	public boolean isInvertX()
 	{
-		return getSensitivityX() < 0f;
+		return sensitivityX() < 0f;
 	}
 
 	public boolean isInvertY()
 	{
-		return getSensitivityY() > 0f;
+		return sensitivityY() > 0f;
 	}
 
 	public boolean isLeftClicked()
 	{
-		return getButton(MOUSE_LEFT).isPressed();
+		return button(MOUSE_LEFT).isPressed();
 	}
 
 	public boolean isRightClicked()
 	{
-		return getButton(MOUSE_RIGHT).isPressed();
+		return button(MOUSE_RIGHT).isPressed();
 	}
 
 	@Override
 	public Iterator<MouseButton> iterator()
 	{
-		return getButtons().iterator();
+		return buttons().iterator();
 	}
 
 	/**
@@ -174,8 +175,8 @@ public class Mouse implements Iterable<MouseButton>
 	public void setCatched(boolean catched)
 	{
 		if (catched == isCatched()) return;
-		getInput().setCursorCatched(catched);
-		if (!catched) setLocation(getDisplay().getCenter());
+		input().setCursorCatched(catched);
+		if (!catched) setLocation(display().center());
 	}
 
 	public void setInvert(boolean invert)
@@ -186,12 +187,12 @@ public class Mouse implements Iterable<MouseButton>
 
 	public void setInvertX(boolean invertX)
 	{
-		if (invertX != isInvertX()) getSensitivity().scl(-1f, 1f);
+		if (invertX != isInvertX()) sensitivity().scl(-1f, 1f);
 	}
 
 	public void setInvertY(boolean invertY)
 	{
-		if (invertY != isInvertY()) getSensitivity().scl(1f, -1f);
+		if (invertY != isInvertY()) sensitivity().scl(1f, -1f);
 	}
 
 	/**
@@ -201,7 +202,7 @@ public class Mouse implements Iterable<MouseButton>
 	 */
 	public void setLocation(int x, int y)
 	{
-		getInput().setCursorPosition(x, y);
+		input().setCursorPosition(x, y);
 	}
 
 	/**
@@ -215,22 +216,22 @@ public class Mouse implements Iterable<MouseButton>
 
 	public void setSensitivity(float sensitivity)
 	{
-		getSensitivity().set(sensitivity, sensitivity);
+		sensitivity().set(sensitivity, sensitivity);
 	}
 
 	public void setSensitivity(Vector2 sensitivity)
 	{
-		getSensitivity().scl(sensitivity);
+		sensitivity().scl(sensitivity);
 	}
 
 	public void setSensitivityX(float x)
 	{
-		getSensitivity().set(x, getSensitivityY());
+		sensitivity().set(x, sensitivityY());
 	}
 
 	public void setSensitivityY(float y)
 	{
-		getSensitivity().set(getSensitivityX(), y);
+		sensitivity().set(sensitivityX(), y);
 	}
 
 	void addScrollWheel(int scrollWheel)
@@ -238,14 +239,14 @@ public class Mouse implements Iterable<MouseButton>
 		this.scrollWheel += scrollWheel;
 	}
 
-	private Display getDisplay()
+	private Display display()
 	{
-		return game.getDisplay();
+		return game.display();
 	}
 
-	private Input getInput()
+	private Input input()
 	{
-		return game.getInput();
+		return game.input();
 	}
 
 	private boolean isMobile()

@@ -40,43 +40,43 @@ public class Text extends Sprite
 	}
 
 	@Override
-	public float getHeight()
+	public float height()
 	{
 		return size.y;
 	}
 
 	@Override
-	public Vector2 getLocation()
+	public Vector2 location()
 	{
 		return location;
 	}
 
 	@Override
-	public float getOriginX()
+	public float originX()
 	{
 		return size.x;
 	}
 
 	@Override
-	public float getOriginY()
+	public float originY()
 	{
 		return 0;
 	}
 
 	@Override
-	public float getRotation()
+	public float rotation()
 	{
 		return 0;
 	}
 
 	@Override
-	public float getScaleX()
+	public float scaleX()
 	{
 		return scale.x;
 	}
 
 	@Override
-	public float getScaleY()
+	public float scaleY()
 	{
 		return scale.y;
 	}
@@ -87,27 +87,27 @@ public class Text extends Sprite
 	}
 
 	@Override
-	public float getWidth()
+	public float width()
 	{
 		return size.x;
 	}
 
 	@Override
-	public float getX()
+	public float x()
 	{
-		return getLocation().x;
+		return location().x;
 	}
 
 	@Override
-	public float getY()
+	public float y()
 	{
-		return getLocation().y;
+		return location().y;
 	}
 
 	@Override
 	public void render(View view)
 	{
-		font.draw(view.getSpriteBatch(), getText(), getX(), getY());
+		font.draw(view.spriteBatch(), getText(), x(), y());
 	}
 
 	@Override

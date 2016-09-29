@@ -42,10 +42,10 @@ public class WorldImporter
 			instance.transform.set(startTransform);
 			RigidBody body = new RigidBody(instance, new Shape(shape), mass);
 			add(body);
-			return body.getBody();
+			return body.body();
 		}
 
-		public MyArrayList<RigidBody> getEntities()
+		public MyArrayList<RigidBody> entities()
 		{
 			return entities;
 		}
@@ -78,8 +78,8 @@ public class WorldImporter
 		importer.dispose();
 	}
 
-	public MyArrayList<RigidBody> getEntities()
+	public MyArrayList<RigidBody> entities()
 	{
-		return importer.getEntities();
+		return importer.entities();
 	}
 }

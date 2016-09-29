@@ -22,20 +22,20 @@ public class RayCallback extends ClosestRayResultCallback
 		set();
 	}
 
-	public btCollisionObject getCollisionObject(Ray ray,
+	public btCollisionObject collisionObject(Ray ray,
 												float distance,
 												PhysicsWorld world)
 	{
 		set(ray, distance);
 		rayTest(world);
-		return getHitObject();
+		return hitObject();
 	}
 
-	public btCollisionObject getCollisionObject(Ray ray, PhysicsWorld world)
+	public btCollisionObject collisionObject(Ray ray, PhysicsWorld world)
 	{
 		set(ray);
 		rayTest(world);
-		return getHitObject();
+		return hitObject();
 	}
 
 	public void releaseCollisionObject()
@@ -68,7 +68,7 @@ public class RayCallback extends ClosestRayResultCallback
 		set(rayStart, rayEnd);
 	}
 
-	private btCollisionObject getHitObject()
+	private btCollisionObject hitObject()
 	{
 		if (hasHit()) return getCollisionObject();
 		return null;

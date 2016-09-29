@@ -4,16 +4,15 @@ import com.badlogic.gdx.Input;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class TouchScreen implements Peripheral
+public class TouchScreen extends Peripheral
 {
 	private static final int MULTITOUCH_SUPPORT = 20;
 
-	private Input input;
 	private HashMap<Integer, Touch> touchs;
 
 	TouchScreen(Input input)
 	{
-		this.input = input;
+		super(input);
 		this.touchs = new HashMap<>();
 		for (int i = 0; i < MULTITOUCH_SUPPORT; i ++)
 		{
@@ -24,7 +23,7 @@ public class TouchScreen implements Peripheral
 	public boolean areTouched(int amount)
 	{
 		int touched = 0;
-		for (Touch touch: getTouchs())
+		for (Touch touch: touchs())
 		{
 			if (touch.isDown()) touched ++;
 			if (touched >= amount) return true;
@@ -36,7 +35,7 @@ public class TouchScreen implements Peripheral
 	{
 		int touched = 0;
 		boolean wasTouched = false;
-		for (Touch touch: getTouchs())
+		for (Touch touch: touchs())
 		{
 			if (touch.isDown()) touched ++;
 			if (touch.isPressed()) wasTouched = true;
@@ -48,40 +47,40 @@ public class TouchScreen implements Peripheral
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(
+		return input().isPeripheralAvailable(
 				Input.Peripheral.MultitouchScreen);
 	}
 
-	public int getAmmountOfTouches()
+	public int ammountOfTouches()
 	{
-		return getAmmountOfTouches(0, MULTITOUCH_SUPPORT);
+		return ammountOfTouches(0, MULTITOUCH_SUPPORT);
 	}
 
-	public int getAmmountOfTouches(int min, int max)
+	public int ammountOfTouches(int min, int max)
 	{
 		if (min < 0 || MULTITOUCH_SUPPORT < max)
 			throw new IllegalArgumentException("Pointers out of range");
 		int touches = 0;
 		for (int i = min; i < max; i ++)
 		{
-			if (getTouch(i).isDown()) touches ++;
+			if (touch(i).isDown()) touches ++;
 		}
 		return touches;
 	}
 
-	public Touch getTouch(int finger)
+	public Touch touch(int finger)
 	{
 		return touchs.get(finger);
 	}
 
-	public Collection<Touch> getTouchs()
+	public Collection<Touch> touchs()
 	{
 		return touchs.values();
 	}
 
 	public boolean isDown()
 	{
-		for (Touch touch: getTouchs())
+		for (Touch touch: touchs())
 		{
 			if (touch.isDown()) return true;
 		}
@@ -90,12 +89,12 @@ public class TouchScreen implements Peripheral
 
 	public boolean isDown(int finger)
 	{
-		return getTouch(finger).isDown();
+		return touch(finger).isDown();
 	}
 
 	public boolean isPressed()
 	{
-		for (Touch touch: getTouchs())
+		for (Touch touch: touchs())
 		{
 			if (touch.isPressed()) return true;
 		}
@@ -104,12 +103,12 @@ public class TouchScreen implements Peripheral
 
 	public boolean isPressed(int finger)
 	{
-		return getTouch(finger).isPressed();
+		return touch(finger).isPressed();
 	}
 
 	public boolean isReleased()
 	{
-		for (Touch touch: getTouchs())
+		for (Touch touch: touchs())
 		{
 			if (touch.isReleased()) return true;
 		}
@@ -118,17 +117,17 @@ public class TouchScreen implements Peripheral
 
 	public boolean isReleased(int finger)
 	{
-		return getTouch(finger).isReleased();
+		return touch(finger).isReleased();
 	}
 
 	public boolean isTouched()
 	{
-		return getInput().isTouched();
+		return input().isTouched();
 	}
 
 	public boolean justTouched()
 	{
-		return getTouch(0).isPressed();
+		return touch(0).isPressed();
 	}
 
 	public boolean oneFingerTouching()
@@ -158,19 +157,14 @@ public class TouchScreen implements Peripheral
 
 	public boolean fingersToucing(int amount)
 	{
-		return getAmmountOfTouches() >= amount;
+		return ammountOfTouches() >= amount;
 	}
 
 	void transfer()
 	{
-		for (Touch touch: getTouchs())
+		for (Touch touch: touchs())
 		{
 			touch.transfer();
 		}
-	}
-
-	private Input getInput()
-	{
-		return input;
 	}
 }

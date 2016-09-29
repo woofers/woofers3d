@@ -17,7 +17,7 @@ public class RigidBox extends RigidBody
 
 	public RigidBox(Color color)
 	{
-		super(new Box(color).getModelInstance(), getShape());
+		super(new Box(color).modelInstance(), getShape());
 	}
 
 	protected static Shape getShape()

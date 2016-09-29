@@ -12,11 +12,11 @@ public interface Light
 	public static final Color COLOR = new MyColor(200, 200, 200);
 	public static final Vector3 DIRECTION = new Vector3(-1f, -0.8f, -0.2f);
 
-	public Color getColor();
+	public Color color();
 
-	public Vector3 getDirection();
+	public Vector3 direction();
 
-	public DirectionalLight getLight();
+	public DirectionalLight light();
 
 	public boolean hasShadows();
 

@@ -2,23 +2,38 @@ package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Input;
 
-public class Vibrator implements Peripheral
+public class Vibrator extends Peripheral
 {
-	private Input input;
+	public static final int NO_REPEAT = -1;
 
 	Vibrator(Input input)
 	{
-		this.input = input;
+		super(input);
 	}
 
 	@Override
 	public boolean exists()
 	{
-		return getInput().isPeripheralAvailable(Input.Peripheral.Vibrator);
+		return input().isPeripheralAvailable(Input.Peripheral.Vibrator);
 	}
 
-	private Input getInput()
+	public void stop()
 	{
-		return input;
+		input().cancelVibrate();
+	}
+
+	public void start(int milliseconds)
+	{
+		input().vibrate(milliseconds);
+	}
+
+	public void start(long[] pattern)
+	{
+		start(pattern, NO_REPEAT);
+	}
+
+	public void start(long[] pattern, int loopCount)
+	{
+		input().vibrate(pattern, loopCount);
 	}
 }

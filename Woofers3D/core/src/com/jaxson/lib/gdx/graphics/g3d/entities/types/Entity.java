@@ -13,12 +13,14 @@ import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.math.Circle;
 
 public abstract class Entity extends GameObject
 {
 	private static final int MATRIX_DIRECTION_X = 8;
 	private static final int MATRIX_DIRECTION_Y = 9;
 	private static final int MATRIX_DIRECTION_Z = 10;
+
 	private static final int ROOT_NODE_LOCATION = 0;
 	private static final float FORWARD_DIRECTION = 0f;
 	private static final float BACKWARD_DIRECTION = 180f;
@@ -35,147 +37,143 @@ public abstract class Entity extends GameObject
 		this.modelInstance = modelInstance;
 	}
 
-	public Entity(String modelPath)
-	{
-		this(readModel(modelPath));
-	}
-
 	@Override
 	public void dispose()
 	{
-		getModel().dispose();
+		model().dispose();
 	}
 
-	public Ray getBackwardRay()
+	public Ray backwardRay()
 	{
-		return getRay(BACKWARD_DIRECTION);
+		return ray(BACKWARD_DIRECTION);
 	}
 
-	public BoundingBox getBoundingBox()
+	public BoundingBox boundingBox()
 	{
-		return getModelInstance().calculateBoundingBox(new BoundingBox());
+		return modelInstance().calculateBoundingBox(new BoundingBox());
 	}
 
-	public Vector3 getCenter()
+	public Vector3 center()
 	{
-		return getBoundingBox().getCenter(new Vector3());
+		return boundingBox().getCenter(new Vector3());
 	}
 
-	public Vector3 getCenterLocation()
+	public Vector3 centerLocation()
 	{
-		return getCenter().add(getLocation());
+		return center().add(location());
 	}
 
-	public Vector3 getDeltaLocation(Entity entity)
+	public Vector3 distance(Entity entity)
 	{
-		return getDeltaLocation(entity.getLocation());
+		return distance(entity.location());
 	}
 
-	public Vector3 getDeltaLocation(Vector3 location)
+	public Vector3 distance(Vector3 location)
 	{
-		return getLocation().sub(location);
+		return location().sub(location);
 	}
 
-	public float getDiameter()
+	public float diameter()
 	{
-		return getSize().len();
+		return size().len();
 	}
 
-	public Vector3 getDirection()
+	public Vector3 direction()
 	{
-		float[] matrix = getTransformValues();
+		float[] matrix = transformValues();
 		return new Vector3(matrix[MATRIX_DIRECTION_X],
 						   matrix[MATRIX_DIRECTION_Y],
 						   matrix[MATRIX_DIRECTION_Z]);
 	}
 
-	public Ray getForwardRay()
+	public Ray forwardRay()
 	{
-		return getRay(FORWARD_DIRECTION);
+		return ray(FORWARD_DIRECTION);
 	}
 
-	public Vector3 getLocation()
+	public Vector3 location()
 	{
-		return getTransform().getTranslation(new Vector3());
+		return transform().getTranslation(new Vector3());
 	}
 
-	public Model getModel()
+	public Model model()
 	{
-		return getModelInstance().model;
+		return modelInstance().model;
 	}
 
-	public ModelInstance getModelInstance()
+	public ModelInstance modelInstance()
 	{
 		return modelInstance;
 	}
 
-	public Vector3 getOriginalSize()
+	public Vector3 originalSize()
 	{
-		return getBoundingBox().getDimensions(new Vector3());
+		return boundingBox().getDimensions(new Vector3());
 	}
 
-	public float getRadius()
+	public float radius()
 	{
-		return getDiameter() * MyMath.DIAMETER_TO_RADIUS;
+		return diameter() * Circle.DIAMETER_TO_RADIUS;
 	}
 
-	public Ray getRay(Entity entity)
+	public Ray ray(Entity entity)
 	{
-		return getRay(entity.getLocation());
+		return ray(entity.location());
 	}
 
-	public Ray getRay(float direction)
+	public Ray ray(float direction)
 	{
-		return new Ray(getLocation(),
-				getDirection().rotate(Vector3.Y, direction));
+		return new Ray(location(),
+				direction().rotate(Vector3.Y,
+								   direction));
 	}
 
-	public Ray getRay(Vector3 location)
+	public Ray ray(Vector3 location)
 	{
-		return new Ray(getLocation(), getDeltaLocation(location));
+		return new Ray(location(), distance(location));
 	}
 
-	public Quaternion getRoationQuaternion()
+	public Quaternion roationQuaternion()
 	{
-		return getTransform().getRotation(new Quaternion());
+		return transform().getRotation(new Quaternion());
 	}
 
-	public Node getRootNode()
+	public Node rootNode()
 	{
-		return getModelInstance().nodes.get(ROOT_NODE_LOCATION);
+		return modelInstance().nodes.get(ROOT_NODE_LOCATION);
 	}
 
-	public Vector3 getRotation()
+	public Vector3 rotation()
 	{
-		Quaternion rotation = getRoationQuaternion();
+		Quaternion rotation = roationQuaternion();
 		return new Vector3(rotation.getYaw(),
 						   rotation.getPitch(),
 						   rotation.getRoll());
 	}
 
-	public Vector3 getScale()
+	public Vector3 scale()
 	{
-		return getRootNode().scale;
+		return rootNode().scale;
 	}
 
-	public Vector3 getSize()
+	public Vector3 size()
 	{
-		return getOriginalSize().scl(getScale());
+		return originalSize().scl(scale());
 	}
 
-	public Matrix4 getTransform()
+	public Matrix4 transform()
 	{
-		return getModelInstance().transform;
+		return modelInstance().transform;
 	}
 
-	public float[] getTransformValues()
+	public float[] transformValues()
 	{
-		return getTransform().getValues();
+		return transform().getValues();
 	}
 
 	public boolean isVisible(Camera camera)
 	{
-		return camera.frustum.sphereInFrustum(getCenterLocation(), getRadius());
+		return camera.frustum.sphereInFrustum(centerLocation(), radius());
 	}
 
 	public void rotate(float yaw, float pitch, float roll)
@@ -192,17 +190,17 @@ public abstract class Entity extends GameObject
 
 	public void rotate(Vector3 axis, float amount)
 	{
-		getTransform().rotate(axis, amount);
+		transform().rotate(axis, amount);
 	}
 
-	public void setLocation(Vector3 location)
+	public void moveTo(Vector3 location)
 	{
-		getTransform().setToTranslation(location);
+		transform().setToTranslation(location);
 	}
 
 	public void setRotation(float yaw, float pitch, float roll)
 	{
-		getTransform().setFromEulerAngles(yaw, pitch, roll);
+		transform().setFromEulerAngles(yaw, pitch, roll);
 	}
 
 	public void setRotation(Vector3 angles)
@@ -210,35 +208,35 @@ public abstract class Entity extends GameObject
 		setRotation(angles.x, angles.y, angles.z);
 	}
 
-	public void setScale(float scale)
+	public void scale(float scale)
 	{
-		setScale(new Vector3(scale, scale, scale));
+		scale(new Vector3(scale, scale, scale));
 	}
 
-	public void setScale(Vector3 scale)
+	public void scale(Vector3 scale)
 	{
-		getRootNode().scale.set(scale);
+		rootNode().scale.set(scale);
 		calculateTransforms();
 	}
 
 	public void setSize(Vector3 size)
 	{
-		setScale(GdxMath.divideVector(size, getOriginalSize()));
+		scale(GdxMath.divideVector(size, originalSize()));
 	}
 
 	public void translate(Vector3 translation)
 	{
-		getTransform().translate(translation);
+		transform().translate(translation);
 	}
 
 	public void translateABS(Vector3 translation)
 	{
-		getTransform().trn(translation);
+		transform().trn(translation);
 	}
 
 	protected void calculateTransforms()
 	{
-		getModelInstance().calculateTransforms();
+		modelInstance().calculateTransforms();
 	}
 
 	protected static Model readModel(String modelPath)

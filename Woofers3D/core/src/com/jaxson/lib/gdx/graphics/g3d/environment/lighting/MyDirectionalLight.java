@@ -23,7 +23,7 @@ public class MyDirectionalLight extends BaseLight<DirectionalLight>
 
 	public MyDirectionalLight(Light light)
 	{
-		this(light.getColor(), light.getDirection());
+		this(light.color(), light.direction());
 	}
 
 	public MyDirectionalLight(Vector3 direction)

@@ -30,24 +30,14 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 	public RigidBody(ModelInstance modelInstance, Shape shape, float mass)
 	{
 		this(modelInstance, shape, mass,
-			 new btRigidBody(mass, null, null, shape.getInertia(mass)));
-	}
-
-	public RigidBody(String modelPath, Shape shape)
-	{
-		this(modelPath, shape, MASS);
-	}
-
-	public RigidBody(String modelPath, Shape shape, float mass)
-	{
-		this(readModel(modelPath), shape, mass);
+			 new btRigidBody(mass, null, null, shape.inertia(mass)));
 	}
 
 	private RigidBody(ModelInstance modelInstance, Shape shape,
 					  float mass, btRigidBody body)
 	{
 		super(modelInstance, body, shape, mass);
-		setMotionState(new MyMotionState(getTransform()));
+		setMotionState(new MyMotionState(transform()));
 	}
 
 	public void applyCentralImpulse(Ray ray)
@@ -63,7 +53,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 	public void applyCentralImpulse(Vector3 impulse)
 	{
 		activate();
-		getBody().applyCentralImpulse(impulse);
+		body().applyCentralImpulse(impulse);
 	}
 
 	@Override
@@ -73,7 +63,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 		motionState.dispose();
 	}
 
-	public MyMotionState getMotionState()
+	public MyMotionState motionState()
 	{
 		return motionState;
 	}
@@ -82,12 +72,12 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 	public void setMass(float mass)
 	{
 		super.setMass(mass);
-		getBody().setMassProps(mass, getInertia());
+		body().setMassProps(mass, inertia());
 	}
 
 	public void setMotionState(MyMotionState motionState)
 	{
 		this.motionState = motionState;
-		getBody().setMotionState(motionState);
+		body().setMotionState(motionState);
 	}
 }

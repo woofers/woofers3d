@@ -19,7 +19,7 @@ public class Models extends ObjectsBase<Entity>
 		this.environment = environment;
 	}
 
-	public MyEnvironment getEnvironment()
+	public MyEnvironment environment()
 	{
 		return environment;
 	}
@@ -28,18 +28,18 @@ public class Models extends ObjectsBase<Entity>
 	public void render(View view)
 	{
 		if (isEmpty()) return;
-		view.getModelView().apply();
-		environment.render(getObjects(), view.getModelView().getCamera());
-		view.getModelBatch().begin(view.getModelView().getCamera());
+		view.modelView().apply();
+		environment.render(getObjects(), view.modelView().getCamera());
+		view.modelBatch().begin(view.modelView().getCamera());
 		for (Entity entity: getObjects())
 		{
-			if (entity.isVisible(view.getModelView().getCamera()))
+			if (entity.isVisible(view.modelView().getCamera()))
 			{
-				view.getModelBatch().render(
-						entity.getModelInstance(), environment);
+				view.modelBatch().render(
+						entity.modelInstance(), environment);
 			}
 		}
-		view.getModelBatch().end();
+		view.modelBatch().end();
 	}
 
 	public void setEnvironment(MyEnvironment environment)

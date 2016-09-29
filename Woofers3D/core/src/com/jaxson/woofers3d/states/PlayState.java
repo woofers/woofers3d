@@ -20,6 +20,9 @@ import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.woofers3d.entities.Player;
+import com.jaxson.lib.io.FileExtension;
+import com.jaxson.lib.io.DataFile;
+import com.jaxson.lib.util.Optional;
 
 public class PlayState extends BulletState
 {
@@ -39,9 +42,9 @@ public class PlayState extends BulletState
 		super(game);
 		setSubState(new PauseState(game));
 
-		camera = new TargetCamera(getWidth(), getHeight());
+		camera = new TargetCamera(width(), height());
 		applyPhysics(camera);
-		getView().getModelView().setCamera(camera);
+		view().modelView().setCamera(camera);
 
 		// load(new GdxFile("btscene1.g3dj"));
 
@@ -57,19 +60,19 @@ public class PlayState extends BulletState
 						new RandomColor(new MyColor(255, 95, 0),
 										new MyColor(255, 165, 50)));
 			boxs[i].setSize(new RandomVector3(1f, 4f));
-			boxs[i].setLocation(new RandomVector3(6f, 30f));
+			boxs[i].moveTo(new RandomVector3(6f, 30f));
 			boxs[i].setMass(mass.floatValue());
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
 		}
 
-		if (getGame().isDesktop())
+		if (game().isDesktop())
 		{
 			spheres = new RigidSphere[SPHERE_AMOUNT];
 			for (int i = 0; i < SPHERE_AMOUNT; i ++)
 			{
 				spheres[i] = new RigidSphere(new RandomColor());
-				spheres[i].setLocation(new RandomVector3(6f, 30f));
+				spheres[i].moveTo(new RandomVector3(6f, 30f));
 				spheres[i].setSize(new Vector3(2f, 2f, 2f));
 				spheres[i].setMass(mass.floatValue());
 				applyPhysics(spheres[i]);
@@ -77,7 +80,7 @@ public class PlayState extends BulletState
 			}
 		}
 
-		softBox = new SoftBox(getPhysicsWorld());
+		softBox = new SoftBox(physicsWorld());
 		applyPhysics(softBox);
 		add(softBox);
 
@@ -85,7 +88,9 @@ public class PlayState extends BulletState
 		applyPhysics(player);
 		add(player);
 
-		addHud(new FPSCounter(getGame()));
+		addHud(new FPSCounter(game()));
+
+		System.out.println(new DataFile("entities/ship/ship.g3db").size());
 	}
 
 	@Override
@@ -109,19 +114,22 @@ public class PlayState extends BulletState
 	@Override
 	protected void input(float dt)
 	{
-		if (Inputs.getTouchScreen().justTouched())
+		if (Inputs.touchScreen().justTouched())
 		{
-			Ray ray = player.getForwardRay();
-			if (Inputs.getTouchScreen().exists())
+			Ray ray = player.forwardRay();
+			if (Inputs.touchScreen().exists())
 			{
-				Vector2 mouse = Inputs.getMouse().getLocation();
+				Vector2 mouse = Inputs.mouse().location();
 				ray = camera.getPickRay(mouse.x, mouse.y);
 			}
-			EntityBody<?> body = getPhysicsWorld().getBody(ray);
-			if (body instanceof RigidBody)
+			Optional<EntityBody> body = physicsWorld().rayTrace(ray);
+			if (body.exists())
 			{
-				RigidBody rigidBody = (RigidBody) body;
-				rigidBody.applyCentralImpulse(ray, IMPULSE_SPEED);
+				if (body.unwrap() instanceof RigidBody)
+				{
+					RigidBody rigidBody = (RigidBody) body.unwrap();
+					rigidBody.applyCentralImpulse(ray, IMPULSE_SPEED);
+				}
 			}
 		}
 	}

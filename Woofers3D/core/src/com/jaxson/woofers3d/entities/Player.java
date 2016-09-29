@@ -3,6 +3,7 @@ package com.jaxson.woofers3d.entities;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.io.GdxFile;
 
 public class Player extends CameraPlayerBody
 {
@@ -14,11 +15,11 @@ public class Player extends CameraPlayerBody
 
 	public Player(TargetCamera camera)
 	{
-		super(PATH, camera);
+		super(new GdxFile(PATH).readObject(), camera);
 		setCollisionShapeScale(HITBOX_SCALE);
-		setScale(SCALE);
+		scale(SCALE);
 
-		this.cameraKey = getKeyboard().getKey("T");
+		this.cameraKey = keyboard().key("T");
 	}
 
 	@Override

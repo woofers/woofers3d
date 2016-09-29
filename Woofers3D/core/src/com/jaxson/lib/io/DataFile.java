@@ -11,30 +11,32 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
+import com.jaxson.lib.util.Unwrapable;
 
 /**
  * A File that handles writing and reading.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class DefaultFile implements File<DefaultFile, String, String>
+public class DataFile implements File<DataFile, String, String>, Unwrapable<String>
 {
-	public static final DefaultFile NOTHING = new EmptyFile();
+	public static final DataFile NOTHING = new EmptyFile();
+
 	private static final String PATH_EMPTY = "Path can not be empty";
 
 	private final String path;
 
 	/**
-	 * Constructs a {@link DefaultFile} from a {@link String}.
+	 * Constructs a {@link DataFile} from a {@link String}.
 	 * @param path The path
 	 */
-	public DefaultFile(String path)
+	public DataFile(String path)
 	{
 		this.path = validatePath(path);
 	}
 
 	@Override
-	public DefaultFile append(String contents)
+	public DataFile append(String contents)
 	{
 		return write(readString() + contents);
 	}
@@ -42,24 +44,24 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	@Override
 	public boolean canRead()
 	{
-		return getJavaFile().canRead();
+		return javaFile().canRead();
 	}
 
 	@Override
 	public boolean canWrite()
 	{
-		return getJavaFile().canWrite();
+		return javaFile().canWrite();
 	}
 
 	@Override
-	public DefaultFile copy(DefaultFile file)
+	public DataFile copy(DataFile file)
 	{
 		if (equals(file)) return this;
 		return file.write(readBytes());
 	}
 
 	@Override
-	public DefaultFile createDirectory()
+	public DataFile createDirectory()
 	{
 		if (exists())
 		{
@@ -68,17 +70,17 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		}
 		try
 		{
-			getJavaFile().mkdirs();
+			javaFile().mkdirs();
 		}
 		catch (Exception ex)
 		{
-			return DefaultFile.NOTHING;
+			return DataFile.NOTHING;
 		}
 		return this;
 	}
 
 	@Override
-	public DefaultFile createFile()
+	public DataFile createFile()
 	{
 		if (exists())
 		{
@@ -89,56 +91,56 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public DefaultFile delete()
+	public DataFile delete()
 	{
-		if (!exists()) return DefaultFile.NOTHING;
+		if (!exists()) return DataFile.NOTHING;
 		try
 		{
-			getJavaFile().delete();
+			javaFile().delete();
 		}
 		catch (Exception ex)
 		{
 			return this;
 		}
-		return DefaultFile.NOTHING;
+		return DataFile.NOTHING;
 	}
 
 	@Override
-	public boolean equals(File file)
+	public boolean equals(DataFile file)
 	{
-		return getPath().equals(file.getPath());
+		return path().equals(file.path());
 	}
 
 	@Override
 	public boolean equals(Object file)
 	{
-		if (file instanceof DefaultFile) return equals((DefaultFile) file);
+		if (file instanceof DataFile) return equals((DataFile) file);
 		return false;
 	}
 
 	/**
-	 * Gets whether the {@link DefaultFile} exists.
-	 * @return {@link boolean} - Whether the {@link DefaultFile} exists
+	 * Gets whether the {@link DataFile} exists.
+	 * @return {@link boolean} - Whether the {@link DataFile} exists
 	 */
 	@Override
 	public boolean exists()
 	{
-		return getJavaFile().exists();
+		return javaFile().exists();
 	}
 
 	/**
-	 * Return a {@link BufferedReader} from the {@link DefaultFile}
+	 * Return a {@link BufferedReader} from the {@link DataFile}
 	 * @return {@link BufferedReader} - The buffered reader
 	 * @throws FileNotFoundException If the file is not found
 	 */
 	@Override
-	public BufferedReader getBufferedReader()
+	public BufferedReader bufferedReader()
 			throws FileNotFoundException
 	{
 		FileReader fileReader = null;
 		try
 		{
-			fileReader = getFileReader();
+			fileReader = fileReader();
 		}
 		catch (FileNotFoundException ex)
 		{
@@ -148,26 +150,26 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public DefaultFile getChild(String child)
+	public DataFile child(String child)
 	{
-		if (!exists() || isFile()) return DefaultFile.NOTHING;
+		if (!exists() || isFile()) return DataFile.NOTHING;
 		if (child.charAt(0) != FOWARD_SLASH.charAt(0))
 			child = FOWARD_SLASH + child;
-		DefaultFile file = new DefaultFile(getPath() + child);
+		DataFile file = new DataFile(path() + child);
 		if (file.exists()) return file;
-		return DefaultFile.NOTHING;
+		return DataFile.NOTHING;
 	}
 
 	/**
-	 * Gets the file extension of the {@link DefaultFile}. Returns an empty
+	 * Gets the file extension of the {@link DataFile}. Returns an empty
 	 * string if
-	 * the {@link DefaultFile} has no extension.
+	 * the {@link DataFile} has no extension.
 	 * @return {@link String} - The file extension
 	 */
 	@Override
-	public String getExtension()
+	public String extension()
 	{
-		String name = getName();
+		String name = name();
 		if (name.lastIndexOf(".") == -1) return NO_EXTENSION;
 		String[] fileNames = name.split(Pattern.quote("."));
 		if (fileNames.length == 1) return fileNames[0];
@@ -175,116 +177,116 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public FileType getExtensionType()
+	public FileExtension fileExtension()
 	{
-		return new FileType(getExtension());
+		return new FileExtension(extension());
 	}
 
 	@Override
-	public FileInputStream getFileInputStream()
+	public FileInputStream fileInputStream()
 			throws FileNotFoundException
 	{
-		return new FileInputStream(getJavaFile());
+		return new FileInputStream(javaFile());
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream()
+	public FileOutputStream fileOutputStream()
 			throws FileNotFoundException,
 				   SecurityException
 	{
-		return new FileOutputStream(getJavaFile());
+		return new FileOutputStream(javaFile());
 	}
 
 	@Override
-	public FileReader getFileReader() throws FileNotFoundException
+	public FileReader fileReader() throws FileNotFoundException
 	{
-		return new FileReader(getJavaFile());
+		return new FileReader(javaFile());
 	}
 
 	/**
-	 * Gets the {@link java.io.File} of the {@link DefaultFile}.
+	 * Gets the {@link java.io.File} of the {@link DataFile}.
 	 * @return {@link java.io.File} - The file
 	 */
 	@Override
-	public java.io.File getJavaFile()
+	public java.io.File javaFile()
 	{
-		return new java.io.File(getPath());
+		return new java.io.File(path());
 	}
 
 	/**
-	 * Gets the file name of the {@link DefaultFile}.
+	 * Gets the file name of the {@link DataFile}.
 	 * @return {@link String} - The file name
 	 */
 	@Override
-	public String getName()
+	public String name()
 	{
-		int index = getPath().lastIndexOf(FOWARD_SLASH);
-		return getPath().substring(index + 1);
+		int index = path().lastIndexOf(FOWARD_SLASH);
+		return path().substring(index + 1);
 	}
 
 	@Override
-	public String getNameWithoutExtension()
+	public String nameWithoutExtension()
 	{
-		String name = getName();
+		String name = name();
 		int index = name.lastIndexOf(".");
 		if (index == -1) return name;
 		return name.substring(0, index);
 	}
 
 	@Override
-	public DefaultFile getParent()
+	public DataFile parent()
 	{
-		return new DefaultFile(getParentPath());
+		return new DataFile(parentPath());
 	}
 
 	@Override
-	public String getParentPath()
+	public String parentPath()
 	{
-		int index = getPath().lastIndexOf(FOWARD_SLASH);
+		int index = path().lastIndexOf(FOWARD_SLASH);
 		if (index == -1) return "";
-		return getPath().substring(0, index + 1);
+		return path().substring(0, index + 1);
 	}
 
 	/**
-	 * Gets the file path of the {@link DefaultFile}.
+	 * Gets the file path of the {@link DataFile}.
 	 * @return {@link String} - The file path
 	 */
 	@Override
-	public String getPath()
+	public String path()
 	{
 		return path;
 	}
 
 	@Override
-	public PrintWriter getPrintWriter()
+	public PrintWriter printWriter()
 			throws FileNotFoundException,
 				   UnsupportedEncodingException
 	{
-		return new PrintWriter(getJavaFile());
+		return new PrintWriter(javaFile());
 	}
 
 	@Override
-	public Date getWhenLastModified()
+	public Date lastModified()
 	{
 		Calendar calendar = Calendar.getInstance();
 		int utcOffset = calendar.get(Calendar.ZONE_OFFSET)
-		+ calendar.get(Calendar.DST_OFFSET);
-		return new Date(getJavaFile().lastModified() - utcOffset);
+					  + calendar.get(Calendar.DST_OFFSET);
+		return new Date(javaFile().lastModified() - utcOffset);
 	}
 
 	/**
-	 * Gets whether the {@link DefaultFile} is a directory.
-	 * @return {@link boolean} - Whether the {@link DefaultFile} is a directory
+	 * Gets whether the {@link DataFile} is a directory.
+	 * @return {@link boolean} - Whether the {@link DataFile} is a directory
 	 */
 	@Override
 	public boolean isDirectory()
 	{
-		return getJavaFile().isDirectory();
+		return javaFile().isDirectory();
 	}
 
 	/**
-	 * Gets whether the {@link DefaultFile} is a file.
-	 * @return {@link boolean} - Whether the {@link DefaultFile} is a file
+	 * Gets whether the {@link DataFile} is a file.
+	 * @return {@link boolean} - Whether the {@link DataFile} is a file
 	 */
 	@Override
 	public boolean isFile()
@@ -293,36 +295,36 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	/**
-	 * Gets the size of the {@link DefaultFile} in {@link byte}s.
+	 * Gets the size of the {@link DataFile} in {@link byte}s.
 	 * @return {@link long} - The size in {@link byte}s
 	 */
 	@Override
-	public long length()
+	public long size()
 	{
-		return getJavaFile().length();
+		return javaFile().length();
 	}
 
 	@Override
-	public DefaultFile move(DefaultFile file)
+	public DataFile move(DataFile file)
 	{
-		DefaultFile copy = copy(file);
-		if (copy.equals(DefaultFile.NOTHING)) return this;
+		DataFile copy = copy(file);
+		if (copy.equals(DataFile.NOTHING)) return this;
 		delete();
 		return copy;
 	}
 
 	/**
-	 * Parses a the {@link DefaultFile} as a {@link byte} array.
+	 * Parses a the {@link DataFile} as a {@link byte} array.
 	 * @return {@link byte[]} - The contents of the file as a {@link byte} array
 	 */
 	@Override
 	public byte[] readBytes()
 	{
 		FileInputStream stream = null;
-		byte bytes[] = new byte[(int) length()];
+		byte bytes[] = new byte[(int) size()];
 		try
 		{
-			stream = getFileInputStream();
+			stream = fileInputStream();
 			stream.read(bytes);
 		}
 		catch (Exception ex)
@@ -349,8 +351,13 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return readString();
 	}
 
+	public String unwrap()
+	{
+		return readString();
+	}
+
 	/**
-	 * Parses a the {@link DefaultFile} as a {@link String}.
+	 * Parses a the {@link DataFile} as a {@link String}.
 	 * @return {@link String} - The contents of the file
 	 */
 	@Override
@@ -360,7 +367,7 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		String output = "";
 		try
 		{
-			reader = getBufferedReader();
+			reader = bufferedReader();
 			String nextLine = "";
 			do
 			{
@@ -389,60 +396,60 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	@Override
-	public DefaultFile rename(String name)
+	public DataFile rename(String name)
 	{
-		return rename(new DefaultFile(name));
+		return rename(new DataFile(name));
 	}
 
 	@Override
-	public DefaultFile setExtension(FileType extension)
+	public DataFile setExtension(FileExtension extension)
 	{
-		if (extension.equals(getExtensionType())) return this;
-		return new DefaultFile(getParentPath()
-							   + getNameWithoutExtension()
+		if (extension.equals(fileExtension())) return this;
+		return new DataFile(parentPath()
+							   + nameWithoutExtension()
 							   + "." + extension.getExtension());
 	}
 
 	@Override
-	public DefaultFile setExtension(String extension)
+	public DataFile setExtension(String extension)
 	{
-		return setExtension(new FileType(extension));
+		return setExtension(new FileExtension(extension));
 	}
 
 	@Override
-	public DefaultFile setPath(String path)
+	public DataFile setPath(String path)
 	{
-		return new DefaultFile(path);
+		return new DataFile(path);
 	}
 
 	@Override
 	public String toString()
 	{
-		return getPath();
+		return path();
 	}
 
 	@Override
-	public DefaultFile write()
+	public DataFile write()
 	{
 		return write("");
 	}
 
 	/**
-	 * Writes to the {@link DefaultFile}.
+	 * Writes to the {@link DataFile}.
 	 * @param contents The contents to write as {@link byte}s
 	 */
 	@Override
-	public DefaultFile write(byte[] contents)
+	public DataFile write(byte[] contents)
 	{
 		FileOutputStream stream = null;
 		try
 		{
-			stream = getFileOutputStream();
+			stream = fileOutputStream();
 			stream.write(contents);
 		}
 		catch (Exception ex)
 		{
-			return DefaultFile.NOTHING;
+			return DataFile.NOTHING;
 		}
 		finally
 		{
@@ -459,21 +466,21 @@ public class DefaultFile implements File<DefaultFile, String, String>
 	}
 
 	/**
-	 * Writes to the {@link DefaultFile}.
+	 * Writes to the {@link DataFile}.
 	 * @param contents The contents to write as a {@link String}
 	 */
 	@Override
-	public DefaultFile write(String contents)
+	public DataFile write(String contents)
 	{
 		PrintWriter writer = null;
 		try
 		{
-			writer = getPrintWriter();
+			writer = printWriter();
 			writer.print(contents);
 		}
 		catch (Exception ex)
 		{
-			return DefaultFile.NOTHING;
+			return DataFile.NOTHING;
 		}
 		finally
 		{
@@ -482,10 +489,10 @@ public class DefaultFile implements File<DefaultFile, String, String>
 		return this;
 	}
 
-	private DefaultFile rename(DefaultFile file)
+	private DataFile rename(DataFile file)
 	{
 		if (equals(file)) return this;
-		if (!exists() || getJavaFile().renameTo(file.getJavaFile())) return file;
+		if (!exists() || javaFile().renameTo(file.javaFile())) return file;
 		return this;
 	}
 

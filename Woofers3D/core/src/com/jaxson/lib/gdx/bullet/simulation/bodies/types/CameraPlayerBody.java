@@ -16,24 +16,12 @@ public class CameraPlayerBody extends PlayerBody
 
 	public CameraPlayerBody(Model model, TargetCamera camera)
 	{
-		this(model, getFittedHitbox(model), camera);
-	}
-
-	public CameraPlayerBody(String modelPath,
-							ConvexShape shape,
-							TargetCamera camera)
-	{
-		this(readModel(modelPath), shape, camera);
-	}
-
-	public CameraPlayerBody(String modelPath, TargetCamera camera)
-	{
-		this(readModel(modelPath), camera);
+		this(model, fittedHitbox(model), camera);
 	}
 
 	public boolean cameraIsLocked()
 	{
-		return !getCamera().hasTarget();
+		return !camera().hasTarget();
 	}
 
 	@Override
@@ -43,24 +31,24 @@ public class CameraPlayerBody extends PlayerBody
 		unlockCamera();
 	}
 
-	public TargetCamera getCamera()
+	public TargetCamera camera()
 	{
 		return camera;
 	}
 
 	public boolean hasCamera()
 	{
-		return getCamera() != null;
+		return camera() != null;
 	}
 
 	public void lockCamera()
 	{
-		if (hasCamera()) getCamera().setTarget(null);
+		if (hasCamera()) camera().setTarget(null);
 	}
 
 	public void setCamera(TargetCamera camera)
 	{
-		if (camera == getCamera()) return;
+		if (camera == camera()) return;
 		if (camera == null) lockCamera();
 		this.camera = camera;
 		unlockCamera();
@@ -80,7 +68,7 @@ public class CameraPlayerBody extends PlayerBody
 
 	public void unlockCamera()
 	{
-		if (hasCamera()) getCamera().setTarget(this);
+		if (hasCamera()) camera().setTarget(this);
 	}
 
 	@Override

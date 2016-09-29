@@ -25,7 +25,7 @@ public class Screenshot implements Disposable
 	public Screenshot()
 	{
 		saveScreenshot();
-		this.file = getScreenshotFile();
+		this.file = screenshotFile();
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class Screenshot implements Disposable
 
 	public Screenshot flipY()
 	{
-		ByteBuffer pixels = getPixmap().getPixels();
-		int bytesPerLine = getWidth() * BYTES_PER_PIXEL;
-		int totalBytes = getArea() * BYTES_PER_PIXEL;
+		ByteBuffer pixels = pixmap().getPixels();
+		int bytesPerLine = width() * BYTES_PER_PIXEL;
+		int totalBytes = area() * BYTES_PER_PIXEL;
 		byte[] lines = new byte[totalBytes];
-		for (int i = 0; i < getHeight(); i ++)
+		for (int i = 0; i < height(); i ++)
 		{
-			pixels.position((getHeight() - i - 1) * bytesPerLine);
+			pixels.position((height() - i - 1) * bytesPerLine);
 			pixels.get(lines, i * bytesPerLine, bytesPerLine);
 		}
 		pixels.clear();
@@ -51,24 +51,24 @@ public class Screenshot implements Disposable
 		return this;
 	}
 
-	public int getArea()
+	public int area()
 	{
-		return getWidth() * getHeight();
+		return width() * height();
 	}
 
-	public int getHeight()
+	public int height()
 	{
-		return getPixmap().getHeight();
+		return pixmap().getHeight();
 	}
 
-	public Pixmap getPixmap()
+	public Pixmap pixmap()
 	{
 		return image;
 	}
 
-	public int getWidth()
+	public int width()
 	{
-		return getPixmap().getWidth();
+		return pixmap().getWidth();
 	}
 
 	public Screenshot save()
@@ -89,13 +89,14 @@ public class Screenshot implements Disposable
 
 	public TextureData toTextureData()
 	{
-		return new PixmapTextureData(getPixmap(), getPixmap().getFormat(),
-				true, true);
+		return new PixmapTextureData(pixmap(),
+									 pixmap().getFormat(),
+									 true, true);
 	}
 
 	private void saveScreenshot()
 	{
-		saveScreenshot(getGraphics().getWidth(), getGraphics().getHeight());
+		saveScreenshot(graphics().getWidth(), graphics().getHeight());
 	}
 
 	private void saveScreenshot(int width, int height)
@@ -110,25 +111,25 @@ public class Screenshot implements Disposable
 		if (yDown) flipY();
 	}
 
-	private static Graphics getGraphics()
+	private static Graphics graphics()
 	{
 		return Gdx.graphics;
 	}
 
-	private static GdxFile getScreenshotFile()
+	private static GdxFile screenshotFile()
 	{
 		int counter = 0;
 		GdxFile file;
 		do
 		{
 			counter ++;
-			file = new GdxFile(getScreenshotPath(counter));
+			file = new GdxFile(screenshotPath(counter));
 		}
 		while (file.exists());
 		return file;
 	}
 
-	private static String getScreenshotPath(int index)
+	private static String screenshotPath(int index)
 	{
 		return FOLDER + File.FOWARD_SLASH + NAME + index + EXTENSION;
 	}

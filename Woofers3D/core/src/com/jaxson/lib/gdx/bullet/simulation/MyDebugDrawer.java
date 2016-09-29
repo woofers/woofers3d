@@ -40,7 +40,7 @@ public class MyDebugDrawer
 		removeDebugDrawer();
 	}
 
-	public int getDebugMode()
+	public int debugMode()
 	{
 		if (!hasDebugDrawer()) return NO_DEBUG;
 		return debugDrawer.getDebugMode();
@@ -49,16 +49,16 @@ public class MyDebugDrawer
 	public void render(View view)
 	{
 		if (!hasDebugDrawer()) return;
-		view.getModelView().apply();
-		view.getModelBatch().flush();
-		debugDrawer.begin(view.getModelView().getCamera());
+		view.modelView().apply();
+		view.modelBatch().flush();
+		debugDrawer.begin(view.modelView().getCamera());
 		world.debugDrawWorld();
 		debugDrawer.end();
 	}
 
 	public void setDebugMode(int mode)
 	{
-		if (mode == getDebugMode()) return;
+		if (mode == debugMode()) return;
 		if (mode == NO_DEBUG && !hasDebugDrawer()) return;
 		if (!hasDebugDrawer())
 		{
@@ -75,7 +75,7 @@ public class MyDebugDrawer
 
 	public void toggleDebugMode()
 	{
-		if (getDebugMode() == NO_DEBUG)
+		if (debugMode() == NO_DEBUG)
 		{
 			setDebugMode(MIXED);
 		}

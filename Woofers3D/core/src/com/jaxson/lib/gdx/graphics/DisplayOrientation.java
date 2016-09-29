@@ -38,17 +38,17 @@ public class DisplayOrientation
 		if (other instanceof DisplayOrientation)
 		{
 			DisplayOrientation otherOrientation = (DisplayOrientation) other;
-			return getAngle() == otherOrientation.getAngle();
+			return angle() == otherOrientation.angle();
 		}
 		if (other instanceof Number)
 		{
 			Number otherNumber = (Number) other;
-			return getAngle() == otherNumber.intValue();
+			return angle() == otherNumber.intValue();
 		}
 		return false;
 	}
 
-	public int getAngle()
+	public int angle()
 	{
 		return angle;
 	}

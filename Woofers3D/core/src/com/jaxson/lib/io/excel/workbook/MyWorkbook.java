@@ -1,6 +1,6 @@
 package com.jaxson.lib.io.excel.workbook;
 
-import com.jaxson.lib.io.DefaultFile;
+import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.util.MyArrayList;
 import java.io.Closeable;
 import java.io.IOException;
@@ -56,12 +56,12 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		return getWorkbook().addPicture(pictureData, format);
 	}
 
-	public int addPicture(DefaultFile picture)
+	public int addPicture(DataFile picture)
 	{
 		return addPicture(picture, PICTURE_PNG);
 	}
 
-	public int addPicture(DefaultFile picture, int format)
+	public int addPicture(DataFile picture, int format)
 	{
 		return addPicture(picture.readBytes(), format);
 	}

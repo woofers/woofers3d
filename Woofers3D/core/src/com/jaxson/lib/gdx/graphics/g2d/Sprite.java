@@ -9,58 +9,58 @@ public abstract class Sprite extends GameObject
 	private float alpha = 1f;
 	private float depth = 1f;
 
-	public float getAlpha()
+	public float alpha()
 	{
 		return alpha;
 	}
 
-	public Vector2 getCenter()
+	public Vector2 center()
 	{
-		return getLocation().add(getLocation().scl(0.5f));
+		return location().add(location().scl(0.5f));
 	}
 
-	public float getDepth()
+	public float depth()
 	{
 		return depth;
 	}
 
-	public abstract float getHeight();
+	public abstract float height();
 
-	public Vector2 getLocation()
+	public Vector2 location()
 	{
-		return new Vector2(getX(), getY());
+		return new Vector2(x(), y());
 	}
 
-	public Vector2 getOrigin()
+	public Vector2 origin()
 	{
-		return new Vector2(getOriginX(), getOriginY());
+		return new Vector2(originX(), originY());
 	}
 
-	public abstract float getOriginX();
+	public abstract float originX();
 
-	public abstract float getOriginY();
+	public abstract float originY();
 
-	public abstract float getRotation();
+	public abstract float rotation();
 
-	public Vector2 getScale()
+	public Vector2 scale()
 	{
-		return new Vector2(getScaleX(), getScaleY());
+		return new Vector2(scaleX(), scaleY());
 	}
 
-	public abstract float getScaleX();
+	public abstract float scaleX();
 
-	public abstract float getScaleY();
+	public abstract float scaleY();
 
-	public Vector2 getSize()
+	public Vector2 size()
 	{
-		return new Vector2(getWidth(), getHeight());
+		return new Vector2(width(), height());
 	}
 
-	public abstract float getWidth();
+	public abstract float width();
 
-	public abstract float getX();
+	public abstract float x();
 
-	public abstract float getY();
+	public abstract float y();
 
 	public void setAlpha(float alpha)
 	{
@@ -117,12 +117,12 @@ public abstract class Sprite extends GameObject
 
 	public void setScaleX(float scale)
 	{
-		setScale(scale, getScaleY());
+		setScale(scale, scaleY());
 	}
 
 	public void setScaleY(float scale)
 	{
-		setScale(getScaleX(), scale);
+		setScale(scaleX(), scale);
 	}
 
 	public abstract void setSize(float width, float height);
@@ -134,12 +134,12 @@ public abstract class Sprite extends GameObject
 
 	public void setX(float x)
 	{
-		setLocation(x, getY(), getDepth());
+		setLocation(x, y(), depth());
 	}
 
 	public void setY(float y)
 	{
-		setLocation(getX(), y, getDepth());
+		setLocation(x(), y, depth());
 	}
 
 	public void translate(float x, float y)

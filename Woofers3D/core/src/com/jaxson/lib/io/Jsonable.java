@@ -1,12 +1,14 @@
 package com.jaxson.lib.io;
 
+import com.jaxson.lib.util.Unwrapable;
+
 /**
  * Decorator to save any {@link Object}.
  * @param <T> the type of {@link Object} being saved
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class Jsonable<T>
+public class Jsonable<T> implements Unwrapable<T>
 {
 	private T object;
 	private JsonFile<T> file;
@@ -28,24 +30,24 @@ public class Jsonable<T>
 		obtain();
 	}
 
-	public T get()
+	public T unwarp()
 	{
 		return object;
 	}
 
-	public JsonFile<T> getSaveFile()
+	public JsonFile<T> saveFile()
 	{
 		return file;
 	}
 
 	public boolean isPresent()
 	{
-		return get() != null;
+		return unwarp() != null;
 	}
 
 	public void obtain()
 	{
-		if (getSaveFile().exists())
+		if (saveFile().exists())
 			read();
 		else
 			save();
@@ -53,17 +55,24 @@ public class Jsonable<T>
 
 	public void read()
 	{
-		T newObject = getSaveFile().readObject();
+		T newObject = saveFile().readObject();
 		if (newObject != null) this.object = newObject;
 	}
 
 	public void save()
 	{
-		getSaveFile().write(get());
+		saveFile().write(unwarp());
 	}
 
 	public void setSaveFile(JsonFile<T> file)
 	{
 		this.file = file;
+	}
+
+	@Override
+	public T unwrap()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

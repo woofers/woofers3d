@@ -11,7 +11,7 @@ public class Touch implements Key
 		this.finger = finger;
 	}
 
-	public int getFinger()
+	public int finger()
 	{
 		return finger;
 	}

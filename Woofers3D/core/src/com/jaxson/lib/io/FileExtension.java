@@ -1,8 +1,9 @@
 package com.jaxson.lib.io;
 
 import java.util.HashMap;
+import com.jaxson.lib.util.Measurable;
 
-public class FileType
+public class FileExtension implements Measurable
 {
 	private static HashMap<String, String> exceptions = new HashMap<>();
 
@@ -12,19 +13,19 @@ public class FileType
 		addException("htm", "html");
 	}
 
-	public static final FileType NONE = new FileType("");
-	public static final FileType DIB = new FileType("dib");
-	public static final FileType EMF = new FileType("emf");
-	public static final FileType JPG = new FileType("jpg");
-	public static final FileType PICT = new FileType("pict");
-	public static final FileType PNG = new FileType("png");
-	public static final FileType WMP = new FileType("wmp");
-	public static final FileType G3DJ = new FileType("g3dj");
-	public static final FileType G3DB = new FileType("g3db");
-	public static final FileType OBJ = new FileType("obj");
-	public static final FileType XLS = new FileType("xls");
-	public static final FileType XLSX = new FileType("xlsx");
-	public static final FileType HTML = new FileType("html");
+	public static final FileExtension NONE = new FileExtension("");
+	public static final FileExtension DIB = new FileExtension("dib");
+	public static final FileExtension EMF = new FileExtension("emf");
+	public static final FileExtension JPG = new FileExtension("jpg");
+	public static final FileExtension PICT = new FileExtension("pict");
+	public static final FileExtension PNG = new FileExtension("png");
+	public static final FileExtension WMP = new FileExtension("wmp");
+	public static final FileExtension G3DJ = new FileExtension("g3dj");
+	public static final FileExtension G3DB = new FileExtension("g3db");
+	public static final FileExtension OBJ = new FileExtension("obj");
+	public static final FileExtension XLS = new FileExtension("xls");
+	public static final FileExtension XLSX = new FileExtension("xlsx");
+	public static final FileExtension HTML = new FileExtension("html");
 
 	private static final int MAX_CHARACTER = 55;
 	private static final String MAX_CHARACTER_EXCEEDED
@@ -32,14 +33,14 @@ public class FileType
 
 	private final String extension;
 
-	public FileType(String extension)
+	public FileExtension(String extension)
 	{
 		this.extension = formatExtension(extension);
-		if (length() >= MAX_CHARACTER)
+		if (size() >= MAX_CHARACTER)
 			throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}
 
-	public boolean equals(FileType other)
+	public boolean equals(FileExtension other)
 	{
 		return getExtension().equals(other.getExtension());
 	}
@@ -47,7 +48,7 @@ public class FileType
 	@Override
 	public boolean equals(Object other)
 	{
-		if (other instanceof FileType) return equals((FileType) other);
+		if (other instanceof FileExtension) return equals((FileExtension) other);
 		return false;
 	}
 
@@ -71,7 +72,8 @@ public class FileType
 		return equals(XLS) || equals(XLSX);
 	}
 
-	public int length()
+	@Override
+	public int size()
 	{
 		return getExtension().length();
 	}
@@ -101,9 +103,9 @@ public class FileType
 
 	private static String formatExtension(String extension)
 	{
-		DefaultFile file = new DefaultFile(extension);
-		String newExtension = file.getExtension();
-		if (newExtension.isEmpty()) newExtension = file.getName();
+		DataFile file = new DataFile(extension);
+		String newExtension = file.extension();
+		if (newExtension.isEmpty()) newExtension = file.name();
 		newExtension = findStandardExtension(newExtension);
 		return newExtension;
 	}

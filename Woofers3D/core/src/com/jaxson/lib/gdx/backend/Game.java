@@ -39,122 +39,122 @@ public class Game
 	public void dispose()
 	{
 		gameStates.dispose();
-		getDisplay().dispose();
+		display().dispose();
 	}
 
 	public void exit()
 	{
-		getApplication().exit();
+		application().exit();
 	}
 
-	public Application getApplication()
+	public Application application()
 	{
 		return Gdx.app;
 	}
 
-	public ApplicationType getApplicationType()
+	public ApplicationType applicationType()
 	{
-		return getApplication().getType();
+		return application().getType();
 	}
 
-	public Audio getAudio()
+	public Audio audio()
 	{
-		return getApplication().getAudio();
+		return application().getAudio();
 	}
 
-	public float getClampInterval()
+	public float clampInterval()
 	{
-		return getConfig().getClampInterval();
+		return config().getClampInterval();
 	}
 
-	public Clipboard getClipboard()
+	public Clipboard clipboard()
 	{
-		return getApplication().getClipboard();
+		return application().getClipboard();
 	}
 
-	public GameConfig getConfig()
+	public GameConfig config()
 	{
-		return getSaveableConfig().get();
+		return saveableConfig().unwarp();
 	}
 
-	public State getCurrentState()
+	public State currentState()
 	{
 		return gameStates.peek();
 	}
 
-	public Display getDisplay()
+	public Display display()
 	{
 		return display;
 	}
 
-	public Files getFiles()
+	public Files files()
 	{
-		return getApplication().getFiles();
+		return application().getFiles();
 	}
 
-	public GL20 getGl()
+	public GL20 gl()
 	{
-		return getDisplay().getGl();
+		return display().gl();
 	}
 
-	public Graphics getGraphics()
+	public Graphics graphics()
 	{
-		return getApplication().getGraphics();
+		return application().getGraphics();
 	}
 
-	public Input getInput()
+	public Input input()
 	{
-		return getApplication().getInput();
+		return application().getInput();
 	}
 
-	public Net getNetwork()
+	public Net network()
 	{
-		return getApplication().getNet();
+		return application().getNet();
 	}
 
-	public Jsonable<GameConfig> getSaveableConfig()
+	public Jsonable<GameConfig> saveableConfig()
 	{
 		return config;
 	}
 
-	public float getStepInterval()
+	public float stepInterval()
 	{
-		return getConfig().getStepInterval();
+		return config().getStepInterval();
 	}
 
-	public View getView()
+	public View view()
 	{
-		return getDisplay().getView();
+		return display().view();
 	}
 
 	public boolean hasFixedTimeStamp()
 	{
-		return getConfig().hasFixedTimeStep();
+		return config().hasFixedTimeStep();
 	}
 
 	public boolean isAndroid()
 	{
-		return getApplicationType() == ApplicationType.Android;
+		return applicationType() == ApplicationType.Android;
 	}
 
 	public boolean isDesktop()
 	{
-		return getApplicationType() == ApplicationType.Desktop;
+		return applicationType() == ApplicationType.Desktop;
 	}
 
 	public boolean isFocused()
 	{
-		return getDisplay().isFocused();
+		return display().isFocused();
 	}
 
 	public boolean isIOS()
 	{
-		return getApplicationType() == ApplicationType.iOS;
+		return applicationType() == ApplicationType.iOS;
 	}
 
 	public boolean isMinimized()
 	{
-		return getDisplay().isMinimized();
+		return display().isMinimized();
 	}
 
 	public boolean isMobile()
@@ -164,7 +164,7 @@ public class Game
 
 	public boolean isPaused()
 	{
-		return getDisplay().isPaused();
+		return display().isPaused();
 	}
 
 	public boolean isSmartPhone()
@@ -174,18 +174,18 @@ public class Game
 
 	public boolean isWeb()
 	{
-		return getApplicationType() == ApplicationType.WebGL;
+		return applicationType() == ApplicationType.WebGL;
 	}
 
 	public void log(String tag, String message)
 	{
-		getApplication().log(tag, message);
+		application().log(tag, message);
 	}
 
 	public void pause()
 	{
 		gameStates.pause();
-		getDisplay().pause();
+		display().pause();
 	}
 
 	public void pushState(State state)
@@ -195,12 +195,12 @@ public class Game
 
 	public void render()
 	{
-		dt = getDeltaTime();
+		dt = deltaTime();
 		if (hasFixedTimeStamp())
 		{
-			clamp = getClampInterval();
+			clamp = clampInterval();
 			if (dt > clamp) dt = clamp;
-			step = getStepInterval();
+			step = stepInterval();
 			accumulator += dt;
 			while (accumulator >= step)
 			{
@@ -212,25 +212,25 @@ public class Game
 		{
 			update(dt);
 		}
-		getDisplay().render(getView());
-		gameStates.render(getView());
+		display().render(view());
+		gameStates.render(view());
 	}
 
 	public void resize(int width, int height)
 	{
 		gameStates.resize(width, height);
-		getDisplay().resize(width, height);
+		display().resize(width, height);
 	}
 
 	public void resume()
 	{
 		gameStates.resume();
-		getDisplay().resume();
+		display().resume();
 	}
 
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
-		getInput().setInputProcessor(inputProcessor);
+		input().setInputProcessor(inputProcessor);
 	}
 
 	public void setState(State state)
@@ -241,12 +241,12 @@ public class Game
 	public void update(float step)
 	{
 		gameStates.update(step);
-		getDisplay().update(step);
+		display().update(step);
 		Inputs.update(step);
 	}
 
-	private float getDeltaTime()
+	private float deltaTime()
 	{
-		return getGraphics().getDeltaTime();
+		return graphics().getDeltaTime();
 	}
 }

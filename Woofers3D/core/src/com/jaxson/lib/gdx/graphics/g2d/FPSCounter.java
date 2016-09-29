@@ -25,6 +25,6 @@ public class FPSCounter extends Text
 	@Override
 	public void update(float dt)
 	{
-		setText(FPS_LABEL + game.getDisplay().getFps());
+		setText(FPS_LABEL + game.display().fps());
 	}
 }

@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class EmptyFile extends DefaultFile
+public class EmptyFile extends DataFile
 {
 	EmptyFile()
 	{
@@ -22,7 +22,7 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public DefaultFile append(String contents)
+	public DataFile append(String contents)
 	{
 		return this;
 	}
@@ -40,25 +40,25 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public DefaultFile copy(DefaultFile file)
+	public DataFile copy(DataFile file)
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile createDirectory()
+	public DataFile createDirectory()
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile createFile()
+	public DataFile createFile()
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile delete()
+	public DataFile delete()
 	{
 		return this;
 	}
@@ -70,27 +70,27 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public BufferedReader getBufferedReader()
+	public BufferedReader bufferedReader()
 			throws FileNotFoundException
 	{
 		return null;
 	}
 
 	@Override
-	public DefaultFile getChild(String child)
+	public DataFile child(String child)
 	{
 		return this;
 	}
 
 	@Override
-	public FileInputStream getFileInputStream()
+	public FileInputStream fileInputStream()
 			throws FileNotFoundException
 	{
 		return null;
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream()
+	public FileOutputStream fileOutputStream()
 			throws FileNotFoundException,
 				   SecurityException
 	{
@@ -98,32 +98,32 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public FileReader getFileReader()
+	public FileReader fileReader()
 			throws FileNotFoundException
 	{
 		return null;
 	}
 
 	@Override
-	public java.io.File getJavaFile()
+	public java.io.File javaFile()
 	{
 		return null;
 	}
 
 	@Override
-	public DefaultFile getParent()
+	public DataFile parent()
 	{
 		return this;
 	}
 
 	@Override
-	public String getParentPath()
+	public String parentPath()
 	{
-		return getPath();
+		return path();
 	}
 
 	@Override
-	public PrintWriter getPrintWriter()
+	public PrintWriter printWriter()
 			throws FileNotFoundException,
 				   UnsupportedEncodingException
 	{
@@ -131,7 +131,7 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public Date getWhenLastModified()
+	public Date lastModified()
 	{
 		return new Date(0);
 	}
@@ -149,13 +149,13 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public long length()
+	public long size()
 	{
 		return 0;
 	}
 
 	@Override
-	public DefaultFile move(DefaultFile file)
+	public DataFile move(DataFile file)
 	{
 		return this;
 	}
@@ -163,7 +163,7 @@ public class EmptyFile extends DefaultFile
 	@Override
 	public byte[] readBytes()
 	{
-		return new byte[(int) length()];
+		return new byte[(int) size()];
 	}
 
 	@Override
@@ -173,31 +173,31 @@ public class EmptyFile extends DefaultFile
 	}
 
 	@Override
-	public DefaultFile rename(String name)
+	public DataFile rename(String name)
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile setExtension(FileType extension)
+	public DataFile setExtension(FileExtension extension)
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile setPath(String path)
+	public DataFile setPath(String path)
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile write(byte[] contents)
+	public DataFile write(byte[] contents)
 	{
 		return this;
 	}
 
 	@Override
-	public DefaultFile write(String contents)
+	public DataFile write(String contents)
 	{
 		return this;
 	}

@@ -42,42 +42,42 @@ public class MyColor extends Color
 		this(toFloat(r), toFloat(g), toFloat(b), toFloat(a));
 	}
 
-	public float getAlpha()
+	public float alpha()
 	{
 		return a;
 	}
 
-	public int getAlphaInt()
+	public int alphaInt()
 	{
 		return toInt(a);
 	}
 
-	public float getBlue()
+	public float blue()
 	{
 		return b;
 	}
 
-	public int getBlueInt()
+	public int blueInt()
 	{
 		return toInt(b);
 	}
 
-	public float getGreen()
+	public float green()
 	{
 		return g;
 	}
 
-	public int getGreenInt()
+	public int greenInt()
 	{
 		return toInt(g);
 	}
 
-	public float getRed()
+	public float red()
 	{
 		return r;
 	}
 
-	public int getRedInt()
+	public int redInt()
 	{
 		return toInt(r);
 	}

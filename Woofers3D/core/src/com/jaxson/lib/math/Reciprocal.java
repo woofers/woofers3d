@@ -14,16 +14,16 @@ public class Reciprocal extends ComparableNumber
 	@Override
 	public double doubleValue()
 	{
-		return 1d / getNumber().doubleValue();
+		return 1d / denominator().doubleValue();
 	}
 
 	@Override
 	public float floatValue()
 	{
-		return 1f / getNumber().floatValue();
+		return 1f / denominator().floatValue();
 	}
 
-	public Number getNumber()
+	public Number denominator()
 	{
 		return number;
 	}
@@ -31,12 +31,12 @@ public class Reciprocal extends ComparableNumber
 	@Override
 	public int intValue()
 	{
-		return 1 / getNumber().intValue();
+		return 1 / denominator().intValue();
 	}
 
 	@Override
 	public long longValue()
 	{
-		return 1l / getNumber().longValue();
+		return 1l / denominator().longValue();
 	}
 }

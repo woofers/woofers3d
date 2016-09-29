@@ -25,6 +25,7 @@ public abstract class ShapeBody
 		this(new ModelInstance(model), body, shape, mass);
 	}
 
+
 	public ShapeBody(ModelInstance modelInstance, B body, S shape)
 	{
 		this(modelInstance, body, shape, MASS);
@@ -36,16 +37,6 @@ public abstract class ShapeBody
 		setCollisionShape(shape);
 	}
 
-	public ShapeBody(String modelPath, B body, S shape)
-	{
-		this(modelPath, body, shape, MASS);
-	}
-
-	public ShapeBody(String modelPath, B body, S shape, float mass)
-	{
-		this(readModel(modelPath), body, shape, mass);
-	}
-
 	@Override
 	public void dispose()
 	{
@@ -53,32 +44,32 @@ public abstract class ShapeBody
 		shape.dispose();
 	}
 
-	public S getCollisionShape()
+	public S shape()
 	{
 		return shape;
 	}
 
-	public Vector3 getCollisionShapeScale()
+	public Vector3 shapeScale()
 	{
-		return getCollisionShape().getScale();
+		return shape().scale();
 	}
 
-	public Shape getFittedHitbox()
+	public Shape fittedHitbox()
 	{
-		return new BoxShape(getSize());
+		return new BoxShape(size());
 	}
 
-	public Vector3 getInertia()
+	public Vector3 inertia()
 	{
-		return shape.getInertia(getMass());
+		return shape.inertia(mass());
 	}
 
 	public void setCollisionShape(S shape)
 	{
-		if (new Optional<S>(shape).equals(getCollisionShape())) return;
-		Shape oldShape = getCollisionShape();
+		if (new Optional<S>(shape).equals(shape())) return;
+		Shape oldShape = shape();
 		this.shape = shape;
-		getBody().setCollisionShape(shape.getCollisionShape());
+		body().setCollisionShape(shape.shape());
 		if (oldShape != null) oldShape.dispose();
 	}
 
@@ -89,22 +80,22 @@ public abstract class ShapeBody
 
 	public void setCollisionShapeScale(Vector3 scale)
 	{
-		setLocalScaling(scale.scl(getScale()));
+		setLocalScaling(scale.scl(scale()));
 	}
 
 	@Override
-	public void setScale(Vector3 scale)
+	public void scale(Vector3 scale)
 	{
-		super.setScale(scale);
-		setLocalScaling(scale.scl(getCollisionShapeScale()));
+		super.scale(scale);
+		setLocalScaling(scale.scl(shapeScale()));
 	}
 
 	private void setLocalScaling(Vector3 scale)
 	{
-		getCollisionShape().setScale(scale);
+		shape().setScale(scale);
 	}
 
-	protected static BoxShape getFittedHitbox(Model model)
+	protected static BoxShape fittedHitbox(Model model)
 	{
 		return new BoxShape(model.calculateBoundingBox(
 				new BoundingBox()).getDimensions(new Vector3()));

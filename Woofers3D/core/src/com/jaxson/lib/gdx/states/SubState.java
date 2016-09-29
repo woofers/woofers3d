@@ -24,7 +24,7 @@ public abstract class SubState extends BaseState
 		super(gameManager);
 	}
 
-	public SubStateBehavior getBehavior()
+	public SubStateBehavior behavior()
 	{
 		return behavior;
 	}

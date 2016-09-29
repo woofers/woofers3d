@@ -9,12 +9,13 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import com.jaxson.lib.util.Unwrapable;
 
-public class JsonFile<T> implements File<JsonFile<T>, T, T>
+public class JsonFile<T> implements File<JsonFile<T>, T, T>, Unwrapable<T>
 {
 	private static final String EMPTY = "{" + NEXT_LINE + NEXT_LINE + "}";
 	public static final JsonFile NOTHING
-			= new JsonFile(DefaultFile.NOTHING, Object.class);
+			= new JsonFile(DataFile.NOTHING, Object.class);
 
 	private final File file;
 	private final Class<T> type;
@@ -27,7 +28,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 
 	public JsonFile(String path, Class<T> type)
 	{
-		this(new DefaultFile(path), type);
+		this(new DataFile(path), type);
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public boolean equals(File file)
+	public boolean equals(JsonFile file)
 	{
 		return getFile().equals(file);
 	}
@@ -85,100 +86,100 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public BufferedReader getBufferedReader()
+	public BufferedReader bufferedReader()
 			throws FileNotFoundException
 	{
-		return getFile().getBufferedReader();
+		return getFile().bufferedReader();
 	}
 
 	@Override
-	public JsonFile<T> getChild(String child)
+	public JsonFile<T> child(String child)
 	{
-		return new JsonFile<>(getFile().getChild(child), type);
+		return new JsonFile<>(getFile().child(child), type);
 	}
 
 	@Override
-	public String getExtension()
+	public String extension()
 	{
-		return getFile().getExtension();
+		return getFile().extension();
 	}
 
 	@Override
-	public FileType getExtensionType()
+	public FileExtension fileExtension()
 	{
-		return getFile().getExtensionType();
+		return getFile().fileExtension();
 	}
 
 	@Override
-	public FileInputStream getFileInputStream()
+	public FileInputStream fileInputStream()
 			throws FileNotFoundException
 	{
-		return getFile().getFileInputStream();
+		return getFile().fileInputStream();
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream()
+	public FileOutputStream fileOutputStream()
 			throws FileNotFoundException,
 				   SecurityException
 	{
-		return getFile().getFileOutputStream();
+		return getFile().fileOutputStream();
 	}
 
 	@Override
-	public FileReader getFileReader()
+	public FileReader fileReader()
 			throws FileNotFoundException
 	{
-		return getFile().getFileReader();
+		return getFile().fileReader();
 	}
 
 	@Override
-	public java.io.File getJavaFile()
+	public java.io.File javaFile()
 	{
-		return getFile().getJavaFile();
+		return getFile().javaFile();
 	}
 
 	@Override
-	public String getName()
+	public String name()
 	{
-		return getFile().getName();
+		return getFile().name();
 	}
 
 	@Override
-	public String getNameWithoutExtension()
+	public String nameWithoutExtension()
 	{
-		return getFile().getNameWithoutExtension();
+		return getFile().nameWithoutExtension();
 	}
 
 	@Override
-	public JsonFile<T> getParent()
+	public JsonFile<T> parent()
 	{
-		return new JsonFile<>(getFile().getParent(), type);
+		return new JsonFile<>(getFile().parent(), type);
 	}
 
 	@Override
-	public String getParentPath()
+	public String parentPath()
 	{
-		return getFile().getParentPath();
+		return getFile().parentPath();
 	}
 
 	@Override
-	public String getPath()
+	public String path()
 	{
-		return getFile().getPath();
+		return getFile().path();
 	}
 
 	@Override
-	public PrintWriter getPrintWriter()
+	public PrintWriter printWriter()
 			throws FileNotFoundException,
 				   UnsupportedEncodingException
 	{
-		return getFile().getPrintWriter();
+		return getFile().printWriter();
 	}
 
 	@Override
-	public Date getWhenLastModified()
+	public Date lastModified()
 	{
-		return getFile().getWhenLastModified();
+		return getFile().lastModified();
 	}
 
 	@Override
@@ -194,9 +195,9 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public long length()
+	public long size()
 	{
-		return getFile().length();
+		return getFile().size();
 	}
 
 	@Override
@@ -209,6 +210,11 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	public byte[] readBytes()
 	{
 		return getFile().readBytes();
+	}
+
+	public T unwrap()
+	{
+		return readObject();
 	}
 
 	@Override
@@ -239,7 +245,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public JsonFile<T> setExtension(FileType extension)
+	public JsonFile<T> setExtension(FileExtension extension)
 	{
 		return new JsonFile<>(getFile().setExtension(extension), type);
 	}

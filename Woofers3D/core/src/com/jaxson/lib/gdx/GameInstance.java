@@ -9,7 +9,7 @@ import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
-import com.jaxson.lib.io.DefaultFile;
+import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.io.Jsonable;
 
 /**
@@ -29,7 +29,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public GameInstance()
 	{
-		this.config = new Jsonable<>(new DefaultFile("config.json"),
+		this.config = new Jsonable<>(new DataFile("config.json"),
 									 GameConfig.class,
 									 new GameConfig());
 	}
@@ -59,7 +59,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public GameConfig getConfig()
 	{
-		return getSaveableConfig().get();
+		return getSaveableConfig().unwarp();
 	}
 
 	/**

@@ -12,6 +12,8 @@ import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
+import com.jaxson.lib.util.Optional;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -49,126 +51,126 @@ public class TargetCamera extends PerspectiveCamera
 		setFar(FAR);
 		center();
 
-		this.keyboard = Inputs.getKeyboard();
-		this.centerKey = keyboard.getKey("R");
+		this.keyboard = Inputs.keyboard();
+		this.centerKey = keyboard.key("R");
 	}
 
 	public void center()
 	{
-		center(getTargetLocation());
+		center(targetLocation());
 	}
 
 	public void center(Vector3 point)
 	{
 		if (point == null) point = STAGE_LOCATION;
 		Vector3 newOffset = offset.cpy();
-		if (hasTarget()) newOffset.rotate(Vector3.Y, getTargetRotation().x);
+		if (hasTarget()) newOffset.rotate(Vector3.Y, targetRotation().x);
 		setLocation(point);
 		translate(newOffset);
 		lookAt(point);
 		oldTargetLocation = point;
 	}
 
-	public Vector3 getDeltaLocation(Vector3 location)
+	public Vector3 deltaLocation(Vector3 location)
 	{
-		return location.cpy().sub(getLocation());
+		return location.cpy().sub(location());
 	}
 
-	public Vector3 getDeltaTargetLocation()
+	public Vector3 deltaTargetLocation()
 	{
-		return getTargetLocation().cpy().sub(oldTargetLocation);
+		return targetLocation().cpy().sub(oldTargetLocation);
 	}
 
-	public Vector3 getDirection()
+	public Vector3 direction()
 	{
 		return direction;
 	}
 
-	public float getFar()
+	public float far()
 	{
 		return far;
 	}
 
-	public float getFov()
+	public float fov()
 	{
 		return fieldOfView;
 	}
 
-	public Vector3 getLocation()
+	public Vector3 location()
 	{
 		return position;
 	}
 
-	public Vector2 getMouse()
+	public Vector2 mosueLocation()
 	{
-		return Inputs.getMouse().getScaledLocation();
+		return Inputs.mouse().scaledLocation();
 	}
 
-	public float getNear()
+	public float near()
 	{
 		return near;
 	}
 
-	public Vector3 getOffset()
+	public Vector3 offset()
 	{
 		return offset;
 	}
 
-	public Ray getRay()
+	public Ray ray()
 	{
 		if (!hasTarget()) return null;
-		return new Ray(getLocation(),
-				getDeltaLocation(getTarget().getLocation()));
+		return new Ray(location(),
+				deltaLocation(target().location()));
 	}
 
-	public Quaternion getRoationQuat()
+	public Quaternion roationQuaternion()
 	{
-		return getView().getRotation(new Quaternion());
+		return view().getRotation(new Quaternion());
 	}
 
-	public Vector3 getRotation()
+	public Vector3 rotation()
 	{
-		Quaternion rotation = getRoationQuat();
+		Quaternion rotation = roationQuaternion();
 		return new Vector3(rotation.getYaw(),
 						   rotation.getPitch(),
 						   rotation.getRoll());
 	}
 
-	public Entity getTarget()
+	public Entity target()
 	{
 		return target;
 	}
 
-	public Vector3 getTargetLocation()
+	public Vector3 targetLocation()
 	{
 		if (!hasTarget()) return null;
-		return getTarget().getLocation();
+		return target().location();
 	}
 
-	public Vector3 getTargetRotation()
+	public Vector3 targetRotation()
 	{
 		if (!hasTarget()) return null;
-		return getTarget().getRotation();
+		return target().rotation();
 	}
 
-	public Vector3 getUp()
+	public Vector3 up()
 	{
 		return up;
 	}
 
-	public Matrix4 getView()
+	public Matrix4 view()
 	{
 		return view;
 	}
 
-	public Vector3 getZoom()
+	public Vector3 zoom()
 	{
 		return zoom;
 	}
 
 	public boolean hasTarget()
 	{
-		return getTarget() != null;
+		return target() != null;
 	}
 
 	public boolean hasWorld()
@@ -223,7 +225,8 @@ public class TargetCamera extends PerspectiveCamera
 		if (!keepInBounds) return;
 		if (hasWorld() && hasTarget())
 		{
-			if (world.getBody(getRay()) != getTarget())
+			Optional<EntityBody> trace = world.rayTrace(ray());
+			if (trace.exists() && world.rayTrace(ray()).unwrap() != target())
 			{
 				rotateAround(location, -yaw, -pitch, -roll, !keepInBounds);
 			}
@@ -242,7 +245,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setDirection(Vector3 direction)
 	{
-		getDirection().set(direction);
+		direction().set(direction);
 	}
 
 	public void setFar(float far)
@@ -258,7 +261,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setLocation(Vector3 location)
 	{
-		getLocation().set(location);
+		location().set(location);
 	}
 
 	public void setNear(float near)
@@ -292,7 +295,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setUp(Vector3 location)
 	{
-		getUp().set(location);
+		up().set(location);
 	}
 
 	public void setWorld(PhysicsWorld world)
@@ -309,19 +312,19 @@ public class TargetCamera extends PerspectiveCamera
 	public void update()
 	{
 		input();
-		oldTargetLocation = getTargetLocation();
+		oldTargetLocation = targetLocation();
 		super.update();
 	}
 
 	private void input()
 	{
 		if (!hasTarget()) return;
-		rotateAround(getTargetLocation(), getMouse());
-		translate(getDeltaTargetLocation());
+		rotateAround(targetLocation(), mosueLocation());
+		translate(deltaTargetLocation());
 		resetUp();
 		if (centerKey.isPressed())
 		{
-			center(getTargetLocation());
+			center(targetLocation());
 		}
 	}
 }

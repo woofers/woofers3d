@@ -18,7 +18,7 @@ public abstract class BaseState extends GameObject
 	protected BaseState(Game game)
 	{
 		this.game = game;
-		this.objects = new MixedObjects(getView());
+		this.objects = new MixedObjects(view());
 	}
 
 	public void add(Entity entity)
@@ -42,29 +42,29 @@ public abstract class BaseState extends GameObject
 		objects.dispose();
 	}
 
-	public MyEnvironment getEnvironment()
+	public MyEnvironment environment()
 	{
-		return objects.getEnvironment();
+		return objects.environment();
 	}
 
-	public Game getGame()
+	public Game game()
 	{
 		return game;
 	}
 
-	public int getHeight()
+	public int height()
 	{
-		return getGame().getDisplay().getHeight();
+		return game().display().height();
 	}
 
-	public View getView()
+	public View view()
 	{
-		return getGame().getView();
+		return game().view();
 	}
 
-	public int getWidth()
+	public int width()
 	{
-		return getGame().getDisplay().getWidth();
+		return game().display().width();
 	}
 
 	public void remove(Entity entity)

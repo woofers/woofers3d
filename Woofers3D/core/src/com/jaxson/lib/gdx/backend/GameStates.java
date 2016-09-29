@@ -58,7 +58,7 @@ public class GameStates extends GameObject
 	{
 		if (isEmpty()) return;
 		peek().pause();
-		if (updatesSubState()) peek().getSubState().pause();
+		if (updatesSubState()) peek().subState().pause();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class GameStates extends GameObject
 	{
 		if (isEmpty()) return;
 		peek().render(view);
-		if (updatesSubState()) peek().getSubState().render(view);
+		if (updatesSubState()) peek().subState().render(view);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class GameStates extends GameObject
 	{
 		if (isEmpty()) return;
 		peek().resize(width, height);
-		if (updatesSubState()) peek().getSubState().resize(width, height);
+		if (updatesSubState()) peek().subState().resize(width, height);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class GameStates extends GameObject
 	{
 		if (isEmpty()) return;
 		peek().resume();
-		if (updatesSubState()) peek().getSubState().resume();
+		if (updatesSubState()) peek().subState().resume();
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class GameStates extends GameObject
 		}
 		else
 		{
-			if (hasPausedState()) peek().getSubState().update(dt);
+			if (hasPausedState()) peek().subState().update(dt);
 		}
 	}
 

@@ -20,7 +20,7 @@ public class RigidSphere extends RigidBody
 
 	public RigidSphere(Color color)
 	{
-		super(new Sphere(color).getModelInstance(), getShape());
+		super(new Sphere(color).modelInstance(), getShape());
 	}
 
 	protected static SphereShape getShape()

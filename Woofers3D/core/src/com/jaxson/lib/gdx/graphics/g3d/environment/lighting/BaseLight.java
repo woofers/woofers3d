@@ -16,19 +16,19 @@ public abstract class BaseLight<L extends DirectionalLight> implements Light
 	public abstract BaseLight<L> copy();
 
 	@Override
-	public Color getColor()
+	public Color color()
 	{
-		return getLight().color;
+		return light().color;
 	}
 
 	@Override
-	public Vector3 getDirection()
+	public Vector3 direction()
 	{
-		return getLight().direction;
+		return light().direction;
 	}
 
 	@Override
-	public L getLight()
+	public L light()
 	{
 		return light;
 	}
@@ -38,17 +38,17 @@ public abstract class BaseLight<L extends DirectionalLight> implements Light
 
 	public void set(Color color, Vector3 direction)
 	{
-		getLight().set(color, direction);
+		light().set(color, direction);
 	}
 
 	public void setColor(Color color)
 	{
-		set(color, getDirection());
+		set(color, direction());
 	}
 
 	public void setDirection(Vector3 direction)
 	{
-		getLight().setDirection(direction);
+		light().setDirection(direction);
 	}
 
 	@Override

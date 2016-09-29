@@ -44,37 +44,37 @@ public class SpriteActor extends Sprite
 	}
 
 	@Override
-	public float getHeight()
+	public float height()
 	{
 		return sprite.getHeight();
 	}
 
 	@Override
-	public float getOriginX()
+	public float originX()
 	{
 		return sprite.getOriginX();
 	}
 
 	@Override
-	public float getOriginY()
+	public float originY()
 	{
 		return sprite.getOriginY();
 	}
 
 	@Override
-	public float getRotation()
+	public float rotation()
 	{
 		return sprite.getRotation();
 	}
 
 	@Override
-	public float getScaleX()
+	public float scaleX()
 	{
 		return sprite.getScaleX();
 	}
 
 	@Override
-	public float getScaleY()
+	public float scaleY()
 	{
 		return sprite.getScaleY();
 	}
@@ -85,19 +85,19 @@ public class SpriteActor extends Sprite
 	}
 
 	@Override
-	public float getWidth()
+	public float width()
 	{
 		return sprite.getWidth();
 	}
 
 	@Override
-	public float getX()
+	public float x()
 	{
 		return sprite.getX();
 	}
 
 	@Override
-	public float getY()
+	public float y()
 	{
 		return sprite.getY();
 	}
@@ -105,7 +105,7 @@ public class SpriteActor extends Sprite
 	@Override
 	public void render(View view)
 	{
-		sprite.draw(view.getSpriteBatch(), getAlpha());
+		sprite.draw(view.spriteBatch(), alpha());
 	}
 
 	public void setBounds(float x, float y, float width, float height)

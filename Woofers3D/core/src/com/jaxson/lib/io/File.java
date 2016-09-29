@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import com.jaxson.lib.util.Unwrapable;
 
 /**
  * A File that handles writing and reading.
@@ -17,7 +18,7 @@ import java.util.Date;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public interface File<F extends File, R, W>
+public interface File<F extends File, R, W> extends Unwrapable<R>
 {
 	public static final String FOWARD_SLASH = "/";
 	public static final String BACK_SLASH = "\\";
@@ -47,7 +48,7 @@ public interface File<F extends File, R, W>
 	 * Copies the file to another {@link File}.
 	 * @param file The new location
 	 * @return {@link F} - The {@link File} that was created.
-	 * If the copy failied the original location is returned.
+	 * If the copy failed the original location is returned.
 	 */
 	public F copy(F file);
 
@@ -72,7 +73,7 @@ public interface File<F extends File, R, W>
 	 */
 	public F delete();
 
-	public boolean equals(File file);
+	public boolean equals(F file);
 
 	/**
 	 * Gets whether the {@link File} exists.
@@ -85,7 +86,7 @@ public interface File<F extends File, R, W>
 	 * @return {@link BufferedReader} - The buffered reader
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public BufferedReader getBufferedReader()
+	public BufferedReader bufferedReader()
 			throws FileNotFoundException;
 
 	/**
@@ -93,27 +94,27 @@ public interface File<F extends File, R, W>
 	 * @param child The Child
 	 * @return {@link F} - The child
 	 */
-	public F getChild(String child);
+	public F child(String child);
 
 	/**
 	 * Gets the file extension of the {@link File}. Returns an empty
 	 * string if the {@link File} has no extension.
 	 * @return {@link String} - The file extension
 	 */
-	public String getExtension();
+	public String extension();
 
 	/**
-	 * Gets the file extension of the {@link File} as a {@link FileType}.
-	 * @return {@link FileType} - The file extension
+	 * Gets the file extension of the {@link File} as a {@link FileExtension}.
+	 * @return {@link FileExtension} - The file extension
 	 */
-	public FileType getExtensionType();
+	public FileExtension fileExtension();
 
 	/**
 	 * Returns a {@link FileInputStream} from the {@link File}
 	 * @return {@link FileInputStream} - The file input stream
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public FileInputStream getFileInputStream()
+	public FileInputStream fileInputStream()
 			throws FileNotFoundException;
 
 	/**
@@ -122,7 +123,7 @@ public interface File<F extends File, R, W>
 	 * @throws FileNotFoundException If the file is not found
 	 * @throws SecurityException If the access to the file denied
 	 */
-	public FileOutputStream getFileOutputStream()
+	public FileOutputStream fileOutputStream()
 			throws FileNotFoundException,
 				   SecurityException;
 
@@ -131,44 +132,44 @@ public interface File<F extends File, R, W>
 	 * @return {@link FileInputStream} - The file input stream
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public FileReader getFileReader()
+	public FileReader fileReader()
 			throws FileNotFoundException;
 
 	/**
 	 * Gets the {@link java.io.File} of the {@link File}.
 	 * @return {@link java.io.File} - The file
 	 */
-	public java.io.File getJavaFile();
+	public java.io.File javaFile();
 
 	/**
 	 * Gets the file name of the {@link File}.
 	 * @return {@link String} - The file name
 	 */
-	public String getName();
+	public String name();
 
 	/**
 	 * Gets the file name of the {@link File} without the type.
 	 * @return {@link String} - The file name
 	 */
-	public String getNameWithoutExtension();
+	public String nameWithoutExtension();
 
 	/**
 	 * Gets the parent directory of the {@link File}.
 	 * @return {@link F} - The parent directory
 	 */
-	public F getParent();
+	public F parent();
 
 	/**
 	 * Gets the parent directory's path of the {@link File}.
 	 * @return {@link String} - The parent directory's path
 	 */
-	public String getParentPath();
+	public String parentPath();
 
 	/**
 	 * Gets the file path of the {@link File}.
 	 * @return {@link String} - The file path
 	 */
-	public String getPath();
+	public String path();
 
 	/**
 	 * Returns a {@link PrintWriter} from the {@link File}
@@ -176,7 +177,7 @@ public interface File<F extends File, R, W>
 	 * @throws FileNotFoundException If the file is not found
 	 * @throws UnsupportedEncodingException If the charset is not supported
 	 */
-	public PrintWriter getPrintWriter()
+	public PrintWriter printWriter()
 			throws FileNotFoundException,
 				   UnsupportedEncodingException;
 
@@ -184,7 +185,7 @@ public interface File<F extends File, R, W>
 	 * Gets when the {@link File} was last changed.
 	 * @return {@link Date} - When the {@link File} was last changed
 	 */
-	public Date getWhenLastModified();
+	public Date lastModified();
 
 	/**
 	 * Gets whether the {@link File} is a directory.
@@ -199,17 +200,17 @@ public interface File<F extends File, R, W>
 	public boolean isFile();
 
 	/**
-	 * Gets the length of {@link File}'s abstract path in bytes.
-	 * @return {@link long} - The length of {@link File}'s abstract path in
+	 * Gets the size of {@link File}'s abstract path in bytes.
+	 * @return {@link long} - The size of {@link File}'s abstract path in
 	 * bytes
 	 */
-	public long length();
+	public long size();
 
 	/**
 	 * Moves the {@link File} to another location.
 	 * @param file The new location
 	 * @return {@link F} - The {@link File} in its new location.
-	 * If the move failied the original location is returned.
+	 * If the move failed the original location is returned.
 	 */
 	public F move(F file);
 
@@ -220,10 +221,16 @@ public interface File<F extends File, R, W>
 	public byte[] readBytes();
 
 	/**
-	 * Reads the fil as a {@link R}.
+	 * Reads the {@link File} as a {@link R}.
 	 * @return {@link R} - The {@link Object} read.
 	 */
 	public R readObject();
+
+	/**
+	 * Unwraps the content of the {@link File}.
+	 * @return {@link R} - The content to unwrap.
+	 */
+	public R unwrap();
 
 	/**
 	 * Parses a the {@link File} as a {@link String}.
@@ -240,11 +247,11 @@ public interface File<F extends File, R, W>
 	public F rename(String name);
 
 	/**
-	 * Changes the {@link FileType} extension of the {@link File}.
+	 * Changes the {@link FileExtension} extension of the {@link File}.
 	 * @param extension The new fileType
 	 * @return {@link F} - The {@link File} with its changed extension.
 	 */
-	public F setExtension(FileType extension);
+	public F setExtension(FileExtension extension);
 
 	/**
 	 * Changes the extension of the {@link File}.

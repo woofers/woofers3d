@@ -31,22 +31,22 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	public SoftBody(ModelInstance modelInstance, float mass, PhysicsWorld world)
 	{
 		super(modelInstance, getBody(modelInstance.model, world), mass);
-		getBody().setMass(0, 0);
+		body().setMass(0, 0);
 		meshPart = modelInstance.model.nodes.get(0).parts.get(0).meshPart;
 		meshPart.mesh.scale(3, 3, 3);
 		indexMap = BufferUtils.newShortBuffer(meshPart.size);
 		positionOffset
 				= meshPart.mesh.getVertexAttribute(Usage.Position).offset;
 		normalOffset = meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
-		Material material = getBody().appendMaterial();
+		Material material = body().appendMaterial();
 		material.setKLST(0.2f);
 		material.setFlags(0);
-		getBody().generateBendingConstraints(2, material);
-		getBody().setConfig_piterations(7);
-		getBody().setConfig_kDF(0.2f);
-		getBody().randomizeConstraints();
-		getBody().setTotalMass(mass);
-		getBody().translate(new Vector3(50f, 14f, 5f).scl(0.5f));
+		body().generateBendingConstraints(2, material);
+		body().setConfig_piterations(7);
+		body().setConfig_kDF(0.2f);
+		body().randomizeConstraints();
+		body().setTotalMass(mass);
+		body().translate(new Vector3(50f, 14f, 5f).scl(0.5f));
 		// getBoundingBox();
 		// transformToBody();
 	}
@@ -70,7 +70,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	@Override
 	public void update(float dt)
 	{
-		getBody().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh
+		body().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh
 				.getVertexSize(), positionOffset, normalOffset, meshPart.mesh
 						.getIndicesBuffer(),
 				meshPart.offset, meshPart.size,
@@ -87,7 +87,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 				= meshPart.mesh.getVertexAttribute(Usage.Position).offset;
 		int normalOffset
 				= meshPart.mesh.getVertexAttribute(Usage.Normal).offset;
-		return new btSoftBody(world.getWorldInfo(),
+		return new btSoftBody(world.worldInfo(),
 				meshPart.mesh.getVerticesBuffer(),
 				meshPart.mesh.getVertexSize(),
 				positionOffset,

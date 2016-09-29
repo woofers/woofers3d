@@ -29,6 +29,8 @@ import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
+import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
+import com.jaxson.lib.util.Optional;
 
 public class PhysicsWorld
 {
@@ -77,21 +79,22 @@ public class PhysicsWorld
 	private TouchScreen touchScreen;
 	private KeyboardKey debugKey;
 
-	public PhysicsWorld()
+	public PhysicsWorld(MyEnvironment environment)
 	{
-		this(WORLD_SIZE);
+		this(environment, WORLD_SIZE);
 	}
 
-	public PhysicsWorld(Vector3 worldSize)
+	public PhysicsWorld(MyEnvironment environment, Vector3 worldSize)
 	{
-		this(worldSize.cpy().scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
+		this(environment, worldSize.cpy().scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
 	}
 
-	public PhysicsWorld(Vector3 minSize, Vector3 maxSize)
+	public PhysicsWorld(MyEnvironment environment, Vector3 minSize, Vector3 maxSize)
 	{
 		BulletStarter.init();
 
 		this.worldSize = maxSize.sub(minSize);
+		environment.setWorldSize(worldSize);
 		this.objects = new MyArrayList<>();
 		this.contactListener = new MyContactListener();
 		this.collisionConfig = new btDefaultCollisionConfiguration();
@@ -110,9 +113,9 @@ public class PhysicsWorld
 		this.worldInfo.setDispatcher(dispatcher);
 		this.worldInfo.getSparsesdf().Initialize();
 
-		this.keyboard = Inputs.getKeyboard();
-		this.touchScreen = Inputs.getTouchScreen();
-		this.debugKey = keyboard.getKey("F5");
+		this.keyboard = Inputs.keyboard();
+		this.touchScreen = Inputs.touchScreen();
+		this.debugKey = keyboard.key("F5");
 
 		setGravity(GRAVITY);
 	}
@@ -135,12 +138,12 @@ public class PhysicsWorld
 		if (contains(entity)) return;
 		objects.add(entity);
 		entity.setCollisionFlags(CHARACTER_FLAG);
-		broadphase.getOverlappingPairCache().setInternalGhostPairCallback(entity
-		.getCallback());
-		world.addCollisionObject(entity.getBody(),
+		broadphase.getOverlappingPairCache().
+				setInternalGhostPairCallback(entity.callback());
+		world.addCollisionObject(entity.body(),
 								(short) CHARACTER_FILTER,
 								(short) (STATIC_FILTER | DEFAULT_FILTER));
-		world.addAction(entity.getCharacterController());
+		world.addAction(entity.characterController());
 	}
 
 	public void add(RigidBody entity)
@@ -153,7 +156,7 @@ public class PhysicsWorld
 		if (contains(entity)) return;
 		objects.add(entity);
 		entity.addCollisionFlag(CALLBACK_FLAG);
-		world.addRigidBody(entity.getBody());
+		world.addRigidBody(entity.body());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);
 	}
@@ -168,7 +171,7 @@ public class PhysicsWorld
 		if (contains(entity)) return;
 		objects.add(entity);
 		entity.addCollisionFlag(CALLBACK_FLAG);
-		world.addSoftBody(entity.getBody());
+		world.addSoftBody(entity.body());
 		entity.setContactCallbackFlag(group);
 		entity.setContactCallbackFilter(mask);
 	}
@@ -197,46 +200,47 @@ public class PhysicsWorld
 		rayCallback.dispose();
 	}
 
-	public EntityBody getBody(float x, float y, Camera camera)
+	public Optional<EntityBody> rayTrace(float x, float y, Camera camera)
 	{
-		return getBody(camera.getPickRay(x, y));
+		return rayTrace(camera.getPickRay(x, y));
 	}
 
-	public EntityBody getBody(Ray ray)
+	public Optional<EntityBody> rayTrace(Ray ray)
 	{
-		btCollisionObject object = rayCallback.getCollisionObject(ray, this);
-		if (object == null) return null;
+		Optional<btCollisionObject> body
+				= new Optional<>(rayCallback.collisionObject(ray, this));
+		if (!body.exists()) return new Optional<>();
 		for (EntityBody entity: objects)
-			if (entity.isBody(object)) return entity;
-		return null;
+			if (entity.isBody(body.unwrap())) return new Optional<>(entity);
+		return new Optional<>();
 	}
 
-	public EntityBody getBody(Vector2 location, Camera camera)
+	public Optional<EntityBody> rayTrace(Vector2 location, Camera camera)
 	{
-		return getBody(location.x, location.y, camera);
+		return rayTrace(location.x, location.y, camera);
 	}
 
-	public int getDebugMode()
+	public int debugMode()
 	{
-		return debugDrawer.getDebugMode();
+		return debugDrawer.debugMode();
 	}
 
-	public MyArrayList<EntityBody> getEntities()
+	public MyArrayList<EntityBody> entities()
 	{
 		return objects;
 	}
 
-	public Vector3 getGravity()
+	public Vector3 gravity()
 	{
 		return world.getGravity();
 	}
 
-	public btSoftBodyWorldInfo getWorldInfo()
+	public btSoftBodyWorldInfo worldInfo()
 	{
 		return worldInfo;
 	}
 
-	public Vector3 getWorldSize()
+	public Vector3 worldSize()
 	{
 		return worldSize;
 	}
@@ -244,7 +248,7 @@ public class PhysicsWorld
 	public MyArrayList<RigidBody> load(GdxFile file)
 	{
 		importer = new WorldImporter(file, world);
-		return importer.getEntities();
+		return importer.entities();
 	}
 
 	public MyArrayList<RigidBody> load(String path)
@@ -256,22 +260,22 @@ public class PhysicsWorld
 	{
 		if (!contains(entity)) return;
 		objects.remove(entity);
-		world.removeCollisionObject(entity.getBody());
-		world.removeAction(entity.getCharacterController());
+		world.removeCollisionObject(entity.body());
+		world.removeAction(entity.characterController());
 	}
 
 	public void remove(RigidBody entity)
 	{
 		if (!contains(entity)) return;
 		objects.remove(entity);
-		world.removeRigidBody(entity.getBody());
+		world.removeRigidBody(entity.body());
 	}
 
 	public void remove(SoftBody entity)
 	{
 		if (!contains(entity)) return;
 		objects.remove(entity);
-		world.removeSoftBody(entity.getBody());
+		world.removeSoftBody(entity.body());
 	}
 
 	public void render(View view)

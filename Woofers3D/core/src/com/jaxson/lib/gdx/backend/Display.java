@@ -69,21 +69,21 @@ public class Display extends GameObject
 	public Display(Game game)
 	{
 		this.game = game;
-		this.view = new View(getWidth(), getHeight());
-		this.lastWindowedWidth = getDefaultWidth();
-		this.lastWindowedHeight = getDefaultHeight();
+		this.view = new View(width(), height());
+		this.lastWindowedWidth = defaultWidth();
+		this.lastWindowedHeight = defaultHeight();
 
-		this.keyboard = Inputs.getKeyboard();
-		this.mouse = Inputs.getMouse();
-		this.touchScreen = Inputs.getTouchScreen();
-		this.pauseKey = keyboard.getKey("Escape");
-		this.screenshotKey = keyboard.getKey("F12");
+		this.keyboard = Inputs.keyboard();
+		this.mouse = Inputs.mouse();
+		this.touchScreen = Inputs.touchScreen();
+		this.pauseKey = keyboard.key("Escape");
+		this.screenshotKey = keyboard.key("F12");
 		this.fullscreenKey
-			= new Keys(keyboard.getKey("F11"),
+			= new Keys(keyboard.key("F11"),
 					   new KeyCombination(
-					   		new Keys(keyboard.getKey("L-Alt"),
-									 keyboard.getKey("R-Alt")),
-							keyboard.getKey("Enter")));
+					   		new Keys(keyboard.key("L-Alt"),
+									 keyboard.key("R-Alt")),
+							keyboard.key("Enter")));
 
 		setFullscreen(startsFullscreen());
 	}
@@ -94,16 +94,16 @@ public class Display extends GameObject
 	 */
 	public boolean allowsFullscreen()
 	{
-		return getConfig().allowsFullscreen();
+		return config().allowsFullscreen();
 	}
 
 	/**
-	 * Clears the screen with the {@link #getClearMask()} and clear color.
+	 * Clears the screen with the {@link #clearMask()} and clear color.
 	 */
 	public void clearScreen()
 	{
 		clearScreen(CLEAR_COLOR);
-		clearScreen(getClearMask());
+		clearScreen(clearMask());
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class Display extends GameObject
 	 */
 	public void clearScreen(float r, float g, float b, float a)
 	{
-		getGl().glClearColor(r, g, b, a);
+		gl().glClearColor(r, g, b, a);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class Display extends GameObject
 	 */
 	public void clearScreen(int mask)
 	{
-		getGl().glClear(mask);
+		gl().glClear(mask);
 	}
 
 	@Override
@@ -157,9 +157,9 @@ public class Display extends GameObject
 	 * Gets the aspect ratio of the {@link Game}.
 	 * @return {@link float} - The aspect ratio of the {@link Game}
 	 */
-	public float getAspectRatio()
+	public float aspectRatio()
 	{
-		return (float) getWidth() / (float) getHeight();
+		return (float) width() / (float) height();
 	}
 
 	/**
@@ -167,43 +167,43 @@ public class Display extends GameObject
 	 * @return {@link BufferFormat} - The {@link BufferFormat} of the
 	 * {@link Display}
 	 */
-	public BufferFormat getBufferFormat()
+	public BufferFormat bufferFormat()
 	{
-		return getGraphics().getBufferFormat();
+		return graphics().getBufferFormat();
 	}
 
 	/**
 	 * Gets the center of the {@link Display}.
 	 * @return {@link Vector2} - The center of the {@link Display}
 	 */
-	public Vector2 getCenter()
+	public Vector2 center()
 	{
-		return new Vector2(getWidth() * MyMath.HALF, getHeight() * MyMath.HALF);
+		return new Vector2(width() * MyMath.HALF, height() * MyMath.HALF);
 	}
 
 	/**
 	 * Gets the clear mask of the {@link Display}.
 	 * @return {@link int} - The clear mask of the {@link Display}
 	 */
-	public int getClearMask()
+	public int clearMask()
 	{
-		return CLEAR_MASK | getCoverageSampling();
+		return CLEAR_MASK | coverageSampling();
 	}
 
 	/**
 	 * Gets the config of the {@link Game}.
 	 * @return {@link GameConfig} - The config
 	 */
-	public GameConfig getConfig()
+	public GameConfig config()
 	{
-		return game.getConfig();
+		return game.config();
 	}
 
 	/**
 	 * Gets the coverage sampling mask.
 	 * @return {@link int} - The coverage sampling mask
 	 */
-	public int getCoverageSampling()
+	public int coverageSampling()
 	{
 		return hasCoverageSampling() ? COVERAGE_SAMPLING_MASK : EMPTY_MASK;
 	}
@@ -212,36 +212,36 @@ public class Display extends GameObject
 	 * Gets the aspect ratio of the {@link Display}.
 	 * @return {@link float} - The aspect ratio of the {@link Display}
 	 */
-	public float getDefaultAspectRatio()
+	public float defaultAspectRatio()
 	{
-		return (float) getDefaultWidth() / (float) getDefaultHeight();
+		return (float) defaultWidth() / (float) defaultHeight();
 	}
 
 	/**
 	 * Gets the default height of the {@link Display}.
 	 * @return {@link float} - The default height of the {@link Display}
 	 */
-	public int getDefaultHeight()
+	public int defaultHeight()
 	{
-		return getConfig().getHeight();
+		return config().getHeight();
 	}
 
 	/**
 	 * Gets the default width of the {@link Display}.
 	 * @return {@link float} - The default width of the {@link Display}
 	 */
-	public int getDefaultWidth()
+	public int defaultWidth()
 	{
-		return getConfig().getWidth();
+		return config().getWidth();
 	}
 
 	/**
 	 * Gets the {@link DisplayMode} of the {@link Display}.
 	 * @return {@link float} - The {@link DisplayMode} of the {@link Display}
 	 */
-	public DisplayMode getDisplayMode()
+	public DisplayMode displayMode()
 	{
-		return getGraphics().getDesktopDisplayMode();
+		return graphics().getDesktopDisplayMode();
 	}
 
 	/**
@@ -249,18 +249,18 @@ public class Display extends GameObject
 	 * @return {@link float} - All possible {@link DisplayMode}s of the
 	 * {@link Display}
 	 */
-	public DisplayMode[] getDisplayModes()
+	public DisplayMode[] displayModes()
 	{
-		return getGraphics().getDisplayModes();
+		return graphics().getDisplayModes();
 	}
 
 	/**
 	 * Gets the frame rate.
 	 * @return {@link int} - The frame rate
 	 */
-	public int getFps()
+	public int fps()
 	{
-		return getGraphics().getFramesPerSecond();
+		return graphics().getFramesPerSecond();
 	}
 
 	/**
@@ -268,9 +268,9 @@ public class Display extends GameObject
 	 * @return {@link DisplayMode} - The best fullscreen {@link DisplayMode} of
 	 * the {@link Display}
 	 */
-	public DisplayMode getFullscreenDisplayMode()
+	public DisplayMode fullscreenDisplayMode()
 	{
-		DisplayMode[] displayModes = getDisplayModes();
+		DisplayMode[] displayModes = displayModes();
 		DisplayMode bestMode = displayModes[0];
 		for (DisplayMode mode: displayModes)
 		{
@@ -283,7 +283,7 @@ public class Display extends GameObject
 	 * Gets the OpenGLES reference.
 	 * @return {@link int} - The OpenGLES reference
 	 */
-	public GL20 getGl()
+	public GL20 gl()
 	{
 		return Gdx.gl;
 	}
@@ -292,9 +292,9 @@ public class Display extends GameObject
 	 * Gets the {@link Graphics} reference.
 	 * @return {@link Graphics} - The {@link Graphics} reference
 	 */
-	public Graphics getGraphics()
+	public Graphics graphics()
 	{
-		return game.getGraphics();
+		return game.graphics();
 	}
 
 	/**
@@ -302,62 +302,62 @@ public class Display extends GameObject
 	 * @return {@link int} - The height of the {@link Display} in
 	 * pixels
 	 */
-	public int getHeight()
+	public int height()
 	{
-		return getGraphics().getHeight();
+		return graphics().getHeight();
 	}
 
 	/**
 	 * Gets the {@link Input} reference.
 	 * @return {@link Input} - The {@link Input} reference
 	 */
-	public Input getInput()
+	public Input input()
 	{
-		return game.getInput();
+		return game.input();
 	}
 
-	public int getLastWindowedHeight()
+	public int lastWindowedHeight()
 	{
 		return lastWindowedHeight;
 	}
 
-	public int getLastWindowedWidth()
+	public int lastWindowedWidth()
 	{
 		return lastWindowedWidth;
 	}
 
-	private Orientation getNativeOrientation()
+	private Orientation nativeOrientation()
 	{
-		return getInput().getNativeOrientation();
+		return input().getNativeOrientation();
 	}
 
-	private int getNativeRotation()
+	private int nativeRotation()
 	{
-		return getInput().getRotation();
+		return input().getRotation();
 	}
 
-	public DisplayOrientation getOrientation()
+	public DisplayOrientation orientation()
 	{
-		return new DisplayOrientation(getRotation());
+		return new DisplayOrientation(rotation());
 	}
 
-	public int getRotation()
+	public int rotation()
 	{
-		int rotation = getNativeRotation();
-		if (getNativeOrientation() == Orientation.Portrait) return rotation;
+		int rotation = nativeRotation();
+		if (nativeOrientation() == Orientation.Portrait) return rotation;
 		return rotation + NATIVE_ROTATION_OFFSET;
 	}
 
-	public Jsonable<GameConfig> getSaveableConfig()
+	public Jsonable<GameConfig> saveableConfig()
 	{
-		return game.getSaveableConfig();
+		return game.saveableConfig();
 	}
 
 	/**
 	 * Gets the {@link View} of the {@link Display}.
 	 * @return {@link View} - The {@link View} of the {@link Display}
 	 */
-	public View getView()
+	public View view()
 	{
 		return view;
 	}
@@ -366,9 +366,9 @@ public class Display extends GameObject
 	 * Gets the width of the {@link Display} in pixels.
 	 * @return {@link int} - The starting of the {@link Display} in pixels
 	 */
-	public int getWidth()
+	public int width()
 	{
-		return getGraphics().getWidth();
+		return graphics().getWidth();
 	}
 
 	/**
@@ -380,7 +380,7 @@ public class Display extends GameObject
 	 */
 	public boolean hasCoverageSampling()
 	{
-		return getBufferFormat().coverageSampling;
+		return bufferFormat().coverageSampling;
 	}
 
 	/**
@@ -398,12 +398,12 @@ public class Display extends GameObject
 	 */
 	public boolean isFullscreen()
 	{
-		return getGraphics().isFullscreen();
+		return graphics().isFullscreen();
 	}
 
 	public boolean isLandscape()
 	{
-		return getOrientation().isLandscape();
+		return orientation().isLandscape();
 	}
 
 	/**
@@ -426,27 +426,27 @@ public class Display extends GameObject
 
 	public boolean isPortrait()
 	{
-		return getOrientation().isPortrait();
+		return orientation().isPortrait();
 	}
 
 	public boolean isReverseLandscape()
 	{
-		return getOrientation().equals(DisplayOrientation.REVERSE_LANDSCAPE);
+		return orientation().equals(DisplayOrientation.REVERSE_LANDSCAPE);
 	}
 
 	public boolean isReversePortrait()
 	{
-		return getOrientation().equals(DisplayOrientation.REVERSE_PORTRAIT);
+		return orientation().equals(DisplayOrientation.REVERSE_PORTRAIT);
 	}
 
 	public boolean isStandardLandscape()
 	{
-		return getOrientation().equals(DisplayOrientation.LANDSCAPE);
+		return orientation().equals(DisplayOrientation.LANDSCAPE);
 	}
 
 	public boolean isStandardPortrait()
 	{
-		return getOrientation().equals(DisplayOrientation.PORTRAIT);
+		return orientation().equals(DisplayOrientation.PORTRAIT);
 	}
 
 	@Override
@@ -481,7 +481,7 @@ public class Display extends GameObject
 	 */
 	public void setDisplayMode(DisplayMode displayMode)
 	{
-		getGraphics().setDisplayMode(displayMode);
+		graphics().setDisplayMode(displayMode);
 		updateViewport();
 	}
 
@@ -492,7 +492,7 @@ public class Display extends GameObject
 	 */
 	public void setDisplayMode(int width, int height)
 	{
-		getGraphics().setDisplayMode(width, height, false);
+		graphics().setDisplayMode(width, height, false);
 		updateViewport();
 	}
 
@@ -503,17 +503,17 @@ public class Display extends GameObject
 	public void setFullscreen(boolean fullscreen)
 	{
 		if (isFullscreen() == fullscreen) return;
-		getConfig().setFullscreenStartup(fullscreen);
-		getSaveableConfig().save();
+		config().setFullscreenStartup(fullscreen);
+		saveableConfig().save();
 		if (fullscreen)
 		{
-			lastWindowedWidth = getWidth();
-			lastWindowedHeight = getHeight();
-			setDisplayMode(getFullscreenDisplayMode());
+			lastWindowedWidth = width();
+			lastWindowedHeight = height();
+			setDisplayMode(fullscreenDisplayMode());
 		}
 		else
 		{
-			setDisplayMode(getLastWindowedWidth(), getLastWindowedHeight());
+			setDisplayMode(lastWindowedWidth(), lastWindowedHeight());
 		}
 		Inputs.reset();
 	}
@@ -534,9 +534,9 @@ public class Display extends GameObject
 	 */
 	public void setTitle(String title)
 	{
-		getGraphics().setTitle(title);
-		getConfig().setTitle(title);
-		getSaveableConfig().save();
+		graphics().setTitle(title);
+		config().setTitle(title);
+		saveableConfig().save();
 	}
 
 	/**
@@ -545,9 +545,9 @@ public class Display extends GameObject
 	 */
 	public void setVsync(boolean vsync)
 	{
-		getGraphics().setVSync(vsync);
-		getConfig().setVsync(vsync);
-		getSaveableConfig().save();
+		graphics().setVSync(vsync);
+		config().setVsync(vsync);
+		saveableConfig().save();
 	}
 
 	/**
@@ -556,7 +556,7 @@ public class Display extends GameObject
 	 */
 	public boolean startsFullscreen()
 	{
-		return getConfig().startsFullscreen();
+		return config().startsFullscreen();
 	}
 
 	/**
@@ -579,7 +579,7 @@ public class Display extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
-		if (!isPaused()) getView().update();
+		if (!isPaused()) view().update();
 	}
 
 	@Override
@@ -604,7 +604,7 @@ public class Display extends GameObject
 
 	private void setViewport(int x, int y, int width, int height)
 	{
-		getGl().glViewport(x, y, width, height);
+		gl().glViewport(x, y, width, height);
 	}
 
 	/**
@@ -612,12 +612,12 @@ public class Display extends GameObject
 	 */
 	private void updateViewport()
 	{
-		setViewport(getWidth(), getHeight());
+		setViewport(width(), height());
 	}
 
 	private boolean hasPauseScreen()
 	{
-		return game.getCurrentState() != null
-			&& game.getCurrentState().hasPauseState();
+		return game.currentState() != null
+			&& game.currentState().hasPauseState();
 	}
 }
