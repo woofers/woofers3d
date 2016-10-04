@@ -15,7 +15,7 @@ public class Player extends CameraPlayerBody
 
 	public Player(TargetCamera camera)
 	{
-		super(new GdxFile(PATH).readObject(), camera);
+		super(new GdxFile(PATH), camera);
 		setCollisionShapeScale(HITBOX_SCALE);
 		scale(SCALE);
 

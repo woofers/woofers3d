@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.jaxson.lib.gdx.bullet.simulation.WorldImporter;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.AnimatedEntity;
+import com.jaxson.lib.util.Optional;
 
 public abstract class EntityBody<B extends btCollisionObject>
 		extends AnimatedEntity
@@ -160,8 +161,9 @@ public abstract class EntityBody<B extends btCollisionObject>
 
 	public boolean wasImpoted()
 	{
-		Integer i = (Integer) modelInstance().userData;
-		return i != null && i == WorldImporter.IMPORTED;
+		Optional<Integer> i = new Optional<>(
+				(Integer) modelInstance().userData);
+		return i.exists() && i.unwrap() == WorldImporter.IMPORTED;
 	}
 
 	protected void bodyToTransform()

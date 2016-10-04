@@ -29,14 +29,9 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
 	public RigidBody(ModelInstance modelInstance, Shape shape, float mass)
 	{
-		this(modelInstance, shape, mass,
-			 new btRigidBody(mass, null, null, shape.inertia(mass)));
-	}
-
-	private RigidBody(ModelInstance modelInstance, Shape shape,
-					  float mass, btRigidBody body)
-	{
-		super(modelInstance, body, shape, mass);
+		super(modelInstance,
+			  new btRigidBody(mass, null, null, shape.inertia(mass)),
+			  shape, mass);
 		setMotionState(new MyMotionState(transform()));
 	}
 

@@ -3,6 +3,7 @@ package com.jaxson.lib.gdx.bullet.simulation.bodies.types;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
+import com.jaxson.lib.util.Unwrapable;
 
 public class CameraPlayerBody extends PlayerBody
 {
@@ -17,6 +18,11 @@ public class CameraPlayerBody extends PlayerBody
 	public CameraPlayerBody(Model model, TargetCamera camera)
 	{
 		this(model, fittedHitbox(model), camera);
+	}
+
+	public CameraPlayerBody(Unwrapable<Model> model, TargetCamera camera)
+	{
+		this(model.unwrap(), camera);
 	}
 
 	public boolean cameraIsLocked()

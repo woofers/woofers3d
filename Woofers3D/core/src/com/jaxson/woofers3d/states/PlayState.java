@@ -89,8 +89,6 @@ public class PlayState extends BulletState
 		add(player);
 
 		addHud(new FPSCounter(game()));
-
-		System.out.println(new DataFile("entities/ship/ship.g3db").size());
 	}
 
 	@Override

@@ -17,9 +17,9 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 		this.touchKeyboard = new TouchKeyboard(input());
 		this.keycodeKeys = new HashMap<>();
 		this.stringKeys = new HashMap<>();
-		for (int i = Keys.MIN; i < Keys.MAX; i ++)
+		for (int keycode = Keys.MIN; keycode < Keys.MAX; keycode ++)
 		{
-			KeyboardKey key = new KeyboardKey(i);
+			KeyboardKey key = new KeyboardKey(keycode);
 			String name = key.name();
 			keycodeKeys.put(key.keycode(), key);
 			if (name != null) stringKeys.put(name.toLowerCase(), key);

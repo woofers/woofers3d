@@ -6,7 +6,7 @@ import com.jaxson.lib.gdx.util.GameObject;
 import java.util.Stack;
 
 /**
- * A class that mangers states.
+ * A class that contains {@link State}s.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
