@@ -227,6 +227,7 @@ public abstract class PlayerBody
 			}
 		}
 
+		System.out.println(accelerometer);
 		if (accelerometer.exists())
 		{
 			if (accelerometer.tiltsForward() || accelerometer.tiltsBackward())

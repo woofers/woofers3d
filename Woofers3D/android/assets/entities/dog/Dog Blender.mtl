@@ -1,0 +1,47 @@
+# Blender MTL File: 'Dog .blend'
+# Material Count: 4
+
+newmtl Material__24
+Ns 7.843137
+Ka 0.000000 0.000000 0.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Map__0_Gradient.tga
+map_Ka Map__0_Gradient.tga
+refl Map__11_Gradient.tga
+
+newmtl Material__25
+Ns 7.843137
+Ka 0.000000 0.000000 0.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Map__12_Gradient.tga
+map_Ka Map__12_Gradient.tga
+refl Map__11_Gradient.tga
+
+newmtl Material__26
+Ns 7.843137
+Ka 0.000000 0.000000 0.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Map__13_Gradient.tga
+map_Ka Map__13_Gradient.tga
+refl Map__11_Gradient.tga
+
+newmtl wire_174186203
+Ns 29.411765
+Ka 0.000000 0.000000 0.000000
+Kd 0.545920 0.583520 0.636880
+Ks 0.350000 0.350000 0.350000
+Ni 1.000000
+d 1.000000
+illum 2

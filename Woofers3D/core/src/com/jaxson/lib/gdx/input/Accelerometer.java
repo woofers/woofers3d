@@ -6,6 +6,7 @@ import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.math.MyMath;
 import java.util.HashMap;
+import com.jaxson.lib.util.Printer;
 
 public class Accelerometer extends Peripheral
 {
@@ -142,5 +143,14 @@ public class Accelerometer extends Peripheral
 		this.x = absouluteX();
 		this.y = absouluteY();
 		this.z = absouluteZ();
+	}
+
+	@Override
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label("X", x()),
+				new Printer.Label("Y", y()),
+				new Printer.Label("Z", z())).toString();
 	}
 }

@@ -7,7 +7,7 @@ import com.jaxson.lib.gdx.io.GdxFile;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/ship/ship.g3db";
+	private static final String PATH = "entities/ship/ship.obj";
 	private static final float SCALE = 2f;
 	private static final float HITBOX_SCALE = 80f / 100f;
 
