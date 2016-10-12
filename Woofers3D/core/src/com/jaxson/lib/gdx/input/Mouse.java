@@ -11,22 +11,6 @@ import java.util.Iterator;
 
 public class Mouse implements Iterable<MouseButton>
 {
-	public static final int MOUSE_LEFT = Buttons.LEFT;
-	public static final int MOUSE_RIGHT = Buttons.RIGHT;
-	public static final int MOUSE_MIDDLE = Buttons.MIDDLE;
-	public static final int MOUSE_BACK = Buttons.BACK;
-	public static final int MOUSE_FORWARD = Buttons.FORWARD;
-
-	public static final int[] MOUSE_BUTTONS = { MOUSE_LEFT,
-												MOUSE_RIGHT,
-												MOUSE_MIDDLE,
-												MOUSE_BACK,
-												MOUSE_FORWARD };
-
-	public static final int[] PRIMARY_MOUSE = { MOUSE_LEFT,
-												MOUSE_RIGHT,
-												MOUSE_MIDDLE };
-
 	private static final float MOUSE_SCALE = 1f / 5f;
 	private static final float TOUCH_MOUSE_SCALE = 1f / 3f;
 
@@ -38,6 +22,7 @@ public class Mouse implements Iterable<MouseButton>
 	private Vector2 sensitivity;
 	private int scrollWheel;
 	private HashMap<Integer, MouseButton> buttons;
+	private HashMap<String, MouseButton> stringButtons;
 	private Game game;
 	private TouchScreen touchScreen;
 
@@ -49,18 +34,31 @@ public class Mouse implements Iterable<MouseButton>
 		this.delta = new Vector2();
 		this.sensitivity = new Vector2(1f, -1f);
 		this.buttons = new HashMap<>();
+		this.stringButtons = new HashMap<>();
 		setSensitivity(game.config().getSensitivity());
 		setInvertX(INVERT_MOUSE_X);
 		setInvertY(INVERT_MOUSE_X);
-		for (int button: MOUSE_BUTTONS)
+		for (int code: MouseButton.BUTTONS)
 		{
-			buttons.put(button, new MouseButton(button, input()));
+			MouseButton button = new MouseButton(code, input());
+			String name = button.name();
+			buttons.put(code, button);
+			stringButtons.put(name.toLowerCase(), button);
 		}
 	}
 
-	public MouseButton button(int button)
+	public MouseButton button(int code)
 	{
-		return buttons.get(button);
+		MouseButton button = buttons.get(code);
+		if (button == null) throw new InvalidKeyException(code);
+		return button;
+	}
+
+	public MouseButton button(String name)
+	{
+		MouseButton button = stringButtons.get(name.toLowerCase().trim());
+		if (button == null) throw new InvalidKeyException(name);
+		return button;
 	}
 
 	public Collection<MouseButton> buttons()
@@ -154,12 +152,12 @@ public class Mouse implements Iterable<MouseButton>
 
 	public boolean isLeftClicked()
 	{
-		return button(MOUSE_LEFT).isPressed();
+		return button(MouseButton.LEFT).isPressed();
 	}
 
 	public boolean isRightClicked()
 	{
-		return button(MOUSE_RIGHT).isPressed();
+		return button(MouseButton.RIGHT).isPressed();
 	}
 
 	@Override

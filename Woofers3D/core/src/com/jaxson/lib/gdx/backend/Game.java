@@ -74,7 +74,7 @@ public class Game
 
 	public GameConfig config()
 	{
-		return saveableConfig().unwarp();
+		return saveableConfig().unwrap();
 	}
 
 	public State currentState()

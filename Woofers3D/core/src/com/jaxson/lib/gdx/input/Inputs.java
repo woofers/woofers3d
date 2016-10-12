@@ -208,6 +208,7 @@ public class Inputs
 		{
 			keyboard.transfer();
 			touchScreen.transfer();
+			accelerometer.update(dt);
 		}
 
 		private Input input()

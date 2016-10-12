@@ -24,7 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import com.jaxson.lib.util.Unwrapable;
 
-public class GdxFile implements File<GdxFile, Model, Pixmap>, Unwrapable<Model>
+public class GdxFile implements File<GdxFile, Model, Pixmap>
 {
 	public static final GdxFile NOTHING = new GdxFile(DataFile.NOTHING);
 
@@ -53,6 +53,11 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>, Unwrapable<Model>
 	public GdxFile(String path, FileType fileType)
 	{
 		this(new DataFile(path), fileType);
+	}
+
+	public String toString()
+	{
+		return getFile().toString();
 	}
 
 	@Override

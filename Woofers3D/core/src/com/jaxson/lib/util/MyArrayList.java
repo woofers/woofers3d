@@ -121,4 +121,9 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 			if (iterator.next() == null) iterator.remove();
 		}
 	}
+
+	public String toString()
+	{
+		return getClass().getSimpleName() + super.toString();
+	}
 }

@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.jaxson.lib.util.Unwrapable;
 
-public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>, Unwrapable<MyWorkbook>
+public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 {
 	public static final ExcelFile NOTHING = new ExcelFile(DataFile.NOTHING);
 	private static final String EXTENSION_NOT_FOUND

@@ -1,6 +1,7 @@
 package com.jaxson.lib.math;
 
 import com.jaxson.lib.util.MyComparable;
+import com.jaxson.lib.util.Printer;
 
 public class Circle implements MyComparable<Circle>
 {
@@ -50,5 +51,12 @@ public class Circle implements MyComparable<Circle>
 		if (!(other instanceof Circle)) return false;
 		Circle circle = (Circle)other;
 		return radius() == circle.radius();
+	}
+
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label("Radius", radius()),
+				new Printer.Label("Circumference", circumference())).toString();
 	}
 }

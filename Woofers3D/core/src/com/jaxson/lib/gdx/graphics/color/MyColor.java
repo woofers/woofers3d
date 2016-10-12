@@ -2,6 +2,8 @@ package com.jaxson.lib.gdx.graphics.color;
 
 import com.badlogic.gdx.graphics.Color;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.util.Printer;
+
 
 public class MyColor extends Color
 {
@@ -107,6 +109,14 @@ public class MyColor extends Color
 		channel = MyMath.max(MIN_VALUE_INT, channel);
 		channel = MyMath.min(MAX_VALUE_INT, channel);
 		return channel * RGB_TO_FLOAT;
+	}
+
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label("Red", redInt()),
+				new Printer.Label("Green", greenInt()),
+				new Printer.Label("Blue", blueInt())).toString();
 	}
 
 	private static int toInt(float channel)

@@ -3,9 +3,10 @@ package com.jaxson.lib.gdx.bullet.simulation;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionWorld;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
+import com.badlogic.gdx.utils.Disposable;
 import com.jaxson.lib.gdx.graphics.views.View;
 
-public class MyDebugDrawer
+public class BulletDebug implements Disposable
 {
 	public final static int NO_DEBUG = btIDebugDraw.DebugDrawModes.DBG_NoDebug;
 	public final static int WIREFRAME
@@ -27,73 +28,69 @@ public class MyDebugDrawer
 	public final static int MIXED
 			= WIREFRAME | FEATURES_TEXT | TEXT | CONTACT_POINTS;
 
-	private DebugDrawer debugDrawer;
+	private DebugDrawer drawer;
 	private btCollisionWorld world;
 
-	public MyDebugDrawer(btCollisionWorld world)
-	{
-		setWorld(world);
-	}
-
-	public void dispose()
-	{
-		removeDebugDrawer();
-	}
-
-	public int debugMode()
-	{
-		if (!hasDebugDrawer()) return NO_DEBUG;
-		return debugDrawer.getDebugMode();
-	}
-
-	public void render(View view)
-	{
-		if (!hasDebugDrawer()) return;
-		view.modelView().apply();
-		view.modelBatch().flush();
-		debugDrawer.begin(view.modelView().getCamera());
-		world.debugDrawWorld();
-		debugDrawer.end();
-	}
-
-	public void setDebugMode(int mode)
-	{
-		if (mode == debugMode()) return;
-		if (mode == NO_DEBUG && !hasDebugDrawer()) return;
-		if (!hasDebugDrawer())
-		{
-			debugDrawer = new DebugDrawer();
-			world.setDebugDrawer(debugDrawer);
-		}
-		debugDrawer.setDebugMode(mode);
-	}
-
-	public void setWorld(btCollisionWorld world)
+	protected BulletDebug(btCollisionWorld world)
 	{
 		this.world = world;
 	}
 
-	public void toggleDebugMode()
+	public void dispose()
 	{
-		if (debugMode() == NO_DEBUG)
+		removeDrawer();
+	}
+
+	public int mode()
+	{
+		if (!isActive()) return NO_DEBUG;
+		return drawer.getDebugMode();
+	}
+
+	public void render(View view)
+	{
+		if (!isActive()) return;
+		view.modelView().apply();
+		view.modelBatch().flush();
+		drawer.begin(view.modelView().getCamera());
+		world.debugDrawWorld();
+		drawer.end();
+	}
+
+	public void setMode(int mode)
+	{
+		if (mode == mode()) return;
+		if (mode == NO_DEBUG && !isActive()) return;
+		if (!isActive())
 		{
-			setDebugMode(MIXED);
+			this.drawer = new DebugDrawer();
+			world.setDebugDrawer(drawer);
+		}
+		drawer.setDebugMode(mode);
+	}
+
+
+	public void toggle()
+	{
+		if (mode() == NO_DEBUG)
+		{
+			setMode(MIXED);
 		}
 		else
 		{
-			setDebugMode(NO_DEBUG);
+			setMode(NO_DEBUG);
 		}
 	}
 
-	private boolean hasDebugDrawer()
+	private boolean isActive()
 	{
-		return debugDrawer != null;
+		return drawer != null;
 	}
 
-	private void removeDebugDrawer()
+	private void removeDrawer()
 	{
-		if (!hasDebugDrawer()) return;
-		debugDrawer.dispose();
-		debugDrawer = null;
+		if (!isActive()) return;
+		drawer.dispose();
+		drawer = null;
 	}
 }

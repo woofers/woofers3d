@@ -23,6 +23,7 @@ import com.jaxson.woofers3d.entities.Player;
 import com.jaxson.lib.io.FileExtension;
 import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.util.Optional;
+import com.jaxson.lib.gdx.io.GdxFile;
 
 public class PlayState extends BulletState
 {
@@ -46,7 +47,7 @@ public class PlayState extends BulletState
 		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
-		// load(new GdxFile("btscene1.g3dj"));
+		load(new GdxFile("btscene1.g3dj"));
 
 		floor = new Floor();
 		applyPhysics(floor);

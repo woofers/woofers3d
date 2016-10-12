@@ -1,6 +1,8 @@
 package com.jaxson.lib.io;
 
 import com.jaxson.lib.util.Unwrapable;
+import com.jaxson.lib.util.Optional;
+import com.jaxson.lib.util.Uncertainty;
 
 /**
  * Decorator to save any {@link Object}.
@@ -10,7 +12,7 @@ import com.jaxson.lib.util.Unwrapable;
  */
 public class Jsonable<T> implements Unwrapable<T>
 {
-	private T object;
+	private Optional<T> object;
 	private JsonFile<T> file;
 
 	public Jsonable(File file, Class<T> type)
@@ -25,24 +27,19 @@ public class Jsonable<T> implements Unwrapable<T>
 
 	public Jsonable(JsonFile<T> file, T object)
 	{
-		this.object = object;
+		this.object = new Optional<>(object);
 		setSaveFile(file);
 		obtain();
 	}
 
-	public T unwarp()
+	public T unwrap()
 	{
-		return object;
+		return object.unwrap();
 	}
 
 	public JsonFile<T> saveFile()
 	{
 		return file;
-	}
-
-	public boolean isPresent()
-	{
-		return unwarp() != null;
 	}
 
 	public void obtain()
@@ -55,24 +52,17 @@ public class Jsonable<T> implements Unwrapable<T>
 
 	public void read()
 	{
-		T newObject = saveFile().readObject();
-		if (newObject != null) this.object = newObject;
+		Optional<T> newObject = new Optional<>(saveFile().readObject());
+		if (newObject.exists()) this.object = newObject;
 	}
 
 	public void save()
 	{
-		saveFile().write(unwarp());
+		saveFile().write(unwrap());
 	}
 
 	public void setSaveFile(JsonFile<T> file)
 	{
 		this.file = file;
-	}
-
-	@Override
-	public T unwrap()
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

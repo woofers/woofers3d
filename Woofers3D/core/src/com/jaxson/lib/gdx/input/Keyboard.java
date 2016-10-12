@@ -22,7 +22,7 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 			KeyboardKey key = new KeyboardKey(keycode);
 			String name = key.name();
 			keycodeKeys.put(key.keycode(), key);
-			if (name != null) stringKeys.put(name.toLowerCase(), key);
+			stringKeys.put(name.toLowerCase(), key);
 		}
 	}
 
@@ -30,7 +30,7 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 	public boolean exists()
 	{
 		return input().isPeripheralAvailable(
-			Input.Peripheral.HardwareKeyboard);
+				Input.Peripheral.HardwareKeyboard);
 	}
 
 	public KeyboardKey key(int keycode)

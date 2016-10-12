@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.bullet.softbody.btSoftBodyWorldInfo;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftRigidDynamicsWorld;
 import com.jaxson.lib.gdx.bullet.BulletStarter;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.Floor;
+import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.PlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
@@ -31,8 +32,10 @@ import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.util.Optional;
+import com.badlogic.gdx.utils.Disposable;
+import com.jaxson.lib.gdx.util.GameObject;
 
-public class PhysicsWorld
+public class PhysicsWorld extends GameObject
 {
 	protected static final short GROUND_FLAG = 1 << 8;
 	protected static final short OBJECT_FLAG = 1 << 9;
@@ -64,7 +67,7 @@ public class PhysicsWorld
 
 	private MyArrayList<EntityBody> objects;
 	private MyContactListener contactListener;
-	private MyDebugDrawer debugDrawer;
+	private BulletDebug debug;
 	private btDefaultCollisionConfiguration collisionConfig;
 	private btCollisionDispatcher dispatcher;
 	private btAxisSweep3 broadphase;
@@ -72,7 +75,7 @@ public class PhysicsWorld
 	private btSoftRigidDynamicsWorld world;
 	private btSoftBodyWorldInfo worldInfo;
 	private Vector3 worldSize;
-	private RayCallback rayCallback;
+	private BulletRay rayCallback;
 	private WorldImporter importer;
 
 	private Keyboard keyboard;
@@ -89,7 +92,8 @@ public class PhysicsWorld
 		this(environment, worldSize.cpy().scl(VECOTR_TO_MIN), worldSize.scl(VECOTR_TO_MAX));
 	}
 
-	public PhysicsWorld(MyEnvironment environment, Vector3 minSize, Vector3 maxSize)
+	public PhysicsWorld(MyEnvironment environment,
+			Vector3 minSize, Vector3 maxSize)
 	{
 		BulletStarter.init();
 
@@ -102,11 +106,9 @@ public class PhysicsWorld
 		this.broadphase = new btAxisSweep3(minSize, maxSize);
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.world = new btSoftRigidDynamicsWorld(dispatcher,
-												  broadphase,
-												  constraintSolver,
-												  collisionConfig);
-		this.debugDrawer = new MyDebugDrawer(world);
-		this.rayCallback = new RayCallback();
+				broadphase, constraintSolver, collisionConfig);
+		this.debug = new BulletDebug(world);
+		this.rayCallback = new BulletRay();
 
 		this.worldInfo = new btSoftBodyWorldInfo();
 		this.worldInfo.setBroadphase(broadphase);
@@ -141,8 +143,8 @@ public class PhysicsWorld
 		broadphase.getOverlappingPairCache().
 				setInternalGhostPairCallback(entity.callback());
 		world.addCollisionObject(entity.body(),
-								(short) CHARACTER_FILTER,
-								(short) (STATIC_FILTER | DEFAULT_FILTER));
+				(short) CHARACTER_FILTER,
+				(short) (STATIC_FILTER | DEFAULT_FILTER));
 		world.addAction(entity.characterController());
 	}
 
@@ -188,7 +190,7 @@ public class PhysicsWorld
 
 	public void dispose()
 	{
-		debugDrawer.dispose();
+		debug.dispose();
 		worldInfo.dispose();
 		world.dispose();
 		if (importer != null) importer.dispose();
@@ -208,7 +210,7 @@ public class PhysicsWorld
 	public Optional<EntityBody> rayTrace(Ray ray)
 	{
 		Optional<btCollisionObject> body
-				= new Optional<>(rayCallback.collisionObject(ray, this));
+				= rayCallback.collisionObject(ray, this);
 		if (!body.exists()) return new Optional<>();
 		for (EntityBody entity: objects)
 			if (entity.isBody(body.unwrap())) return new Optional<>(entity);
@@ -218,11 +220,6 @@ public class PhysicsWorld
 	public Optional<EntityBody> rayTrace(Vector2 location, Camera camera)
 	{
 		return rayTrace(location.x, location.y, camera);
-	}
-
-	public int debugMode()
-	{
-		return debugDrawer.debugMode();
 	}
 
 	public MyArrayList<EntityBody> entities()
@@ -248,18 +245,17 @@ public class PhysicsWorld
 	public MyArrayList<RigidBody> load(GdxFile file)
 	{
 		importer = new WorldImporter(file, world);
+		for (RigidBody body: importer.entities())
+			add(body);
 		return importer.entities();
-	}
-
-	public MyArrayList<RigidBody> load(String path)
-	{
-		return load(new GdxFile(path, FileType.Internal));
 	}
 
 	public void remove(PlayerBody entity)
 	{
 		if (!contains(entity)) return;
 		objects.remove(entity);
+		broadphase.getOverlappingPairCache().
+				setInternalGhostPairCallback(null);
 		world.removeCollisionObject(entity.body());
 		world.removeAction(entity.characterController());
 	}
@@ -280,12 +276,7 @@ public class PhysicsWorld
 
 	public void render(View view)
 	{
-		debugDrawer.render(view);
-	}
-
-	public void setDebugMode(int mode)
-	{
-		debugDrawer.setDebugMode(mode);
+		debug.render(view);
 	}
 
 	public void setGravity(Vector3 gravity)
@@ -293,25 +284,23 @@ public class PhysicsWorld
 		world.setGravity(gravity);
 	}
 
-	public void toggleDebugMode()
-	{
-		debugDrawer.toggleDebugMode();
-	}
-
 	public void update(float dt)
 	{
+		super.update(dt);
 		world.stepSimulation(dt);
+	}
 
+	protected void input(float dt)
+	{
 		if (keyboard.exists() && debugKey.isPressed()
-		 || touchScreen.exists() && touchScreen.fingersTouched(3))
+				|| touchScreen.exists() && touchScreen.fingersTouched(3))
 		{
-			toggleDebugMode();
+			debug.toggle();
 		}
 	}
 
 	protected void rayTest(Vector3 rayStart,
-							Vector3 rayEnd,
-							RayCallback callback)
+			Vector3 rayEnd, ClosestRayResultCallback callback)
 	{
 		world.rayTest(rayStart, rayEnd, callback);
 	}

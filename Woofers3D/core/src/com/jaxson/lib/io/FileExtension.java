@@ -2,6 +2,7 @@ package com.jaxson.lib.io;
 
 import java.util.HashMap;
 import com.jaxson.lib.util.Measurable;
+import com.jaxson.lib.util.Printer;
 
 public class FileExtension implements Measurable
 {
@@ -36,13 +37,14 @@ public class FileExtension implements Measurable
 	public FileExtension(String extension)
 	{
 		this.extension = formatExtension(extension);
+		System.out.println(toString());
 		if (size() >= MAX_CHARACTER)
 			throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}
 
 	public boolean equals(FileExtension other)
 	{
-		return getExtension().equals(other.getExtension());
+		return extension().equals(other.extension());
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class FileExtension implements Measurable
 		return false;
 	}
 
-	public String getExtension()
+	public String extension()
 	{
 		return extension;
 	}
@@ -75,13 +77,14 @@ public class FileExtension implements Measurable
 	@Override
 	public int size()
 	{
-		return getExtension().length();
+		return extension().length();
 	}
 
 	@Override
 	public String toString()
 	{
-		return getExtension();
+		return new Printer(getClass(),
+				new Printer.Label(extension())).toString();
 	}
 
 	public static void addException(String original, String translated)

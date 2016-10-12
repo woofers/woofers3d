@@ -48,7 +48,8 @@ public class MyCellStyle implements Cloneable
 	public final static short THICK_HORZ_BANDS = CellStyle.THICK_HORZ_BANDS;
 	public final static short THICK_VERT_BANDS = CellStyle.THICK_VERT_BANDS;
 	public final static short THICK_BACKWARD_DIAG
-		= CellStyle.THICK_BACKWARD_DIAG;
+			= CellStyle.THICK_BACKWARD_DIAG;
+
 	public final static short THICK_FORWARD_DIAG = CellStyle.THICK_FORWARD_DIAG;
 	public final static short BIG_SPOTS = CellStyle.BIG_SPOTS;
 	public final static short BRICKS = CellStyle.BRICKS;

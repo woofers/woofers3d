@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import com.jaxson.lib.util.Unwrapable;
 
-public class JsonFile<T> implements File<JsonFile<T>, T, T>, Unwrapable<T>
+public class JsonFile<T> implements File<JsonFile<T>, T, T>
 {
 	private static final String EMPTY = "{" + NEXT_LINE + NEXT_LINE + "}";
 	public static final JsonFile NOTHING
@@ -283,6 +283,7 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>, Unwrapable<T>
 	@Override
 	public JsonFile<T> write(T object)
 	{
+		if (object == null) return write();
 		try
 		{
 			write(new Gson().toJson(object));

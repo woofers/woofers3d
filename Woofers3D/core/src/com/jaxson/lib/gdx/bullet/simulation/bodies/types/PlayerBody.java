@@ -226,19 +226,16 @@ public abstract class PlayerBody
 				jump();
 			}
 		}
+
 		if (accelerometer.exists())
 		{
-			if (accelerometer.tiltsForward())
+			if (accelerometer.tiltsForward() || accelerometer.tiltsBackward())
 			{
 				walkDirection.add(direction());
-				walkDirection.scl(accelerometer.getForward());
-			}
-			if (accelerometer.tiltsBackward())
-			{
-				walkDirection.sub(direction());
-				walkDirection.scl(accelerometer.getBack());
+				walkDirection.scl(accelerometer.y());
 			}
 		}
+
 		walkDirection.scl(speed());
 		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();

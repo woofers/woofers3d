@@ -1,6 +1,7 @@
 package com.jaxson.lib.math;
 
 import com.jaxson.lib.util.MyComparable;
+import com.jaxson.lib.util.Printer;
 
 public abstract class ComparableNumber extends Number
 		implements MyComparable<Number>
@@ -26,4 +27,9 @@ public abstract class ComparableNumber extends Number
 
 	@Override
 	public abstract long longValue();
+
+	public String toString()
+	{
+		return new Printer(getClass(), new Printer.Label(floatValue())).toString();
+	}
 }

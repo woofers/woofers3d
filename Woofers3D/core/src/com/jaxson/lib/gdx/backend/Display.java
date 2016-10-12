@@ -79,11 +79,11 @@ public class Display extends GameObject
 		this.pauseKey = keyboard.key("Escape");
 		this.screenshotKey = keyboard.key("F12");
 		this.fullscreenKey
-			= new Keys(keyboard.key("F11"),
-					   new KeyCombination(
-					   		new Keys(keyboard.key("L-Alt"),
-									 keyboard.key("R-Alt")),
-							keyboard.key("Enter")));
+				= new Keys(keyboard.key("F11"),
+						   new KeyCombination(
+						   		new Keys(keyboard.key("L-Alt"),
+										 keyboard.key("R-Alt")),
+								keyboard.key("Enter")));
 
 		setFullscreen(startsFullscreen());
 	}
@@ -618,6 +618,6 @@ public class Display extends GameObject
 	private boolean hasPauseScreen()
 	{
 		return game.currentState() != null
-			&& game.currentState().hasPauseState();
+				&& game.currentState().hasPauseState();
 	}
 }

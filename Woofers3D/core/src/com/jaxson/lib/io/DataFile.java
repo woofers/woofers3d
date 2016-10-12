@@ -12,13 +12,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 import com.jaxson.lib.util.Unwrapable;
+import com.jaxson.lib.util.Printer;
 
 /**
  * A File that handles writing and reading.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class DataFile implements File<DataFile, String, String>, Unwrapable<String>
+public class DataFile implements File<DataFile, String, String>
 {
 	public static final DataFile NOTHING = new EmptyFile();
 
@@ -407,7 +408,7 @@ public class DataFile implements File<DataFile, String, String>, Unwrapable<Stri
 		if (extension.equals(fileExtension())) return this;
 		return new DataFile(parentPath()
 							   + nameWithoutExtension()
-							   + "." + extension.getExtension());
+							   + "." + extension.extension());
 	}
 
 	@Override
@@ -425,7 +426,8 @@ public class DataFile implements File<DataFile, String, String>, Unwrapable<Stri
 	@Override
 	public String toString()
 	{
-		return path();
+		return new Printer(getClass(),
+				new Printer.Label("Path", path())).toString();
 	}
 
 	@Override

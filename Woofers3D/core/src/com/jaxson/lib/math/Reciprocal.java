@@ -37,6 +37,6 @@ public class Reciprocal extends ComparableNumber
 	@Override
 	public long longValue()
 	{
-		return 1l / denominator().longValue();
+		return 1L / denominator().longValue();
 	}
 }

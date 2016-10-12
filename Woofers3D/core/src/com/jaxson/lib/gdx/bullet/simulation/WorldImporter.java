@@ -14,7 +14,7 @@ import com.jaxson.lib.util.MyArrayList;
 
 public class WorldImporter
 {
-	private static final String WORLD_EXTENSION = "bulllet";
+	private static final String WORLD_EXTENSION = "bullet";
 
 	private static class WorldImporterHelper extends btBulletWorldImporter
 	{

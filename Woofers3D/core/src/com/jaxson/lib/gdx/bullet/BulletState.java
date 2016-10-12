@@ -74,16 +74,8 @@ public abstract class BulletState extends State
 
 	public void load(GdxFile file)
 	{
-		load(file, true);
-	}
-
-	public void load(GdxFile file, boolean applyPhysics)
-	{
 		for (RigidBody entity: physicsWorld().load(file))
-		{
 			add(entity);
-			if (applyPhysics) applyPhysics(entity);
-		}
 	}
 
 	public void removePhysics(PlayerBody entity)

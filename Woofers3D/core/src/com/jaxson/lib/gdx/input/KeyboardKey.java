@@ -1,5 +1,7 @@
 package com.jaxson.lib.gdx.input;
 
+import com.jaxson.lib.util.Printer;
+
 public class KeyboardKey implements Key
 {
 	private int keycode;
@@ -11,7 +13,7 @@ public class KeyboardKey implements Key
 	{
 		this.keycode = keycode;
 		this.name = Keys.toString(keycode);
-		if (!keycodeIsValid()) throw new InvalidKeyException(keycode);
+		if (!isValid()) throw new InvalidKeyException(keycode);
 	}
 
 	public int keycode()
@@ -45,7 +47,9 @@ public class KeyboardKey implements Key
 	@Override
 	public String toString()
 	{
-		return "Key: " + name() + ", Keycode: " + keycode();
+		return new Printer(getClass(),
+				new Printer.Label("Name", name()),
+				new Printer.Label("Keycode", keycode())).toString();
 	}
 
 	void setDown(boolean down)
@@ -63,7 +67,7 @@ public class KeyboardKey implements Key
 		this.wasDown = down;
 	}
 
-	private boolean keycodeIsValid()
+	private boolean isValid()
 	{
 		return Keys.MIN <= keycode() && keycode() < Keys.MAX;
 	}

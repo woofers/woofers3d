@@ -11,7 +11,7 @@ public class MyColor
 	public static final MyColor WHITE = new MyColor(IndexedColors.WHITE);
 	public static final MyColor RED = new MyColor(IndexedColors.RED);
 	public static final MyColor BRIGHT_GREEN
-		= new MyColor(IndexedColors.BRIGHT_GREEN);
+			= new MyColor(IndexedColors.BRIGHT_GREEN);
 	public static final MyColor DARK_BLUE = new MyColor(IndexedColors.BLUE);
 	public static final MyColor YELLOW = new MyColor(IndexedColors.YELLOW);
 	public static final MyColor PINK = new MyColor(IndexedColors.PINK);

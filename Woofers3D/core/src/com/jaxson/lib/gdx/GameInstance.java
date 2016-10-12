@@ -59,7 +59,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public GameConfig getConfig()
 	{
-		return getSaveableConfig().unwarp();
+		return getSaveableConfig().unwrap();
 	}
 
 	/**

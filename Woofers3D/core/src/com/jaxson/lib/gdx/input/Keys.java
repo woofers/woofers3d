@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 public class Keys extends Input.Keys implements Key, Iterable<Key>
 {
-	public static final int ANY_KEY = -1;
 	private static final String ANY_KEY_NAME = "Any Key";
 	public static final int MIN = ANY_KEY;
 	public static final int MAX = 256;
@@ -80,6 +79,8 @@ public class Keys extends Input.Keys implements Key, Iterable<Key>
 	public static String toString(int keycode)
 	{
 		if (keycode == ANY_KEY) return ANY_KEY_NAME;
-		return Input.Keys.toString(keycode);
+		String name = Input.Keys.toString(keycode);
+		if (name == null) return new Integer(keycode).toString();
+		return name;
 	}
 }

@@ -5,20 +5,23 @@ import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.math.MyMath;
+import java.util.HashMap;
 
 public class Accelerometer extends Peripheral
 {
-	private static final float ACCELEROMETER_FORWARD_SCALE = 70f / 100f;
-	private static final float ACCELEROMETER_BACK_SCALE = 20f / 100f;
-	private static final float ACCELEROMETER_NULL_SCALE
-			= 100f - ACCELEROMETER_FORWARD_SCALE - ACCELEROMETER_BACK_SCALE;
+	public static final float MAX = 10f;
+	public static final float MIN = -MAX;
+	public static final float RANGE = MAX - MIN;
 
-	private static final float ACCELEROMETER_MAX = 10f;
-	private static final float ACCELEROMETER_MIN = -ACCELEROMETER_MAX;
-	private static final float ACCELEROMETER_RANGE
-			= ACCELEROMETER_MAX - ACCELEROMETER_MIN;
+	private static final float DEAD_ZONE = 1f;
 
 	private Game game;
+	private float x;
+	private float y;
+	private float z;
+	private float oldX;
+	private float oldY;
+	private float oldZ;
 
 	Accelerometer(Game game)
 	{
@@ -32,135 +35,112 @@ public class Accelerometer extends Peripheral
 		return input().isPeripheralAvailable(Input.Peripheral.Accelerometer);
 	}
 
-	public float getBack()
+	public Vector3 values()
 	{
-		float value = 0;
-		float y = getY();
-		if (y > getNullMaxY())
-			value = MyMath.abs((y - getNullMaxY()) / getMinRangeY());
-		return MyMath.min(value, 1f);
+		return new Vector3(x(), y(), z());
 	}
 
-	public float getBackRangeY()
-	{
-		return ACCELEROMETER_MAX - getNullMaxY();
-	}
-
-	public float getForward()
-	{
-		float value = 0;
-		float y = getY();
-		if (y < getNullMinY())
-			value = MyMath.abs((y - getNullMinY()) / getMinRangeY());
-		return MyMath.min(value, 1f);
-	}
-
-	public float getForwardRangeY()
-	{
-		return getNullMinY() - ACCELEROMETER_MIN;
-	}
-
-	public float getMinRangeY()
-	{
-		float back = getBackRangeY();
-		float forward = getForwardRangeY();
-		if (back > forward) return forward;
-		return back;
-	}
-
-	public float getNullMaxY()
-	{
-		return ACCELEROMETER_MAX
-				- getScaledAccelerometerRange(ACCELEROMETER_BACK_SCALE);
-	}
-
-	public float getNullMinY()
-	{
-		return ACCELEROMETER_MIN
-				+ getScaledAccelerometerRange(ACCELEROMETER_FORWARD_SCALE);
-	}
-
-	public Vector3 getValues()
-	{
-		return new Vector3(getX(), getY(), getZ());
-	}
-
-	public float getX()
+	public float absouluteX()
 	{
 		float x;
-		if (getDisplay().isLandscape())
+		if (display().isLandscape())
 		{
-			x = getAbsouluteY();
-			if (getDisplay().isReverseLandscape()) x *= -1f;
-
+			x = input().getAccelerometerY();
+			if (display().isReverseLandscape()) x *= -1f;
 		}
 		else
 		{
-			x = getAbsouluteX();
-			if (getDisplay().isReversePortrait()) x *= -1f;
+			x = input().getAccelerometerX();
+			if (display().isReversePortrait()) x *= -1f;
 		}
 		return x;
 	}
 
-	public float getY()
+	public float absouluteY()
 	{
 		float y;
-		if (getDisplay().isLandscape())
+		if (display().isLandscape())
 		{
-			y = getAbsouluteX();
-			if (getDisplay().isReverseLandscape()) y *= -1f;
+			y = input().getAccelerometerX();
+			if (display().isReverseLandscape()) y *= -1f;
 
 		}
 		else
 		{
-			y = getAbsouluteY();
-			if (getDisplay().isReversePortrait()) y *= -1f;
+			y = input().getAccelerometerY();
+			if (display().isReversePortrait()) y *= -1f;
 		}
 		return y;
 	}
 
-	public float getZ()
-	{
-		return getAbsouluteZ();
-	}
-
-	public boolean tiltsBackward()
-	{
-		return getBack() != 0;
-	}
-
-	public boolean tiltsForward()
-	{
-		return getForward() != 0;
-	}
-
-	private Vector3 getAbsouluteValues()
-	{
-		return new Vector3(getAbsouluteX(), getAbsouluteY(), getAbsouluteZ());
-	}
-
-	private float getAbsouluteX()
-	{
-		return input().getAccelerometerX();
-	}
-
-	private float getAbsouluteY()
-	{
-		return input().getAccelerometerY();
-	}
-
-	private float getAbsouluteZ()
+	public float absouluteZ()
 	{
 		return input().getAccelerometerZ();
 	}
 
-	private Display getDisplay()
+	public Vector3 absouluteValues()
+	{
+		return new Vector3(absouluteX(), absouluteY(), absouluteZ());
+	}
+
+	private Display display()
 	{
 		return game.display();
 	}
 
-	private static float getScaledAccelerometerRange(float scale)
+	public float z()
 	{
-		return scale * ACCELEROMETER_RANGE;
+		return MyMath.abs(z - oldZ) >= DEAD_ZONE ? z : 0f;
+	}
+
+	public float y()
+	{
+		return MyMath.abs(y - oldY) >= DEAD_ZONE ? y : 0f;
+	}
+
+	public float x()
+	{
+		return MyMath.abs(x - oldX) >= DEAD_ZONE ? x : 0f;
+	}
+
+	public boolean tiltsForward()
+	{
+		return y() > 0f;
+	}
+
+	public boolean tiltsBackward()
+	{
+		return y() < 0f;
+	}
+
+	public boolean tiltsLeft()
+	{
+		return x() < 0f;
+	}
+
+	public boolean tiltsRight()
+	{
+		return x() > 0f;
+	}
+
+	public boolean tiltsUp()
+	{
+		return z() > 0f;
+	}
+
+	public boolean tiltsDown()
+	{
+		return z() < 0f;
+	}
+
+	public void update(float dt)
+	{
+		if (!exists()) return;
+		this.oldX = x;
+		this.oldY = y;
+		this.oldZ = z;
+		this.x = absouluteX();
+		this.y = absouluteY();
+		this.z = absouluteZ();
 	}
 }

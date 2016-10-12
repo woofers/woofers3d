@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import com.jaxson.lib.util.Printer;
 
 /**
  * A EmptyFile that is returned inplace of {@code null}.
@@ -176,6 +177,12 @@ public class EmptyFile extends DataFile
 	public DataFile rename(String name)
 	{
 		return this;
+	}
+
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label()).toString();
 	}
 
 	@Override
