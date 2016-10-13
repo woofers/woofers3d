@@ -14,6 +14,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
 import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
+import com.jaxson.lib.gdx.graphics.g2d.Text;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
@@ -37,6 +38,7 @@ public class PlayState extends BulletState
 	private SoftBox softBox;
 	private Player player;
 	private TargetCamera camera;
+	private Text text;
 
 	public PlayState(Game game)
 	{
@@ -90,6 +92,10 @@ public class PlayState extends BulletState
 		add(player);
 
 		addHud(new FPSCounter(game()));
+
+		text = new Text("");
+		text.setLocation(20, 38);
+		addHud(text);
 	}
 
 	@Override
@@ -108,6 +114,7 @@ public class PlayState extends BulletState
 	public void update(float dt)
 	{
 		super.update(dt);
+		text.setText(Inputs.accelerometer().toString());
 	}
 
 	@Override
