@@ -5,6 +5,8 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.jaxson.woofers3d.Woofers3D;
 import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
+import android.content.Context;
 
 public class AndroidLauncher extends AndroidApplication
 {
@@ -15,4 +17,10 @@ public class AndroidLauncher extends AndroidApplication
 		Woofers3D game = new Woofers3D();
 		initialize(game, game.toAndroidConfig());
 	}
+
+	  @Override
+     protected void attachBaseContext(Context base) {
+          super.attachBaseContext(base);
+          MultiDex.install(this);
+     }
 }

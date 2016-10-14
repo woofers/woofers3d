@@ -2,9 +2,9 @@ android {
     buildToolsVersion "23.0.2"
     compileSdkVersion 23
 
-        defaultConfig {
-            multiDexEnabled true
-        }
+    defaultConfig {
+        multiDexEnabled true
+    }
 
     sourceSets {
         main {
@@ -119,4 +119,9 @@ idea {
             }
         }
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:multidex:1.0.0'
 }

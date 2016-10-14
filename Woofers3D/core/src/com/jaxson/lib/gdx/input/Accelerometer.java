@@ -14,7 +14,8 @@ public class Accelerometer extends Peripheral
 	public static final float MIN = -MAX;
 	public static final float RANGE = MAX - MIN;
 
-	private static final float DEAD_ZONE = 1f;
+	private static final float ALPHA = 0.2f;
+	public static final float DEAD_ZONE = 1.75f;
 
 	private Game game;
 	private float x;
@@ -71,7 +72,7 @@ public class Accelerometer extends Peripheral
 			y = input().getAccelerometerY();
 			if (display().isReversePortrait()) y *= -1f;
 		}
-		return y;
+		return y * -1f;
 	}
 
 	public float absouluteZ()
@@ -91,47 +92,47 @@ public class Accelerometer extends Peripheral
 
 	public float z()
 	{
-		return MyMath.abs(z - oldZ) >= DEAD_ZONE ? z : 0f;
+		return oldZ + ALPHA * (z - oldZ);
 	}
 
 	public float y()
 	{
-		return MyMath.abs(y - oldY) >= DEAD_ZONE ? y : 0f;
+		return oldY + ALPHA * (y - oldY);
 	}
 
 	public float x()
 	{
-		return MyMath.abs(x - oldX) >= DEAD_ZONE ? x : 0f;
+		return oldX + ALPHA * (x - oldX);
 	}
 
 	public boolean tiltsForward()
 	{
-		return y() > 0f;
+		return y() > DEAD_ZONE;
 	}
 
 	public boolean tiltsBackward()
 	{
-		return y() < 0f;
+		return y() < -DEAD_ZONE;
 	}
 
 	public boolean tiltsLeft()
 	{
-		return x() < 0f;
+		return x() < -DEAD_ZONE;
 	}
 
 	public boolean tiltsRight()
 	{
-		return x() > 0f;
+		return x() > DEAD_ZONE;
 	}
 
 	public boolean tiltsUp()
 	{
-		return z() > 0f;
+		return z() > DEAD_ZONE;
 	}
 
 	public boolean tiltsDown()
 	{
-		return z() < 0f;
+		return z() < -DEAD_ZONE;
 	}
 
 	public void update(float dt)

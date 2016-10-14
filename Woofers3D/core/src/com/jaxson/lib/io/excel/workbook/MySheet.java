@@ -315,11 +315,6 @@ public class MySheet implements Iterable<MyRow>
 		return getSheet().getMergedRegion(index);
 	}
 
-	public List<CellRangeAddress> getMergedRegions()
-	{
-		return getSheet().getMergedRegions();
-	}
-
 	public String getName()
 	{
 		return getSheet().getSheetName();

@@ -122,9 +122,9 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         compile 'com.google.code.gson:gson:2.2.4'
-        compile "org.apache.poi:poi:3.13"
-        compile "org.apache.poi:poi-ooxml:3.13"
-        compile "org.apache.poi:ooxml-schemas:1.1"
+        //compile "org.apache.poi:poi:3.13"
+        //compile "org.apache.poi:poi-ooxml:3.13"
+        //compile "org.apache.poi:ooxml-schemas:1.1"
     }
 }
 

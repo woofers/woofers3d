@@ -2,7 +2,6 @@ package com.jaxson.lib.io.excel.workbook;
 
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Color;
-import org.apache.poi.ss.usermodel.ExtendedColor;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 public class MyColor
@@ -114,11 +113,6 @@ public class MyColor
 		{
 			HSSFColor color = (HSSFColor) getColor();
 			return color.getIndex();
-		}
-		if (getColor() instanceof ExtendedColor)
-		{
-			ExtendedColor color = (ExtendedColor) getColor();
-			if (color.isIndexed()) return color.getIndex();
 		}
 		if (getColor() instanceof IndexedColors)
 		{

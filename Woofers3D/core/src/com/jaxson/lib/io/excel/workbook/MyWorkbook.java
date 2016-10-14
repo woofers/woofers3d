@@ -254,10 +254,14 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	public Iterator<MySheet> iterator()
 	{
 		MyArrayList<MySheet> sheets = new MyArrayList<>();
-		for (Sheet sheet: getWorkbook())
+		int i = 0;
+		Sheet sheet = null;
+		do
 		{
-			sheets.add(new MySheet(sheet));
+			sheets.add(getSheet(i));
+			i ++;
 		}
+		while (sheet != null);
 		return sheets.iterator();
 	}
 

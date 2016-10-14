@@ -36,7 +36,7 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 
 	public GdxFile(File file)
 	{
-		this(file, FileType.Absolute);
+		this(file, FileType.Internal);
 	}
 
 	public GdxFile(File file, FileType fileType)

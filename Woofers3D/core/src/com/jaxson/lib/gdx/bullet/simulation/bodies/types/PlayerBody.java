@@ -227,13 +227,21 @@ public abstract class PlayerBody
 			}
 		}
 
-		System.out.println(accelerometer);
 		if (accelerometer.exists())
 		{
-			if (accelerometer.tiltsForward() || accelerometer.tiltsBackward())
+			walkDirection.add(direction());
+			walkDirection.scl((accelerometer.y() + 5) / 6.5f);
+			if (accelerometer.tiltsLeft())
 			{
-				walkDirection.add(direction());
-				walkDirection.scl(accelerometer.y());
+				rotate(-rotationSpeed() *
+						(accelerometer.y() - Accelerometer.DEAD_ZONE)
+						 * 0.17f, 0f, 0f);
+			}
+			if (accelerometer.tiltsRight())
+			{
+				rotate(rotationSpeed() *
+						(accelerometer.y() - Accelerometer.DEAD_ZONE)
+						 * 0.17f, 0f, 0f);
 			}
 		}
 

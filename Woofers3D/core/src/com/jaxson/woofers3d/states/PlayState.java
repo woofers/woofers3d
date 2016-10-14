@@ -43,13 +43,13 @@ public class PlayState extends BulletState
 	public PlayState(Game game)
 	{
 		super(game);
-		setSubState(new PauseState(game));
+		//setSubState(new PauseState(game));
 
 		camera = new TargetCamera(width(), height());
 		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
-		load(new GdxFile("btscene1.g3dj"));
+		//load(new GdxFile("btscene1.g3dj"));
 
 		floor = new Floor();
 		applyPhysics(floor);
