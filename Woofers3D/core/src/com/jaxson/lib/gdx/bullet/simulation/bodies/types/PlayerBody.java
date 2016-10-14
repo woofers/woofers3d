@@ -26,6 +26,8 @@ public abstract class PlayerBody
 	private static final float FALL_SPEED = 55f;
 	private static final float JUMP_SPEED = 10f;
 
+	private static final float Y_BALANCE = 5.5f;
+
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
 	private Vector3 walkDirection;
@@ -189,11 +191,16 @@ public abstract class PlayerBody
 		return keyboard;
 	}
 
+	protected Accelerometer accelerometer()
+	{
+		return accelerometer;
+	}
+
 	@Override
 	protected void input(float dt)
 	{
 		walkDirection.setZero();
-		if (keyboard.exists())
+		if (keyboard().exists())
 		{
 			if (onGround())
 			{
@@ -230,24 +237,38 @@ public abstract class PlayerBody
 		if (accelerometer.exists())
 		{
 			walkDirection.add(direction());
-			walkDirection.scl((accelerometer.y() + 5) / 6.5f);
+			walkDirection.scl(yAccelerometer() * 0.15f);
 			if (accelerometer.tiltsLeft())
 			{
-				rotate(-rotationSpeed() *
-						(accelerometer.y() - Accelerometer.DEAD_ZONE)
-						 * 0.17f, 0f, 0f);
+				rotate(rotationSpeed() *
+						(accelerometer.x() + Accelerometer.DEAD_ZONE)
+						* 0.17f, 0f, 0f);
 			}
 			if (accelerometer.tiltsRight())
 			{
-				rotate(rotationSpeed() *
-						(accelerometer.y() - Accelerometer.DEAD_ZONE)
-						 * 0.17f, 0f, 0f);
+				rotate(-rotationSpeed() *
+						(accelerometer.x() - Accelerometer.DEAD_ZONE)
+						* 0.17f, 0f, 0f);
 			}
 		}
 
 		walkDirection.scl(speed());
 		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();
+	}
+
+	protected float yAccelerometer()
+	{
+		float y = accelerometer.y();
+		if (y > Y_BALANCE && y <= Y_BALANCE + Accelerometer.MAX)
+		{
+			return y - Y_BALANCE;
+		}
+		else if (y > 0f)
+		{
+			return -(y - Y_BALANCE - Accelerometer.MAX);
+		}
+		return y - Y_BALANCE;
 	}
 
 	private btKinematicCharacterController createController(float stepHeight)

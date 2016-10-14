@@ -10,6 +10,7 @@ import com.jaxson.lib.util.Printer;
 
 public class Accelerometer extends Peripheral
 {
+	public static final float BALANCE = 0f;
 	public static final float MAX = 10f;
 	public static final float MIN = -MAX;
 	public static final float RANGE = MAX - MIN;
@@ -82,7 +83,8 @@ public class Accelerometer extends Peripheral
 
 	public Vector3 absouluteValues()
 	{
-		return new Vector3(absouluteX(), absouluteY(), absouluteZ());
+		return new Vector3(absouluteX(), absouluteY(),
+				absouluteZ());
 	}
 
 	private Display display()
@@ -105,34 +107,64 @@ public class Accelerometer extends Peripheral
 		return oldX + ALPHA * (x - oldX);
 	}
 
+	public boolean tiltsForward(float tolerance)
+	{
+		return y() > tolerance;
+	}
+
+	public boolean tiltsBackward(float tolerance)
+	{
+		return y() < -tolerance;
+	}
+
+	public boolean tiltsLeft(float tolerance)
+	{
+		return x() < -tolerance;
+	}
+
+	public boolean tiltsRight(float tolerance)
+	{
+		return x() > tolerance;
+	}
+
+	public boolean tiltsUp(float tolerance)
+	{
+		return z() > tolerance;
+	}
+
+	public boolean tiltsDown(float tolerance)
+	{
+		return z() < -tolerance;
+	}
+
 	public boolean tiltsForward()
 	{
-		return y() > DEAD_ZONE;
+		return tiltsForward(DEAD_ZONE);
 	}
 
 	public boolean tiltsBackward()
 	{
-		return y() < -DEAD_ZONE;
+		return tiltsBackward(DEAD_ZONE);
 	}
 
 	public boolean tiltsLeft()
 	{
-		return x() < -DEAD_ZONE;
+		return tiltsLeft(DEAD_ZONE);
 	}
 
 	public boolean tiltsRight()
 	{
-		return x() > DEAD_ZONE;
+		return tiltsRight(DEAD_ZONE);
 	}
 
 	public boolean tiltsUp()
 	{
-		return z() > DEAD_ZONE;
+		return tiltsUp(DEAD_ZONE);
 	}
 
 	public boolean tiltsDown()
 	{
-		return z() < -DEAD_ZONE;
+		return tiltsDown(DEAD_ZONE);
 	}
 
 	public void update(float dt)
