@@ -43,7 +43,7 @@ public class PlayState extends BulletState
 	public PlayState(Game game)
 	{
 		super(game);
-		//setSubState(new PauseState(game));
+		setSubState(new PauseState(game));
 
 		camera = new TargetCamera(width(), height());
 		applyPhysics(camera);
@@ -114,7 +114,7 @@ public class PlayState extends BulletState
 	public void update(float dt)
 	{
 		super.update(dt);
-		text.setText(Inputs.accelerometer().toString());
+		text.setText(player.accelerometer().toString());
 	}
 
 	@Override

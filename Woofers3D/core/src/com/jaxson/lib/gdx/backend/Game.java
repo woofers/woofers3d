@@ -15,11 +15,11 @@ import com.jaxson.lib.gdx.GameConfig;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.states.State;
-import com.jaxson.lib.io.Jsonable;
+import com.jaxson.lib.io.Json;
 
 public class Game
 {
-	private Jsonable<GameConfig> config;
+	private Json<GameConfig> config;
 	private GameStates gameStates;
 	private Display display;
 	private Inputs inputs;
@@ -28,7 +28,7 @@ public class Game
 	private float step;
 	private float clamp;
 
-	public Game(Jsonable<GameConfig> config)
+	public Game(Json<GameConfig> config)
 	{
 		this.config = config;
 		this.inputs = new Inputs(this);
@@ -112,7 +112,7 @@ public class Game
 		return application().getNet();
 	}
 
-	public Jsonable<GameConfig> saveableConfig()
+	public Json<GameConfig> saveableConfig()
 	{
 		return config;
 	}

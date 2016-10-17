@@ -10,22 +10,22 @@ import com.jaxson.lib.util.Uncertainty;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public class Jsonable<T> implements Unwrapable<T>
+public class Json<T> implements Unwrapable<T>
 {
 	private Optional<T> object;
 	private JsonFile<T> file;
 
-	public Jsonable(File file, Class<T> type)
+	public Json(File file, Class<T> type)
 	{
 		this(file, type, null);
 	}
 
-	public Jsonable(File file, Class<T> type, T object)
+	public Json(File file, Class<T> type, T object)
 	{
 		this(new JsonFile<>(file, type), object);
 	}
 
-	public Jsonable(JsonFile<T> file, T object)
+	public Json(JsonFile<T> file, T object)
 	{
 		this.object = new Optional<>(object);
 		setSaveFile(file);

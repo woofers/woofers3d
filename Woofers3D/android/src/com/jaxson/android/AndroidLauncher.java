@@ -18,9 +18,10 @@ public class AndroidLauncher extends AndroidApplication
 		initialize(game, game.toAndroidConfig());
 	}
 
-	  @Override
-     protected void attachBaseContext(Context base) {
-          super.attachBaseContext(base);
-          MultiDex.install(this);
-     }
+	@Override
+	protected void attachBaseContext(Context base)
+	{
+		super.attachBaseContext(base);
+		MultiDex.install(this);
+	}
 }

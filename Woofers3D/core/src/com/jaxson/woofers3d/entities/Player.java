@@ -4,6 +4,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.lib.gdx.bullet.simulation.collision.SphereShape;
 
 public class Player extends CameraPlayerBody
 {

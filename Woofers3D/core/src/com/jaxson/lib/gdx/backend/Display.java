@@ -26,7 +26,7 @@ import com.jaxson.lib.gdx.input.Keys;
 import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.io.Jsonable;
+import com.jaxson.lib.io.Json;
 import com.jaxson.lib.math.MyMath;
 
 /**
@@ -348,7 +348,7 @@ public class Display extends GameObject
 		return rotation + NATIVE_ROTATION_OFFSET;
 	}
 
-	public Jsonable<GameConfig> saveableConfig()
+	public Json<GameConfig> saveableConfig()
 	{
 		return game.saveableConfig();
 	}

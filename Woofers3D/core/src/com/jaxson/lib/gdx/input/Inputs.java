@@ -32,7 +32,7 @@ public class Inputs
 			this.display = game.display();
 			this.mouse = new Mouse(game, touchScreen);
 			this.vibrator = new Vibrator(input());
-			this.accelerometer = new Accelerometer(game);
+			this.accelerometer = new DataAccelerometer(game);
 		}
 
 		@Override

@@ -20,8 +20,7 @@ public class View
 	public View(int width, int height)
 	{
 		this(new ExtendViewport(width, height),
-			 new ExtendViewport(width, height,
-			 					new TargetCamera(width, height)),
+			 new ExtendViewport(width, height, new TargetCamera(width, height)),
 			 new FitViewport(width, height));
 	}
 

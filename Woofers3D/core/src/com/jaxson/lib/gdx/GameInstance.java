@@ -10,7 +10,7 @@ import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
 import com.jaxson.lib.gdx.util.Resizeable;
 import com.jaxson.lib.io.DataFile;
-import com.jaxson.lib.io.Jsonable;
+import com.jaxson.lib.io.Json;
 
 /**
  * A {@link GameInstance} containing a {@link Game} and a {@link GameConfig}.
@@ -21,7 +21,7 @@ import com.jaxson.lib.io.Jsonable;
 public abstract class GameInstance extends ApplicationAdapter
 		implements Pauseable, Resizeable
 {
-	private Jsonable<GameConfig> config;
+	private Json<GameConfig> config;
 	private Game game;
 
 	/**
@@ -29,9 +29,9 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public GameInstance()
 	{
-		this.config = new Jsonable<>(new DataFile("config.json"),
-									 GameConfig.class,
-									 new GameConfig());
+		this.config = new Json<>(new DataFile("config.json"),
+							GameConfig.class,
+							new GameConfig());
 	}
 
 	/**
@@ -81,10 +81,10 @@ public abstract class GameInstance extends ApplicationAdapter
 	}
 
 	/**
-	 * Gets the {@link Jsonable} config of the {@link Game}.
+	 * Gets the {@link Json} config of the {@link Game}.
 	 * @return {@link GameConfig} - The config
 	 */
-	public Jsonable<GameConfig> getSaveableConfig()
+	public Json<GameConfig> getSaveableConfig()
 	{
 		return config;
 	}
@@ -142,7 +142,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	}
 
 	/**
-	 * Starts the game on desktop.
+	 * Starts the game on android.
 	 * @param launcher Android launcher to receive the {@link Game}
 	 * @deprecated Does nothing
 	 */

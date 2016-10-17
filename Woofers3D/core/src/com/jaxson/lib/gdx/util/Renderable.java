@@ -7,17 +7,11 @@ import com.jaxson.lib.gdx.graphics.views.View;
  * @author Jaxson Van Doorn
  * @since 1.0
  */
-public interface Renderable
+public interface Renderable extends Updateable
 {
 	/**
 	 * Called when the {@link Object} should render itself.
 	 * @param view View
 	 */
 	public void render(View view);
-
-	/**
-	 * Called when the {@link Object} should update the game logic.
-	 * @param dt The delta time
-	 */
-	public void update(float dt);
 }

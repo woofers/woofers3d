@@ -6,13 +6,14 @@ import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
-import com.jaxson.lib.gdx.input.Accelerometer;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.Accelerometer;
 import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.gdx.input.GameAccelerometer;
 
 public abstract class PlayerBody
 		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
@@ -26,7 +27,7 @@ public abstract class PlayerBody
 	private static final float FALL_SPEED = 55f;
 	private static final float JUMP_SPEED = 10f;
 
-	private static final float Y_BALANCE = 5f;
+	private static final float Y_BALANCE = -0.5f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
@@ -36,7 +37,7 @@ public abstract class PlayerBody
 	private float stepHeight;
 
 	private Keyboard keyboard;
-	private Accelerometer accelerometer;
+	private GameAccelerometer accelerometer;
 	private TouchScreen touchScreen;
 	private KeyboardKey forwardKey;
 	private KeyboardKey backwardKey;
@@ -62,7 +63,7 @@ public abstract class PlayerBody
 		setFallSpeed(FALL_SPEED);
 
 		this.keyboard = Inputs.keyboard();
-		this.accelerometer = Inputs.accelerometer();
+		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
 		this.touchScreen = Inputs.touchScreen();
 		this.forwardKey = keyboard.key("W");
 		this.backwardKey = keyboard.key("S");
@@ -184,6 +185,7 @@ public abstract class PlayerBody
 	public void update(float dt)
 	{
 		super.update(dt);
+		accelerometer().update(dt);
 	}
 
 	protected Keyboard keyboard()
@@ -191,9 +193,19 @@ public abstract class PlayerBody
 		return keyboard;
 	}
 
-	protected Accelerometer accelerometer()
+	public GameAccelerometer accelerometer()
 	{
 		return accelerometer;
+	}
+
+	protected void rotateLeft(float scale)
+	{
+		rotate(rotationSpeed() * scale, 0f, 0f);
+	}
+
+	protected void rotateRight(float scale)
+	{
+		rotate(-rotationSpeed() * scale, 0f, 0f);
 	}
 
 	@Override
@@ -206,11 +218,15 @@ public abstract class PlayerBody
 			{
 				if (leftKey.isDown())
 				{
-					rotate(rotationSpeed(), 0f, 0f);
+					rotateLeft(1f);
 				}
 				if (rightKey.isDown())
 				{
-					rotate(-rotationSpeed(), 0f, 0f);
+					rotateRight(1f);
+				}
+				if (jumpKey.isDown())
+				{
+					jump();
 				}
 			}
 			if (forwardKey.isDown())
@@ -221,11 +237,8 @@ public abstract class PlayerBody
 			{
 				walkDirection.sub(direction());
 			}
-			if (jumpKey.isDown())
-			{
-				jump();
-			}
 		}
+
 		if (touchScreen.exists())
 		{
 			if (touchScreen.justTouched())
@@ -233,25 +246,24 @@ public abstract class PlayerBody
 				jump();
 			}
 		}
-
 		if (accelerometer.exists())
 		{
 			walkDirection.add(direction());
-			walkDirection.scl(yAccelerometer() * 0.17f);
-			if (accelerometer.tiltsLeft())
+			walkDirection.scl(yAccelerometer() * 1.7f);
+			if (onGround())
 			{
-				rotate(rotationSpeed() *
-						(accelerometer.x() - Accelerometer.DEAD_ZONE)
-						* 0.2f, 0f, 0f);
-			}
-			if (accelerometer.tiltsRight())
-			{
-				rotate(rotationSpeed() *
-						(accelerometer.x() + Accelerometer.DEAD_ZONE)
-						* 0.2f, 0f, 0f);
+				if (accelerometer.tiltsLeft())
+				{
+					rotateLeft(2f * (accelerometer.x()
+							- accelerometer.deadZone().x));
+				}
+				else if (accelerometer.tiltsRight())
+				{
+					rotateRight(-2f * (accelerometer.x()
+							- accelerometer.deadZone().x));
+				}
 			}
 		}
-
 		walkDirection.scl(speed());
 		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();
@@ -260,11 +272,14 @@ public abstract class PlayerBody
 	protected float yAccelerometer()
 	{
 		float y = accelerometer.y();
-		if (y > Y_BALANCE && y <= Y_BALANCE + Accelerometer.MAX)
+		if (y > 0f)
 		{
-			return -(Accelerometer.MAX + -1f * (y - Y_BALANCE)) - 1f;
+			if (y > Y_BALANCE + Accelerometer.MAX)
+			{
+				return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
+			}
 		}
-		return y + Y_BALANCE;
+		return y - Y_BALANCE;
 	}
 
 	private btKinematicCharacterController createController(float stepHeight)

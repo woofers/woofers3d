@@ -22,7 +22,12 @@ public class CameraPlayerBody extends PlayerBody
 
 	public CameraPlayerBody(Unwrapable<Model> model, TargetCamera camera)
 	{
-		this(model.unwrap(), camera);
+		this(model, fittedHitbox(model.unwrap()), camera);
+	}
+
+	public CameraPlayerBody(Unwrapable<Model> model, ConvexShape shape, TargetCamera camera)
+	{
+		this(model.unwrap(), shape, camera);
 	}
 
 	public boolean cameraIsLocked()

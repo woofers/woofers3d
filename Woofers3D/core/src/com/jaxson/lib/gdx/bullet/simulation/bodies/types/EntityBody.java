@@ -161,9 +161,9 @@ public abstract class EntityBody<B extends btCollisionObject>
 
 	public boolean wasImpoted()
 	{
-		Optional<Integer> i = new Optional<>(
+		Optional<Integer> data = new Optional<>(
 				(Integer) modelInstance().userData);
-		return i.exists() && i.unwrap() == WorldImporter.IMPORTED;
+		return data.exists() && data.unwrap() == WorldImporter.IMPORTED;
 	}
 
 	protected void bodyToTransform()

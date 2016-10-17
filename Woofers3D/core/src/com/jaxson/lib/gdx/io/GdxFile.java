@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import com.jaxson.lib.util.Unwrapable;
+import com.jaxson.lib.io.FileExtension;
 
 public class GdxFile implements File<GdxFile, Model, Pixmap>
 {
@@ -295,10 +296,10 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	@Override
 	public Model readObject()
 	{
-		com.jaxson.lib.io.FileExtension extension = fileExtension();
-		if (extension.equals(com.jaxson.lib.io.FileExtension.G3DB)) return readG3db();
-		if (extension.equals(com.jaxson.lib.io.FileExtension.G3DJ)) return readG3dj();
-		if (extension.equals(com.jaxson.lib.io.FileExtension.OBJ)) return readObj();
+		FileExtension extension = fileExtension();
+		if (extension.equals(FileExtension.G3DB)) return readG3db();
+		if (extension.equals(FileExtension.G3DJ)) return readG3dj();
+		if (extension.equals(FileExtension.OBJ)) return readObj();
 		throw new IllegalArgumentException(LOADER_NOT_FOUND);
 	}
 
