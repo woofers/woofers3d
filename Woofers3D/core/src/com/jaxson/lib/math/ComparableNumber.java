@@ -28,8 +28,10 @@ public abstract class ComparableNumber extends Number
 	@Override
 	public abstract long longValue();
 
+	@Override
 	public String toString()
 	{
-		return new Printer(getClass(), new Printer.Label(floatValue())).toString();
+		return new Printer(getClass(),
+				new Printer.Label(floatValue())).toString();
 	}
 }

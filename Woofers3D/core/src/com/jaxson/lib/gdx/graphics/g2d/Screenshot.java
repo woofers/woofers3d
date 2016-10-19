@@ -1,5 +1,6 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
+import java.nio.ByteBuffer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.io.File;
-import java.nio.ByteBuffer;
 
 public class Screenshot implements Disposable
 {
@@ -20,12 +20,18 @@ public class Screenshot implements Disposable
 	private static final int BYTES_PER_PIXEL = 4;
 
 	private GdxFile file;
+
 	private Pixmap image;
 
 	public Screenshot()
 	{
 		saveScreenshot();
 		this.file = screenshotFile();
+	}
+
+	public int area()
+	{
+		return width() * height();
 	}
 
 	@Override
@@ -51,11 +57,6 @@ public class Screenshot implements Disposable
 		return this;
 	}
 
-	public int area()
-	{
-		return width() * height();
-	}
-
 	public int height()
 	{
 		return pixmap().getHeight();
@@ -66,15 +67,27 @@ public class Screenshot implements Disposable
 		return image;
 	}
 
-	public int width()
-	{
-		return pixmap().getWidth();
-	}
-
 	public Screenshot save()
 	{
 		file.write(this);
 		return this;
+	}
+
+	private void saveScreenshot()
+	{
+		saveScreenshot(graphics().getWidth(), graphics().getHeight());
+	}
+
+	private void saveScreenshot(int width, int height)
+	{
+		saveScreenshot(0, 0, width, height, true);
+	}
+
+	private void saveScreenshot(int x, int y, int width, int height,
+			boolean yDown)
+	{
+		this.image = ScreenUtils.getFrameBufferPixmap(x, y, width, height);
+		if (yDown) flipY();
 	}
 
 	public SpriteActor toSprite()
@@ -90,25 +103,13 @@ public class Screenshot implements Disposable
 	public TextureData toTextureData()
 	{
 		return new PixmapTextureData(pixmap(),
-									 pixmap().getFormat(),
-									 true, true);
+				pixmap().getFormat(),
+				true, true);
 	}
 
-	private void saveScreenshot()
+	public int width()
 	{
-		saveScreenshot(graphics().getWidth(), graphics().getHeight());
-	}
-
-	private void saveScreenshot(int width, int height)
-	{
-		saveScreenshot(0, 0, width, height, true);
-	}
-
-	private void saveScreenshot(int x, int y, int width, int height,
-								boolean yDown)
-	{
-		this.image = ScreenUtils.getFrameBufferPixmap(x, y, width, height);
-		if (yDown) flipY();
+		return pixmap().getWidth();
 	}
 
 	private static Graphics graphics()

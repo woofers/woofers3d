@@ -107,6 +107,11 @@ public class MyColor
 		this.color = color;
 	}
 
+	private Object getColor()
+	{
+		return color;
+	}
+
 	public short getIndex()
 	{
 		if (getColor() instanceof HSSFColor)
@@ -125,10 +130,5 @@ public class MyColor
 			return (short) color;
 		}
 		return DEFAULT.getIndex();
-	}
-
-	private Object getColor()
-	{
-		return color;
 	}
 }

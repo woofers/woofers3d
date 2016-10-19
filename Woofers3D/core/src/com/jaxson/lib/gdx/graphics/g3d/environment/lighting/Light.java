@@ -16,9 +16,9 @@ public interface Light
 
 	public Vector3 direction();
 
-	public DirectionalLight light();
-
 	public boolean hasShadows();
+
+	public DirectionalLight light();
 
 	public MyDirectionalLight toLight();
 

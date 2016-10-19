@@ -33,6 +33,13 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	public F append(String contents);
 
 	/**
+	 * Return a {@link BufferedReader} from the {@link File}
+	 * @return {@link BufferedReader} - The buffered reader
+	 * @throws FileNotFoundException If the file is not found
+	 */
+	public BufferedReader bufferedReader() throws FileNotFoundException;
+
+	/**
 	 * Gets whether the {@link File} can be read.
 	 * @return {@link boolean} - Whether the {@link File} can be read
 	 */
@@ -43,6 +50,13 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	 * @return {@link boolean} - Whether the {@link File} can be written to
 	 */
 	public boolean canWrite();
+
+	/**
+	 * Returns a child of the {@link File} if it exists.
+	 * @param child The Child
+	 * @return {@link F} - The child
+	 */
+	public F child(String child);
 
 	/**
 	 * Copies the file to another {@link File}.
@@ -82,21 +96,6 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	public boolean exists();
 
 	/**
-	 * Return a {@link BufferedReader} from the {@link File}
-	 * @return {@link BufferedReader} - The buffered reader
-	 * @throws FileNotFoundException If the file is not found
-	 */
-	public BufferedReader bufferedReader()
-			throws FileNotFoundException;
-
-	/**
-	 * Returns a child of the {@link File} if it exists.
-	 * @param child The Child
-	 * @return {@link F} - The child
-	 */
-	public F child(String child);
-
-	/**
 	 * Gets the file extension of the {@link File}. Returns an empty
 	 * string if the {@link File} has no extension.
 	 * @return {@link String} - The file extension
@@ -114,8 +113,7 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	 * @return {@link FileInputStream} - The file input stream
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public FileInputStream fileInputStream()
-			throws FileNotFoundException;
+	public FileInputStream fileInputStream() throws FileNotFoundException;
 
 	/**
 	 * Returns a {@link FileOutputStream} from the {@link File}
@@ -124,22 +122,46 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	 * @throws SecurityException If the access to the file denied
 	 */
 	public FileOutputStream fileOutputStream()
-			throws FileNotFoundException,
-				   SecurityException;
+			throws FileNotFoundException, SecurityException;
 
 	/**
 	 * Returns a {@link FileInputStream} from the {@link File}
 	 * @return {@link FileInputStream} - The file input stream
 	 * @throws FileNotFoundException If the file is not found
 	 */
-	public FileReader fileReader()
-			throws FileNotFoundException;
+	public FileReader fileReader() throws FileNotFoundException;
+
+	/**
+	 * Gets whether the {@link File} is a directory.
+	 * @return {@link boolean} - Whether the {@link File} is a directory
+	 */
+	public boolean isDirectory();
+
+	/**
+	 * Gets whether the {@link File} is a file.
+	 * @return {@link boolean} - Whether the {@link File} is a file
+	 */
+	public boolean isFile();
 
 	/**
 	 * Gets the {@link java.io.File} of the {@link File}.
 	 * @return {@link java.io.File} - The file
 	 */
 	public java.io.File javaFile();
+
+	/**
+	 * Gets when the {@link File} was last changed.
+	 * @return {@link Date} - When the {@link File} was last changed
+	 */
+	public Date lastModified();
+
+	/**
+	 * Moves the {@link File} to another location.
+	 * @param file The new location
+	 * @return {@link F} - The {@link File} in its new location.
+	 * If the move failed the original location is returned.
+	 */
+	public F move(F file);
 
 	/**
 	 * Gets the file name of the {@link File}.
@@ -178,41 +200,7 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	 * @throws UnsupportedEncodingException If the charset is not supported
 	 */
 	public PrintWriter printWriter()
-			throws FileNotFoundException,
-				   UnsupportedEncodingException;
-
-	/**
-	 * Gets when the {@link File} was last changed.
-	 * @return {@link Date} - When the {@link File} was last changed
-	 */
-	public Date lastModified();
-
-	/**
-	 * Gets whether the {@link File} is a directory.
-	 * @return {@link boolean} - Whether the {@link File} is a directory
-	 */
-	public boolean isDirectory();
-
-	/**
-	 * Gets whether the {@link File} is a file.
-	 * @return {@link boolean} - Whether the {@link File} is a file
-	 */
-	public boolean isFile();
-
-	/**
-	 * Gets the size of {@link File}'s abstract path in bytes.
-	 * @return {@link long} - The size of {@link File}'s abstract path in
-	 * bytes
-	 */
-	public long size();
-
-	/**
-	 * Moves the {@link File} to another location.
-	 * @param file The new location
-	 * @return {@link F} - The {@link File} in its new location.
-	 * If the move failed the original location is returned.
-	 */
-	public F move(F file);
+			throws FileNotFoundException, UnsupportedEncodingException;
 
 	/**
 	 * Parses a the {@link File} as a {@link byte} array.
@@ -225,12 +213,6 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	 * @return {@link R} - The {@link Object} read.
 	 */
 	public R readObject();
-
-	/**
-	 * Unwraps the content of the {@link File}.
-	 * @return {@link R} - The content to unwrap.
-	 */
-	public R unwrap();
 
 	/**
 	 * Parses a the {@link File} as a {@link String}.
@@ -266,6 +248,20 @@ public interface File<F extends File, R, W> extends Unwrapable<R>
 	 * @return {@link F} - The {@link File} with its new path.
 	 */
 	public F setPath(String path);
+
+	/**
+	 * Gets the size of {@link File}'s abstract path in bytes.
+	 * @return {@link long} - The size of {@link File}'s abstract path in
+	 * bytes
+	 */
+	public long size();
+
+	/**
+	 * Unwraps the content of the {@link File}.
+	 * @return {@link R} - The content to unwrap.
+	 */
+	@Override
+	public R unwrap();
 
 	/**
 	 * Writes a blank document to the {@link File}.

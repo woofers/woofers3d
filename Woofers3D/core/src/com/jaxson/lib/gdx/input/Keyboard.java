@@ -1,9 +1,9 @@
 package com.jaxson.lib.gdx.input;
 
-import com.badlogic.gdx.Input;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import com.badlogic.gdx.Input;
 
 public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 {
@@ -33,6 +33,12 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 				Input.Peripheral.HardwareKeyboard);
 	}
 
+	@Override
+	public Iterator<KeyboardKey> iterator()
+	{
+		return keys().iterator();
+	}
+
 	public KeyboardKey key(int keycode)
 	{
 		KeyboardKey key = keycodeKeys.get(keycode);
@@ -47,15 +53,9 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 		return key;
 	}
 
-	public TouchKeyboard touchKeyboard()
+	private Collection<KeyboardKey> keys()
 	{
-		return touchKeyboard;
-	}
-
-	@Override
-	public Iterator<KeyboardKey> iterator()
-	{
-		return keys().iterator();
+		return keycodeKeys.values();
 	}
 
 	void reset()
@@ -67,16 +67,16 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 		}
 	}
 
+	public TouchKeyboard touchKeyboard()
+	{
+		return touchKeyboard;
+	}
+
 	void transfer()
 	{
 		for (KeyboardKey key: keys())
 		{
 			key.transfer();
 		}
-	}
-
-	private Collection<KeyboardKey> keys()
-	{
-		return keycodeKeys.values();
 	}
 }

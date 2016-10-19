@@ -62,20 +62,15 @@ public abstract class BulletState extends State
 		super.dispose();
 	}
 
-	public PhysicsWorld physicsWorld()
-	{
-		return world;
-	}
-
-	public Vector3 worldSize()
-	{
-		return physicsWorld().worldSize();
-	}
-
 	public void load(GdxFile file)
 	{
 		for (RigidBody entity: physicsWorld().load(file))
 			add(entity);
+	}
+
+	public PhysicsWorld physicsWorld()
+	{
+		return world;
 	}
 
 	public void removePhysics(PlayerBody entity)
@@ -110,5 +105,10 @@ public abstract class BulletState extends State
 	{
 		super.update(dt);
 		world.update(dt);
+	}
+
+	public Vector3 worldSize()
+	{
+		return physicsWorld().worldSize();
 	}
 }

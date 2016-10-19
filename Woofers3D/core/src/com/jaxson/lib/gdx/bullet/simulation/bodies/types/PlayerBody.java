@@ -6,14 +6,14 @@ import com.badlogic.gdx.physics.bullet.collision.btGhostPairCallback;
 import com.badlogic.gdx.physics.bullet.collision.btPairCachingGhostObject;
 import com.badlogic.gdx.physics.bullet.dynamics.btKinematicCharacterController;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexShape;
+import com.jaxson.lib.gdx.input.Accelerometer;
+import com.jaxson.lib.gdx.input.GameAccelerometer;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
-import com.jaxson.lib.gdx.input.Accelerometer;
 import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
-import com.jaxson.lib.gdx.input.GameAccelerometer;
 
 public abstract class PlayerBody
 		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
@@ -70,11 +70,41 @@ public abstract class PlayerBody
 		this.leftKey = keyboard.key("A");
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
+
+		for (float i = Accelerometer.MIN; i < Accelerometer.MAX + 0.1f; i += 0.1f)
+			System.out.println(round(i) + ": " + round(yAccelerometer(i)));
+	}
+
+	private static float round(float i)
+	{
+		return Math.round(i * 100.0f) / 100.0f;
+	}
+
+	public GameAccelerometer accelerometer()
+	{
+		return accelerometer;
+	}
+
+	public btGhostPairCallback callback()
+	{
+		return callback;
 	}
 
 	public boolean canJump()
 	{
 		return characterController().canJump();
+	}
+
+	public btKinematicCharacterController characterController()
+	{
+		return characterController;
+	}
+
+	private btKinematicCharacterController createController(float stepHeight)
+	{
+		return new btKinematicCharacterController(body(),
+				shape().shape(),
+				stepHeight);
 	}
 
 	@Override
@@ -83,129 +113,9 @@ public abstract class PlayerBody
 		super.dispose();
 	}
 
-	public btGhostPairCallback callback()
-	{
-		return callback;
-	}
-
-	public btKinematicCharacterController characterController()
-	{
-		return characterController;
-	}
-
 	public float gravity()
 	{
 		return characterController().getGravity();
-	}
-
-	public float maxSlope()
-	{
-		return maxSlopeRad() * MyMath.RADIANS_TO_DEGREES;
-	}
-
-	public float maxSlopeRad()
-	{
-		return characterController().getMaxSlope();
-	}
-
-	public float rotationSpeed()
-	{
-		return rotationSpeed;
-	}
-
-	public float speed()
-	{
-		return speed;
-	}
-
-	public float stepHeight()
-	{
-		return stepHeight;
-	}
-
-	public void jump()
-	{
-		characterController().jump();
-	}
-
-	public boolean onGround()
-	{
-		return characterController().onGround();
-	}
-
-	public void setFallSpeed(float fallSpeed)
-	{
-		characterController().setFallSpeed(fallSpeed);
-	}
-
-	public void setGravity(float gravity)
-	{
-		characterController().setGravity(gravity);
-	}
-
-	public void setJumpSpeed(float jumpSpeed)
-	{
-		characterController().setJumpSpeed(jumpSpeed);
-	}
-
-	@Override
-	public void moveTo(Vector3 location)
-	{
-		super.moveTo(location);
-		characterController().warp(location);
-	}
-
-	public void setMaxSlope(float maxSlope)
-	{
-		setMaxSlope(maxSlope * MyMath.DEGREES_TO_RADIANS);
-	}
-
-	public void setMaxSlopeRad(float maxSlope)
-	{
-		characterController().setMaxSlope(maxSlope);
-	}
-
-	public void setRotationSpeed(float rotationSpeed)
-	{
-		this.rotationSpeed = rotationSpeed;
-	}
-
-	public void setSpeed(float speed)
-	{
-		this.speed = speed;
-	}
-
-	public void setStepHeight(float stepHeight)
-	{
-		this.stepHeight = stepHeight;
-		this.characterController = createController(stepHeight);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-		accelerometer().update(dt);
-	}
-
-	protected Keyboard keyboard()
-	{
-		return keyboard;
-	}
-
-	public GameAccelerometer accelerometer()
-	{
-		return accelerometer;
-	}
-
-	protected void rotateLeft(float scale)
-	{
-		rotate(rotationSpeed() * scale, 0f, 0f);
-	}
-
-	protected void rotateRight(float scale)
-	{
-		rotate(-rotationSpeed() * scale, 0f, 0f);
 	}
 
 	@Override
@@ -249,7 +159,7 @@ public abstract class PlayerBody
 		if (accelerometer.exists())
 		{
 			walkDirection.add(direction());
-			walkDirection.scl(yAccelerometer() * 1.7f);
+			walkDirection.scl(yAccelerometer(5f) * 1.7f);
 			if (onGround())
 			{
 				if (accelerometer.tiltsLeft())
@@ -269,23 +179,122 @@ public abstract class PlayerBody
 		bodyToTransform();
 	}
 
-	protected float yAccelerometer()
+	public void jump()
 	{
-		float y = accelerometer.y();
-		if (y > 0f)
-		{
-			if (y > Y_BALANCE + Accelerometer.MAX)
-			{
-				return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
-			}
-		}
-		return y - Y_BALANCE;
+		characterController().jump();
 	}
 
-	private btKinematicCharacterController createController(float stepHeight)
+	protected Keyboard keyboard()
 	{
-		return new btKinematicCharacterController(body(),
-				shape().shape(),
-				stepHeight);
+		return keyboard;
+	}
+
+	public float maxSlope()
+	{
+		return maxSlopeRad() * MyMath.RADIANS_TO_DEGREES;
+	}
+
+	public float maxSlopeRad()
+	{
+		return characterController().getMaxSlope();
+	}
+
+	@Override
+	public void moveTo(Vector3 location)
+	{
+		super.moveTo(location);
+		characterController().warp(location);
+	}
+
+	public boolean onGround()
+	{
+		return characterController().onGround();
+	}
+
+	protected void rotateLeft(float scale)
+	{
+		rotate(rotationSpeed() * scale, 0f, 0f);
+	}
+
+	protected void rotateRight(float scale)
+	{
+		rotate(-rotationSpeed() * scale, 0f, 0f);
+	}
+
+	public float rotationSpeed()
+	{
+		return rotationSpeed;
+	}
+
+	public void setFallSpeed(float fallSpeed)
+	{
+		characterController().setFallSpeed(fallSpeed);
+	}
+
+	public void setGravity(float gravity)
+	{
+		characterController().setGravity(gravity);
+	}
+
+	public void setJumpSpeed(float jumpSpeed)
+	{
+		characterController().setJumpSpeed(jumpSpeed);
+	}
+
+	public void setMaxSlope(float maxSlope)
+	{
+		setMaxSlope(maxSlope * MyMath.DEGREES_TO_RADIANS);
+	}
+
+	public void setMaxSlopeRad(float maxSlope)
+	{
+		characterController().setMaxSlope(maxSlope);
+	}
+
+	public void setRotationSpeed(float rotationSpeed)
+	{
+		this.rotationSpeed = rotationSpeed;
+	}
+
+	public void setSpeed(float speed)
+	{
+		this.speed = speed;
+	}
+
+	public void setStepHeight(float stepHeight)
+	{
+		this.stepHeight = stepHeight;
+		this.characterController = createController(stepHeight);
+	}
+
+	public float speed()
+	{
+		return speed;
+	}
+
+	public float stepHeight()
+	{
+		return stepHeight;
+	}
+
+	@Override
+	public void update(float dt)
+	{
+		super.update(dt);
+		accelerometer().update(dt);
+	}
+
+	protected float yAccelerometer(float test)
+	{
+		float y = test; //accelerometer.y();
+		//if (y > 0f)
+		//{
+		//	if (y > Y_BALANCE + Accelerometer.MAX)
+		//	{
+		//		return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
+		//	}
+		//}
+		//return y - Y_BALANCE;
+		return y;
 	}
 }

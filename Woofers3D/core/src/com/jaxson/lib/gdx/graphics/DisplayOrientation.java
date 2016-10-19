@@ -29,7 +29,12 @@ public class DisplayOrientation
 		{
 			angle += MAX_ANGLE;
 		}
-		this.angle = round(angle, FULL_ROTATION);
+		this.angle = newAngle(angle, FULL_ROTATION);
+	}
+
+	public int angle()
+	{
+		return angle;
 	}
 
 	@Override
@@ -48,11 +53,6 @@ public class DisplayOrientation
 		return false;
 	}
 
-	public int angle()
-	{
-		return angle;
-	}
-
 	public boolean isLandscape()
 	{
 		return equals(LANDSCAPE) || equals(REVERSE_LANDSCAPE);
@@ -63,7 +63,7 @@ public class DisplayOrientation
 		return equals(PORTRAIT) || equals(REVERSE_PORTRAIT);
 	}
 
-	private static int round(int angle, int multiple)
+	private static int newAngle(int angle, int multiple)
 	{
 		return (int) (Math.round((double) angle / multiple) * multiple);
 	}

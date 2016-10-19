@@ -1,13 +1,13 @@
 package com.jaxson.lib.gdx.input;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 
 public class Mouse implements Iterable<MouseButton>
 {
@@ -47,6 +47,11 @@ public class Mouse implements Iterable<MouseButton>
 		}
 	}
 
+	void addScrollWheel(int scrollWheel)
+	{
+		this.scrollWheel += scrollWheel;
+	}
+
 	public MouseButton button(int code)
 	{
 		MouseButton button = buttons.get(code);
@@ -74,6 +79,57 @@ public class Mouse implements Iterable<MouseButton>
 	public int deltaY()
 	{
 		return input().getDeltaY();
+	}
+
+	private Display display()
+	{
+		return game.display();
+	}
+
+	private Input input()
+	{
+		return game.input();
+	}
+
+	public boolean isCatched()
+	{
+		return input().isCursorCatched() || isMobile();
+	}
+
+	public boolean isClicked()
+	{
+		return isLeftClicked() || isRightClicked();
+	}
+
+	public boolean isInvertX()
+	{
+		return sensitivityX() < 0f;
+	}
+
+	public boolean isInvertY()
+	{
+		return sensitivityY() > 0f;
+	}
+
+	public boolean isLeftClicked()
+	{
+		return button(Buttons.LEFT).isPressed();
+	}
+
+	private boolean isMobile()
+	{
+		return game.isMobile();
+	}
+
+	public boolean isRightClicked()
+	{
+		return button(Buttons.RIGHT).isPressed();
+	}
+
+	@Override
+	public Iterator<MouseButton> iterator()
+	{
+		return buttons().iterator();
 	}
 
 	public Vector2 location()
@@ -118,52 +174,6 @@ public class Mouse implements Iterable<MouseButton>
 	public float sensitivityY()
 	{
 		return sensitivity().y;
-	}
-
-	public int x()
-	{
-		return input().getX();
-	}
-
-	public int y()
-	{
-		return input().getY();
-	}
-
-	public boolean isCatched()
-	{
-		return input().isCursorCatched() || isMobile();
-	}
-
-	public boolean isClicked()
-	{
-		return isLeftClicked() || isRightClicked();
-	}
-
-	public boolean isInvertX()
-	{
-		return sensitivityX() < 0f;
-	}
-
-	public boolean isInvertY()
-	{
-		return sensitivityY() > 0f;
-	}
-
-	public boolean isLeftClicked()
-	{
-		return button(MouseButton.LEFT).isPressed();
-	}
-
-	public boolean isRightClicked()
-	{
-		return button(MouseButton.RIGHT).isPressed();
-	}
-
-	@Override
-	public Iterator<MouseButton> iterator()
-	{
-		return buttons().iterator();
 	}
 
 	/**
@@ -232,23 +242,13 @@ public class Mouse implements Iterable<MouseButton>
 		sensitivity().set(sensitivityX(), y);
 	}
 
-	void addScrollWheel(int scrollWheel)
+	public int x()
 	{
-		this.scrollWheel += scrollWheel;
+		return input().getX();
 	}
 
-	private Display display()
+	public int y()
 	{
-		return game.display();
-	}
-
-	private Input input()
-	{
-		return game.input();
-	}
-
-	private boolean isMobile()
-	{
-		return game.isMobile();
+		return input().getY();
 	}
 }

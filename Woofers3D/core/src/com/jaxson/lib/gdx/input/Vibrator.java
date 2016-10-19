@@ -17,11 +17,6 @@ public class Vibrator extends Peripheral
 		return input().isPeripheralAvailable(Input.Peripheral.Vibrator);
 	}
 
-	public void stop()
-	{
-		input().cancelVibrate();
-	}
-
 	public void start(int milliseconds)
 	{
 		input().vibrate(milliseconds);
@@ -35,5 +30,10 @@ public class Vibrator extends Peripheral
 	public void start(long[] pattern, int loopCount)
 	{
 		input().vibrate(pattern, loopCount);
+	}
+
+	public void stop()
+	{
+		input().cancelVibrate();
 	}
 }

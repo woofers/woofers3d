@@ -1,12 +1,12 @@
 package com.jaxson.lib.gdx.graphics.views;
 
+import java.util.HashMap;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import java.util.HashMap;
 
 public class View
 {
@@ -20,8 +20,9 @@ public class View
 	public View(int width, int height)
 	{
 		this(new ExtendViewport(width, height),
-			 new ExtendViewport(width, height, new TargetCamera(width, height)),
-			 new FitViewport(width, height));
+				new ExtendViewport(width, height,
+						new TargetCamera(width, height)),
+				new FitViewport(width, height));
 	}
 
 	public View(Viewport sprite, Viewport model, Viewport hud)
@@ -44,7 +45,7 @@ public class View
 		}
 		camera.setToOrtho(false);
 		spriteView().setCamera(camera);
-}
+	}
 
 	public Viewport add(Viewport viewport, String name)
 	{
@@ -76,16 +77,6 @@ public class View
 	public Viewport modelView()
 	{
 		return model;
-	}
-
-	public SpriteBatch spriteBatch()
-	{
-		return spriteBatch;
-	}
-
-	public Viewport spriteView()
-	{
-		return sprite;
 	}
 
 	public Viewport remove(String name)
@@ -133,6 +124,16 @@ public class View
 	public void setSpriteView(Viewport sprite)
 	{
 		this.sprite = sprite;
+	}
+
+	public SpriteBatch spriteBatch()
+	{
+		return spriteBatch;
+	}
+
+	public Viewport spriteView()
+	{
+		return sprite;
 	}
 
 	public void update()

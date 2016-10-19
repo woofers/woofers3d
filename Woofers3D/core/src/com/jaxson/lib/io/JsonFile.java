@@ -1,6 +1,5 @@
 package com.jaxson.lib.io;
 
-import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,7 +8,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import com.jaxson.lib.util.Unwrapable;
+import com.google.gson.Gson;
 
 public class JsonFile<T> implements File<JsonFile<T>, T, T>
 {
@@ -38,6 +37,12 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
+	public BufferedReader bufferedReader() throws FileNotFoundException
+	{
+		return getFile().bufferedReader();
+	}
+
+	@Override
 	public boolean canRead()
 	{
 		return getFile().canRead();
@@ -47,6 +52,12 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	public boolean canWrite()
 	{
 		return getFile().canWrite();
+	}
+
+	@Override
+	public JsonFile<T> child(String child)
+	{
+		return new JsonFile<>(getFile().child(child), type);
 	}
 
 	@Override
@@ -86,19 +97,6 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public BufferedReader bufferedReader()
-			throws FileNotFoundException
-	{
-		return getFile().bufferedReader();
-	}
-
-	@Override
-	public JsonFile<T> child(String child)
-	{
-		return new JsonFile<>(getFile().child(child), type);
-	}
-
-	@Override
 	public String extension()
 	{
 		return getFile().extension();
@@ -111,31 +109,57 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public FileInputStream fileInputStream()
-			throws FileNotFoundException
+	public FileInputStream fileInputStream() throws FileNotFoundException
 	{
 		return getFile().fileInputStream();
 	}
 
 	@Override
-	public FileOutputStream fileOutputStream()
-			throws FileNotFoundException,
-				   SecurityException
+	public FileOutputStream
+		fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return getFile().fileOutputStream();
 	}
 
 	@Override
-	public FileReader fileReader()
-			throws FileNotFoundException
+	public FileReader fileReader() throws FileNotFoundException
 	{
 		return getFile().fileReader();
+	}
+
+	private File getFile()
+	{
+		return file;
+	}
+
+	@Override
+	public boolean isDirectory()
+	{
+		return getFile().isDirectory();
+	}
+
+	@Override
+	public boolean isFile()
+	{
+		return getFile().isFile();
 	}
 
 	@Override
 	public java.io.File javaFile()
 	{
 		return getFile().javaFile();
+	}
+
+	@Override
+	public Date lastModified()
+	{
+		return getFile().lastModified();
+	}
+
+	@Override
+	public JsonFile<T> move(JsonFile<T> file)
+	{
+		return new JsonFile<>(getFile().move(file), type);
 	}
 
 	@Override
@@ -169,52 +193,16 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public PrintWriter printWriter()
-			throws FileNotFoundException,
-				   UnsupportedEncodingException
+	public PrintWriter
+		printWriter() throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return getFile().printWriter();
-	}
-
-	@Override
-	public Date lastModified()
-	{
-		return getFile().lastModified();
-	}
-
-	@Override
-	public boolean isDirectory()
-	{
-		return getFile().isDirectory();
-	}
-
-	@Override
-	public boolean isFile()
-	{
-		return getFile().isFile();
-	}
-
-	@Override
-	public long size()
-	{
-		return getFile().size();
-	}
-
-	@Override
-	public JsonFile<T> move(JsonFile<T> file)
-	{
-		return new JsonFile<>(getFile().move(file), type);
 	}
 
 	@Override
 	public byte[] readBytes()
 	{
 		return getFile().readBytes();
-	}
-
-	public T unwrap()
-	{
-		return readObject();
 	}
 
 	@Override
@@ -263,6 +251,18 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
+	public long size()
+	{
+		return getFile().size();
+	}
+
+	@Override
+	public T unwrap()
+	{
+		return readObject();
+	}
+
+	@Override
 	public JsonFile<T> write()
 	{
 		return write(EMPTY);
@@ -293,10 +293,5 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 			return JsonFile.NOTHING;
 		}
 		return this;
-	}
-
-	private File getFile()
-	{
-		return file;
 	}
 }

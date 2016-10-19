@@ -1,7 +1,7 @@
 package com.jaxson.lib.gdx.input;
 
-import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
+import com.jaxson.lib.util.MyArrayList;
 
 public class KeyCombination implements Key, Iterable<Key>
 {

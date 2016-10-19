@@ -1,11 +1,11 @@
 package com.jaxson.lib.io.excel.workbook;
 
-import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
+import com.jaxson.lib.util.MyArrayList;
 
 public class MyRow implements Iterable<MyCell>
 {
@@ -33,8 +33,7 @@ public class MyRow implements Iterable<MyCell>
 		return new MyCell(getRow().createCell(column, type));
 	}
 
-	public MyCell getCell(CellLocation location)
-			throws CellOutOfBoundsException
+	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
 	{
 		int x = location.getX();
 		return getCell(x);
@@ -45,8 +44,8 @@ public class MyRow implements Iterable<MyCell>
 		return getCell(row, POLICY);
 	}
 
-	public MyCell getCell(int row, MissingCellPolicy policy)
-			throws CellOutOfBoundsException
+	public MyCell getCell(int row,
+			MissingCellPolicy policy) throws CellOutOfBoundsException
 	{
 		Cell cell = getRow().getCell(row, policy);
 		if (cell == null)
@@ -94,6 +93,11 @@ public class MyRow implements Iterable<MyCell>
 	public int getPhysicalNumberOfCells()
 	{
 		return getRow().getPhysicalNumberOfCells();
+	}
+
+	protected Row getRow()
+	{
+		return row;
 	}
 
 	public CellStyle getRowStyle()
@@ -160,10 +164,5 @@ public class MyRow implements Iterable<MyCell>
 	public void setZeroHeight(boolean height)
 	{
 		getRow().setZeroHeight(height);
-	}
-
-	protected Row getRow()
-	{
-		return row;
 	}
 }

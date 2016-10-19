@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
-import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
@@ -32,6 +31,11 @@ public class SpriteActor extends Sprite
 		flip(true, true);
 	}
 
+	private void flip(boolean flipX, boolean flipY)
+	{
+		sprite.flip(flipX, flipY);
+	}
+
 	public void flipX()
 	{
 		flip(true, false);
@@ -40,6 +44,11 @@ public class SpriteActor extends Sprite
 	public void flipY()
 	{
 		flip(false, true);
+	}
+
+	public Color getTint()
+	{
+		return sprite.getColor();
 	}
 
 	@Override
@@ -61,6 +70,12 @@ public class SpriteActor extends Sprite
 	}
 
 	@Override
+	public void render(View view)
+	{
+		sprite.draw(view.spriteBatch(), alpha());
+	}
+
+	@Override
 	public float rotation()
 	{
 		return sprite.getRotation();
@@ -76,35 +91,6 @@ public class SpriteActor extends Sprite
 	public float scaleY()
 	{
 		return sprite.getScaleY();
-	}
-
-	public Color getTint()
-	{
-		return sprite.getColor();
-	}
-
-	@Override
-	public float width()
-	{
-		return sprite.getWidth();
-	}
-
-	@Override
-	public float x()
-	{
-		return sprite.getX();
-	}
-
-	@Override
-	public float y()
-	{
-		return sprite.getY();
-	}
-
-	@Override
-	public void render(View view)
-	{
-		sprite.draw(view.spriteBatch(), alpha());
 	}
 
 	public void setBounds(float x, float y, float width, float height)
@@ -187,8 +173,21 @@ public class SpriteActor extends Sprite
 
 	}
 
-	private void flip(boolean flipX, boolean flipY)
+	@Override
+	public float width()
 	{
-		sprite.flip(flipX, flipY);
+		return sprite.getWidth();
+	}
+
+	@Override
+	public float x()
+	{
+		return sprite.getX();
+	}
+
+	@Override
+	public float y()
+	{
+		return sprite.getY();
 	}
 }

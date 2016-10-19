@@ -1,8 +1,8 @@
 package com.jaxson.lib.gdx.input;
 
-import com.badlogic.gdx.Input;
 import java.util.Collection;
 import java.util.HashMap;
+import com.badlogic.gdx.Input;
 
 public class TouchScreen extends Peripheral
 {
@@ -18,37 +18,6 @@ public class TouchScreen extends Peripheral
 		{
 			touchs.put(i, new Touch(i));
 		}
-	}
-
-	public boolean areTouched(int amount)
-	{
-		int touched = 0;
-		for (Touch touch: touchs())
-		{
-			if (touch.isDown()) touched ++;
-			if (touched >= amount) return true;
-		}
-		return false;
-	}
-
-	public boolean fingersTouched(int amount)
-	{
-		int touched = 0;
-		boolean wasTouched = false;
-		for (Touch touch: touchs())
-		{
-			if (touch.isDown()) touched ++;
-			if (touch.isPressed()) wasTouched = true;
-			if (touched >= amount && wasTouched) return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean exists()
-	{
-		return input().isPeripheralAvailable(
-				Input.Peripheral.MultitouchScreen);
 	}
 
 	public int ammountOfTouches()
@@ -68,14 +37,40 @@ public class TouchScreen extends Peripheral
 		return touches;
 	}
 
-	public Touch touch(int finger)
+	public boolean areTouched(int amount)
 	{
-		return touchs.get(finger);
+		int touched = 0;
+		for (Touch touch: touchs())
+		{
+			if (touch.isDown()) touched ++;
+			if (touched >= amount) return true;
+		}
+		return false;
 	}
 
-	public Collection<Touch> touchs()
+	@Override
+	public boolean exists()
 	{
-		return touchs.values();
+		return input().isPeripheralAvailable(
+				Input.Peripheral.MultitouchScreen);
+	}
+
+	public boolean fingersTouched(int amount)
+	{
+		int touched = 0;
+		boolean wasTouched = false;
+		for (Touch touch: touchs())
+		{
+			if (touch.isDown()) touched ++;
+			if (touch.isPressed()) wasTouched = true;
+			if (touched >= amount && wasTouched) return true;
+		}
+		return false;
+	}
+
+	public boolean fingersToucing(int amount)
+	{
+		return ammountOfTouches() >= amount;
 	}
 
 	public boolean isDown()
@@ -145,19 +140,14 @@ public class TouchScreen extends Peripheral
 		return fingersToucing(3);
 	}
 
-	public boolean twoFingerTouched()
+	public Touch touch(int finger)
 	{
-		return fingersTouched(2);
+		return touchs.get(finger);
 	}
 
-	public boolean twoFingerTouching()
+	public Collection<Touch> touchs()
 	{
-		return fingersToucing(3);
-	}
-
-	public boolean fingersToucing(int amount)
-	{
-		return ammountOfTouches() >= amount;
+		return touchs.values();
 	}
 
 	void transfer()
@@ -166,5 +156,15 @@ public class TouchScreen extends Peripheral
 		{
 			touch.transfer();
 		}
+	}
+
+	public boolean twoFingerTouched()
+	{
+		return fingersTouched(2);
+	}
+
+	public boolean twoFingerTouching()
+	{
+		return fingersToucing(3);
 	}
 }

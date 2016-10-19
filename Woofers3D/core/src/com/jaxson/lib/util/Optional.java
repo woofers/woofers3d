@@ -1,7 +1,6 @@
 package com.jaxson.lib.util;
 
 import java.util.NoSuchElementException;
-import com.jaxson.lib.util.Printer;
 
 public final class Optional<T> implements Uncertainty, Unwrapable<T>
 {
@@ -35,13 +34,6 @@ public final class Optional<T> implements Uncertainty, Unwrapable<T>
 	}
 
 	@Override
-	public T unwrap()
-	{
-		if (!exists())
-			throw new NoSuchElementException(NO_VALUE_PRESENT);
-		return value;
-	}
-
 	public boolean exists()
 	{
 		return value != null;
@@ -57,5 +49,13 @@ public final class Optional<T> implements Uncertainty, Unwrapable<T>
 	{
 		return new Printer(getClass(),
 				new Printer.Label(value)).toString();
+	}
+
+	@Override
+	public T unwrap()
+	{
+		if (!exists())
+			throw new NoSuchElementException(NO_VALUE_PRESENT);
+		return value;
 	}
 }

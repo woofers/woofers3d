@@ -50,7 +50,8 @@ public class FileExtension implements Measurable
 	@Override
 	public boolean equals(Object other)
 	{
-		if (other instanceof FileExtension) return equals((FileExtension) other);
+		if (other instanceof FileExtension)
+			return equals((FileExtension) other);
 		return false;
 	}
 
@@ -92,12 +93,6 @@ public class FileExtension implements Measurable
 		exceptions.put(original, translated);
 	}
 
-	public static void removeException(String exception)
-	{
-		if (!exceptions.containsKey(exception)) return;
-		exceptions.remove(exceptions);
-	}
-
 	private static String findStandardExtension(String exception)
 	{
 		if (!exceptions.containsKey(exception)) return exception;
@@ -111,5 +106,11 @@ public class FileExtension implements Measurable
 		if (newExtension.isEmpty()) newExtension = file.name();
 		newExtension = findStandardExtension(newExtension);
 		return newExtension;
+	}
+
+	public static void removeException(String exception)
+	{
+		if (!exceptions.containsKey(exception)) return;
+		exceptions.remove(exceptions);
 	}
 }

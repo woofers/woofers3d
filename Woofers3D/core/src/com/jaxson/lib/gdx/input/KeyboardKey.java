@@ -16,16 +16,6 @@ public class KeyboardKey implements Key
 		if (!isValid()) throw new InvalidKeyException(keycode);
 	}
 
-	public int keycode()
-	{
-		return keycode;
-	}
-
-	public String name()
-	{
-		return name;
-	}
-
 	@Override
 	public boolean isDown()
 	{
@@ -44,12 +34,19 @@ public class KeyboardKey implements Key
 		return wasDown && !isDown();
 	}
 
-	@Override
-	public String toString()
+	private boolean isValid()
 	{
-		return new Printer(getClass(),
-				new Printer.Label("Name", name()),
-				new Printer.Label("Keycode", keycode())).toString();
+		return Keys.MIN <= keycode() && keycode() < Keys.MAX;
+	}
+
+	public int keycode()
+	{
+		return keycode;
+	}
+
+	public String name()
+	{
+		return name;
 	}
 
 	void setDown(boolean down)
@@ -62,13 +59,16 @@ public class KeyboardKey implements Key
 		this.wasDown = wasDown;
 	}
 
+	@Override
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label("Name", name()),
+				new Printer.Label("Keycode", keycode())).toString();
+	}
+
 	void transfer()
 	{
 		this.wasDown = down;
-	}
-
-	private boolean isValid()
-	{
-		return Keys.MIN <= keycode() && keycode() < Keys.MAX;
 	}
 }

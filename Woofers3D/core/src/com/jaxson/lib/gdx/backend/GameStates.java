@@ -1,9 +1,9 @@
 package com.jaxson.lib.gdx.backend;
 
+import java.util.Stack;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.GameObject;
-import java.util.Stack;
 
 /**
  * A class that contains {@link State}s.
@@ -34,7 +34,6 @@ public class GameStates extends GameObject
 		makeEmpty();
 	}
 
-
 	/**
 	 * Gets whether the current state has a sub state.
 	 * @return {@link boolean} - Whether the state has a paused state
@@ -51,6 +50,28 @@ public class GameStates extends GameObject
 	public boolean isEmpty()
 	{
 		return states.isEmpty();
+	}
+
+	private boolean isFocused()
+	{
+		return game.isFocused();
+	}
+
+	private boolean isMinimized()
+	{
+		return game.isMinimized();
+	}
+
+	private boolean isPaused()
+	{
+		return game.isPaused();
+	}
+
+	private void makeEmpty()
+	{
+		if (isEmpty()) return;
+		pop();
+		makeEmpty();
 	}
 
 	@Override
@@ -155,28 +176,6 @@ public class GameStates extends GameObject
 		{
 			if (hasPausedState()) peek().subState().update(dt);
 		}
-	}
-
-	private boolean isFocused()
-	{
-		return game.isFocused();
-	}
-
-	private boolean isMinimized()
-	{
-		return game.isMinimized();
-	}
-
-	private boolean isPaused()
-	{
-		return game.isPaused();
-	}
-
-	private void makeEmpty()
-	{
-		if (isEmpty()) return;
-		pop();
-		makeEmpty();
 	}
 
 	private boolean updatesSubState()

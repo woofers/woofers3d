@@ -5,7 +5,7 @@ import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 
 public abstract class ObjectsBase<T extends GameObject>
-	extends GameObject implements GameObjects<T>
+		extends GameObject implements GameObjects<T>
 {
 	private MyArrayList<T> objects;
 
@@ -27,6 +27,11 @@ public abstract class ObjectsBase<T extends GameObject>
 		{
 			object.dispose();
 		}
+	}
+
+	protected MyArrayList<T> getObjects()
+	{
+		return objects;
 	}
 
 	@Override
@@ -78,10 +83,5 @@ public abstract class ObjectsBase<T extends GameObject>
 		{
 			object.update(dt);
 		}
-	}
-
-	protected MyArrayList<T> getObjects()
-	{
-		return objects;
 	}
 }

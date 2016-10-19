@@ -1,6 +1,5 @@
 package com.jaxson.lib.io.excel.workbook;
 
-import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.hssf.util.PaneInformation;
@@ -19,6 +18,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
 import org.apache.poi.ss.util.CellRangeAddress;
+import com.jaxson.lib.util.MyArrayList;
 
 public class MySheet implements Iterable<MyRow>
 {
@@ -92,12 +92,12 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void createFreezePane(int columnSplit,
-								 int rowSplit,
-								 int leftmostColumn,
-								 int topRow)
+			int rowSplit,
+			int leftmostColumn,
+			int topRow)
 	{
 		getSheet().createFreezePane(columnSplit, rowSplit, leftmostColumn,
-		topRow);
+				topRow);
 	}
 
 	public MyRow createRow()
@@ -111,13 +111,13 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void createSplitPane(int xSplit,
-								int ySplit,
-								int leftMostColumn,
-								int topRow,
-								int activePane)
+			int ySplit,
+			int leftMostColumn,
+			int topRow,
+			int activePane)
 	{
 		getSheet().createSplitPane(xSplit, ySplit, leftMostColumn, topRow,
-		activePane);
+				activePane);
 	}
 
 	public int getAmountMergedRegions()
@@ -130,8 +130,7 @@ public class MySheet implements Iterable<MyRow>
 		return getSheet().getAutobreaks();
 	}
 
-	public MyCell getCell(CellLocation location)
-			throws CellOutOfBoundsException
+	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
 	{
 		int y = location.getY() + 1;
 		Iterator<MyRow> iterator = iterator();
@@ -375,6 +374,11 @@ public class MySheet implements Iterable<MyRow>
 		return getSheet().getScenarioProtect();
 	}
 
+	protected Sheet getSheet()
+	{
+		return sheet;
+	}
+
 	public SheetConditionalFormatting getSheetConditionalFormatting()
 	{
 		return getSheet().getSheetConditionalFormatting();
@@ -512,7 +516,7 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public CellRange<? extends Cell> setArrayFormula(String formula,
-													 CellRangeAddress range)
+			CellRangeAddress range)
 	{
 		return getSheet().setArrayFormula(formula, range);
 	}
@@ -673,10 +677,10 @@ public class MySheet implements Iterable<MyRow>
 	}
 
 	public void shiftRows(int arg0,
-						  int arg1,
-						  int arg2,
-						  boolean arg3,
-						  boolean arg4)
+			int arg1,
+			int arg2,
+			boolean arg3,
+			boolean arg4)
 	{
 		getSheet().shiftRows(arg0, arg1, arg2, arg3, arg4);
 	}
@@ -694,10 +698,5 @@ public class MySheet implements Iterable<MyRow>
 	public void ungroupRow(int arg0, int arg1)
 	{
 		getSheet().ungroupRow(arg0, arg1);
-	}
-
-	protected Sheet getSheet()
-	{
-		return sheet;
 	}
 }

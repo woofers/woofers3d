@@ -20,6 +20,16 @@ public abstract class GameObject
 	public abstract void dispose();
 
 	/**
+	 * Called when the {@link GameObject} should check for input.
+	 * By default called at the start of the update loop.
+	 * @param dt The delta time
+	 */
+	protected void input(float dt)
+	{
+
+	}
+
+	/**
 	 * Called when the {@link Game} is paused.
 	 */
 	@Override
@@ -66,15 +76,5 @@ public abstract class GameObject
 	public void update(float dt)
 	{
 		input(dt);
-	}
-
-	/**
-	 * Called when the {@link GameObject} should check for input.
-	 * By default called at the start of the update loop.
-	 * @param dt The delta time
-	 */
-	protected void input(float dt)
-	{
-
 	}
 }

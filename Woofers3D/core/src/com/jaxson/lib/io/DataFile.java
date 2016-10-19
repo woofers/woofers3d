@@ -11,7 +11,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
-import com.jaxson.lib.util.Unwrapable;
 import com.jaxson.lib.util.Printer;
 
 /**
@@ -42,6 +41,26 @@ public class DataFile implements File<DataFile, String, String>
 		return write(readString() + contents);
 	}
 
+	/**
+	 * Return a {@link BufferedReader} from the {@link DataFile}
+	 * @return {@link BufferedReader} - The buffered reader
+	 * @throws FileNotFoundException If the file is not found
+	 */
+	@Override
+	public BufferedReader bufferedReader() throws FileNotFoundException
+	{
+		FileReader fileReader = null;
+		try
+		{
+			fileReader = fileReader();
+		}
+		catch (FileNotFoundException ex)
+		{
+			throw ex;
+		}
+		return new BufferedReader(fileReader);
+	}
+
 	@Override
 	public boolean canRead()
 	{
@@ -52,6 +71,17 @@ public class DataFile implements File<DataFile, String, String>
 	public boolean canWrite()
 	{
 		return javaFile().canWrite();
+	}
+
+	@Override
+	public DataFile child(String child)
+	{
+		if (!exists() || isFile()) return DataFile.NOTHING;
+		if (child.charAt(0) != FOWARD_SLASH.charAt(0))
+			child = FOWARD_SLASH + child;
+		DataFile file = new DataFile(path() + child);
+		if (file.exists()) return file;
+		return DataFile.NOTHING;
 	}
 
 	@Override
@@ -130,38 +160,6 @@ public class DataFile implements File<DataFile, String, String>
 	}
 
 	/**
-	 * Return a {@link BufferedReader} from the {@link DataFile}
-	 * @return {@link BufferedReader} - The buffered reader
-	 * @throws FileNotFoundException If the file is not found
-	 */
-	@Override
-	public BufferedReader bufferedReader()
-			throws FileNotFoundException
-	{
-		FileReader fileReader = null;
-		try
-		{
-			fileReader = fileReader();
-		}
-		catch (FileNotFoundException ex)
-		{
-			throw ex;
-		}
-		return new BufferedReader(fileReader);
-	}
-
-	@Override
-	public DataFile child(String child)
-	{
-		if (!exists() || isFile()) return DataFile.NOTHING;
-		if (child.charAt(0) != FOWARD_SLASH.charAt(0))
-			child = FOWARD_SLASH + child;
-		DataFile file = new DataFile(path() + child);
-		if (file.exists()) return file;
-		return DataFile.NOTHING;
-	}
-
-	/**
 	 * Gets the file extension of the {@link DataFile}. Returns an empty
 	 * string if
 	 * the {@link DataFile} has no extension.
@@ -184,16 +182,14 @@ public class DataFile implements File<DataFile, String, String>
 	}
 
 	@Override
-	public FileInputStream fileInputStream()
-			throws FileNotFoundException
+	public FileInputStream fileInputStream() throws FileNotFoundException
 	{
 		return new FileInputStream(javaFile());
 	}
 
 	@Override
-	public FileOutputStream fileOutputStream()
-			throws FileNotFoundException,
-				   SecurityException
+	public FileOutputStream
+		fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return new FileOutputStream(javaFile());
 	}
@@ -205,6 +201,26 @@ public class DataFile implements File<DataFile, String, String>
 	}
 
 	/**
+	 * Gets whether the {@link DataFile} is a directory.
+	 * @return {@link boolean} - Whether the {@link DataFile} is a directory
+	 */
+	@Override
+	public boolean isDirectory()
+	{
+		return javaFile().isDirectory();
+	}
+
+	/**
+	 * Gets whether the {@link DataFile} is a file.
+	 * @return {@link boolean} - Whether the {@link DataFile} is a file
+	 */
+	@Override
+	public boolean isFile()
+	{
+		return !isDirectory();
+	}
+
+	/**
 	 * Gets the {@link java.io.File} of the {@link DataFile}.
 	 * @return {@link java.io.File} - The file
 	 */
@@ -212,6 +228,24 @@ public class DataFile implements File<DataFile, String, String>
 	public java.io.File javaFile()
 	{
 		return new java.io.File(path());
+	}
+
+	@Override
+	public Date lastModified()
+	{
+		Calendar calendar = Calendar.getInstance();
+		int utcOffset = calendar.get(Calendar.ZONE_OFFSET)
+				+ calendar.get(Calendar.DST_OFFSET);
+		return new Date(javaFile().lastModified() - utcOffset);
+	}
+
+	@Override
+	public DataFile move(DataFile file)
+	{
+		DataFile copy = copy(file);
+		if (copy.equals(DataFile.NOTHING)) return this;
+		delete();
+		return copy;
 	}
 
 	/**
@@ -260,58 +294,9 @@ public class DataFile implements File<DataFile, String, String>
 
 	@Override
 	public PrintWriter printWriter()
-			throws FileNotFoundException,
-				   UnsupportedEncodingException
+			throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return new PrintWriter(javaFile());
-	}
-
-	@Override
-	public Date lastModified()
-	{
-		Calendar calendar = Calendar.getInstance();
-		int utcOffset = calendar.get(Calendar.ZONE_OFFSET)
-					  + calendar.get(Calendar.DST_OFFSET);
-		return new Date(javaFile().lastModified() - utcOffset);
-	}
-
-	/**
-	 * Gets whether the {@link DataFile} is a directory.
-	 * @return {@link boolean} - Whether the {@link DataFile} is a directory
-	 */
-	@Override
-	public boolean isDirectory()
-	{
-		return javaFile().isDirectory();
-	}
-
-	/**
-	 * Gets whether the {@link DataFile} is a file.
-	 * @return {@link boolean} - Whether the {@link DataFile} is a file
-	 */
-	@Override
-	public boolean isFile()
-	{
-		return !isDirectory();
-	}
-
-	/**
-	 * Gets the size of the {@link DataFile} in {@link byte}s.
-	 * @return {@link long} - The size in {@link byte}s
-	 */
-	@Override
-	public long size()
-	{
-		return javaFile().length();
-	}
-
-	@Override
-	public DataFile move(DataFile file)
-	{
-		DataFile copy = copy(file);
-		if (copy.equals(DataFile.NOTHING)) return this;
-		delete();
-		return copy;
 	}
 
 	/**
@@ -348,11 +333,6 @@ public class DataFile implements File<DataFile, String, String>
 
 	@Override
 	public String readObject()
-	{
-		return readString();
-	}
-
-	public String unwrap()
 	{
 		return readString();
 	}
@@ -396,6 +376,13 @@ public class DataFile implements File<DataFile, String, String>
 		return output;
 	}
 
+	private DataFile rename(DataFile file)
+	{
+		if (equals(file)) return this;
+		if (!exists() || javaFile().renameTo(file.javaFile())) return file;
+		return this;
+	}
+
 	@Override
 	public DataFile rename(String name)
 	{
@@ -407,8 +394,9 @@ public class DataFile implements File<DataFile, String, String>
 	{
 		if (extension.equals(fileExtension())) return this;
 		return new DataFile(parentPath()
-							   + nameWithoutExtension()
-							   + "." + extension.extension());
+				+ nameWithoutExtension()
+				+ "."
+				+ extension.extension());
 	}
 
 	@Override
@@ -423,11 +411,27 @@ public class DataFile implements File<DataFile, String, String>
 		return new DataFile(path);
 	}
 
+	/**
+	 * Gets the size of the {@link DataFile} in {@link byte}s.
+	 * @return {@link long} - The size in {@link byte}s
+	 */
+	@Override
+	public long size()
+	{
+		return javaFile().length();
+	}
+
 	@Override
 	public String toString()
 	{
 		return new Printer(getClass(),
 				new Printer.Label("Path", path())).toString();
+	}
+
+	@Override
+	public String unwrap()
+	{
+		return readString();
 	}
 
 	@Override
@@ -488,13 +492,6 @@ public class DataFile implements File<DataFile, String, String>
 		{
 			if (writer != null) writer.close();
 		}
-		return this;
-	}
-
-	private DataFile rename(DataFile file)
-	{
-		if (equals(file)) return this;
-		if (!exists() || javaFile().renameTo(file.javaFile())) return file;
 		return this;
 	}
 

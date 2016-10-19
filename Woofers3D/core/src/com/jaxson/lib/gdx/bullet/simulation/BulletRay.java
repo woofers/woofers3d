@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.collision.ClosestRayResultCallback;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.jaxson.lib.util.Optional;
 import com.badlogic.gdx.utils.Disposable;
+import com.jaxson.lib.util.Optional;
 
 public class BulletRay implements Disposable
 {
@@ -25,11 +25,6 @@ public class BulletRay implements Disposable
 		reset();
 	}
 
-	public void dispose()
-	{
-		callback.dispose();
-	}
-
 	public Optional<btCollisionObject> collisionObject(Ray ray,
 			float distance, PhysicsWorld world)
 	{
@@ -38,11 +33,28 @@ public class BulletRay implements Disposable
 		return hitObject();
 	}
 
-	public Optional<btCollisionObject> collisionObject(Ray ray, PhysicsWorld world)
+	public Optional<btCollisionObject> collisionObject(Ray ray,
+			PhysicsWorld world)
 	{
 		set(ray);
 		rayTest(world);
 		return hitObject();
+	}
+
+	@Override
+	public void dispose()
+	{
+		callback.dispose();
+	}
+
+	private Optional<btCollisionObject> hitObject()
+	{
+		return new Optional<>(callback.getCollisionObject());
+	}
+
+	private void rayTest(PhysicsWorld world)
+	{
+		world.rayTest(rayStart, rayEnd, callback);
 	}
 
 	private void reset()
@@ -63,16 +75,6 @@ public class BulletRay implements Disposable
 		rayEnd.scl(distance);
 		rayEnd.add(rayStart);
 		set(rayStart, rayEnd);
-	}
-
-	private Optional<btCollisionObject> hitObject()
-	{
-		return new Optional<>(callback.getCollisionObject());
-	}
-
-	private void rayTest(PhysicsWorld world)
-	{
-		world.rayTest(rayStart, rayEnd, callback);
 	}
 
 	private void set(Vector3 rayStart, Vector3 rayEnd)

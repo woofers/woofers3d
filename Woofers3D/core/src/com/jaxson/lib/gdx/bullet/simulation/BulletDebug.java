@@ -36,15 +36,28 @@ public class BulletDebug implements Disposable
 		this.world = world;
 	}
 
+	@Override
 	public void dispose()
 	{
 		removeDrawer();
+	}
+
+	private boolean isActive()
+	{
+		return drawer != null;
 	}
 
 	public int mode()
 	{
 		if (!isActive()) return NO_DEBUG;
 		return drawer.getDebugMode();
+	}
+
+	private void removeDrawer()
+	{
+		if (!isActive()) return;
+		drawer.dispose();
+		drawer = null;
 	}
 
 	public void render(View view)
@@ -69,7 +82,6 @@ public class BulletDebug implements Disposable
 		drawer.setDebugMode(mode);
 	}
 
-
 	public void toggle()
 	{
 		if (mode() == NO_DEBUG)
@@ -80,17 +92,5 @@ public class BulletDebug implements Disposable
 		{
 			setMode(NO_DEBUG);
 		}
-	}
-
-	private boolean isActive()
-	{
-		return drawer != null;
-	}
-
-	private void removeDrawer()
-	{
-		if (!isActive()) return;
-		drawer.dispose();
-		drawer = null;
 	}
 }

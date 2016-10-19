@@ -1,19 +1,20 @@
 package com.jaxson.lib.gdx.bullet.simulation.bodies.types;
 
+import java.nio.ShortBuffer;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.model.MeshPart;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody.Material;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
-import java.nio.ShortBuffer;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 public abstract class SoftBody extends EntityBody<btSoftBody>
 {
 	private ShortBuffer indexMap;
+
 	private MeshPart meshPart;
 	private int positionOffset;
 	private int normalOffset;
@@ -70,9 +71,9 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	@Override
 	public void update(float dt)
 	{
-		body().getVertices(meshPart.mesh.getVerticesBuffer(), meshPart.mesh
-				.getVertexSize(), positionOffset, normalOffset, meshPart.mesh
-						.getIndicesBuffer(),
+		body().getVertices(meshPart.mesh.getVerticesBuffer(),
+				meshPart.mesh.getVertexSize(), positionOffset, normalOffset,
+				meshPart.mesh.getIndicesBuffer(),
 				meshPart.offset, meshPart.size,
 				indexMap, 0);
 		bodyToTransform();

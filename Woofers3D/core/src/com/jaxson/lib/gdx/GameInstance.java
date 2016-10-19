@@ -5,6 +5,8 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
@@ -30,8 +32,8 @@ public abstract class GameInstance extends ApplicationAdapter
 	public GameInstance()
 	{
 		this.config = new Json<>(new DataFile("config.json"),
-							GameConfig.class,
-							new GameConfig());
+				GameConfig.class,
+				new GameConfig());
 	}
 
 	/**
@@ -156,9 +158,18 @@ public abstract class GameInstance extends ApplicationAdapter
 	 * Starts the game on desktop.
 	 * @return {@link LwjglApplication} - Instance of the game
 	 */
-	public LwjglApplication startDesktop()
+	public LwjglApplication startLwjgl()
 	{
 		return new LwjglApplication(this, getLwjglConfig());
+	}
+
+	/**
+	 * Starts the game on desktop.
+	 * @return {@link Lwjgl3Application} - Instance of the game
+	 */
+	public Lwjgl3Application startLwjgl3()
+	{
+		return new Lwjgl3Application(this, getConfig().toLwjgl3Config());
 	}
 
 	/**

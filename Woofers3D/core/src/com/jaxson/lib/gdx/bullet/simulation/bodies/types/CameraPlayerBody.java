@@ -20,14 +20,20 @@ public class CameraPlayerBody extends PlayerBody
 		this(model, fittedHitbox(model), camera);
 	}
 
+	public CameraPlayerBody(Unwrapable<Model> model, ConvexShape shape,
+			TargetCamera camera)
+	{
+		this(model.unwrap(), shape, camera);
+	}
+
 	public CameraPlayerBody(Unwrapable<Model> model, TargetCamera camera)
 	{
 		this(model, fittedHitbox(model.unwrap()), camera);
 	}
 
-	public CameraPlayerBody(Unwrapable<Model> model, ConvexShape shape, TargetCamera camera)
+	public TargetCamera camera()
 	{
-		this(model.unwrap(), shape, camera);
+		return camera;
 	}
 
 	public boolean cameraIsLocked()
@@ -42,14 +48,15 @@ public class CameraPlayerBody extends PlayerBody
 		unlockCamera();
 	}
 
-	public TargetCamera camera()
-	{
-		return camera;
-	}
-
 	public boolean hasCamera()
 	{
 		return camera() != null;
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+		super.input(dt);
 	}
 
 	public void lockCamera()
@@ -86,11 +93,5 @@ public class CameraPlayerBody extends PlayerBody
 	public void update(float dt)
 	{
 		super.update(dt);
-	}
-
-	@Override
-	protected void input(float dt)
-	{
-		super.input(dt);
 	}
 }

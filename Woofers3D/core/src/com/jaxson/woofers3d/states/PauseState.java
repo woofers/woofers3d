@@ -17,18 +17,24 @@ public class PauseState extends SubState
 	{
 		super(game);
 
-		//image = new SpriteActor(PAUSE_SCREEN_PATH);
-		//image.setAlpha(PAUSE_ALPHA);
-		//image.setY(game().display().center().y
-		//		 - image.height() / 2);
-		//image.setScale(RES_SCALE);
-		//add(image);
+		// image = new SpriteActor(PAUSE_SCREEN_PATH);
+		// image.setAlpha(PAUSE_ALPHA);
+		// image.setY(game().display().center().y
+		// - image.height() / 2);
+		// image.setScale(RES_SCALE);
+		// add(image);
 	}
 
 	@Override
 	public void dispose()
 	{
 		super.dispose();
+	}
+
+	@Override
+	protected void input(float dt)
+	{
+
 	}
 
 	@Override
@@ -41,11 +47,5 @@ public class PauseState extends SubState
 	public void update(float dt)
 	{
 		super.update(dt);
-	}
-
-	@Override
-	protected void input(float dt)
-	{
-
 	}
 }

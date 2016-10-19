@@ -51,17 +51,6 @@ public abstract class Sprite extends GameObject
 
 	public abstract float scaleY();
 
-	public Vector2 size()
-	{
-		return new Vector2(width(), height());
-	}
-
-	public abstract float width();
-
-	public abstract float x();
-
-	public abstract float y();
-
 	public void setAlpha(float alpha)
 	{
 		this.alpha = alpha;
@@ -142,6 +131,11 @@ public abstract class Sprite extends GameObject
 		setLocation(x(), y, depth());
 	}
 
+	public Vector2 size()
+	{
+		return new Vector2(width(), height());
+	}
+
 	public void translate(float x, float y)
 	{
 		translateX(x);
@@ -156,4 +150,10 @@ public abstract class Sprite extends GameObject
 	public abstract void translateX(float x);
 
 	public abstract void translateY(float y);
+
+	public abstract float width();
+
+	public abstract float x();
+
+	public abstract float y();
 }

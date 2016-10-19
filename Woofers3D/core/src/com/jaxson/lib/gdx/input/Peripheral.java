@@ -1,7 +1,7 @@
 package com.jaxson.lib.gdx.input;
 
-import com.jaxson.lib.util.Uncertainty;
 import com.badlogic.gdx.Input;
+import com.jaxson.lib.util.Uncertainty;
 
 public abstract class Peripheral implements Uncertainty
 {
@@ -12,10 +12,11 @@ public abstract class Peripheral implements Uncertainty
 		this.input = input;
 	}
 
+	@Override
+	public abstract boolean exists();
+
 	protected Input input()
 	{
 		return input;
 	}
-
-	public abstract boolean exists();
 }

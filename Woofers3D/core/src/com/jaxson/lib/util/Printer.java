@@ -44,7 +44,7 @@ public class Printer
 
 	public Printer(Class<?> type)
 	{
-		this(type, (Label)null);
+		this(type, (Label) null);
 	}
 
 	public Printer(Class<?> type, Label... labels)

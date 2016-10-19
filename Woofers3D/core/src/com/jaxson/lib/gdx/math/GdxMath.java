@@ -7,11 +7,6 @@ import com.jaxson.lib.math.Reciprocal;
 
 public class GdxMath extends MyMath
 {
-	private GdxMath()
-	{
-
-	}
-
 	public static Vector3 absVector(Vector3 vector)
 	{
 		return vector.set(abs(vector.x), abs(vector.y), abs(vector.z));
@@ -25,8 +20,8 @@ public class GdxMath extends MyMath
 	public static Vector3 divideVector(Vector3 vector, Vector3 vector2)
 	{
 		return vector.set(vector.x / vector2.x,
-						  vector.y / vector2.y,
-						  vector.z / vector2.z);
+				vector.y / vector2.y,
+				vector.z / vector2.z);
 	}
 
 	public static Vector3 randVector3(float min, float max)
@@ -37,7 +32,7 @@ public class GdxMath extends MyMath
 	public static Vector3 reciprocalVector(Vector3 vector)
 	{
 		return vector.set(new Reciprocal(vector.x).floatValue(),
-						  new Reciprocal(vector.y).floatValue(),
-						  new Reciprocal(vector.z).floatValue());
+				new Reciprocal(vector.y).floatValue(),
+				new Reciprocal(vector.z).floatValue());
 	}
 }

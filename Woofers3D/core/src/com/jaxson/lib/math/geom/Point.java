@@ -1,11 +1,11 @@
 package com.jaxson.lib.math.geom;
 
+import com.jaxson.lib.util.Printer;
+
 public class Point
 {
-	private static final String X_PREFIX = "X: ";
-	private static final String Y_PREFIX = ", Y: ";
-
-	private int x, y;
+	private int x;
+	private int y;
 
 	public Point()
 	{
@@ -60,9 +60,8 @@ public class Point
 	@Override
 	public String toString()
 	{
-		return X_PREFIX
-				+ new Integer(x).toString()
-				+ Y_PREFIX
-				+ new Integer(y).toString();
+		return new Printer(getClass(),
+				new Printer.Label("X", getX()),
+				new Printer.Label("Y", getY())).toString();
 	}
 }

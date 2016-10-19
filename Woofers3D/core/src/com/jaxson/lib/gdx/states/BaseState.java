@@ -1,7 +1,5 @@
 package com.jaxson.lib.gdx.states;
 
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.Input;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.backend.objects.MixedObjects;
 import com.jaxson.lib.gdx.graphics.g2d.Sprite;
@@ -57,16 +55,6 @@ public abstract class BaseState extends GameObject
 		return game().display().height();
 	}
 
-	public View view()
-	{
-		return game().view();
-	}
-
-	public int width()
-	{
-		return game().display().width();
-	}
-
 	public void remove(Entity entity)
 	{
 		objects.remove(entity);
@@ -99,5 +87,15 @@ public abstract class BaseState extends GameObject
 	{
 		super.update(dt);
 		objects.update(dt);
+	}
+
+	public View view()
+	{
+		return game().view();
+	}
+
+	public int width()
+	{
+		return game().display().width();
 	}
 }

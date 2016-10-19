@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 public class MyModelBuilder extends ModelBuilder
 {
 	private static final long ATTRIBUTES = VertexAttributes.Usage.Position
-										 | VertexAttributes.Usage.Normal;
+			| VertexAttributes.Usage.Normal;
 
 	private static final Vector3 SIZE = new Vector3(1f, 1f, 1f);
 	private static final int DIVISIONS = 16;

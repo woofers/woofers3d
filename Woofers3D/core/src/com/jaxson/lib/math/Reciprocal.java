@@ -11,6 +11,11 @@ public class Reciprocal extends ComparableNumber
 		this.number = number;
 	}
 
+	public Number denominator()
+	{
+		return number;
+	}
+
 	@Override
 	public double doubleValue()
 	{
@@ -21,11 +26,6 @@ public class Reciprocal extends ComparableNumber
 	public float floatValue()
 	{
 		return 1f / denominator().floatValue();
-	}
-
-	public Number denominator()
-	{
-		return number;
 	}
 
 	@Override

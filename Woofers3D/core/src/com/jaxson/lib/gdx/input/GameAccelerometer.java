@@ -1,10 +1,8 @@
 package com.jaxson.lib.gdx.input;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.backend.Display;
-import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.util.Printer;
+import com.badlogic.gdx.math.Matrix4;
 
 public class GameAccelerometer implements Accelerometer
 {
@@ -37,11 +35,18 @@ public class GameAccelerometer implements Accelerometer
 		this.values = new Vector3();
 	}
 
+	public Matrix4 rotationMatrix()
+	{
+		return accelerometer.rotationMatrix();
+	}
+
+	@Override
 	public Vector3 alpha()
 	{
 		return alpha;
 	}
 
+	@Override
 	public Vector3 deadZone()
 	{
 		return deadZone;
@@ -99,6 +104,16 @@ public class GameAccelerometer implements Accelerometer
 	}
 
 	@Override
+	public void update(float dt)
+	{
+		accelerometer.update(dt);
+		if (!exists()) return;
+		this.values.x = accelerometer.x();
+		this.values.y = accelerometer.y();
+		this.values.z = accelerometer.z();
+	}
+
+	@Override
 	public Vector3 values()
 	{
 		return new Vector3(x(), y(), z());
@@ -120,15 +135,5 @@ public class GameAccelerometer implements Accelerometer
 	public float z()
 	{
 		return values.z + alpha.z * (accelerometer.z() - values.z);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-		accelerometer.update(dt);
-		if (!exists()) return;
-		this.values.x = accelerometer.x();
-		this.values.y = accelerometer.y();
-		this.values.z = accelerometer.z();
 	}
 }

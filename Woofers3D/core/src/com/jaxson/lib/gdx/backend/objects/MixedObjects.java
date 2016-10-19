@@ -52,8 +52,8 @@ public class MixedObjects extends GameObject implements GameObjects<Entity>
 	public boolean isEmpty()
 	{
 		return sprites.isEmpty()
-			&& models.isEmpty()
-			&& hud.isEmpty();
+				&& models.isEmpty()
+				&& hud.isEmpty();
 	}
 
 	@Override

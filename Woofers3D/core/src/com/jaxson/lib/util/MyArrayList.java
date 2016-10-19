@@ -101,6 +101,15 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		return size() - 1;
 	}
 
+	private void removeNull()
+	{
+		Iterator<E> iterator = iterator();
+		while (iterator.hasNext())
+		{
+			if (iterator.next() == null) iterator.remove();
+		}
+	}
+
 	/**
 	 * Removes elements from the {@code startIndex} to the end
 	 * of the {@link List}.
@@ -113,15 +122,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 		removeRange(startIndex, size());
 	}
 
-	private void removeNull()
-	{
-		Iterator<E> iterator = iterator();
-		while (iterator.hasNext())
-		{
-			if (iterator.next() == null) iterator.remove();
-		}
-	}
-
+	@Override
 	public String toString()
 	{
 		return getClass().getSimpleName() + super.toString();

@@ -17,6 +17,7 @@ public class Inputs
 		private Game game;
 		private Accelerometer accelerometer;
 		private Compass compass;
+		private Gyroscope gyroscope;
 		private Keyboard keyboard;
 		private Mouse mouse;
 		private Display display;
@@ -27,18 +28,13 @@ public class Inputs
 		{
 			this.game = game;
 			this.compass = new Compass(input());
+			this.gyroscope = new Gyroscope(input());
 			this.touchScreen = new TouchScreen(input());
 			this.keyboard = new Keyboard(input());
 			this.display = game.display();
 			this.mouse = new Mouse(game, touchScreen);
 			this.vibrator = new Vibrator(input());
 			this.accelerometer = new DataAccelerometer(game);
-		}
-
-		@Override
-		public boolean fling(float velocityX, float velocityY, int button)
-		{
-			return true;
 		}
 
 		public Accelerometer accelerometer()
@@ -56,6 +52,22 @@ public class Inputs
 			return display;
 		}
 
+		public Gyroscope gyroscope()
+		{
+			return gyroscope;
+		}
+
+		@Override
+		public boolean fling(float velocityX, float velocityY, int button)
+		{
+			return true;
+		}
+
+		private Input input()
+		{
+			return game.input();
+		}
+
 		public InputMultiplexer inputProcessor()
 		{
 			return inputMultiplexer;
@@ -66,26 +78,11 @@ public class Inputs
 			return keyboard;
 		}
 
-		public Mouse mouse()
-		{
-			return mouse;
-		}
-
-		public TouchScreen touchScreen()
-		{
-			return touchScreen;
-		}
-
-		public Vibrator vibrator()
-		{
-			return vibrator;
-		}
-
 		@Override
 		public boolean keyDown(int keycode)
 		{
 			keyboard.key(keycode).setDown(true);
-			keyboard.key(Keys.ANY_KEY).setDown(true);
+			keyboard.key(com.badlogic.gdx.Input.Keys.ANY_KEY).setDown(true);
 			return true;
 		}
 
@@ -99,7 +96,7 @@ public class Inputs
 		public boolean keyUp(int keycode)
 		{
 			keyboard.key(keycode).setDown(false);
-			keyboard.key(Keys.ANY_KEY).setDown(false);
+			keyboard.key(com.badlogic.gdx.Input.Keys.ANY_KEY).setDown(false);
 			return true;
 		}
 
@@ -107,6 +104,11 @@ public class Inputs
 		public boolean longPress(float x, float y)
 		{
 			return false;
+		}
+
+		public Mouse mouse()
+		{
+			return mouse;
 		}
 
 		@Override
@@ -129,11 +131,16 @@ public class Inputs
 
 		@Override
 		public boolean pinch(Vector2 initialPointer1,
-							 Vector2 initialPointer2,
-							 Vector2 pointer1,
-							 Vector2 pointer2)
+				Vector2 initialPointer2,
+				Vector2 pointer1,
+				Vector2 pointer2)
 		{
 			return true;
+		}
+
+		void reset()
+		{
+			keyboard.reset();
 		}
 
 		@Override
@@ -186,22 +193,16 @@ public class Inputs
 			return true;
 		}
 
+		public TouchScreen touchScreen()
+		{
+			return touchScreen;
+		}
+
 		@Override
 		public boolean touchUp(int x, int y, int pointer, int button)
 		{
 			touchScreen.touch(pointer).setTouched(false);
 			return true;
-		}
-
-		@Override
-		public boolean zoom(float initialDistance, float distance)
-		{
-			return false;
-		}
-
-		void reset()
-		{
-			keyboard.reset();
 		}
 
 		void update(float dt)
@@ -211,9 +212,20 @@ public class Inputs
 			accelerometer.update(dt);
 		}
 
-		private Input input()
+		public Vibrator vibrator()
 		{
-			return game.input();
+			return vibrator;
+		}
+
+		@Override
+		public boolean zoom(float initialDistance, float distance)
+		{
+			return false;
+		}
+
+		public void pinchStop()
+		{
+
 		}
 	}
 
@@ -257,9 +269,19 @@ public class Inputs
 		return inputListener.mouse();
 	}
 
+	public static void reset()
+	{
+		inputListener.reset();
+	}
+
 	public static TouchScreen touchScreen()
 	{
 		return inputListener.touchScreen();
+	}
+
+	public static void update(float dt)
+	{
+		inputListener.update(dt);
 	}
 
 	public static Vibrator vibrator()
@@ -267,13 +289,8 @@ public class Inputs
 		return inputListener.vibrator();
 	}
 
-	public static void reset()
+	public static Gyroscope gyroscope()
 	{
-		inputListener.reset();
-	}
-
-	public static void update(float dt)
-	{
-		inputListener.update(dt);
+		return inputListener.gyroscope();
 	}
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.util.Printer;
 
-
 public class MyColor extends Color
 {
 	public static final int MIN_VALUE_INT = 0;
@@ -74,16 +73,6 @@ public class MyColor extends Color
 		return toInt(g);
 	}
 
-	public float red()
-	{
-		return r;
-	}
-
-	public int redInt()
-	{
-		return toInt(r);
-	}
-
 	public MyColor random()
 	{
 		set(new RandomColor());
@@ -97,11 +86,30 @@ public class MyColor extends Color
 	}
 
 	public MyColor random(int minR, int maxR,
-						  int minG, int maxG,
-						  int minB, int maxB)
+			int minG, int maxG,
+			int minB, int maxB)
 	{
 		set(new RandomColor(minR, maxR, minG, maxG, minB, maxB));
 		return this;
+	}
+
+	public float red()
+	{
+		return r;
+	}
+
+	public int redInt()
+	{
+		return toInt(r);
+	}
+
+	@Override
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label("Red", redInt()),
+				new Printer.Label("Green", greenInt()),
+				new Printer.Label("Blue", blueInt())).toString();
 	}
 
 	private static float toFloat(int channel)
@@ -109,14 +117,6 @@ public class MyColor extends Color
 		channel = MyMath.max(MIN_VALUE_INT, channel);
 		channel = MyMath.min(MAX_VALUE_INT, channel);
 		return channel * RGB_TO_FLOAT;
-	}
-
-	public String toString()
-	{
-		return new Printer(getClass(),
-				new Printer.Label("Red", redInt()),
-				new Printer.Label("Green", greenInt()),
-				new Printer.Label("Blue", blueInt())).toString();
 	}
 
 	private static int toInt(float channel)

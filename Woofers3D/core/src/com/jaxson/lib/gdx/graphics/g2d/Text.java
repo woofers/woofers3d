@@ -39,6 +39,11 @@ public class Text extends Sprite
 		font.dispose();
 	}
 
+	public String getText()
+	{
+		return text;
+	}
+
 	@Override
 	public float height()
 	{
@@ -64,6 +69,12 @@ public class Text extends Sprite
 	}
 
 	@Override
+	public void render(View view)
+	{
+		font.draw(view.spriteBatch(), getText(), x(), y());
+	}
+
+	@Override
 	public float rotation()
 	{
 		return 0;
@@ -79,35 +90,6 @@ public class Text extends Sprite
 	public float scaleY()
 	{
 		return scale.y;
-	}
-
-	public String getText()
-	{
-		return text;
-	}
-
-	@Override
-	public float width()
-	{
-		return size.x;
-	}
-
-	@Override
-	public float x()
-	{
-		return location().x;
-	}
-
-	@Override
-	public float y()
-	{
-		return location().y;
-	}
-
-	@Override
-	public void render(View view)
-	{
-		font.draw(view.spriteBatch(), getText(), x(), y());
 	}
 
 	@Override
@@ -173,5 +155,23 @@ public class Text extends Sprite
 	public void translateY(float y)
 	{
 		location.y += y;
+	}
+
+	@Override
+	public float width()
+	{
+		return size.x;
+	}
+
+	@Override
+	public float x()
+	{
+		return location().x;
+	}
+
+	@Override
+	public float y()
+	{
+		return location().y;
 	}
 }

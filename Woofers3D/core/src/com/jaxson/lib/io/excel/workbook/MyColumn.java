@@ -1,7 +1,7 @@
 package com.jaxson.lib.io.excel.workbook;
 
-import com.jaxson.lib.util.MyArrayList;
 import java.util.Iterator;
+import com.jaxson.lib.util.MyArrayList;
 
 public class MyColumn implements Iterable<MyCell>
 {

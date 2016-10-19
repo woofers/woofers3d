@@ -20,11 +20,8 @@ import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
-import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.lib.io.FileExtension;
-import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.util.Optional;
-import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends BulletState
 {
@@ -49,7 +46,7 @@ public class PlayState extends BulletState
 		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
-		//load(new GdxFile("btscene1.g3dj"));
+		// load(new GdxFile("btscene1.g3dj"));
 
 		floor = new Floor();
 		applyPhysics(floor);
@@ -60,8 +57,8 @@ public class PlayState extends BulletState
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
 			boxs[i] = new RigidBox(
-						new RandomColor(new MyColor(255, 95, 0),
-										new MyColor(255, 165, 50)));
+					new RandomColor(new MyColor(255, 95, 0),
+							new MyColor(255, 165, 50)));
 			boxs[i].setSize(new RandomVector3(1f, 4f));
 			boxs[i].moveTo(new RandomVector3(6f, 30f));
 			boxs[i].setMass(mass.floatValue());
@@ -105,19 +102,6 @@ public class PlayState extends BulletState
 	}
 
 	@Override
-	public void render(View view)
-	{
-		super.render(view);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-		text.setText(player.accelerometer().toString());
-	}
-
-	@Override
 	protected void input(float dt)
 	{
 		if (Inputs.touchScreen().justTouched())
@@ -138,5 +122,18 @@ public class PlayState extends BulletState
 				}
 			}
 		}
+	}
+
+	@Override
+	public void render(View view)
+	{
+		super.render(view);
+	}
+
+	@Override
+	public void update(float dt)
+	{
+		super.update(dt);
+		text.setText(player.accelerometer().toString());
 	}
 }

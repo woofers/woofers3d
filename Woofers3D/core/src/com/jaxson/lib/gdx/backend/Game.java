@@ -36,17 +36,6 @@ public class Game
 		this.display = new Display(this);
 	}
 
-	public void dispose()
-	{
-		gameStates.dispose();
-		display().dispose();
-	}
-
-	public void exit()
-	{
-		application().exit();
-	}
-
 	public Application application()
 	{
 		return Gdx.app;
@@ -82,9 +71,25 @@ public class Game
 		return gameStates.peek();
 	}
 
+	private float deltaTime()
+	{
+		return graphics().getDeltaTime();
+	}
+
 	public Display display()
 	{
 		return display;
+	}
+
+	public void dispose()
+	{
+		gameStates.dispose();
+		display().dispose();
+	}
+
+	public void exit()
+	{
+		application().exit();
 	}
 
 	public Files files()
@@ -102,34 +107,14 @@ public class Game
 		return application().getGraphics();
 	}
 
-	public Input input()
-	{
-		return application().getInput();
-	}
-
-	public Net network()
-	{
-		return application().getNet();
-	}
-
-	public Json<GameConfig> saveableConfig()
-	{
-		return config;
-	}
-
-	public float stepInterval()
-	{
-		return config().getStepInterval();
-	}
-
-	public View view()
-	{
-		return display().view();
-	}
-
 	public boolean hasFixedTimeStamp()
 	{
 		return config().hasFixedTimeStep();
+	}
+
+	public Input input()
+	{
+		return application().getInput();
 	}
 
 	public boolean isAndroid()
@@ -182,6 +167,11 @@ public class Game
 		application().log(tag, message);
 	}
 
+	public Net network()
+	{
+		return application().getNet();
+	}
+
 	public void pause()
 	{
 		gameStates.pause();
@@ -228,6 +218,11 @@ public class Game
 		display().resume();
 	}
 
+	public Json<GameConfig> saveableConfig()
+	{
+		return config;
+	}
+
 	public void setInputProcessor(InputProcessor inputProcessor)
 	{
 		input().setInputProcessor(inputProcessor);
@@ -238,6 +233,11 @@ public class Game
 		gameStates.set(state);
 	}
 
+	public float stepInterval()
+	{
+		return config().getStepInterval();
+	}
+
 	public void update(float step)
 	{
 		gameStates.update(step);
@@ -245,8 +245,8 @@ public class Game
 		Inputs.update(step);
 	}
 
-	private float deltaTime()
+	public View view()
 	{
-		return graphics().getDeltaTime();
+		return display().view();
 	}
 }

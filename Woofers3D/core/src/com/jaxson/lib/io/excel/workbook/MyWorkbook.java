@@ -1,7 +1,5 @@
 package com.jaxson.lib.io.excel.workbook;
 
-import com.jaxson.lib.io.DataFile;
-import com.jaxson.lib.util.MyArrayList;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,6 +17,8 @@ import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.jaxson.lib.io.DataFile;
+import com.jaxson.lib.util.MyArrayList;
 
 public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 {
@@ -113,16 +113,16 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	}
 
 	public Font findFont(short boldWeight,
-						 short color,
-						 short fontHeight,
-						 String name,
-						 boolean italic,
-						 boolean strikeout,
-						 short typeOffset,
-						 byte underline)
+			short color,
+			short fontHeight,
+			String name,
+			boolean italic,
+			boolean strikeout,
+			short typeOffset,
+			byte underline)
 	{
 		return getWorkbook().findFont(boldWeight, color, fontHeight, name,
-		italic, strikeout, typeOffset, underline);
+				italic, strikeout, typeOffset, underline);
 	}
 
 	public MySheet getActiveSheet()
@@ -228,6 +228,11 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	public String getSheetName(int sheet)
 	{
 		return getWorkbook().getSheetName(sheet);
+	}
+
+	protected Workbook getWorkbook()
+	{
+		return workbook;
 	}
 
 	public boolean hasForcedFormulaRecalculation()
@@ -336,13 +341,13 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 	}
 
 	public void setPrintArea(int sheet,
-							 int startColumn,
-							 int endColumn,
-							 int startRow,
-							 int endRow)
+			int startColumn,
+			int endColumn,
+			int startRow,
+			int endRow)
 	{
 		getWorkbook().setPrintArea(sheet, startColumn, endColumn, startRow,
-		endRow);
+				endRow);
 	}
 
 	public void setPrintArea(int sheet, String reference)
@@ -375,14 +380,8 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		getWorkbook().setSheetOrder(sheetName, index);
 	}
 
-	public void write(OutputStream stream)
-			throws IOException
+	public void write(OutputStream stream) throws IOException
 	{
 		getWorkbook().write(stream);
-	}
-
-	protected Workbook getWorkbook()
-	{
-		return workbook;
 	}
 }

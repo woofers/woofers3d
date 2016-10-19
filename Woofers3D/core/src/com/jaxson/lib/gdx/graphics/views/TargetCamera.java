@@ -7,13 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
-import com.jaxson.lib.util.exceptions.NegativeValueException;
 import com.jaxson.lib.util.Optional;
-import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
+import com.jaxson.lib.util.exceptions.NegativeValueException;
 
 public class TargetCamera extends PerspectiveCamera
 {
@@ -96,6 +96,28 @@ public class TargetCamera extends PerspectiveCamera
 		return fieldOfView;
 	}
 
+	public boolean hasTarget()
+	{
+		return target() != null;
+	}
+
+	public boolean hasWorld()
+	{
+		return world != null;
+	}
+
+	private void input()
+	{
+		if (!hasTarget()) return;
+		rotateAround(targetLocation(), mosueLocation());
+		translate(deltaTargetLocation());
+		resetUp();
+		if (centerKey.isPressed())
+		{
+			center(targetLocation());
+		}
+	}
+
 	public Vector3 location()
 	{
 		return position;
@@ -123,61 +145,6 @@ public class TargetCamera extends PerspectiveCamera
 				deltaLocation(target().location()));
 	}
 
-	public Quaternion roationQuaternion()
-	{
-		return view().getRotation(new Quaternion());
-	}
-
-	public Vector3 rotation()
-	{
-		Quaternion rotation = roationQuaternion();
-		return new Vector3(rotation.getYaw(),
-						   rotation.getPitch(),
-						   rotation.getRoll());
-	}
-
-	public Entity target()
-	{
-		return target;
-	}
-
-	public Vector3 targetLocation()
-	{
-		if (!hasTarget()) return null;
-		return target().location();
-	}
-
-	public Vector3 targetRotation()
-	{
-		if (!hasTarget()) return null;
-		return target().rotation();
-	}
-
-	public Vector3 up()
-	{
-		return up;
-	}
-
-	public Matrix4 view()
-	{
-		return view;
-	}
-
-	public Vector3 zoom()
-	{
-		return zoom;
-	}
-
-	public boolean hasTarget()
-	{
-		return target() != null;
-	}
-
-	public boolean hasWorld()
-	{
-		return world != null;
-	}
-
 	public void resetDirection()
 	{
 		setDirection(Vector3.Z);
@@ -186,6 +153,11 @@ public class TargetCamera extends PerspectiveCamera
 	public void resetUp()
 	{
 		setUp(Vector3.Y);
+	}
+
+	public Quaternion roationQuaternion()
+	{
+		return view().getRotation(new Quaternion());
 	}
 
 	public void rotate(float yaw, float pitch, float roll)
@@ -206,18 +178,18 @@ public class TargetCamera extends PerspectiveCamera
 	}
 
 	public void rotateAround(Vector3 location,
-							 float yaw,
-							 float pitch,
-							 float roll)
+			float yaw,
+			float pitch,
+			float roll)
 	{
 		rotateAround(location, yaw, pitch, roll, true);
 	}
 
 	public void rotateAround(Vector3 location,
-							 float yaw,
-							 float pitch,
-							 float roll,
-							 boolean keepInBounds)
+			float yaw,
+			float pitch,
+			float roll,
+			boolean keepInBounds)
 	{
 		rotateAround(location, Vector3.X, pitch);
 		rotateAround(location, Vector3.Y, yaw);
@@ -241,6 +213,14 @@ public class TargetCamera extends PerspectiveCamera
 	public void rotateAround(Vector3 location, Vector3 angles)
 	{
 		rotateAround(location, angles.x, angles.y, angles.z);
+	}
+
+	public Vector3 rotation()
+	{
+		Quaternion rotation = roationQuaternion();
+		return new Vector3(rotation.getYaw(),
+				rotation.getPitch(),
+				rotation.getRoll());
 	}
 
 	public void setDirection(Vector3 direction)
@@ -308,6 +288,28 @@ public class TargetCamera extends PerspectiveCamera
 		this.zoom = zoom;
 	}
 
+	public Entity target()
+	{
+		return target;
+	}
+
+	public Vector3 targetLocation()
+	{
+		if (!hasTarget()) return null;
+		return target().location();
+	}
+
+	public Vector3 targetRotation()
+	{
+		if (!hasTarget()) return null;
+		return target().rotation();
+	}
+
+	public Vector3 up()
+	{
+		return up;
+	}
+
 	@Override
 	public void update()
 	{
@@ -316,15 +318,13 @@ public class TargetCamera extends PerspectiveCamera
 		super.update();
 	}
 
-	private void input()
+	public Matrix4 view()
 	{
-		if (!hasTarget()) return;
-		rotateAround(targetLocation(), mosueLocation());
-		translate(deltaTargetLocation());
-		resetUp();
-		if (centerKey.isPressed())
-		{
-			center(targetLocation());
-		}
+		return view;
+	}
+
+	public Vector3 zoom()
+	{
+		return zoom;
 	}
 }

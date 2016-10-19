@@ -9,9 +9,8 @@ import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 import com.jaxson.lib.util.Optional;
 
-public abstract class ShapeBody
-		<B extends btCollisionObject, S extends Shape>
-			extends EntityBody<B>
+public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
+		extends EntityBody<B>
 {
 	private S shape;
 
@@ -24,7 +23,6 @@ public abstract class ShapeBody
 	{
 		this(new ModelInstance(model), body, shape, mass);
 	}
-
 
 	public ShapeBody(ModelInstance modelInstance, B body, S shape)
 	{
@@ -44,16 +42,6 @@ public abstract class ShapeBody
 		shape.dispose();
 	}
 
-	public S shape()
-	{
-		return shape;
-	}
-
-	public Vector3 shapeScale()
-	{
-		return shape().scale();
-	}
-
 	public Shape fittedHitbox()
 	{
 		return new BoxShape(size());
@@ -64,9 +52,16 @@ public abstract class ShapeBody
 		return shape.inertia(mass());
 	}
 
+	@Override
+	public void scale(Vector3 scale)
+	{
+		super.scale(scale);
+		setLocalScaling(scale.scl(shapeScale()));
+	}
+
 	public void setCollisionShape(S shape)
 	{
-		if (new Optional<S>(shape).equals(shape())) return;
+		if (new Optional<>(shape).equals(shape())) return;
 		Shape oldShape = shape();
 		this.shape = shape;
 		body().setCollisionShape(shape.shape());
@@ -83,16 +78,19 @@ public abstract class ShapeBody
 		setLocalScaling(scale.scl(scale()));
 	}
 
-	@Override
-	public void scale(Vector3 scale)
-	{
-		super.scale(scale);
-		setLocalScaling(scale.scl(shapeScale()));
-	}
-
 	private void setLocalScaling(Vector3 scale)
 	{
 		shape().setScale(scale);
+	}
+
+	public S shape()
+	{
+		return shape;
+	}
+
+	public Vector3 shapeScale()
+	{
+		return shape().scale();
 	}
 
 	protected static BoxShape fittedHitbox(Model model)

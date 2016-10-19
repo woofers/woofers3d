@@ -11,11 +11,6 @@ public abstract class State extends BaseState
 		super(game);
 	}
 
-	public SubState subState()
-	{
-		return subState;
-	}
-
 	public boolean hasPauseState()
 	{
 		if (hasSubState()) return subState().isPauseState();
@@ -30,5 +25,10 @@ public abstract class State extends BaseState
 	public void setSubState(SubState subState)
 	{
 		this.subState = subState;
+	}
+
+	public SubState subState()
+	{
+		return subState;
 	}
 }

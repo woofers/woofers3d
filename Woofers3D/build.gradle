@@ -29,11 +29,11 @@ allprojects {
     version = '1.0' + getDate()
     ext {
         appName = "Woofers3D"
-        gdxVersion = '1.7.1'
-        roboVMVersion = '1.9.0'
+        gdxVersion = '1.9.4'
+        roboVMVersion = '2.2.0'
         box2DLightsVersion = '1.4'
-        ashleyVersion = '1.6.0'
-        aiVersion = '1.6.0'
+        ashleyVersion = '1.7.0'
+        aiVersion = '1.8.0'
         gsonVersion = '2.2.4'
         poiVersion = '3.10.1'
     }
@@ -52,6 +52,7 @@ project(":desktop") {
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
@@ -120,6 +121,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         compile 'com.google.code.gson:gson:2.2.4'
         //compile "org.apache.poi:poi:3.13"

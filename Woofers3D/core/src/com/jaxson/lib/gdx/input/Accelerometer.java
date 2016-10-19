@@ -2,6 +2,7 @@ package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.util.Updateable;
+import com.badlogic.gdx.math.Matrix4;
 
 public interface Accelerometer extends Updateable
 {
@@ -15,17 +16,11 @@ public interface Accelerometer extends Updateable
 
 	public boolean exists();
 
-	public Vector3 values();
+	public boolean tiltsBackward();
 
-	public float z();
-
-	public float y();
-
-	public float x();
+	public boolean tiltsDown();
 
 	public boolean tiltsForward();
-
-	public boolean tiltsBackward();
 
 	public boolean tiltsLeft();
 
@@ -33,5 +28,13 @@ public interface Accelerometer extends Updateable
 
 	public boolean tiltsUp();
 
-	public boolean tiltsDown();
+	public Vector3 values();
+
+	public Matrix4 rotationMatrix();
+
+	public float x();
+
+	public float y();
+
+	public float z();
 }

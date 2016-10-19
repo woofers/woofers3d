@@ -1,9 +1,5 @@
 package com.jaxson.lib.io.excel;
 
-import com.jaxson.lib.io.DataFile;
-import com.jaxson.lib.io.File;
-import com.jaxson.lib.io.FileExtension;
-import com.jaxson.lib.io.excel.workbook.MyWorkbook;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +12,10 @@ import java.util.Date;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.jaxson.lib.util.Unwrapable;
+import com.jaxson.lib.io.DataFile;
+import com.jaxson.lib.io.File;
+import com.jaxson.lib.io.FileExtension;
+import com.jaxson.lib.io.excel.workbook.MyWorkbook;
 
 public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 {
@@ -43,6 +42,12 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
+	public BufferedReader bufferedReader() throws FileNotFoundException
+	{
+		return getFile().bufferedReader();
+	}
+
+	@Override
 	public boolean canRead()
 	{
 		return getFile().canRead();
@@ -52,6 +57,12 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	public boolean canWrite()
 	{
 		return getFile().canWrite();
+	}
+
+	@Override
+	public ExcelFile child(String child)
+	{
+		return new ExcelFile(getFile().child(child));
 	}
 
 	@Override
@@ -91,19 +102,6 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public BufferedReader bufferedReader()
-			throws FileNotFoundException
-	{
-		return getFile().bufferedReader();
-	}
-
-	@Override
-	public ExcelFile child(String child)
-	{
-		return new ExcelFile(getFile().child(child));
-	}
-
-	@Override
 	public String extension()
 	{
 		return getFile().extension();
@@ -116,31 +114,65 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public FileInputStream fileInputStream()
-			throws FileNotFoundException
+	public FileInputStream fileInputStream() throws FileNotFoundException
 	{
 		return getFile().fileInputStream();
 	}
 
 	@Override
-	public FileOutputStream fileOutputStream()
-			throws FileNotFoundException,
-				   SecurityException
+	public FileOutputStream
+		fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return getFile().fileOutputStream();
 	}
 
 	@Override
-	public FileReader fileReader()
-			throws FileNotFoundException
+	public FileReader fileReader() throws FileNotFoundException
 	{
 		return getFile().fileReader();
+	}
+
+	private File getFile()
+	{
+		return file;
+	}
+
+	@Override
+	public boolean isDirectory()
+	{
+		return getFile().isDirectory();
+	}
+
+	@Override
+	public boolean isFile()
+	{
+		return getFile().isFile();
 	}
 
 	@Override
 	public java.io.File javaFile()
 	{
 		return getFile().javaFile();
+	}
+
+	@Override
+	public Date lastModified()
+	{
+		return getFile().lastModified();
+	}
+
+	private Workbook loadWordbook()
+	{
+		FileExtension type = fileExtension();
+		if (type.equals(FileExtension.XLS)) return readXlsxWorkbook();
+		if (type.equals(FileExtension.XLSX)) return readXlsxWorkbook();
+		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
+	}
+
+	@Override
+	public ExcelFile move(ExcelFile file)
+	{
+		return new ExcelFile(getFile().move(file));
 	}
 
 	@Override
@@ -174,41 +206,10 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public PrintWriter printWriter()
-			throws FileNotFoundException,
-				   UnsupportedEncodingException
+	public PrintWriter
+		printWriter() throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return getFile().printWriter();
-	}
-
-	@Override
-	public Date lastModified()
-	{
-		return getFile().lastModified();
-	}
-
-	@Override
-	public boolean isDirectory()
-	{
-		return getFile().isDirectory();
-	}
-
-	@Override
-	public boolean isFile()
-	{
-		return getFile().isFile();
-	}
-
-	@Override
-	public long size()
-	{
-		return getFile().size();
-	}
-
-	@Override
-	public ExcelFile move(ExcelFile file)
-	{
-		return new ExcelFile(getFile().move(file));
 	}
 
 	@Override
@@ -223,15 +224,42 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 		return new MyWorkbook(loadWordbook());
 	}
 
-	public MyWorkbook unwrap()
-	{
-		return readObject();
-	}
-
 	@Override
 	public String readString()
 	{
 		return getFile().readString();
+	}
+
+	private HSSFWorkbook readXlsWorkbook()
+	{
+		HSSFWorkbook workbook = null;
+		FileInputStream stream = null;
+		try
+		{
+			stream = fileInputStream();
+			workbook = new HSSFWorkbook(stream);
+		}
+		catch (Exception ex)
+		{
+			return new HSSFWorkbook();
+		}
+		return workbook;
+	}
+
+	private XSSFWorkbook readXlsxWorkbook()
+	{
+		XSSFWorkbook workbook = null;
+		FileInputStream stream = null;
+		try
+		{
+			stream = fileInputStream();
+			workbook = new XSSFWorkbook(stream);
+		}
+		catch (Exception ex)
+		{
+			return new XSSFWorkbook();
+		}
+		return workbook;
 	}
 
 	@Override
@@ -256,6 +284,18 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	public ExcelFile setPath(String path)
 	{
 		return new ExcelFile(path);
+	}
+
+	@Override
+	public long size()
+	{
+		return getFile().size();
+	}
+
+	@Override
+	public MyWorkbook unwrap()
+	{
+		return readObject();
 	}
 
 	@Override
@@ -301,50 +341,5 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	public ExcelFile write(String contents)
 	{
 		return new ExcelFile(getFile().write(contents));
-	}
-
-	private File getFile()
-	{
-		return file;
-	}
-
-	private Workbook loadWordbook()
-	{
-		FileExtension type = fileExtension();
-		if (type.equals(FileExtension.XLS)) return readXlsxWorkbook();
-		if (type.equals(FileExtension.XLSX)) return readXlsxWorkbook();
-		throw new IllegalArgumentException(EXTENSION_NOT_FOUND);
-	}
-
-	private HSSFWorkbook readXlsWorkbook()
-	{
-		HSSFWorkbook workbook = null;
-		FileInputStream stream = null;
-		try
-		{
-			stream = fileInputStream();
-			workbook = new HSSFWorkbook(stream);
-		}
-		catch (Exception ex)
-		{
-			return new HSSFWorkbook();
-		}
-		return workbook;
-	}
-
-	private XSSFWorkbook readXlsxWorkbook()
-	{
-		XSSFWorkbook workbook = null;
-		FileInputStream stream = null;
-		try
-		{
-			stream = fileInputStream();
-			workbook = new XSSFWorkbook(stream);
-		}
-		catch (Exception ex)
-		{
-			return new XSSFWorkbook();
-		}
-		return workbook;
 	}
 }

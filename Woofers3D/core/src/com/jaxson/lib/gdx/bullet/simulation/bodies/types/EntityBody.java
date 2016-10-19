@@ -47,31 +47,24 @@ public abstract class EntityBody<B extends btCollisionObject>
 		body().setActivationState(ACTIVE_TAG);
 	}
 
-	public void addCollisionFlag(int flag)
-	{
-		setCollisionFlags(collisionFlags() | flag);
-	}
-
-	public void deactivate()
-	{
-		body().setActivationState(DISABLE_SIMULATION);
-	}
-
-	@Override
-	public void dispose()
-	{
-		if (!wasImpoted()) super.dispose();
-		body.dispose();
-	}
-
 	public int activationState()
 	{
 		return body().getActivationState();
 	}
 
+	public void addCollisionFlag(int flag)
+	{
+		setCollisionFlags(collisionFlags() | flag);
+	}
+
 	public B body()
 	{
 		return body;
+	}
+
+	protected void bodyToTransform()
+	{
+		body().getWorldTransform(transform());
 	}
 
 	public int collisionFlags()
@@ -89,14 +82,33 @@ public abstract class EntityBody<B extends btCollisionObject>
 		return body().getContactCallbackFlag();
 	}
 
-	public float mass()
+	public void deactivate()
 	{
-		return mass;
+		body().setActivationState(DISABLE_SIMULATION);
+	}
+
+	@Override
+	public void dispose()
+	{
+		if (!wasImpoted()) super.dispose();
+		body.dispose();
 	}
 
 	public boolean isBody(btCollisionObject body)
 	{
 		return body().equals(body);
+	}
+
+	public float mass()
+	{
+		return mass;
+	}
+
+	@Override
+	public void moveTo(Vector3 location)
+	{
+		super.moveTo(location);
+		transformToBody();
 	}
 
 	@Override
@@ -109,6 +121,11 @@ public abstract class EntityBody<B extends btCollisionObject>
 	public void setActivationState(int state)
 	{
 		body().setActivationState(state);
+	}
+
+	protected void setBody(B body)
+	{
+		this.body = body;
 	}
 
 	public void setCollisionFlags(int flags)
@@ -126,13 +143,6 @@ public abstract class EntityBody<B extends btCollisionObject>
 		body().setContactCallbackFlag(flag);
 	}
 
-	@Override
-	public void moveTo(Vector3 location)
-	{
-		super.moveTo(location);
-		transformToBody();
-	}
-
 	public void setMass(float mass)
 	{
 		this.mass = mass;
@@ -143,6 +153,11 @@ public abstract class EntityBody<B extends btCollisionObject>
 	{
 		super.setRotation(yaw, pitch, roll);
 		transformToBody();
+	}
+
+	protected void transformToBody()
+	{
+		body().setWorldTransform(transform());
 	}
 
 	@Override
@@ -164,20 +179,5 @@ public abstract class EntityBody<B extends btCollisionObject>
 		Optional<Integer> data = new Optional<>(
 				(Integer) modelInstance().userData);
 		return data.exists() && data.unwrap() == WorldImporter.IMPORTED;
-	}
-
-	protected void bodyToTransform()
-	{
-		body().getWorldTransform(transform());
-	}
-
-	protected void setBody(B body)
-	{
-		this.body = body;
-	}
-
-	protected void transformToBody()
-	{
-		body().setWorldTransform(transform());
 	}
 }

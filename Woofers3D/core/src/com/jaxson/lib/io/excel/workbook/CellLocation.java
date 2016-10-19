@@ -12,6 +12,7 @@ public class CellLocation
 	private static final char CHAR_MIN = '0';
 
 	private int x;
+
 	private int y;
 
 	public CellLocation(int x, int y)
@@ -26,14 +27,14 @@ public class CellLocation
 		this(cell.getColumnIndex(), cell.getRowIndex());
 	}
 
-	public CellLocation(String cell)
-	{
-		this(getPoint(cell));
-	}
-
 	private CellLocation(Point point)
 	{
 		this(point.getX(), point.getY());
+	}
+
+	public CellLocation(String cell)
+	{
+		this(getPoint(cell));
 	}
 
 	public Point getPoint()
@@ -132,6 +133,11 @@ public class CellLocation
 		return getString();
 	}
 
+	private static void checkAmount(int amount)
+	{
+		if (amount < 0) throw new NegativeValueException("amount");
+	}
+
 	public static int columnToInt(String column)
 	{
 		if (column == null || column.isEmpty())
@@ -145,11 +151,6 @@ public class CellLocation
 		}
 
 		return sum - 1;
-	}
-
-	private static void checkAmount(int amount)
-	{
-		if (amount < 0) throw new NegativeValueException("amount");
 	}
 
 	private static Point getPoint(String cell)
@@ -170,7 +171,7 @@ public class CellLocation
 			}
 		}
 		return new Point(columnToInt(letters),
-						 new Integer(numbers).intValue() - 1);
+				new Integer(numbers).intValue() - 1);
 	}
 
 	private static String intToChar(int columnNumber)
@@ -184,7 +185,7 @@ public class CellLocation
 			modulo = (dividend - 1) % ALPHABET_MAX;
 			newCharValue = 'A' + modulo;
 			columnName = new String(new char[]{ (char) newCharValue })
-						 + columnName;
+					+ columnName;
 			dividend = (dividend - modulo) / ALPHABET_MAX;
 		}
 		return columnName;

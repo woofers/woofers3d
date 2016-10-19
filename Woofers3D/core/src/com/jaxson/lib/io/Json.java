@@ -1,8 +1,7 @@
 package com.jaxson.lib.io;
 
-import com.jaxson.lib.util.Unwrapable;
 import com.jaxson.lib.util.Optional;
-import com.jaxson.lib.util.Uncertainty;
+import com.jaxson.lib.util.Unwrapable;
 
 /**
  * Decorator to save any {@link Object}.
@@ -32,16 +31,6 @@ public class Json<T> implements Unwrapable<T>
 		obtain();
 	}
 
-	public T unwrap()
-	{
-		return object.unwrap();
-	}
-
-	public JsonFile<T> saveFile()
-	{
-		return file;
-	}
-
 	public void obtain()
 	{
 		if (saveFile().exists())
@@ -61,8 +50,19 @@ public class Json<T> implements Unwrapable<T>
 		saveFile().write(unwrap());
 	}
 
+	public JsonFile<T> saveFile()
+	{
+		return file;
+	}
+
 	public void setSaveFile(JsonFile<T> file)
 	{
 		this.file = file;
+	}
+
+	@Override
+	public T unwrap()
+	{
+		return object.unwrap();
 	}
 }

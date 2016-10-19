@@ -28,11 +28,6 @@ public class Shape<S extends btCollisionShape> implements Disposable
 				&& type() == otherShape.type();
 	}
 
-	public S shape()
-	{
-		return shape;
-	}
-
 	public Vector3 inertia(float mass)
 	{
 		Vector3 inertia = new Vector3();
@@ -46,13 +41,18 @@ public class Shape<S extends btCollisionShape> implements Disposable
 		return shape().getLocalScaling();
 	}
 
-	public int type()
-	{
-		return shape().getShapeType();
-	}
-
 	public void setScale(Vector3 scale)
 	{
 		shape().setLocalScaling(scale);
+	}
+
+	public S shape()
+	{
+		return shape;
+	}
+
+	public int type()
+	{
+		return shape().getShapeType();
 	}
 }

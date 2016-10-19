@@ -25,16 +25,6 @@ public class Circle implements MyComparable<Circle>
 		this.radius = radius;
 	}
 
-	public float radius()
-	{
-		return radius;
-	}
-
-	public float diamater()
-	{
-		return radius() * RADIUS_TO_DIAMETER;
-	}
-
 	public float circumference()
 	{
 		return diamater() * PI;
@@ -46,13 +36,25 @@ public class Circle implements MyComparable<Circle>
 		return (int) (radius() - other.radius());
 	}
 
+	public float diamater()
+	{
+		return radius() * RADIUS_TO_DIAMETER;
+	}
+
+	@Override
 	public boolean equals(Object other)
 	{
 		if (!(other instanceof Circle)) return false;
-		Circle circle = (Circle)other;
+		Circle circle = (Circle) other;
 		return radius() == circle.radius();
 	}
 
+	public float radius()
+	{
+		return radius;
+	}
+
+	@Override
 	public String toString()
 	{
 		return new Printer(getClass(),

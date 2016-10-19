@@ -14,8 +14,6 @@ import com.jaxson.lib.util.MyArrayList;
 
 public class WorldImporter
 {
-	private static final String WORLD_EXTENSION = "bullet";
-
 	private static class WorldImporterHelper extends btBulletWorldImporter
 	{
 		private Model model;
@@ -28,12 +26,17 @@ public class WorldImporter
 			this.entities = new MyArrayList<>();
 		}
 
+		private void add(RigidBody entitiy)
+		{
+			entities.add(entitiy);
+		}
+
 		@Override
 		public btRigidBody createRigidBody(boolean isDynamic,
-										   float mass,
-										   Matrix4 startTransform,
-										   btCollisionShape shape,
-										   String bodyName)
+				float mass,
+				Matrix4 startTransform,
+				btCollisionShape shape,
+				String bodyName)
 		{
 			String nodeName = bodyName.split("_", 2)[0] + "_model";
 			ModelInstance instance
@@ -49,12 +52,9 @@ public class WorldImporter
 		{
 			return entities;
 		}
-
-		private void add(RigidBody entitiy)
-		{
-			entities.add(entitiy);
-		}
 	}
+
+	private static final String WORLD_EXTENSION = "bullet";
 
 	public static final int NOT_IMPORTED = 0;
 	public static final int IMPORTED = 1;

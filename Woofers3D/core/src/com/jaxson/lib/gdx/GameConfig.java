@@ -8,6 +8,8 @@ import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.math.Reciprocal;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 /**
  * A universal config file that can be converted to other config types.
@@ -101,6 +103,10 @@ public class GameConfig
 	public boolean allowsFullscreen()
 	{
 		return allowFullscreen;
+	}
+
+	private void autoSave()
+	{
 	}
 
 	/**
@@ -573,11 +579,29 @@ public class GameConfig
 		config.samples = getAntiAliasing();
 		config.x = getX();
 		config.y = getY();
+		config.useGL30 = true;
 		if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
 		return config;
 	}
 
-	private void autoSave()
+	/**
+	 * Gets the {@link Lwjgl3ApplicationConfiguration} of the {@link GameConfig}.
+	 * @return {@link Lwjgl3ApplicationConfiguration} - The config.
+	 */
+	public Lwjgl3ApplicationConfiguration toLwjgl3Config()
 	{
+		Lwjgl3ApplicationConfiguration config
+				= new Lwjgl3ApplicationConfiguration();
+		config.setTitle(getTitle());
+		config.setWindowedMode(getWidth(), getHeight());
+		config.useVsync(isVsync());
+		config.setResizable(isResizable());
+		config.setWindowPosition(getX(), getY());
+		config.useOpenGL3(true, 3, 2);
+		//config.foregroundFPS = getMaxFps();
+		//config.backgroundFPS = getBackgroundFps();
+		//config.samples = getAntiAliasing();
+		//if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
+		return config;
 	}
 }

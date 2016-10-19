@@ -1,8 +1,8 @@
 package com.jaxson.lib.gdx.input;
 
+import java.util.Iterator;
 import com.badlogic.gdx.Input;
 import com.jaxson.lib.util.MyArrayList;
-import java.util.Iterator;
 
 public class Keys extends Input.Keys implements Key, Iterable<Key>
 {

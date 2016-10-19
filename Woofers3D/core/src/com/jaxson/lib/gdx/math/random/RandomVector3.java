@@ -11,12 +11,12 @@ public class RandomVector3 extends Vector3
 	}
 
 	public RandomVector3(float minX, float maxX,
-						 float minY, float maxY,
-						 float minZ, float maxZ)
+			float minY, float maxY,
+			float minZ, float maxZ)
 	{
 		super(new RandomNumber(minX, maxX).floatValue(),
-			  new RandomNumber(minY, maxY).floatValue(),
-			  new RandomNumber(minZ, maxZ).floatValue());
+				new RandomNumber(minY, maxY).floatValue(),
+				new RandomNumber(minZ, maxZ).floatValue());
 	}
 
 	public RandomVector3(Vector3 min, Vector3 max)

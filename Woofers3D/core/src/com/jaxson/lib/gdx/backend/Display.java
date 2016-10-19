@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input.Orientation;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -38,8 +39,8 @@ import com.jaxson.lib.math.MyMath;
  */
 public class Display extends GameObject
 {
-	private static final int CLEAR_MASK = GL20.GL_COLOR_BUFFER_BIT
-										| GL20.GL_DEPTH_BUFFER_BIT;
+	private static final int CLEAR_MASK
+			= GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT;
 
 	private static final int COVERAGE_SAMPLING_MASK
 			= GL20.GL_COVERAGE_BUFFER_BIT_NV;
@@ -80,9 +81,9 @@ public class Display extends GameObject
 		this.screenshotKey = keyboard.key("F12");
 		this.fullscreenKey
 				= new Keys(keyboard.key("F11"),
-						   new KeyCombination(
-						   		new Keys(keyboard.key("L-Alt"),
-										 keyboard.key("R-Alt")),
+						new KeyCombination(
+								new Keys(keyboard.key("L-Alt"),
+										keyboard.key("R-Alt")),
 								keyboard.key("Enter")));
 
 		setFullscreen(startsFullscreen());
@@ -94,7 +95,49 @@ public class Display extends GameObject
 	 */
 	public boolean allowsFullscreen()
 	{
-		return config().allowsFullscreen();
+		return config().allowsFullscreen() && deviceCanFullscreen();
+	}
+
+	public boolean deviceCanFullscreen()
+	{
+		return graphics().supportsDisplayModeChange();
+	}
+
+	/**
+	 * Gets the aspect ratio of the {@link Game}.
+	 * @return {@link float} - The aspect ratio of the {@link Game}
+	 */
+	public float aspectRatio()
+	{
+		return (float) width() / (float) height();
+	}
+
+	/**
+	 * Gets the {@link BufferFormat} of the {@link Display}.
+	 * @return {@link BufferFormat} - The {@link BufferFormat} of the
+	 * {@link Display}
+	 */
+	public BufferFormat bufferFormat()
+	{
+		return graphics().getBufferFormat();
+	}
+
+	/**
+	 * Gets the center of the {@link Display}.
+	 * @return {@link Vector2} - The center of the {@link Display}
+	 */
+	public Vector2 center()
+	{
+		return new Vector2(width() * MyMath.HALF, height() * MyMath.HALF);
+	}
+
+	/**
+	 * Gets the clear mask of the {@link Display}.
+	 * @return {@link int} - The clear mask of the {@link Display}
+	 */
+	public int clearMask()
+	{
+		return CLEAR_MASK | coverageSampling();
 	}
 
 	/**
@@ -145,49 +188,6 @@ public class Display extends GameObject
 	public void clearScreen(int mask)
 	{
 		gl().glClear(mask);
-	}
-
-	@Override
-	public void dispose()
-	{
-		view.dispose();
-	}
-
-	/**
-	 * Gets the aspect ratio of the {@link Game}.
-	 * @return {@link float} - The aspect ratio of the {@link Game}
-	 */
-	public float aspectRatio()
-	{
-		return (float) width() / (float) height();
-	}
-
-	/**
-	 * Gets the {@link BufferFormat} of the {@link Display}.
-	 * @return {@link BufferFormat} - The {@link BufferFormat} of the
-	 * {@link Display}
-	 */
-	public BufferFormat bufferFormat()
-	{
-		return graphics().getBufferFormat();
-	}
-
-	/**
-	 * Gets the center of the {@link Display}.
-	 * @return {@link Vector2} - The center of the {@link Display}
-	 */
-	public Vector2 center()
-	{
-		return new Vector2(width() * MyMath.HALF, height() * MyMath.HALF);
-	}
-
-	/**
-	 * Gets the clear mask of the {@link Display}.
-	 * @return {@link int} - The clear mask of the {@link Display}
-	 */
-	public int clearMask()
-	{
-		return CLEAR_MASK | coverageSampling();
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class Display extends GameObject
 	 */
 	public DisplayMode displayMode()
 	{
-		return graphics().getDesktopDisplayMode();
+		return graphics().getDisplayMode();
 	}
 
 	/**
@@ -252,6 +252,12 @@ public class Display extends GameObject
 	public DisplayMode[] displayModes()
 	{
 		return graphics().getDisplayModes();
+	}
+
+	@Override
+	public void dispose()
+	{
+		view.dispose();
 	}
 
 	/**
@@ -285,7 +291,30 @@ public class Display extends GameObject
 	 */
 	public GL20 gl()
 	{
-		return Gdx.gl;
+		return gl20();
+	}
+
+	/**
+	 * Gets the OpenGLES 2.0 reference.
+	 * @return {@link int} - The OpenGLES reference
+	 */
+	public GL20 gl20()
+	{
+		return graphics().getGL20();
+	}
+
+	/**
+	 * Gets the OpenGLES 3.0 reference.
+	 * @return {@link int} - The OpenGLES reference
+	 */
+	public GL30 gl30()
+	{
+		return graphics().getGL30();
+	}
+
+	public boolean isGL30Available()
+	{
+		return graphics().isGL30Available();
 	}
 
 	/**
@@ -295,6 +324,24 @@ public class Display extends GameObject
 	public Graphics graphics()
 	{
 		return game.graphics();
+	}
+
+	/**
+	 * Gets whether the {@link Display} uses coverage sampling.
+	 * @return {@link boolean} - Whether the {@link Display} uses coverage
+	 * sampling
+	 * @see <a href="http://www.nvidia.com/object/coverage-sampled-aa.html">
+	 * CoverageSampling</a>
+	 */
+	public boolean hasCoverageSampling()
+	{
+		return bufferFormat().coverageSampling;
+	}
+
+	private boolean hasPauseScreen()
+	{
+		return game.currentState() != null
+				&& game.currentState().hasPauseState();
 	}
 
 	/**
@@ -316,71 +363,19 @@ public class Display extends GameObject
 		return game.input();
 	}
 
-	public int lastWindowedHeight()
+	@Override
+	protected void input(float dt)
 	{
-		return lastWindowedHeight;
-	}
-
-	public int lastWindowedWidth()
-	{
-		return lastWindowedWidth;
-	}
-
-	private Orientation nativeOrientation()
-	{
-		return input().getNativeOrientation();
-	}
-
-	private int nativeRotation()
-	{
-		return input().getRotation();
-	}
-
-	public DisplayOrientation orientation()
-	{
-		return new DisplayOrientation(rotation());
-	}
-
-	public int rotation()
-	{
-		int rotation = nativeRotation();
-		if (nativeOrientation() == Orientation.Portrait) return rotation;
-		return rotation + NATIVE_ROTATION_OFFSET;
-	}
-
-	public Json<GameConfig> saveableConfig()
-	{
-		return game.saveableConfig();
-	}
-
-	/**
-	 * Gets the {@link View} of the {@link Display}.
-	 * @return {@link View} - The {@link View} of the {@link Display}
-	 */
-	public View view()
-	{
-		return view;
-	}
-
-	/**
-	 * Gets the width of the {@link Display} in pixels.
-	 * @return {@link int} - The starting of the {@link Display} in pixels
-	 */
-	public int width()
-	{
-		return graphics().getWidth();
-	}
-
-	/**
-	 * Gets whether the {@link Display} uses coverage sampling.
-	 * @return {@link boolean} - Whether the {@link Display} uses coverage
-	 * sampling
-	 * @see <a href="http://www.nvidia.com/object/coverage-sampled-aa.html">
-	 * CoverageSampling</a>
-	 */
-	public boolean hasCoverageSampling()
-	{
-		return bufferFormat().coverageSampling;
+		if (allowsFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
+		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched())
+			mouse.setCatched(true);
+		if (touchScreen.exists() && touchScreen.fingersToucing(3))
+			togglePaused();
+		if (keyboard.exists())
+		{
+			if (hasPauseScreen() && pauseKey.isPressed()) togglePaused();
+			if (screenshotKey.isPressed()) new Screenshot().save().dispose();
+		}
 	}
 
 	/**
@@ -449,6 +444,31 @@ public class Display extends GameObject
 		return orientation().equals(DisplayOrientation.PORTRAIT);
 	}
 
+	public int lastWindowedHeight()
+	{
+		return lastWindowedHeight;
+	}
+
+	public int lastWindowedWidth()
+	{
+		return lastWindowedWidth;
+	}
+
+	private Orientation nativeOrientation()
+	{
+		return input().getNativeOrientation();
+	}
+
+	private int nativeRotation()
+	{
+		return input().getRotation();
+	}
+
+	public DisplayOrientation orientation()
+	{
+		return new DisplayOrientation(rotation());
+	}
+
 	@Override
 	public void pause()
 	{
@@ -475,13 +495,25 @@ public class Display extends GameObject
 		minimized = false;
 	}
 
+	public int rotation()
+	{
+		int rotation = nativeRotation();
+		if (nativeOrientation() == Orientation.Portrait) return rotation;
+		return rotation + NATIVE_ROTATION_OFFSET;
+	}
+
+	public Json<GameConfig> saveableConfig()
+	{
+		return game.saveableConfig();
+	}
+
 	/**
 	 * Sets the {@link DisplayMode} of the {@link Display}.
 	 * @param displayMode The {@link DisplayMode}
 	 */
 	public void setDisplayMode(DisplayMode displayMode)
 	{
-		graphics().setDisplayMode(displayMode);
+		graphics().setFullscreenMode(displayMode);
 		updateViewport();
 	}
 
@@ -492,7 +524,7 @@ public class Display extends GameObject
 	 */
 	public void setDisplayMode(int width, int height)
 	{
-		graphics().setDisplayMode(width, height, false);
+		graphics().setWindowedMode(width, height);
 		updateViewport();
 	}
 
@@ -539,6 +571,16 @@ public class Display extends GameObject
 		saveableConfig().save();
 	}
 
+	private void setViewport(int width, int height)
+	{
+		setViewport(0, 0, width, height);
+	}
+
+	private void setViewport(int x, int y, int width, int height)
+	{
+		gl().glViewport(x, y, width, height);
+	}
+
 	/**
 	 * Sets whether the {@link Game} uses vertical sync.
 	 * @param vsync Whether the {@link Game} uses vertical sync
@@ -556,7 +598,7 @@ public class Display extends GameObject
 	 */
 	public boolean startsFullscreen()
 	{
-		return config().startsFullscreen();
+		return allowsFullscreen() && config().startsFullscreen();
 	}
 
 	/**
@@ -582,31 +624,6 @@ public class Display extends GameObject
 		if (!isPaused()) view().update();
 	}
 
-	@Override
-	protected void input(float dt)
-	{
-		if (allowsFullscreen() && fullscreenKey.isDown()) toggleFullscreen();
-		if (!mouse.isCatched() && !isPaused() && touchScreen.justTouched())
-			mouse.setCatched(true);
-		if (touchScreen.exists() && touchScreen.fingersToucing(3))
-			togglePaused();
-		if (keyboard.exists())
-		{
-			if (hasPauseScreen() && pauseKey.isPressed()) togglePaused();
-			if (screenshotKey.isPressed()) new Screenshot().save().dispose();
-		}
-	}
-
-	private void setViewport(int width, int height)
-	{
-		setViewport(0, 0, width, height);
-	}
-
-	private void setViewport(int x, int y, int width, int height)
-	{
-		gl().glViewport(x, y, width, height);
-	}
-
 	/**
 	 * Updates the {@link Viewport}
 	 */
@@ -615,9 +632,21 @@ public class Display extends GameObject
 		setViewport(width(), height());
 	}
 
-	private boolean hasPauseScreen()
+	/**
+	 * Gets the {@link View} of the {@link Display}.
+	 * @return {@link View} - The {@link View} of the {@link Display}
+	 */
+	public View view()
 	{
-		return game.currentState() != null
-				&& game.currentState().hasPauseState();
+		return view;
+	}
+
+	/**
+	 * Gets the width of the {@link Display} in pixels.
+	 * @return {@link int} - The starting of the {@link Display} in pixels
+	 */
+	public int width()
+	{
+		return graphics().getWidth();
 	}
 }
