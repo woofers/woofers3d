@@ -52,15 +52,15 @@ public class Inputs
 			return display;
 		}
 
-		public Gyroscope gyroscope()
-		{
-			return gyroscope;
-		}
-
 		@Override
 		public boolean fling(float velocityX, float velocityY, int button)
 		{
 			return true;
+		}
+
+		public Gyroscope gyroscope()
+		{
+			return gyroscope;
 		}
 
 		private Input input()
@@ -136,6 +136,12 @@ public class Inputs
 				Vector2 pointer2)
 		{
 			return true;
+		}
+
+		@Override
+		public void pinchStop()
+		{
+
 		}
 
 		void reset()
@@ -222,11 +228,6 @@ public class Inputs
 		{
 			return false;
 		}
-
-		public void pinchStop()
-		{
-
-		}
 	}
 
 	private static InputMultiplexer inputMultiplexer;
@@ -252,6 +253,11 @@ public class Inputs
 	public static Display display()
 	{
 		return inputListener.display();
+	}
+
+	public static Gyroscope gyroscope()
+	{
+		return inputListener.gyroscope();
 	}
 
 	public static InputMultiplexer inputProcessor()
@@ -287,10 +293,5 @@ public class Inputs
 	public static Vibrator vibrator()
 	{
 		return inputListener.vibrator();
-	}
-
-	public static Gyroscope gyroscope()
-	{
-		return inputListener.gyroscope();
 	}
 }

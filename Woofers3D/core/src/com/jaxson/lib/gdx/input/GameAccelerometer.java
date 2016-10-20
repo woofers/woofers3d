@@ -1,8 +1,8 @@
 package com.jaxson.lib.gdx.input;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.util.Printer;
-import com.badlogic.gdx.math.Matrix4;
 
 public class GameAccelerometer implements Accelerometer
 {
@@ -35,11 +35,6 @@ public class GameAccelerometer implements Accelerometer
 		this.values = new Vector3();
 	}
 
-	public Matrix4 rotationMatrix()
-	{
-		return accelerometer.rotationMatrix();
-	}
-
 	@Override
 	public Vector3 alpha()
 	{
@@ -56,6 +51,12 @@ public class GameAccelerometer implements Accelerometer
 	public boolean exists()
 	{
 		return accelerometer.exists();
+	}
+
+	@Override
+	public Matrix4 rotationMatrix()
+	{
+		return accelerometer.rotationMatrix();
 	}
 
 	@Override

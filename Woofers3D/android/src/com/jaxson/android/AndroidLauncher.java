@@ -15,7 +15,7 @@ public class AndroidLauncher extends AndroidApplication
 	{
 		super.onCreate(savedInstanceState);
 		Woofers3D game = new Woofers3D();
-		initialize(game, game.toAndroidConfig());
+		initialize(game, game.config().toAndroidConfig());
 	}
 
 	@Override

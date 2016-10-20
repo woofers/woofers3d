@@ -1,6 +1,5 @@
 package com.jaxson.lib.gdx.backend;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.BufferFormat;
 import com.badlogic.gdx.Graphics.DisplayMode;
@@ -56,6 +55,10 @@ public class Display extends GameObject
 	private int lastWindowedWidth;
 	private int lastWindowedHeight;
 
+	private Rectangle size;
+	private Rectangle defaultSize;
+	private Rectangle lastSize;
+
 	private Keyboard keyboard;
 	private Mouse mouse;
 	private Keys fullscreenKey;
@@ -98,11 +101,6 @@ public class Display extends GameObject
 		return config().allowsFullscreen() && deviceCanFullscreen();
 	}
 
-	public boolean deviceCanFullscreen()
-	{
-		return graphics().supportsDisplayModeChange();
-	}
-
 	/**
 	 * Gets the aspect ratio of the {@link Game}.
 	 * @return {@link float} - The aspect ratio of the {@link Game}
@@ -128,7 +126,7 @@ public class Display extends GameObject
 	 */
 	public Vector2 center()
 	{
-		return new Vector2(width() * MyMath.HALF, height() * MyMath.HALF);
+		return size().scl(MyMath.HALF);
 	}
 
 	/**
@@ -223,7 +221,7 @@ public class Display extends GameObject
 	 */
 	public int defaultHeight()
 	{
-		return config().getHeight();
+		return config().height();
 	}
 
 	/**
@@ -232,7 +230,12 @@ public class Display extends GameObject
 	 */
 	public int defaultWidth()
 	{
-		return config().getWidth();
+		return config().width();
+	}
+
+	public boolean deviceCanFullscreen()
+	{
+		return graphics().supportsDisplayModeChange();
 	}
 
 	/**
@@ -312,11 +315,6 @@ public class Display extends GameObject
 		return graphics().getGL30();
 	}
 
-	public boolean isGL30Available()
-	{
-		return graphics().isGL30Available();
-	}
-
 	/**
 	 * Gets the {@link Graphics} reference.
 	 * @return {@link Graphics} - The {@link Graphics} reference
@@ -394,6 +392,11 @@ public class Display extends GameObject
 	public boolean isFullscreen()
 	{
 		return graphics().isFullscreen();
+	}
+
+	public boolean isGL30Available()
+	{
+		return graphics().isGL30Available();
 	}
 
 	public boolean isLandscape()
@@ -486,6 +489,11 @@ public class Display extends GameObject
 	public void resize(int width, int height)
 	{
 		view.resize(width, height);
+	}
+
+	public Vector2 size()
+	{
+		return new Vector2(width(), height());
 	}
 
 	@Override

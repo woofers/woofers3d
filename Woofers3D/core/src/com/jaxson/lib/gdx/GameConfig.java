@@ -3,13 +3,12 @@ package com.jaxson.lib.gdx;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.io.DataFile;
 import com.jaxson.lib.io.File;
 import com.jaxson.lib.math.Reciprocal;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 /**
  * A universal config file that can be converted to other config types.
@@ -63,6 +62,7 @@ public class GameConfig
 	private boolean immersive = true;
 	private Vector2 sensitivity = new Vector2(SENSITIVITY, SENSITIVITY);
 	private transient File icon = new DataFile("icon.png");
+	private boolean gl30 = true;
 
 	/**
 	 * Constructs a default config.
@@ -105,8 +105,56 @@ public class GameConfig
 		return allowFullscreen;
 	}
 
+	/**
+	 * Gets the number of MSAA samples.
+	 * Returns {@code 0} when MSAA is off.
+	 * @return {@link int} - The number of MSAA samples.
+	 */
+	public int antiAliasing()
+	{
+		return antiAliasing;
+	}
+
 	private void autoSave()
 	{
+	}
+
+	/**
+	 * Gets the frame rate when the game is minimized.
+	 * Returns {@code -1} when the game pauses on minimize.
+	 * @return {@link int} - The frame rate when the game is minimized.
+	 */
+	public int backgroundFps()
+	{
+		return backgroundFps;
+	}
+
+	public void center()
+	{
+		setX(WINDOW_CENTER);
+		setY(WINDOW_CENTER);
+	}
+
+	/**
+	 * Gets the number of logic updates per second that the {@link Game} cannot
+	 * skip.
+	 * @return {@link int} - The number of logic updates per second that the
+	 * {@link Game} cannot skip
+	 */
+	public int clamp()
+	{
+		return clamp;
+	}
+
+	/**
+	 * Gets the interval between {@link Game} logic updates in milliseconds that
+	 * cannot be skipped.
+	 * @return {@link float} - The interval between {@link Game} logic updates
+	 * in milliseconds that cannot be skipped in milliseconds
+	 */
+	public float clampInterval()
+	{
+		return new Reciprocal(clamp()).floatValue();
 	}
 
 	/**
@@ -119,147 +167,13 @@ public class GameConfig
 	}
 
 	/**
-	 * Gets the number of MSAA samples.
-	 * Returns {@code 0} when MSAA is off.
-	 * @return {@link int} - The number of MSAA samples.
-	 */
-	public int getAntiAliasing()
-	{
-		return antiAliasing;
-	}
-
-	/**
-	 * Gets the frame rate when the game is minimized.
-	 * Returns {@code -1} when the game pauses on minimize.
-	 * @return {@link int} - The frame rate when the game is minimized.
-	 */
-	public int getBackgroundFps()
-	{
-		return backgroundFps;
-	}
-
-	/**
-	 * Gets the number of logic updates per second that the {@link Game} cannot
-	 * skip.
-	 * @return {@link int} - The number of logic updates per second that the
-	 * {@link Game} cannot skip
-	 */
-	public int getClamp()
-	{
-		return clamp;
-	}
-
-	/**
-	 * Gets the interval between {@link Game} logic updates in milliseconds that
-	 * cannot be skipped.
-	 * @return {@link float} - The interval between {@link Game} logic updates
-	 * in milliseconds that cannot be skipped in milliseconds
-	 */
-	public float getClampInterval()
-	{
-		return new Reciprocal(getClamp()).floatValue();
-	}
-
-	/**
-	 * Gets the starting height of the window in pixels.
-	 * @return {@link int} - The starting height of the window in pixels
-	 */
-	public int getHeight()
-	{
-		return height;
-	}
-
-	/**
-	 * Gets the {@link Game} icon.
-	 * @return {@link File} - The {@link Game} icon.
-	 */
-	public File getIcon()
-	{
-		return icon;
-	}
-
-	/**
-	 * Gets the max frame rate.
-	 * @return {@link int} - The max frame rate
-	 */
-	public int getMaxFps()
-	{
-		return fps;
-	}
-
-	/**
-	 * Gets the sensitivity of the mouse.
-	 * @return {@link Vector2} - The sensitivity of the mouse
-	 */
-	public Vector2 getSensitivity()
-	{
-		return sensitivity;
-	}
-
-	/**
-	 * Gets the number of logic updates per second in the {@link Game}.
-	 * @return {@link int} - The number of logic updates per second in the
-	 * {@link Game}
-	 */
-	public int getStep()
-	{
-		return step;
-	}
-
-	/**
-	 * Gets the interval between {@link Game} logic updates in milliseconds.
-	 * @return {@link float} - The interval between {@link Game} logic updates
-	 * in milliseconds
-	 */
-	public float getStepInterval()
-	{
-		return new Reciprocal(step).floatValue();
-	}
-
-	/**
-	 * Gets the title of the {@link Game} window.
-	 * @return {@link String} - The title of the {@link Game} window
-	 */
-	public String getTitle()
-	{
-		return title;
-	}
-
-	/**
-	 * Gets the starting width of the window in pixels.
-	 * @return {@link int} - The starting width of the window in pixels
-	 */
-	public int getWidth()
-	{
-		return width;
-	}
-
-	/**
-	 * Gets the starting x location of the window.
-	 * @return {@link int} - The starting x location of the window
-	 */
-	public int getX()
-	{
-		return x;
-	}
-
-	/**
-	 * Gets the starting y location of the window.
-	 * @return {@link int} - The starting y location of the window
-	 */
-	public int getY()
-	{
-		return y;
-	}
-
-	/**
 	 * Gets whether the {@link Game} uses a fixed time step.
 	 * @return {@link boolean} - Whether the {@link Game} uses a fixed time
 	 * step
 	 */
 	public boolean hasFixedTimeStep()
 	{
-		return getStep() != VARIBLE_TIME_STEP;
+		return step() != VARIBLE_TIME_STEP;
 	}
 
 	/**
@@ -268,7 +182,7 @@ public class GameConfig
 	 */
 	public boolean hasFpsCap()
 	{
-		return getMaxFps() != VARIBLE_FRAME_RATE;
+		return maxFps() != VARIBLE_FRAME_RATE;
 	}
 
 	/**
@@ -278,6 +192,24 @@ public class GameConfig
 	public boolean hasStatusBar()
 	{
 		return statusBar;
+	}
+
+	/**
+	 * Gets the starting height of the window in pixels.
+	 * @return {@link int} - The starting height of the window in pixels
+	 */
+	public int height()
+	{
+		return height;
+	}
+
+	/**
+	 * Gets the {@link Game} icon.
+	 * @return {@link File} - The {@link Game} icon.
+	 */
+	public File icon()
+	{
+		return icon;
 	}
 
 	/**
@@ -310,9 +242,27 @@ public class GameConfig
 		return vsync;
 	}
 
+	/**
+	 * Gets the max frame rate.
+	 * @return {@link int} - The max frame rate
+	 */
+	public int maxFps()
+	{
+		return fps;
+	}
+
 	public void obtain()
 	{
 
+	}
+
+	/**
+	 * Gets the sensitivity of the mouse.
+	 * @return {@link Vector2} - The sensitivity of the mouse
+	 */
+	public Vector2 sensitivity()
+	{
+		return sensitivity;
 	}
 
 	/**
@@ -322,23 +272,23 @@ public class GameConfig
 	public void set(GameConfig config)
 	{
 		if (config == null) return;
-		setTitle(config.getTitle());
-		setWidth(config.getWidth());
-		setHeight(config.getHeight());
-		setX(config.getX());
-		setY(config.getY());
-		setMaxFps(config.getMaxFps());
-		setStep(config.getStep());
-		setClamp(config.getClamp());
-		setBackgroundFps(config.getBackgroundFps());
+		setTitle(config.title());
+		setWidth(config.width());
+		setHeight(config.height());
+		setX(config.x());
+		setY(config.y());
+		setMaxFps(config.maxFps());
+		setStep(config.step());
+		setClamp(config.clamp());
+		setBackgroundFps(config.backgroundFps());
 		setVsync(config.isVsync());
 		setResizable(config.isResizable());
 		setFullscreen(config.allowsFullscreen());
 		setFullscreenStartup(config.startsFullscreen());
 		setStatusBar(config.hasStatusBar());
 		setImmersiveMode(config.isImmersive());
-		setIcon(config.getIcon());
-		setAntiAliasing(config.getAntiAliasing());
+		setIcon(config.icon());
+		setAntiAliasing(config.antiAliasing());
 		autoSave();
 	}
 
@@ -393,6 +343,11 @@ public class GameConfig
 	{
 		this.startFullscreen = startFullscreen;
 		autoSave();
+	}
+
+	public void setGL30(boolean gl30)
+	{
+		this.gl30 = gl30;
 	}
 
 	/**
@@ -454,7 +409,7 @@ public class GameConfig
 	 */
 	public void setSensitivity(float sensitivity)
 	{
-		getSensitivity().set(sensitivity, sensitivity);
+		sensitivity().set(sensitivity, sensitivity);
 		autoSave();
 	}
 
@@ -519,6 +474,18 @@ public class GameConfig
 		autoSave();
 	}
 
+	public void setWindowLocation(int x, int y)
+	{
+		setX(x);
+		setY(y);
+	}
+
+	public void setWindowSize(int width, int height)
+	{
+		setWidth(width);
+		setHeight(height);
+	}
+
 	/**
 	 * Sets the starting x location of the window.
 	 * @param x The x location of the window
@@ -547,17 +514,70 @@ public class GameConfig
 	}
 
 	/**
+	 * Gets the number of logic updates per second in the {@link Game}.
+	 * @return {@link int} - The number of logic updates per second in the
+	 * {@link Game}
+	 */
+	public int step()
+	{
+		return step;
+	}
+
+	/**
+	 * Gets the interval between {@link Game} logic updates in milliseconds.
+	 * @return {@link float} - The interval between {@link Game} logic updates
+	 * in milliseconds
+	 */
+	public float stepInterval()
+	{
+		return new Reciprocal(step).floatValue();
+	}
+
+	/**
+	 * Gets the title of the {@link Game} window.
+	 * @return {@link String} - The title of the {@link Game} window
+	 */
+	public String title()
+	{
+		return title;
+	}
+
+	/**
 	 * Gets the {@link AndroidApplicationConfiguration} of the
 	 * {@link GameConfig}.
 	 * @return {@link AndroidApplicationConfiguration} - The config.
 	 */
+	@SuppressWarnings("deprecation")
 	public AndroidApplicationConfiguration toAndroidConfig()
 	{
 		AndroidApplicationConfiguration config
 				= new AndroidApplicationConfiguration();
 		config.hideStatusBar = hasStatusBar();
 		config.useImmersiveMode = isImmersive();
-		config.numSamples = getAntiAliasing();
+		config.numSamples = antiAliasing();
+		config.useGL30 = usesGL30();
+		return config;
+	}
+
+	/**
+	 * Gets the {@link Lwjgl3ApplicationConfiguration} of the
+	 * {@link GameConfig}.
+	 * @return {@link Lwjgl3ApplicationConfiguration} - The config.
+	 */
+	public Lwjgl3ApplicationConfiguration toLwjgl3Config()
+	{
+		Lwjgl3ApplicationConfiguration config
+				= new Lwjgl3ApplicationConfiguration();
+		config.setTitle(title());
+		config.setWindowedMode(width(), height());
+		config.useVsync(isVsync());
+		config.setResizable(isResizable());
+		config.setWindowPosition(x(), y());
+		config.useOpenGL3(usesGL30(), 3, 2);
+		// config.foregroundFPS = getMaxFps();
+		// config.backgroundFPS = getBackgroundFps();
+		// config.samples = getAntiAliasing();
+		// if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
 		return config;
 	}
 
@@ -569,39 +589,50 @@ public class GameConfig
 	{
 		LwjglApplicationConfiguration config
 				= new LwjglApplicationConfiguration();
-		config.title = getTitle();
-		config.width = getWidth();
-		config.height = getHeight();
+		config.title = title();
+		config.width = width();
+		config.height = height();
 		config.vSyncEnabled = isVsync();
-		config.foregroundFPS = getMaxFps();
-		config.backgroundFPS = getBackgroundFps();
+		config.foregroundFPS = maxFps();
+		config.backgroundFPS = backgroundFps();
 		config.resizable = isResizable();
-		config.samples = getAntiAliasing();
-		config.x = getX();
-		config.y = getY();
-		config.useGL30 = true;
-		if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
+		config.samples = antiAliasing();
+		config.x = x();
+		config.y = y();
+		config.useGL30 = usesGL30();
+		if (icon().exists()) config.addIcon(icon().path(), ICON_TYPE);
 		return config;
 	}
 
-	/**
-	 * Gets the {@link Lwjgl3ApplicationConfiguration} of the {@link GameConfig}.
-	 * @return {@link Lwjgl3ApplicationConfiguration} - The config.
-	 */
-	public Lwjgl3ApplicationConfiguration toLwjgl3Config()
+	public boolean usesGL30()
 	{
-		Lwjgl3ApplicationConfiguration config
-				= new Lwjgl3ApplicationConfiguration();
-		config.setTitle(getTitle());
-		config.setWindowedMode(getWidth(), getHeight());
-		config.useVsync(isVsync());
-		config.setResizable(isResizable());
-		config.setWindowPosition(getX(), getY());
-		config.useOpenGL3(true, 3, 2);
-		//config.foregroundFPS = getMaxFps();
-		//config.backgroundFPS = getBackgroundFps();
-		//config.samples = getAntiAliasing();
-		//if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
-		return config;
+		return gl30;
+	}
+
+	/**
+	 * Gets the starting width of the window in pixels.
+	 * @return {@link int} - The starting width of the window in pixels
+	 */
+	public int width()
+	{
+		return width;
+	}
+
+	/**
+	 * Gets the starting x location of the window.
+	 * @return {@link int} - The starting x location of the window
+	 */
+	public int x()
+	{
+		return x;
+	}
+
+	/**
+	 * Gets the starting y location of the window.
+	 * @return {@link int} - The starting y location of the window
+	 */
+	public int y()
+	{
+		return y;
 	}
 }

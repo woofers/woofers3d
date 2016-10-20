@@ -10,14 +10,14 @@ public class Woofers3D extends GameInstance
 	public Woofers3D()
 	{
 		super();
-		getConfig().setTitle(TITLE);
-		getSaveableConfig().save();
+		config().setTitle(TITLE);
+		saveableConfig().save();
 	}
 
 	@Override
 	public void create()
 	{
 		super.create();
-		pushState(new PlayState(getGame()));
+		pushState(new PlayState(game()));
 	}
 }

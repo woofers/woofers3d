@@ -10,15 +10,15 @@ public class Compass extends Peripheral
 		super(input);
 	}
 
+	public float azimuth()
+	{
+		return input().getAzimuth();
+	}
+
 	@Override
 	public boolean exists()
 	{
 		return input().isPeripheralAvailable(Input.Peripheral.Compass);
-	}
-
-	public float azimuth()
-	{
-		return input().getAzimuth();
 	}
 
 	public float pitch()

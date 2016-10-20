@@ -71,13 +71,9 @@ public abstract class PlayerBody
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
 
-		for (float i = Accelerometer.MIN; i < Accelerometer.MAX + 0.1f; i += 0.1f)
+		for (float i = Accelerometer.MIN; i < Accelerometer.MAX + 0.1f;
+				i += 0.1f)
 			System.out.println(round(i) + ": " + round(yAccelerometer(i)));
-	}
-
-	private static float round(float i)
-	{
-		return Math.round(i * 100.0f) / 100.0f;
 	}
 
 	public GameAccelerometer accelerometer()
@@ -286,15 +282,20 @@ public abstract class PlayerBody
 
 	protected float yAccelerometer(float test)
 	{
-		float y = test; //accelerometer.y();
-		//if (y > 0f)
-		//{
-		//	if (y > Y_BALANCE + Accelerometer.MAX)
-		//	{
-		//		return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
-		//	}
-		//}
-		//return y - Y_BALANCE;
+		float y = test; // accelerometer.y();
+		// if (y > 0f)
+		// {
+		// if (y > Y_BALANCE + Accelerometer.MAX)
+		// {
+		// return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
+		// }
+		// }
+		// return y - Y_BALANCE;
 		return y;
+	}
+
+	private static float round(float i)
+	{
+		return Math.round(i * 100.0f) / 100.0f;
 	}
 }

@@ -1,11 +1,11 @@
 package com.jaxson.lib.gdx.input;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.backend.Display;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.util.Printer;
-import com.badlogic.gdx.math.Matrix4;
 
 public class DataAccelerometer extends Peripheral implements Accelerometer
 {
@@ -19,13 +19,6 @@ public class DataAccelerometer extends Peripheral implements Accelerometer
 	{
 		super(game.input());
 		this.game = game;
-	}
-
-	public Matrix4 rotationMatrix()
-	{
-		Matrix4 matrix = new Matrix4();
-		input().getRotationMatrix(matrix.val);
-		return matrix;
 	}
 
 	@Override
@@ -49,6 +42,14 @@ public class DataAccelerometer extends Peripheral implements Accelerometer
 	public boolean exists()
 	{
 		return input().isPeripheralAvailable(Input.Peripheral.Accelerometer);
+	}
+
+	@Override
+	public Matrix4 rotationMatrix()
+	{
+		Matrix4 matrix = new Matrix4();
+		input().getRotationMatrix(matrix.val);
+		return matrix;
 	}
 
 	@Override

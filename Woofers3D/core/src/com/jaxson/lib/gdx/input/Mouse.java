@@ -35,7 +35,7 @@ public class Mouse implements Iterable<MouseButton>
 		this.sensitivity = new Vector2(1f, -1f);
 		this.buttons = new HashMap<>();
 		this.stringButtons = new HashMap<>();
-		setSensitivity(game.config().getSensitivity());
+		setSensitivity(game.config().sensitivity());
 		setInvertX(INVERT_MOUSE_X);
 		setInvertY(INVERT_MOUSE_X);
 		for (int code: MouseButton.BUTTONS)

@@ -53,7 +53,7 @@ public class Game
 
 	public float clampInterval()
 	{
-		return config().getClampInterval();
+		return config().clampInterval();
 	}
 
 	public Clipboard clipboard()
@@ -235,7 +235,7 @@ public class Game
 
 	public float stepInterval()
 	{
-		return config().getStepInterval();
+		return config().stepInterval();
 	}
 
 	public void update(float step)

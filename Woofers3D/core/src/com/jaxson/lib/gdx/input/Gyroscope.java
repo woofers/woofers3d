@@ -16,6 +16,11 @@ public class Gyroscope extends Peripheral
 		return input().isPeripheralAvailable(Input.Peripheral.Gyroscope);
 	}
 
+	public Vector3 values()
+	{
+		return new Vector3(x(), y(), z());
+	}
+
 	public float x()
 	{
 		return input().getGyroscopeX();
@@ -29,10 +34,5 @@ public class Gyroscope extends Peripheral
 	public float z()
 	{
 		return input().getGyroscopeZ();
-	}
-
-	public Vector3 values()
-	{
-		return new Vector3(x(), y(), z());
 	}
 }

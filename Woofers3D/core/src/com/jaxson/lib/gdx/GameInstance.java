@@ -2,11 +2,8 @@ package com.jaxson.lib.gdx;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
@@ -37,12 +34,21 @@ public abstract class GameInstance extends ApplicationAdapter
 	}
 
 	/**
+	 * Gets the config of the {@link Game}.
+	 * @return {@link GameConfig} - The config
+	 */
+	public GameConfig config()
+	{
+		return saveableConfig().unwrap();
+	}
+
+	/**
 	 * Called when the {@link Game} is first created.
 	 */
 	@Override
 	public void create()
 	{
-		this.game = new Game(getSaveableConfig());
+		this.game = new Game(saveableConfig());
 	}
 
 	/**
@@ -52,43 +58,16 @@ public abstract class GameInstance extends ApplicationAdapter
 	@Override
 	public void dispose()
 	{
-		getGame().dispose();
-	}
-
-	/**
-	 * Gets the config of the {@link Game}.
-	 * @return {@link GameConfig} - The config
-	 */
-	public GameConfig getConfig()
-	{
-		return getSaveableConfig().unwrap();
+		game().dispose();
 	}
 
 	/**
 	 * Gets the {@link Game}.
 	 * @return {@link Game} - Game
 	 */
-	public Game getGame()
+	public Game game()
 	{
 		return game;
-	}
-
-	/**
-	 * Gets the Lwjgl config of the game.
-	 * @return {@link LwjglApplicationConfiguration} - Lwjgl config
-	 */
-	public LwjglApplicationConfiguration getLwjglConfig()
-	{
-		return getConfig().toLwjglConfig();
-	}
-
-	/**
-	 * Gets the {@link Json} config of the {@link Game}.
-	 * @return {@link GameConfig} - The config
-	 */
-	public Json<GameConfig> getSaveableConfig()
-	{
-		return config;
 	}
 
 	/**
@@ -99,7 +78,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	@Override
 	public void pause()
 	{
-		getGame().pause();
+		game().pause();
 	}
 
 	/**
@@ -108,7 +87,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public void pushState(State state)
 	{
-		getGame().pushState(state);
+		game().pushState(state);
 	}
 
 	/**
@@ -117,7 +96,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	@Override
 	public void render()
 	{
-		getGame().render();
+		game().render();
 	}
 
 	/**
@@ -130,7 +109,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	@Override
 	public void resize(int width, int height)
 	{
-		getGame().resize(width, height);
+		game().resize(width, height);
 	}
 
 	/**
@@ -140,7 +119,16 @@ public abstract class GameInstance extends ApplicationAdapter
 	@Override
 	public void resume()
 	{
-		getGame().resume();
+		game().resume();
+	}
+
+	/**
+	 * Gets the {@link Json} config of the {@link Game}.
+	 * @return {@link GameConfig} - The config
+	 */
+	public Json<GameConfig> saveableConfig()
+	{
+		return config;
 	}
 
 	/**
@@ -151,7 +139,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	@Deprecated
 	public void startAndroid(AndroidApplication launcher)
 	{
-		// launcher.initialize(this, toAndroidConfig());
+		// launcher.initialize(this, config().toAndroidConfig());
 	}
 
 	/**
@@ -160,7 +148,7 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public LwjglApplication startLwjgl()
 	{
-		return new LwjglApplication(this, getLwjglConfig());
+		return new LwjglApplication(this, config().toLwjglConfig());
 	}
 
 	/**
@@ -169,15 +157,6 @@ public abstract class GameInstance extends ApplicationAdapter
 	 */
 	public Lwjgl3Application startLwjgl3()
 	{
-		return new Lwjgl3Application(this, getConfig().toLwjgl3Config());
-	}
-
-	/**
-	 * Gets the android config of the game.
-	 * @return {@link AndroidApplicationConfiguration} - Android config
-	 */
-	public AndroidApplicationConfiguration toAndroidConfig()
-	{
-		return getConfig().toAndroidConfig();
+		return new Lwjgl3Application(this, config().toLwjgl3Config());
 	}
 }
