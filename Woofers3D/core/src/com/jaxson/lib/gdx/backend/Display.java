@@ -28,6 +28,7 @@ import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.io.Json;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.math.Rectangle;
 
 /**
  * A class that handles the display and rendering.

@@ -5,10 +5,10 @@ import com.jaxson.lib.util.Printer;
 
 public class Rectangle implements MyComparable<Rectangle>
 {
-	private float width;
-	private float height;
+	private int width;
+	private int height;
 
-	public Rectangle(float width, float height)
+	public Rectangle(int width, int height)
 	{
 		this.width = width;
 		this.height = height;
@@ -19,12 +19,12 @@ public class Rectangle implements MyComparable<Rectangle>
 		return width() * height();
 	}
 
-	public float width()
+	public int width()
 	{
 		return width;
 	}
 
-	public float height()
+	public int height()
 	{
 		return height;
 	}

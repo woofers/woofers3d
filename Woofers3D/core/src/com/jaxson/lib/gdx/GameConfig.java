@@ -128,7 +128,9 @@ public class GameConfig
 	{
 		return backgroundFps;
 	}
-
+	/**
+	 * Centers the window
+	 */
 	public void center()
 	{
 		setX(WINDOW_CENTER);
@@ -251,11 +253,6 @@ public class GameConfig
 		return fps;
 	}
 
-	public void obtain()
-	{
-
-	}
-
 	/**
 	 * Gets the sensitivity of the mouse.
 	 * @return {@link Vector2} - The sensitivity of the mouse
@@ -345,6 +342,10 @@ public class GameConfig
 		autoSave();
 	}
 
+	/**
+	 * Sets whether the {@link Game} uses OpenGL 3.
+	 * @param gl30 Whether the {@link Game} uses OpenGL 3
+	 */
 	public void setGL30(boolean gl30)
 	{
 		this.gl30 = gl30;
@@ -480,6 +481,11 @@ public class GameConfig
 		setY(y);
 	}
 
+	/**
+	 * Sets the starting size of the window.
+	 * @param width The starting width of the window
+	 * @param height The starting height of the window
+	 */
 	public void setWindowSize(int width, int height)
 	{
 		setWidth(width);
@@ -604,6 +610,11 @@ public class GameConfig
 		return config;
 	}
 
+
+	/**
+	 * Gets whether the {@link Game} uses OpenGL 3.
+	 * @return {@link boolean} - Whether the {@link Game} starts fullscreen
+	 */
 	public boolean usesGL30()
 	{
 		return gl30;
