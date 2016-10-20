@@ -2,33 +2,47 @@ package com.jaxson.lib.gdx.backend;
 
 import com.jaxson.lib.util.MyComparable;
 import com.jaxson.lib.util.Printer;
+import com.badlogic.gdx.Graphics.DisplayMode;
 
-public class DisplayType implements MyComparable<DisplayType>
+public class DisplayType
 {
-	private static class DisplayMode extends com.badlogic.gdx.Graphics.DisplayMode
-	{
-		private static final int BPP = 32;
+	private static final int BPP = 32;
+	private static final int REFRESH_RATE = 60;
 
-		public DisplayMode(int width, int height, int refreshRate, int bitsPerPixel)
-		{
-			super(width, height, refreshRate, bitsPerPixel);
-		}
-	}
+	private int width;
+	private int height;
+	private int refreshRate;
+	private int bitsPerPixel;
 
 	public DisplayType(int width, int height)
 	{
-		//this.width = width;
-		//this.height = height;
+		this(width, height, REFRESH_RATE);
 	}
 
-	@Override
-	public int compareTo(DisplayType other)
+	public DisplayType(int width, int height, int refreshRate)
 	{
-		return 1;
-		//return (width() - other.width()) * (height() - other.height());
+		this(width, height, refreshRate, BPP);
 	}
-/*
-	public float area()
+
+	public DisplayType(int width, int height, int refreshRate, int bitsPerPixel)
+	{
+		this.width = width;
+		this.height = height;
+		this.refreshRate = refreshRate;
+		this.bitsPerPixel = bitsPerPixel;
+	}
+
+	public int refreshRate()
+	{
+		return refreshRate;
+	}
+
+	public int bitsPerPixel()
+	{
+		return bitsPerPixel;
+	}
+
+	public int area()
 	{
 		return width() * height();
 	}
@@ -48,12 +62,23 @@ public class DisplayType implements MyComparable<DisplayType>
 		return width() / height();
 	}
 
+	public DisplayMode toDisplayMode()
+	{
+		DisplayMode[] displayModes = displayModes();
+		DisplayMode bestMode = displayModes[0];
+		for (DisplayMode mode: displayModes)
+		{
+			if (bestMode.width() == mode.width()) bestMode = mode;
+		}
+		return bestMode;
+	}
+
 	@Override
 	public boolean equals(Object other)
 	{
 		if (!(other instanceof DisplayType)) return false;
-		DisplayType rectangle = (DisplayType) other;
-		return width() == rectangle.width() && height() == rectangle.height();
+		DisplayType display = (DisplayType) other;
+		return width() == display.width() && height() == display.height();
 	}
 
 	@Override
@@ -62,7 +87,8 @@ public class DisplayType implements MyComparable<DisplayType>
 		return new Printer(getClass(),
 				new Printer.Label("Width", width()),
 				new Printer.Label("Height", height()),
+				new Printer.Label("Refresh Rate", refreshRate()),
+				new Printer.Label("Bits Per Pixel", bitsPerPixel()),
 				new Printer.Label("Aspect Ratio", aspectRatio())).toString();
 	}
-*/
 }
