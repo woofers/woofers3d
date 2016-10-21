@@ -22,7 +22,6 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.woofers3d.entities.Player;
-import com.badlogic.gdx.Graphics.DisplayMode;
 
 public class PlayState extends BulletState
 {
@@ -94,9 +93,6 @@ public class PlayState extends BulletState
 		text = new Text("");
 		text.setLocation(20, 38);
 		addHud(text);
-
-		for (DisplayMode mode: game().display().displayModes())
-			System.out.println(mode);
 	}
 
 	@Override

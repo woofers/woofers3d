@@ -2,7 +2,6 @@ package com.jaxson.lib.gdx.backend;
 
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.BufferFormat;
-import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Orientation;
 import com.badlogic.gdx.graphics.Camera;
@@ -53,12 +52,8 @@ public class Display extends GameObject
 	private View view;
 	private boolean minimized;
 	private boolean paused;
-	private int lastWindowedWidth;
-	private int lastWindowedHeight;
-
-	private Rectangle size;
-	private Rectangle defaultSize;
-	private Rectangle lastSize;
+	private DisplayMode lastWindowed;
+	private DisplayMode defaultWindowed;
 
 	private Keyboard keyboard;
 	private Mouse mouse;
@@ -75,8 +70,8 @@ public class Display extends GameObject
 	{
 		this.game = game;
 		this.view = new View(width(), height());
-		this.lastWindowedWidth = defaultWidth();
-		this.lastWindowedHeight = defaultHeight();
+		this.lastWindowed = displayMode();
+		this.defaultWindowed = lastWindowed;
 
 		this.keyboard = Inputs.keyboard();
 		this.mouse = Inputs.mouse();
@@ -207,31 +202,9 @@ public class Display extends GameObject
 		return hasCoverageSampling() ? COVERAGE_SAMPLING_MASK : EMPTY_MASK;
 	}
 
-	/**
-	 * Gets the aspect ratio of the {@link Display}.
-	 * @return {@link float} - The aspect ratio of the {@link Display}
-	 */
-	public float defaultAspectRatio()
+	public DisplayMode defaultDisplayMode()
 	{
-		return (float) defaultWidth() / (float) defaultHeight();
-	}
-
-	/**
-	 * Gets the default height of the {@link Display}.
-	 * @return {@link float} - The default height of the {@link Display}
-	 */
-	public int defaultHeight()
-	{
-		return config().height();
-	}
-
-	/**
-	 * Gets the default width of the {@link Display}.
-	 * @return {@link float} - The default width of the {@link Display}
-	 */
-	public int defaultWidth()
-	{
-		return config().width();
+		return defaultWindowed;
 	}
 
 	public boolean deviceCanFullscreen()
@@ -241,11 +214,13 @@ public class Display extends GameObject
 
 	/**
 	 * Gets the {@link DisplayMode} of the {@link Display}.
-	 * @return {@link float} - The {@link DisplayMode} of the {@link Display}
+	 * @return {@link DisplayMode} - The {@link DisplayMode} of
+	 * the {@link Display}
 	 */
 	public DisplayMode displayMode()
 	{
-		return graphics().getDisplayMode();
+		if (isFullscreen()) return new DisplayMode(graphics().getDisplayMode());
+		return new DisplayMode(width(), height(), game.config().maxFps());
 	}
 
 	/**
@@ -253,7 +228,7 @@ public class Display extends GameObject
 	 * @return {@link float} - All possible {@link DisplayMode}s of the
 	 * {@link Display}
 	 */
-	public DisplayMode[] displayModes()
+	public com.badlogic.gdx.Graphics.DisplayMode[] displayModes()
 	{
 		return graphics().getDisplayModes();
 	}
@@ -280,13 +255,7 @@ public class Display extends GameObject
 	 */
 	public DisplayMode fullscreenDisplayMode()
 	{
-		DisplayMode[] displayModes = displayModes();
-		DisplayMode bestMode = displayModes[0];
-		for (DisplayMode mode: displayModes)
-		{
-			if (bestMode.width < mode.width) bestMode = mode;
-		}
-		return bestMode;
+		return DisplayMode.BEST;
 	}
 
 	/**
@@ -448,16 +417,6 @@ public class Display extends GameObject
 		return orientation().equals(DisplayOrientation.PORTRAIT);
 	}
 
-	public int lastWindowedHeight()
-	{
-		return lastWindowedHeight;
-	}
-
-	public int lastWindowedWidth()
-	{
-		return lastWindowedWidth;
-	}
-
 	private Orientation nativeOrientation()
 	{
 		return input().getNativeOrientation();
@@ -520,10 +479,21 @@ public class Display extends GameObject
 	 * Sets the {@link DisplayMode} of the {@link Display}.
 	 * @param displayMode The {@link DisplayMode}
 	 */
-	public void setDisplayMode(DisplayMode displayMode)
+	public void setFullscreenMode(DisplayMode displayMode)
 	{
-		graphics().setFullscreenMode(displayMode);
+		lastWindowed = displayMode();
+		graphics().setFullscreenMode(
+				displayMode.toBestDisplayMode(displayModes()));
 		updateViewport();
+	}
+
+	/**
+	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
+	 * @param displayMode The {@link DisplayMode}
+	 */
+	public void setWindowedMode(DisplayMode displayMode)
+	{
+		setWindowedMode(displayMode.width(), displayMode.height());
 	}
 
 	/**
@@ -531,7 +501,7 @@ public class Display extends GameObject
 	 * @param width The width
 	 * @param height The height
 	 */
-	public void setDisplayMode(int width, int height)
+	public void setWindowedMode(int width, int height)
 	{
 		graphics().setWindowedMode(width, height);
 		updateViewport();
@@ -548,13 +518,11 @@ public class Display extends GameObject
 		saveableConfig().save();
 		if (fullscreen)
 		{
-			lastWindowedWidth = width();
-			lastWindowedHeight = height();
-			setDisplayMode(fullscreenDisplayMode());
+			setFullscreenMode(fullscreenDisplayMode());
 		}
 		else
 		{
-			setDisplayMode(lastWindowedWidth(), lastWindowedHeight());
+			setWindowedMode(lastWindowed);
 		}
 		Inputs.reset();
 	}
