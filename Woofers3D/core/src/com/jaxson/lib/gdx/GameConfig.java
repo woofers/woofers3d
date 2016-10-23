@@ -128,6 +128,7 @@ public class GameConfig
 	{
 		return backgroundFps;
 	}
+
 	/**
 	 * Centers the window
 	 */
@@ -609,7 +610,6 @@ public class GameConfig
 		if (icon().exists()) config.addIcon(icon().path(), ICON_TYPE);
 		return config;
 	}
-
 
 	/**
 	 * Gets whether the {@link Game} uses OpenGL 3.

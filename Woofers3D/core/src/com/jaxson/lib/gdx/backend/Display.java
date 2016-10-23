@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaxson.lib.gdx.GameConfig;
@@ -26,13 +24,10 @@ import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.io.Json;
-import com.jaxson.lib.math.MyMath;
-import com.jaxson.lib.math.Rectangle;
 
 /**
  * A class that handles the display and rendering.
- * Contains the {@link Camera}, {@link Viewport}, {@link SpriteBatch},
- * {@link ModelBatch}.
+ * Contains the {@link Camera}, {@link Viewport}, {@link View}.
  * @author Jaxson Van Doorn
  * @since 1.0
  */
@@ -52,8 +47,9 @@ public class Display extends GameObject
 	private View view;
 	private boolean minimized;
 	private boolean paused;
-	private DisplayMode lastWindowed;
-	private DisplayMode defaultWindowed;
+	private DisplayMode windowedMode;
+	private DisplayMode fullscreenMode;
+	private DisplayMode defaultMode;
 
 	private Keyboard keyboard;
 	private Mouse mouse;
@@ -70,8 +66,9 @@ public class Display extends GameObject
 	{
 		this.game = game;
 		this.view = new View(width(), height());
-		this.lastWindowed = displayMode();
-		this.defaultWindowed = lastWindowed;
+		this.windowedMode = displayMode();
+		this.fullscreenMode = systemDisplayMode();
+		this.defaultMode = windowedMode;
 
 		this.keyboard = Inputs.keyboard();
 		this.mouse = Inputs.mouse();
@@ -103,7 +100,7 @@ public class Display extends GameObject
 	 */
 	public float aspectRatio()
 	{
-		return (float) width() / (float) height();
+		return displayMode().aspectRatio();
 	}
 
 	/**
@@ -122,7 +119,7 @@ public class Display extends GameObject
 	 */
 	public Vector2 center()
 	{
-		return size().scl(MyMath.HALF);
+		return size().scl(0.5f);
 	}
 
 	/**
@@ -204,7 +201,7 @@ public class Display extends GameObject
 
 	public DisplayMode defaultDisplayMode()
 	{
-		return defaultWindowed;
+		return defaultMode;
 	}
 
 	public boolean deviceCanFullscreen()
@@ -219,8 +216,7 @@ public class Display extends GameObject
 	 */
 	public DisplayMode displayMode()
 	{
-		if (isFullscreen()) return new DisplayMode(graphics().getDisplayMode());
-		return new DisplayMode(width(), height(), game.config().maxFps());
+		return isFullscreen() ? fullscreenMode : windowedMode;
 	}
 
 	/**
@@ -255,11 +251,11 @@ public class Display extends GameObject
 	 */
 	public DisplayMode fullscreenDisplayMode()
 	{
-		return DisplayMode.BEST;
+		return fullscreenMode;
 	}
 
 	/**
-	 * Gets the OpenGLES reference.
+	 * Gets the OpenGL reference.
 	 * @return {@link int} - The OpenGLES reference
 	 */
 	public GL20 gl()
@@ -268,7 +264,7 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Gets the OpenGLES 2.0 reference.
+	 * Gets the OpenGL 2.0 reference.
 	 * @return {@link int} - The OpenGLES reference
 	 */
 	public GL20 gl20()
@@ -277,7 +273,7 @@ public class Display extends GameObject
 	}
 
 	/**
-	 * Gets the OpenGLES 3.0 reference.
+	 * Gets the OpenGL 3.0 reference.
 	 * @return {@link int} - The OpenGLES reference
 	 */
 	public GL30 gl30()
@@ -292,6 +288,13 @@ public class Display extends GameObject
 	public Graphics graphics()
 	{
 		return game.graphics();
+	}
+
+	private void handleDisplayChange()
+	{
+		updateViewport();
+		Inputs.reset();
+		saveFullscreen();
 	}
 
 	/**
@@ -449,11 +452,13 @@ public class Display extends GameObject
 	public void resize(int width, int height)
 	{
 		view.resize(width, height);
-	}
+		if (!isFullscreen())
+		{
 
-	public Vector2 size()
-	{
-		return new Vector2(width(), height());
+			windowedMode = new DisplayMode(width(), height(),
+					game.config().maxFps(), isFullscreen());
+		}
+		System.out.println(displayMode());
 	}
 
 	@Override
@@ -475,36 +480,22 @@ public class Display extends GameObject
 		return game.saveableConfig();
 	}
 
-	/**
-	 * Sets the {@link DisplayMode} of the {@link Display}.
-	 * @param displayMode The {@link DisplayMode}
-	 */
-	public void setFullscreenMode(DisplayMode displayMode)
+	private void saveFullscreen()
 	{
-		lastWindowed = displayMode();
-		graphics().setFullscreenMode(
-				displayMode.toBestDisplayMode(displayModes()));
-		updateViewport();
+		config().setFullscreenStartup(isFullscreen());
+		saveableConfig().save();
 	}
 
-	/**
-	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
-	 * @param displayMode The {@link DisplayMode}
-	 */
-	public void setWindowedMode(DisplayMode displayMode)
+	public void setDisplayMode(DisplayMode displayMode)
 	{
-		setWindowedMode(displayMode.width(), displayMode.height());
-	}
-
-	/**
-	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
-	 * @param width The width
-	 * @param height The height
-	 */
-	public void setWindowedMode(int width, int height)
-	{
-		graphics().setWindowedMode(width, height);
-		updateViewport();
+		if (displayMode.fullscreen())
+		{
+			setFullscreen(displayMode);
+		}
+		else
+		{
+			setWindowed(displayMode);
+		}
 	}
 
 	/**
@@ -514,17 +505,34 @@ public class Display extends GameObject
 	public void setFullscreen(boolean fullscreen)
 	{
 		if (isFullscreen() == fullscreen) return;
-		config().setFullscreenStartup(fullscreen);
-		saveableConfig().save();
 		if (fullscreen)
 		{
-			setFullscreenMode(fullscreenDisplayMode());
+			setFullscreen(fullscreenDisplayMode());
 		}
 		else
 		{
-			setWindowedMode(lastWindowed);
+			setWindowed(windowedMode);
 		}
-		Inputs.reset();
+	}
+
+	/**
+	 * Sets the {@link DisplayMode} of the {@link Display}.
+	 * @param displayMode The {@link DisplayMode}
+	 */
+	private void setFullscreen(DisplayMode displayMode)
+	{
+		boolean wasFullscreen = isFullscreen();
+		windowedMode = displayMode();
+		com.badlogic.gdx.Graphics.DisplayMode exactFullscreenMode
+				= displayMode.toBestDisplayMode(displayModes());
+		graphics().setFullscreenMode(exactFullscreenMode);
+		fullscreenMode = new DisplayMode(exactFullscreenMode, isFullscreen());
+		if (displayMode.fullscreen() != wasFullscreen) handleDisplayChange();
+	}
+
+	public void setFullscreen(int width, int height, int refreshRate)
+	{
+		setFullscreen(new DisplayMode(width, height, refreshRate, true));
 	}
 
 	/**
@@ -570,12 +578,44 @@ public class Display extends GameObject
 	}
 
 	/**
+	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
+	 * @param displayMode The {@link DisplayMode}
+	 */
+	private void setWindowed(DisplayMode displayMode)
+	{
+		setWindowed(displayMode.width(), displayMode.height());
+	}
+
+	/**
+	 * Sets the {@link DisplayMode} of the {@link Display} by width and height.
+	 * @param width The width
+	 * @param height The height
+	 */
+	public void setWindowed(int width, int height)
+	{
+		DisplayMode old = displayMode();
+		graphics().setWindowedMode(width, height);
+		if (old.width() != width || old.height() != height)
+			handleDisplayChange();
+	}
+
+	public Vector2 size()
+	{
+		return new Vector2(width(), height());
+	}
+
+	/**
 	 * Gets whether the {@link Game} starts fullscreen.
 	 * @return {@link boolean} - Whether the {@link Game} starts fullscreen
 	 */
 	public boolean startsFullscreen()
 	{
 		return allowsFullscreen() && config().startsFullscreen();
+	}
+
+	public DisplayMode systemDisplayMode()
+	{
+		return new DisplayMode(graphics().getDisplayMode(), true);
 	}
 
 	/**

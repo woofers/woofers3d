@@ -37,7 +37,6 @@ public class FileExtension implements Measurable
 	public FileExtension(String extension)
 	{
 		this.extension = formatExtension(extension);
-		System.out.println(toString());
 		if (size() >= MAX_CHARACTER)
 			throw new IllegalArgumentException(MAX_CHARACTER_EXCEEDED);
 	}

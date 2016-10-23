@@ -19,19 +19,9 @@ public class Rectangle implements MyComparable<Rectangle>
 		return width() * height();
 	}
 
-	public int width()
-	{
-		return width;
-	}
-
-	public int height()
-	{
-		return height;
-	}
-
 	public float aspectRatio()
 	{
-		return width() / height();
+		return (float) width() / (float) height();
 	}
 
 	@Override
@@ -48,6 +38,11 @@ public class Rectangle implements MyComparable<Rectangle>
 		return width() == rectangle.width() && height() == rectangle.height();
 	}
 
+	public int height()
+	{
+		return height;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -55,5 +50,10 @@ public class Rectangle implements MyComparable<Rectangle>
 				new Printer.Label("Width", width()),
 				new Printer.Label("Height", height()),
 				new Printer.Label("Aspect Ratio", aspectRatio())).toString();
+	}
+
+	public int width()
+	{
+		return width;
 	}
 }

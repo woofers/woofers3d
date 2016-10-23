@@ -1,6 +1,5 @@
 package com.jaxson.woofers3d.states;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.Game;
@@ -18,6 +17,7 @@ import com.jaxson.lib.gdx.graphics.g2d.Text;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
+import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
@@ -36,6 +36,8 @@ public class PlayState extends BulletState
 	private Player player;
 	private TargetCamera camera;
 	private Text text;
+
+	private Mouse mouse;
 
 	public PlayState(Game game)
 	{
@@ -93,6 +95,8 @@ public class PlayState extends BulletState
 		text = new Text("");
 		text.setLocation(20, 38);
 		addHud(text);
+
+		mouse = Inputs.mouse();
 	}
 
 	@Override
@@ -109,8 +113,7 @@ public class PlayState extends BulletState
 			Ray ray = player.forwardRay();
 			if (Inputs.touchScreen().exists())
 			{
-				Vector2 mouse = Inputs.mouse().location();
-				ray = camera.getPickRay(mouse.x, mouse.y);
+				ray = camera.getPickRay(mouse.x(), mouse.y());
 			}
 			Optional<EntityBody> body = physicsWorld().rayTrace(ray);
 			if (body.exists())
@@ -135,5 +138,6 @@ public class PlayState extends BulletState
 	{
 		super.update(dt);
 		text.setText(player.accelerometer().toString());
+		if (Inputs.keyboard().key("U").isPressed()) game().display().setFullscreen(400, 400, 60);
 	}
 }

@@ -86,7 +86,7 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 
 	/**
 	 * Adds element to the {@link List}. Does nothing if element is null.
-	 * @param {@link List} Elements to add
+	 * @param list Elements to add
 	 * @return {@link boolean} - Whether element was added
 	 */
 	public boolean addAll(MyArrayList<E> list)
@@ -114,7 +114,6 @@ public class MyArrayList<E> extends ArrayList<E> implements MyList<E>
 	 * Removes elements from the {@code startIndex} to the end
 	 * of the {@link List}.
 	 * @param startIndex Elements to add
-	 * @return {@link boolean} - Whether element was added
 	 */
 	@Override
 	public void removeRange(int startIndex)

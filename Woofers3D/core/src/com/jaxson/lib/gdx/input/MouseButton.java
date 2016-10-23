@@ -5,8 +5,7 @@ import com.jaxson.lib.util.Printer;
 
 public class MouseButton extends Input.Buttons implements Button
 {
-	public static final int[] BUTTONS =
-	{
+	public static final int[] BUTTONS = {
 			LEFT,
 			RIGHT,
 			MIDDLE,
@@ -14,8 +13,7 @@ public class MouseButton extends Input.Buttons implements Button
 			FORWARD
 	};
 
-	public static final int[] PRIMARY =
-	{
+	public static final int[] PRIMARY = {
 			LEFT,
 			RIGHT,
 			MIDDLE

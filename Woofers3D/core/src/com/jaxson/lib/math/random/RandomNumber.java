@@ -57,19 +57,9 @@ public class RandomNumber extends ComparableNumber
 	public double doubleValue()
 	{
 		double value = getRandom().nextDouble();
-		value *= getMax().doubleValue() - getMin().doubleValue();
-		value += getMin().doubleValue();
+		value *= max().doubleValue() - min().doubleValue();
+		value += min().doubleValue();
 		if (isExcluded(value)) return doubleValue();
-		return value;
-	}
-
-	@Override
-	public float floatValue()
-	{
-		float value = getRandom().nextFloat();
-		value *= getMax().floatValue() - getMin().floatValue();
-		value += getMin().floatValue();
-		if (isExcluded(value)) return floatValue();
 		return value;
 	}
 
@@ -77,42 +67,34 @@ public class RandomNumber extends ComparableNumber
 	 * Gets the excluded range.
 	 * @return {@link Number}[] - The rxcluded range
 	 */
-	public Number[] getExclude()
+	public Number[] excluded()
 	{
 		return excluded;
 	}
 
-	/**
-	 * Gets the max value of the range.
-	 * @return {@link Number} - The max value of the range
-	 */
-	public Number getMax()
+	@Override
+	public float floatValue()
 	{
-		return max;
-	}
-
-	/**
-	 * Gets the min value of the range.
-	 * @return {@link Number} - The min value of the range
-	 */
-	public Number getMin()
-	{
-		return min;
+		float value = getRandom().nextFloat();
+		value *= max().floatValue() - min().floatValue();
+		value += min().floatValue();
+		if (isExcluded(value)) return floatValue();
+		return value;
 	}
 
 	@Override
 	public int intValue()
 	{
 		int value = getRandom().nextInt(
-				getMax().intValue() - getMin().intValue() + 1);
-		value += getMin().intValue();
+				max().intValue() - min().intValue() + 1);
+		value += min().intValue();
 		if (isExcluded(value)) return intValue();
 		return value;
 	}
 
 	public boolean isExcluded(Number value)
 	{
-		for (Number number: getExclude())
+		for (Number number: excluded())
 		{
 			if (value.equals(number)) return true;
 		}
@@ -123,10 +105,28 @@ public class RandomNumber extends ComparableNumber
 	public long longValue()
 	{
 		long value = getRandom().nextLong();
-		value *= getMax().longValue() - getMin().longValue();
-		value += getMin().longValue();
+		value *= max().longValue() - min().longValue();
+		value += min().longValue();
 		if (isExcluded(value)) return longValue();
 		return value;
+	}
+
+	/**
+	 * Gets the max value of the range.
+	 * @return {@link Number} - The max value of the range
+	 */
+	public Number max()
+	{
+		return max;
+	}
+
+	/**
+	 * Gets the min value of the range.
+	 * @return {@link Number} - The min value of the range
+	 */
+	public Number min()
+	{
+		return min;
 	}
 
 	/**

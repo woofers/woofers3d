@@ -107,8 +107,8 @@ public class GameAccelerometer implements Accelerometer
 	@Override
 	public void update(float dt)
 	{
-		accelerometer.update(dt);
 		if (!exists()) return;
+		accelerometer.update(dt);
 		this.values.x = accelerometer.x();
 		this.values.y = accelerometer.y();
 		this.values.z = accelerometer.z();

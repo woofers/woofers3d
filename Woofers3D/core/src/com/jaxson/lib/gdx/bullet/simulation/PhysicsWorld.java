@@ -57,8 +57,8 @@ public class PhysicsWorld extends GameObject
 	protected static final int DEFAULT_FILTER
 			= btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
 
-	protected static final float VECOTR_TO_MAX = GdxMath.HALF;
-	protected static final float VECOTR_TO_MIN = -GdxMath.HALF;
+	protected static final float VECOTR_TO_MAX = 2f;
+	protected static final float VECOTR_TO_MIN = -VECOTR_TO_MAX;
 	protected static final Vector3 WORLD_SIZE = new Vector3(100f, 100f, 100f);
 	protected static final Vector3 GRAVITY
 			= new Vector3(0, -GdxMath.GRAVITY_EARTH, 0);

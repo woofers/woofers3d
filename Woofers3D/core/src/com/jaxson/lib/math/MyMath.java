@@ -11,11 +11,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MyMath
 {
 	/**
-	 * Precalculated {@code 1/2} as float.
-	 */
-	public static final float HALF = 1f / 2f;
-
-	/**
 	 * Constant to invert a sign.
 	 */
 	public static final int FLIP_SIGN = -1;
