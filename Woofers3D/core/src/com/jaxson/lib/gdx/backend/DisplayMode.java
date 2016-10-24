@@ -7,7 +7,7 @@ public class DisplayMode
 	private static class ZeroDisplay
 			extends com.badlogic.gdx.Graphics.DisplayMode
 	{
-		public ZeroDisplay()
+		ZeroDisplay()
 		{
 			super(0, 0, 0, 0);
 		}
@@ -90,7 +90,11 @@ public class DisplayMode
 	{
 		if (!(other instanceof DisplayMode)) return false;
 		DisplayMode display = (DisplayMode) other;
-		return width() == display.width() && height() == display.height();
+		return width() == display.width()
+				&& height() == display.height()
+				&& refreshRate() == display.refreshRate()
+				&& bitsPerPixel() == display.bitsPerPixel()
+				&& fullscreen() == display.fullscreen();
 	}
 
 	public boolean fullscreen()
