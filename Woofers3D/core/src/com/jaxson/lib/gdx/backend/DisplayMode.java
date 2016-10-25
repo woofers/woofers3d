@@ -4,12 +4,23 @@ import com.jaxson.lib.util.Printer;
 
 public class DisplayMode
 {
-	private static class ZeroDisplay
+	private static class MinDisplay
 			extends com.badlogic.gdx.Graphics.DisplayMode
 	{
-		ZeroDisplay()
+		MinDisplay()
 		{
 			super(0, 0, 0, 0);
+		}
+	}
+
+
+	private static class MaxDisplay
+			extends com.badlogic.gdx.Graphics.DisplayMode
+	{
+		MaxDisplay()
+		{
+			super(Integer.MAX_VALUE, Integer.MAX_VALUE,
+					Integer.MAX_VALUE, Integer.MAX_VALUE);
 		}
 	}
 
@@ -17,9 +28,8 @@ public class DisplayMode
 	private static final int REFRESH_RATE = 60;
 	private static final boolean FULLSCREEN = false;
 
-	public static final DisplayMode WORST = new DisplayMode(0, 0, 0, 0);
-	public static final DisplayMode BEST = new DisplayMode(Integer.MAX_VALUE,
-			Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, true);
+	public static final DisplayMode WORST = new DisplayMode(new MinDisplay(), true);
+	public static final DisplayMode BEST = new DisplayMode(new MaxDisplay(), true);
 
 	private int width;
 	private int height;
@@ -115,8 +125,8 @@ public class DisplayMode
 	public com.badlogic.gdx.Graphics.DisplayMode toBestDisplayMode(
 			com.badlogic.gdx.Graphics.DisplayMode[] displayModes)
 	{
-		com.badlogic.gdx.Graphics.DisplayMode bestMode = new ZeroDisplay();
-		com.badlogic.gdx.Graphics.DisplayMode worstMode = displayModes[0];
+		com.badlogic.gdx.Graphics.DisplayMode bestMode = new MinDisplay();
+		com.badlogic.gdx.Graphics.DisplayMode worstMode = new MaxDisplay();
 		for (com.badlogic.gdx.Graphics.DisplayMode mode: displayModes)
 		{
 			if (mode.height >= bestMode.height && mode.height <= height())

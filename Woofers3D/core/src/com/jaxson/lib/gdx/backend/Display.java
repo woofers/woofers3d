@@ -66,10 +66,9 @@ public class Display extends GameObject
 	{
 		this.game = game;
 		this.view = new View(width(), height());
-		this.windowedMode = new DisplayMode(width(), height(),
-					game.config().maxFps(), false);
 		this.fullscreenMode = systemDisplayMode();
 		this.defaultMode = windowedMode;
+		updateLastWindowedMode();
 
 		this.keyboard = Inputs.keyboard();
 		this.mouse = Inputs.mouse();
@@ -293,7 +292,7 @@ public class Display extends GameObject
 
 	private void handleDisplayChange()
 	{
-		updateViewport();
+		//updateViewport();
 		Inputs.reset();
 		saveFullscreen();
 	}
@@ -330,7 +329,7 @@ public class Display extends GameObject
 	 * Gets the {@link Input} reference.
 	 * @return {@link Input} - The {@link Input} reference
 	 */
-	public Input input()
+	private Input input()
 	{
 		return game.input();
 	}
@@ -453,13 +452,13 @@ public class Display extends GameObject
 	public void resize(int width, int height)
 	{
 		view.resize(width, height);
-		if (!isFullscreen())
-		{
+		if (!isFullscreen()) updateLastWindowedMode();
+	}
 
-			windowedMode = new DisplayMode(width(), height(),
-					game.config().maxFps(), isFullscreen());
-		}
-		System.out.println(displayMode());
+	private void updateLastWindowedMode()
+	{
+		windowedMode = new DisplayMode(width(), height(),
+				game.config().maxFps(), false);
 	}
 
 	@Override
