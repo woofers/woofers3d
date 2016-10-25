@@ -138,6 +138,6 @@ public class PlayState extends BulletState
 	{
 		super.update(dt);
 		text.setText(player.accelerometer().toString());
-		if (Inputs.keyboard().key("U").isPressed()) game().display().setFullscreen(400, 400, 60);
+		if (Inputs.keyboard().key("U").isPressed()) game().display().setWindowed(400, 400);
 	}
 }

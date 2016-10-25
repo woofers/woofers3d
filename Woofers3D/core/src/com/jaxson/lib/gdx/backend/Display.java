@@ -66,7 +66,8 @@ public class Display extends GameObject
 	{
 		this.game = game;
 		this.view = new View(width(), height());
-		this.windowedMode = displayMode();
+		this.windowedMode = new DisplayMode(width(), height(),
+					game.config().maxFps(), false);
 		this.fullscreenMode = systemDisplayMode();
 		this.defaultMode = windowedMode;
 
@@ -522,11 +523,12 @@ public class Display extends GameObject
 	private void setFullscreen(DisplayMode displayMode)
 	{
 		boolean wasFullscreen = isFullscreen();
-		windowedMode = displayMode();
 		com.badlogic.gdx.Graphics.DisplayMode exactFullscreenMode
 				= displayMode.toBestDisplayMode(displayModes());
-		graphics().setFullscreenMode(exactFullscreenMode);
-		fullscreenMode = new DisplayMode(exactFullscreenMode, isFullscreen());
+		DisplayMode newFullscreenMode = new DisplayMode(exactFullscreenMode, true);
+		if (!displayMode().equals(newFullscreenMode))
+			graphics().setFullscreenMode(exactFullscreenMode);
+		fullscreenMode = newFullscreenMode;
 		if (displayMode.fullscreen() != wasFullscreen) handleDisplayChange();
 	}
 
@@ -593,9 +595,9 @@ public class Display extends GameObject
 	 */
 	public void setWindowed(int width, int height)
 	{
-		DisplayMode old = displayMode();
+		DisplayMode oldMode = displayMode();
 		graphics().setWindowedMode(width, height);
-		if (old.width() != width || old.height() != height)
+		if (oldMode.width() != width || oldMode.height() != height)
 			handleDisplayChange();
 	}
 

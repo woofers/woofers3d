@@ -4,16 +4,24 @@
 		"selected_items":
 		[
 			[
+				"new",
+				"newFullscreenMode"
+			],
+			[
+				"displ",
+				"displayMode"
+			],
+			[
+				"DS",
+				"DisplayMode"
+			],
+			[
 				"last",
 				"lastWindowed"
 			],
 			[
 				"f",
 				"fullscreenMode"
-			],
-			[
-				"displ",
-				"displayModes"
 			],
 			[
 				"ful",
@@ -404,10 +412,6 @@
 				"IOException"
 			],
 			[
-				"new",
-				"newDir"
-			],
-			[
 				"file",
 				"file2"
 			],
@@ -510,59 +514,25 @@
 			[
 				"MyDI",
 				"MyDirectionalShadowLight"
-			],
-			[
-				"remove",
-				"removeNull"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "core/src/com/jaxson/lib/gdx/backend/Display.java",
+			"contents": "\nPostman postman = new Postman.Default(\n\tnew SMTP(\"smtp.googlemail.com\", 465, \"user\", \"pwd\")\n)\n.send(\n\tnew Envelope.MIME(\n\t\tnew Array<Stamp>(\n\t\t\tnew StSender(\"Yegor Bugayenko <yegor@teamed.io>\"),\n\t\t\tnew StRecipient(\"dude@jcabi.com\"),\n\t\t\tnew StSubject(\"how are you?\")\n\t\t),\n\t\tnew Array<Enclosure>(\n\t\t\tnew EnPlain(\"Dude, how are you?\")\n\t\t)\n\t)\n);\n\n\n\npostman.send(envelope);\n\nEmail email = new SimpleEmail();\nemail.setHostName(\"smtp.googlemail.com\");\nemail.setSmtpPort(465);\nemail.setAuthenticator(new DefaultAuthenticator(\"user\", \"pwd\"));\nemail.setFrom(\"yegor@teamed.io\", \"Yegor Bugayenko\");\nemail.addTo(\"dude@jcabi.com\");\nemail.setSubject(\"how are you?\");\nemail.setMsg(\"Dude, how are you?\");\nemail.send();",
 			"settings":
 			{
-				"buffer_size": 15049,
-				"encoding": "UTF-8",
+				"buffer_size": 702,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
+			"file": "/C/Users/Jaxson/Desktop/Email.java",
 			"settings":
 			{
-				"buffer_size": 3764,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "core/src/com/jaxson/lib/gdx/backend/DisplayMode.java",
-			"settings":
-			{
-				"buffer_size": 3836,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "/**\n * Copyright (c) 2009-2016, rultor.com\n * All rights reserved.\n *\n * Redistribution and use in source and binary forms, with or without\n * modification, are permitted provided that the following conditions\n * are met: 1) Redistributions of source code must retain the above\n * copyright notice, this list of conditions and the following\n * disclaimer. 2) Redistributions in binary form must reproduce the above\n * copyright notice, this list of conditions and the following\n * disclaimer in the documentation and/or other materials provided\n * with the distribution. 3) Neither the name of the rultor.com nor\n * the names of its contributors may be used to endorse or promote\n * products derived from this software without specific prior written\n * permission.\n *\n * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\n * \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT\n * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND\n * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL\n * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,\n * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES\n * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\n * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)\n * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,\n * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED\n * OF THE POSSIBILITY OF SUCH DAMAGE.\n */\npackage com.rultor.dynamo;\n\nimport com.amazonaws.services.dynamodbv2.model.AttributeAction;\nimport com.amazonaws.services.dynamodbv2.model.AttributeValue;\nimport com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;\nimport com.google.common.collect.Iterables;\nimport com.jcabi.aspects.Immutable;\nimport com.jcabi.dynamo.AttributeUpdates;\nimport com.jcabi.dynamo.Item;\nimport com.jcabi.xml.StrictXML;\nimport com.jcabi.xml.XML;\nimport com.jcabi.xml.XMLDocument;\nimport com.jcabi.xml.XSLDocument;\nimport com.rultor.spi.Talk;\nimport java.io.ByteArrayInputStream;\nimport java.io.ByteArrayOutputStream;\nimport java.io.IOException;\nimport java.io.OutputStream;\nimport java.nio.ByteBuffer;\nimport java.util.Date;\nimport java.util.zip.GZIPInputStream;\nimport java.util.zip.GZIPOutputStream;\nimport lombok.EqualsAndHashCode;\nimport lombok.ToString;\nimport org.apache.commons.io.Charsets;\nimport org.apache.commons.io.IOUtils;\nimport org.w3c.dom.Node;\nimport org.xembly.Directive;\nimport org.xembly.ImpossibleModificationException;\nimport org.xembly.Xembler;\n\n/**\n * Talk in Dynamo.\n *\n * @author Yegor Bugayenko (yegor@teamed.io)\n * @version $Id$\n * @since 1.0\n * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)\n */\n@Immutable\n@ToString\n@EqualsAndHashCode(of = \"item\")\npublic final class DyTalk implements Talk {\n\n\t/**\n\t * Maximum amount of bytes per item in DynamoDB (400Kb).\n\t * @link http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\n\t * @checkstyle MagicNumber (3 lines)\n\t */\n\tprivate static final int LIMIT = 399 << 10;\n\n\t/**\n\t * Item.\n\t */\n\tprivate final transient Item item;\n\n\t/**\n\t * Ctor.\n\t * @param itm Item\n\t */\n\tDyTalk(final Item itm) {\n\t\tthis.item = itm;\n\t}\n\n\t@Override\n\tpublic Long number() throws IOException {\n\t\treturn Long.parseLong(this.item.get(DyTalks.ATTR_NUMBER).getN());\n\t}\n\n\t@Override\n\tpublic String name() throws IOException {\n\t\treturn this.item.get(DyTalks.HASH).getS();\n\t}\n\n\t@Override\n\tpublic Date updated() throws IOException {\n\t\treturn new Date(Long.parseLong(this.item.get(DyTalks.ATTR_UPDATED).getN()));\n\t}\n\n\t@Override\n\tpublic XML read() throws IOException {\n\t\tfinal String xml;\n\t\tif (this.item.has(DyTalks.ATTR_XML_ZIP)) {\n\t\t\txml = DyTalk.unzip(\n\t\t\t\tthis.item.get(DyTalks.ATTR_XML_ZIP).getB().array()\n\t\t\t);\n\t\t} else {\n\t\t\txml = this.item.get(DyTalks.ATTR_XML).getS();\n\t\t}\n\t\treturn new StrictXML(\n\t\t\tTalk.UPGRADE.transform(new XMLDocument(xml)),\n\t\t\tTalk.SCHEMA\n\t\t);\n\t}\n\n\t@Override\n\tpublic void modify(final Iterable<Directive> dirs) throws IOException {\n\t\tif (!Iterables.isEmpty(dirs)) {\n\t\t\tfinal XML xml = this.read();\n\t\t\tfinal Node node = xml.node();\n\t\t\ttry {\n\t\t\t\tnew Xembler(dirs).apply(node);\n\t\t\t} catch (final ImpossibleModificationException ex) {\n\t\t\t\tthrow new IllegalStateException(\n\t\t\t\t\t\tString.format(\"failed to apply %s to %s\", \n\t\t\t\t\t\tdirs.toString(), xml),\n\t\t\t\t\t\tex);\n\t\t\t}\n\t\t\tfinal byte[] body = DyTalk.zip(\n\t\t\t\tXSLDocument.STRIP.transform(\n\t\t\t\t\tnew StrictXML(new XMLDocument(node), Talk.SCHEMA)\n\t\t\t\t).toString()\n\t\t\t);\n\t\t\tif (body.length > DyTalk.LIMIT) {\n\t\t\t\tthrow new IllegalArgumentException(\n\t\t\t\t\tString.format(\n\t\t\t\t\t\t// @checkstyle LineLength (1 line)\n\t\t\t\t\t\t\"XML is too big (%d bytes,maximum is %d), even after ZIP, in \\\"%s\\\"\",\n\t\t\t\t\t\tbody.length, DyTalk.LIMIT,\n\t\t\t\t\t\tthis.item.get(DyTalks.HASH).getS()\n\t\t\t\t\t)\n\t\t\t\t);\n\t\t\t}\n\t\t\tfinal AttributeValue value = new AttributeValue();\n\t\t\tvalue.setB(ByteBuffer.wrap(body));\n\t\t\tthis.item.put(\n\t\t\t\tnew AttributeUpdates()\n\t\t\t\t\t.with(DyTalks.ATTR_UPDATED, System.currentTimeMillis())\n\t\t\t\t\t.with(\n\t\t\t\t\t\tDyTalks.ATTR_XML_ZIP,\n\t\t\t\t\t\tnew AttributeValueUpdate(value, AttributeAction.PUT)\n\t\t\t\t\t)\n\t\t\t);\n\t\t}\n\t}\n\n\t@Override\n\tpublic void active(final boolean yes) throws IOException {\n\t\tthis.item.put(\n\t\t\tnew AttributeUpdates()\n\t\t\t\t.with(DyTalks.ATTR_ACTIVE, yes)\n\t\t\t\t.with(DyTalks.ATTR_UPDATED, System.currentTimeMillis())\n\t\t);\n\t}\n\n\t/**\n\t * Zip the XML.\n\t * @param xml The XML content\n\t * @return Zipped content\n\t * @throws IOException If fails\n\t */\n\tprivate static byte[] zip(final String xml) throws IOException {\n\t\tfinal ByteArrayOutputStream baos = new ByteArrayOutputStream();\n\t\tfinal OutputStream output = new GZIPOutputStream(baos);\n\t\tIOUtils.copy(\n\t\t\tIOUtils.toInputStream(xml, Charsets.UTF_8),\n\t\t\toutput\n\t\t);\n\t\toutput.close();\n\t\treturn baos.toByteArray();\n\t}\n\n\t/**\n\t * Unzip the XML.\n\t * @param bytes The XML content\n\t * @return Unzipped content\n\t * @throws IOException If fails\n\t */\n\tprivate static String unzip(final byte[] bytes) throws IOException {\n\t\tfinal ByteArrayOutputStream baos = new ByteArrayOutputStream();\n\t\tIOUtils.copy(\n\t\t\tnew GZIPInputStream(new ByteArrayInputStream(bytes)),\n\t\t\tbaos\n\t\t);\n\t\treturn new String(baos.toByteArray(), Charsets.UTF_8);\n\t}\n\n}\n",
-			"file": "/C/Users/Jaxson/Desktop/DyTalk.java",
-			"file_size": 7198,
-			"file_write_time": 131217435911124402,
-			"settings":
-			{
-				"buffer_size": 6248,
+				"buffer_size": 62553,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "core/src/com/jaxson/lib/util/Printer.java",
-			"settings":
-			{
-				"buffer_size": 1306,
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -609,7 +579,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 383.0,
+		"height": 400.0,
 		"last_filter": "conv",
 		"selected_items":
 		[
@@ -622,7 +592,7 @@
 				"Git: Push"
 			],
 			[
-				"git co",
+				"git com",
 				"Git: Commit"
 			],
 			[
@@ -630,7 +600,7 @@
 				"Git: Add..."
 			],
 			[
-				"git com",
+				"git co",
 				"Git: Commit"
 			],
 			[
@@ -854,6 +824,18 @@
 	],
 	"file_history":
 	[
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Printer.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayMode.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/io/GdxFile.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/Screenshot.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/GameConfig.java",
+		"/C/Users/Jaxson/Desktop/DyTalk.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Display.java",
+		"/C/Users/Jaxson/Desktop/Email.java",
+		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java",
+		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglGraphics.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/assets/config.json",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/Main.gwt.xml",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/objects/Models.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/objects/MixedObjects.java",
@@ -868,7 +850,6 @@
 		"/C/Users/Jaxson/Desktop/offset.txt",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/ic_launcher-web.png",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/Rectangle.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Display.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/MyMath.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/math/GdxMath.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/PhysicsWorld.java",
@@ -879,15 +860,12 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/File.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/BaseState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/FileExtension.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayMode.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/DataFile.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayType.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Game.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/DisplayOrientation.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/geom/Point.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/MouseButton.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/GameConfig.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/src/com/jaxson/android/AndroidLauncher.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/GameInstance.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/build.gradle",
@@ -907,12 +885,10 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/gradle.properties",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/GameObject.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/html/src/com/jaxson/client/HtmlLauncher.java",
-		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java",
 		"/D/Documents/Development/lib/libgdx-master/gdx/src/com/badlogic/gdx/Gdx.java",
 		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglGL20.java",
 		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidGraphics.java",
 		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglGL30.java",
-		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglGraphics.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/Inputs.java",
 		"/D/Downloads/test/build.gradle",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/entities/types/Entity.java",
@@ -938,7 +914,6 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/color/RandomColor.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/FPSCounter.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/Sprite.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/Screenshot.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/SpriteActor.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/environment/lighting/MyDirectionalLight.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/environment/lighting/ShadowBatch.java",
@@ -953,7 +928,6 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/Peripheral.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/KeyCombination.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/KeyboardKey.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/io/GdxFile.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/math/random/RandomVector3.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/SubState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Resizeable.java",
@@ -975,13 +949,9 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyComparable.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyList.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Printer.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Uncertainty.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Unwrapable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/SphereShape.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/ShapeBody.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PauseState.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java"
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/SphereShape.java"
 	],
 	"find":
 	{
@@ -999,6 +969,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"=",
+			"VARIBLE_FRAME_RATE",
+			"resize",
+			"windowedMode",
 			"mode",
 			"DisplayMode",
 			"DisplayMode'",
@@ -1122,11 +1096,7 @@
 			"Jaxson:",
 			"Jake:",
 			"Chris:",
-			"Jaxson:",
-			"gameManager",
-			"minimized",
-			"updateViewport();",
-			"updateViewport()"
+			"Jaxson:"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1211,24 +1181,23 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "core/src/com/jaxson/lib/gdx/backend/Display.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15049,
+						"buffer_size": 702,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1215,
-								1215
+								702,
+								702
 							]
 						],
 						"settings":
@@ -1237,106 +1206,19 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 858.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3764,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3763,
-								3763
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 99.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "core/src/com/jaxson/lib/gdx/backend/DisplayMode.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3836,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2063,
-								2063
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1474.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/C/Users/Jaxson/Desktop/DyTalk.java",
+					"buffer": 1,
+					"file": "/C/Users/Jaxson/Desktop/Email.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6248,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2727,
-								2737
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 830.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "core/src/com/jaxson/lib/util/Printer.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1306,
+						"buffer_size": 62553,
 						"regions":
 						{
 						},
@@ -1349,14 +1231,13 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Java/Java.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4752.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1422,6 +1303,22 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"config",
+				"android\\assets\\config.json"
+			],
+			[
+				"gamcon",
+				"core\\src\\com\\jaxson\\lib\\gdx\\GameConfig.java"
+			],
+			[
+				"gdxf",
+				"core\\src\\com\\jaxson\\lib\\gdx\\io\\GdxFile.java"
+			],
+			[
+				"scr",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g2d\\Screenshot.java"
+			],
 			[
 				"pr",
 				"core\\src\\com\\jaxson\\lib\\util\\Printer.java"
@@ -1517,10 +1414,6 @@
 			[
 				"mouseb",
 				"core\\src\\com\\jaxson\\lib\\gdx\\input\\MouseButton.java"
-			],
-			[
-				"gamcon",
-				"core\\src\\com\\jaxson\\lib\\gdx\\GameConfig.java"
 			],
 			[
 				"andr",
@@ -1693,10 +1586,6 @@
 			[
 				"wofers",
 				"core\\src\\com\\jaxson\\woofers3d\\Woofers3D.java"
-			],
-			[
-				"gdxf",
-				"core\\src\\com\\jaxson\\lib\\gdx\\io\\GdxFile.java"
 			],
 			[
 				"plst",
@@ -1925,14 +1814,6 @@
 			[
 				"ent",
 				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\bodies\\EntityBody.java"
-			],
-			[
-				"mydir",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\environment\\light\\MyDirectionalShadowLight.java"
-			],
-			[
-				"myenv",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\environment\\MyEnvironment.java"
 			]
 		],
 		"width": 0.0

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.jaxson.lib.gdx.io.GdxFile;
+import com.badlogic.gdx.Files.FileType;
 import com.jaxson.lib.io.File;
 
 public class Screenshot implements Disposable
@@ -20,7 +21,6 @@ public class Screenshot implements Disposable
 	private static final int BYTES_PER_PIXEL = 4;
 
 	private GdxFile file;
-
 	private Pixmap image;
 
 	public Screenshot()
@@ -124,7 +124,7 @@ public class Screenshot implements Disposable
 		do
 		{
 			counter ++;
-			file = new GdxFile(screenshotPath(counter));
+			file = new GdxFile(screenshotPath(counter), FileType.Absolute);
 		}
 		while (file.exists());
 		return file;
