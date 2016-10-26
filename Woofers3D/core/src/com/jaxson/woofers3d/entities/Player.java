@@ -7,16 +7,16 @@ import com.jaxson.lib.gdx.io.GdxFile;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/ship/ship.obj";
-	private static final float SCALE = 2f;
-	private static final float HITBOX_SCALE = 80f / 100f;
+	private static final String PATH = "entities/dog/dog.g3db";
+	private static final float SCALE = 4f;
+	private static final float HITBOX_SCALE = 50f / 100f;
 
 	private KeyboardKey cameraKey;
 
 	public Player(TargetCamera camera)
 	{
 		super(new GdxFile(PATH), camera);
-		setCollisionShapeScale(HITBOX_SCALE);
+		//setCollisionShapeScale(HITBOX_SCALE);
 		scale(SCALE);
 
 		this.cameraKey = keyboard().key("T");
