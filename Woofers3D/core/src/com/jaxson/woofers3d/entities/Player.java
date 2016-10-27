@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/dog/dog.g3db";
+	private static final String PATH = "entities/dog/fbx/dog.g3db";
 	private static final float SCALE = 4f;
 	private static final float HITBOX_SCALE = 50f / 100f;
 
@@ -18,9 +18,8 @@ public class Player extends CameraPlayerBody
 	public Player(TargetCamera camera)
 	{
 		super(new GdxFile(PATH), new BoxShape(
-				new Vector3(0.491f, 0.664f * 0.75f, 0.901f)), camera);
+				new Vector3(0.49f, 0.66f * 0.75f, 0.90f)), camera);
 		setCollisionShapeScale(HITBOX_SCALE);
-		//new BoxShape(model.calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3()))
 		scale(SCALE);
 
 		this.cameraKey = keyboard().key("T");

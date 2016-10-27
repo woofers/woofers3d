@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.backend;
 
 import com.jaxson.lib.util.Printer;
+import com.badlogic.gdx.math.Vector2;
 
 public class DisplayMode
 {
@@ -17,10 +18,11 @@ public class DisplayMode
 	private static class MaxDisplay
 			extends com.badlogic.gdx.Graphics.DisplayMode
 	{
+		private static final int MAX = Integer.MAX_VALUE;
+
 		MaxDisplay()
 		{
-			super(Integer.MAX_VALUE, Integer.MAX_VALUE,
-					Integer.MAX_VALUE, Integer.MAX_VALUE);
+			super(MAX, MAX, MAX, MAX);
 		}
 	}
 
@@ -120,6 +122,11 @@ public class DisplayMode
 	public int refreshRate()
 	{
 		return refreshRate;
+	}
+
+	public Vector2 size()
+	{
+		return new Vector2(width(), height());
 	}
 
 	public com.badlogic.gdx.Graphics.DisplayMode toBestDisplayMode(

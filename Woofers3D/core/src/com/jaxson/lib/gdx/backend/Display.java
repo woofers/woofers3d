@@ -524,11 +524,13 @@ public class Display extends GameObject
 		boolean wasFullscreen = isFullscreen();
 		com.badlogic.gdx.Graphics.DisplayMode exactFullscreenMode
 				= displayMode.toBestDisplayMode(displayModes());
-		DisplayMode newFullscreenMode = new DisplayMode(exactFullscreenMode, true);
+		DisplayMode newFullscreenMode
+				= new DisplayMode(exactFullscreenMode, true);
 		if (!displayMode().equals(newFullscreenMode))
 			graphics().setFullscreenMode(exactFullscreenMode);
 		fullscreenMode = newFullscreenMode;
-		if (displayMode.fullscreen() != wasFullscreen) handleDisplayChange();
+		if (displayMode.fullscreen() != wasFullscreen)
+			handleDisplayChange();
 	}
 
 	public void setFullscreen(int width, int height, int refreshRate)
@@ -602,7 +604,7 @@ public class Display extends GameObject
 
 	public Vector2 size()
 	{
-		return new Vector2(width(), height());
+		return displayMode().size();
 	}
 
 	/**
