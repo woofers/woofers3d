@@ -17,7 +17,7 @@ public class CameraPlayerBody extends PlayerBody
 
 	public CameraPlayerBody(Model model, TargetCamera camera)
 	{
-		this(model, fittedHitbox(model), camera);
+		this(model, fittedShape(model), camera);
 	}
 
 	public CameraPlayerBody(Unwrapable<Model> model, ConvexShape shape,
@@ -28,7 +28,7 @@ public class CameraPlayerBody extends PlayerBody
 
 	public CameraPlayerBody(Unwrapable<Model> model, TargetCamera camera)
 	{
-		this(model, fittedHitbox(model.unwrap()), camera);
+		this(model, fittedShape(model.unwrap()), camera);
 	}
 
 	public TargetCamera camera()

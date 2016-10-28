@@ -26,6 +26,7 @@ public abstract class PlayerBody
 	private static final float GRAVITY = GdxMath.GRAVITY_EARTH * GRAVITY_SCALE;
 	private static final float FALL_SPEED = 55f;
 	private static final float JUMP_SPEED = 10f;
+	private static final float ACCELERATION = 0.04f;
 
 	private static final float Y_BALANCE = -0.5f;
 
@@ -35,6 +36,8 @@ public abstract class PlayerBody
 	private float speed;
 	private float rotationSpeed;
 	private float stepHeight;
+	private float acceleration;
+	private float accumulator = 1f;
 
 	private Keyboard keyboard;
 	private GameAccelerometer accelerometer;
@@ -47,7 +50,7 @@ public abstract class PlayerBody
 
 	public PlayerBody(Model model)
 	{
-		this(model, fittedHitbox(model));
+		this(model, fittedShape(model));
 	}
 
 	public PlayerBody(Model model, ConvexShape shape)
@@ -61,6 +64,7 @@ public abstract class PlayerBody
 		setRotationSpeed(ROTATION_SPEED);
 		setJumpSpeed(JUMP_SPEED);
 		setFallSpeed(FALL_SPEED);
+		setAcceleration(ACCELERATION);
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -71,9 +75,19 @@ public abstract class PlayerBody
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
 
-		for (float i = Accelerometer.MIN; i < Accelerometer.MAX + 0.1f;
-				i += 0.1f)
+		for (float i = Accelerometer.MIN;
+				i < Accelerometer.MAX + 0.1f; i += 0.1f)
 			System.out.println(round(i) + ": " + round(yAccelerometer(i)));
+	}
+
+	public void setAcceleration(float acceleration)
+	{
+		this.acceleration = acceleration;
+	}
+
+	public float acceleration()
+	{
+		return acceleration;
 	}
 
 	public GameAccelerometer accelerometer()
@@ -99,7 +113,7 @@ public abstract class PlayerBody
 	private btKinematicCharacterController createController(float stepHeight)
 	{
 		return new btKinematicCharacterController(body(),
-				shape().shape(),
+				shape().bulletShape(),
 				stepHeight);
 	}
 
@@ -171,6 +185,7 @@ public abstract class PlayerBody
 			}
 		}
 		walkDirection.scl(speed());
+		walkDirection.scl(GdxMath.abs(accumulator));
 		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();
 	}

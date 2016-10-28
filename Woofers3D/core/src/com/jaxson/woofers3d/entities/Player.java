@@ -12,14 +12,14 @@ public class Player extends CameraPlayerBody
 {
 	private static final String PATH = "entities/dog/dog.g3db";
 	private static final float SCALE = 4f;
-	private static final float HITBOX_SCALE = 50f / 100f;
+	private static final float HITBOX_SCALE = 90f / 100f;
 
 	private KeyboardKey cameraKey;
 
 	public Player(TargetCamera camera)
 	{
-		super(readModel(PATH), new ConvexHullShape(readModel(PATH)), camera);
-		//setCollisionShapeScale(HITBOX_SCALE);
+		super(readModel(PATH), camera);
+		setCollisionShapeScale(HITBOX_SCALE);
 		scale(SCALE);
 
 		this.cameraKey = keyboard().key("T");

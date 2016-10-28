@@ -16,7 +16,7 @@ public class Shape<S extends btCollisionShape> implements Disposable
 	@Override
 	public void dispose()
 	{
-		shape().dispose();
+		bulletShape().dispose();
 	}
 
 	@Override
@@ -32,27 +32,27 @@ public class Shape<S extends btCollisionShape> implements Disposable
 	{
 		Vector3 inertia = new Vector3();
 		if (mass <= 0) return inertia;
-		shape().calculateLocalInertia(mass, inertia);
+		bulletShape().calculateLocalInertia(mass, inertia);
 		return inertia;
 	}
 
 	public Vector3 scale()
 	{
-		return shape().getLocalScaling();
+		return bulletShape().getLocalScaling();
 	}
 
 	public void setScale(Vector3 scale)
 	{
-		shape().setLocalScaling(scale);
+		bulletShape().setLocalScaling(scale);
 	}
 
-	public S shape()
+	public S bulletShape()
 	{
 		return shape;
 	}
 
 	public int type()
 	{
-		return shape().getShapeType();
+		return bulletShape().getShapeType();
 	}
 }

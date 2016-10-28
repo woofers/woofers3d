@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.badlogic.gdx.math.Quaternion;
 
-public class OffsetMotionState extends MyMotionState
+public class OffsetMotionState extends MotionState
 {
 	private EntityBody body;
 	private Vector3 offset;

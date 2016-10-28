@@ -3,11 +3,11 @@ package com.jaxson.lib.gdx.bullet.simulation;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 
-public class MyMotionState extends btMotionState
+public class MotionState extends btMotionState
 {
 	private Matrix4 transform;
 
-	public MyMotionState(Matrix4 transform)
+	public MotionState(Matrix4 transform)
 	{
 		super();
 		this.transform = transform;

@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
-import com.jaxson.lib.gdx.bullet.simulation.MyMotionState;
+import com.jaxson.lib.gdx.bullet.simulation.MotionState;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 
 public class RigidBody extends ShapeBody<btRigidBody, Shape>
 {
-	private MyMotionState motionState;
+	private MotionState motionState;
 
 	public RigidBody(Model model, Shape shape)
 	{
@@ -32,7 +32,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 		super(modelInstance,
 				new btRigidBody(mass, null, null, shape.inertia(mass)),
 				shape, mass);
-		setMotionState(new MyMotionState(transform()));
+		setMotionState(new MotionState(transform()));
 	}
 
 	public void applyCentralImpulse(Ray ray)
@@ -58,7 +58,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 		motionState.dispose();
 	}
 
-	public MyMotionState motionState()
+	public MotionState motionState()
 	{
 		return motionState;
 	}
@@ -70,7 +70,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 		body().setMassProps(mass, inertia());
 	}
 
-	public void setMotionState(MyMotionState motionState)
+	public void setMotionState(MotionState motionState)
 	{
 		this.motionState = motionState;
 		body().setMotionState(motionState);
