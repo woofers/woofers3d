@@ -22,6 +22,7 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.woofers3d.entities.Player;
+import com.jaxson.lib.gdx.bullet.simulation.MyMotionState;
 
 public class PlayState extends BulletState
 {

@@ -5,11 +5,12 @@ import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
+import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexHullShape;
 import com.badlogic.gdx.math.Vector3;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/dog/fbx/dog.g3db";
+	private static final String PATH = "entities/dog/dog.g3db";
 	private static final float SCALE = 4f;
 	private static final float HITBOX_SCALE = 50f / 100f;
 
@@ -17,9 +18,8 @@ public class Player extends CameraPlayerBody
 
 	public Player(TargetCamera camera)
 	{
-		super(new GdxFile(PATH), new BoxShape(
-				new Vector3(0.49f, 0.66f * 0.75f, 0.90f)), camera);
-		setCollisionShapeScale(HITBOX_SCALE);
+		super(readModel(PATH), new ConvexHullShape(readModel(PATH)), camera);
+		//setCollisionShapeScale(HITBOX_SCALE);
 		scale(SCALE);
 
 		this.cameraKey = keyboard().key("T");

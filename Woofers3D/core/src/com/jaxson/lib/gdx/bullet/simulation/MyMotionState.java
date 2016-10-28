@@ -24,4 +24,9 @@ public class MyMotionState extends btMotionState
 	{
 		transform.set(worldTransform);
 	}
+
+	protected Matrix4 transform()
+	{
+		return transform;
+	}
 }

@@ -147,7 +147,7 @@ public abstract class Entity extends GameObject
 		return new Ray(location(), distance(location));
 	}
 
-	public Quaternion roationQuaternion()
+	public Quaternion rotationQuaternion()
 	{
 		return transform().getRotation(new Quaternion());
 	}
@@ -176,7 +176,7 @@ public abstract class Entity extends GameObject
 
 	public Vector3 rotation()
 	{
-		Quaternion rotation = roationQuaternion();
+		Quaternion rotation = rotationQuaternion();
 		return new Vector3(rotation.getYaw(),
 				rotation.getPitch(),
 				rotation.getRoll());
@@ -206,6 +206,11 @@ public abstract class Entity extends GameObject
 	public void setRotation(Vector3 angles)
 	{
 		setRotation(angles.x, angles.y, angles.z);
+	}
+
+	public void setRotation(Quaternion quaternion)
+	{
+		transform().set(quaternion);
 	}
 
 	public void setSize(Vector3 size)

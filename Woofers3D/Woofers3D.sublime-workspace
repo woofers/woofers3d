@@ -532,7 +532,7 @@
 			"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
 			"settings":
 			{
-				"buffer_size": 1169,
+				"buffer_size": 1077,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -557,7 +557,7 @@
 			"file": "core/src/com/jaxson/lib/gdx/backend/Display.java",
 			"settings":
 			{
-				"buffer_size": 15130,
+				"buffer_size": 15127,
 				"line_ending": "Windows"
 			}
 		}
@@ -1225,15 +1225,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1169,
+						"buffer_size": 1077,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								712,
-								712
+								1006,
+								1006
 							]
 						],
 						"settings":
@@ -1312,7 +1312,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15130,
+						"buffer_size": 15127,
 						"regions":
 						{
 						},
