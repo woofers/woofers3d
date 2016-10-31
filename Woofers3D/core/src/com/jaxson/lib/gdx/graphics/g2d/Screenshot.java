@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.graphics.g2d;
 
 import java.nio.ByteBuffer;
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.jaxson.lib.gdx.io.GdxFile;
-import com.badlogic.gdx.Files.FileType;
 import com.jaxson.lib.io.File;
 
 public class Screenshot implements Disposable

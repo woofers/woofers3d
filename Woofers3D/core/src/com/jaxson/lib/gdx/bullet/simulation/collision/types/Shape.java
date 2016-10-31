@@ -13,6 +13,11 @@ public class Shape<S extends btCollisionShape> implements Disposable
 		this.shape = shape;
 	}
 
+	public S bulletShape()
+	{
+		return shape;
+	}
+
 	@Override
 	public void dispose()
 	{
@@ -44,11 +49,6 @@ public class Shape<S extends btCollisionShape> implements Disposable
 	public void setScale(Vector3 scale)
 	{
 		bulletShape().setLocalScaling(scale);
-	}
-
-	public S bulletShape()
-	{
-		return shape;
 	}
 
 	public int type()

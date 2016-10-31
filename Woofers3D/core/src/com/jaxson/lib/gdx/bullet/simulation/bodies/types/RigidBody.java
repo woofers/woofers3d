@@ -64,6 +64,13 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 	}
 
 	@Override
+	public void setCollisionShape(Shape shape)
+	{
+		super.setCollisionShape(shape);
+		body().setMassProps(mass(), inertia());
+	}
+
+	@Override
 	public void setMass(float mass)
 	{
 		super.setMass(mass);

@@ -262,8 +262,8 @@ public class PhysicsWorld extends GameObject
 		objects.remove(entity);
 		broadphase.getOverlappingPairCache()
 				.setInternalGhostPairCallback(null);
-		world.removeCollisionObject(entity.body());
 		world.removeAction(entity.characterController());
+		world.removeCollisionObject(entity.body());
 	}
 
 	public void remove(RigidBody entity)

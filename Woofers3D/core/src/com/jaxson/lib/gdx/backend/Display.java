@@ -119,7 +119,7 @@ public class Display extends GameObject
 	 */
 	public Vector2 center()
 	{
-		return size().scl(0.5f);
+		return displayMode().center();
 	}
 
 	/**
@@ -292,7 +292,7 @@ public class Display extends GameObject
 
 	private void handleDisplayChange()
 	{
-		//updateViewport();
+		// updateViewport();
 		Inputs.reset();
 		saveFullscreen();
 	}
@@ -453,12 +453,6 @@ public class Display extends GameObject
 	{
 		view.resize(width, height);
 		if (!isFullscreen()) updateLastWindowedMode();
-	}
-
-	private void updateLastWindowedMode()
-	{
-		windowedMode = new DisplayMode(width(), height(),
-				game.config().maxFps(), false);
 	}
 
 	@Override
@@ -642,6 +636,12 @@ public class Display extends GameObject
 	{
 		super.update(dt);
 		if (!isPaused()) view().update();
+	}
+
+	private void updateLastWindowedMode()
+	{
+		windowedMode = new DisplayMode(width(), height(),
+				game.config().maxFps(), false);
 	}
 
 	/**

@@ -10,6 +10,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.SoftBox;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
+import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
 import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
@@ -22,7 +23,6 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.woofers3d.entities.Player;
-import com.jaxson.lib.gdx.bullet.simulation.MotionState;
 
 public class PlayState extends BulletState
 {
@@ -98,6 +98,10 @@ public class PlayState extends BulletState
 		addHud(text);
 
 		mouse = Inputs.mouse();
+
+		removePhysics(spheres[0]);
+		spheres[0].setCollisionShape(new BoxShape());
+		applyPhysics(spheres[0]);
 	}
 
 	@Override

@@ -1,10 +1,9 @@
 package com.jaxson.lib.gdx.bullet.simulation;
 
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
-import com.badlogic.gdx.math.Quaternion;
 
 public class OffsetMotionState extends MotionState
 {
@@ -16,16 +15,6 @@ public class OffsetMotionState extends MotionState
 		super(transform);
 		this.body = body;
 		this.offset = offset;
-	}
-
-	public void setOffset(Vector3 offset)
-	{
-		this.offset = offset;
-	}
-
-	public Vector3 offset()
-	{
-		return offset;
 	}
 
 	@Override
@@ -43,14 +32,26 @@ public class OffsetMotionState extends MotionState
 		super.getWorldTransform(transform());
 	}
 
+	public Vector3 offset()
+	{
+		return offset;
+	}
+
+	public void setOffset(Vector3 offset)
+	{
+		this.offset = offset;
+	}
+
 	@Override
 	public void setWorldTransform(Matrix4 worldTransform)
 	{
 		Vector3 btPosition = worldTransform.getTranslation(new Vector3());
 		Quaternion btRotation = worldTransform.getRotation(new Quaternion());
-		Quaternion rotation = new Quaternion(btRotation.w, btRotation.x, btRotation.y, btRotation.z);
+		Quaternion rotation = new Quaternion(btRotation.w, btRotation.x,
+				btRotation.y, btRotation.z);
 		Vector3 finalOffset = offset.mul(rotation);
-		Vector3 position = new Vector3(btPosition.x - finalOffset.x, btPosition.y - finalOffset.y, btPosition.z - finalOffset.z);
+		Vector3 position = new Vector3(btPosition.x - finalOffset.x,
+				btPosition.y - finalOffset.y, btPosition.z - finalOffset.z);
 
 		body.moveTo(position);
 		body.setRotation(position);

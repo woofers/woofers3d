@@ -1,20 +1,10 @@
 package com.jaxson.lib.gdx.backend;
 
-import com.jaxson.lib.util.Printer;
 import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.util.Printer;
 
 public class DisplayMode
 {
-	private static class MinDisplay
-			extends com.badlogic.gdx.Graphics.DisplayMode
-	{
-		MinDisplay()
-		{
-			super(0, 0, 0, 0);
-		}
-	}
-
-
 	private static class MaxDisplay
 			extends com.badlogic.gdx.Graphics.DisplayMode
 	{
@@ -26,12 +16,23 @@ public class DisplayMode
 		}
 	}
 
+	private static class MinDisplay
+			extends com.badlogic.gdx.Graphics.DisplayMode
+	{
+		MinDisplay()
+		{
+			super(0, 0, 0, 0);
+		}
+	}
+
 	private static final int BPP = 32;
 	private static final int REFRESH_RATE = 60;
 	private static final boolean FULLSCREEN = false;
 
-	public static final DisplayMode WORST = new DisplayMode(new MinDisplay(), true);
-	public static final DisplayMode BEST = new DisplayMode(new MaxDisplay(), true);
+	public static final DisplayMode WORST
+			= new DisplayMode(new MinDisplay(), true);
+	public static final DisplayMode BEST
+			= new DisplayMode(new MaxDisplay(), true);
 
 	private int width;
 	private int height;
@@ -127,6 +128,11 @@ public class DisplayMode
 	public Vector2 size()
 	{
 		return new Vector2(width(), height());
+	}
+
+	public Vector2 center()
+	{
+		return size().scl(0.5f);
 	}
 
 	public com.badlogic.gdx.Graphics.DisplayMode toBestDisplayMode(

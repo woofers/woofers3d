@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
+import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexHullShape;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 import com.jaxson.lib.util.Optional;
-import com.jaxson.lib.gdx.bullet.simulation.collision.types.ConvexHullShape;
 
 public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
 		extends EntityBody<B>
@@ -65,13 +65,6 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
 		setLocalScaling(scale.scl(shapeScale()));
 	}
 
-	/*
-	1) remove the object from the world
-	2) assign the new shape using object->setCollisionShape(newShape)
-	3) recompute the inertia tensor for dynamic objects (mass>0)
-			using newShape->calcLocalInertia(...) and use body->setMassProps
-	4) add the body to the world
-	 */
 	public void setCollisionShape(S shape)
 	{
 		if (new Optional<>(shape).equals(shape())) return;

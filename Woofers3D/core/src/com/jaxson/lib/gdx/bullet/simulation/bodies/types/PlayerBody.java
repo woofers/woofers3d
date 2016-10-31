@@ -80,11 +80,6 @@ public abstract class PlayerBody
 			System.out.println(round(i) + ": " + round(yAccelerometer(i)));
 	}
 
-	public void setAcceleration(float acceleration)
-	{
-		this.acceleration = acceleration;
-	}
-
 	public float acceleration()
 	{
 		return acceleration;
@@ -185,7 +180,7 @@ public abstract class PlayerBody
 			}
 		}
 		walkDirection.scl(speed());
-		walkDirection.scl(GdxMath.abs(accumulator));
+		walkDirection.scl(MyMath.abs(accumulator));
 		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();
 	}
@@ -235,6 +230,11 @@ public abstract class PlayerBody
 	public float rotationSpeed()
 	{
 		return rotationSpeed;
+	}
+
+	public void setAcceleration(float acceleration)
+	{
+		this.acceleration = acceleration;
 	}
 
 	public void setFallSpeed(float fallSpeed)

@@ -147,11 +147,6 @@ public abstract class Entity extends GameObject
 		return new Ray(location(), distance(location));
 	}
 
-	public Quaternion rotationQuaternion()
-	{
-		return transform().getRotation(new Quaternion());
-	}
-
 	public Node rootNode()
 	{
 		return modelInstance().nodes.get(ROOT_NODE_LOCATION);
@@ -182,6 +177,11 @@ public abstract class Entity extends GameObject
 				rotation.getRoll());
 	}
 
+	public Quaternion rotationQuaternion()
+	{
+		return transform().getRotation(new Quaternion());
+	}
+
 	public Vector3 scale()
 	{
 		return rootNode().scale;
@@ -203,14 +203,14 @@ public abstract class Entity extends GameObject
 		transform().setFromEulerAngles(yaw, pitch, roll);
 	}
 
-	public void setRotation(Vector3 angles)
-	{
-		setRotation(angles.x, angles.y, angles.z);
-	}
-
 	public void setRotation(Quaternion quaternion)
 	{
 		transform().set(quaternion);
+	}
+
+	public void setRotation(Vector3 angles)
+	{
+		setRotation(angles.x, angles.y, angles.z);
 	}
 
 	public void setSize(Vector3 size)

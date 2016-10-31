@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"BOX",
+				"BoxShape"
+			],
+			[
 				"ac",
 				"accumulator"
 			],
@@ -510,55 +514,34 @@
 			[
 				"LIG",
 				"Light"
-			],
-			[
-				"MyDI",
-				"MyDirectionalShadowLight"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/PlayerBody.java",
+			"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
 			"settings":
 			{
-				"buffer_size": 6863,
-				"encoding": "UTF-8",
+				"buffer_size": 3842,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "core/src/com/jaxson/lib/gdx/backend/Game.java",
+			"file": "/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java",
 			"settings":
 			{
-				"buffer_size": 4130,
+				"buffer_size": 8890,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/ConvexHullShape.java",
+			"contents": "-- MarI/O by SethBling\n-- Feel free to use this code, but please do not redistribute it.\n-- Intended for use with the BizHawk emulator and Super Mario World or Super Mario Bros. ROM.\n-- For SMW, make sure you have a save state named \"DP1.state\" at the beginning of a level,\n-- and put a copy in both the Lua folder and the root directory of BizHawk.\n\nif gameinfo.getromname() == \"Super Mario World (USA)\" then\n\tFilename = \"DP1.state\"\n\tButtonNames = {\n\t\t\"A\",\n\t\t\"B\",\n\t\t\"X\",\n\t\t\"Y\",\n\t\t\"Up\",\n\t\t\"Down\",\n\t\t\"Left\",\n\t\t\"Right\",\n\t}\nelseif gameinfo.getromname() == \"Super Mario Bros.\" then\n\tFilename = \"SMB1-1.state\"\n\tButtonNames = {\n\t\t\"A\",\n\t\t\"B\",\n\t\t\"Up\",\n\t\t\"Down\",\n\t\t\"Left\",\n\t\t\"Right\",\n\t}\nend\n\nBoxRadius = 6\nInputSize = (BoxRadius*2+1)*(BoxRadius*2+1)\n\nInputs = InputSize+1\nOutputs = #ButtonNames\n\nPopulation = 300\nDeltaDisjoint = 2.0\nDeltaWeights = 0.4\nDeltaThreshold = 1.0\n\nStaleSpecies = 15\n\nMutateConnectionsChance = 0.25\nPerturbChance = 0.90\nCrossoverChance = 0.75\nLinkMutationChance = 2.0\nNodeMutationChance = 0.50\nBiasMutationChance = 0.40\nStepSize = 0.1\nDisableMutationChance = 0.4\nEnableMutationChance = 0.2\n\nTimeoutConstant = 20\n\nMaxNodes = 1000000\n\nfunction getPositions()\n\tif gameinfo.getromname() == \"Super Mario World (USA)\" then\n\t\tmarioX = memory.read_s16_le(0x94)\n\t\tmarioY = memory.read_s16_le(0x96)\n\t\t\n\t\tlocal layer1x = memory.read_s16_le(0x1A);\n\t\tlocal layer1y = memory.read_s16_le(0x1C);\n\t\t\n\t\tscreenX = marioX-layer1x\n\t\tscreenY = marioY-layer1y\n\telseif gameinfo.getromname() == \"Super Mario Bros.\" then\n\t\tmarioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)\n\t\tmarioY = memory.readbyte(0x03B8)+16\n\t\n\t\tscreenX = memory.readbyte(0x03AD)\n\t\tscreenY = memory.readbyte(0x03B8)\n\tend\nend\n\nfunction getTile(dx, dy)\n\tif gameinfo.getromname() == \"Super Mario World (USA)\" then\n\t\tx = math.floor((marioX+dx+8)/16)\n\t\ty = math.floor((marioY+dy)/16)\n\t\t\n\t\treturn memory.readbyte(0x1C800 + math.floor(x/0x10)*0x1B0 + y*0x10 + x%0x10)\n\telseif gameinfo.getromname() == \"Super Mario Bros.\" then\n\t\tlocal x = marioX + dx + 8\n\t\tlocal y = marioY + dy - 16\n\t\tlocal page = math.floor(x/256)%2\n\n\t\tlocal subx = math.floor((x%256)/16)\n\t\tlocal suby = math.floor((y - 32)/16)\n\t\tlocal addr = 0x500 + page*13*16+suby*16+subx\n\t\t\n\t\tif suby >= 13 or suby < 0 then\n\t\t\treturn 0\n\t\tend\n\t\t\n\t\tif memory.readbyte(addr) ~= 0 then\n\t\t\treturn 1\n\t\telse\n\t\t\treturn 0\n\t\tend\n\tend\nend\n\nfunction getSprites()\n\tif gameinfo.getromname() == \"Super Mario World (USA)\" then\n\t\tlocal sprites = {}\n\t\tfor slot=0,11 do\n\t\t\tlocal status = memory.readbyte(0x14C8+slot)\n\t\t\tif status ~= 0 then\n\t\t\t\tspritex = memory.readbyte(0xE4+slot) + memory.readbyte(0x14E0+slot)*256\n\t\t\t\tspritey = memory.readbyte(0xD8+slot) + memory.readbyte(0x14D4+slot)*256\n\t\t\t\tsprites[#sprites+1] = {[\"x\"]=spritex, [\"y\"]=spritey}\n\t\t\tend\n\t\tend\t\t\n\t\t\n\t\treturn sprites\n\telseif gameinfo.getromname() == \"Super Mario Bros.\" then\n\t\tlocal sprites = {}\n\t\tfor slot=0,4 do\n\t\t\tlocal enemy = memory.readbyte(0xF+slot)\n\t\t\tif enemy ~= 0 then\n\t\t\t\tlocal ex = memory.readbyte(0x6E + slot)*0x100 + memory.readbyte(0x87+slot)\n\t\t\t\tlocal ey = memory.readbyte(0xCF + slot)+24\n\t\t\t\tsprites[#sprites+1] = {[\"x\"]=ex,[\"y\"]=ey}\n\t\t\tend\n\t\tend\n\t\t\n\t\treturn sprites\n\tend\nend\n\nfunction getExtendedSprites()\n\tif gameinfo.getromname() == \"Super Mario World (USA)\" then\n\t\tlocal extended = {}\n\t\tfor slot=0,11 do\n\t\t\tlocal number = memory.readbyte(0x170B+slot)\n\t\t\tif number ~= 0 then\n\t\t\t\tspritex = memory.readbyte(0x171F+slot) + memory.readbyte(0x1733+slot)*256\n\t\t\t\tspritey = memory.readbyte(0x1715+slot) + memory.readbyte(0x1729+slot)*256\n\t\t\t\textended[#extended+1] = {[\"x\"]=spritex, [\"y\"]=spritey}\n\t\t\tend\n\t\tend\t\t\n\t\t\n\t\treturn extended\n\telseif gameinfo.getromname() == \"Super Mario Bros.\" then\n\t\treturn {}\n\tend\nend\n\nfunction getInputs()\n\tgetPositions()\n\t\n\tsprites = getSprites()\n\textended = getExtendedSprites()\n\t\n\tlocal inputs = {}\n\t\n\tfor dy=-BoxRadius*16,BoxRadius*16,16 do\n\t\tfor dx=-BoxRadius*16,BoxRadius*16,16 do\n\t\t\tinputs[#inputs+1] = 0\n\t\t\t\n\t\t\ttile = getTile(dx, dy)\n\t\t\tif tile == 1 and marioY+dy < 0x1B0 then\n\t\t\t\tinputs[#inputs] = 1\n\t\t\tend\n\t\t\t\n\t\t\tfor i = 1,#sprites do\n\t\t\t\tdistx = math.abs(sprites[i][\"x\"] - (marioX+dx))\n\t\t\t\tdisty = math.abs(sprites[i][\"y\"] - (marioY+dy))\n\t\t\t\tif distx <= 8 and disty <= 8 then\n\t\t\t\t\tinputs[#inputs] = -1\n\t\t\t\tend\n\t\t\tend\n\n\t\t\tfor i = 1,#extended do\n\t\t\t\tdistx = math.abs(extended[i][\"x\"] - (marioX+dx))\n\t\t\t\tdisty = math.abs(extended[i][\"y\"] - (marioY+dy))\n\t\t\t\tif distx < 8 and disty < 8 then\n\t\t\t\t\tinputs[#inputs] = -1\n\t\t\t\tend\n\t\t\tend\n\t\tend\n\tend\n\t\n\t--mariovx = memory.read_s8(0x7B)\n\t--mariovy = memory.read_s8(0x7D)\n\t\n\treturn inputs\nend\n\nfunction sigmoid(x)\n\treturn 2/(1+math.exp(-4.9*x))-1\nend\n\nfunction newInnovation()\n\tpool.innovation = pool.innovation + 1\n\treturn pool.innovation\nend\n\nfunction newPool()\n\tlocal pool = {}\n\tpool.species = {}\n\tpool.generation = 0\n\tpool.innovation = Outputs\n\tpool.currentSpecies = 1\n\tpool.currentGenome = 1\n\tpool.currentFrame = 0\n\tpool.maxFitness = 0\n\t\n\treturn pool\nend\n\nfunction newSpecies()\n\tlocal species = {}\n\tspecies.topFitness = 0\n\tspecies.staleness = 0\n\tspecies.genomes = {}\n\tspecies.averageFitness = 0\n\t\n\treturn species\nend\n\nfunction newGenome()\n\tlocal genome = {}\n\tgenome.genes = {}\n\tgenome.fitness = 0\n\tgenome.adjustedFitness = 0\n\tgenome.network = {}\n\tgenome.maxneuron = 0\n\tgenome.globalRank = 0\n\tgenome.mutationRates = {}\n\tgenome.mutationRates[\"connections\"] = MutateConnectionsChance\n\tgenome.mutationRates[\"link\"] = LinkMutationChance\n\tgenome.mutationRates[\"bias\"] = BiasMutationChance\n\tgenome.mutationRates[\"node\"] = NodeMutationChance\n\tgenome.mutationRates[\"enable\"] = EnableMutationChance\n\tgenome.mutationRates[\"disable\"] = DisableMutationChance\n\tgenome.mutationRates[\"step\"] = StepSize\n\t\n\treturn genome\nend\n\nfunction copyGenome(genome)\n\tlocal genome2 = newGenome()\n\tfor g=1,#genome.genes do\n\t\ttable.insert(genome2.genes, copyGene(genome.genes[g]))\n\tend\n\tgenome2.maxneuron = genome.maxneuron\n\tgenome2.mutationRates[\"connections\"] = genome.mutationRates[\"connections\"]\n\tgenome2.mutationRates[\"link\"] = genome.mutationRates[\"link\"]\n\tgenome2.mutationRates[\"bias\"] = genome.mutationRates[\"bias\"]\n\tgenome2.mutationRates[\"node\"] = genome.mutationRates[\"node\"]\n\tgenome2.mutationRates[\"enable\"] = genome.mutationRates[\"enable\"]\n\tgenome2.mutationRates[\"disable\"] = genome.mutationRates[\"disable\"]\n\t\n\treturn genome2\nend\n\nfunction basicGenome()\n\tlocal genome = newGenome()\n\tlocal innovation = 1\n\n\tgenome.maxneuron = Inputs\n\tmutate(genome)\n\t\n\treturn genome\nend\n\nfunction newGene()\n\tlocal gene = {}\n\tgene.into = 0\n\tgene.out = 0\n\tgene.weight = 0.0\n\tgene.enabled = true\n\tgene.innovation = 0\n\t\n\treturn gene\nend\n\nfunction copyGene(gene)\n\tlocal gene2 = newGene()\n\tgene2.into = gene.into\n\tgene2.out = gene.out\n\tgene2.weight = gene.weight\n\tgene2.enabled = gene.enabled\n\tgene2.innovation = gene.innovation\n\t\n\treturn gene2\nend\n\nfunction newNeuron()\n\tlocal neuron = {}\n\tneuron.incoming = {}\n\tneuron.value = 0.0\n\t\n\treturn neuron\nend\n\nfunction generateNetwork(genome)\n\tlocal network = {}\n\tnetwork.neurons = {}\n\t\n\tfor i=1,Inputs do\n\t\tnetwork.neurons[i] = newNeuron()\n\tend\n\t\n\tfor o=1,Outputs do\n\t\tnetwork.neurons[MaxNodes+o] = newNeuron()\n\tend\n\t\n\ttable.sort(genome.genes, function (a,b)\n\t\treturn (a.out < b.out)\n\tend)\n\tfor i=1,#genome.genes do\n\t\tlocal gene = genome.genes[i]\n\t\tif gene.enabled then\n\t\t\tif network.neurons[gene.out] == nil then\n\t\t\t\tnetwork.neurons[gene.out] = newNeuron()\n\t\t\tend\n\t\t\tlocal neuron = network.neurons[gene.out]\n\t\t\ttable.insert(neuron.incoming, gene)\n\t\t\tif network.neurons[gene.into] == nil then\n\t\t\t\tnetwork.neurons[gene.into] = newNeuron()\n\t\t\tend\n\t\tend\n\tend\n\t\n\tgenome.network = network\nend\n\nfunction evaluateNetwork(network, inputs)\n\ttable.insert(inputs, 1)\n\tif #inputs ~= Inputs then\n\t\tconsole.writeline(\"Incorrect number of neural network inputs.\")\n\t\treturn {}\n\tend\n\t\n\tfor i=1,Inputs do\n\t\tnetwork.neurons[i].value = inputs[i]\n\tend\n\t\n\tfor _,neuron in pairs(network.neurons) do\n\t\tlocal sum = 0\n\t\tfor j = 1,#neuron.incoming do\n\t\t\tlocal incoming = neuron.incoming[j]\n\t\t\tlocal other = network.neurons[incoming.into]\n\t\t\tsum = sum + incoming.weight * other.value\n\t\tend\n\t\t\n\t\tif #neuron.incoming > 0 then\n\t\t\tneuron.value = sigmoid(sum)\n\t\tend\n\tend\n\t\n\tlocal outputs = {}\n\tfor o=1,Outputs do\n\t\tlocal button = \"P1 \" .. ButtonNames[o]\n\t\tif network.neurons[MaxNodes+o].value > 0 then\n\t\t\toutputs[button] = true\n\t\telse\n\t\t\toutputs[button] = false\n\t\tend\n\tend\n\t\n\treturn outputs\nend\n\nfunction crossover(g1, g2)\n\t-- Make sure g1 is the higher fitness genome\n\tif g2.fitness > g1.fitness then\n\t\ttempg = g1\n\t\tg1 = g2\n\t\tg2 = tempg\n\tend\n\n\tlocal child = newGenome()\n\t\n\tlocal innovations2 = {}\n\tfor i=1,#g2.genes do\n\t\tlocal gene = g2.genes[i]\n\t\tinnovations2[gene.innovation] = gene\n\tend\n\t\n\tfor i=1,#g1.genes do\n\t\tlocal gene1 = g1.genes[i]\n\t\tlocal gene2 = innovations2[gene1.innovation]\n\t\tif gene2 ~= nil and math.random(2) == 1 and gene2.enabled then\n\t\t\ttable.insert(child.genes, copyGene(gene2))\n\t\telse\n\t\t\ttable.insert(child.genes, copyGene(gene1))\n\t\tend\n\tend\n\t\n\tchild.maxneuron = math.max(g1.maxneuron,g2.maxneuron)\n\t\n\tfor mutation,rate in pairs(g1.mutationRates) do\n\t\tchild.mutationRates[mutation] = rate\n\tend\n\t\n\treturn child\nend\n\nfunction randomNeuron(genes, nonInput)\n\tlocal neurons = {}\n\tif not nonInput then\n\t\tfor i=1,Inputs do\n\t\t\tneurons[i] = true\n\t\tend\n\tend\n\tfor o=1,Outputs do\n\t\tneurons[MaxNodes+o] = true\n\tend\n\tfor i=1,#genes do\n\t\tif (not nonInput) or genes[i].into > Inputs then\n\t\t\tneurons[genes[i].into] = true\n\t\tend\n\t\tif (not nonInput) or genes[i].out > Inputs then\n\t\t\tneurons[genes[i].out] = true\n\t\tend\n\tend\n\n\tlocal count = 0\n\tfor _,_ in pairs(neurons) do\n\t\tcount = count + 1\n\tend\n\tlocal n = math.random(1, count)\n\t\n\tfor k,v in pairs(neurons) do\n\t\tn = n-1\n\t\tif n == 0 then\n\t\t\treturn k\n\t\tend\n\tend\n\t\n\treturn 0\nend\n\nfunction containsLink(genes, link)\n\tfor i=1,#genes do\n\t\tlocal gene = genes[i]\n\t\tif gene.into == link.into and gene.out == link.out then\n\t\t\treturn true\n\t\tend\n\tend\nend\n\nfunction pointMutate(genome)\n\tlocal step = genome.mutationRates[\"step\"]\n\t\n\tfor i=1,#genome.genes do\n\t\tlocal gene = genome.genes[i]\n\t\tif math.random() < PerturbChance then\n\t\t\tgene.weight = gene.weight + math.random() * step*2 - step\n\t\telse\n\t\t\tgene.weight = math.random()*4-2\n\t\tend\n\tend\nend\n\nfunction linkMutate(genome, forceBias)\n\tlocal neuron1 = randomNeuron(genome.genes, false)\n\tlocal neuron2 = randomNeuron(genome.genes, true)\n\t \n\tlocal newLink = newGene()\n\tif neuron1 <= Inputs and neuron2 <= Inputs then\n\t\t--Both input nodes\n\t\treturn\n\tend\n\tif neuron2 <= Inputs then\n\t\t-- Swap output and input\n\t\tlocal temp = neuron1\n\t\tneuron1 = neuron2\n\t\tneuron2 = temp\n\tend\n\n\tnewLink.into = neuron1\n\tnewLink.out = neuron2\n\tif forceBias then\n\t\tnewLink.into = Inputs\n\tend\n\t\n\tif containsLink(genome.genes, newLink) then\n\t\treturn\n\tend\n\tnewLink.innovation = newInnovation()\n\tnewLink.weight = math.random()*4-2\n\t\n\ttable.insert(genome.genes, newLink)\nend\n\nfunction nodeMutate(genome)\n\tif #genome.genes == 0 then\n\t\treturn\n\tend\n\n\tgenome.maxneuron = genome.maxneuron + 1\n\n\tlocal gene = genome.genes[math.random(1,#genome.genes)]\n\tif not gene.enabled then\n\t\treturn\n\tend\n\tgene.enabled = false\n\t\n\tlocal gene1 = copyGene(gene)\n\tgene1.out = genome.maxneuron\n\tgene1.weight = 1.0\n\tgene1.innovation = newInnovation()\n\tgene1.enabled = true\n\ttable.insert(genome.genes, gene1)\n\t\n\tlocal gene2 = copyGene(gene)\n\tgene2.into = genome.maxneuron\n\tgene2.innovation = newInnovation()\n\tgene2.enabled = true\n\ttable.insert(genome.genes, gene2)\nend\n\nfunction enableDisableMutate(genome, enable)\n\tlocal candidates = {}\n\tfor _,gene in pairs(genome.genes) do\n\t\tif gene.enabled == not enable then\n\t\t\ttable.insert(candidates, gene)\n\t\tend\n\tend\n\t\n\tif #candidates == 0 then\n\t\treturn\n\tend\n\t\n\tlocal gene = candidates[math.random(1,#candidates)]\n\tgene.enabled = not gene.enabled\nend\n\nfunction mutate(genome)\n\tfor mutation,rate in pairs(genome.mutationRates) do\n\t\tif math.random(1,2) == 1 then\n\t\t\tgenome.mutationRates[mutation] = 0.95*rate\n\t\telse\n\t\t\tgenome.mutationRates[mutation] = 1.05263*rate\n\t\tend\n\tend\n\n\tif math.random() < genome.mutationRates[\"connections\"] then\n\t\tpointMutate(genome)\n\tend\n\t\n\tlocal p = genome.mutationRates[\"link\"]\n\twhile p > 0 do\n\t\tif math.random() < p then\n\t\t\tlinkMutate(genome, false)\n\t\tend\n\t\tp = p - 1\n\tend\n\n\tp = genome.mutationRates[\"bias\"]\n\twhile p > 0 do\n\t\tif math.random() < p then\n\t\t\tlinkMutate(genome, true)\n\t\tend\n\t\tp = p - 1\n\tend\n\t\n\tp = genome.mutationRates[\"node\"]\n\twhile p > 0 do\n\t\tif math.random() < p then\n\t\t\tnodeMutate(genome)\n\t\tend\n\t\tp = p - 1\n\tend\n\t\n\tp = genome.mutationRates[\"enable\"]\n\twhile p > 0 do\n\t\tif math.random() < p then\n\t\t\tenableDisableMutate(genome, true)\n\t\tend\n\t\tp = p - 1\n\tend\n\n\tp = genome.mutationRates[\"disable\"]\n\twhile p > 0 do\n\t\tif math.random() < p then\n\t\t\tenableDisableMutate(genome, false)\n\t\tend\n\t\tp = p - 1\n\tend\nend\n\nfunction disjoint(genes1, genes2)\n\tlocal i1 = {}\n\tfor i = 1,#genes1 do\n\t\tlocal gene = genes1[i]\n\t\ti1[gene.innovation] = true\n\tend\n\n\tlocal i2 = {}\n\tfor i = 1,#genes2 do\n\t\tlocal gene = genes2[i]\n\t\ti2[gene.innovation] = true\n\tend\n\t\n\tlocal disjointGenes = 0\n\tfor i = 1,#genes1 do\n\t\tlocal gene = genes1[i]\n\t\tif not i2[gene.innovation] then\n\t\t\tdisjointGenes = disjointGenes+1\n\t\tend\n\tend\n\t\n\tfor i = 1,#genes2 do\n\t\tlocal gene = genes2[i]\n\t\tif not i1[gene.innovation] then\n\t\t\tdisjointGenes = disjointGenes+1\n\t\tend\n\tend\n\t\n\tlocal n = math.max(#genes1, #genes2)\n\t\n\treturn disjointGenes / n\nend\n\nfunction weights(genes1, genes2)\n\tlocal i2 = {}\n\tfor i = 1,#genes2 do\n\t\tlocal gene = genes2[i]\n\t\ti2[gene.innovation] = gene\n\tend\n\n\tlocal sum = 0\n\tlocal coincident = 0\n\tfor i = 1,#genes1 do\n\t\tlocal gene = genes1[i]\n\t\tif i2[gene.innovation] ~= nil then\n\t\t\tlocal gene2 = i2[gene.innovation]\n\t\t\tsum = sum + math.abs(gene.weight - gene2.weight)\n\t\t\tcoincident = coincident + 1\n\t\tend\n\tend\n\t\n\treturn sum / coincident\nend\n\t\nfunction sameSpecies(genome1, genome2)\n\tlocal dd = DeltaDisjoint*disjoint(genome1.genes, genome2.genes)\n\tlocal dw = DeltaWeights*weights(genome1.genes, genome2.genes) \n\treturn dd + dw < DeltaThreshold\nend\n\nfunction rankGlobally()\n\tlocal global = {}\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\tfor g = 1,#species.genomes do\n\t\t\ttable.insert(global, species.genomes[g])\n\t\tend\n\tend\n\ttable.sort(global, function (a,b)\n\t\treturn (a.fitness < b.fitness)\n\tend)\n\t\n\tfor g=1,#global do\n\t\tglobal[g].globalRank = g\n\tend\nend\n\nfunction calculateAverageFitness(species)\n\tlocal total = 0\n\t\n\tfor g=1,#species.genomes do\n\t\tlocal genome = species.genomes[g]\n\t\ttotal = total + genome.globalRank\n\tend\n\t\n\tspecies.averageFitness = total / #species.genomes\nend\n\nfunction totalAverageFitness()\n\tlocal total = 0\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\ttotal = total + species.averageFitness\n\tend\n\n\treturn total\nend\n\nfunction cullSpecies(cutToOne)\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\t\n\t\ttable.sort(species.genomes, function (a,b)\n\t\t\treturn (a.fitness > b.fitness)\n\t\tend)\n\t\t\n\t\tlocal remaining = math.ceil(#species.genomes/2)\n\t\tif cutToOne then\n\t\t\tremaining = 1\n\t\tend\n\t\twhile #species.genomes > remaining do\n\t\t\ttable.remove(species.genomes)\n\t\tend\n\tend\nend\n\nfunction breedChild(species)\n\tlocal child = {}\n\tif math.random() < CrossoverChance then\n\t\tg1 = species.genomes[math.random(1, #species.genomes)]\n\t\tg2 = species.genomes[math.random(1, #species.genomes)]\n\t\tchild = crossover(g1, g2)\n\telse\n\t\tg = species.genomes[math.random(1, #species.genomes)]\n\t\tchild = copyGenome(g)\n\tend\n\t\n\tmutate(child)\n\t\n\treturn child\nend\n\nfunction removeStaleSpecies()\n\tlocal survived = {}\n\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\t\n\t\ttable.sort(species.genomes, function (a,b)\n\t\t\treturn (a.fitness > b.fitness)\n\t\tend)\n\t\t\n\t\tif species.genomes[1].fitness > species.topFitness then\n\t\t\tspecies.topFitness = species.genomes[1].fitness\n\t\t\tspecies.staleness = 0\n\t\telse\n\t\t\tspecies.staleness = species.staleness + 1\n\t\tend\n\t\tif species.staleness < StaleSpecies or species.topFitness >= pool.maxFitness then\n\t\t\ttable.insert(survived, species)\n\t\tend\n\tend\n\n\tpool.species = survived\nend\n\nfunction removeWeakSpecies()\n\tlocal survived = {}\n\n\tlocal sum = totalAverageFitness()\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\tbreed = math.floor(species.averageFitness / sum * Population)\n\t\tif breed >= 1 then\n\t\t\ttable.insert(survived, species)\n\t\tend\n\tend\n\n\tpool.species = survived\nend\n\n\nfunction addToSpecies(child)\n\tlocal foundSpecies = false\n\tfor s=1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\tif not foundSpecies and sameSpecies(child, species.genomes[1]) then\n\t\t\ttable.insert(species.genomes, child)\n\t\t\tfoundSpecies = true\n\t\tend\n\tend\n\t\n\tif not foundSpecies then\n\t\tlocal childSpecies = newSpecies()\n\t\ttable.insert(childSpecies.genomes, child)\n\t\ttable.insert(pool.species, childSpecies)\n\tend\nend\n\nfunction newGeneration()\n\tcullSpecies(false) -- Cull the bottom half of each species\n\trankGlobally()\n\tremoveStaleSpecies()\n\trankGlobally()\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\tcalculateAverageFitness(species)\n\tend\n\tremoveWeakSpecies()\n\tlocal sum = totalAverageFitness()\n\tlocal children = {}\n\tfor s = 1,#pool.species do\n\t\tlocal species = pool.species[s]\n\t\tbreed = math.floor(species.averageFitness / sum * Population) - 1\n\t\tfor i=1,breed do\n\t\t\ttable.insert(children, breedChild(species))\n\t\tend\n\tend\n\tcullSpecies(true) -- Cull all but the top member of each species\n\twhile #children + #pool.species < Population do\n\t\tlocal species = pool.species[math.random(1, #pool.species)]\n\t\ttable.insert(children, breedChild(species))\n\tend\n\tfor c=1,#children do\n\t\tlocal child = children[c]\n\t\taddToSpecies(child)\n\tend\n\t\n\tpool.generation = pool.generation + 1\n\t\n\twriteFile(\"backup.\" .. pool.generation .. \".\" .. forms.gettext(saveLoadFile))\nend\n\t\nfunction initializePool()\n\tpool = newPool()\n\n\tfor i=1,Population do\n\t\tbasic = basicGenome()\n\t\taddToSpecies(basic)\n\tend\n\n\tinitializeRun()\nend\n\nfunction clearJoypad()\n\tcontroller = {}\n\tfor b = 1,#ButtonNames do\n\t\tcontroller[\"P1 \" .. ButtonNames[b]] = false\n\tend\n\tjoypad.set(controller)\nend\n\nfunction initializeRun()\n\tsavestate.load(Filename);\n\trightmost = 0\n\tpool.currentFrame = 0\n\ttimeout = TimeoutConstant\n\tclearJoypad()\n\t\n\tlocal species = pool.species[pool.currentSpecies]\n\tlocal genome = species.genomes[pool.currentGenome]\n\tgenerateNetwork(genome)\n\tevaluateCurrent()\nend\n\nfunction evaluateCurrent()\n\tlocal species = pool.species[pool.currentSpecies]\n\tlocal genome = species.genomes[pool.currentGenome]\n\n\tinputs = getInputs()\n\tcontroller = evaluateNetwork(genome.network, inputs)\n\t\n\tif controller[\"P1 Left\"] and controller[\"P1 Right\"] then\n\t\tcontroller[\"P1 Left\"] = false\n\t\tcontroller[\"P1 Right\"] = false\n\tend\n\tif controller[\"P1 Up\"] and controller[\"P1 Down\"] then\n\t\tcontroller[\"P1 Up\"] = false\n\t\tcontroller[\"P1 Down\"] = false\n\tend\n\n\tjoypad.set(controller)\nend\n\nif pool == nil then\n\tinitializePool()\nend\n\n\nfunction nextGenome()\n\tpool.currentGenome = pool.currentGenome + 1\n\tif pool.currentGenome > #pool.species[pool.currentSpecies].genomes then\n\t\tpool.currentGenome = 1\n\t\tpool.currentSpecies = pool.currentSpecies+1\n\t\tif pool.currentSpecies > #pool.species then\n\t\t\tnewGeneration()\n\t\t\tpool.currentSpecies = 1\n\t\tend\n\tend\nend\n\nfunction fitnessAlreadyMeasured()\n\tlocal species = pool.species[pool.currentSpecies]\n\tlocal genome = species.genomes[pool.currentGenome]\n\t\n\treturn genome.fitness ~= 0\nend\n\nfunction displayGenome(genome)\n\tlocal network = genome.network\n\tlocal cells = {}\n\tlocal i = 1\n\tlocal cell = {}\n\tfor dy=-BoxRadius,BoxRadius do\n\t\tfor dx=-BoxRadius,BoxRadius do\n\t\t\tcell = {}\n\t\t\tcell.x = 50+5*dx\n\t\t\tcell.y = 70+5*dy\n\t\t\tcell.value = network.neurons[i].value\n\t\t\tcells[i] = cell\n\t\t\ti = i + 1\n\t\tend\n\tend\n\tlocal biasCell = {}\n\tbiasCell.x = 80\n\tbiasCell.y = 110\n\tbiasCell.value = network.neurons[Inputs].value\n\tcells[Inputs] = biasCell\n\t\n\tfor o = 1,Outputs do\n\t\tcell = {}\n\t\tcell.x = 220\n\t\tcell.y = 30 + 8 * o\n\t\tcell.value = network.neurons[MaxNodes + o].value\n\t\tcells[MaxNodes+o] = cell\n\t\tlocal color\n\t\tif cell.value > 0 then\n\t\t\tcolor = 0xFF0000FF\n\t\telse\n\t\t\tcolor = 0xFF000000\n\t\tend\n\t\tgui.drawText(223, 24+8*o, ButtonNames[o], color, 9)\n\tend\n\t\n\tfor n,neuron in pairs(network.neurons) do\n\t\tcell = {}\n\t\tif n > Inputs and n <= MaxNodes then\n\t\t\tcell.x = 140\n\t\t\tcell.y = 40\n\t\t\tcell.value = neuron.value\n\t\t\tcells[n] = cell\n\t\tend\n\tend\n\t\n\tfor n=1,4 do\n\t\tfor _,gene in pairs(genome.genes) do\n\t\t\tif gene.enabled then\n\t\t\t\tlocal c1 = cells[gene.into]\n\t\t\t\tlocal c2 = cells[gene.out]\n\t\t\t\tif gene.into > Inputs and gene.into <= MaxNodes then\n\t\t\t\t\tc1.x = 0.75*c1.x + 0.25*c2.x\n\t\t\t\t\tif c1.x >= c2.x then\n\t\t\t\t\t\tc1.x = c1.x - 40\n\t\t\t\t\tend\n\t\t\t\t\tif c1.x < 90 then\n\t\t\t\t\t\tc1.x = 90\n\t\t\t\t\tend\n\t\t\t\t\t\n\t\t\t\t\tif c1.x > 220 then\n\t\t\t\t\t\tc1.x = 220\n\t\t\t\t\tend\n\t\t\t\t\tc1.y = 0.75*c1.y + 0.25*c2.y\n\t\t\t\t\t\n\t\t\t\tend\n\t\t\t\tif gene.out > Inputs and gene.out <= MaxNodes then\n\t\t\t\t\tc2.x = 0.25*c1.x + 0.75*c2.x\n\t\t\t\t\tif c1.x >= c2.x then\n\t\t\t\t\t\tc2.x = c2.x + 40\n\t\t\t\t\tend\n\t\t\t\t\tif c2.x < 90 then\n\t\t\t\t\t\tc2.x = 90\n\t\t\t\t\tend\n\t\t\t\t\tif c2.x > 220 then\n\t\t\t\t\t\tc2.x = 220\n\t\t\t\t\tend\n\t\t\t\t\tc2.y = 0.25*c1.y + 0.75*c2.y\n\t\t\t\tend\n\t\t\tend\n\t\tend\n\tend\n\t\n\tgui.drawBox(50-BoxRadius*5-3,70-BoxRadius*5-3,50+BoxRadius*5+2,70+BoxRadius*5+2,0xFF000000, 0x80808080)\n\tfor n,cell in pairs(cells) do\n\t\tif n > Inputs or cell.value ~= 0 then\n\t\t\tlocal color = math.floor((cell.value+1)/2*256)\n\t\t\tif color > 255 then color = 255 end\n\t\t\tif color < 0 then color = 0 end\n\t\t\tlocal opacity = 0xFF000000\n\t\t\tif cell.value == 0 then\n\t\t\t\topacity = 0x50000000\n\t\t\tend\n\t\t\tcolor = opacity + color*0x10000 + color*0x100 + color\n\t\t\tgui.drawBox(cell.x-2,cell.y-2,cell.x+2,cell.y+2,opacity,color)\n\t\tend\n\tend\n\tfor _,gene in pairs(genome.genes) do\n\t\tif gene.enabled then\n\t\t\tlocal c1 = cells[gene.into]\n\t\t\tlocal c2 = cells[gene.out]\n\t\t\tlocal opacity = 0xA0000000\n\t\t\tif c1.value == 0 then\n\t\t\t\topacity = 0x20000000\n\t\t\tend\n\t\t\t\n\t\t\tlocal color = 0x80-math.floor(math.abs(sigmoid(gene.weight))*0x80)\n\t\t\tif gene.weight > 0 then \n\t\t\t\tcolor = opacity + 0x8000 + 0x10000*color\n\t\t\telse\n\t\t\t\tcolor = opacity + 0x800000 + 0x100*color\n\t\t\tend\n\t\t\tgui.drawLine(c1.x+1, c1.y, c2.x-3, c2.y, color)\n\t\tend\n\tend\n\t\n\tgui.drawBox(49,71,51,78,0x00000000,0x80FF0000)\n\t\n\tif forms.ischecked(showMutationRates) then\n\t\tlocal pos = 100\n\t\tfor mutation,rate in pairs(genome.mutationRates) do\n\t\t\tgui.drawText(100, pos, mutation .. \": \" .. rate, 0xFF000000, 10)\n\t\t\tpos = pos + 8\n\t\tend\n\tend\nend\n\nfunction writeFile(filename)\n        local file = io.open(filename, \"w\")\n\tfile:write(pool.generation .. \"\\n\")\n\tfile:write(pool.maxFitness .. \"\\n\")\n\tfile:write(#pool.species .. \"\\n\")\n        for n,species in pairs(pool.species) do\n\t\tfile:write(species.topFitness .. \"\\n\")\n\t\tfile:write(species.staleness .. \"\\n\")\n\t\tfile:write(#species.genomes .. \"\\n\")\n\t\tfor m,genome in pairs(species.genomes) do\n\t\t\tfile:write(genome.fitness .. \"\\n\")\n\t\t\tfile:write(genome.maxneuron .. \"\\n\")\n\t\t\tfor mutation,rate in pairs(genome.mutationRates) do\n\t\t\t\tfile:write(mutation .. \"\\n\")\n\t\t\t\tfile:write(rate .. \"\\n\")\n\t\t\tend\n\t\t\tfile:write(\"done\\n\")\n\t\t\t\n\t\t\tfile:write(#genome.genes .. \"\\n\")\n\t\t\tfor l,gene in pairs(genome.genes) do\n\t\t\t\tfile:write(gene.into .. \" \")\n\t\t\t\tfile:write(gene.out .. \" \")\n\t\t\t\tfile:write(gene.weight .. \" \")\n\t\t\t\tfile:write(gene.innovation .. \" \")\n\t\t\t\tif(gene.enabled) then\n\t\t\t\t\tfile:write(\"1\\n\")\n\t\t\t\telse\n\t\t\t\t\tfile:write(\"0\\n\")\n\t\t\t\tend\n\t\t\tend\n\t\tend\n        end\n        file:close()\nend\n\nfunction savePool()\n\tlocal filename = forms.gettext(saveLoadFile)\n\twriteFile(filename)\nend\n\nfunction loadFile(filename)\n        local file = io.open(filename, \"r\")\n\tpool = newPool()\n\tpool.generation = file:read(\"*number\")\n\tpool.maxFitness = file:read(\"*number\")\n\tforms.settext(maxFitnessLabel, \"Max Fitness: \" .. math.floor(pool.maxFitness))\n        local numSpecies = file:read(\"*number\")\n        for s=1,numSpecies do\n\t\tlocal species = newSpecies()\n\t\ttable.insert(pool.species, species)\n\t\tspecies.topFitness = file:read(\"*number\")\n\t\tspecies.staleness = file:read(\"*number\")\n\t\tlocal numGenomes = file:read(\"*number\")\n\t\tfor g=1,numGenomes do\n\t\t\tlocal genome = newGenome()\n\t\t\ttable.insert(species.genomes, genome)\n\t\t\tgenome.fitness = file:read(\"*number\")\n\t\t\tgenome.maxneuron = file:read(\"*number\")\n\t\t\tlocal line = file:read(\"*line\")\n\t\t\twhile line ~= \"done\" do\n\t\t\t\tgenome.mutationRates[line] = file:read(\"*number\")\n\t\t\t\tline = file:read(\"*line\")\n\t\t\tend\n\t\t\tlocal numGenes = file:read(\"*number\")\n\t\t\tfor n=1,numGenes do\n\t\t\t\tlocal gene = newGene()\n\t\t\t\ttable.insert(genome.genes, gene)\n\t\t\t\tlocal enabled\n\t\t\t\tgene.into, gene.out, gene.weight, gene.innovation, enabled = file:read(\"*number\", \"*number\", \"*number\", \"*number\", \"*number\")\n\t\t\t\tif enabled == 0 then\n\t\t\t\t\tgene.enabled = false\n\t\t\t\telse\n\t\t\t\t\tgene.enabled = true\n\t\t\t\tend\n\t\t\t\t\n\t\t\tend\n\t\tend\n\tend\n        file:close()\n\t\n\twhile fitnessAlreadyMeasured() do\n\t\tnextGenome()\n\tend\n\tinitializeRun()\n\tpool.currentFrame = pool.currentFrame + 1\nend\n \nfunction loadPool()\n\tlocal filename = forms.gettext(saveLoadFile)\n\tloadFile(filename)\nend\n\nfunction playTop()\n\tlocal maxfitness = 0\n\tlocal maxs, maxg\n\tfor s,species in pairs(pool.species) do\n\t\tfor g,genome in pairs(species.genomes) do\n\t\t\tif genome.fitness > maxfitness then\n\t\t\t\tmaxfitness = genome.fitness\n\t\t\t\tmaxs = s\n\t\t\t\tmaxg = g\n\t\t\tend\n\t\tend\n\tend\n\t\n\tpool.currentSpecies = maxs\n\tpool.currentGenome = maxg\n\tpool.maxFitness = maxfitness\n\tforms.settext(maxFitnessLabel, \"Max Fitness: \" .. math.floor(pool.maxFitness))\n\tinitializeRun()\n\tpool.currentFrame = pool.currentFrame + 1\n\treturn\nend\n\nfunction onExit()\n\tforms.destroy(form)\nend\n\nwriteFile(\"temp.pool\")\n\nevent.onexit(onExit)\n\nform = forms.newform(200, 260, \"Fitness\")\nmaxFitnessLabel = forms.label(form, \"Max Fitness: \" .. math.floor(pool.maxFitness), 5, 8)\nshowNetwork = forms.checkbox(form, \"Show Map\", 5, 30)\nshowMutationRates = forms.checkbox(form, \"Show M-Rates\", 5, 52)\nrestartButton = forms.button(form, \"Restart\", initializePool, 5, 77)\nsaveButton = forms.button(form, \"Save\", savePool, 5, 102)\nloadButton = forms.button(form, \"Load\", loadPool, 80, 102)\nsaveLoadFile = forms.textbox(form, Filename .. \".pool\", 170, 25, nil, 5, 148)\nsaveLoadLabel = forms.label(form, \"Save/Load:\", 5, 129)\nplayTopButton = forms.button(form, \"Play Top\", playTop, 5, 170)\nhideBanner = forms.checkbox(form, \"Hide Banner\", 5, 190)\n\n\nwhile true do\n\tlocal backgroundColor = 0xD0FFFFFF\n\tif not forms.ischecked(hideBanner) then\n\t\tgui.drawBox(0, 0, 300, 26, backgroundColor, backgroundColor)\n\tend\n\n\tlocal species = pool.species[pool.currentSpecies]\n\tlocal genome = species.genomes[pool.currentGenome]\n\t\n\tif forms.ischecked(showNetwork) then\n\t\tdisplayGenome(genome)\n\tend\n\t\n\tif pool.currentFrame%5 == 0 then\n\t\tevaluateCurrent()\n\tend\n\n\tjoypad.set(controller)\n\n\tgetPositions()\n\tif marioX > rightmost then\n\t\trightmost = marioX\n\t\ttimeout = TimeoutConstant\n\tend\n\t\n\ttimeout = timeout - 1\n\t\n\t\n\tlocal timeoutBonus = pool.currentFrame / 4\n\tif timeout + timeoutBonus <= 0 then\n\t\tlocal fitness = rightmost - pool.currentFrame / 2\n\t\tif gameinfo.getromname() == \"Super Mario World (USA)\" and rightmost > 4816 then\n\t\t\tfitness = fitness + 1000\n\t\tend\n\t\tif gameinfo.getromname() == \"Super Mario Bros.\" and rightmost > 3186 then\n\t\t\tfitness = fitness + 1000\n\t\tend\n\t\tif fitness == 0 then\n\t\t\tfitness = -1\n\t\tend\n\t\tgenome.fitness = fitness\n\t\t\n\t\tif fitness > pool.maxFitness then\n\t\t\tpool.maxFitness = fitness\n\t\t\tforms.settext(maxFitnessLabel, \"Max Fitness: \" .. math.floor(pool.maxFitness))\n\t\t\twriteFile(\"backup.\" .. pool.generation .. \".\" .. forms.gettext(saveLoadFile))\n\t\tend\n\t\t\n\t\tconsole.writeline(\"Gen \" .. pool.generation .. \" species \" .. pool.currentSpecies .. \" genome \" .. pool.currentGenome .. \" fitness: \" .. fitness)\n\t\tpool.currentSpecies = 1\n\t\tpool.currentGenome = 1\n\t\twhile fitnessAlreadyMeasured() do\n\t\t\tnextGenome()\n\t\tend\n\t\tinitializeRun()\n\tend\n\n\tlocal measured = 0\n\tlocal total = 0\n\tfor _,species in pairs(pool.species) do\n\t\tfor _,genome in pairs(species.genomes) do\n\t\t\ttotal = total + 1\n\t\t\tif genome.fitness ~= 0 then\n\t\t\t\tmeasured = measured + 1\n\t\t\tend\n\t\tend\n\tend\n\tif not forms.ischecked(hideBanner) then\n\t\tgui.drawText(0, 0, \"Gen \" .. pool.generation .. \" species \" .. pool.currentSpecies .. \" genome \" .. pool.currentGenome .. \" (\" .. math.floor(measured/total*100) .. \"%)\", 0xFF000000, 11)\n\t\tgui.drawText(0, 12, \"Fitness: \" .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), 0xFF000000, 11)\n\t\tgui.drawText(100, 12, \"Max Fitness: \" .. math.floor(pool.maxFitness), 0xFF000000, 11)\n\tend\n\t\t\n\tpool.currentFrame = pool.currentFrame + 1\n\n\temu.frameadvance();\nend",
 			"settings":
 			{
-				"buffer_size": 1300,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/Shape.java",
-			"settings":
-			{
-				"buffer_size": 1101,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
-			"settings":
-			{
-				"buffer_size": 1087,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
+				"buffer_size": 28193,
+				"line_ending": "Windows",
+				"name": "-- MarI/O by SethBling"
 			}
 		}
 	],
@@ -605,14 +588,10 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 188.0,
-		"last_filter": "up",
+		"height": 113.0,
+		"last_filter": "git push",
 		"selected_items":
 		[
-			[
-				"up",
-				"Convert Case: Upper Case"
-			],
 			[
 				"git push",
 				"Git: Push"
@@ -624,6 +603,10 @@
 			[
 				"git add",
 				"Git: Add..."
+			],
+			[
+				"up",
+				"Convert Case: Upper Case"
 			],
 			[
 				"conv",
@@ -831,39 +814,61 @@
 	],
 	"file_history":
 	[
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/local.properties",
+		"/C/Users/Jaxson/Desktop/DyTalk.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Display.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayMode.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/util/MyModelBuilder.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/MaterialTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/LightsTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/shadows/system/BaseShadowSystem.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/Animation3DTest.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/PhysicsWorld.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/ShapeBody.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/FogTest.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/environment/MyEnvironment.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/BulletState.java",
+		"/D/Documents/Development/lib/libgdx-master/gdx/src/com/badlogic/gdx/graphics/g3d/attributes/ColorAttribute.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/assets/config.json",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/environment/lighting/Light.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/conformance/DisplayModeTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShadowMappingTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/superkoalio/SuperKoalio.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/net/HttpRequestExample.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/MeshShapeTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/CollisionDispatcherTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/TriangleRaycastTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/ConstraintsTest.java",
+		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/CharacterTest.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/BoxShape.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/PlayerBody.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/RigidBody.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/CameraPlayerBody.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/MotionState.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Game.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/ConvexHullShape.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/Shape.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/entities/Player.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/EntityBody.java",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/local.properties",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/CameraPlayerBody.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/entities/types/Entity.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/OffsetMotionState.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/MyMotionState.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/PlayState.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/PlayerBody.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/ConvexHullShape.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/EntityBody.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Display.java",
 		"/C/Users/Jaxson/Desktop/todo.txt",
 		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/VehicleTest.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/BoxShape.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/Shape.java",
 		"/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/ConvexHullTest.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/ConvexShape.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Optional.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/assets/entities/ship/dog.g3dj",
 		"/C/Users/Jaxson/Desktop/Email.java",
-		"/C/Users/Jaxson/Desktop/DyTalk.java",
 		"/C/Users/Jaxson/Documents/My Games/Sid Meier's Civilization 5/GraphicsSettingsDX11.ini",
 		"/C/Users/Jaxson/Documents/My Games/Sid Meier's Civilization 5/UserSettings.ini",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Printer.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayMode.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/io/GdxFile.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/Screenshot.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/GameConfig.java",
 		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java",
 		"/D/Documents/Development/lib/libgdx-master/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglGraphics.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/assets/config.json",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/Main.gwt.xml",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/objects/Models.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/objects/MixedObjects.java",
@@ -880,7 +885,6 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/Rectangle.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/MyMath.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/math/GdxMath.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/bullet/simulation/PhysicsWorld.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/Circle.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/Reciprocal.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/Mouse.java",
@@ -889,7 +893,6 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/FileExtension.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/DataFile.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/DisplayType.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/backend/Game.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/DisplayOrientation.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/geom/Point.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/MouseButton.java",
@@ -938,27 +941,7 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/environment/lighting/ShadowBatch.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/environment/lighting/MyDirectionalShadowLight.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/entities/Sphere.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/entities/Box.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/views/View.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/State.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Updateable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Renderable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/TouchKeyboard.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/Peripheral.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/KeyCombination.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/input/KeyboardKey.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/math/random/RandomVector3.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/states/SubState.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Resizeable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/util/Pauseable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/EmptyOutputStream.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/EmptyFile.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/random/RandomNumber.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math/ComparableNumber.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Dialog.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Panel.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/ScaleContainer.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/ui/Window.java"
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/entities/Box.java"
 	],
 	"find":
 	{
@@ -976,6 +959,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"colorAttribute",
+			"btPairCachingGhostObject",
 			"shape",
 			"createController",
 			"Map__13_Gradient",
@@ -1101,8 +1086,6 @@
 			"Till",
 			"till",
 			"Jake:",
-			"Jaxson:",
-			"Chris:",
 			"Jaxson:"
 		],
 		"highlight": true,
@@ -1188,53 +1171,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/PlayerBody.java",
+					"file": "core/src/com/jaxson/woofers3d/states/PlayState.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6863,
+						"buffer_size": 3842,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5509,
-								5509
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4961.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "core/src/com/jaxson/lib/gdx/backend/Game.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4130,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								799,
-								810
+								1083,
+								1083
 							]
 						],
 						"settings":
@@ -1244,6 +1198,35 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Documents/Development/lib/libgdx-master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8890,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6579,
+								6579
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4103.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1251,89 +1234,31 @@
 				},
 				{
 					"buffer": 2,
-					"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/ConvexHullShape.java",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1300,
+						"buffer_size": 28193,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								650,
-								650
+								1209,
+								1214
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
+							"auto_name": "-- MarI/O by SethBling",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 26466.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/collision/types/Shape.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1101,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								247,
-								247
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 792.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "core/src/com/jaxson/woofers3d/entities/Player.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1087,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								432,
-								432
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 132.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1400,20 +1325,96 @@
 		"selected_items":
 		[
 			[
+				"play",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
+			],
+			[
+				"dis",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\DisplayMode.java"
+			],
+			[
+				"displ",
+				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\Display.java"
+			],
+			[
+				"myoi",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\util\\MyModelBuilder.java"
+			],
+			[
+				"bulet",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\BulletState.java"
+			],
+			[
+				"light",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\environment\\lighting\\Light.java"
+			],
+			[
+				"mymodel",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\util\\MyModelBuilder.java"
+			],
+			[
+				"mymod",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\util\\MyModelBuilder.java"
+			],
+			[
+				"conf",
+				"android\\assets\\config.json"
+			],
+			[
+				"mynevi",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\environment\\MyEnvironment.java"
+			],
+			[
+				"boxsha",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\collision\\BoxShape.java"
+			],
+			[
+				"shapbo",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\ShapeBody.java"
+			],
+			[
+				"phycs",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\PhysicsWorld.java"
+			],
+			[
+				"sha",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\ShapeBody.java"
+			],
+			[
+				"shap",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\collision\\types\\Shape.java"
+			],
+			[
+				"rgidbo",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\RigidBody.java"
+			],
+			[
+				"shab",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\ShapeBody.java"
+			],
+			[
+				"enti",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\EntityBody.java"
+			],
+			[
+				"paly",
+				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
+			],
+			[
+				"motionsta",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\MotionState.java"
+			],
+			[
+				"shapb",
+				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\ShapeBody.java"
+			],
+			[
 				"gam",
 				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\Game.java"
 			],
 			[
 				"plabo",
 				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\PlayerBody.java"
-			],
-			[
-				"paly",
-				"core\\src\\com\\jaxson\\woofers3d\\entities\\Player.java"
-			],
-			[
-				"sha",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\collision\\types\\Shape.java"
 			],
 			[
 				"conv",
@@ -1428,16 +1429,8 @@
 				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\PlayerBody.java"
 			],
 			[
-				"shapbo",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\ShapeBody.java"
-			],
-			[
 				"rigibod",
 				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\RigidBody.java"
-			],
-			[
-				"play",
-				"core\\src\\com\\jaxson\\woofers3d\\entities\\Player.java"
 			],
 			[
 				"playbo",
@@ -1450,10 +1443,6 @@
 			[
 				"plsta",
 				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
-			],
-			[
-				"enti",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\EntityBody.java"
 			],
 			[
 				"en",
@@ -1514,14 +1503,6 @@
 			[
 				"palyerbod",
 				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\bodies\\types\\PlayerBody.java"
-			],
-			[
-				"dis",
-				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\Display.java"
-			],
-			[
-				"displ",
-				"core\\src\\com\\jaxson\\lib\\gdx\\backend\\Display.java"
 			],
 			[
 				"disp",
@@ -1854,62 +1835,6 @@
 			[
 				"rec",
 				"core\\src\\com\\jaxson\\lib\\math\\Reciprocal.java"
-			],
-			[
-				"ph",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\PhysicsWorld.java"
-			],
-			[
-				"pla",
-				"core\\src\\com\\jaxson\\woofers3d\\states\\PlayState.java"
-			],
-			[
-				"opti",
-				"core\\src\\com\\jaxson\\lib\\util\\Optional.java"
-			],
-			[
-				"print",
-				"core\\src\\com\\jaxson\\lib\\util\\Printer.java"
-			],
-			[
-				"bu",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\BulletState.java"
-			],
-			[
-				"worl",
-				"core\\src\\com\\jaxson\\lib\\gdx\\bullet\\simulation\\WorldImporter.java"
-			],
-			[
-				"mosuebut",
-				"core\\src\\com\\jaxson\\lib\\gdx\\input\\MouseButton.java"
-			],
-			[
-				"prin",
-				"core\\src\\com\\jaxson\\lib\\util\\Printer.java"
-			],
-			[
-				"emp",
-				"core\\src\\com\\jaxson\\lib\\io\\EmptyFile.java"
-			],
-			[
-				"keyb",
-				"core\\src\\com\\jaxson\\lib\\gdx\\input\\KeyboardKey.java"
-			],
-			[
-				"optiona",
-				"core\\src\\com\\jaxson\\lib\\util\\Optional.java"
-			],
-			[
-				"myevn",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g3d\\environment\\MyEnvironment.java"
-			],
-			[
-				"per",
-				"core\\src\\com\\jaxson\\lib\\gdx\\input\\Peripheral.java"
-			],
-			[
-				"mousebu",
-				"core\\src\\com\\jaxson\\lib\\gdx\\input\\MouseButton.java"
 			]
 		],
 		"width": 0.0

@@ -18,9 +18,9 @@ public abstract class BulletState extends State
 
 	private PhysicsWorld world;
 
-	public BulletState(Game gameManager)
+	public BulletState(Game game)
 	{
-		super(gameManager);
+		super(game);
 		this.world = new PhysicsWorld(environment());
 		setShadows(SHADOWS);
 	}
