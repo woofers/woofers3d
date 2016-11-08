@@ -20,24 +20,26 @@ public abstract class PlayerBody
 {
 	private static final float GHOST_MASS = -1f;
 	private static final float STEP_HEIGHT = 1f / 5f;
-	private static final float SPEED = 0.2f;
+	private static final float SPEED = 23f / 100f;
 	private static final float ROTATION_SPEED = 2f;
 	private static final float GRAVITY_SCALE = 3f;
 	private static final float GRAVITY = GdxMath.GRAVITY_EARTH * GRAVITY_SCALE;
 	private static final float FALL_SPEED = 55f;
 	private static final float JUMP_SPEED = 10f;
-	private static final float ACCELERATION = 0.04f;
+	private static final float ACCELERATION = 0.027f;
+	private static final float MAX_SPEED = 1.15f;
 
 	private static final float Y_BALANCE = -0.5f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
-	private Vector3 walkDirection;
-	private float speed;
+	private Vector3 walkDirection = new Vector3();
+	private Vector3 speed = new Vector3();
+	private Vector3 maxSpeed;
+	private float displacement;
 	private float rotationSpeed;
 	private float stepHeight;
 	private float acceleration;
-	private float accumulator = 1f;
 
 	private Keyboard keyboard;
 	private GameAccelerometer accelerometer;
@@ -58,13 +60,12 @@ public abstract class PlayerBody
 		super(model, new btPairCachingGhostObject(), shape, GHOST_MASS);
 		setStepHeight(STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
-		this.walkDirection = new Vector3();
 		setGravity(GRAVITY);
-		setSpeed(SPEED);
 		setRotationSpeed(ROTATION_SPEED);
 		setJumpSpeed(JUMP_SPEED);
 		setFallSpeed(FALL_SPEED);
 		setAcceleration(ACCELERATION);
+		setMaxSpeed(MAX_SPEED);
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -116,6 +117,8 @@ public abstract class PlayerBody
 	public void dispose()
 	{
 		super.dispose();
+		characterController.dispose();
+		callback.dispose();
 	}
 
 	public float gravity()
@@ -133,11 +136,11 @@ public abstract class PlayerBody
 			{
 				if (leftKey.isDown())
 				{
-					rotateLeft(1f);
+					rotateLeft();
 				}
 				if (rightKey.isDown())
 				{
-					rotateRight(1f);
+					rotateRight();
 				}
 				if (jumpKey.isDown())
 				{
@@ -146,12 +149,23 @@ public abstract class PlayerBody
 			}
 			if (forwardKey.isDown())
 			{
+				if (speed().z < 0f) speed().z = 0f;
+				if (MyMath.abs(speed().z) < maxSpeed().z) speed().z += acceleration();
 				walkDirection.add(direction());
 			}
-			if (backwardKey.isDown())
+			else if (backwardKey.isDown())
 			{
-				walkDirection.sub(direction());
+				if (speed().z > 0f) speed().z = 0f;
+				if (MyMath.abs(speed().z) < maxSpeed().z) speed().z -= acceleration();
+				walkDirection.add(direction());
 			}
+			else
+			{
+				speed().z = 0f;
+			}
+
+			if (leftKey.isDown() || rightKey.isDown()) speed().z = 0f;
+
 		}
 
 		if (touchScreen.exists())
@@ -179,8 +193,8 @@ public abstract class PlayerBody
 				}
 			}
 		}
-		walkDirection.scl(speed());
-		walkDirection.scl(MyMath.abs(accumulator));
+		walkDirection.scl(speed().z);
+		System.out.println(speed().z);
 		characterController().setWalkDirection(walkDirection);
 		bodyToTransform();
 	}
@@ -215,6 +229,16 @@ public abstract class PlayerBody
 	public boolean onGround()
 	{
 		return characterController().onGround();
+	}
+
+	protected void rotateLeft()
+	{
+		rotateLeft(1f);
+	}
+
+	protected void rotateRight()
+	{
+		rotateRight(1f);
 	}
 
 	protected void rotateLeft(float scale)
@@ -267,9 +291,14 @@ public abstract class PlayerBody
 		this.rotationSpeed = rotationSpeed;
 	}
 
-	public void setSpeed(float speed)
+	public void setMaxSpeed(float maxSpeed)
 	{
-		this.speed = speed;
+		setMaxSpeed(new Vector3(maxSpeed, maxSpeed, maxSpeed));
+	}
+
+	public void setMaxSpeed(Vector3 maxSpeed)
+	{
+		this.maxSpeed = maxSpeed;
 	}
 
 	public void setStepHeight(float stepHeight)
@@ -278,7 +307,12 @@ public abstract class PlayerBody
 		this.characterController = createController(stepHeight);
 	}
 
-	public float speed()
+	public Vector3 maxSpeed()
+	{
+		return maxSpeed;
+	}
+
+	public Vector3 speed()
 	{
 		return speed;
 	}

@@ -22,6 +22,7 @@ import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
+import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends BulletState
@@ -49,7 +50,7 @@ public class PlayState extends BulletState
 		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
-		// load(new GdxFile("btscene1.g3dj"));
+		load(new GdxFile("btscene1.g3dj"));
 
 		floor = new Floor();
 		applyPhysics(floor);
@@ -98,10 +99,6 @@ public class PlayState extends BulletState
 		addHud(text);
 
 		mouse = Inputs.mouse();
-
-		removePhysics(spheres[0]);
-		spheres[0].setCollisionShape(new BoxShape());
-		applyPhysics(spheres[0]);
 	}
 
 	@Override

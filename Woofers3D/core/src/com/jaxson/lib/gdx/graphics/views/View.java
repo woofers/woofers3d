@@ -2,6 +2,7 @@ package com.jaxson.lib.gdx.graphics.views;
 
 import java.util.HashMap;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -33,18 +34,23 @@ public class View
 		this.extras = new HashMap<>();
 		this.spriteBatch = new SpriteBatch();
 		this.modelBatch = new ModelBatch();
+		setToOrthographic();
+	}
 
-		OrthographicCamera camera = null;
-		if (spriteView().getCamera() instanceof OrthographicCamera)
-		{
-			camera = (OrthographicCamera) spriteView().getCamera();
-		}
-		else
-		{
-			camera = new OrthographicCamera();
-		}
+	private void setToOrthographic()
+	{
+		OrthographicCamera camera = validateCamera(spriteView().getCamera());
 		camera.setToOrtho(false);
 		spriteView().setCamera(camera);
+	}
+
+	private OrthographicCamera validateCamera(Camera camera)
+	{
+		if (camera instanceof OrthographicCamera)
+		{
+			return (OrthographicCamera) camera;
+		}
+		return new OrthographicCamera();
 	}
 
 	public Viewport add(Viewport viewport, String name)

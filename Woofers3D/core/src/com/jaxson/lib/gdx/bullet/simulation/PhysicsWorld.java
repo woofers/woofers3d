@@ -57,6 +57,9 @@ public class PhysicsWorld extends GameObject
 	protected static final int DEFAULT_FILTER
 			= btBroadphaseProxy.CollisionFilterGroups.DefaultFilter;
 
+	protected static final int DISABLE_DEACTIVATION
+			= CollisionConstants.DISABLE_DEACTIVATION;
+
 	protected static final float VECOTR_TO_MAX = 2f;
 	protected static final float VECOTR_TO_MIN = -VECOTR_TO_MAX;
 	protected static final Vector3 WORLD_SIZE = new Vector3(100f, 100f, 100f);
@@ -130,7 +133,7 @@ public class PhysicsWorld extends GameObject
 	{
 		if (contains(entity)) return;
 		if (hasMovement) entity.addCollisionFlag(KINEMATIC_FLAG);
-		entity.setActivationState(CollisionConstants.DISABLE_DEACTIVATION);
+		entity.setActivationState(DISABLE_DEACTIVATION);
 		add(entity, GROUND_FLAG, ALL_FLAG);
 	}
 

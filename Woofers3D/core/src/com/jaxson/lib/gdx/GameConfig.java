@@ -115,10 +115,6 @@ public class GameConfig
 		return antiAliasing;
 	}
 
-	private void autoSave()
-	{
-	}
-
 	/**
 	 * Gets the frame rate when the game is minimized.
 	 * Returns {@code -1} when the game pauses on minimize.
@@ -287,7 +283,6 @@ public class GameConfig
 		setImmersiveMode(config.isImmersive());
 		setIcon(config.icon());
 		setAntiAliasing(config.antiAliasing());
-		autoSave();
 	}
 
 	/**
@@ -298,7 +293,6 @@ public class GameConfig
 	public void setAntiAliasing(int antiAliasing)
 	{
 		this.antiAliasing = antiAliasing;
-		autoSave();
 	}
 
 	/**
@@ -309,7 +303,6 @@ public class GameConfig
 	public void setBackgroundFps(int backgroundFps)
 	{
 		this.backgroundFps = backgroundFps;
-		autoSave();
 	}
 
 	/**
@@ -330,7 +323,6 @@ public class GameConfig
 	public void setFullscreen(boolean allowFullscreen)
 	{
 		this.allowFullscreen = allowFullscreen;
-		autoSave();
 	}
 
 	/**
@@ -340,7 +332,6 @@ public class GameConfig
 	public void setFullscreenStartup(boolean startFullscreen)
 	{
 		this.startFullscreen = startFullscreen;
-		autoSave();
 	}
 
 	/**
@@ -359,7 +350,6 @@ public class GameConfig
 	public void setHeight(int height)
 	{
 		this.height = height;
-		autoSave();
 	}
 
 	/**
@@ -369,7 +359,6 @@ public class GameConfig
 	public void setIcon(File icon)
 	{
 		this.icon = icon;
-		autoSave();
 	}
 
 	/**
@@ -382,7 +371,6 @@ public class GameConfig
 	public void setImmersiveMode(boolean immersive)
 	{
 		this.immersive = immersive;
-		autoSave();
 	}
 
 	/**
@@ -392,7 +380,6 @@ public class GameConfig
 	public void setMaxFps(int fps)
 	{
 		this.fps = fps;
-		autoSave();
 	}
 
 	/**
@@ -402,7 +389,6 @@ public class GameConfig
 	public void setResizable(boolean resizable)
 	{
 		this.resizable = resizable;
-		autoSave();
 	}
 
 	/**
@@ -412,7 +398,6 @@ public class GameConfig
 	public void setSensitivity(float sensitivity)
 	{
 		sensitivity().set(sensitivity, sensitivity);
-		autoSave();
 	}
 
 	/**
@@ -423,7 +408,6 @@ public class GameConfig
 	public void setSensitivity(Vector2 sensitivity)
 	{
 		this.sensitivity = sensitivity;
-		autoSave();
 	}
 
 	/**
@@ -433,7 +417,6 @@ public class GameConfig
 	public void setStatusBar(boolean statusBar)
 	{
 		this.statusBar = statusBar;
-		autoSave();
 	}
 
 	/**
@@ -443,7 +426,6 @@ public class GameConfig
 	public void setStep(int step)
 	{
 		this.step = step;
-		autoSave();
 	}
 
 	/**
@@ -453,7 +435,6 @@ public class GameConfig
 	public void setTitle(String title)
 	{
 		this.title = title;
-		autoSave();
 	}
 
 	/**
@@ -463,7 +444,6 @@ public class GameConfig
 	public void setVsync(boolean vsync)
 	{
 		this.vsync = vsync;
-		autoSave();
 	}
 
 	/**
@@ -473,7 +453,6 @@ public class GameConfig
 	public void setWidth(int width)
 	{
 		this.width = width;
-		autoSave();
 	}
 
 	public void setWindowLocation(int x, int y)
