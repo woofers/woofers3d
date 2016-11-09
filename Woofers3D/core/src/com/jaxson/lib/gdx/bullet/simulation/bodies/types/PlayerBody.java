@@ -26,9 +26,12 @@ public abstract class PlayerBody
 	private static final float ROTATION_SPEED = 2f;
 	private static final float MAX_FALL_VELOCITY = 55f;
 	private static final float JUMP_IMUPLSE = 10f;
-	private static final float ACCELERATION = 1.8f;
-	private static final float DECCELERATION = ACCELERATION / 3f;
-	private static final float MAX_VELOCITY = 0.45f;
+	private static final float ACCELERATION_X = 5f;
+	private static final float DECCELERATION_X = ACCELERATION_X * 2f;
+	private static final float MAX_VELOCITY_X = 2.5f;
+	private static final float ACCELERATION_Z = 1.8f;
+	private static final float DECCELERATION_Z = ACCELERATION_Z / 3f;
+	private static final float MAX_VELOCITY_Z = 0.45f;
 
 	private static final float Y_BALANCE = -0.5f;
 
@@ -67,10 +70,9 @@ public abstract class PlayerBody
 		this.decceleration = new Vector3();
 		setJumpImpulse(JUMP_IMUPLSE);
 		setMaxFallVelocity(MAX_FALL_VELOCITY);
-		setAcceleration(ACCELERATION);
-		setDecceleration(DECCELERATION);
-		setMaxVelocity(MAX_VELOCITY);
-		setGravity(GRAVITY);
+		setAcceleration(new Vector3(ACCELERATION_X, GRAVITY, ACCELERATION_Z));
+		setDecceleration(new Vector3(DECCELERATION_X, GRAVITY, DECCELERATION_Z));
+		setMaxVelocity(new Vector3(MAX_VELOCITY_X, MAX_FALL_VELOCITY, MAX_VELOCITY_Z));
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -81,7 +83,7 @@ public abstract class PlayerBody
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
 
-		System.out.println(acceleration());
+		System.out.println(maxSpeed());
 
 		for (float i = Accelerometer.MIN;
 				i < Accelerometer.MAX + 0.1f; i += 0.1f)
@@ -143,12 +145,42 @@ public abstract class PlayerBody
 			{
 				if (leftKey.isDown())
 				{
-					rotate(ROTATION_SPEED, 0f, 0f);
+					if (MyMath.abs(velocity().x) < maxSpeed().x)
+					{
+						if (velocity().x >= 0f)
+						{
+							velocity().x += acceleration().x * dt;
+						}
+						else
+						{
+							velocity().x += decceleration().x * dt;
+						}
+					}
+				}
+				else
+				{
+					if (velocity().x > 0f) velocity().x -= decceleration().x * dt;
 				}
 				if (rightKey.isDown())
 				{
-					rotate(-ROTATION_SPEED, 0f, 0f);
+					if (MyMath.abs(velocity().x) < maxSpeed().x)
+					{
+						if (velocity().x <= 0f)
+						{
+							velocity().x -= acceleration().x * dt;
+						}
+						else
+						{
+							velocity().x -= decceleration().x * dt;
+						}
+					}
 				}
+				else
+				{
+					if (velocity().x < 0f) velocity().x += decceleration().x * dt;
+				}
+				if (MyMath.abs(velocity().x) < acceleration().x * dt) velocity().x = 0f;
+
 				if (jumpKey.isPressed())
 				{
 					jump();
@@ -226,9 +258,10 @@ public abstract class PlayerBody
 				}
 			}
 		}
+		if (velocity().x != 0) rotate(velocity().x, 0f, 0f);
 		direction.add(direction());
 		direction.scl(velocity().z);
-		System.out.println(velocity().z);
+		System.out.println(velocity().x);
 		characterController().setWalkDirection(direction);
 		bodyToTransform();
 	}
