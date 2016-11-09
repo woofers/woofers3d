@@ -89,6 +89,7 @@ public class Inputs
 		@Override
 		public boolean keyTyped(char character)
 		{
+			System.out.println(character);
 			return true;
 		}
 

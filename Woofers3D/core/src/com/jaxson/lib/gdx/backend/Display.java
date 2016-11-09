@@ -54,7 +54,7 @@ public class Display extends GameObject
 	private Keyboard keyboard;
 	private Mouse mouse;
 	private Keys fullscreenKey;
-	private KeyboardKey pauseKey;
+	private Keys pauseKey;
 	private KeyboardKey screenshotKey;
 	private TouchScreen touchScreen;
 
@@ -73,7 +73,7 @@ public class Display extends GameObject
 		this.keyboard = Inputs.keyboard();
 		this.mouse = Inputs.mouse();
 		this.touchScreen = Inputs.touchScreen();
-		this.pauseKey = keyboard.key("Escape");
+		this.pauseKey = new Keys(keyboard.key("Escape"), keyboard.key("Enter"));
 		this.screenshotKey = keyboard.key("F12");
 		this.fullscreenKey
 				= new Keys(keyboard.key("F11"),
@@ -292,7 +292,7 @@ public class Display extends GameObject
 
 	private void handleDisplayChange()
 	{
-		// updateViewport();
+		updateViewport();
 		Inputs.reset();
 		saveFullscreen();
 	}

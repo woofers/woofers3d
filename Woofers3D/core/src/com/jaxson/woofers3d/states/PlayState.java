@@ -63,7 +63,7 @@ public class PlayState extends BulletState
 			boxs[i] = new RigidBox(
 					new RandomColor(new MyColor(255, 95, 0),
 							new MyColor(255, 165, 50)));
-			boxs[i].setSize(new RandomVector3(1f, 4f));
+			boxs[i].setSize(new RandomVector3(1f, 4f, 1f, 2f, 1f, 4f));
 			boxs[i].moveTo(new RandomVector3(6f, 30f));
 			boxs[i].setMass(mass.floatValue());
 			applyPhysics(boxs[i]);
@@ -140,5 +140,7 @@ public class PlayState extends BulletState
 	{
 		super.update(dt);
 		text.setText(player.accelerometer().toString());
+		boxs[0].rotate(1f, 0f, 0f);
+		boxs[0].translate(new Vector3(0.1f, 0f, 0f));
 	}
 }

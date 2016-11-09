@@ -18,28 +18,30 @@ import com.jaxson.lib.math.MyMath;
 public abstract class PlayerBody
 		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 {
+	private static final float GRAVITY_SCALE = 5f;
 	private static final float GHOST_MASS = -1f;
-	private static final float STEP_HEIGHT = 1f / 5f;
-	private static final float SPEED = 23f / 100f;
+
+	private static final float GRAVITY = 7.84f;
+	private static final float STEP_HEIGHT = 1f / 6f;
 	private static final float ROTATION_SPEED = 2f;
-	private static final float GRAVITY_SCALE = 3f;
-	private static final float GRAVITY = GdxMath.GRAVITY_EARTH * GRAVITY_SCALE;
-	private static final float FALL_SPEED = 55f;
-	private static final float JUMP_SPEED = 10f;
-	private static final float ACCELERATION = 0.027f;
-	private static final float MAX_SPEED = 1.15f;
+	private static final float MAX_FALL_VELOCITY = 55f;
+	private static final float JUMP_IMUPLSE = 10f;
+	private static final float ACCELERATION = 0.015f;
+	private static final float DECCELERATION = ACCELERATION / 3f;
+	private static final float MAX_VELOCITY = 0.45f;
 
 	private static final float Y_BALANCE = -0.5f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
-	private Vector3 walkDirection = new Vector3();
-	private Vector3 speed = new Vector3();
-	private Vector3 maxSpeed;
-	private float displacement;
+	private Vector3 direction;
+	private Vector3 velocity;
+	private Vector3 maxVelocity;
 	private float rotationSpeed;
 	private float stepHeight;
 	private float acceleration;
+	private float decceleration;
+	private float gravity;
 
 	private Keyboard keyboard;
 	private GameAccelerometer accelerometer;
@@ -60,12 +62,15 @@ public abstract class PlayerBody
 		super(model, new btPairCachingGhostObject(), shape, GHOST_MASS);
 		setStepHeight(STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
+		this.direction = new Vector3();
+		this.velocity = new Vector3();
 		setGravity(GRAVITY);
 		setRotationSpeed(ROTATION_SPEED);
-		setJumpSpeed(JUMP_SPEED);
-		setFallSpeed(FALL_SPEED);
+		setJumpImpulse(JUMP_IMUPLSE);
+		setMaxFallVelocity(MAX_FALL_VELOCITY);
 		setAcceleration(ACCELERATION);
-		setMaxSpeed(MAX_SPEED);
+		setDecceleration(DECCELERATION);
+		setMaxVelocity(MAX_VELOCITY);
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -123,13 +128,13 @@ public abstract class PlayerBody
 
 	public float gravity()
 	{
-		return characterController().getGravity();
+		return gravity;
 	}
 
 	@Override
 	protected void input(float dt)
 	{
-		walkDirection.setZero();
+		direction.setZero();
 		if (keyboard().exists())
 		{
 			if (onGround())
@@ -142,30 +147,56 @@ public abstract class PlayerBody
 				{
 					rotateRight();
 				}
-				if (jumpKey.isDown())
+				if (jumpKey.isPressed())
 				{
 					jump();
 				}
 			}
 			if (forwardKey.isDown())
 			{
-				if (speed().z < 0f) speed().z = 0f;
-				if (MyMath.abs(speed().z) < maxSpeed().z) speed().z += acceleration();
-				walkDirection.add(direction());
-			}
-			else if (backwardKey.isDown())
-			{
-				if (speed().z > 0f) speed().z = 0f;
-				if (MyMath.abs(speed().z) < maxSpeed().z) speed().z -= acceleration();
-				walkDirection.add(direction());
+				if (MyMath.abs(velocity().z) < maxSpeed().z)
+				{
+					if (velocity().z >= 0f)
+					{
+						velocity().z += acceleration();
+					}
+					else
+					{
+						velocity().z += decceleration();
+					}
+				}
 			}
 			else
 			{
-				speed().z = 0f;
+				if (velocity().z > 0f) velocity().z -= decceleration();
 			}
-
-			if (leftKey.isDown() || rightKey.isDown()) speed().z = 0f;
-
+			if (backwardKey.isDown())
+			{
+				if (MyMath.abs(velocity().z) < maxSpeed().z)
+				{
+					if (velocity().z <= 0f)
+					{
+						velocity().z -= acceleration();
+					}
+					else
+					{
+						velocity().z -= decceleration();
+					}
+				}
+			}
+			else
+			{
+				if (velocity().z < 0f) velocity().z += decceleration();
+			}
+			if (leftKey.isDown() || rightKey.isDown())
+			{
+				if (MyMath.abs(velocity().z) > decceleration())
+				{
+					velocity().z += -(MyMath.abs(velocity().z) / velocity().z)
+							* (acceleration() + decceleration());
+				}
+			}
+			if (MyMath.abs(velocity().z) < acceleration()) velocity().z = 0f;
 		}
 
 		if (touchScreen.exists())
@@ -177,8 +208,8 @@ public abstract class PlayerBody
 		}
 		if (accelerometer.exists())
 		{
-			walkDirection.add(direction());
-			walkDirection.scl(yAccelerometer(5f) * 1.7f);
+			direction.add(direction());
+			direction.scl(yAccelerometer(5f) * 1.7f);
 			if (onGround())
 			{
 				if (accelerometer.tiltsLeft())
@@ -193,9 +224,10 @@ public abstract class PlayerBody
 				}
 			}
 		}
-		walkDirection.scl(speed().z);
-		System.out.println(speed().z);
-		characterController().setWalkDirection(walkDirection);
+		direction.add(direction());
+		direction.scl(velocity().z);
+		System.out.println(velocity().z);
+		characterController().setWalkDirection(direction);
 		bodyToTransform();
 	}
 
@@ -261,19 +293,30 @@ public abstract class PlayerBody
 		this.acceleration = acceleration;
 	}
 
-	public void setFallSpeed(float fallSpeed)
+	public void setDecceleration(float decceleration)
 	{
-		characterController().setFallSpeed(fallSpeed);
+		this.decceleration = decceleration;
+	}
+
+	public float decceleration()
+	{
+		return decceleration;
+	}
+
+	public void setMaxFallVelocity(float maxFallVelocity)
+	{
+		characterController().setFallSpeed(maxFallVelocity);
 	}
 
 	public void setGravity(float gravity)
 	{
-		characterController().setGravity(gravity);
+		this.gravity = gravity;
+		characterController().setGravity(gravity() * GRAVITY_SCALE);
 	}
 
-	public void setJumpSpeed(float jumpSpeed)
+	public void setJumpImpulse(float jumpImpulse)
 	{
-		characterController().setJumpSpeed(jumpSpeed);
+		characterController().setJumpSpeed(jumpImpulse);
 	}
 
 	public void setMaxSlope(float maxSlope)
@@ -291,14 +334,14 @@ public abstract class PlayerBody
 		this.rotationSpeed = rotationSpeed;
 	}
 
-	public void setMaxSpeed(float maxSpeed)
+	public void setMaxVelocity(float maxVelocity)
 	{
-		setMaxSpeed(new Vector3(maxSpeed, maxSpeed, maxSpeed));
+		setMaxVelocity(new Vector3(maxVelocity, maxVelocity, maxVelocity));
 	}
 
-	public void setMaxSpeed(Vector3 maxSpeed)
+	public void setMaxVelocity(Vector3 maxVelocity)
 	{
-		this.maxSpeed = maxSpeed;
+		this.maxVelocity = maxVelocity;
 	}
 
 	public void setStepHeight(float stepHeight)
@@ -309,12 +352,12 @@ public abstract class PlayerBody
 
 	public Vector3 maxSpeed()
 	{
-		return maxSpeed;
+		return maxVelocity;
 	}
 
-	public Vector3 speed()
+	public Vector3 velocity()
 	{
-		return speed;
+		return velocity;
 	}
 
 	public float stepHeight()
