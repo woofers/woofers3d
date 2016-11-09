@@ -20,6 +20,7 @@ public abstract class PlayerBody
 {
 	private static final float GRAVITY_SCALE = -5f;
 	private static final float GHOST_MASS = -1f;
+	private static final float ROUND_TOLERANCE_SCALE = 1.00000001f;
 
 	private static final float GRAVITY = -7.84f;
 	private static final float STEP_HEIGHT = 1f / 6f;
@@ -179,11 +180,11 @@ public abstract class PlayerBody
 				{
 					if (velocity().x < 0f) velocity().x += decceleration().x * dt;
 				}
-				if (MyMath.abs(velocity().x) < acceleration().x * dt) velocity().x = 0f;
+				if (MyMath.abs(velocity().x) < acceleration().x * dt * ROUND_TOLERANCE_SCALE) velocity().x = 0f;
 
 				if (jumpKey.isPressed())
 				{
-					jump();
+					if (canJump()) jump();
 				}
 			}
 			if (forwardKey.isDown())
@@ -224,13 +225,13 @@ public abstract class PlayerBody
 			}
 			if (leftKey.isDown() || rightKey.isDown())
 			{
-				if (MyMath.abs(velocity().z) > decceleration().z * dt)
+				if (MyMath.abs(velocity().z) > decceleration().z * dt * ROUND_TOLERANCE_SCALE)
 				{
 					velocity().z += -(MyMath.abs(velocity().z) / velocity().z)
 							* (acceleration().z + decceleration().z) * dt;
 				}
 			}
-			if (MyMath.abs(velocity().z) < acceleration().z * dt) velocity().z = 0f;
+			if (MyMath.abs(velocity().z) < acceleration().z * dt * ROUND_TOLERANCE_SCALE) velocity().z = 0f;
 		}
 
 		if (touchScreen.exists())
@@ -261,7 +262,7 @@ public abstract class PlayerBody
 		if (velocity().x != 0) rotate(velocity().x, 0f, 0f);
 		direction.add(direction());
 		direction.scl(velocity().z);
-		System.out.println(velocity().x);
+		System.out.println(velocity());
 		characterController().setWalkDirection(direction);
 		bodyToTransform();
 	}
