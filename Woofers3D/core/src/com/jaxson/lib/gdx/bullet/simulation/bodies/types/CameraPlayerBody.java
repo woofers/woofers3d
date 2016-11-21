@@ -31,6 +31,12 @@ public class CameraPlayerBody extends PlayerBody
 		this(model, fittedShape(model.unwrap()), camera);
 	}
 
+	protected void reset()
+	{
+		super.reset();
+		unlockCamera();
+	}
+
 	public TargetCamera camera()
 	{
 		return camera;

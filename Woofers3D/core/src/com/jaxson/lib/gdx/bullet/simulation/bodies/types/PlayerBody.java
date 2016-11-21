@@ -27,7 +27,7 @@ public abstract class PlayerBody
 	private static final float ROTATION_SPEED = 2f;
 	private static final float MAX_FALL_VELOCITY = 8.25f;
 	private static final float JUMP_IMUPLSE = 1.5f;
-	private static final float ACCELERATION_X = 2f;
+	private static final float ACCELERATION_X = 3f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
 	private static final float MAX_VELOCITY_X = 250f;
 	private static final float ACCELERATION_Z = 0.23f;
@@ -91,6 +91,13 @@ public abstract class PlayerBody
 		for (float i = Accelerometer.MIN;
 				i < Accelerometer.MAX + 0.1f; i += 0.1f)
 			System.out.println(round(i) + ": " + round(yAccelerometer(i)));
+	}
+
+	protected void reset()
+	{
+		moveTo(Vector3.Zero);
+		velocityPerTick().setZero();
+		direction.setZero();
 	}
 
 	public Vector3 acceleration()

@@ -3,6 +3,7 @@ package com.jaxson.woofers3d.entities;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.badlogic.gdx.math.Vector3;
 
 public class Player extends CameraPlayerBody
 {
@@ -11,6 +12,7 @@ public class Player extends CameraPlayerBody
 	private static final float HITBOX_SCALE = 90f / 100f;
 
 	private KeyboardKey cameraKey;
+	private KeyboardKey resetKey;
 
 	public Player(TargetCamera camera)
 	{
@@ -19,6 +21,7 @@ public class Player extends CameraPlayerBody
 		scale(SCALE);
 
 		this.cameraKey = keyboard().key("T");
+		this.resetKey = keyboard().key("Y");
 	}
 
 	@Override
@@ -32,6 +35,7 @@ public class Player extends CameraPlayerBody
 	{
 		super.input(dt);
 		if (cameraKey.isPressed()) toggleCamera();
+		if (resetKey.isPressed()) reset();
 	}
 
 	@Override

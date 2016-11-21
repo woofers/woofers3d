@@ -523,8 +523,7 @@
 			"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/PlayerBody.java",
 			"settings":
 			{
-				"buffer_size": 9607,
-				"encoding": "UTF-8",
+				"buffer_size": 10091,
 				"line_ending": "Windows"
 			}
 		}
@@ -798,16 +797,7 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/excel",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/io/excel/workbook",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/math"
+		"/C/Users/707021/Desktop/JavaProjects/Woofers3D"
 	],
 	"file_history":
 	[
@@ -1179,15 +1169,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9607,
+						"buffer_size": 10091,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2171,
-								2171
+								1338,
+								1338
 							]
 						],
 						"settings":
@@ -1196,7 +1186,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 462.0,
+						"translation.y": 330.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
