@@ -11,7 +11,7 @@ import com.jaxson.lib.gdx.backend.Game;
 
 public class Mouse implements Iterable<MouseButton>
 {
-	private static final float MOUSE_SCALE = 1f / 5f;
+	private static final float MOUSE_SCALE = 1f / 60f;
 	private static final float TOUCH_MOUSE_SCALE = 1f / 3f;
 
 	private static final boolean INVERT_MOUSE_X = true;

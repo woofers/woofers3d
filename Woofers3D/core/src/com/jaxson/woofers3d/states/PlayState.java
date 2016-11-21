@@ -10,7 +10,6 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.SoftBox;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
-import com.jaxson.lib.gdx.bullet.simulation.collision.BoxShape;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
 import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
@@ -22,19 +21,22 @@ import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
-import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.woofers3d.entities.Player;
 
 public class PlayState extends BulletState
 {
 	private static final int BOX_AMOUNT = 25;
+	private static final int TEST_AMOUNT = 5;
 	private static final int SPHERE_AMOUNT = 25;
-	private static final float IMPULSE_SPEED = 45f;
+	private static final float IMPULSE_SPEED = 1.3f;
+	private static final float MARKER_LENGTH = 35f;
 
 	private Floor floor;
 	private RigidBox[] boxs;
 	private RigidSphere[] spheres;
 	private SoftBox softBox;
+	private RigidBox marker;
+	private RigidBox[] tests;
 	private Player player;
 	private TargetCamera camera;
 	private Text text;
@@ -50,21 +52,22 @@ public class PlayState extends BulletState
 		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
-		load(new GdxFile("btscene1.g3dj"));
+		// load(new GdxFile("btscene1.g3dj"));
 
 		floor = new Floor();
 		applyPhysics(floor);
 		add(floor);
 
-		RandomNumber mass = new RandomNumber(0.9f, 1.2f);
+		RandomNumber mass = new RandomNumber(0.135f, 0.18f);
 		boxs = new RigidBox[BOX_AMOUNT];
 		for (int i = 0; i < BOX_AMOUNT; i ++)
 		{
 			boxs[i] = new RigidBox(
 					new RandomColor(new MyColor(255, 95, 0),
 							new MyColor(255, 165, 50)));
-			boxs[i].setSize(new RandomVector3(1f, 4f, 1f, 2f, 1f, 4f));
-			boxs[i].moveTo(new RandomVector3(6f, 30f));
+			boxs[i].setSize(
+					new RandomVector3(0.15f, 0.6f, 0.15f, 0.3f, 0.15f, 0.6f));
+			boxs[i].moveTo(new RandomVector3(0.9f, 2.205f));
 			boxs[i].setMass(mass.floatValue());
 			applyPhysics(boxs[i]);
 			add(boxs[i]);
@@ -76,8 +79,8 @@ public class PlayState extends BulletState
 			for (int i = 0; i < SPHERE_AMOUNT; i ++)
 			{
 				spheres[i] = new RigidSphere(new RandomColor());
-				spheres[i].moveTo(new RandomVector3(6f, 30f));
-				spheres[i].setSize(new Vector3(2f, 2f, 2f));
+				spheres[i].moveTo(new RandomVector3(0.9f, 2.205f));
+				spheres[i].setSize(new Vector3(0.3f, 0.3f, 0.3f));
 				spheres[i].setMass(mass.floatValue());
 				applyPhysics(spheres[i]);
 				add(spheres[i]);
@@ -140,7 +143,7 @@ public class PlayState extends BulletState
 	{
 		super.update(dt);
 		text.setText(player.accelerometer().toString());
-		boxs[0].rotate(1f, 0f, 0f);
-		boxs[0].translate(new Vector3(0.1f, 0f, 0f));
+		// boxs[0].rotate(1f, 0f, 0f);
+		// boxs[0].translate(new Vector3(0.1f, 0f, 0f));
 	}
 }

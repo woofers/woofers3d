@@ -11,6 +11,7 @@ import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.states.State;
+import com.jaxson.lib.util.MyArrayList;
 
 public abstract class BulletState extends State
 {
@@ -62,10 +63,12 @@ public abstract class BulletState extends State
 		super.dispose();
 	}
 
-	public void load(GdxFile file)
+	public MyArrayList<RigidBody> load(GdxFile file)
 	{
-		for (RigidBody entity: physicsWorld().load(file))
+		MyArrayList<RigidBody> imported = physicsWorld().load(file);
+		for (RigidBody entity: imported)
 			add(entity);
+		return imported;
 	}
 
 	public PhysicsWorld physicsWorld()

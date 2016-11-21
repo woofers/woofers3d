@@ -33,22 +33,111 @@ public class MySheet implements Iterable<MyRow>
 
 	public int addMergedRegion(CellRangeAddress region)
 	{
-		return getSheet().addMergedRegion(region);
+		return sheet().addMergedRegion(region);
 	}
 
 	public void addValidationData(DataValidation dataValidation)
 	{
-		getSheet().addValidationData(dataValidation);
+		sheet().addValidationData(dataValidation);
+	}
+
+	public int amountOfMergedRegions()
+	{
+		return sheet().getNumMergedRegions();
+	}
+
+	public boolean autobreaks()
+	{
+		return sheet().getAutobreaks();
 	}
 
 	public void autoSizeColumn(int column)
 	{
-		getSheet().autoSizeColumn(column);
+		sheet().autoSizeColumn(column);
 	}
 
 	public void autoSizeColumn(int column, boolean mergedCells)
 	{
-		getSheet().autoSizeColumn(column, mergedCells);
+		sheet().autoSizeColumn(column, mergedCells);
+	}
+
+	public MyCell cell(CellLocation location) throws CellOutOfBoundsException
+	{
+		int y = location.y() + 1;
+		Iterator<MyRow> iterator = iterator();
+		MyRow row = null;
+		for (int r = 0; r < y; r ++)
+		{
+			if (iterator.hasNext())
+				row = iterator.next();
+			else
+				throw new CellOutOfBoundsException(location);
+		}
+		if (row == null) throw new CellOutOfBoundsException(location);
+		return row.cell(location);
+	}
+
+	public MyCell cell(int x, int y)
+	{
+		return cell(new CellLocation(x, y));
+	}
+
+	public MyCell cell(String cell)
+	{
+		return cell(new CellLocation(cell));
+	}
+
+	public Comment cellComment(CellLocation location)
+	{
+		return cellComment(location.x(), location.y());
+	}
+
+	public Comment cellComment(int column, int row)
+	{
+		return sheet().getCellComment(row, column);
+	}
+
+	@Override
+	public MySheet clone()
+	{
+		return new MySheet(workbook().cloneSheet(index()));
+	}
+
+	public MyColumn column(CellLocation location)
+	{
+		return column(location.x());
+	}
+
+	public MyColumn column(int column)
+	{
+		MyArrayList<MyCell> cells = new MyArrayList<>();
+		MyCell cell = topRow().cell(column);
+		CellLocation location = cell.location();
+		do
+		{
+			cells.add(cell);
+			location = location.nextRow();
+			try
+			{
+				cell = cell(location);
+			}
+			catch (Exception ex)
+			{
+				cell = null;
+			}
+		}
+		while (cell != null);
+		return new MyColumn(this, cells);
+	}
+
+	public int[] columnBreaks()
+	{
+		return sheet().getColumnBreaks();
+	}
+
+	public int columnOutlineLevel(int column)
+	{
+		return sheet().getColumnOutlineLevel(column);
 	}
 
 	public Iterable<MyColumn> columns()
@@ -60,15 +149,15 @@ public class MySheet implements Iterable<MyRow>
 		for (MyCell cell: topRow)
 		{
 			MyArrayList<MyCell> cells = new MyArrayList<>();
-			location = cell.getLocation();
-			cellRow = getCell(location);
+			location = cell.location();
+			cellRow = cell(location);
 			do
 			{
 				cells.add(cellRow);
 				location = location.nextRow();
 				try
 				{
-					cellRow = getCell(location);
+					cellRow = cell(location);
 				}
 				catch (Exception ex)
 				{
@@ -81,14 +170,29 @@ public class MySheet implements Iterable<MyRow>
 		return columns;
 	}
 
+	public MyCellStyle columnStyle(int column)
+	{
+		return new MyCellStyle(sheet().getColumnStyle(column));
+	}
+
+	public int columnWidth(int column)
+	{
+		return sheet().getColumnWidth(column);
+	}
+
+	public float columnWidthInPixels(int column)
+	{
+		return sheet().getColumnWidthInPixels(column);
+	}
+
 	public Drawing createDrawingPatriarch()
 	{
-		return getSheet().createDrawingPatriarch();
+		return sheet().createDrawingPatriarch();
 	}
 
 	public void createFreezePane(int columnSplit, int rowSplit)
 	{
-		getSheet().createFreezePane(columnSplit, rowSplit);
+		sheet().createFreezePane(columnSplit, rowSplit);
 	}
 
 	public void createFreezePane(int columnSplit,
@@ -96,18 +200,18 @@ public class MySheet implements Iterable<MyRow>
 			int leftmostColumn,
 			int topRow)
 	{
-		getSheet().createFreezePane(columnSplit, rowSplit, leftmostColumn,
+		sheet().createFreezePane(columnSplit, rowSplit, leftmostColumn,
 				topRow);
 	}
 
 	public MyRow createRow()
 	{
-		return createRow(getLastRowIndex() + 1);
+		return createRow(lastRowIndex() + 1);
 	}
 
 	public MyRow createRow(int index)
 	{
-		return new MyRow(getSheet().createRow(index));
+		return new MyRow(sheet().createRow(index));
 	}
 
 	public void createSplitPane(int xSplit,
@@ -116,352 +220,158 @@ public class MySheet implements Iterable<MyRow>
 			int topRow,
 			int activePane)
 	{
-		getSheet().createSplitPane(xSplit, ySplit, leftMostColumn, topRow,
+		sheet().createSplitPane(xSplit, ySplit, leftMostColumn, topRow,
 				activePane);
 	}
 
-	public int getAmountMergedRegions()
+	public DataValidationHelper dataValidationHelper()
 	{
-		return getSheet().getNumMergedRegions();
+		return sheet().getDataValidationHelper();
 	}
 
-	public boolean getAutobreaks()
+	public List<? extends DataValidation> dataValidations()
 	{
-		return getSheet().getAutobreaks();
+		return sheet().getDataValidations();
 	}
 
-	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
+	public int defaultColumnWidth()
 	{
-		int y = location.getY() + 1;
-		Iterator<MyRow> iterator = iterator();
-		MyRow row = null;
-		for (int r = 0; r < y; r ++)
-		{
-			if (iterator.hasNext())
-				row = iterator.next();
-			else
-				throw new CellOutOfBoundsException(location);
-		}
-		if (row == null) throw new CellOutOfBoundsException(location);
-		return row.getCell(location);
+		return sheet().getDefaultColumnWidth();
 	}
 
-	public MyCell getCell(int x, int y)
+	public short defaultRowHeight()
 	{
-		return getCell(new CellLocation(x, y));
+		return sheet().getDefaultRowHeight();
 	}
 
-	public MyCell getCell(String cell)
+	public float defaultRowHeightInPoints()
 	{
-		return getCell(new CellLocation(cell));
+		return sheet().getDefaultRowHeightInPoints();
 	}
 
-	public Comment getCellComment(CellLocation location)
+	public boolean displaysFormulas()
 	{
-		return getCellComment(location.getX(), location.getY());
+		return sheet().isDisplayFormulas();
 	}
 
-	public Comment getCellComment(int column, int row)
+	public boolean displaysGridlines()
 	{
-		return getSheet().getCellComment(row, column);
+		return sheet().isDisplayGridlines();
 	}
 
-	public MyColumn getColumn(CellLocation location)
+	public boolean displaysGuts()
 	{
-		return getColumn(location.getX());
+		return sheet().getDisplayGuts();
 	}
 
-	public MyColumn getColumn(int column)
+	public boolean displaysRowColHeadings()
 	{
-		MyArrayList<MyCell> cells = new MyArrayList<>();
-		MyCell cell = getTopRow().getCell(column);
-		CellLocation location = cell.getLocation();
-		do
-		{
-			cells.add(cell);
-			location = location.nextRow();
-			try
-			{
-				cell = getCell(location);
-			}
-			catch (Exception ex)
-			{
-				cell = null;
-			}
-		}
-		while (cell != null);
-		return new MyColumn(this, cells);
+		return sheet().isDisplayRowColHeadings();
 	}
 
-	public int[] getColumnBreaks()
+	public boolean displaysZeros()
 	{
-		return getSheet().getColumnBreaks();
+		return sheet().isDisplayZeros();
 	}
 
-	public int getColumnOutlineLevel(int column)
+	public MyRow firstRow()
 	{
-		return getSheet().getColumnOutlineLevel(column);
+		return row(firstRowIndex());
 	}
 
-	public CellStyle getColumnStyle(int column)
+	public int firstRowIndex()
 	{
-		return getSheet().getColumnStyle(column);
+		return sheet().getFirstRowNum();
 	}
 
-	public int getColumnWidth(int column)
+	public boolean fitsToPage()
 	{
-		return getSheet().getColumnWidth(column);
+		return sheet().getFitToPage();
 	}
 
-	public float getColumnWidthInPixels(int column)
+	public Footer footer()
 	{
-		return getSheet().getColumnWidthInPixels(column);
+		return sheet().getFooter();
 	}
 
-	public DataValidationHelper getDataValidationHelper()
+	public boolean forcesFormulaRecalculation()
 	{
-		return getSheet().getDataValidationHelper();
+		return sheet().getForceFormulaRecalculation();
 	}
 
-	public List<? extends DataValidation> getDataValidations()
+	public SheetConditionalFormatting formatting()
 	{
-		return getSheet().getDataValidations();
-	}
-
-	public int getDefaultColumnWidth()
-	{
-		return getSheet().getDefaultColumnWidth();
-	}
-
-	public short getDefaultRowHeight()
-	{
-		return getSheet().getDefaultRowHeight();
-	}
-
-	public float getDefaultRowHeightInPoints()
-	{
-		return getSheet().getDefaultRowHeightInPoints();
-	}
-
-	public boolean getDisplayGuts()
-	{
-		return getSheet().getDisplayGuts();
-	}
-
-	public MyRow getFirstRow()
-	{
-		return getRow(getFirstRowIndex());
-	}
-
-	public int getFirstRowIndex()
-	{
-		return getSheet().getFirstRowNum();
-	}
-
-	public boolean getFitToPage()
-	{
-		return getSheet().getFitToPage();
-	}
-
-	public Footer getFooter()
-	{
-		return getSheet().getFooter();
-	}
-
-	public boolean getForceFormulaRecalculation()
-	{
-		return getSheet().getForceFormulaRecalculation();
-	}
-
-	public Header getHeader()
-	{
-		return getSheet().getHeader();
-	}
-
-	public boolean getHorizontallyCenter()
-	{
-		return getSheet().getHorizontallyCenter();
-	}
-
-	public int getIndex()
-	{
-		return getWorkbook().getSheetIndex(this);
-	}
-
-	public MyRow getLastRow()
-	{
-		return getRow(getLastRowIndex());
-	}
-
-	public int getLastRowIndex()
-	{
-		if (!hasRow()) return NO_ROWS;
-		return getSheet().getLastRowNum();
-	}
-
-	public short getLeftColumn()
-	{
-		return getSheet().getLeftCol();
-	}
-
-	public double getMargin(short margin)
-	{
-		return getSheet().getMargin(margin);
-	}
-
-	public CellRangeAddress getMergedRegion(int index)
-	{
-		return getSheet().getMergedRegion(index);
-	}
-
-	public String getName()
-	{
-		return getSheet().getSheetName();
-	}
-
-	public PaneInformation getPaneInformation()
-	{
-		return getSheet().getPaneInformation();
-	}
-
-	public int getPhysicalNumberOfRows()
-	{
-		return getSheet().getPhysicalNumberOfRows();
-	}
-
-	public PrintSetup getPrintSetup()
-	{
-		return getSheet().getPrintSetup();
-	}
-
-	public boolean getProtect()
-	{
-		return getSheet().getProtect();
-	}
-
-	public CellRangeAddress getRepeatingColumns()
-	{
-		return getSheet().getRepeatingColumns();
-	}
-
-	public CellRangeAddress getRepeatingRows()
-	{
-		return getSheet().getRepeatingRows();
-	}
-
-	public MyRow getRow(int index)
-	{
-		return new MyRow(getSheet().getRow(index));
-	}
-
-	public int[] getRowBreaks()
-	{
-		return getSheet().getRowBreaks();
-	}
-
-	public boolean getRowSumsBelow()
-	{
-		return getSheet().getRowSumsBelow();
-	}
-
-	public boolean getRowSumsRight()
-	{
-		return getSheet().getRowSumsRight();
-	}
-
-	public boolean getScenarioProtect()
-	{
-		return getSheet().getScenarioProtect();
-	}
-
-	protected Sheet getSheet()
-	{
-		return sheet;
-	}
-
-	public SheetConditionalFormatting getSheetConditionalFormatting()
-	{
-		return getSheet().getSheetConditionalFormatting();
-	}
-
-	public MyRow getTopRow()
-	{
-		return iterator().next();
-	}
-
-	public boolean getVerticallyCenter()
-	{
-		return getSheet().getVerticallyCenter();
-	}
-
-	public MyWorkbook getWorkbook()
-	{
-		return new MyWorkbook(getSheet().getWorkbook());
+		return sheet().getSheetConditionalFormatting();
 	}
 
 	public void groupColumn(int startColumn, int endColumn)
 	{
-		getSheet().groupColumn(startColumn, endColumn);
+		sheet().groupColumn(startColumn, endColumn);
 	}
 
 	public void groupRow(int startRow, int endStart)
 	{
-		getSheet().groupRow(startRow, endStart);
+		sheet().groupRow(startRow, endStart);
 	}
 
 	public boolean hasRow()
 	{
-		return getFirstRow().getRow() != null;
+		return firstRow().row() != null;
+	}
+
+	public Header header()
+	{
+		return sheet().getHeader();
+	}
+
+	public int index()
+	{
+		return workbook().sheetIndex(this);
 	}
 
 	public boolean isColumnBroken(int column)
 	{
-		return getSheet().isColumnBroken(column);
+		return sheet().isColumnBroken(column);
 	}
 
 	public boolean isColumnHidden(int column)
 	{
-		return getSheet().isColumnHidden(column);
+		return sheet().isColumnHidden(column);
 	}
 
-	public boolean isDisplayFormulas()
+	public boolean isHorizontallyCenter()
 	{
-		return getSheet().isDisplayFormulas();
+		return sheet().getHorizontallyCenter();
 	}
 
-	public boolean isDisplayGridlines()
+	public boolean isProtected()
 	{
-		return getSheet().isDisplayGridlines();
-	}
-
-	public boolean isDisplayRowColHeadings()
-	{
-		return getSheet().isDisplayRowColHeadings();
-	}
-
-	public boolean isDisplayZeros()
-	{
-		return getSheet().isDisplayZeros();
-	}
-
-	public boolean isPrintGridlines()
-	{
-		return getSheet().isPrintGridlines();
+		return sheet().getProtect();
 	}
 
 	public boolean isRightToLeft()
 	{
-		return getSheet().isRightToLeft();
+		return sheet().isRightToLeft();
 	}
 
 	public boolean isRowBroken(int row)
 	{
-		return getSheet().isRowBroken(row);
+		return sheet().isRowBroken(row);
+	}
+
+	public boolean isScenarioProtected()
+	{
+		return sheet().getScenarioProtect();
 	}
 
 	public boolean isSelected()
 	{
-		return getSheet().isSelected();
+		return sheet().isSelected();
+	}
+
+	public boolean isVerticallyCenter()
+	{
+		return sheet().getVerticallyCenter();
 	}
 
 	@Override
@@ -470,210 +380,296 @@ public class MySheet implements Iterable<MyRow>
 		return rows().iterator();
 	}
 
+	public MyRow lastRow()
+	{
+		return row(lastRowIndex());
+	}
+
+	public int lastRowIndex()
+	{
+		if (!hasRow()) return NO_ROWS;
+		return sheet().getLastRowNum();
+	}
+
+	public short leftColumn()
+	{
+		return sheet().getLeftCol();
+	}
+
+	public double margin(short margin)
+	{
+		return sheet().getMargin(margin);
+	}
+
+	public CellRangeAddress mergedRegion(int index)
+	{
+		return sheet().getMergedRegion(index);
+	}
+
+	public String name()
+	{
+		return sheet().getSheetName();
+	}
+
+	public PaneInformation paneInformation()
+	{
+		return sheet().getPaneInformation();
+	}
+
+	public int physicalNumberOfRows()
+	{
+		return sheet().getPhysicalNumberOfRows();
+	}
+
+	public PrintSetup printSetup()
+	{
+		return sheet().getPrintSetup();
+	}
+
+	public boolean printsGridlines()
+	{
+		return sheet().isPrintGridlines();
+	}
+
 	public void protectSheet(String password)
 	{
-		getSheet().protectSheet(password);
+		sheet().protectSheet(password);
 	}
 
 	public CellRange<? extends Cell> removeArrayFormula(Cell cell)
 	{
-		return getSheet().removeArrayFormula(cell);
+		return sheet().removeArrayFormula(cell);
 	}
 
 	public void removeColumnBreak(int column)
 	{
-		getSheet().removeColumnBreak(column);
+		sheet().removeColumnBreak(column);
 	}
 
 	public void removeMergedRegion(int index)
 	{
-		getSheet().removeMergedRegion(index);
+		sheet().removeMergedRegion(index);
 	}
 
 	public void removeRow(int row)
 	{
-		removeRow(getRow(row));
+		removeRow(row(row));
 	}
 
 	public void removeRow(MyRow row)
 	{
-		getSheet().removeRow(row.getRow());
+		sheet().removeRow(row.row());
 	}
 
 	public void removeRowBreak(int row)
 	{
-		getSheet().removeRowBreak(row);
+		sheet().removeRowBreak(row);
+	}
+
+	public CellRangeAddress repeatingColumns()
+	{
+		return sheet().getRepeatingColumns();
+	}
+
+	public CellRangeAddress repeatingRows()
+	{
+		return sheet().getRepeatingRows();
+	}
+
+	public MyRow row(int index)
+	{
+		return new MyRow(sheet().getRow(index));
+	}
+
+	public int[] rowBreaks()
+	{
+		return sheet().getRowBreaks();
 	}
 
 	public Iterable<MyRow> rows()
 	{
 		MyArrayList<MyRow> rows = new MyArrayList<>();
-		for (Row row: getSheet())
+		for (Row row: sheet())
 		{
 			rows.add(new MyRow(row));
 		}
 		return rows;
 	}
 
+	public boolean rowSumsAreBelow()
+	{
+		return sheet().getRowSumsBelow();
+	}
+
+	public boolean rowSumsAreRight()
+	{
+		return sheet().getRowSumsRight();
+	}
+
 	public CellRange<? extends Cell> setArrayFormula(String formula,
 			CellRangeAddress range)
 	{
-		return getSheet().setArrayFormula(formula, range);
+		return sheet().setArrayFormula(formula, range);
 	}
 
 	public void setAutobreaks(boolean autobreaks)
 	{
-		getSheet().setAutobreaks(autobreaks);
+		sheet().setAutobreaks(autobreaks);
 	}
 
 	public AutoFilter setAutoFilter(CellRangeAddress range)
 	{
-		return getSheet().setAutoFilter(range);
+		return sheet().setAutoFilter(range);
 	}
 
 	public void setColumnBreak(int arg0)
 	{
-		getSheet().setColumnBreak(arg0);
+		sheet().setColumnBreak(arg0);
 	}
 
 	public void setColumnGroupCollapsed(int arg0, boolean arg1)
 	{
-		getSheet().setColumnGroupCollapsed(arg0, arg1);
+		sheet().setColumnGroupCollapsed(arg0, arg1);
 	}
 
 	public void setColumnHidden(int arg0, boolean arg1)
 	{
-		getSheet().setColumnHidden(arg0, arg1);
+		sheet().setColumnHidden(arg0, arg1);
 	}
 
 	public void setColumnWidth(int arg0, int arg1)
 	{
-		getSheet().setColumnWidth(arg0, arg1);
+		sheet().setColumnWidth(arg0, arg1);
 	}
 
 	public void setDefaultColumnStyle(int arg0, CellStyle arg1)
 	{
-		getSheet().setDefaultColumnStyle(arg0, arg1);
+		sheet().setDefaultColumnStyle(arg0, arg1);
 	}
 
 	public void setDefaultColumnWidth(int arg0)
 	{
-		getSheet().setDefaultColumnWidth(arg0);
+		sheet().setDefaultColumnWidth(arg0);
 	}
 
 	public void setDefaultRowHeight(short arg0)
 	{
-		getSheet().setDefaultRowHeight(arg0);
+		sheet().setDefaultRowHeight(arg0);
 	}
 
 	public void setDefaultRowHeightInPoints(float arg0)
 	{
-		getSheet().setDefaultRowHeightInPoints(arg0);
+		sheet().setDefaultRowHeightInPoints(arg0);
 	}
 
 	public void setDisplayFormulas(boolean arg0)
 	{
-		getSheet().setDisplayFormulas(arg0);
+		sheet().setDisplayFormulas(arg0);
 	}
 
 	public void setDisplayGridlines(boolean arg0)
 	{
-		getSheet().setDisplayGridlines(arg0);
+		sheet().setDisplayGridlines(arg0);
 	}
 
 	public void setDisplayGuts(boolean arg0)
 	{
-		getSheet().setDisplayGuts(arg0);
+		sheet().setDisplayGuts(arg0);
 	}
 
 	public void setDisplayRowColHeadings(boolean arg0)
 	{
-		getSheet().setDisplayRowColHeadings(arg0);
+		sheet().setDisplayRowColHeadings(arg0);
 	}
 
 	public void setDisplayZeros(boolean arg0)
 	{
-		getSheet().setDisplayZeros(arg0);
+		sheet().setDisplayZeros(arg0);
 	}
 
 	public void setFitToPage(boolean arg0)
 	{
-		getSheet().setFitToPage(arg0);
+		sheet().setFitToPage(arg0);
 	}
 
 	public void setForceFormulaRecalculation(boolean arg0)
 	{
-		getSheet().setForceFormulaRecalculation(arg0);
+		sheet().setForceFormulaRecalculation(arg0);
 	}
 
 	public void setHorizontallyCenter(boolean arg0)
 	{
-		getSheet().setHorizontallyCenter(arg0);
+		sheet().setHorizontallyCenter(arg0);
 	}
 
 	public void setMargin(short arg0, double arg1)
 	{
-		getSheet().setMargin(arg0, arg1);
+		sheet().setMargin(arg0, arg1);
 	}
 
 	public void setPrintGridlines(boolean arg0)
 	{
-		getSheet().setPrintGridlines(arg0);
+		sheet().setPrintGridlines(arg0);
 	}
 
 	public void setRepeatingColumns(CellRangeAddress arg0)
 	{
-		getSheet().setRepeatingColumns(arg0);
+		sheet().setRepeatingColumns(arg0);
 	}
 
 	public void setRepeatingRows(CellRangeAddress arg0)
 	{
-		getSheet().setRepeatingRows(arg0);
+		sheet().setRepeatingRows(arg0);
 	}
 
 	public void setRightToLeft(boolean arg0)
 	{
-		getSheet().setRightToLeft(arg0);
+		sheet().setRightToLeft(arg0);
 	}
 
 	public void setRowBreak(int arg0)
 	{
-		getSheet().setRowBreak(arg0);
+		sheet().setRowBreak(arg0);
 	}
 
 	public void setRowGroupCollapsed(int arg0, boolean arg1)
 	{
-		getSheet().setRowGroupCollapsed(arg0, arg1);
+		sheet().setRowGroupCollapsed(arg0, arg1);
 	}
 
 	public void setRowSumsBelow(boolean arg0)
 	{
-		getSheet().setRowSumsBelow(arg0);
+		sheet().setRowSumsBelow(arg0);
 	}
 
 	public void setRowSumsRight(boolean arg0)
 	{
-		getSheet().setRowSumsRight(arg0);
+		sheet().setRowSumsRight(arg0);
 	}
 
 	public void setSelected(boolean arg0)
 	{
-		getSheet().setSelected(arg0);
+		sheet().setSelected(arg0);
 	}
 
 	public void setVerticallyCenter(boolean arg0)
 	{
-		getSheet().setVerticallyCenter(arg0);
+		sheet().setVerticallyCenter(arg0);
 	}
 
 	public void setZoom(int arg0, int arg1)
 	{
-		getSheet().setZoom(arg0, arg1);
+		sheet().setZoom(arg0, arg1);
+	}
+
+	protected Sheet sheet()
+	{
+		return sheet;
 	}
 
 	public void shiftRows(int arg0, int arg1, int arg2)
 	{
-		getSheet().shiftRows(arg0, arg1, arg2);
+		sheet().shiftRows(arg0, arg1, arg2);
 	}
 
 	public void shiftRows(int arg0,
@@ -682,21 +678,31 @@ public class MySheet implements Iterable<MyRow>
 			boolean arg3,
 			boolean arg4)
 	{
-		getSheet().shiftRows(arg0, arg1, arg2, arg3, arg4);
+		sheet().shiftRows(arg0, arg1, arg2, arg3, arg4);
 	}
 
 	public void showInPane(int arg0, int arg1)
 	{
-		getSheet().showInPane(arg0, arg1);
+		sheet().showInPane(arg0, arg1);
+	}
+
+	public MyRow topRow()
+	{
+		return iterator().next();
 	}
 
 	public void ungroupColumn(int arg0, int arg1)
 	{
-		getSheet().ungroupColumn(arg0, arg1);
+		sheet().ungroupColumn(arg0, arg1);
 	}
 
 	public void ungroupRow(int arg0, int arg1)
 	{
-		getSheet().ungroupRow(arg0, arg1);
+		sheet().ungroupRow(arg0, arg1);
+	}
+
+	public MyWorkbook workbook()
+	{
+		return new MyWorkbook(sheet().getWorkbook());
 	}
 }

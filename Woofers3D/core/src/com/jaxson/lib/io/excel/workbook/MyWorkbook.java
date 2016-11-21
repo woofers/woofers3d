@@ -51,14 +51,19 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		setMissingCellPolicy(POLICY);
 	}
 
-	public int addPicture(byte[] pictureData, int format)
+	public MySheet activeSheet()
 	{
-		return getWorkbook().addPicture(pictureData, format);
+		return sheet(activeSheetIndex());
 	}
 
-	public int addPicture(DataFile picture)
+	public int activeSheetIndex()
 	{
-		return addPicture(picture, PICTURE_PNG);
+		return workbook().getActiveSheetIndex();
+	}
+
+	public int addPicture(byte[] pictureData, int format)
+	{
+		return workbook().addPicture(pictureData, format);
 	}
 
 	public int addPicture(DataFile picture, int format)
@@ -68,48 +73,58 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 
 	public void addToolPack(UDFFinder toolpack)
 	{
-		getWorkbook().addToolPack(toolpack);
+		workbook().addToolPack(toolpack);
+	}
+
+	public CellStyle cellStyle(short style)
+	{
+		return workbook().getCellStyleAt(style);
 	}
 
 	public Sheet cloneSheet(int sheet)
 	{
-		return getWorkbook().cloneSheet(sheet);
+		return workbook().cloneSheet(sheet);
 	}
 
 	@Override
 	public void close() throws IOException
 	{
-		getWorkbook().close();
+		workbook().close();
 	}
 
 	public MyCellStyle createCellStyle()
 	{
-		return new MyCellStyle(getWorkbook().createCellStyle());
+		return new MyCellStyle(workbook().createCellStyle());
 	}
 
 	public DataFormat createDataFormat()
 	{
-		return getWorkbook().createDataFormat();
+		return workbook().createDataFormat();
 	}
 
 	public Font createFont()
 	{
-		return getWorkbook().createFont();
+		return workbook().createFont();
 	}
 
 	public Name createName()
 	{
-		return getWorkbook().createName();
+		return workbook().createName();
 	}
 
 	public MySheet createSheet()
 	{
-		return new MySheet(getWorkbook().createSheet());
+		return new MySheet(workbook().createSheet());
 	}
 
 	public MySheet createSheet(String name)
 	{
-		return new MySheet(getWorkbook().createSheet(name));
+		return new MySheet(workbook().createSheet(name));
+	}
+
+	public CreationHelper creationHelper()
+	{
+		return workbook().getCreationHelper();
 	}
 
 	public Font findFont(short boldWeight,
@@ -121,138 +136,38 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 			short typeOffset,
 			byte underline)
 	{
-		return getWorkbook().findFont(boldWeight, color, fontHeight, name,
+		return workbook().findFont(boldWeight, color, fontHeight, name,
 				italic, strikeout, typeOffset, underline);
 	}
 
-	public MySheet getActiveSheet()
+	public int firstVisibleTab()
 	{
-		return getSheet(getActiveSheetIndex());
+		return workbook().getFirstVisibleTab();
 	}
 
-	public int getActiveSheetIndex()
+	public Font font(short font)
 	{
-		return getWorkbook().getActiveSheetIndex();
-	}
-
-	public CellStyle getCellStyle(short style)
-	{
-		return getWorkbook().getCellStyleAt(style);
-	}
-
-	public CreationHelper getCreationHelper()
-	{
-		return getWorkbook().getCreationHelper();
-	}
-
-	public int getFirstVisibleTab()
-	{
-		return getWorkbook().getFirstVisibleTab();
-	}
-
-	public Font getFont(short font)
-	{
-		return getWorkbook().getFontAt(font);
-	}
-
-	public int getLastCellStyleIndex()
-	{
-		return getWorkbook().getNumCellStyles() - 1;
-	}
-
-	public int getLastFontIndex()
-	{
-		return getWorkbook().getNumberOfFonts() - 1;
-	}
-
-	public int getLastNameIndex()
-	{
-		return getWorkbook().getNumberOfNames() - 1;
-	}
-
-	public int getLastSheetIndex()
-	{
-		return getWorkbook().getNumberOfSheets() - 1;
-	}
-
-	public MissingCellPolicy getMissingCellPolicy()
-	{
-		return getWorkbook().getMissingCellPolicy();
-	}
-
-	public Name getName(int name)
-	{
-		return getWorkbook().getNameAt(name);
-	}
-
-	public Name getName(String name)
-	{
-		return getWorkbook().getName(name);
-	}
-
-	public int getNameIndex(String name)
-	{
-		return getWorkbook().getNameIndex(name);
-	}
-
-	public List<? extends PictureData> getPictures()
-	{
-		return getWorkbook().getAllPictures();
-	}
-
-	public String getPrintArea(int sheet)
-	{
-		return getWorkbook().getPrintArea(sheet);
-	}
-
-	public MySheet getSheet(int sheet)
-	{
-		return new MySheet(getWorkbook().getSheetAt(sheet));
-	}
-
-	public MySheet getSheet(String sheetName)
-	{
-		return new MySheet(getWorkbook().getSheet(sheetName));
-	}
-
-	public int getSheetIndex(MySheet sheet)
-	{
-		return getWorkbook().getSheetIndex(sheet.getSheet());
-	}
-
-	public int getSheetIndex(String sheetName)
-	{
-		return getWorkbook().getSheetIndex(sheetName);
-	}
-
-	public String getSheetName(int sheet)
-	{
-		return getWorkbook().getSheetName(sheet);
-	}
-
-	protected Workbook getWorkbook()
-	{
-		return workbook;
+		return workbook().getFontAt(font);
 	}
 
 	public boolean hasForcedFormulaRecalculation()
 	{
-		return getWorkbook().getForceFormulaRecalculation();
+		return workbook().getForceFormulaRecalculation();
 	}
 
 	public boolean isHidden()
 	{
-		return getWorkbook().isHidden();
+		return workbook().isHidden();
 	}
 
 	public boolean isSheetHidden(int sheet)
 	{
-		return getWorkbook().isSheetHidden(sheet);
+		return workbook().isSheetHidden(sheet);
 	}
 
 	public boolean isSheetVeryHidden(int sheet)
 	{
-		return getWorkbook().isSheetVeryHidden(sheet);
+		return workbook().isSheetVeryHidden(sheet);
 	}
 
 	@Override
@@ -263,81 +178,131 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 		Sheet sheet = null;
 		do
 		{
-			sheets.add(getSheet(i));
+			sheets.add(sheet(i));
 			i ++;
 		}
 		while (sheet != null);
 		return sheets.iterator();
 	}
 
+	public int lastCellStyleIndex()
+	{
+		return workbook().getNumCellStyles() - 1;
+	}
+
+	public int lastFontIndex()
+	{
+		return workbook().getNumberOfFonts() - 1;
+	}
+
+	public int lastNameIndex()
+	{
+		return workbook().getNumberOfNames() - 1;
+	}
+
+	public int lastSheetIndex()
+	{
+		return workbook().getNumberOfSheets() - 1;
+	}
+
 	public int linkExternalWorkbook(String name, MyWorkbook workbook)
 	{
-		return getWorkbook().linkExternalWorkbook(name, workbook.getWorkbook());
+		return workbook().linkExternalWorkbook(name, workbook.workbook());
+	}
+
+	public MissingCellPolicy missingCellPolicy()
+	{
+		return workbook().getMissingCellPolicy();
+	}
+
+	public Name name(int name)
+	{
+		return workbook().getNameAt(name);
+	}
+
+	public Name name(String name)
+	{
+		return workbook().getName(name);
+	}
+
+	public int nameIndex(String name)
+	{
+		return workbook().getNameIndex(name);
+	}
+
+	public List<? extends PictureData> pictures()
+	{
+		return workbook().getAllPictures();
+	}
+
+	public String printArea(int sheet)
+	{
+		return workbook().getPrintArea(sheet);
 	}
 
 	public void removeName(int name)
 	{
-		getWorkbook().removeName(name);
+		workbook().removeName(name);
 	}
 
 	public void removeName(String name)
 	{
-		getWorkbook().removeName(name);
+		workbook().removeName(name);
 	}
 
 	public void removePrintArea(int sheet)
 	{
-		getWorkbook().removePrintArea(sheet);
+		workbook().removePrintArea(sheet);
 	}
 
 	public void removePrintArea(MySheet sheet)
 	{
-		removePrintArea(sheet.getIndex());
+		removePrintArea(sheet.index());
 	}
 
 	public void removeSheet(int sheet)
 	{
-		getWorkbook().removeSheetAt(sheet);
+		workbook().removeSheetAt(sheet);
 	}
 
 	public void removeSheet(MySheet sheet)
 	{
-		removeSheet(sheet.getIndex());
+		removeSheet(sheet.index());
 	}
 
 	public void setActiveSheet(int sheet)
 	{
-		getWorkbook().setActiveSheet(sheet);
+		workbook().setActiveSheet(sheet);
 	}
 
 	public void setActiveSheet(MySheet sheet)
 	{
-		setActiveSheet(sheet.getIndex());
+		setActiveSheet(sheet.index());
 	}
 
 	public void setFirstVisibleSheet(int sheet)
 	{
-		getWorkbook().setFirstVisibleTab(sheet);
+		workbook().setFirstVisibleTab(sheet);
 	}
 
 	public void setFirstVisibleSheet(MySheet sheet)
 	{
-		setFirstVisibleSheet(sheet.getIndex());
+		setFirstVisibleSheet(sheet.index());
 	}
 
 	public void setForceFormulaRecalculation(boolean formulaRecalculation)
 	{
-		getWorkbook().setForceFormulaRecalculation(formulaRecalculation);
+		workbook().setForceFormulaRecalculation(formulaRecalculation);
 	}
 
 	public void setHidden(boolean hidden)
 	{
-		getWorkbook().setHidden(hidden);
+		workbook().setHidden(hidden);
 	}
 
 	public void setMissingCellPolicy(MissingCellPolicy policy)
 	{
-		getWorkbook().setMissingCellPolicy(policy);
+		workbook().setMissingCellPolicy(policy);
 	}
 
 	public void setPrintArea(int sheet,
@@ -346,42 +311,72 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 			int startRow,
 			int endRow)
 	{
-		getWorkbook().setPrintArea(sheet, startColumn, endColumn, startRow,
+		workbook().setPrintArea(sheet, startColumn, endColumn, startRow,
 				endRow);
 	}
 
 	public void setPrintArea(int sheet, String reference)
 	{
-		getWorkbook().setPrintArea(sheet, reference);
+		workbook().setPrintArea(sheet, reference);
 	}
 
 	public void setSelectedSheet(int sheet)
 	{
-		getWorkbook().setSelectedTab(sheet);
+		workbook().setSelectedTab(sheet);
 	}
 
 	public void setSheetHidden(int sheet, boolean hidden)
 	{
-		getWorkbook().setSheetHidden(sheet, hidden);
+		workbook().setSheetHidden(sheet, hidden);
 	}
 
 	public void setSheetHidden(int sheet, int hidden)
 	{
-		getWorkbook().setSheetHidden(sheet, hidden);
+		workbook().setSheetHidden(sheet, hidden);
 	}
 
 	public void setSheetName(int sheet, String name)
 	{
-		getWorkbook().setSheetName(sheet, name);
+		workbook().setSheetName(sheet, name);
 	}
 
 	public void setSheetOrder(String sheetName, int index)
 	{
-		getWorkbook().setSheetOrder(sheetName, index);
+		workbook().setSheetOrder(sheetName, index);
+	}
+
+	public MySheet sheet(int sheet)
+	{
+		return new MySheet(workbook().getSheetAt(sheet));
+	}
+
+	public MySheet sheet(String sheetName)
+	{
+		return new MySheet(workbook().getSheet(sheetName));
+	}
+
+	public int sheetIndex(MySheet sheet)
+	{
+		return workbook().getSheetIndex(sheet.sheet());
+	}
+
+	public int sheetIndex(String sheetName)
+	{
+		return workbook().getSheetIndex(sheetName);
+	}
+
+	public String sheetName(int sheet)
+	{
+		return workbook().getSheetName(sheet);
+	}
+
+	protected Workbook workbook()
+	{
+		return workbook;
 	}
 
 	public void write(OutputStream stream) throws IOException
 	{
-		getWorkbook().write(stream);
+		workbook().write(stream);
 	}
 }

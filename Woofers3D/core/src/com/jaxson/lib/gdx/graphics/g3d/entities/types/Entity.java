@@ -122,7 +122,7 @@ public abstract class Entity extends GameObject
 
 	public Vector3 originalSize()
 	{
-		return boundingBox().getDimensions(new Vector3());
+		return GdxMath.divideVector(size(), scale());
 	}
 
 	public float radius()
@@ -150,6 +150,12 @@ public abstract class Entity extends GameObject
 	public Node rootNode()
 	{
 		return modelInstance().nodes.get(ROOT_NODE_LOCATION);
+	}
+
+	public Vector3 rootNodeSize()
+	{
+		return rootNode().calculateBoundingBox(new BoundingBox())
+				.getDimensions(new Vector3());
 	}
 
 	public void rotate(float yaw, float pitch, float roll)
@@ -215,12 +221,12 @@ public abstract class Entity extends GameObject
 
 	public void setSize(Vector3 size)
 	{
-		scale(GdxMath.divideVector(size, originalSize()));
+		scale(GdxMath.divideVector(size, size()));
 	}
 
 	public Vector3 size()
 	{
-		return originalSize().scl(scale());
+		return boundingBox().getDimensions(new Vector3());
 	}
 
 	public Matrix4 transform()

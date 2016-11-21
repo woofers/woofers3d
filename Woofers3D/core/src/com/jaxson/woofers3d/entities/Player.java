@@ -7,7 +7,7 @@ import com.jaxson.lib.gdx.input.KeyboardKey;
 public class Player extends CameraPlayerBody
 {
 	private static final String PATH = "entities/dog/dog.g3db";
-	private static final float SCALE = 4f;
+	private static final float SCALE = 0.6f;
 	private static final float HITBOX_SCALE = 90f / 100f;
 
 	private KeyboardKey cameraKey;

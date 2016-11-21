@@ -12,33 +12,34 @@ import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.input.TouchScreen;
-import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.math.MyMath;
+import com.jaxson.lib.math.Reciprocal;
 
 public abstract class PlayerBody
 		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 {
-	private static final float GRAVITY_SCALE = -5f;
+	private static final float GRAVITY_SCALE = -1f;
 	private static final float GHOST_MASS = -1f;
 	private static final float ROUND_TOLERANCE_SCALE = 1.00000001f;
 
-	private static final float GRAVITY = -7.84f;
-	private static final float STEP_HEIGHT = 1f / 6f;
+	private static final float GRAVITY = -6.5f;
+	private static final float STEP_HEIGHT = 0.035f;
 	private static final float ROTATION_SPEED = 2f;
-	private static final float MAX_FALL_VELOCITY = 55f;
-	private static final float JUMP_IMUPLSE = 10f;
-	private static final float ACCELERATION_X = 5f;
-	private static final float DECCELERATION_X = ACCELERATION_X * 2f;
-	private static final float MAX_VELOCITY_X = 2.5f;
-	private static final float ACCELERATION_Z = 1.8f;
+	private static final float MAX_FALL_VELOCITY = 8.25f;
+	private static final float JUMP_IMUPLSE = 1.5f;
+	private static final float ACCELERATION_X = 2f;
+	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
+	private static final float MAX_VELOCITY_X = 250f;
+	private static final float ACCELERATION_Z = 0.23f;
 	private static final float DECCELERATION_Z = ACCELERATION_Z / 3f;
-	private static final float MAX_VELOCITY_Z = 0.45f;
+	private static final float MAX_VELOCITY_Z = 7f;
 
 	private static final float Y_BALANCE = -0.5f;
 
 	private btKinematicCharacterController characterController;
 	private btGhostPairCallback callback;
 	private Vector3 direction;
+	private Vector3 velocityPerTick;
 	private Vector3 velocity;
 	private Vector3 maxVelocity;
 	private float stepHeight;
@@ -65,6 +66,7 @@ public abstract class PlayerBody
 		setStepHeight(STEP_HEIGHT);
 		this.callback = new btGhostPairCallback();
 		this.direction = new Vector3();
+		this.velocityPerTick = new Vector3();
 		this.velocity = new Vector3();
 		this.maxVelocity = new Vector3();
 		this.acceleration = new Vector3();
@@ -72,8 +74,10 @@ public abstract class PlayerBody
 		setJumpImpulse(JUMP_IMUPLSE);
 		setMaxFallVelocity(MAX_FALL_VELOCITY);
 		setAcceleration(new Vector3(ACCELERATION_X, GRAVITY, ACCELERATION_Z));
-		setDecceleration(new Vector3(DECCELERATION_X, GRAVITY, DECCELERATION_Z));
-		setMaxVelocity(new Vector3(MAX_VELOCITY_X, MAX_FALL_VELOCITY, MAX_VELOCITY_Z));
+		setDecceleration(
+				new Vector3(DECCELERATION_X, GRAVITY, DECCELERATION_Z));
+		setMaxVelocity(
+				new Vector3(MAX_VELOCITY_X, MAX_FALL_VELOCITY, MAX_VELOCITY_Z));
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -83,8 +87,6 @@ public abstract class PlayerBody
 		this.leftKey = keyboard.key("A");
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
-
-		System.out.println(maxSpeed());
 
 		for (float i = Accelerometer.MIN;
 				i < Accelerometer.MAX + 0.1f; i += 0.1f)
@@ -123,6 +125,11 @@ public abstract class PlayerBody
 				stepHeight);
 	}
 
+	public Vector3 decceleration()
+	{
+		return decceleration;
+	}
+
 	@Override
 	public void dispose()
 	{
@@ -146,41 +153,45 @@ public abstract class PlayerBody
 			{
 				if (leftKey.isDown())
 				{
-					if (MyMath.abs(velocity().x) < maxSpeed().x)
+					if (MyMath.abs(velocityPerTick().x) < maxSpeed().x * dt)
 					{
-						if (velocity().x >= 0f)
+						if (velocityPerTick().x >= 0f)
 						{
-							velocity().x += acceleration().x * dt;
+							velocityPerTick().x += acceleration().x * dt;
 						}
 						else
 						{
-							velocity().x += decceleration().x * dt;
+							velocityPerTick().x += decceleration().x * dt;
 						}
 					}
 				}
 				else
 				{
-					if (velocity().x > 0f) velocity().x -= decceleration().x * dt;
+					if (velocityPerTick().x > 0f)
+						velocityPerTick().x -= decceleration().x * dt;
 				}
 				if (rightKey.isDown())
 				{
-					if (MyMath.abs(velocity().x) < maxSpeed().x)
+					if (MyMath.abs(velocityPerTick().x) < maxSpeed().x * dt)
 					{
-						if (velocity().x <= 0f)
+						if (velocityPerTick().x <= 0f)
 						{
-							velocity().x -= acceleration().x * dt;
+							velocityPerTick().x -= acceleration().x * dt;
 						}
 						else
 						{
-							velocity().x -= decceleration().x * dt;
+							velocityPerTick().x -= decceleration().x * dt;
 						}
 					}
 				}
 				else
 				{
-					if (velocity().x < 0f) velocity().x += decceleration().x * dt;
+					if (velocityPerTick().x < 0f)
+						velocityPerTick().x += decceleration().x * dt;
 				}
-				if (MyMath.abs(velocity().x) < acceleration().x * dt * ROUND_TOLERANCE_SCALE) velocity().x = 0f;
+				if (MyMath.abs(velocityPerTick().x) < acceleration().x * dt
+						* ROUND_TOLERANCE_SCALE)
+					velocityPerTick().x = 0f;
 
 				if (jumpKey.isPressed())
 				{
@@ -189,49 +200,55 @@ public abstract class PlayerBody
 			}
 			if (forwardKey.isDown())
 			{
-				if (MyMath.abs(velocity().z) < maxSpeed().z)
+				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z * dt)
 				{
-					if (velocity().z >= 0f)
+					if (velocityPerTick().z >= 0f)
 					{
-						velocity().z += acceleration().z * dt;
+						velocityPerTick().z += acceleration().z * dt;
 					}
 					else
 					{
-						velocity().z += decceleration().z * dt;
+						velocityPerTick().z += decceleration().z * dt;
 					}
 				}
 			}
 			else
 			{
-				if (velocity().z > 0f) velocity().z -= decceleration().z * dt;
+				if (velocityPerTick().z > 0f)
+					velocityPerTick().z -= decceleration().z * dt;
 			}
 			if (backwardKey.isDown())
 			{
-				if (MyMath.abs(velocity().z) < maxSpeed().z)
+				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z * dt)
 				{
-					if (velocity().z <= 0f)
+					if (velocityPerTick().z <= 0f)
 					{
-						velocity().z -= acceleration().z * dt;
+						velocityPerTick().z -= acceleration().z * dt;
 					}
 					else
 					{
-						velocity().z -= decceleration().z * dt;
+						velocityPerTick().z -= decceleration().z * dt;
 					}
 				}
 			}
 			else
 			{
-				if (velocity().z < 0f) velocity().z += decceleration().z * dt;
+				if (velocityPerTick().z < 0f)
+					velocityPerTick().z += decceleration().z * dt;
 			}
 			if (leftKey.isDown() || rightKey.isDown())
 			{
-				if (MyMath.abs(velocity().z) > decceleration().z * dt * ROUND_TOLERANCE_SCALE)
+				if (MyMath.abs(velocityPerTick().z) > decceleration().z * dt
+						* ROUND_TOLERANCE_SCALE)
 				{
-					velocity().z += -(MyMath.abs(velocity().z) / velocity().z)
-							* (acceleration().z + decceleration().z) * dt;
+					velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
+							/ velocityPerTick().z)
+							* (dt * (acceleration().z + decceleration().z));
 				}
 			}
-			if (MyMath.abs(velocity().z) < acceleration().z * dt * ROUND_TOLERANCE_SCALE) velocity().z = 0f;
+			if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
+					* ROUND_TOLERANCE_SCALE)
+				velocityPerTick().z = 0f;
 		}
 
 		if (touchScreen.exists())
@@ -243,25 +260,12 @@ public abstract class PlayerBody
 		}
 		if (accelerometer.exists())
 		{
-			direction.add(direction());
-			direction.scl(yAccelerometer(5f) * 1.7f);
-			if (onGround())
-			{
-				if (accelerometer.tiltsLeft())
-				{
-					rotateLeft(2f * (accelerometer.x()
-							- accelerometer.deadZone().x));
-				}
-				else if (accelerometer.tiltsRight())
-				{
-					rotateRight(-2f * (accelerometer.x()
-							- accelerometer.deadZone().x));
-				}
-			}
+
 		}
-		if (velocity().x != 0) rotate(velocity().x, 0f, 0f);
+		if (velocityPerTick().x != 0f) rotate(velocityPerTick().x, 0f, 0f);
 		direction.add(direction());
-		direction.scl(velocity().z);
+		direction.scl(velocityPerTick().z);
+		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
 		System.out.println(velocity());
 		characterController().setWalkDirection(direction);
 		bodyToTransform();
@@ -287,6 +291,11 @@ public abstract class PlayerBody
 		return characterController().getMaxSlope();
 	}
 
+	public Vector3 maxSpeed()
+	{
+		return maxVelocity;
+	}
+
 	@Override
 	public void moveTo(Vector3 location)
 	{
@@ -304,14 +313,14 @@ public abstract class PlayerBody
 		rotateLeft(1f);
 	}
 
-	protected void rotateRight()
-	{
-		rotateRight(1f);
-	}
-
 	protected void rotateLeft(float scale)
 	{
 		rotate(ROTATION_SPEED * scale, 0f, 0f);
+	}
+
+	protected void rotateRight()
+	{
+		rotateRight(1f);
 	}
 
 	protected void rotateRight(float scale)
@@ -341,16 +350,6 @@ public abstract class PlayerBody
 		setGravity(decceleration().y);
 	}
 
-	public Vector3 decceleration()
-	{
-		return decceleration;
-	}
-
-	public void setMaxFallVelocity(float maxFallVelocity)
-	{
-		characterController().setFallSpeed(maxFallVelocity);
-	}
-
 	public void setGravity(float gravity)
 	{
 		acceleration().y = gravity;
@@ -361,6 +360,11 @@ public abstract class PlayerBody
 	public void setJumpImpulse(float jumpImpulse)
 	{
 		characterController().setJumpSpeed(jumpImpulse);
+	}
+
+	public void setMaxFallVelocity(float maxFallVelocity)
+	{
+		characterController().setFallSpeed(maxFallVelocity);
 	}
 
 	public void setMaxSlope(float maxSlope)
@@ -389,16 +393,6 @@ public abstract class PlayerBody
 		this.characterController = createController(stepHeight);
 	}
 
-	public Vector3 maxSpeed()
-	{
-		return maxVelocity;
-	}
-
-	public Vector3 velocity()
-	{
-		return velocity;
-	}
-
 	public float stepHeight()
 	{
 		return stepHeight;
@@ -409,6 +403,16 @@ public abstract class PlayerBody
 	{
 		super.update(dt);
 		accelerometer().update(dt);
+	}
+
+	public Vector3 velocity()
+	{
+		return velocity;
+	}
+
+	protected Vector3 velocityPerTick()
+	{
+		return velocityPerTick;
 	}
 
 	protected float yAccelerometer(float test)

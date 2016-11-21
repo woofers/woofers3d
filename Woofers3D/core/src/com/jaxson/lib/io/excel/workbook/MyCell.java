@@ -25,212 +25,262 @@ public class MyCell
 		this.cell = cell;
 	}
 
-	public boolean equalsValue(MyCell cell)
+	public boolean booleanValue()
 	{
-		return equalsValue(cell.getValue());
+		return cell().getBooleanCellValue();
 	}
 
-	public boolean equalsValue(String value)
+	public int cachedFormulaResultType()
 	{
-		return getValue().equals(value);
+		return cell().getCachedFormulaResultType();
 	}
 
-	public CellRangeAddress getArrayFormulaRange()
-	{
-		return getCell().getArrayFormulaRange();
-	}
-
-	public boolean getBooleanValue()
-	{
-		return getCell().getBooleanCellValue();
-	}
-
-	public int getCachedFormulaResultType()
-	{
-		return getCell().getCachedFormulaResultType();
-	}
-
-	protected Cell getCell()
+	protected Cell cell()
 	{
 		return cell;
 	}
 
-	public MyColumn getColumn()
+	public MyColumn column()
 	{
-		return getSheet().getColumn(getColumnIndex());
+		return sheet().column(columnIndex());
 	}
 
-	public int getColumnIndex()
+	public int columnIndex()
 	{
-		return getCell().getColumnIndex();
+		return cell().getColumnIndex();
 	}
 
-	public Comment getComment()
+	public Comment comment()
 	{
-		return getCell().getCellComment();
+		return cell().getCellComment();
 	}
 
-	public Date getDateValue()
+	public Date dateValue()
 	{
-		return getCell().getDateCellValue();
+		return cell().getDateCellValue();
 	}
 
-	public byte getErrorValue()
+	public MyCell down()
 	{
-		return getCell().getErrorCellValue();
+		return sheet().cell(location().nextRow());
 	}
 
-	public String getFormula()
+	public MyCell down(int amount)
 	{
-		return getCell().getCellFormula();
+		return sheet().cell(location().nextRow(amount));
 	}
 
-	public Hyperlink getHyperlink()
+	public boolean equalsValue(MyCell cell)
 	{
-		return getCell().getHyperlink();
+		return equalsValue(cell.value());
 	}
 
-	public CellLocation getLocation()
+	public boolean equalsValue(String value)
 	{
-		return new CellLocation(this);
+		return value().equals(value.toLowerCase());
 	}
 
-	public double getNumericValue()
+	public byte errorValue()
 	{
-		return getCell().getNumericCellValue();
+		return cell().getErrorCellValue();
 	}
 
-	public RichTextString getRichStringValue()
+	public String formula()
 	{
-		return getCell().getRichStringCellValue();
+		return cell().getCellFormula();
 	}
 
-	public MyRow getRow()
+	public CellRangeAddress formulaRange()
 	{
-		return new MyRow(getCell().getRow());
+		return cell().getArrayFormulaRange();
 	}
 
-	public int getRowIndex()
+	public Hyperlink hyperlink()
 	{
-		return getCell().getRowIndex();
-	}
-
-	public MySheet getSheet()
-	{
-		return new MySheet(getCell().getSheet());
-	}
-
-	public String getStringValue()
-	{
-		return getCell().getStringCellValue();
-	}
-
-	public MyCellStyle getStyle()
-	{
-		return new MyCellStyle(getCell().getCellStyle());
-	}
-
-	public int getType()
-	{
-		return getCell().getCellType();
-	}
-
-	public String getValue()
-	{
-		switch (getType())
-		{
-			case TYPE_BLANK:
-				return "";
-			case TYPE_BOOLEAN:
-				return new Boolean(getBooleanValue()).toString();
-			case TYPE_FORMULA:
-				return getFormula();
-			case TYPE_NUMERIC:
-				return new Double(getNumericValue()).toString();
-			case TYPE_STRING:
-				return getStringValue();
-		}
-		return new String(new byte[]{ getCell().getErrorCellValue() },
-				StandardCharsets.UTF_8);
+		return cell().getHyperlink();
 	}
 
 	public boolean isPartOfArrayFormulaGroup()
 	{
-		return getCell().isPartOfArrayFormulaGroup();
+		return cell().isPartOfArrayFormulaGroup();
+	}
+
+	public MyCell left()
+	{
+		return sheet().cell(location().prevColumn());
+	}
+
+	public MyCell left(int amount)
+	{
+		return sheet().cell(location().prevColumn(amount));
+	}
+
+	public CellLocation location()
+	{
+		return new CellLocation(this);
+	}
+
+	public double numericValue()
+	{
+		return cell().getNumericCellValue();
 	}
 
 	public void removeComment()
 	{
-		getCell().removeCellComment();
+		cell().removeCellComment();
 	}
 
 	public void removeHyperlink()
 	{
-		getCell().removeHyperlink();
+		cell().removeHyperlink();
+	}
+
+	public RichTextString richStringValue()
+	{
+		return cell().getRichStringCellValue();
+	}
+
+	public MyCell right()
+	{
+		return sheet().cell(location().nextColumn());
+	}
+
+	public MyCell right(int amount)
+	{
+		return sheet().cell(location().nextColumn(amount));
+	}
+
+	public MyRow row()
+	{
+		return new MyRow(cell().getRow());
+	}
+
+	public int rowIndex()
+	{
+		return cell().getRowIndex();
 	}
 
 	public void setAsActive()
 	{
-		getCell().setAsActiveCell();
+		cell().setAsActiveCell();
 	}
 
 	public void setComment(Comment comment)
 	{
-		getCell().setCellComment(comment);
+		cell().setCellComment(comment);
 	}
 
 	public void setErrorValue(byte error)
 	{
-		getCell().setCellErrorValue(error);
+		cell().setCellErrorValue(error);
 	}
 
 	public void setFormula(String formula) throws FormulaParseException
 	{
-		getCell().setCellFormula(formula);
+		cell().setCellFormula(formula);
 	}
 
 	public void setHyperlink(Hyperlink link)
 	{
-		getCell().setHyperlink(link);
+		cell().setHyperlink(link);
 	}
 
 	public void setStyle(MyCellStyle style)
 	{
-		getCell().setCellStyle(style.getStyle());
+		cell().setCellStyle(style.style());
 	}
 
 	public void setType(int type)
 	{
-		getCell().setCellType(type);
+		cell().setCellType(type);
 	}
 
 	public void setValue(boolean value)
 	{
-		getCell().setCellValue(value);
+		cell().setCellValue(value);
 	}
 
 	public void setValue(Calendar calendar)
 	{
-		getCell().setCellValue(calendar);
+		cell().setCellValue(calendar);
 	}
 
 	public void setValue(Date date)
 	{
-		getCell().setCellValue(date);
+		cell().setCellValue(date);
 	}
 
 	public void setValue(double value)
 	{
-		getCell().setCellValue(value);
+		cell().setCellValue(value);
 	}
 
 	public void setValue(RichTextString text)
 	{
-		getCell().setCellValue(text);
+		cell().setCellValue(text);
 	}
 
 	public void setValue(String value)
 	{
-		getCell().setCellValue(value);
+		cell().setCellValue(value);
+	}
+
+	public MySheet sheet()
+	{
+		return new MySheet(cell().getSheet());
+	}
+
+	public String stringValue()
+	{
+		return cell().getStringCellValue();
+	}
+
+	public MyCellStyle style()
+	{
+		return new MyCellStyle(cell().getCellStyle());
+	}
+
+	public int type()
+	{
+		return cell().getCellType();
+	}
+
+	public MyCell up()
+	{
+		return sheet().cell(location().prevRow());
+	}
+
+	public MyCell up(int amount)
+	{
+		return sheet().cell(location().prevRow(amount));
+	}
+
+	public String value()
+	{
+		switch (type())
+		{
+			case TYPE_BLANK:
+				return "";
+			case TYPE_BOOLEAN:
+				return new Boolean(booleanValue()).toString();
+			case TYPE_FORMULA:
+				return formula();
+			case TYPE_NUMERIC:
+				return new Double(numericValue()).toString();
+			case TYPE_STRING:
+				return stringValue();
+		}
+		return new String(new byte[]{ cell().getErrorCellValue() },
+				StandardCharsets.UTF_8);
+	}
+
+	public int x()
+	{
+		return location().x();
+	}
+
+	public int y()
+	{
+		return location().y();
 	}
 }

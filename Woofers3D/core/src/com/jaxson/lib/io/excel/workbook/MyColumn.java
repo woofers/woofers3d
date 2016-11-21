@@ -14,24 +14,39 @@ public class MyColumn implements Iterable<MyCell>
 		this.cells = cells;
 	}
 
-	public MyCell getCell(CellLocation cell)
+	public MyCell cell(CellLocation cell)
 	{
-		return getCell(cell.getY());
+		return cell(cell.y());
 	}
 
-	public MyCell getCell(int row)
+	public MyCell cell(int row)
 	{
 		return cells.get(row);
 	}
 
-	public MySheet getSheet()
+	public int index()
 	{
-		return sheet;
+		return cells.get(0).x();
 	}
 
 	@Override
 	public Iterator<MyCell> iterator()
 	{
 		return cells.iterator();
+	}
+
+	public MySheet sheet()
+	{
+		return sheet;
+	}
+
+	public MyCellStyle style()
+	{
+		return sheet().columnStyle(index());
+	}
+
+	public int width()
+	{
+		return sheet().columnWidth(index());
 	}
 }

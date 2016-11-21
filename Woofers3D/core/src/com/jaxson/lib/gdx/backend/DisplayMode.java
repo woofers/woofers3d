@@ -98,6 +98,11 @@ public class DisplayMode
 		return bitsPerPixel;
 	}
 
+	public Vector2 center()
+	{
+		return size().scl(0.5f);
+	}
+
 	@Override
 	public boolean equals(Object other)
 	{
@@ -128,11 +133,6 @@ public class DisplayMode
 	public Vector2 size()
 	{
 		return new Vector2(width(), height());
-	}
-
-	public Vector2 center()
-	{
-		return size().scl(0.5f);
 	}
 
 	public com.badlogic.gdx.Graphics.DisplayMode toBestDisplayMode(

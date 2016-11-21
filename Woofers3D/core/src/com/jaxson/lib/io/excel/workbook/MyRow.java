@@ -18,151 +18,151 @@ public class MyRow implements Iterable<MyCell>
 		this.row = row;
 	}
 
+	public MyCell cell(CellLocation location) throws CellOutOfBoundsException
+	{
+		int x = location.x();
+		return cell(x);
+	}
+
+	public MyCell cell(int row) throws CellOutOfBoundsException
+	{
+		return cell(row, POLICY);
+	}
+
+	public MyCell cell(int row,
+			MissingCellPolicy policy) throws CellOutOfBoundsException
+	{
+		Cell cell = row().getCell(row, policy);
+		if (cell == null)
+			throw new CellOutOfBoundsException(location(row));
+		return new MyCell(cell);
+	}
+
 	public MyCell createCell()
 	{
-		return createCell(getLastCellIndex() + 1);
+		return createCell(lastCellIndex() + 1);
 	}
 
 	public MyCell createCell(int column)
 	{
-		return new MyCell(getRow().createCell(column));
+		return new MyCell(row().createCell(column));
 	}
 
 	public MyCell createCell(int column, int type)
 	{
-		return new MyCell(getRow().createCell(column, type));
+		return new MyCell(row().createCell(column, type));
 	}
 
-	public MyCell getCell(CellLocation location) throws CellOutOfBoundsException
+	public short firstCellIndex()
 	{
-		int x = location.getX();
-		return getCell(x);
+		return row().getFirstCellNum();
 	}
 
-	public MyCell getCell(int row) throws CellOutOfBoundsException
+	public boolean hasZeroHeight()
 	{
-		return getCell(row, POLICY);
+		return row().getZeroHeight();
 	}
 
-	public MyCell getCell(int row,
-			MissingCellPolicy policy) throws CellOutOfBoundsException
+	public short height()
 	{
-		Cell cell = getRow().getCell(row, policy);
-		if (cell == null)
-			throw new CellOutOfBoundsException(getCellLocation(row));
-		return new MyCell(cell);
+		return row().getHeight();
 	}
 
-	public CellLocation getCellLocation(int column)
+	public float heightInPoints()
 	{
-		return new CellLocation(column, getIndex());
+		return row().getHeightInPoints();
 	}
 
-	public short getFirstCellIndex()
+	public int index()
 	{
-		return getRow().getFirstCellNum();
-	}
-
-	public short getHeight()
-	{
-		return getRow().getHeight();
-	}
-
-	public float getHeightInPoints()
-	{
-		return getRow().getHeightInPoints();
-	}
-
-	public int getIndex()
-	{
-		return getRow().getRowNum();
-	}
-
-	public int getLastCellIndex()
-	{
-		int value = getRow().getLastCellNum();
-		if (value == -1) return value;
-		return value - 1;
-	}
-
-	public int getOutlineLevel()
-	{
-		return getRow().getOutlineLevel();
-	}
-
-	public int getPhysicalNumberOfCells()
-	{
-		return getRow().getPhysicalNumberOfCells();
-	}
-
-	protected Row getRow()
-	{
-		return row;
-	}
-
-	public CellStyle getRowStyle()
-	{
-		return getRow().getRowStyle();
-	}
-
-	public MySheet getSheet()
-	{
-		return new MySheet(getRow().getSheet());
-	}
-
-	public boolean getZeroHeight()
-	{
-		return getRow().getZeroHeight();
+		return row().getRowNum();
 	}
 
 	public boolean isFormatted()
 	{
-		return getRow().isFormatted();
+		return row().isFormatted();
 	}
 
 	@Override
 	public Iterator<MyCell> iterator()
 	{
 		MyArrayList<MyCell> cells = new MyArrayList<>();
-		for (int x = 0; x < getLastCellIndex(); x ++)
+		for (int x = 0; x < lastCellIndex(); x ++)
 		{
-			cells.add(getCell(x));
+			cells.add(cell(x));
 		}
 		return cells.iterator();
 	}
 
+	public int lastCellIndex()
+	{
+		int value = row().getLastCellNum();
+		if (value == -1) return value;
+		return value - 1;
+	}
+
+	public CellLocation location(int column)
+	{
+		return new CellLocation(column, index());
+	}
+
+	public int outlineLevel()
+	{
+		return row().getOutlineLevel();
+	}
+
+	public int physicalNumberOfCells()
+	{
+		return row().getPhysicalNumberOfCells();
+	}
+
 	public void removeCell(int cell)
 	{
-		removeCell(getCell(cell));
+		removeCell(cell(cell));
 	}
 
 	public void removeCell(MyCell cell)
 	{
-		getRow().removeCell(cell.getCell());
+		row().removeCell(cell.cell());
+	}
+
+	protected Row row()
+	{
+		return row;
 	}
 
 	public void setHeight(short height)
 	{
-		getRow().setHeight(height);
+		row().setHeight(height);
 	}
 
 	public void setHeightInPoints(float height)
 	{
-		getRow().setHeightInPoints(height);
+		row().setHeightInPoints(height);
 	}
 
-	public void setRowIndex(int index)
+	public void setIndex(int index)
 	{
-		getRow().setRowNum(index);
+		row().setRowNum(index);
 	}
 
-	public void setRowStyle(CellStyle style)
+	public void setStyle(CellStyle style)
 	{
-		getRow().setRowStyle(style);
+		row().setRowStyle(style);
 	}
 
 	public void setZeroHeight(boolean height)
 	{
-		getRow().setZeroHeight(height);
+		row().setZeroHeight(height);
+	}
+
+	public MySheet sheet()
+	{
+		return new MySheet(row().getSheet());
+	}
+
+	public MyCellStyle style()
+	{
+		return new MyCellStyle(row().getRowStyle());
 	}
 }

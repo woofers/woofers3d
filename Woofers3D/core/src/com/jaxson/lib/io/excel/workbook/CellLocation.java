@@ -24,7 +24,7 @@ public class CellLocation
 
 	public CellLocation(MyCell cell)
 	{
-		this(cell.getColumnIndex(), cell.getRowIndex());
+		this(cell.columnIndex(), cell.rowIndex());
 	}
 
 	private CellLocation(Point point)
@@ -37,24 +37,9 @@ public class CellLocation
 		this(getPoint(cell));
 	}
 
-	public Point getPoint()
+	public String name()
 	{
-		return new Point(getX(), getY());
-	}
-
-	public String getString()
-	{
-		return intToChar(getX()) + (getY() + 1);
-	}
-
-	public int getX()
-	{
-		return x;
-	}
-
-	public int getY()
-	{
-		return y;
+		return intToChar(x()) + (y() + 1);
 	}
 
 	public CellLocation nextColumn()
@@ -77,6 +62,11 @@ public class CellLocation
 	{
 		checkAmount(amount);
 		return shift(0, amount);
+	}
+
+	public Point point()
+	{
+		return new Point(x(), y());
 	}
 
 	public CellLocation prevColumn()
@@ -124,13 +114,23 @@ public class CellLocation
 	public CellLocation shift(int amountX, int amountY)
 	{
 		if (amountX == 0 && amountY == 0) return this;
-		return new CellLocation(getX() + amountX, getY() + amountY);
+		return new CellLocation(x() + amountX, y() + amountY);
 	}
 
 	@Override
 	public String toString()
 	{
-		return getString();
+		return name();
+	}
+
+	public int x()
+	{
+		return x;
+	}
+
+	public int y()
+	{
+		return y;
 	}
 
 	private static void checkAmount(int amount)

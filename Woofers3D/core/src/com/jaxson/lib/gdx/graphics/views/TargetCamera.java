@@ -20,7 +20,7 @@ public class TargetCamera extends PerspectiveCamera
 	private static final int FOV = 95;
 	private static final float FAR = 300f;
 	private static final float NEAR = 1f / 10f;
-	private static final Vector3 OFFSET = new Vector3(0f, 5f, -5f);
+	private static final Vector3 OFFSET = new Vector3(0f, 0.55f, -0.75f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
 	private Entity target;

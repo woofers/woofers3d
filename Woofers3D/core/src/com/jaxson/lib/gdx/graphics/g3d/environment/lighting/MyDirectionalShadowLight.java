@@ -11,7 +11,9 @@ import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 @SuppressWarnings("deprecation")
 public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 {
-	private static final int SHADOW_RESOLUTION = 4096;
+	private static final int SHADOW_RESOLUTION_SCALE = 14;
+	private static final int SHADOW_RESOLUTION
+			= (int) Math.pow(2, SHADOW_RESOLUTION_SCALE);
 	private static final float SHADOW_NEAR = 1f;
 	private static final float SHADOW_FAR = 100f;
 	private static final Vector3 WORLD_SIZE = new Vector3(100f, 100f, 100f);

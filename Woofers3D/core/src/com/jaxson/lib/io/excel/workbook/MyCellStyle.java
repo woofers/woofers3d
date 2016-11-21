@@ -72,13 +72,28 @@ public class MyCellStyle implements Cloneable
 		setFillPattern(FILL_PATTERN);
 	}
 
+	public short alignment()
+	{
+		return style().getAlignment();
+	}
+
+	public short bottomBorder()
+	{
+		return style().getBorderBottom();
+	}
+
+	public short bottomBorderColor()
+	{
+		return style().getBottomBorderColor();
+	}
+
 	@Override
 	public MyCellStyle clone() throws CloneNotSupportedException
 	{
 		XSSFCellStyle style = null;
-		if (getStyle() instanceof XSSFCellStyle)
+		if (style() instanceof XSSFCellStyle)
 		{
-			style = (XSSFCellStyle) getStyle();
+			style = (XSSFCellStyle) style();
 			style = (XSSFCellStyle) style.clone();
 			return new MyCellStyle(style);
 		}
@@ -86,164 +101,109 @@ public class MyCellStyle implements Cloneable
 				"HSSFWorkbook clones not supported");
 	}
 
-	public short getAlignment()
+	public short dataFormat()
 	{
-		return getStyle().getAlignment();
+		return style().getDataFormat();
 	}
 
-	public short getBorderBottom()
+	public String dataFormatAsString()
 	{
-		return getStyle().getBorderBottom();
+		return style().getDataFormatString();
 	}
 
-	public short getBorderLeft()
+	public Color fillBackgroundColor()
 	{
-		return getStyle().getBorderLeft();
+		return style().getFillBackgroundColorColor();
 	}
 
-	public short getBorderRight()
+	public short fillBackgroundColorIndex()
 	{
-		return getStyle().getBorderRight();
+		return style().getFillBackgroundColor();
 	}
 
-	public short getBorderTop()
+	public Color fillForegroundColor()
 	{
-		return getStyle().getBorderTop();
+		return style().getFillForegroundColorColor();
 	}
 
-	public short getBottomBorderColor()
+	public short fillForegroundColorIndex()
 	{
-		return getStyle().getBottomBorderColor();
+		return style().getFillForegroundColor();
 	}
 
-	public short getDataFormat()
+	public short fillPattern()
 	{
-		return getStyle().getDataFormat();
+		return style().getFillPattern();
 	}
 
-	public String getDataFormatString()
+	public short fontIndex()
 	{
-		return getStyle().getDataFormatString();
-	}
-
-	public Color getFillBackgroundColor()
-	{
-		return getStyle().getFillBackgroundColorColor();
-	}
-
-	public short getFillBackgroundColorIndex()
-	{
-		return getStyle().getFillBackgroundColor();
-	}
-
-	public Color getFillForegroundColor()
-	{
-		return getStyle().getFillForegroundColorColor();
-	}
-
-	public short getFillForegroundColorIndex()
-	{
-		return getStyle().getFillForegroundColor();
-	}
-
-	public short getFillPattern()
-	{
-		return getStyle().getFillPattern();
-	}
-
-	public short getFontIndex()
-	{
-		return getStyle().getFontIndex();
-	}
-
-	public boolean getHidden()
-	{
-		return getStyle().getHidden();
-	}
-
-	public short getIndention()
-	{
-		return getStyle().getIndention();
-	}
-
-	public short getIndex()
-	{
-		return getStyle().getIndex();
-	}
-
-	public short getLeftBorderColor()
-	{
-		return getStyle().getLeftBorderColor();
-	}
-
-	public boolean getLocked()
-	{
-		return getStyle().getLocked();
-	}
-
-	public short getRightBorderColor()
-	{
-		return getStyle().getRightBorderColor();
-	}
-
-	public short getRotation()
-	{
-		return getStyle().getRotation();
-	}
-
-	public boolean getShrinkToFit()
-	{
-		return getStyle().getShrinkToFit();
-	}
-
-	protected CellStyle getStyle()
-	{
-		return style;
-	}
-
-	public short getTopBorderColor()
-	{
-		return getStyle().getTopBorderColor();
-	}
-
-	public short getVerticalAlignment()
-	{
-		return getStyle().getVerticalAlignment();
+		return style().getFontIndex();
 	}
 
 	public boolean hasWrappedText()
 	{
-		return getStyle().getWrapText();
+		return style().getWrapText();
+	}
+
+	public short indention()
+	{
+		return style().getIndention();
+	}
+
+	public short index()
+	{
+		return style().getIndex();
+	}
+
+	public boolean isHidden()
+	{
+		return style().getHidden();
+	}
+
+	public short leftBorder()
+	{
+		return style().getBorderLeft();
+	}
+
+	public short leftBorderColor()
+	{
+		return style().getLeftBorderColor();
+	}
+
+	public boolean locked()
+	{
+		return style().getLocked();
+	}
+
+	public short rightBorder()
+	{
+		return style().getBorderRight();
+	}
+
+	public short rightBorderColor()
+	{
+		return style().getRightBorderColor();
+	}
+
+	public short rotation()
+	{
+		return style().getRotation();
 	}
 
 	public void set(MyCellStyle style)
 	{
-		getStyle().cloneStyleFrom(style.getStyle());
+		style().cloneStyleFrom(style.style());
 	}
 
 	public void setAlignment(short alignment)
 	{
-		getStyle().setAlignment(alignment);
+		style().setAlignment(alignment);
 	}
 
-	public void setBorderBottom(short border)
+	public void setBottomBorder(short border)
 	{
-		getStyle().setBorderBottom(border);
-	}
-
-	public void setBorderLeft(short border)
-	{
-		getStyle().setBorderLeft(border);
-	}
-
-	public void setBorderRight(short border)
-	{
-		getStyle().setBorderRight(border);
-	}
-
-	public void setBorderTop(short border)
-	{
-		getStyle().setBorderTop(border);
+		style().setBorderBottom(border);
 	}
 
 	public void setBottomBorderColor(MyColor color)
@@ -253,12 +213,12 @@ public class MyCellStyle implements Cloneable
 
 	public void setBottomBorderColor(short color)
 	{
-		getStyle().setBottomBorderColor(color);
+		style().setBottomBorderColor(color);
 	}
 
 	public void setDataFormat(short dataFormat)
 	{
-		getStyle().setDataFormat(dataFormat);
+		style().setDataFormat(dataFormat);
 	}
 
 	public void setFillBackgroundColor(MyColor color)
@@ -268,7 +228,7 @@ public class MyCellStyle implements Cloneable
 
 	public void setFillBackgroundColor(short color)
 	{
-		getStyle().setFillBackgroundColor(color);
+		style().setFillBackgroundColor(color);
 	}
 
 	public void setFillForegroundColor(MyColor color)
@@ -278,27 +238,32 @@ public class MyCellStyle implements Cloneable
 
 	public void setFillForegroundColor(short color)
 	{
-		getStyle().setFillForegroundColor(color);
+		style().setFillForegroundColor(color);
 	}
 
 	public void setFillPattern(short fillPattern)
 	{
-		getStyle().setFillPattern(fillPattern);
+		style().setFillPattern(fillPattern);
 	}
 
 	public void setFont(Font font)
 	{
-		getStyle().setFont(font);
+		style().setFont(font);
 	}
 
 	public void setHidden(boolean hidden)
 	{
-		getStyle().setHidden(hidden);
+		style().setHidden(hidden);
 	}
 
 	public void setIndention(short indent)
 	{
-		getStyle().setIndention(indent);
+		style().setIndention(indent);
+	}
+
+	public void setLeftBorder(short border)
+	{
+		style().setBorderLeft(border);
 	}
 
 	public void setLeftBorderColor(MyColor color)
@@ -308,12 +273,17 @@ public class MyCellStyle implements Cloneable
 
 	public void setLeftBorderColor(short color)
 	{
-		getStyle().setLeftBorderColor(color);
+		style().setLeftBorderColor(color);
 	}
 
 	public void setLocked(boolean locked)
 	{
-		getStyle().setLocked(locked);
+		style().setLocked(locked);
+	}
+
+	public void setRightBorder(short border)
+	{
+		style().setBorderRight(border);
 	}
 
 	public void setRightBorderColor(MyColor color)
@@ -323,17 +293,22 @@ public class MyCellStyle implements Cloneable
 
 	public void setRightBorderColor(short color)
 	{
-		getStyle().setRightBorderColor(color);
+		style().setRightBorderColor(color);
 	}
 
 	public void setRotation(short rotation)
 	{
-		getStyle().setRotation(rotation);
+		style().setRotation(rotation);
 	}
 
 	public void setShrinkToFit(boolean shrinkToFit)
 	{
-		getStyle().setShrinkToFit(shrinkToFit);
+		style().setShrinkToFit(shrinkToFit);
+	}
+
+	public void setTopBorder(short border)
+	{
+		style().setBorderTop(border);
 	}
 
 	public void setTopBorderColor(MyColor color)
@@ -343,16 +318,41 @@ public class MyCellStyle implements Cloneable
 
 	public void setTopBorderColor(short color)
 	{
-		getStyle().setTopBorderColor(color);
+		style().setTopBorderColor(color);
 	}
 
 	public void setVerticalAlignment(short alignment)
 	{
-		getStyle().setVerticalAlignment(alignment);
+		style().setVerticalAlignment(alignment);
 	}
 
 	public void setWrapText(boolean wrapped)
 	{
-		getStyle().setWrapText(wrapped);
+		style().setWrapText(wrapped);
+	}
+
+	public boolean shrinksToFit()
+	{
+		return style().getShrinkToFit();
+	}
+
+	protected CellStyle style()
+	{
+		return style;
+	}
+
+	public short topBorder()
+	{
+		return style().getBorderTop();
+	}
+
+	public short topBorderColor()
+	{
+		return style().getTopBorderColor();
+	}
+
+	public short verticalAlignment()
+	{
+		return style().getVerticalAlignment();
 	}
 }
