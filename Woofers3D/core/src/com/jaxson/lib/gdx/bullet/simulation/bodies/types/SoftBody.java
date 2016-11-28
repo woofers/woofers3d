@@ -34,7 +34,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		super(modelInstance, getBody(modelInstance.model, world), mass);
 		body().setMass(0, 0);
 		meshPart = modelInstance.model.nodes.get(0).parts.get(0).meshPart;
-		meshPart.mesh.scale(3, 3, 3);
+		meshPart.mesh.scale(0.45f, 0.45f, 0.45f);
 		indexMap = BufferUtils.newShortBuffer(meshPart.size);
 		positionOffset
 				= meshPart.mesh.getVertexAttribute(Usage.Position).offset;
@@ -47,7 +47,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		body().setConfig_kDF(0.2f);
 		body().randomizeConstraints();
 		body().setTotalMass(mass);
-		body().translate(new Vector3(50f, 14f, 5f).scl(0.5f));
+		body().translate(new Vector3(50f, 14f, 5f).scl(0.5f).scl(0.15f));
 		// getBoundingBox();
 		// transformToBody();
 	}
@@ -82,7 +82,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	private static btSoftBody getBody(Model model, PhysicsWorld world)
 	{
 		MeshPart meshPart = model.nodes.get(0).parts.get(0).meshPart;
-		meshPart.mesh.scale(3, 3, 3);
+		meshPart.mesh.scale(0.45f, 0.45f, 0.45f);
 		ShortBuffer indexMap = BufferUtils.newShortBuffer(meshPart.size);
 		int positionOffset
 				= meshPart.mesh.getVertexAttribute(Usage.Position).offset;

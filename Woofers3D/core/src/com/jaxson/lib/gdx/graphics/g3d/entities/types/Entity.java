@@ -117,7 +117,9 @@ public abstract class Entity extends GameObject
 
 	public void moveTo(Vector3 location)
 	{
+		Quaternion rotation = rotationQuaternion();
 		transform().setToTranslation(location);
+		setRotation(rotation);
 	}
 
 	public Vector3 originalSize()

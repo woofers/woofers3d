@@ -29,6 +29,11 @@ public class Floor extends RigidBox
 		scale(new Vector3(width, THICKNESS, height));
 	}
 
+	public Floor(Color color)
+	{
+		this(WIDTH, HEIGHT, color);
+	}
+
 	@Override
 	public void dispose()
 	{

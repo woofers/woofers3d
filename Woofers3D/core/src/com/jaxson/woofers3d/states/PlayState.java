@@ -33,6 +33,7 @@ public class PlayState extends BulletState
 	private static final float MARKER_LENGTH = 35f;
 
 	private Floor floor;
+	private Floor ramp;
 	private RigidBox[] boxs;
 	private RigidSphere[] spheres;
 	private SoftBox softBox;
@@ -54,14 +55,22 @@ public class PlayState extends BulletState
 		view().modelView().setCamera(camera);
 
 /*
+		final float IMPORT_SCALE = 0.15f;
 		for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
 		{
-			object.scale(0.15f);
+			object.scale(IMPORT_SCALE);
+			object.moveTo(object.location().scl(IMPORT_SCALE));
 		}
 */
 		floor = new Floor();
 		applyPhysics(floor);
 		add(floor);
+
+		ramp = new Floor(1f, 1f, new MyColor(250, 250, 250));
+		ramp.rotate(new Vector3(0f, 0f, 30f));
+		ramp.translate(new Vector3(0f, 0f, 5f));
+		applyPhysics(ramp);
+		add(ramp);
 
 		RandomNumber mass = new RandomNumber(0.135f, 0.18f);
 		boxs = new RigidBox[BOX_AMOUNT];

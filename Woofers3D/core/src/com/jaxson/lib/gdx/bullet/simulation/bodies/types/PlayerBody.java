@@ -20,16 +20,18 @@ public abstract class PlayerBody
 {
 	private static final float GRAVITY_SCALE = -1f;
 	private static final float GHOST_MASS = -1f;
-	private static final float ROUND_TOLERANCE_SCALE = 1.00000001f;
+	private static final float ROUND_TOLERANCE_SCALE = 1.00000005f;
+
+	private static final float ROUND_TOLERANCE = 0.00000001f;
 
 	private static final float GRAVITY = -6.5f;
 	private static final float STEP_HEIGHT = 0.035f;
 	private static final float ROTATION_SPEED = 2f;
 	private static final float MAX_FALL_VELOCITY = 8.25f;
 	private static final float JUMP_IMUPLSE = 1.5f;
-	private static final float ACCELERATION_X = 3f;
+	private static final float ACCELERATION_X = 1.95f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
-	private static final float MAX_VELOCITY_X = 250f;
+	private static final float MAX_VELOCITY_X = 162.5f;
 	private static final float ACCELERATION_Z = 0.23f;
 	private static final float DECCELERATION_Z = ACCELERATION_Z / 3f;
 	private static final float MAX_VELOCITY_Z = 7f;
@@ -78,6 +80,7 @@ public abstract class PlayerBody
 				new Vector3(DECCELERATION_X, GRAVITY, DECCELERATION_Z));
 		setMaxVelocity(
 				new Vector3(MAX_VELOCITY_X, MAX_FALL_VELOCITY, MAX_VELOCITY_Z));
+		characterController().setUseGhostSweepTest(false);
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -150,6 +153,7 @@ public abstract class PlayerBody
 		return acceleration().y;
 	}
 
+	//length = angle * radius
 	@Override
 	protected void input(float dt)
 	{
@@ -196,9 +200,6 @@ public abstract class PlayerBody
 					if (velocityPerTick().x < 0f)
 						velocityPerTick().x += decceleration().x * dt;
 				}
-				if (MyMath.abs(velocityPerTick().x) < acceleration().x * dt
-						* ROUND_TOLERANCE_SCALE)
-					velocityPerTick().x = 0f;
 
 				if (jumpKey.isPressed())
 				{
@@ -243,19 +244,24 @@ public abstract class PlayerBody
 				if (velocityPerTick().z < 0f)
 					velocityPerTick().z += decceleration().z * dt;
 			}
-			if (leftKey.isDown() || rightKey.isDown())
-			{
-				if (MyMath.abs(velocityPerTick().z) > decceleration().z * dt
-						* ROUND_TOLERANCE_SCALE)
-				{
-					velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
-							/ velocityPerTick().z)
-							* (dt * (acceleration().z + decceleration().z));
-				}
-			}
+			//if (leftKey.isDown() || rightKey.isDown())
+			//{
+			//	if (MyMath.abs(velocityPerTick().z) > decceleration().z * dt
+			//			* ROUND_TOLERANCE_SCALE)
+			//	{
+			//		velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
+			//				/ velocityPerTick().z)
+			//				* (dt * (acceleration().z + decceleration().z));
+			//	}
+			//}
 			if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
 					* ROUND_TOLERANCE_SCALE)
 				velocityPerTick().z = 0f;
+		}
+		if (MyMath.abs(velocityPerTick().x) <
+				acceleration().x * dt * ROUND_TOLERANCE_SCALE)
+		{
+			velocityPerTick().x = 0f;
 		}
 
 		if (touchScreen.exists())
@@ -269,13 +275,21 @@ public abstract class PlayerBody
 		{
 
 		}
-		if (velocityPerTick().x != 0f) rotate(velocityPerTick().x, 0f, 0f);
 		direction.add(direction());
 		direction.scl(velocityPerTick().z);
-		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
-		System.out.println(velocity());
 		characterController().setWalkDirection(direction);
 		bodyToTransform();
+		if (MyMath.abs(velocityPerTick().x) > acceleration().x
+				* acceleration().x * dt * ROUND_TOLERANCE_SCALE)
+		{
+			rotate(velocityPerTick().x, 0f, 0f);
+		}
+		else if (!leftKey.isDown() && !rightKey.isDown())
+		{
+			velocityPerTick().x = 0f;
+		}
+		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
+		System.out.println(velocity());
 	}
 
 	public void jump()
