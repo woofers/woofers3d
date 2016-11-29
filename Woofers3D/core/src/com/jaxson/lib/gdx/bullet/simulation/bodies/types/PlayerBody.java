@@ -29,9 +29,9 @@ public abstract class PlayerBody
 	private static final float ROTATION_SPEED = 2f;
 	private static final float MAX_FALL_VELOCITY = 8.25f;
 	private static final float JUMP_IMUPLSE = 1.5f;
-	private static final float ACCELERATION_X = 1.95f;
+	private static final float ACCELERATION_X = 0.0125f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
-	private static final float MAX_VELOCITY_X = 162.5f;
+	private static final float MAX_VELOCITY_X = 1.04f;
 	private static final float ACCELERATION_Z = 0.23f;
 	private static final float DECCELERATION_Z = ACCELERATION_Z / 3f;
 	private static final float MAX_VELOCITY_Z = 7f;
@@ -153,7 +153,6 @@ public abstract class PlayerBody
 		return acceleration().y;
 	}
 
-	//length = angle * radius
 	@Override
 	protected void input(float dt)
 	{
@@ -164,41 +163,41 @@ public abstract class PlayerBody
 			{
 				if (leftKey.isDown())
 				{
-					if (MyMath.abs(velocityPerTick().x) < maxSpeed().x * dt)
+					if (MyMath.abs(velocityPerTick().x) < angle(maxSpeed().x) * dt)
 					{
-						if (velocityPerTick().x >= 0f)
+						if (angle(velocityPerTick().x) >= 0f)
 						{
-							velocityPerTick().x += acceleration().x * dt;
+							velocityPerTick().x += angle(acceleration().x) * dt;
 						}
 						else
 						{
-							velocityPerTick().x += decceleration().x * dt;
+							velocityPerTick().x += angle(decceleration().x) * dt;
 						}
 					}
 				}
 				else
 				{
 					if (velocityPerTick().x > 0f)
-						velocityPerTick().x -= decceleration().x * dt;
+						velocityPerTick().x -= angle(decceleration().x) * dt;
 				}
 				if (rightKey.isDown())
 				{
-					if (MyMath.abs(velocityPerTick().x) < maxSpeed().x * dt)
+					if (MyMath.abs(velocityPerTick().x) < angle(maxSpeed().x) * dt)
 					{
-						if (velocityPerTick().x <= 0f)
+						if (angle(velocityPerTick().x) <= 0f)
 						{
-							velocityPerTick().x -= acceleration().x * dt;
+							velocityPerTick().x -= angle(acceleration().x) * dt;
 						}
 						else
 						{
-							velocityPerTick().x -= decceleration().x * dt;
+							velocityPerTick().x -= angle(decceleration().x) * dt;
 						}
 					}
 				}
 				else
 				{
 					if (velocityPerTick().x < 0f)
-						velocityPerTick().x += decceleration().x * dt;
+						velocityPerTick().x += angle(decceleration().x) * dt;
 				}
 
 				if (jumpKey.isPressed())
@@ -258,8 +257,8 @@ public abstract class PlayerBody
 					* ROUND_TOLERANCE_SCALE)
 				velocityPerTick().z = 0f;
 		}
-		if (MyMath.abs(velocityPerTick().x) <
-				acceleration().x * dt * ROUND_TOLERANCE_SCALE)
+		if (MyMath.abs(angle(velocityPerTick().x)) <
+				angle(acceleration().x) * dt * ROUND_TOLERANCE_SCALE)
 		{
 			velocityPerTick().x = 0f;
 		}
@@ -279,8 +278,8 @@ public abstract class PlayerBody
 		direction.scl(velocityPerTick().z);
 		characterController().setWalkDirection(direction);
 		bodyToTransform();
-		if (MyMath.abs(velocityPerTick().x) > acceleration().x
-				* acceleration().x * dt * ROUND_TOLERANCE_SCALE)
+		if (MyMath.abs(angle(velocityPerTick().x)) > angle(acceleration().x)
+				* angle(acceleration().x) * dt * ROUND_TOLERANCE_SCALE)
 		{
 			rotate(velocityPerTick().x, 0f, 0f);
 		}
@@ -289,7 +288,18 @@ public abstract class PlayerBody
 			velocityPerTick().x = 0f;
 		}
 		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
+		velocity().x = turn(velocityPerTick().x / dt);
 		System.out.println(velocity());
+	}
+
+	private float angle(float length)
+	{
+		return length / radius() * MyMath.RADIANS_TO_DEGREES;
+	}
+
+	private float turn(float angle)
+	{
+		return angle * MyMath.DEGREES_TO_RADIANS * radius();
 	}
 
 	public void jump()
