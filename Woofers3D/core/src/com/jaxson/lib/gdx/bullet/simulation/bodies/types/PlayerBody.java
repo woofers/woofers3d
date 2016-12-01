@@ -27,7 +27,7 @@ public abstract class PlayerBody
 	private static final float GRAVITY = -9.81f;
 	private static final float STEP_HEIGHT = 0.035f;
 	private static final float ROTATION_SPEED = 2f;
-	private static final float MAX_FALL_VELOCITY = 55f;
+	private static final float MAX_FALL_VELOCITY = -55f;
 	private static final float JUMP_VELOCITY = 2.4f;
 	private static final float ACCELERATION_X = 0.0125f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
@@ -47,8 +47,10 @@ public abstract class PlayerBody
 	private float stepHeight;
 	private Vector3 acceleration;
 	private Vector3 decceleration;
+
 	private float jumpTime;
-	private boolean couldJump;
+	private boolean wasJumping;
+	private boolean isJumping;
 	private float jumpVelocity;
 
 	private Keyboard keyboard;
@@ -246,6 +248,7 @@ public abstract class PlayerBody
 				if (velocityPerTick().z < 0f)
 					velocityPerTick().z += decceleration().z * dt;
 			}
+/*
 			if (leftKey.isDown() || rightKey.isDown())
 			{
 				if (MyMath.abs(velocityPerTick().z) > decceleration().z * dt
@@ -256,6 +259,7 @@ public abstract class PlayerBody
 							* (dt * (acceleration().z + decceleration().z));
 				}
 			}
+*/
 			if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
 					* ROUND_TOLERANCE_SCALE)
 				velocityPerTick().z = 0f;
@@ -291,24 +295,38 @@ public abstract class PlayerBody
 			velocityPerTick().x = 0f;
 		}
 		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
-		velocity().x = turn(velocityPerTick().x / dt);
-		couldJump = canJump();
-		if (isJumping())
+		velocity().x = -turn(velocityPerTick().x / dt);
+		wasJumping = isJumping();
+		if (isJumping() || isFalling())
 		{
 			jumpTime += dt;
+			velocity().y = acceleration().y * jumpTime;
+			if (isJumping()) velocity().y += jumpVelocity();
+			if (velocity().y <= maxSpeed().y) velocity().y = maxSpeed().y;
+			if (justLanded()) isJumping = false;
 		}
 		else
 		{
 			jumpTime = 0f;
 		}
-		velocity().y = JUMP_VELOCITY + acceleration().y * jumpTime;
-		if (velocity().y >= JUMP_VELOCITY) velocity().y = 0f;
-		System.out.println(velocity());
+		System.out.println(round(velocity().x) + "m/s, "
+				+ round(velocity().y) + "m/s, "
+				+ round(velocity().z) + "m/s");
 	}
 
 	public boolean isJumping()
 	{
-		return !canJump() && !onGround();
+		return isJumping;
+	}
+
+	public boolean justLanded()
+	{
+		return wasJumping && onGround();
+	}
+
+	public boolean isFalling()
+	{
+		return !isJumping() && !onGround();
 	}
 
 	private float angle(float length)
@@ -323,6 +341,7 @@ public abstract class PlayerBody
 
 	public void jump()
 	{
+		isJumping = true;
 		characterController().jump();
 	}
 
@@ -360,7 +379,7 @@ public abstract class PlayerBody
 
 	public boolean justJumped()
 	{
-		return couldJump && !canJump();
+		return !wasJumping && !canJump() && isJumping();
 	}
 
 	protected void rotateLeft()
@@ -418,10 +437,14 @@ public abstract class PlayerBody
 		characterController().setJumpSpeed(jumpVelocity);
 	}
 
+	public float jumpVelocity()
+	{
+		return jumpVelocity;
+	}
 
 	public void setMaxFallVelocity(float maxFallVelocity)
 	{
-		characterController().setFallSpeed(maxFallVelocity);
+		characterController().setFallSpeed(-maxFallVelocity);
 	}
 
 	public void setMaxSlope(float maxSlope)

@@ -4,16 +4,20 @@
 		"selected_items":
 		[
 			[
+				"veloc",
+				"velocity"
+			],
+			[
+				"jump",
+				"jumpTime"
+			],
+			[
 				"DE",
 				"DEGREES_TO_RADIANS"
 			],
 			[
 				"rre",
 				"return"
-			],
-			[
-				"veloc",
-				"velocityPerTick"
 			],
 			[
 				"velo",
@@ -510,10 +514,6 @@
 			[
 				"if",
 				"isFile"
-			],
-			[
-				"print",
-				"printStackTrace"
 			]
 		]
 	},
@@ -531,17 +531,17 @@
 			"file": "core/src/com/jaxson/lib/gdx/bullet/simulation/bodies/types/PlayerBody.java",
 			"settings":
 			{
-				"buffer_size": 10862,
+				"buffer_size": 11329,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "length = angle * DEGREE_RAD * radius\n\n	private static final float ACCELERATION_X = 1.95f;\n\n	private static final float MAX_VELOCITY_X = 162.5f;\n",
+			"contents": "up = vi + at\nvi = impulse / mass\n",
 			"settings":
 			{
-				"buffer_size": 144,
+				"buffer_size": 33,
 				"line_ending": "Windows",
-				"name": "length = angle * DEGREE_RAD * radius"
+				"name": "up = vi + at"
 			}
 		},
 		{
@@ -1011,6 +1011,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"JUMP_SPEED",
+			"JUMP_IMUPLSE",
+			"MAX_FALL_VELOCITY",
 			"diameter",
 			"ICON_TYPE",
 			"characterController",
@@ -1135,10 +1138,7 @@
 			"fall back",
 			"Cstrike_TitlesTXT",
 			"hold this",
-			"Availible",
-			"com.jaxson.lib.io",
-			"GdxFile",
-			"out"
+			"Availible"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1146,6 +1146,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"JUMP_VELOCITY",
+			"JUMP_SPEED",
 			"",
 			"direction",
 			"extension",
@@ -1263,15 +1265,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10862,
+						"buffer_size": 11329,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7440,
-								7440
+								7096,
+								7096
 							]
 						],
 						"settings":
@@ -1280,7 +1282,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5639.0,
+						"translation.y": 6336.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1291,20 +1293,20 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 144,
+						"buffer_size": 33,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								144,
-								144
+								33,
+								33
 							]
 						],
 						"settings":
 						{
-							"auto_name": "length = angle * DEGREE_RAD * radius",
+							"auto_name": "up = vi + at",
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
@@ -1366,7 +1368,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2464.0,
+						"translation.y": 2354.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
