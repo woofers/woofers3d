@@ -79,10 +79,9 @@ public abstract class PlayerBody
 		this.acceleration = new Vector3();
 		this.decceleration = new Vector3();
 		setJumpVelocity(JUMP_VELOCITY);
-		setMaxFallVelocity(MAX_FALL_VELOCITY);
 		setAcceleration(new Vector3(ACCELERATION_X, GRAVITY, ACCELERATION_Z));
 		setDecceleration(
-				new Vector3(DECCELERATION_X, GRAVITY, DECCELERATION_Z));
+				new Vector3(DECCELERATION_X, 0f, DECCELERATION_Z));
 		setMaxVelocity(
 				new Vector3(MAX_VELOCITY_X, MAX_FALL_VELOCITY, MAX_VELOCITY_Z));
 		characterController().setUseGhostSweepTest(false);
@@ -382,26 +381,6 @@ public abstract class PlayerBody
 		return !wasJumping && !canJump() && isJumping();
 	}
 
-	protected void rotateLeft()
-	{
-		rotateLeft(1f);
-	}
-
-	protected void rotateLeft(float scale)
-	{
-		rotate(ROTATION_SPEED * scale, 0f, 0f);
-	}
-
-	protected void rotateRight()
-	{
-		rotateRight(1f);
-	}
-
-	protected void rotateRight(float scale)
-	{
-		rotate(-ROTATION_SPEED * scale, 0f, 0f);
-	}
-
 	public void setAcceleration(float acceleration)
 	{
 		setAcceleration(new Vector3(acceleration, gravity(), acceleration));
@@ -421,7 +400,6 @@ public abstract class PlayerBody
 	public void setDecceleration(Vector3 decceleration)
 	{
 		this.decceleration = decceleration;
-		setGravity(decceleration().y);
 	}
 
 	public void setGravity(float gravity)
@@ -442,7 +420,7 @@ public abstract class PlayerBody
 		return jumpVelocity;
 	}
 
-	public void setMaxFallVelocity(float maxFallVelocity)
+	private void setMaxFallVelocity(float maxFallVelocity)
 	{
 		characterController().setFallSpeed(-maxFallVelocity);
 	}
@@ -465,6 +443,7 @@ public abstract class PlayerBody
 	public void setMaxVelocity(Vector3 maxVelocity)
 	{
 		this.maxVelocity = maxVelocity;
+		setMaxFallVelocity(maxVelocity.y);
 	}
 
 	public void setStepHeight(float stepHeight)
