@@ -29,12 +29,13 @@ public abstract class PlayerBody
 	private static final float ROTATION_SPEED = 2f;
 	private static final float MAX_FALL_VELOCITY = -55f;
 	private static final float JUMP_VELOCITY = 2.4f;
-	private static final float ACCELERATION_X = 0.0125f;
+	private static final float ACCELERATION_X = 0.014f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
 	private static final float MAX_VELOCITY_X = 1.04f;
 	private static final float ACCELERATION_Z = 0.23f;
-	private static final float DECCELERATION_Z = ACCELERATION_Z / 3f;
+	private static final float DECCELERATION_Z = ACCELERATION_Z / 2f;
 	private static final float MAX_VELOCITY_Z = 7f;
+	private static final float BURNOUT_VELOCITY = MAX_VELOCITY_Z * 0.88f;
 
 	private static final float Y_BALANCE = -0.5f;
 
@@ -94,10 +95,6 @@ public abstract class PlayerBody
 		this.leftKey = keyboard.key("A");
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
-
-		for (float i = Accelerometer.MIN;
-				i < Accelerometer.MAX + 0.1f; i += 0.1f)
-			System.out.println(round(i) + ": " + round(yAccelerometer(i)));
 	}
 
 	protected void reset()
@@ -247,18 +244,20 @@ public abstract class PlayerBody
 				if (velocityPerTick().z < 0f)
 					velocityPerTick().z += decceleration().z * dt;
 			}
-/*
 			if (leftKey.isDown() || rightKey.isDown())
 			{
 				if (MyMath.abs(velocityPerTick().z) > decceleration().z * dt
 						* ROUND_TOLERANCE_SCALE)
 				{
-					velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
-							/ velocityPerTick().z)
-							* (dt * (acceleration().z + decceleration().z));
+					if (MyMath.abs(velocityPerTick().z) > BURNOUT_VELOCITY * dt)
+					{
+
+						velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
+								/ velocityPerTick().z)
+								* (dt * (acceleration().z + decceleration().z));
+					}
 				}
 			}
-*/
 			if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
 					* ROUND_TOLERANCE_SCALE)
 				velocityPerTick().z = 0f;

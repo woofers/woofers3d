@@ -34,11 +34,10 @@ public class PlayState extends BulletState
 
 	private Floor floor;
 	private Floor ramp;
+	private RigidBox blocker;
 	private RigidBox[] boxs;
 	private RigidSphere[] spheres;
 	private SoftBox softBox;
-	private RigidBox marker;
-	private RigidBox[] tests;
 	private Player player;
 	private TargetCamera camera;
 	private Text text;
@@ -71,6 +70,11 @@ public class PlayState extends BulletState
 		ramp.translate(new Vector3(0f, 0f, 5f));
 		applyPhysics(ramp);
 		add(ramp);
+
+		blocker = new Floor(1f, 1f, new MyColor(250, 250, 250));
+		blocker.translate(new Vector3(5f, 0.9f, 0f));
+		applyPhysics(blocker);
+		add(blocker);
 
 		RandomNumber mass = new RandomNumber(0.135f, 0.18f);
 		boxs = new RigidBox[BOX_AMOUNT];
@@ -157,7 +161,5 @@ public class PlayState extends BulletState
 	{
 		super.update(dt);
 		text.setText(player.accelerometer().toString());
-		// boxs[0].rotate(1f, 0f, 0f);
-		// boxs[0].translate(new Vector3(0.1f, 0f, 0f));
 	}
 }
