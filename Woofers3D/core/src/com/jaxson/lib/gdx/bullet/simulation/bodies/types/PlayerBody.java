@@ -26,9 +26,8 @@ public abstract class PlayerBody
 
 	private static final float GRAVITY = -9.81f;
 	private static final float STEP_HEIGHT = 0.035f;
-	private static final float ROTATION_SPEED = 2f;
 	private static final float MAX_FALL_VELOCITY = -55f;
-	private static final float JUMP_VELOCITY = 2.4f;
+	private static final float JUMP_VELOCITY = 2.4f * 2f;
 	private static final float ACCELERATION_X = 0.014f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
 	private static final float MAX_VELOCITY_X = 1.04f;
@@ -36,6 +35,7 @@ public abstract class PlayerBody
 	private static final float DECCELERATION_Z = ACCELERATION_Z / 2f;
 	private static final float MAX_VELOCITY_Z = 7f;
 	private static final float BURNOUT_VELOCITY = MAX_VELOCITY_Z * 0.88f;
+	private static final float FALL_CONTROL_SCALE = 0f;
 
 	private static final float Y_BALANCE = -0.5f;
 
@@ -203,7 +203,7 @@ public abstract class PlayerBody
 
 				if (jumpKey.isPressed())
 				{
-					if (canJump()) jump();
+					jump();
 				}
 			}
 			if (forwardKey.isDown())
@@ -310,11 +310,22 @@ public abstract class PlayerBody
 		System.out.println(round(velocity().x) + "m/s, "
 				+ round(velocity().y) + "m/s, "
 				+ round(velocity().z) + "m/s");
+		System.out.println(fallScale());
+	}
+
+	private float fallScale()
+	{
+		return onGround() ? 1f : FALL_CONTROL_SCALE;
 	}
 
 	public boolean isJumping()
 	{
 		return isJumping;
+	}
+
+	public boolean isJumpingUpwards()
+	{
+		return isJumping() && velocity().x > 0f;
 	}
 
 	public boolean justLanded()
@@ -339,6 +350,7 @@ public abstract class PlayerBody
 
 	public void jump()
 	{
+		if (!canJump()) return;
 		isJumping = true;
 		characterController().jump();
 	}
