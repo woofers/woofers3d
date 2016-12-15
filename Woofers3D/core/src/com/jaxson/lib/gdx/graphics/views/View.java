@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 
 public class View
 {
@@ -133,7 +134,7 @@ public class View
 		return sprite;
 	}
 
-	public void update()
+	public void update(float dt)
 	{
 		spriteView().getCamera().update();
 		modelView().getCamera().update();

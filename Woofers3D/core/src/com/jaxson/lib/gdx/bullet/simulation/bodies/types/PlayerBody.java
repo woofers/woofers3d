@@ -27,15 +27,15 @@ public abstract class PlayerBody
 	private static final float GRAVITY = -9.81f;
 	private static final float STEP_HEIGHT = 0.035f;
 	private static final float MAX_FALL_VELOCITY = -55f;
-	private static final float JUMP_VELOCITY = 2.4f * 2f;
-	private static final float ACCELERATION_X = 0.014f;
+	private static final float JUMP_VELOCITY = 2.4f;
+	private static final float ACCELERATION_X = 0.014f * 1.18f;
 	private static final float DECCELERATION_X = ACCELERATION_X * 3f;
 	private static final float MAX_VELOCITY_X = 1.04f;
 	private static final float ACCELERATION_Z = 0.23f;
 	private static final float DECCELERATION_Z = ACCELERATION_Z / 2f;
 	private static final float MAX_VELOCITY_Z = 7f;
-	private static final float BURNOUT_VELOCITY = MAX_VELOCITY_Z * 0.88f;
-	private static final float FALL_CONTROL_SCALE = 0f;
+	private static final float INERTIA_VELOCITY = MAX_VELOCITY_Z * 0.88f;
+	private static final float BACKWARD_SCALE = 0.72f;
 
 	private static final float Y_BALANCE = -0.5f;
 
@@ -48,10 +48,12 @@ public abstract class PlayerBody
 	private float stepHeight;
 	private Vector3 acceleration;
 	private Vector3 decceleration;
+	private float inertiaVelocity;
+	private float backwardsMovementScale;
 
 	private float jumpTime;
 	private boolean wasJumping;
-	private boolean isJumping;
+	private boolean inAirFromJump;
 	private float jumpVelocity;
 
 	private Keyboard keyboard;
@@ -86,6 +88,8 @@ public abstract class PlayerBody
 		setMaxVelocity(
 				new Vector3(MAX_VELOCITY_X, MAX_FALL_VELOCITY, MAX_VELOCITY_Z));
 		characterController().setUseGhostSweepTest(false);
+		setInertiaVelocity(INERTIA_VELOCITY);
+		setBackwardsMovementScale(BACKWARD_SCALE);
 
 		this.keyboard = Inputs.keyboard();
 		this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -141,6 +145,16 @@ public abstract class PlayerBody
 		return decceleration;
 	}
 
+	public float backwardsMovementScale()
+	{
+		return backwardsMovementScale;
+	}
+
+	public void setBackwardsMovementScale(float backwardsMovementScale)
+	{
+		this.backwardsMovementScale = backwardsMovementScale;
+	}
+
 	@Override
 	public void dispose()
 	{
@@ -152,6 +166,16 @@ public abstract class PlayerBody
 	public float gravity()
 	{
 		return acceleration().y;
+	}
+
+	public float inertiaVelocity()
+	{
+		return inertiaVelocity;
+	}
+
+	public void setInertiaVelocity(float inertiaVelocity)
+	{
+		this.inertiaVelocity = inertiaVelocity;
 	}
 
 	@Override
@@ -206,6 +230,11 @@ public abstract class PlayerBody
 					jump();
 				}
 			}
+			else
+			{
+				//velocityPerTick().x += -(MyMath.abs(velocityPerTick().x)
+				//				/ velocityPerTick().x) * angle(decceleration().x) * dt;
+			}
 			if (forwardKey.isDown())
 			{
 				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z * dt)
@@ -227,29 +256,32 @@ public abstract class PlayerBody
 			}
 			if (backwardKey.isDown())
 			{
-				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z * dt)
+				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z
+						* dt * backwardsMovementScale())
 				{
 					if (velocityPerTick().z <= 0f)
 					{
-						velocityPerTick().z -= acceleration().z * dt;
+						velocityPerTick().z -= acceleration().z
+								* dt * backwardsMovementScale();
 					}
 					else
 					{
-						velocityPerTick().z -= decceleration().z * dt;
+						velocityPerTick().z -= decceleration().z
+								* dt * backwardsMovementScale();
 					}
 				}
 			}
 			else
 			{
 				if (velocityPerTick().z < 0f)
-					velocityPerTick().z += decceleration().z * dt;
+					velocityPerTick().z += decceleration().z * dt * backwardsMovementScale();
 			}
 			if (leftKey.isDown() || rightKey.isDown())
 			{
 				if (MyMath.abs(velocityPerTick().z) > decceleration().z * dt
 						* ROUND_TOLERANCE_SCALE)
 				{
-					if (MyMath.abs(velocityPerTick().z) > BURNOUT_VELOCITY * dt)
+					if (MyMath.abs(velocityPerTick().z) > inertiaVelocity() * dt)
 					{
 
 						velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
@@ -258,9 +290,9 @@ public abstract class PlayerBody
 					}
 				}
 			}
-			if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
-					* ROUND_TOLERANCE_SCALE)
-				velocityPerTick().z = 0f;
+			//if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
+			//		* ROUND_TOLERANCE_SCALE)
+			//	velocityPerTick().z = 0f;
 		}
 		if (MyMath.abs(angle(velocityPerTick().x)) <
 				angle(acceleration().x) * dt * ROUND_TOLERANCE_SCALE)
@@ -294,38 +326,33 @@ public abstract class PlayerBody
 		}
 		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
 		velocity().x = -turn(velocityPerTick().x / dt);
-		wasJumping = isJumping();
-		if (isJumping() || isFalling())
+		wasJumping = inAirFromJump();
+		if (inAirFromJump() || isFallingWithoutJumping())
 		{
 			jumpTime += dt;
 			velocity().y = acceleration().y * jumpTime;
-			if (isJumping()) velocity().y += jumpVelocity();
+			if (inAirFromJump()) velocity().y += jumpVelocity();
 			if (velocity().y <= maxSpeed().y) velocity().y = maxSpeed().y;
-			if (justLanded()) isJumping = false;
+			if (justLanded()) inAirFromJump = false;
 		}
 		else
 		{
 			jumpTime = 0f;
 		}
-		System.out.println(round(velocity().x) + "m/s, "
-				+ round(velocity().y) + "m/s, "
-				+ round(velocity().z) + "m/s");
-		System.out.println(fallScale());
+		//System.out.println("X " + round(velocity().x) + "m/s, Y "
+		//		+ round(velocity().y) + "m/s, Z "
+		//		+ round(velocity().z) + "m/s");
+		System.out.println(inAir());
 	}
 
-	private float fallScale()
+	public boolean inAirFromJump()
 	{
-		return onGround() ? 1f : FALL_CONTROL_SCALE;
+		return inAirFromJump;
 	}
 
 	public boolean isJumping()
 	{
-		return isJumping;
-	}
-
-	public boolean isJumpingUpwards()
-	{
-		return isJumping() && velocity().x > 0f;
+		return velocity().y > 0f;
 	}
 
 	public boolean justLanded()
@@ -333,9 +360,19 @@ public abstract class PlayerBody
 		return wasJumping && onGround();
 	}
 
+	public boolean isFallingWithoutJumping()
+	{
+		return !inAirFromJump() && !onGround();
+	}
+
 	public boolean isFalling()
 	{
-		return !isJumping() && !onGround();
+		return velocity().y < 0f;
+	}
+
+	public boolean inAir()
+	{
+		return !onGround();
 	}
 
 	private float angle(float length)
@@ -351,7 +388,7 @@ public abstract class PlayerBody
 	public void jump()
 	{
 		if (!canJump()) return;
-		isJumping = true;
+		inAirFromJump = true;
 		characterController().jump();
 	}
 
@@ -389,7 +426,7 @@ public abstract class PlayerBody
 
 	public boolean justJumped()
 	{
-		return !wasJumping && !canJump() && isJumping();
+		return !wasJumping && !canJump() && inAirFromJump();
 	}
 
 	public void setAcceleration(float acceleration)
@@ -487,16 +524,15 @@ public abstract class PlayerBody
 
 	protected float yAccelerometer(float test)
 	{
-		float y = test; // accelerometer.y();
-		// if (y > 0f)
-		// {
-		// if (y > Y_BALANCE + Accelerometer.MAX)
-		// {
-		// return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
-		// }
-		// }
-		// return y - Y_BALANCE;
-		return y;
+		float y = accelerometer.y();
+		if (y > 0f)
+		{
+			if (y > Y_BALANCE + Accelerometer.MAX)
+			{
+				return 2f * Accelerometer.MIN + y - Y_BALANCE - 1f;
+			}
+		}
+		return y - Y_BALANCE;
 	}
 
 	private static float round(float i)

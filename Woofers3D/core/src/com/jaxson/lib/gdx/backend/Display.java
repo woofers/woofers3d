@@ -635,7 +635,7 @@ public class Display extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
-		if (!isPaused()) view().update();
+		if (!isPaused()) view().update(dt);
 	}
 
 	private void updateLastWindowedMode()
