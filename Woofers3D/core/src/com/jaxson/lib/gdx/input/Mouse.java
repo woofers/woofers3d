@@ -108,12 +108,12 @@ public class Mouse implements Iterable<MouseButton>
 
 	public boolean isInvertY()
 	{
-		return sensitivityY() > 0f;
+		return sensitivityY() < 0f;
 	}
 
 	public boolean isLeftClicked()
 	{
-		return button(Buttons.LEFT).isPressed();
+		return button(Buttons.LEFT).isDown();
 	}
 
 	private boolean isMobile()
@@ -123,7 +123,7 @@ public class Mouse implements Iterable<MouseButton>
 
 	public boolean isRightClicked()
 	{
-		return button(Buttons.RIGHT).isPressed();
+		return button(Buttons.RIGHT).isDown();
 	}
 
 	@Override

@@ -11,25 +11,32 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
+import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
 
 public class TargetCamera extends PerspectiveCamera
 {
-	private static final int FOV = 95;
+	private static final float FOV = 95f;
 	private static final float FAR = 300f;
 	private static final float NEAR = 1f / 10f;
 	private static final Vector3 OFFSET = new Vector3(0f, 0.55f, -0.75f);
 	private static final Vector3 STAGE_LOCATION = Vector3.Zero;
 
+	private static final float FOV_MIN = 0f;
+	private static final float FOV_MAX = 180f;
+	private static final float ZOOM_SCALE = 2.4f;
+
 	private Entity target;
 	private Vector3 offset;
-	private Vector3 zoom;
 	private Vector3 oldTargetLocation;
 	private PhysicsWorld world;
+	private float minFov = 70f;
+	private float maxFov = 130f;
 
 	private Keyboard keyboard;
+	private Mouse mouse;
 	private KeyboardKey centerKey;
 
 	public TargetCamera(float width, float height)
@@ -46,14 +53,45 @@ public class TargetCamera extends PerspectiveCamera
 	{
 		super(fov, width, height);
 		this.offset = offset;
-		this.zoom = new Vector3(1f, 1f, 1f);
 		setNear(NEAR);
 		setFar(FAR);
 		center();
 
 		this.keyboard = Inputs.keyboard();
+		this.mouse = Inputs.mouse();
 		this.centerKey = keyboard.key("R");
 	}
+
+	public float maxFov()
+	{
+		return maxFov;
+	}
+
+	public float minFov()
+	{
+		return minFov;
+	}
+
+	public void setMaxFov(float maxFov)
+	{
+		this.maxFov = maxFov;
+		calculateZoom();
+	}
+
+	public void setMinFov(float minFov)
+	{
+		this.minFov = minFov;
+		calculateZoom();
+	}
+
+	private void calculateZoom()
+	{
+		float newFov = FOV + (mouse.scrollWheel() * ZOOM_SCALE);
+		if (newFov < minFov()) newFov = minFov();
+		if (newFov > maxFov()) newFov = maxFov();
+		setFov(newFov);
+	}
+
 
 	public void center()
 	{
@@ -112,10 +150,12 @@ public class TargetCamera extends PerspectiveCamera
 		rotateAround(targetLocation(), mosueLocation());
 		translate(deltaTargetLocation());
 		resetUp();
-		if (centerKey.isPressed())
+		if (centerKey.isPressed() || mouse.button("Middle").isDown())
 		{
 			center(targetLocation());
 		}
+		calculateZoom();
+		System.out.println(fov());
 	}
 
 	public Vector3 location()
@@ -123,9 +163,9 @@ public class TargetCamera extends PerspectiveCamera
 		return position;
 	}
 
-	public Vector2 mosueLocation()
+	private Vector2 mosueLocation()
 	{
-		return Inputs.mouse().scaledLocation();
+		return mouse.scaledLocation();
 	}
 
 	public float near()
@@ -236,6 +276,8 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setFov(float fov)
 	{
+		if (fov > FOV_MAX) fov = FOV_MAX;
+		if (fov < FOV_MIN) fov = FOV_MIN;
 		this.fieldOfView = fov;
 	}
 
@@ -283,11 +325,6 @@ public class TargetCamera extends PerspectiveCamera
 		this.world = world;
 	}
 
-	public void setZoom(Vector3 zoom)
-	{
-		this.zoom = zoom;
-	}
-
 	public Entity target()
 	{
 		return target;
@@ -321,10 +358,5 @@ public class TargetCamera extends PerspectiveCamera
 	public Matrix4 view()
 	{
 		return view;
-	}
-
-	public Vector3 zoom()
-	{
-		return zoom;
 	}
 }

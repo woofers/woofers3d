@@ -25,6 +25,7 @@ public class MouseButton extends Input.Buttons implements Button
 	MouseButton(int button, Input input)
 	{
 		this.button = button;
+		this.input = input;
 		if (!isValid()) throw new InvalidKeyException(button);
 	}
 
@@ -39,8 +40,9 @@ public class MouseButton extends Input.Buttons implements Button
 	}
 
 	@Override
-	public boolean isPressed()
+	public boolean isDown()
 	{
+		System.out.println(input());
 		return input().isButtonPressed(button());
 	}
 
@@ -58,7 +60,7 @@ public class MouseButton extends Input.Buttons implements Button
 			case RIGHT:
 				return "Right";
 			case MIDDLE:
-				return "Scrollwheel";
+				return "Middle";
 			case BACK:
 				return "Back";
 			case FORWARD:
