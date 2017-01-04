@@ -20,7 +20,7 @@ public class Mouse implements Iterable<MouseButton>
 	private Vector2 location;
 	private Vector2 delta;
 	private Vector2 sensitivity;
-	private int scrollWheel;
+	private ScrollWheel scrollWheel;
 	private HashMap<Integer, MouseButton> buttons;
 	private HashMap<String, MouseButton> stringButtons;
 	private Game game;
@@ -40,16 +40,25 @@ public class Mouse implements Iterable<MouseButton>
 		setInvertY(INVERT_MOUSE_X);
 		for (int code: MouseButton.BUTTONS)
 		{
-			MouseButton button = new MouseButton(code, input());
+			MouseButton button = null;
+			if (code == MouseButton.MIDDLE)
+			{
+				scrollWheel = new ScrollWheel(input());
+				button = scrollWheel;
+			}
+			else
+			{
+				button = new MouseButton(code, input());
+			}
 			String name = button.name();
 			buttons.put(code, button);
 			stringButtons.put(name.toLowerCase(), button);
 		}
 	}
 
-	void addScrollWheel(int scrollWheel)
+	public ScrollWheel scrollWheel()
 	{
-		this.scrollWheel += scrollWheel;
+		return scrollWheel;
 	}
 
 	public MouseButton button(int code)
@@ -154,11 +163,6 @@ public class Mouse implements Iterable<MouseButton>
 			mouse.scl(TOUCH_MOUSE_SCALE);
 		}
 		return mouse;
-	}
-
-	public int scrollWheel()
-	{
-		return scrollWheel;
 	}
 
 	public Vector2 sensitivity()

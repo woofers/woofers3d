@@ -42,7 +42,6 @@ public class MouseButton extends Input.Buttons implements Button
 	@Override
 	public boolean isDown()
 	{
-		System.out.println(input());
 		return input().isButtonPressed(button());
 	}
 

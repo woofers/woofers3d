@@ -152,7 +152,7 @@ public class Inputs
 		@Override
 		public boolean scrolled(int amount)
 		{
-			mouse.addScrollWheel(amount);
+			mouse.scrollWheel().setScrollAmount(amount);
 			return true;
 		}
 
@@ -216,6 +216,7 @@ public class Inputs
 			keyboard.transfer();
 			touchScreen.transfer();
 			accelerometer.update(dt);
+			mouse.scrollWheel().update(dt);
 		}
 
 		public Vibrator vibrator()

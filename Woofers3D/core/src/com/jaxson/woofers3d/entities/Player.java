@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Player extends CameraPlayerBody
 {
-	private static final String PATH = "entities/dog/dog.g3db";
+	private static final String PATH = "entities/dog/dog.g3dj";
 	private static final float SCALE = 0.6f;
 	private static final float HITBOX_SCALE = 90f / 100f;
 

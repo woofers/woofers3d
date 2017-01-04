@@ -12,6 +12,7 @@ import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.Mouse;
+import com.jaxson.lib.gdx.input.ScrollWheel;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
@@ -26,7 +27,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	private static final float FOV_MIN = 0f;
 	private static final float FOV_MAX = 180f;
-	private static final float ZOOM_SCALE = 2.4f;
+	private static final float ZOOM_SCALE = 5.5f;
 
 	private Entity target;
 	private Vector3 offset;
@@ -86,7 +87,7 @@ public class TargetCamera extends PerspectiveCamera
 
 	private void calculateZoom()
 	{
-		float newFov = FOV + (mouse.scrollWheel() * ZOOM_SCALE);
+		float newFov = fov() + (mouse.scrollWheel().amountScrolled() * ZOOM_SCALE);
 		if (newFov < minFov()) newFov = minFov();
 		if (newFov > maxFov()) newFov = maxFov();
 		setFov(newFov);
@@ -155,7 +156,6 @@ public class TargetCamera extends PerspectiveCamera
 			center(targetLocation());
 		}
 		calculateZoom();
-		System.out.println(fov());
 	}
 
 	public Vector3 location()
