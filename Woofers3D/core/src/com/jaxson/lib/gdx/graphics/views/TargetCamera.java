@@ -27,14 +27,15 @@ public class TargetCamera extends PerspectiveCamera
 
 	private static final float FOV_MIN = 0f;
 	private static final float FOV_MAX = 180f;
-	private static final float ZOOM_SCALE = 5.5f;
+	private static final float ZOOM_SCALE = 4f;
 
 	private Entity target;
 	private Vector3 offset;
 	private Vector3 oldTargetLocation;
 	private PhysicsWorld world;
-	private float minFov = 70f;
-	private float maxFov = 130f;
+	private float minFov = 75f;
+	private float maxFov = 110f;
+	private float initialFov;
 
 	private Keyboard keyboard;
 	private Mouse mouse;
@@ -56,6 +57,7 @@ public class TargetCamera extends PerspectiveCamera
 		this.offset = offset;
 		setNear(NEAR);
 		setFar(FAR);
+		setFov(fov);
 		center();
 
 		this.keyboard = Inputs.keyboard();
@@ -76,23 +78,22 @@ public class TargetCamera extends PerspectiveCamera
 	public void setMaxFov(float maxFov)
 	{
 		this.maxFov = maxFov;
-		calculateZoom();
+		validateFov(maxFov);
 	}
 
 	public void setMinFov(float minFov)
 	{
 		this.minFov = minFov;
-		calculateZoom();
+		validateFov(minFov);
 	}
 
-	private void calculateZoom()
+	public void zoom(float fov)
 	{
-		float newFov = fov() + (mouse.scrollWheel().amountScrolled() * ZOOM_SCALE);
+		float newFov = fov() - fov;
 		if (newFov < minFov()) newFov = minFov();
 		if (newFov > maxFov()) newFov = maxFov();
-		setFov(newFov);
+		validateFov(newFov);
 	}
-
 
 	public void center()
 	{
@@ -154,8 +155,14 @@ public class TargetCamera extends PerspectiveCamera
 		if (centerKey.isPressed() || mouse.button("Middle").isDown())
 		{
 			center(targetLocation());
+			resetZoom();
 		}
-		calculateZoom();
+		zoom(mouse.scrollWheel().amountScrolled() * -ZOOM_SCALE);
+	}
+
+	public void resetZoom()
+	{
+		setFov(initialFov);
 	}
 
 	public Vector3 location()
@@ -276,9 +283,16 @@ public class TargetCamera extends PerspectiveCamera
 
 	public void setFov(float fov)
 	{
-		if (fov > FOV_MAX) fov = FOV_MAX;
-		if (fov < FOV_MIN) fov = FOV_MIN;
+		this.initialFov = validateFov(fov);
+	}
+
+	private float validateFov(float fov)
+	{
+		if (fov > maxFov()) fov = maxFov();
+		if (fov < minFov()) fov = minFov();
 		this.fieldOfView = fov;
+		System.out.println(fov);
+		return fov;
 	}
 
 	public void setLocation(Vector3 location)

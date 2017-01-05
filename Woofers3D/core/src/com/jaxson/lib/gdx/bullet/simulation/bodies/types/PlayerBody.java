@@ -14,6 +14,7 @@ import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.math.Reciprocal;
+import com.jaxson.lib.util.Printer;
 
 public abstract class PlayerBody
 		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
@@ -519,6 +520,15 @@ public abstract class PlayerBody
 	protected Vector3 velocityPerTick()
 	{
 		return velocityPerTick;
+	}
+
+	public String toString()
+	{
+		return new Printer(getClass(),
+				new Printer.Label("Velocity", velocity()),
+				new Printer.Label("Acceleration", acceleration()),
+				new Printer.Label("Max Speed", maxSpeed()),
+				new Printer.Label("In Air", inAir())).toString();
 	}
 
 	protected float yAccelerometer(float test)

@@ -42,6 +42,8 @@ public class PlayState extends BulletState
 	private TargetCamera camera;
 	private Text text;
 
+	private float counter;
+
 	private Mouse mouse;
 
 	public PlayState(Game game)
@@ -160,6 +162,12 @@ public class PlayState extends BulletState
 	public void update(float dt)
 	{
 		super.update(dt);
-		text.setText(player.accelerometer().toString());
+		camera.zoom(dt * 5.5f);
+		counter += dt;
+		while (counter >= 0.05f)
+		{
+			text.setText(player.toString());
+			counter = 0f;
+		}
 	}
 }
