@@ -26,4 +26,4 @@ Built using LibGDX and Bullet Physics.
 [screenshot2]: http://i.imgur.com/uxLwbkN.png "Woofers 3D"
 [screenshot3]: http://i.imgur.com/nvsfixV.png "Woofers 3D"
 [gif1]: http://i.imgur.com/0QO3UTm.gif "Woofers 3D"
-[gif2]: http://i.imgur.com/nvsfixV.png "Woofers 3D"
+[gif2]: http://i.imgur.com/ZtBOCVY.gif "Woofers 3D"
