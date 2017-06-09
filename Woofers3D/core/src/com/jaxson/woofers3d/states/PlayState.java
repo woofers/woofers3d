@@ -41,9 +41,7 @@ public class PlayState extends BulletState
 	private Player player;
 	private TargetCamera camera;
 	private Text text;
-
 	private float counter;
-
 	private Mouse mouse;
 
 	public PlayState(Game game)
@@ -55,26 +53,25 @@ public class PlayState extends BulletState
 		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
-/*
-		final float IMPORT_SCALE = 0.15f;
-		for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
-		{
-			object.scale(IMPORT_SCALE);
-			object.moveTo(object.location().scl(IMPORT_SCALE));
-		}
-*/
+		//final float IMPORT_SCALE = 0.15f;
+		//for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
+		//{
+		//	object.scale(IMPORT_SCALE);
+		//	object.moveTo(object.location().scl(IMPORT_SCALE));
+		//}
+
 		floor = new Floor();
 		applyPhysics(floor);
 		add(floor);
 
-		ramp = new Floor(1f, 1f, new MyColor(250, 250, 250));
-		ramp.rotate(new Vector3(0f, 0f, 30f));
-		ramp.translate(new Vector3(0f, 0f, 5f));
+		ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
+		ramp.translate(new Vector3(1f, 0.4f, 5f));
+		ramp.rotate(new Vector3(0f, 0f, 23f));
 		applyPhysics(ramp);
 		add(ramp);
 
 		blocker = new Floor(1f, 1f, new MyColor(250, 250, 250));
-		blocker.translate(new Vector3(5f, 0.9f, 0f));
+		blocker.translate(new Vector3(3.25f, 0.64f, 5f));
 		applyPhysics(blocker);
 		add(blocker);
 
@@ -162,7 +159,6 @@ public class PlayState extends BulletState
 	public void update(float dt)
 	{
 		super.update(dt);
-		camera.zoom(dt * 5.5f);
 		counter += dt;
 		while (counter >= 0.05f)
 		{

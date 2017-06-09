@@ -19,7 +19,7 @@ import com.jaxson.lib.util.Printer;
 public abstract class PlayerBody
 		extends ShapeBody<btPairCachingGhostObject, ConvexShape>
 {
-	private static final float GRAVITY_SCALE = -1f;
+	private static final float GRAVITY_SCALE = 1f;
 	private static final float GHOST_MASS = -1f;
 	private static final float ROUND_TOLERANCE_SCALE = 1.00000005f;
 
@@ -55,7 +55,7 @@ public abstract class PlayerBody
 	private float jumpTime;
 	private boolean wasJumping;
 	private boolean inAirFromJump;
-	private float jumpVelocity;
+	private Vector3 jumpVelocity;
 
 	private Keyboard keyboard;
 	private GameAccelerometer accelerometer;
@@ -82,7 +82,7 @@ public abstract class PlayerBody
 		this.maxVelocity = new Vector3();
 		this.acceleration = new Vector3();
 		this.decceleration = new Vector3();
-		setJumpVelocity(JUMP_VELOCITY);
+		setJumpVelocity(new Vector3(0, JUMP_VELOCITY, 0));
 		setAcceleration(new Vector3(ACCELERATION_X, GRAVITY, ACCELERATION_Z));
 		setDecceleration(
 				new Vector3(DECCELERATION_X, 0f, DECCELERATION_Z));
@@ -100,6 +100,7 @@ public abstract class PlayerBody
 		this.leftKey = keyboard.key("A");
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
+		moveTo(Vector3.Zero);
 	}
 
 	protected void reset()
@@ -167,6 +168,11 @@ public abstract class PlayerBody
 	public float gravity()
 	{
 		return acceleration().y;
+	}
+
+	public Vector3 gravityVector()
+	{
+		return new Vector3(0, gravity(), 0);
 	}
 
 	public float inertiaVelocity()
@@ -332,7 +338,7 @@ public abstract class PlayerBody
 		{
 			jumpTime += dt;
 			velocity().y = acceleration().y * jumpTime;
-			if (inAirFromJump()) velocity().y += jumpVelocity();
+			if (inAirFromJump()) velocity().y += jumpVelocity().y;
 			if (velocity().y <= maxSpeed().y) velocity().y = maxSpeed().y;
 			if (justLanded()) inAirFromJump = false;
 		}
@@ -389,7 +395,7 @@ public abstract class PlayerBody
 	{
 		if (!canJump()) return;
 		inAirFromJump = true;
-		characterController().jump();
+		characterController().jump(jumpVelocity);
 	}
 
 	protected Keyboard keyboard()
@@ -454,16 +460,16 @@ public abstract class PlayerBody
 	{
 		acceleration().y = gravity;
 		decceleration().y = gravity;
-		characterController().setGravity(gravity() * GRAVITY_SCALE);
+		characterController().setGravity(gravityVector().scl(GRAVITY_SCALE));
 	}
 
-	public void setJumpVelocity(float jumpVelocity)
+	public void setJumpVelocity(Vector3 jumpVelocity)
 	{
 		this.jumpVelocity = jumpVelocity;
-		characterController().setJumpSpeed(jumpVelocity);
+		characterController().setJumpSpeed(jumpVelocity.y);
 	}
 
-	public float jumpVelocity()
+	public Vector3 jumpVelocity()
 	{
 		return jumpVelocity;
 	}

@@ -291,7 +291,6 @@ public class TargetCamera extends PerspectiveCamera
 		if (fov > maxFov()) fov = maxFov();
 		if (fov < minFov()) fov = minFov();
 		this.fieldOfView = fov;
-		System.out.println(fov);
 		return fov;
 	}
 

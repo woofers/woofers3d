@@ -36,9 +36,7 @@ public class BulletRay implements Disposable
 	public Optional<btCollisionObject> collisionObject(Ray ray,
 			PhysicsWorld world)
 	{
-		set(ray);
-		rayTest(world);
-		return hitObject();
+		return collisionObject(ray, MAX_DISTANCE, world);
 	}
 
 	@Override

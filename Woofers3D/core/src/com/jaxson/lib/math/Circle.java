@@ -8,12 +8,12 @@ public class Circle implements MyComparable<Circle>
 	public static final float PI = (float) Math.PI;
 
 	/**
-	 * Constant to convert a radius to as diamiater.
+	 * Constant to convert a radius to as diameter.
 	 */
 	public static final float RADIUS_TO_DIAMETER = 2f;
 
 	/**
-	 * Constant to convert a diamiater to as radius.
+	 * Constant to convert a diameter to as radius.
 	 */
 	public static final float DIAMETER_TO_RADIUS
 			= new Reciprocal(RADIUS_TO_DIAMETER).floatValue();
