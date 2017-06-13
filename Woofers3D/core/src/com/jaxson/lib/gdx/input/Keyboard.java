@@ -20,9 +20,8 @@ public class Keyboard extends Peripheral implements Iterable<KeyboardKey>
 		for (int keycode = Keys.MIN; keycode < Keys.MAX; keycode ++)
 		{
 			KeyboardKey key = new KeyboardKey(keycode);
-			String name = key.name();
 			keycodeKeys.put(key.keycode(), key);
-			stringKeys.put(name.toLowerCase(), key);
+			stringKeys.put(key.name().toLowerCase(), key);
 		}
 	}
 

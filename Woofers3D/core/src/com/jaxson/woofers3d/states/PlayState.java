@@ -65,8 +65,8 @@ public class PlayState extends BulletState
 		add(floor);
 
 		ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
-		ramp.translate(new Vector3(1f, 0.4f, 5f));
 		ramp.rotate(new Vector3(0f, 0f, 23f));
+		ramp.translateABS(new Vector3(1f, 0.4f, 5f));
 		applyPhysics(ramp);
 		add(ramp);
 
