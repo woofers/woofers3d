@@ -1,4 +1,4 @@
-package com.jaxson.woofers3d.entities.g2d;
+package com.jaxson.lib.gdx.box2d;
 
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
@@ -13,8 +13,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap;
 
-public class Player extends SpriteActor
+public class Floor extends SpriteActor
 {
 	private static final float METERS_TO_PIXELS = 0.11f;
 
@@ -36,13 +38,13 @@ public class Player extends SpriteActor
 	private KeyboardKey rightKey;
 	private KeyboardKey jumpKey;
 
-	public Player()
+	public Floor(float x, float y)
 	{
-		super(PATH);
-		setScale(5);
+		super(getTex());
+		setLocation(x, y);
 
 		this.bodyDef = new BodyDef();
-		this.bodyDef.type = BodyDef.BodyType.DynamicBody;
+		this.bodyDef.type = BodyDef.BodyType.StaticBody;
 		this.bodyDef.position.set(x(), y());
 
 		this.shape = new PolygonShape();
@@ -51,14 +53,6 @@ public class Player extends SpriteActor
 		this.fixtureDef = new FixtureDef();
 		this.fixtureDef.shape = shape;
 		this.fixtureDef.density = 1f;
-
-		this.keyboard = Inputs.keyboard();
-		this.forwardKey = keyboard.key("W");
-		this.backwardKey = keyboard.key("S");
-		this.leftKey = keyboard.key("A");
-		this.rightKey = keyboard.key("D");
-		this.jumpKey = keyboard.key("Space");
-		setLocation(300, 500);
 	}
 
 	public void createBodies(World world)
@@ -100,10 +94,6 @@ public class Player extends SpriteActor
 	protected void input(float dt)
 	{
 		super.input(dt);
-		if (forwardKey.isDown()) translateY(SPEED);
-		if (backwardKey.isDown()) translateY(-SPEED);
-		if (leftKey.isDown()) translateX(-SPEED);
-		if (rightKey.isDown()) translateX(SPEED);
 	}
 
 	@Override
@@ -112,8 +102,6 @@ public class Player extends SpriteActor
 		super.update(dt);
 		input(dt);
 		setLocation(body().getPosition());
-		System.out.println(location());
-		if (Inputs.keyboard().key("P").isPressed()) setLocation(300, 500, 0);
 	}
 
 	@Override
@@ -123,10 +111,11 @@ public class Player extends SpriteActor
 		if (hasBody()) body().setTransform(x, y, 0);
 	}
 
-	@Override
-	public void setScale(float scaleX, float scaleY)
+	public static Texture getTex()
 	{
-		super.setScale(scaleX, scaleY);
+		Pixmap pixmap = new Pixmap(512, 64, Pixmap.Format.RGBA8888);
+		pixmap.setColor(1f, 1f, 1f, 1f);
+		pixmap.fillRectangle(0, 0, 512, 64);
+		return new Texture(pixmap);
 	}
-
 }

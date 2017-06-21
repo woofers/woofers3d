@@ -1,10 +1,11 @@
 package com.jaxson.woofers3d.states;
 
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.bullet.BulletState;
-import com.jaxson.lib.gdx.bullet.simulation.bodies.Floor;
+import com.jaxson.lib.gdx.box2d.Floor;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.RigidBox;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.RigidSphere;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.SoftBox;
@@ -26,11 +27,16 @@ import com.jaxson.woofers3d.entities.g2d.Player;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 public class FlatState extends BulletState
 {
 	private Camera camera;
+	private World world;
 	private Player player;
+	private Floor floor;
+	private Box2DDebugRenderer debugRenderer;
 
 	public FlatState(Game game)
 	{
@@ -39,10 +45,17 @@ public class FlatState extends BulletState
 
 		camera = view().spriteView().getCamera();
 
+		world = new World(new Vector2(0f, -98f), true);
+
 		player = new Player();
+		player.createBodies(world);
 		add(player);
 
+		floor = new Floor(200, 100);
+		floor.createBodies(world);
+		add(floor);
 
+		debugRenderer = new Box2DDebugRenderer();
 	}
 
 	@Override
@@ -61,11 +74,13 @@ public class FlatState extends BulletState
 	public void render(View view)
 	{
 		super.render(view);
+		debugRenderer.render(world,  view.spriteBatch().getProjectionMatrix());
 	}
 
 	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
+		world.step(dt, 6, 2);
 	}
 }
