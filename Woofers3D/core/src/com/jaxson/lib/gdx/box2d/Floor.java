@@ -61,7 +61,7 @@ public class Floor extends SpriteActor
 		fixture = body.createFixture(fixtureDef);
 		shape.dispose();
 		shape = null;
-	}
+}
 
 	public Body body()
 	{
@@ -101,7 +101,6 @@ public class Floor extends SpriteActor
 	{
 		super.update(dt);
 		input(dt);
-		setLocation(body().getPosition());
 	}
 
 	@Override

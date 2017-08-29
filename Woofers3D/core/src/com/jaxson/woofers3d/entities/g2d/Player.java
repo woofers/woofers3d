@@ -112,7 +112,6 @@ public class Player extends SpriteActor
 		super.update(dt);
 		input(dt);
 		setLocation(body().getPosition());
-		System.out.println(location());
 		if (Inputs.keyboard().key("P").isPressed()) setLocation(300, 500, 0);
 	}
 
