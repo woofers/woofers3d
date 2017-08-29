@@ -5,14 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.lib.util.Unwrapable;
+import com.badlogic.gdx.graphics.Texture;
 
 public class SpriteActor extends Sprite
 {
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 
-	public SpriteActor(String path)
+	public SpriteActor(Unwrapable<Texture> texture)
 	{
-		this(new Texture(new GdxFile(path).getFileHandle()));
+		this(texture.unwrap());
 	}
 
 	public SpriteActor(Texture texture)
