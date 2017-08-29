@@ -51,10 +51,15 @@ public class SpriteActor extends Sprite
 		return sprite.getColor();
 	}
 
+	public float originalHeight()
+	{
+		return sprite.getHeight();
+	}
+
 	@Override
 	public float height()
 	{
-		return sprite.getHeight();
+		return originalHeight() * scaleY();
 	}
 
 	@Override
@@ -73,6 +78,7 @@ public class SpriteActor extends Sprite
 	public void render(View view)
 	{
 		sprite.draw(view.spriteBatch(), alpha());
+		//view.spriteBatch().draw(sprite, x(), y());
 	}
 
 	@Override
@@ -173,10 +179,15 @@ public class SpriteActor extends Sprite
 
 	}
 
+	public float originalWidth()
+	{
+		return sprite.getWidth();
+	}
+
 	@Override
 	public float width()
 	{
-		return sprite.getWidth();
+		return originalWidth() * scaleX();
 	}
 
 	@Override

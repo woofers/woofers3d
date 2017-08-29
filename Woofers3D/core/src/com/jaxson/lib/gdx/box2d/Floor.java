@@ -4,6 +4,7 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.Inputs;
@@ -45,7 +46,7 @@ public class Floor extends SpriteActor
 
 		this.bodyDef = new BodyDef();
 		this.bodyDef.type = BodyDef.BodyType.StaticBody;
-		this.bodyDef.position.set(x(), y());
+		this.bodyDef.position.set(x() + width() / 2, y() + height() / 2);
 
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(width() / 2, height() / 2);
@@ -101,13 +102,28 @@ public class Floor extends SpriteActor
 	{
 		super.update(dt);
 		input(dt);
-		setLocation(body().getPosition());
+		//setBodyLocation(body().getPosition());
 	}
 
 	@Override
 	public void setLocation(float x, float y)
 	{
 		super.setLocation(x, y);
+		setBodyLocation(x, y);
+	}
+
+	protected void setBodyLocation(Vector3 location)
+	{
+		setBodyLocation(location.x, location.y);
+	}
+
+	protected void setBodyLocation(Vector2 location)
+	{
+		setBodyLocation(location.x, location.y);
+	}
+
+	protected void setBodyLocation(float x, float y)
+	{
 		if (hasBody()) body().setTransform(x, y, 0);
 	}
 
