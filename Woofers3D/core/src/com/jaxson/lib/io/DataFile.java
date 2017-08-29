@@ -73,6 +73,11 @@ public class DataFile implements File<DataFile, String, String>
 		return javaFile().canWrite();
 	}
 
+	public String[] list()
+	{
+		return javaFile().list();
+	}
+
 	@Override
 	public DataFile child(String child)
 	{
@@ -88,6 +93,20 @@ public class DataFile implements File<DataFile, String, String>
 	public DataFile copy(DataFile file)
 	{
 		if (equals(file)) return this;
+		if (isDirectory())
+		{
+			DataFile result = file;
+			String[] list = list();
+			file.createDirectory();
+			for (String childName: list)
+			{
+				DataFile child = new DataFile(path() + "/" + childName);
+				System.out.println(new DataFile(file.path() + "/" + childName));
+				child = child.copy(new DataFile(file.path() + "/" + childName));
+				if (child.equals(DataFile.NOTHING)) result = child;
+			}
+			return result;
+		}
 		return file.write(readBytes());
 	}
 
@@ -506,7 +525,7 @@ public class DataFile implements File<DataFile, String, String>
 			if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
 		}
 		if (!newDir.isEmpty())
-			path = newDir.substring(0, newDir.length() - 1).toLowerCase();
+			path = newDir.substring(0, newDir.length() - 1);
 		return path;
 	}
 }
