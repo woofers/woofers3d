@@ -1,27 +1,22 @@
-package com.jaxson.lib.box2d.bodies.types;
+package com.jaxson.lib.gdx.box2d.bodies.types;
 
-import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
-import com.jaxson.lib.gdx.graphics.views.TargetCamera;
-import com.jaxson.lib.gdx.input.KeyboardKey;
-import com.badlogic.gdx.math.Vector3;
-import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
-import com.jaxson.lib.gdx.input.Keyboard;
-import com.jaxson.lib.gdx.input.Inputs;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
 import com.jaxson.lib.util.Unwrapable;
-import com.badlogic.gdx.graphics.Texture;
+import com.jaxson.lib.gdx.box2d.Box2DWorld;
+import static com.jaxson.lib.gdx.box2d.Box2DWorld.*;
+
 
 public class SpriteBody extends SpriteActor
 {
-	private static final float METERS_TO_PIXELS = 0.11f;
-
 	private static final String PATH = "icon.png";
 	private static final float SCALE = 0.6f;
 	private static final int SPEED = 2;
@@ -29,14 +24,9 @@ public class SpriteBody extends SpriteActor
 	private Body body;
 	private Fixture fixture;
 
-	private	PolygonShape shape;
+	private PolygonShape shape;
 	private BodyDef bodyDef;
 	private FixtureDef fixtureDef;
-
-	public SpriteBody(Unwrapable<Texture> texture, BodyType type, float density)
-	{
-		this(texture.unwrap(), type, density);
-	}
 
 	public SpriteBody(Texture texture, BodyType type, float density)
 	{
@@ -49,9 +39,19 @@ public class SpriteBody extends SpriteActor
 		this.fixtureDef.density = density;
 	}
 
-	public void createBodies(World world)
+	public SpriteBody(Unwrapable<Texture> texture, BodyType type, float density)
 	{
-		this.bodyDef.linearVelocity.set(50, 0);
+		this(texture.unwrap(), type, density);
+	}
+
+	public Body body()
+	{
+		return body;
+	}
+
+	public void createBody(Box2DWorld world)
+	{
+		//this.bodyDef.linearVelocity.set(50, 0);
 		this.bodyDef.position.set(x(), y());
 
 		this.shape = new PolygonShape();
@@ -68,26 +68,6 @@ public class SpriteBody extends SpriteActor
 		shape = null;
 	}
 
-	public Body body()
-	{
-		return body;
-	}
-
-	public boolean hasFixture()
-	{
-		return fixture != null;
-	}
-
-	public boolean hasBody()
-	{
-		return body != null;
-	}
-
-	public boolean hasPhysics()
-	{
-		return hasFixture() && hasBody();
-	}
-
 	@Override
 	public void dispose()
 	{
@@ -95,11 +75,19 @@ public class SpriteBody extends SpriteActor
 		if (shape != null) shape.dispose();
 	}
 
-	@Override
-	public void update(float dt)
+	public boolean hasBody()
 	{
-		super.update(dt);
-		super.setLocation(body().getPosition().x, body.getPosition().y);
+		return body != null;
+	}
+
+	public boolean hasFixture()
+	{
+		return fixture != null;
+	}
+
+	public boolean hasPhysics()
+	{
+		return hasFixture() && hasBody();
 	}
 
 	@Override
@@ -114,4 +102,31 @@ public class SpriteBody extends SpriteActor
 	{
 		super.setScale(scaleX, scaleY);
 	}
+
+	@Override
+	public void update(float dt)
+	{
+		super.update(dt);
+		super.setLocation(body().getPosition().x, body.getPosition().y);
+	}
+
+	//public float xPixels()
+	//{
+	//	return super.x();
+	//}
+//
+	//public float x()
+	//{
+	//	return xPixels() * PIXELS_TO_METERS;
+	//}
+//
+	//public float yPixels()
+	//{
+	//	return super.y();
+	//}
+//
+	//public float y()
+	//{
+	//	return yPixels() * PIXELS_TO_METERS;
+	//}
 }

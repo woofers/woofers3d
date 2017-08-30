@@ -2,7 +2,7 @@ package com.jaxson.lib.gdx.bullet;
 
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.backend.Game;
-import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
+import com.jaxson.lib.gdx.bullet.simulation.BulletWorld;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.Floor;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.PlayerBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
@@ -17,12 +17,12 @@ public abstract class BulletState extends State
 {
 	private static final boolean SHADOWS = true;
 
-	private PhysicsWorld world;
+	private BulletWorld world;
 
 	public BulletState(Game game)
 	{
 		super(game);
-		this.world = new PhysicsWorld(environment());
+		this.world = new BulletWorld(environment());
 		setShadows(SHADOWS);
 	}
 
@@ -71,7 +71,7 @@ public abstract class BulletState extends State
 		return imported;
 	}
 
-	public PhysicsWorld physicsWorld()
+	public BulletWorld physicsWorld()
 	{
 		return world;
 	}

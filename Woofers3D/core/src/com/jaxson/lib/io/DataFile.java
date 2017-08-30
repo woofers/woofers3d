@@ -73,11 +73,6 @@ public class DataFile implements File<DataFile, String, String>
 		return javaFile().canWrite();
 	}
 
-	public String[] list()
-	{
-		return javaFile().list();
-	}
-
 	@Override
 	public DataFile child(String child)
 	{
@@ -207,8 +202,9 @@ public class DataFile implements File<DataFile, String, String>
 	}
 
 	@Override
-	public FileOutputStream
-		fileOutputStream() throws FileNotFoundException, SecurityException
+	public
+		FileOutputStream
+			fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return new FileOutputStream(javaFile());
 	}
@@ -256,6 +252,11 @@ public class DataFile implements File<DataFile, String, String>
 		int utcOffset = calendar.get(Calendar.ZONE_OFFSET)
 				+ calendar.get(Calendar.DST_OFFSET);
 		return new Date(javaFile().lastModified() - utcOffset);
+	}
+
+	public String[] list()
+	{
+		return javaFile().list();
 	}
 
 	@Override

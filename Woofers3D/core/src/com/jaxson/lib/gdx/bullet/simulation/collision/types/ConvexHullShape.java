@@ -39,7 +39,8 @@ public class ConvexHullShape extends ConvexShape
 	public static btConvexHullShape create(Model model)
 	{
 		Mesh mesh = model.meshes.get(0);
-		return create(mesh.getVerticesBuffer(), mesh.getNumVertices(),
+		return create(
+				mesh.getVerticesBuffer(), mesh.getNumVertices(),
 				mesh.getVertexSize());
 	}
 }

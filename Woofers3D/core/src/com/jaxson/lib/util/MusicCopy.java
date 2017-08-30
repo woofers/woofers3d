@@ -1,14 +1,15 @@
 package com.jaxson.lib.util;
 
 import com.jaxson.lib.io.DataFile;
-import com.jaxson.lib.util.MyArrayList;
 
 public class MusicCopy
 {
 	public MusicCopy()
 	{
-		DataFile listFile = new DataFile("P:/Users/Jaxson/Reinstall Stuff/music2.txt");
-		MyArrayList<String> list = new MyArrayList<>(listFile.readString().split("\n"));
+		DataFile listFile
+				= new DataFile("P:/Users/Jaxson/Reinstall Stuff/music2.txt");
+		MyArrayList<String> list
+				= new MyArrayList<>(listFile.readString().split("\n"));
 		list.remove(0);
 		for (String song: list)
 		{

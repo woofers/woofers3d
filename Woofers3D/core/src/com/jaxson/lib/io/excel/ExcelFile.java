@@ -120,8 +120,9 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public FileOutputStream
-		fileOutputStream() throws FileNotFoundException, SecurityException
+	public
+		FileOutputStream
+			fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return getFile().fileOutputStream();
 	}
@@ -206,8 +207,10 @@ public class ExcelFile implements File<ExcelFile, MyWorkbook, MyWorkbook>
 	}
 
 	@Override
-	public PrintWriter
-		printWriter() throws FileNotFoundException, UnsupportedEncodingException
+	public
+		PrintWriter
+			printWriter()
+					throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return getFile().printWriter();
 	}

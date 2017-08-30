@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 
 public class View
 {
@@ -22,7 +21,8 @@ public class View
 	public View(int width, int height)
 	{
 		this(new ExtendViewport(width, height),
-				new ExtendViewport(width, height,
+				new ExtendViewport(width,
+						height,
 						new TargetCamera(width, height)),
 				new FitViewport(width, height));
 	}

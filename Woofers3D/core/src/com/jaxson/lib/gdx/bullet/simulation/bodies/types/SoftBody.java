@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody;
 import com.badlogic.gdx.physics.bullet.softbody.btSoftBody.Material;
 import com.badlogic.gdx.utils.BufferUtils;
-import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
+import com.jaxson.lib.gdx.bullet.simulation.BulletWorld;
 
 public abstract class SoftBody extends EntityBody<btSoftBody>
 {
@@ -19,17 +19,17 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	private int positionOffset;
 	private int normalOffset;
 
-	public SoftBody(Model model, float mass, PhysicsWorld world)
+	public SoftBody(Model model, float mass, BulletWorld world)
 	{
 		this(new ModelInstance(model), mass, world);
 	}
 
-	public SoftBody(Model model, PhysicsWorld world)
+	public SoftBody(Model model, BulletWorld world)
 	{
 		this(model, MASS, world);
 	}
 
-	public SoftBody(ModelInstance modelInstance, float mass, PhysicsWorld world)
+	public SoftBody(ModelInstance modelInstance, float mass, BulletWorld world)
 	{
 		super(modelInstance, getBody(modelInstance.model, world), mass);
 		body().setMass(0, 0);
@@ -52,12 +52,12 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		// transformToBody();
 	}
 
-	public SoftBody(String modelPath, float mass, PhysicsWorld world)
+	public SoftBody(String modelPath, float mass, BulletWorld world)
 	{
 		this(readModel(modelPath), mass, world);
 	}
 
-	public SoftBody(String modelPath, PhysicsWorld world)
+	public SoftBody(String modelPath, BulletWorld world)
 	{
 		this(modelPath, MASS, world);
 	}
@@ -71,7 +71,8 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	@Override
 	public void update(float dt)
 	{
-		body().getVertices(meshPart.mesh.getVerticesBuffer(),
+		body().getVertices(
+				meshPart.mesh.getVerticesBuffer(),
 				meshPart.mesh.getVertexSize(), positionOffset, normalOffset,
 				meshPart.mesh.getIndicesBuffer(),
 				meshPart.offset, meshPart.size,
@@ -79,7 +80,7 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		bodyToTransform();
 	}
 
-	private static btSoftBody getBody(Model model, PhysicsWorld world)
+	private static btSoftBody getBody(Model model, BulletWorld world)
 	{
 		MeshPart meshPart = model.nodes.get(0).parts.get(0).meshPart;
 		meshPart.mesh.scale(0.45f, 0.45f, 0.45f);

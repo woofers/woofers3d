@@ -17,6 +17,11 @@ public class Floor extends RigidBox
 		this(WIDTH, HEIGHT, COLOR);
 	}
 
+	public Floor(Color color)
+	{
+		this(WIDTH, HEIGHT, color);
+	}
+
 	public Floor(float width, float height)
 	{
 		this(width, height, COLOR);
@@ -27,11 +32,6 @@ public class Floor extends RigidBox
 		super(color);
 		setMass(MASS);
 		scale(new Vector3(width, THICKNESS, height));
-	}
-
-	public Floor(Color color)
-	{
-		this(WIDTH, HEIGHT, color);
 	}
 
 	@Override

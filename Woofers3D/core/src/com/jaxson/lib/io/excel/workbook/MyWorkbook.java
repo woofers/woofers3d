@@ -136,7 +136,8 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 			short typeOffset,
 			byte underline)
 	{
-		return workbook().findFont(boldWeight, color, fontHeight, name,
+		return workbook().findFont(
+				boldWeight, color, fontHeight, name,
 				italic, strikeout, typeOffset, underline);
 	}
 
@@ -311,7 +312,8 @@ public class MyWorkbook implements Iterable<MySheet>, AutoCloseable, Closeable
 			int startRow,
 			int endRow)
 	{
-		workbook().setPrintArea(sheet, startColumn, endColumn, startRow,
+		workbook().setPrintArea(
+				sheet, startColumn, endColumn, startRow,
 				endRow);
 	}
 

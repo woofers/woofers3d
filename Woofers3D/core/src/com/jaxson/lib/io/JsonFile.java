@@ -115,8 +115,9 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public FileOutputStream
-		fileOutputStream() throws FileNotFoundException, SecurityException
+	public
+		FileOutputStream
+			fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return getFile().fileOutputStream();
 	}
@@ -193,8 +194,10 @@ public class JsonFile<T> implements File<JsonFile<T>, T, T>
 	}
 
 	@Override
-	public PrintWriter
-		printWriter() throws FileNotFoundException, UnsupportedEncodingException
+	public
+		PrintWriter
+			printWriter()
+					throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return getFile().printWriter();
 	}

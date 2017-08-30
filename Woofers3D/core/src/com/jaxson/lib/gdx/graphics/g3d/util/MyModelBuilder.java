@@ -28,9 +28,11 @@ public class MyModelBuilder extends ModelBuilder
 
 	public Model createBox(Vector3 size, Color color)
 	{
-		return createBox(size.x, size.y, size.z,
+		return createBox(
+				size.x, size.y, size.z,
 				new Material(new ColorAttribute(
-						ColorAttribute.Diffuse, color)),
+						ColorAttribute.Diffuse,
+						color)),
 				ATTRIBUTES);
 	}
 
@@ -41,9 +43,11 @@ public class MyModelBuilder extends ModelBuilder
 
 	public Model createSphere(Vector3 size, Color color)
 	{
-		return createSphere(size.x, size.y, size.z, DIVISIONS, DIVISIONS,
+		return createSphere(
+				size.x, size.y, size.z, DIVISIONS, DIVISIONS,
 				new Material(new ColorAttribute(
-						ColorAttribute.Diffuse, color)),
+						ColorAttribute.Diffuse,
+						color)),
 				ATTRIBUTES);
 	}
 }

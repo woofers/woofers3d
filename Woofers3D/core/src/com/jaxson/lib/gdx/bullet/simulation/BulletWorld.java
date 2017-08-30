@@ -33,7 +33,7 @@ import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.util.Optional;
 
-public class PhysicsWorld extends GameObject
+public class BulletWorld extends GameObject
 {
 	protected static final short GROUND_FLAG = 1 << 8;
 	protected static final short OBJECT_FLAG = 1 << 9;
@@ -83,19 +83,21 @@ public class PhysicsWorld extends GameObject
 	private TouchScreen touchScreen;
 	private KeyboardKey debugKey;
 
-	public PhysicsWorld(MyEnvironment environment)
+	public BulletWorld(MyEnvironment environment)
 	{
 		this(environment, WORLD_SIZE);
 	}
 
-	public PhysicsWorld(MyEnvironment environment, Vector3 worldSize)
+	public BulletWorld(MyEnvironment environment, Vector3 worldSize)
 	{
-		this(environment, worldSize.cpy().scl(VECOTR_TO_MIN),
+		this(environment,
+				worldSize.cpy().scl(VECOTR_TO_MIN),
 				worldSize.scl(VECOTR_TO_MAX));
 	}
 
-	public PhysicsWorld(MyEnvironment environment,
-			Vector3 minSize, Vector3 maxSize)
+	public BulletWorld(MyEnvironment environment,
+			Vector3 minSize,
+			Vector3 maxSize)
 	{
 		BulletStarter.init();
 
@@ -108,7 +110,9 @@ public class PhysicsWorld extends GameObject
 		this.broadphase = new btAxisSweep3(minSize, maxSize);
 		this.constraintSolver = new btSequentialImpulseConstraintSolver();
 		this.world = new btSoftRigidDynamicsWorld(dispatcher,
-				broadphase, constraintSolver, collisionConfig);
+				broadphase,
+				constraintSolver,
+				collisionConfig);
 		this.debug = new BulletDebug(world);
 		this.rayCallback = new BulletRay();
 
@@ -144,7 +148,8 @@ public class PhysicsWorld extends GameObject
 		entity.setCollisionFlags(CHARACTER_FLAG);
 		broadphase.getOverlappingPairCache()
 				.setInternalGhostPairCallback(entity.callback());
-		world.addCollisionObject(entity.body(),
+		world.addCollisionObject(
+				entity.body(),
 				(short) CHARACTER_FILTER,
 				(short) (STATIC_FILTER | DEFAULT_FILTER));
 		world.addAction(entity.characterController());

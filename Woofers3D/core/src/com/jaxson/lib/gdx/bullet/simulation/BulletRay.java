@@ -26,7 +26,7 @@ public class BulletRay implements Disposable
 	}
 
 	public Optional<btCollisionObject> collisionObject(Ray ray,
-			float distance, PhysicsWorld world)
+			float distance, BulletWorld world)
 	{
 		set(ray, distance);
 		rayTest(world);
@@ -34,7 +34,7 @@ public class BulletRay implements Disposable
 	}
 
 	public Optional<btCollisionObject> collisionObject(Ray ray,
-			PhysicsWorld world)
+			BulletWorld world)
 	{
 		return collisionObject(ray, MAX_DISTANCE, world);
 	}
@@ -50,7 +50,7 @@ public class BulletRay implements Disposable
 		return new Optional<>(callback.getCollisionObject());
 	}
 
-	private void rayTest(PhysicsWorld world)
+	private void rayTest(BulletWorld world)
 	{
 		world.rayTest(rayStart, rayEnd, callback);
 	}

@@ -20,7 +20,8 @@ public class CameraPlayerBody extends PlayerBody
 		this(model, fittedShape(model), camera);
 	}
 
-	public CameraPlayerBody(Unwrapable<Model> model, ConvexShape shape,
+	public CameraPlayerBody(Unwrapable<Model> model,
+			ConvexShape shape,
 			TargetCamera camera)
 	{
 		this(model.unwrap(), shape, camera);
@@ -29,12 +30,6 @@ public class CameraPlayerBody extends PlayerBody
 	public CameraPlayerBody(Unwrapable<Model> model, TargetCamera camera)
 	{
 		this(model, fittedShape(model.unwrap()), camera);
-	}
-
-	protected void reset()
-	{
-		super.reset();
-		unlockCamera();
 	}
 
 	public TargetCamera camera()
@@ -68,6 +63,13 @@ public class CameraPlayerBody extends PlayerBody
 	public void lockCamera()
 	{
 		if (hasCamera()) camera().setTarget(null);
+	}
+
+	@Override
+	protected void reset()
+	{
+		super.reset();
+		unlockCamera();
 	}
 
 	public void setCamera(TargetCamera camera)

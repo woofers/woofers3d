@@ -3,9 +3,9 @@ package com.jaxson.woofers3d.states;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
 import com.jaxson.lib.gdx.graphics.views.View;
-import com.jaxson.lib.gdx.states.SubState;
-import com.jaxson.lib.gdx.io.TextureFromFile;
 import com.jaxson.lib.gdx.io.GdxFile;
+import com.jaxson.lib.gdx.io.TextureFromFile;
+import com.jaxson.lib.gdx.states.SubState;
 
 public class PauseState extends SubState
 {
@@ -19,10 +19,12 @@ public class PauseState extends SubState
 	{
 		super(game);
 
-		image = new SpriteActor(new TextureFromFile(new GdxFile(PAUSE_SCREEN_PATH)));
+		image = new SpriteActor(
+				new TextureFromFile(new GdxFile(PAUSE_SCREEN_PATH)));
 		image.setAlpha(PAUSE_ALPHA);
-		image.setY(game().display().center().y
-				- image.height() / 2);
+		image.setY(
+				game().display().center().y
+						- image.height() / 2);
 		image.setScale(RES_SCALE);
 		add(image);
 	}

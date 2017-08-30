@@ -140,7 +140,8 @@ public abstract class Entity extends GameObject
 	public Ray ray(float direction)
 	{
 		return new Ray(location(),
-				direction().rotate(Vector3.Y,
+				direction().rotate(
+						Vector3.Y,
 						direction));
 	}
 

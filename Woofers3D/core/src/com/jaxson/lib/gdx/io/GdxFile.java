@@ -179,8 +179,9 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public FileOutputStream
-		fileOutputStream() throws FileNotFoundException, SecurityException
+	public
+		FileOutputStream
+			fileOutputStream() throws FileNotFoundException, SecurityException
 	{
 		return getFile().fileOutputStream();
 	}
@@ -311,8 +312,10 @@ public class GdxFile implements File<GdxFile, Model, Pixmap>
 	}
 
 	@Override
-	public PrintWriter
-		printWriter() throws FileNotFoundException, UnsupportedEncodingException
+	public
+		PrintWriter
+			printWriter()
+					throws FileNotFoundException, UnsupportedEncodingException
 	{
 		return getFile().printWriter();
 	}

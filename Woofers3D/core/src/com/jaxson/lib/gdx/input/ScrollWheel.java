@@ -12,19 +12,9 @@ public class ScrollWheel extends MouseButton
 		super(MIDDLE, input);
 	}
 
-	void setScrollAmount(int amount)
-	{
-		this.amount = amount;
-	}
-
 	public int amountScrolled()
 	{
 		return amount;
-	}
-
-	public boolean isScrolledUp()
-	{
-		return amount > 0;
 	}
 
 	public boolean isScrolledDown()
@@ -32,15 +22,19 @@ public class ScrollWheel extends MouseButton
 		return amount < 0;
 	}
 
+	public boolean isScrolledUp()
+	{
+		return amount > 0;
+	}
+
 	public boolean isStill()
 	{
 		return isScrolledUp() && isScrolledDown();
 	}
 
-	public void update(float dt)
+	void setScrollAmount(int amount)
 	{
-		if (isScrolledUp()) amount --;
-		if (isScrolledDown()) amount ++;
+		this.amount = amount;
 	}
 
 	@Override
@@ -49,5 +43,11 @@ public class ScrollWheel extends MouseButton
 		return new Printer(getClass(),
 				new Printer.Label("Name", name()),
 				new Printer.Label("Button", button())).toString();
+	}
+
+	public void update(float dt)
+	{
+		if (isScrolledUp()) amount --;
+		if (isScrolledDown()) amount ++;
 	}
 }

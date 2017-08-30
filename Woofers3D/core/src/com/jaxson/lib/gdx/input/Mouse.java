@@ -41,7 +41,7 @@ public class Mouse implements Iterable<MouseButton>
 		for (int code: MouseButton.BUTTONS)
 		{
 			MouseButton button = null;
-			if (code == MouseButton.MIDDLE)
+			if (code == Buttons.MIDDLE)
 			{
 				scrollWheel = new ScrollWheel(input());
 				button = scrollWheel;
@@ -54,11 +54,6 @@ public class Mouse implements Iterable<MouseButton>
 			buttons.put(code, button);
 			stringButtons.put(name.toLowerCase(), button);
 		}
-	}
-
-	public ScrollWheel scrollWheel()
-	{
-		return scrollWheel;
 	}
 
 	public MouseButton button(int code)
@@ -163,6 +158,11 @@ public class Mouse implements Iterable<MouseButton>
 			mouse.scl(TOUCH_MOUSE_SCALE);
 		}
 		return mouse;
+	}
+
+	public ScrollWheel scrollWheel()
+	{
+		return scrollWheel;
 	}
 
 	public Vector2 sensitivity()

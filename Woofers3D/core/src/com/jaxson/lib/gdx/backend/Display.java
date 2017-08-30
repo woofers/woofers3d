@@ -640,8 +640,10 @@ public class Display extends GameObject
 
 	private void updateLastWindowedMode()
 	{
-		windowedMode = new DisplayMode(width(), height(),
-				game.config().maxFps(), false);
+		windowedMode = new DisplayMode(width(),
+				height(),
+				game.config().maxFps(),
+				false);
 	}
 
 	/**

@@ -22,12 +22,14 @@ public class GameAccelerometer implements Accelerometer
 
 	public GameAccelerometer(Accelerometer accelerometer, Vector3 alpha)
 	{
-		this(accelerometer, alpha,
+		this(accelerometer,
+				alpha,
 				new Vector3(DEAD_ZONE, DEAD_ZONE, DEAD_ZONE));
 	}
 
 	public GameAccelerometer(Accelerometer accelerometer,
-			Vector3 alpha, Vector3 deadZone)
+			Vector3 alpha,
+			Vector3 deadZone)
 	{
 		this.accelerometer = accelerometer;
 		this.alpha = alpha;

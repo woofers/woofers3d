@@ -104,7 +104,8 @@ public class Screenshot implements Disposable
 	{
 		return new PixmapTextureData(pixmap(),
 				pixmap().getFormat(),
-				true, true);
+				true,
+				true);
 	}
 
 	public int width()

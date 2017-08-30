@@ -48,8 +48,11 @@ public class DisplayMode
 	public DisplayMode(com.badlogic.gdx.Graphics.DisplayMode displayMode,
 			boolean fullscreen)
 	{
-		this(displayMode.width, displayMode.height,
-				displayMode.refreshRate, displayMode.bitsPerPixel, fullscreen);
+		this(displayMode.width,
+				displayMode.height,
+				displayMode.refreshRate,
+				displayMode.bitsPerPixel,
+				fullscreen);
 	}
 
 	public DisplayMode(int width, int height)
@@ -62,7 +65,9 @@ public class DisplayMode
 		this(width, height, refreshRate, BPP);
 	}
 
-	public DisplayMode(int width, int height, int refreshRate,
+	public DisplayMode(int width,
+			int height,
+			int refreshRate,
 			boolean fullscreen)
 	{
 		this(width, height, refreshRate, BPP, fullscreen);
@@ -73,7 +78,10 @@ public class DisplayMode
 		this(width, height, refreshRate, bitsPerPixel, FULLSCREEN);
 	}
 
-	public DisplayMode(int width, int height, int refreshRate, int bitsPerPixel,
+	public DisplayMode(int width,
+			int height,
+			int refreshRate,
+			int bitsPerPixel,
 			boolean fullscreen)
 	{
 		this.width = width;

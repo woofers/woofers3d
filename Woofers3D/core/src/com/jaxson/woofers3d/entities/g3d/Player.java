@@ -1,9 +1,8 @@
-package com.jaxson.woofers3d.entities;
+package com.jaxson.woofers3d.entities.g3d;
 
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.KeyboardKey;
-import com.badlogic.gdx.math.Vector3;
 
 public class Player extends CameraPlayerBody
 {

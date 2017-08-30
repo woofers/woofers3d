@@ -25,8 +25,10 @@ public class OffsetMotionState extends MotionState
 		Quaternion rotation = body.rotationQuaternion();
 		Vector3 finalOffset = offset.mul(rotation);
 
-		transform().set(new Vector3(position.x + finalOffset.x,
-				position.y + finalOffset.y, position.z + finalOffset.z),
+		transform().set(
+				new Vector3(position.x + finalOffset.x,
+						position.y + finalOffset.y,
+						position.z + finalOffset.z),
 				new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w));
 
 		super.getWorldTransform(transform());
@@ -47,11 +49,14 @@ public class OffsetMotionState extends MotionState
 	{
 		Vector3 btPosition = worldTransform.getTranslation(new Vector3());
 		Quaternion btRotation = worldTransform.getRotation(new Quaternion());
-		Quaternion rotation = new Quaternion(btRotation.w, btRotation.x,
-				btRotation.y, btRotation.z);
+		Quaternion rotation = new Quaternion(btRotation.w,
+				btRotation.x,
+				btRotation.y,
+				btRotation.z);
 		Vector3 finalOffset = offset.mul(rotation);
 		Vector3 position = new Vector3(btPosition.x - finalOffset.x,
-				btPosition.y - finalOffset.y, btPosition.z - finalOffset.z);
+				btPosition.y - finalOffset.y,
+				btPosition.z - finalOffset.z);
 
 		body.moveTo(position);
 		body.setRotation(position);

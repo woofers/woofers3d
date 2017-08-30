@@ -6,14 +6,13 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.jaxson.lib.gdx.bullet.simulation.PhysicsWorld;
+import com.jaxson.lib.gdx.bullet.simulation.BulletWorld;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
-import com.jaxson.lib.gdx.input.Mouse;
-import com.jaxson.lib.gdx.input.ScrollWheel;
 import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.lib.util.exceptions.NegativeValueException;
 
@@ -32,7 +31,7 @@ public class TargetCamera extends PerspectiveCamera
 	private Entity target;
 	private Vector3 offset;
 	private Vector3 oldTargetLocation;
-	private PhysicsWorld world;
+	private BulletWorld world;
 	private float minFov = 75f;
 	private float maxFov = 110f;
 	private float initialFov;
@@ -63,36 +62,6 @@ public class TargetCamera extends PerspectiveCamera
 		this.keyboard = Inputs.keyboard();
 		this.mouse = Inputs.mouse();
 		this.centerKey = keyboard.key("R");
-	}
-
-	public float maxFov()
-	{
-		return maxFov;
-	}
-
-	public float minFov()
-	{
-		return minFov;
-	}
-
-	public void setMaxFov(float maxFov)
-	{
-		this.maxFov = maxFov;
-		validateFov(maxFov);
-	}
-
-	public void setMinFov(float minFov)
-	{
-		this.minFov = minFov;
-		validateFov(minFov);
-	}
-
-	public void zoom(float fov)
-	{
-		float newFov = fov() - fov;
-		if (newFov < minFov()) newFov = minFov();
-		if (newFov > maxFov()) newFov = maxFov();
-		validateFov(newFov);
 	}
 
 	public void center()
@@ -160,14 +129,19 @@ public class TargetCamera extends PerspectiveCamera
 		zoom(mouse.scrollWheel().amountScrolled() * -ZOOM_SCALE);
 	}
 
-	public void resetZoom()
-	{
-		setFov(initialFov);
-	}
-
 	public Vector3 location()
 	{
 		return position;
+	}
+
+	public float maxFov()
+	{
+		return maxFov;
+	}
+
+	public float minFov()
+	{
+		return minFov;
 	}
 
 	private Vector2 mosueLocation()
@@ -200,6 +174,11 @@ public class TargetCamera extends PerspectiveCamera
 	public void resetUp()
 	{
 		setUp(Vector3.Y);
+	}
+
+	public void resetZoom()
+	{
+		setFov(initialFov);
 	}
 
 	public Quaternion roationQuaternion()
@@ -286,17 +265,21 @@ public class TargetCamera extends PerspectiveCamera
 		this.initialFov = validateFov(fov);
 	}
 
-	private float validateFov(float fov)
-	{
-		if (fov > maxFov()) fov = maxFov();
-		if (fov < minFov()) fov = minFov();
-		this.fieldOfView = fov;
-		return fov;
-	}
-
 	public void setLocation(Vector3 location)
 	{
 		location().set(location);
+	}
+
+	public void setMaxFov(float maxFov)
+	{
+		this.maxFov = maxFov;
+		validateFov(maxFov);
+	}
+
+	public void setMinFov(float minFov)
+	{
+		this.minFov = minFov;
+		validateFov(minFov);
 	}
 
 	public void setNear(float near)
@@ -333,7 +316,7 @@ public class TargetCamera extends PerspectiveCamera
 		up().set(location);
 	}
 
-	public void setWorld(PhysicsWorld world)
+	public void setWorld(BulletWorld world)
 	{
 		this.world = world;
 	}
@@ -368,8 +351,24 @@ public class TargetCamera extends PerspectiveCamera
 		super.update();
 	}
 
+	private float validateFov(float fov)
+	{
+		if (fov > maxFov()) fov = maxFov();
+		if (fov < minFov()) fov = minFov();
+		this.fieldOfView = fov;
+		return fov;
+	}
+
 	public Matrix4 view()
 	{
 		return view;
+	}
+
+	public void zoom(float fov)
+	{
+		float newFov = fov() - fov;
+		if (newFov < minFov()) newFov = minFov();
+		if (newFov > maxFov()) newFov = maxFov();
+		validateFov(newFov);
 	}
 }

@@ -200,7 +200,8 @@ public class MySheet implements Iterable<MyRow>
 			int leftmostColumn,
 			int topRow)
 	{
-		sheet().createFreezePane(columnSplit, rowSplit, leftmostColumn,
+		sheet().createFreezePane(
+				columnSplit, rowSplit, leftmostColumn,
 				topRow);
 	}
 
@@ -220,7 +221,8 @@ public class MySheet implements Iterable<MyRow>
 			int topRow,
 			int activePane)
 	{
-		sheet().createSplitPane(xSplit, ySplit, leftMostColumn, topRow,
+		sheet().createSplitPane(
+				xSplit, ySplit, leftMostColumn, topRow,
 				activePane);
 	}
 

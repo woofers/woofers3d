@@ -4,22 +4,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.views.View;
-import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.util.Unwrapable;
-import com.badlogic.gdx.graphics.Texture;
 
 public class SpriteActor extends Sprite
 {
 	private com.badlogic.gdx.graphics.g2d.Sprite sprite;
 
-	public SpriteActor(Unwrapable<Texture> texture)
-	{
-		this(texture.unwrap());
-	}
-
 	public SpriteActor(Texture texture)
 	{
 		this.sprite = new com.badlogic.gdx.graphics.g2d.Sprite(texture);
+	}
+
+	public SpriteActor(Unwrapable<Texture> texture)
+	{
+		this(texture.unwrap());
 	}
 
 	@Override
@@ -53,15 +51,20 @@ public class SpriteActor extends Sprite
 		return sprite.getColor();
 	}
 
+	@Override
+	public float height()
+	{
+		return originalHeight() * scaleY();
+	}
+
 	public float originalHeight()
 	{
 		return sprite.getHeight();
 	}
 
-	@Override
-	public float height()
+	public float originalWidth()
 	{
-		return originalHeight() * scaleY();
+		return sprite.getWidth();
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class SpriteActor extends Sprite
 	public void render(View view)
 	{
 		sprite.draw(view.spriteBatch(), alpha());
-		//view.spriteBatch().draw(sprite, x(), y());
+		// view.spriteBatch().draw(sprite, x(), y());
 	}
 
 	@Override
@@ -179,11 +182,6 @@ public class SpriteActor extends Sprite
 	public void update(float dt)
 	{
 
-	}
-
-	public float originalWidth()
-	{
-		return sprite.getWidth();
 	}
 
 	@Override

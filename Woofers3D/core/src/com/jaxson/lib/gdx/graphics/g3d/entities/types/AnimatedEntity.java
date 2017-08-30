@@ -30,7 +30,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().action(id, offset, duration,
+		animationController().action(
+				id, offset, duration,
 				loopCount, speed, listener,
 				transitionTime);
 	}
@@ -41,7 +42,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().action(id, loopCount, speed, listener,
+		animationController().action(
+				id, loopCount, speed, listener,
 				transitionTime);
 	}
 
@@ -65,7 +67,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().animate(id, offset, duration,
+		animationController().animate(
+				id, offset, duration,
 				loopCount, speed, listener,
 				transitionTime);
 	}
@@ -75,7 +78,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().animate(id, loopCount, listener,
+		animationController().animate(
+				id, loopCount, listener,
 				transitionTime);
 	}
 
@@ -85,7 +89,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().animate(id, loopCount, speed, listener,
+		animationController().animate(
+				id, loopCount, speed, listener,
 				transitionTime);
 	}
 
@@ -127,7 +132,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().queue(id, offset, duration, loopCount,
+		animationController().queue(
+				id, offset, duration, loopCount,
 				speed, listener, transitionTime);
 	}
 
@@ -137,7 +143,8 @@ public abstract class AnimatedEntity extends Entity
 			AnimationListener listener,
 			float transitionTime)
 	{
-		animationController().queue(id, loopCount, speed, listener,
+		animationController().queue(
+				id, loopCount, speed, listener,
 				transitionTime);
 	}
 
@@ -158,7 +165,8 @@ public abstract class AnimatedEntity extends Entity
 			float speed,
 			AnimationListener listener)
 	{
-		animationController().setAnimation(id, offset, duration, loopCount,
+		animationController().setAnimation(
+				id, offset, duration, loopCount,
 				speed, listener);
 	}
 
