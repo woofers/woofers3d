@@ -54,10 +54,12 @@ public class SpriteBody extends SpriteActor
 		//this.bodyDef.linearVelocity.set(50, 0);
 		this.bodyDef.position.set(x(), y());
 
+		System.out.println(x());
+
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(
 				width() / 2, height() / 2,
-				new Vector2(originalWidth() / 2, originalHeight() / 2),
+				new Vector2(originalWidth() * PIXELS_TO_METERS / 2, originalHeight() * PIXELS_TO_METERS / 2),
 				0);
 
 		this.fixtureDef.shape = shape;
@@ -93,7 +95,7 @@ public class SpriteBody extends SpriteActor
 	@Override
 	public void setLocation(float x, float y)
 	{
-		super.setLocation(x, y);
+		super.setLocation(x * METERS_TO_PIXELS, y * METERS_TO_PIXELS);
 		if (hasBody()) body().setTransform(x, y, 0);
 	}
 
@@ -107,26 +109,98 @@ public class SpriteBody extends SpriteActor
 	public void update(float dt)
 	{
 		super.update(dt);
-		super.setLocation(body().getPosition().x, body.getPosition().y);
+		super.setLocation(body().getPosition().x * METERS_TO_PIXELS, body.getPosition().y * METERS_TO_PIXELS);
 	}
 
-	//public float xPixels()
-	//{
-	//	return super.x();
-	//}
-//
-	//public float x()
-	//{
-	//	return xPixels() * PIXELS_TO_METERS;
-	//}
-//
-	//public float yPixels()
-	//{
-	//	return super.y();
-	//}
-//
-	//public float y()
-	//{
-	//	return yPixels() * PIXELS_TO_METERS;
-	//}
+	public float xPixels()
+	{
+		return super.x();
+	}
+
+	public float x()
+	{
+		return xPixels() * PIXELS_TO_METERS;
+	}
+
+	public float yPixels()
+	{
+		return super.y();
+	}
+
+	public float y()
+	{
+		return yPixels() * PIXELS_TO_METERS;
+	}
+
+	public float widthPixels()
+	{
+		return super.width();
+	}
+
+	public float width()
+	{
+		return widthPixels() * PIXELS_TO_METERS;
+	}
+
+	public float heightPixels()
+	{
+		return super.height();
+	}
+
+	public float height()
+	{
+		return heightPixels() * PIXELS_TO_METERS;
+	}
+
+	public Vector2 location()
+	{
+		return super.location().scl(PIXELS_TO_METERS);
+	}
+
+	public Vector2 origin()
+	{
+		return super.origin().scl(PIXELS_TO_METERS);
+	}
+
+	@Override
+	public float originX()
+	{
+		return super.originX() * PIXELS_TO_METERS;
+	}
+
+	@Override
+	public float originY()
+	{
+		return super.originY() * PIXELS_TO_METERS;
+	}
+
+	@Override
+	public void setCenter(float x, float y)
+	{
+		super.setCenter(x * METERS_TO_PIXELS, y * METERS_TO_PIXELS);
+	}
+
+	@Override
+	public void setOrigin(float originX, float originY)
+	{
+		super.setOrigin(originX * METERS_TO_PIXELS, originY * METERS_TO_PIXELS);
+	}
+
+	@Override
+	public void setSize(float width, float height)
+	{
+		super.setSize(width * METERS_TO_PIXELS, height * METERS_TO_PIXELS);
+	}
+
+	@Override
+	public void translateX(float x)
+	{
+		super.translateX(x * METERS_TO_PIXELS);
+	}
+
+	@Override
+	public void translateY(float y)
+	{
+		super.translateY(y * METERS_TO_PIXELS);
+	}
 }

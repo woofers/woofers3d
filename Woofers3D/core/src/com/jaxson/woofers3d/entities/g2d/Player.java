@@ -11,7 +11,7 @@ import com.jaxson.lib.gdx.io.TextureFromFile;
 public class Player extends SpriteBody
 {
 	private static final String PATH = "icon.png";
-	private static final float SCALE = 0.6f;
+	private static final float SCALE = 3.7f;
 	private static final int SPEED = 2;
 
 	private Keyboard keyboard;
@@ -26,8 +26,8 @@ public class Player extends SpriteBody
 		super(new TextureFromFile(new GdxFile(PATH)),
 				BodyDef.BodyType.DynamicBody,
 				1f);
-		setScale(3.7f);
-		setLocation(128, 700);
+		setScale(SCALE);
+		setLocation(4, 5);
 
 		this.keyboard = Inputs.keyboard();
 		this.forwardKey = keyboard.key("W");

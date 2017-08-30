@@ -34,7 +34,7 @@ public class Box2DWorld extends GameObject
 
 	public Box2DWorld()
 	{
-		this(new Vector2(0f, -98f));
+		this(new Vector2(0f, -9.8f));
 	}
 
 	public void add(SpriteBody sprite)
@@ -60,8 +60,7 @@ public class Box2DWorld extends GameObject
 
 	public void render(View view)
 	{
-		debugRenderer.render(world, view.spriteBatch().getProjectionMatrix());
-		//.cpy().scale(PIXELS_TO_METERS, PIXELS_TO_METERS, 0));
+		debugRenderer.render(world, view.spriteBatch().getProjectionMatrix().cpy().scale(METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
 	}
 
 	public void setContactFilter(ContactFilter filter)

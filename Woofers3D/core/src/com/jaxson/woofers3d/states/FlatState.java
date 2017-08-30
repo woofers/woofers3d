@@ -30,7 +30,7 @@ public class FlatState extends Box2DState
 		add(player);
 		applyPhysics(player);
 
-		floor = new Floor(50, 100);
+		floor = new Floor(4, 4);
 		add(floor);
 		applyPhysics(floor);
 	}
