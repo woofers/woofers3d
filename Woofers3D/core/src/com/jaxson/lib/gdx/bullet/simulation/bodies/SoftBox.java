@@ -7,13 +7,13 @@ import com.jaxson.lib.gdx.graphics.g3d.entities.Box;
 
 public class SoftBox extends SoftBody
 {
-	public SoftBox(Color color, BulletWorld world)
-	{
-		super(new Box(color).modelInstance(), MASS, world);
-	}
-
 	public SoftBox(BulletWorld world)
 	{
 		this(COLOR, world);
+	}
+
+	public SoftBox(Color color, BulletWorld world)
+	{
+		super(new Box(color).modelInstance(), MASS, world);
 	}
 }

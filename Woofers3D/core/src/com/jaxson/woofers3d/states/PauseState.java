@@ -20,11 +20,14 @@ public class PauseState extends SubState
 		super(game);
 
 		image = new SpriteActor(
-				new TextureFromFile(new GdxFile(PAUSE_SCREEN_PATH)));
-		image.setAlpha(PAUSE_ALPHA);
+				new TextureFromFile(
+						new GdxFile(PAUSE_SCREEN_PATH)));
+
 		image.setY(
 				game().display().center().y
-						- image.height() / 2);
+				- image.height() / 2);
+
+		image.setAlpha(PAUSE_ALPHA);
 		image.setScale(RES_SCALE);
 		add(image);
 	}

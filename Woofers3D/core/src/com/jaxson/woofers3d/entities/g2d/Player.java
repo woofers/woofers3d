@@ -7,12 +7,14 @@ import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.io.TextureFromFile;
+import com.jaxson.lib.math.MyMath;
 
 public class Player extends SpriteBody
 {
-	private static final String PATH = "icon.png";
+	private static final String PATH = "2D.png";
 	private static final float SCALE = 3.7f;
-	private static final int SPEED = 2;
+	private static final float SPEED = 4.5f;
+	private static final float JUMP_VELOCITY = 7.4f;
 
 	private Keyboard keyboard;
 	private KeyboardKey forwardKey;
@@ -20,6 +22,7 @@ public class Player extends SpriteBody
 	private KeyboardKey leftKey;
 	private KeyboardKey rightKey;
 	private KeyboardKey jumpKey;
+	private KeyboardKey resetKey;
 
 	public Player()
 	{
@@ -27,7 +30,7 @@ public class Player extends SpriteBody
 				BodyDef.BodyType.DynamicBody,
 				1f);
 		setScale(SCALE);
-		setLocation(4, 5);
+		setLocation(5f, 5.5f);
 
 		this.keyboard = Inputs.keyboard();
 		this.forwardKey = keyboard.key("W");
@@ -35,6 +38,7 @@ public class Player extends SpriteBody
 		this.leftKey = keyboard.key("A");
 		this.rightKey = keyboard.key("D");
 		this.jumpKey = keyboard.key("Space");
+		this.resetKey = keyboard.key("Y");
 	}
 
 	@Override
@@ -47,7 +51,32 @@ public class Player extends SpriteBody
 	protected void input(float dt)
 	{
 		super.input(dt);
-		if (leftKey.isDown()) translateX(-SPEED);
-		if (rightKey.isDown()) translateX(SPEED);
+		if (rightKey.isDown())
+		{
+			body().setLinearVelocity(SPEED, body().getLinearVelocity().y);
+		}
+		else if (leftKey.isDown())
+		{
+			body().setLinearVelocity(-SPEED, body().getLinearVelocity().y);
+		}
+		else
+		{
+			body().setLinearVelocity(0f, body().getLinearVelocity().y);
+		}
+
+		if (jumpKey.isPressed()
+				&& MyMath.abs(body().getLinearVelocity().y) < 0.1f)
+		{
+			body().setLinearVelocity(
+					body().getLinearVelocity().x, JUMP_VELOCITY);
+		}
+
+		if (resetKey.isPressed()) reset();
+	}
+
+	protected void reset()
+	{
+		setLocation(5f, 5.5f);
+		resetVelocity();
 	}
 }

@@ -19,14 +19,14 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 	private int positionOffset;
 	private int normalOffset;
 
-	public SoftBody(Model model, float mass, BulletWorld world)
-	{
-		this(new ModelInstance(model), mass, world);
-	}
-
 	public SoftBody(Model model, BulletWorld world)
 	{
 		this(model, MASS, world);
+	}
+
+	public SoftBody(Model model, float mass, BulletWorld world)
+	{
+		this(new ModelInstance(model), mass, world);
 	}
 
 	public SoftBody(ModelInstance modelInstance, float mass, BulletWorld world)
@@ -52,14 +52,14 @@ public abstract class SoftBody extends EntityBody<btSoftBody>
 		// transformToBody();
 	}
 
-	public SoftBody(String modelPath, float mass, BulletWorld world)
-	{
-		this(readModel(modelPath), mass, world);
-	}
-
 	public SoftBody(String modelPath, BulletWorld world)
 	{
 		this(modelPath, MASS, world);
+	}
+
+	public SoftBody(String modelPath, float mass, BulletWorld world)
+	{
+		this(readModel(modelPath), mass, world);
 	}
 
 	@Override

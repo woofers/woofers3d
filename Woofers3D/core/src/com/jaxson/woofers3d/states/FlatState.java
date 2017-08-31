@@ -1,14 +1,10 @@
 package com.jaxson.woofers3d.states;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.jaxson.lib.gdx.box2d.Box2DWorld;
-import com.jaxson.lib.gdx.box2d.Box2DState;
 import com.badlogic.gdx.physics.box2d.World;
 import com.jaxson.lib.gdx.backend.Game;
-import com.jaxson.lib.gdx.box2d.Floor;
-import com.jaxson.lib.gdx.bullet.BulletState;
+import com.jaxson.lib.gdx.box2d.Box2DState;
+import com.jaxson.lib.gdx.box2d.bodies.Floor;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.woofers3d.entities.g2d.Player;
 
@@ -30,7 +26,7 @@ public class FlatState extends Box2DState
 		add(player);
 		applyPhysics(player);
 
-		floor = new Floor(4, 4);
+		floor = new Floor(2f, 3f);
 		add(floor);
 		applyPhysics(floor);
 	}

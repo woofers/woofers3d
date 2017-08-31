@@ -26,17 +26,17 @@ public class BulletRay implements Disposable
 	}
 
 	public Optional<btCollisionObject> collisionObject(Ray ray,
+			BulletWorld world)
+	{
+		return collisionObject(ray, MAX_DISTANCE, world);
+	}
+
+	public Optional<btCollisionObject> collisionObject(Ray ray,
 			float distance, BulletWorld world)
 	{
 		set(ray, distance);
 		rayTest(world);
 		return hitObject();
-	}
-
-	public Optional<btCollisionObject> collisionObject(Ray ray,
-			BulletWorld world)
-	{
-		return collisionObject(ray, MAX_DISTANCE, world);
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class CameraPlayerBody extends PlayerBody
 
 	public CameraPlayerBody(Unwrapable<Model> model, TargetCamera camera)
 	{
-		this(model, fittedShape(model.unwrap()), camera);
+		this(model.unwrap(), camera);
 	}
 
 	public TargetCamera camera()

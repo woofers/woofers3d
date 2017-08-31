@@ -1,5 +1,7 @@
 package com.jaxson.lib.gdx.box2d.bodies.types;
 
+import static com.jaxson.lib.gdx.box2d.simulation.Box2DWorld.METERS_TO_PIXELS;
+import static com.jaxson.lib.gdx.box2d.simulation.Box2DWorld.PIXELS_TO_METERS;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -8,19 +10,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.jaxson.lib.gdx.box2d.simulation.Box2DWorld;
 import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
+import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.util.Unwrapable;
-import com.jaxson.lib.gdx.box2d.Box2DWorld;
-import static com.jaxson.lib.gdx.box2d.Box2DWorld.*;
-
 
 public class SpriteBody extends SpriteActor
 {
-	private static final String PATH = "icon.png";
-	private static final float SCALE = 0.6f;
-	private static final int SPEED = 2;
-
 	private Body body;
 	private Fixture fixture;
 
@@ -51,16 +47,15 @@ public class SpriteBody extends SpriteActor
 
 	public void createBody(Box2DWorld world)
 	{
-		//this.bodyDef.linearVelocity.set(50, 0);
 		this.bodyDef.position.set(x(), y());
-
-		System.out.println(x());
 
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(
 				width() / 2, height() / 2,
-				new Vector2(originalWidth() * PIXELS_TO_METERS / 2, originalHeight() * PIXELS_TO_METERS / 2),
-				0);
+				new Vector2(
+						originalWidth() * PIXELS_TO_METERS / 2,
+						originalHeight() * PIXELS_TO_METERS / 2),
+				rotation() * MyMath.DEGREES_TO_RADIANS);
 
 		this.fixtureDef.shape = shape;
 
@@ -93,53 +88,9 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
-	public void setLocation(float x, float y)
+	public float height()
 	{
-		super.setLocation(x * METERS_TO_PIXELS, y * METERS_TO_PIXELS);
-		if (hasBody()) body().setTransform(x, y, 0);
-	}
-
-	@Override
-	public void setScale(float scaleX, float scaleY)
-	{
-		super.setScale(scaleX, scaleY);
-	}
-
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-		super.setLocation(body().getPosition().x * METERS_TO_PIXELS, body.getPosition().y * METERS_TO_PIXELS);
-	}
-
-	public float xPixels()
-	{
-		return super.x();
-	}
-
-	public float x()
-	{
-		return xPixels() * PIXELS_TO_METERS;
-	}
-
-	public float yPixels()
-	{
-		return super.y();
-	}
-
-	public float y()
-	{
-		return yPixels() * PIXELS_TO_METERS;
-	}
-
-	public float widthPixels()
-	{
-		return super.width();
-	}
-
-	public float width()
-	{
-		return widthPixels() * PIXELS_TO_METERS;
+		return heightPixels() * PIXELS_TO_METERS;
 	}
 
 	public float heightPixels()
@@ -147,16 +98,13 @@ public class SpriteBody extends SpriteActor
 		return super.height();
 	}
 
-	public float height()
-	{
-		return heightPixels() * PIXELS_TO_METERS;
-	}
-
+	@Override
 	public Vector2 location()
 	{
 		return super.location().scl(PIXELS_TO_METERS);
 	}
 
+	@Override
 	public Vector2 origin()
 	{
 		return super.origin().scl(PIXELS_TO_METERS);
@@ -174,6 +122,12 @@ public class SpriteBody extends SpriteActor
 		return super.originY() * PIXELS_TO_METERS;
 	}
 
+	public void resetVelocity()
+	{
+		body().setLinearVelocity(new Vector2());
+		body().setAngularVelocity(0);
+	}
+
 	@Override
 	public void setCenter(float x, float y)
 	{
@@ -181,9 +135,22 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
+	public void setLocation(float x, float y)
+	{
+		super.setLocation(x * METERS_TO_PIXELS, y * METERS_TO_PIXELS);
+		if (hasBody()) body().setTransform(x, y, 0);
+	}
+
+	@Override
 	public void setOrigin(float originX, float originY)
 	{
 		super.setOrigin(originX * METERS_TO_PIXELS, originY * METERS_TO_PIXELS);
+	}
+
+	@Override
+	public void setScale(float scaleX, float scaleY)
+	{
+		super.setScale(scaleX, scaleY);
 	}
 
 	@Override
@@ -202,5 +169,49 @@ public class SpriteBody extends SpriteActor
 	public void translateY(float y)
 	{
 		super.translateY(y * METERS_TO_PIXELS);
+	}
+
+	@Override
+	public void update(float dt)
+	{
+		super.update(dt);
+		super.setLocation(
+				body().getPosition().x * METERS_TO_PIXELS,
+				body.getPosition().y * METERS_TO_PIXELS);
+
+		setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
+	}
+
+	@Override
+	public float width()
+	{
+		return widthPixels() * PIXELS_TO_METERS;
+	}
+
+	public float widthPixels()
+	{
+		return super.width();
+	}
+
+	@Override
+	public float x()
+	{
+		return xPixels() * PIXELS_TO_METERS;
+	}
+
+	public float xPixels()
+	{
+		return super.x();
+	}
+
+	@Override
+	public float y()
+	{
+		return yPixels() * PIXELS_TO_METERS;
+	}
+
+	public float yPixels()
+	{
+		return super.y();
 	}
 }

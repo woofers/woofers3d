@@ -179,12 +179,6 @@ public class SpriteActor extends Sprite
 	}
 
 	@Override
-	public void update(float dt)
-	{
-
-	}
-
-	@Override
 	public float width()
 	{
 		return originalWidth() * scaleX();
