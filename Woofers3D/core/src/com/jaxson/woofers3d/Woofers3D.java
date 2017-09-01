@@ -13,8 +13,7 @@ public class Woofers3D extends GameInstance
 	 *
 	 * -Fix State API
 	 * -Eliminate Magic Numbers
-	 * -Sync Sprite and Enity Package Design
-	 * -Sync Sprite and Enity Units
+	 * -Sync Sprite and Enity Units****
 	 * -2D Camera
 	 * -Adjust PPM Scaling
 	 * -Fix File API
@@ -25,9 +24,6 @@ public class Woofers3D extends GameInstance
 	 * -Idealy keep constuctors under 4 per object
 	 * -Keep objects to a single unit for each type of quanitity
 	 * 		(Otherwise wrap or convert outside of object)
-	 *   		To Fix: PlayerBody
-	 *   				SpriteBody
-	 *
 	 * -Lines no longer than 80 wide
 	 */
 
@@ -43,6 +39,6 @@ public class Woofers3D extends GameInstance
 	public void create()
 	{
 		super.create();
-		pushState(new PlayState(game()));
+		pushState(new FlatState(game()));
 	}
 }

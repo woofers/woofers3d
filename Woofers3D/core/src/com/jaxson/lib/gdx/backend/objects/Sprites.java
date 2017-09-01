@@ -1,6 +1,6 @@
 package com.jaxson.lib.gdx.backend.objects;
 
-import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.entities.types.Sprite;
 import com.jaxson.lib.gdx.graphics.views.View;
 
 public class Sprites extends ObjectsBase<Sprite>

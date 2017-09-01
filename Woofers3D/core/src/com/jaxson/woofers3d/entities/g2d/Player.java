@@ -8,6 +8,8 @@ import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.io.TextureFromFile;
 import com.jaxson.lib.math.MyMath;
+import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 
 public class Player extends SpriteBody
 {
@@ -29,8 +31,8 @@ public class Player extends SpriteBody
 		super(new TextureFromFile(new GdxFile(PATH)),
 				BodyDef.BodyType.DynamicBody,
 				1f);
-		setScale(SCALE);
-		setLocation(5f, 5.5f);
+		scale(SCALE);
+		moveTo(new Vector2(5f, 5.5f));
 
 		this.keyboard = Inputs.keyboard();
 		this.forwardKey = keyboard.key("W");
@@ -76,7 +78,8 @@ public class Player extends SpriteBody
 
 	protected void reset()
 	{
-		setLocation(5f, 5.5f);
+		moveTo(new Vector2(5f, 5.5f));
+		setRotation(0f);
 		resetVelocity();
 	}
 }

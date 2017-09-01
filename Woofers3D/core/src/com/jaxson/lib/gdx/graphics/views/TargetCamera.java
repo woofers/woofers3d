@@ -18,6 +18,8 @@ import com.jaxson.lib.util.exceptions.NegativeValueException;
 
 public class TargetCamera extends PerspectiveCamera
 {
+	private static int a = 1;
+
 	private static final float FOV = 95f;
 	private static final float FAR = 300f;
 	private static final float NEAR = 1f / 10f;
@@ -349,6 +351,8 @@ public class TargetCamera extends PerspectiveCamera
 		input();
 		oldTargetLocation = targetLocation();
 		super.update();
+		a ++;
+		System.out.println(a);
 	}
 
 	private float validateFov(float fov)

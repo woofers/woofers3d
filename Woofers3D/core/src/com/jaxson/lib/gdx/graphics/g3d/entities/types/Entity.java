@@ -56,7 +56,7 @@ public abstract class Entity extends GameObject
 		return boundingBox().getCenter(new Vector3());
 	}
 
-	public Vector3 centerLocation()
+	public Vector3 locationFromCenter()
 	{
 		return center().add(location());
 	}
@@ -97,7 +97,7 @@ public abstract class Entity extends GameObject
 
 	public boolean isVisible(Camera camera)
 	{
-		return camera.frustum.sphereInFrustum(centerLocation(), radius());
+		return camera.frustum.sphereInFrustum(locationFromCenter(), radius());
 	}
 
 	public Vector3 location()

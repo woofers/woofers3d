@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.jaxson.lib.gdx.box2d.bodies.types.SpriteBody;
+import com.badlogic.gdx.math.Vector2;
 
 public class Floor extends SpriteBody
 {
 	public Floor(float x, float y)
 	{
 		super(getTex(16f, 0.5f), BodyDef.BodyType.StaticBody, 1f);
-		setLocation(x, y);
+		moveTo(new Vector2(x, y));
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class MyColor extends Color
 
 	public MyColor(int r, int g, int b, int a)
 	{
-		this(toFloat(r), toFloat(g), toFloat(b), toFloat(a));
+		this(toFloat(r), toFloat(g), toFloat(b), a);
 	}
 
 	public float alpha()

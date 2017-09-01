@@ -2,7 +2,7 @@ package com.jaxson.lib.gdx.states;
 
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.backend.objects.MixedObjects;
-import com.jaxson.lib.gdx.graphics.g2d.Sprite;
+import com.jaxson.lib.gdx.graphics.g2d.entities.types.Sprite;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.graphics.views.View;

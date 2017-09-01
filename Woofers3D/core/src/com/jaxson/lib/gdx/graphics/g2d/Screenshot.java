@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.jaxson.lib.gdx.graphics.g2d.entities.types.SpriteActor;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.io.File;
 

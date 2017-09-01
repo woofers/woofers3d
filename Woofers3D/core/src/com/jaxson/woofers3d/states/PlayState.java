@@ -12,8 +12,8 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.EntityBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.jaxson.lib.gdx.graphics.color.RandomColor;
-import com.jaxson.lib.gdx.graphics.g2d.FPSCounter;
-import com.jaxson.lib.gdx.graphics.g2d.Text;
+import com.jaxson.lib.gdx.graphics.g2d.entities.FPSCounter;
+import com.jaxson.lib.gdx.graphics.g2d.entities.Text;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
@@ -22,6 +22,7 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.woofers3d.entities.g3d.Player;
+import com.badlogic.gdx.math.Vector2;
 
 public class PlayState extends BulletState
 {
@@ -49,7 +50,7 @@ public class PlayState extends BulletState
 		setSubState(new PauseState(game));
 
 		camera = new TargetCamera(width(), height());
-		applyPhysics(camera);
+		//applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
 		// final float IMPORT_SCALE = 0.15f;
@@ -114,7 +115,7 @@ public class PlayState extends BulletState
 		addHud(new FPSCounter(game()));
 
 		text = new Text("");
-		text.setLocation(20, 38);
+		text.moveTo(new Vector2(20, 38));
 		addHud(text);
 
 		mouse = Inputs.mouse();

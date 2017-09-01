@@ -410,7 +410,7 @@ public abstract class PlayerBody
 		return maxSlopeRad() * MyMath.RADIANS_TO_DEGREES;
 	}
 
-	public float maxSlopeRad()
+	private float maxSlopeRad()
 	{
 		return characterController().getMaxSlope();
 	}
@@ -493,7 +493,7 @@ public abstract class PlayerBody
 		setMaxSlope(maxSlope * MyMath.DEGREES_TO_RADIANS);
 	}
 
-	public void setMaxSlopeRad(float maxSlope)
+	private void setMaxSlopeRad(float maxSlope)
 	{
 		characterController().setMaxSlope(maxSlope);
 	}

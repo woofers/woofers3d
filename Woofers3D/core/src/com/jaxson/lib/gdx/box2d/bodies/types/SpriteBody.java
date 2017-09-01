@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.jaxson.lib.gdx.box2d.simulation.Box2DWorld;
-import com.jaxson.lib.gdx.graphics.g2d.SpriteActor;
+import com.jaxson.lib.gdx.graphics.g2d.entities.types.SpriteActor;
 import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.util.Unwrapable;
 
@@ -110,18 +110,6 @@ public class SpriteBody extends SpriteActor
 		return super.origin().scl(PIXELS_TO_METERS);
 	}
 
-	@Override
-	public float originX()
-	{
-		return super.originX() * PIXELS_TO_METERS;
-	}
-
-	@Override
-	public float originY()
-	{
-		return super.originY() * PIXELS_TO_METERS;
-	}
-
 	public void resetVelocity()
 	{
 		body().setLinearVelocity(new Vector2());
@@ -129,28 +117,28 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
-	public void setCenter(float x, float y)
+	public void moveCenterTo(Vector2 center)
 	{
-		super.setCenter(x * METERS_TO_PIXELS, y * METERS_TO_PIXELS);
+		super.moveCenterTo(center.scl(METERS_TO_PIXELS));
 	}
 
 	@Override
-	public void setLocation(float x, float y)
+	public void moveTo(Vector2 location)
 	{
-		super.setLocation(x * METERS_TO_PIXELS, y * METERS_TO_PIXELS);
-		if (hasBody()) body().setTransform(x, y, 0);
+		super.moveTo(location.scl(METERS_TO_PIXELS));
+		if (hasBody()) body().setTransform(location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS, rotation() * MyMath.DEGREES_TO_RADIANS);
 	}
 
 	@Override
-	public void setOrigin(float originX, float originY)
+	public void setOrigin(Vector2 origin)
 	{
-		super.setOrigin(originX * METERS_TO_PIXELS, originY * METERS_TO_PIXELS);
+		super.setOrigin(origin.scl(METERS_TO_PIXELS));
 	}
 
 	@Override
-	public void setScale(float scaleX, float scaleY)
+	public void scale(Vector2 scale)
 	{
-		super.setScale(scaleX, scaleY);
+		super.scale(scale);
 	}
 
 	@Override
@@ -160,25 +148,17 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
-	public void translateX(float x)
+	public void translate(Vector2 translation)
 	{
-		super.translateX(x * METERS_TO_PIXELS);
-	}
-
-	@Override
-	public void translateY(float y)
-	{
-		super.translateY(y * METERS_TO_PIXELS);
+		translation.scl(METERS_TO_PIXELS);
+		super.translate(translation);
 	}
 
 	@Override
 	public void update(float dt)
 	{
 		super.update(dt);
-		super.setLocation(
-				body().getPosition().x * METERS_TO_PIXELS,
-				body.getPosition().y * METERS_TO_PIXELS);
-
+		super.moveTo(body().getPosition().scl(METERS_TO_PIXELS));
 		setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
 	}
 
