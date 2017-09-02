@@ -10,6 +10,7 @@ import com.jaxson.lib.gdx.io.TextureFromFile;
 import com.jaxson.lib.math.MyMath;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.jaxson.lib.gdx.box2d.simulation.Box2DWorld;
 
 public class Player extends SpriteBody
 {

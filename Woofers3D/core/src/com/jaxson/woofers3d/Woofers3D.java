@@ -14,6 +14,7 @@ public class Woofers3D extends GameInstance
 	 * -Fix State API
 	 * -Eliminate Magic Numbers
 	 * -Sync Sprite and Enity Units****
+	 * -Fix Player Anchor
 	 * -2D Camera
 	 * -Adjust PPM Scaling
 	 * -Fix File API

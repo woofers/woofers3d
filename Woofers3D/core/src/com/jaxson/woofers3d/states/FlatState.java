@@ -14,6 +14,7 @@ public class FlatState extends Box2DState
 	private World world;
 	private Player player;
 	private Floor floor;
+	private Floor floor2;
 
 	public FlatState(Game game)
 	{
@@ -25,6 +26,10 @@ public class FlatState extends Box2DState
 		player = new Player();
 		add(player);
 		applyPhysics(player);
+
+		floor2 = new Floor(6f, 3.1f);
+		add(floor2);
+		applyPhysics(floor2);
 
 		floor = new Floor(2f, 3f);
 		add(floor);

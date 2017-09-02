@@ -113,7 +113,7 @@ public class SpriteBody extends SpriteActor
 	public void resetVelocity()
 	{
 		body().setLinearVelocity(new Vector2());
-		body().setAngularVelocity(0);
+		body().setAngularVelocity(0f);
 	}
 
 	@Override
@@ -171,6 +171,13 @@ public class SpriteBody extends SpriteActor
 	public float widthPixels()
 	{
 		return super.width();
+	}
+
+	@Override
+	public void setRotation(float roll)
+	{
+		super.setRotation(roll);
+		body().setTransform(body().getPosition(), roll * MyMath.DEGREES_TO_RADIANS);
 	}
 
 	@Override
