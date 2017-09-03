@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"x",
+				"xCenter"
+			],
+			[
 				"wid",
 				"width"
 			],
@@ -30,10 +34,6 @@
 			[
 				"bod",
 				"body"
-			],
-			[
-				"x",
-				"xPixels"
 			],
 			[
 				"sp",
@@ -523,7 +523,7 @@
 			"file": "core/src/com/jaxson/woofers3d/entities/g2d/Player.java",
 			"settings":
 			{
-				"buffer_size": 2131,
+				"buffer_size": 2133,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,7 +532,16 @@
 			"file": "core/src/com/jaxson/lib/gdx/box2d/bodies/types/SpriteBody.java",
 			"settings":
 			{
-				"buffer_size": 4119,
+				"buffer_size": 4137,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "core/src/com/jaxson/lib/gdx/graphics/g2d/entities/types/SpriteActor.java",
+			"settings":
+			{
+				"buffer_size": 2798,
 				"line_ending": "Windows"
 			}
 		},
@@ -852,6 +861,12 @@
 	],
 	"file_history":
 	[
+		"/D/Documents/JVD Docs/Video Game Backups/CEMU/shaderCache/info.txt",
+		"/D/Documents/JVD Docs/Video Game Backups/CEMU/crashlog.txt",
+		"/D/Documents/JVD Docs/Video Game Backups/CEMU/log.txt",
+		"/D/Documents/JVD Docs/Video Game Backups/WII U/Games_Unpack/The Legend of Zelda Breath of the Wild (DLC) (983.335 MB) (USA) (unpacked)/content/0011/System/AocVersion.txt",
+		"/D/Documents/JVD Docs/Video Game Backups/WII U/Games_Unpack/The Legend of Zelda Breath of the Wild [ALZE0101]/content/System/Version.txt",
+		"/D/Documents/JVD Docs/Video Game Backups/WII U/Games_Unpack/The Legend of Zelda Breath of the Wild (UPDATE DATA) (v112) (2.666 GB) (USA) (unpacked)/content/System/Version.txt",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/box2d/bodies/types/SpriteBody.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g2d/entities/types/SpriteActor.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/gdx/graphics/g3d/entities/types/Entity.java",
@@ -973,13 +988,7 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyArrayList.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/MyComparable.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Optional.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Printer.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Unwrapable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/FlatState.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/woofers3d/states/MenuState.java",
-		"/C/Users/Jaxson/Desktop/missing songs.txt",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO8FD11C63/B2DSprite.java",
-		"/C/Users/Jaxson/AppData/Local/Temp/7zO8FDD3911/Game.java"
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Printer.java"
 	],
 	"find":
 	{
@@ -1003,6 +1012,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"new char[0]",
 			"body",
 			"DEGREES_TO_RADIANS",
 			"update()",
@@ -1129,8 +1139,7 @@
 			"Rendering",
 			"MovieFramerate",
 			"MovieFramerate ",
-			"FrameCloseButton",
-			"getFowardRay"
+			"FrameCloseButton"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1220,7 +1229,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1229,73 +1238,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2131,
+						"buffer_size": 2133,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1468,
-								1468
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1034.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "core/src/com/jaxson/lib/gdx/box2d/bodies/types/SpriteBody.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4119,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								703,
-								703
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "core/src/com/jaxson/woofers3d/states/FlatState.java",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1099,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								769,
-								769
+								512,
+								512
 							]
 						],
 						"settings":
@@ -1307,11 +1258,98 @@
 						"translation.y": 132.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "core/src/com/jaxson/lib/gdx/box2d/bodies/types/SpriteBody.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4137,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1050,
+								1050
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "core/src/com/jaxson/lib/gdx/graphics/g2d/entities/types/SpriteActor.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2798,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								602,
+								602
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
+					"file": "core/src/com/jaxson/woofers3d/states/FlatState.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1099,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								317,
+								317
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "core/src/com/jaxson/lib/gdx/graphics/g2d/entities/Text.java",
 					"semi_transient": false,
 					"settings":
@@ -1336,7 +1374,7 @@
 						"translation.y": 269.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1402,6 +1440,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"spriac",
+				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g2d\\entities\\types\\SpriteActor.java"
+			],
 			[
 				"sprb",
 				"core\\src\\com\\jaxson\\lib\\gdx\\box2d\\bodies\\types\\SpriteBody.java"
@@ -1481,10 +1523,6 @@
 			[
 				"spribo",
 				"core\\src\\com\\jaxson\\lib\\gdx\\box2d\\bodies\\types\\SpriteBody.java"
-			],
-			[
-				"spriac",
-				"core\\src\\com\\jaxson\\lib\\gdx\\graphics\\g2d\\entities\\types\\SpriteActor.java"
 			],
 			[
 				"pauss",

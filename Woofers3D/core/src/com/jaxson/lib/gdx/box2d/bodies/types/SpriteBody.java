@@ -28,6 +28,8 @@ public class SpriteBody extends SpriteActor
 	{
 		super(texture);
 
+		setOrigin();
+
 		this.bodyDef = new BodyDef();
 		this.bodyDef.type = type;
 
@@ -47,15 +49,11 @@ public class SpriteBody extends SpriteActor
 
 	public void createBody(Box2DWorld world)
 	{
-		this.bodyDef.position.set(x(), y());
+		this.bodyDef.position.set(x() + width() / 2, y() + height() / 2);
 
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(
-				width() / 2, height() / 2,
-				new Vector2(
-						originalWidth() * PIXELS_TO_METERS / 2,
-						originalHeight() * PIXELS_TO_METERS / 2),
-				rotation() * MyMath.DEGREES_TO_RADIANS);
+				width() / 2, height() / 2);
 
 		this.fixtureDef.shape = shape;
 
@@ -158,7 +156,7 @@ public class SpriteBody extends SpriteActor
 	public void update(float dt)
 	{
 		super.update(dt);
-		super.moveTo(body().getPosition().scl(METERS_TO_PIXELS));
+		super.moveTo(body().getPosition().add(-originalWidth() * PIXELS_TO_METERS / 2, -originalHeight() * PIXELS_TO_METERS / 2).scl(METERS_TO_PIXELS));
 		setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
 	}
 
