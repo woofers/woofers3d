@@ -177,9 +177,9 @@ public class Box2DWorld extends GameObject
 	@Override
 	public void render(View view)
 	{
-		debugRenderer.render(
-				world, view.spriteBatch().getProjectionMatrix().cpy().scale(
-						METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
+		//debugRenderer.render(
+		//		world, view.spriteBatch().getProjectionMatrix().cpy().scale(
+		//				METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
 	}
 
 	public void setAutoClearForces(boolean flag)

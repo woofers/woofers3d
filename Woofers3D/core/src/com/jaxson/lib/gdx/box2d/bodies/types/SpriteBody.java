@@ -53,7 +53,8 @@ public class SpriteBody extends SpriteActor
 
 		this.shape = new PolygonShape();
 		this.shape.setAsBox(
-				width() / 2, height() / 2);
+				width() / 2, height() / 2, Vector2.Zero,
+				rotation() * MyMath.DEGREES_TO_RADIANS);
 
 		this.fixtureDef.shape = shape;
 

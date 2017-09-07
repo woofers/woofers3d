@@ -1,11 +1,11 @@
 Woofers3D
 ============
 
-A 3D game API designer to be effortless and simple to use.
+A 3D game API designed to be effortless and simple to use.
 
 Supports modern features such as Ray Tracing, Chasing Camera, States and 3D Model Importing.
 
-Built using LibGDX and Bullet Physics.
+Built using LibGDX, Bullet Physics and Box2D.
 
 ![alt text][gif1]
 
