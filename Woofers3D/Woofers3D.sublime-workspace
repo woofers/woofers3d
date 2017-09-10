@@ -529,6 +529,14 @@
 			}
 		},
 		{
+			"file": "/D/Documents/JVD Docs/Video Game Backups/CEMU/graphicPacks/BSoD FPS ++/patches.txt",
+			"settings":
+			{
+				"buffer_size": 3693,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "core/src/com/jaxson/lib/gdx/box2d/simulation/Box2DWorld.java",
 			"settings":
 			{
@@ -624,8 +632,8 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 388.0,
-		"last_filter": "",
+		"height": 113.0,
+		"last_filter": "git push",
 		"selected_items":
 		[
 			[
@@ -633,7 +641,11 @@
 				"Git: Push"
 			],
 			[
-				"git comm",
+				"git ",
+				"Git: Commit"
+			],
+			[
+				"git com",
 				"Git: Commit"
 			],
 			[
@@ -641,11 +653,7 @@
 				"Git: Add..."
 			],
 			[
-				"git com",
-				"Git: Commit"
-			],
-			[
-				"git ",
+				"git comm",
 				"Git: Commit"
 			],
 			[
@@ -862,6 +870,7 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/.gradle",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/android/res",
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/build",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com",
@@ -873,6 +882,7 @@
 	],
 	"file_history":
 	[
+		"/D/Documents/JVD Docs/Video Game Backups/CEMU/graphicPacks/BotW FPS Mod - Edited/patches.txt",
 		"/D/Documents/JVD Docs/Documents/School/UVIC/2017/Schedule/Removed Courses.txt",
 		"/C/Users/Jaxson/AppData/Local/Temp/7zO4A1FF079/patches.txt",
 		"/D/Documents/JVD Docs/Documents/School/UVIC/2017/Removed Courses.txt",
@@ -999,8 +1009,7 @@
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/exceptions/NegativeValueException.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/exceptions/FileExtensionNotFoundException.java",
 		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/ComparableComparator.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Measurable.java",
-		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Uncertainty.java"
+		"/D/Documents/Development/src/School/JavaProjects/Woofers3D/core/src/com/jaxson/lib/util/Measurable.java"
 	],
 	"find":
 	{
@@ -1241,7 +1250,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1257,8 +1266,8 @@
 						"selection":
 						[
 							[
-								1000,
-								1000
+								816,
+								816
 							]
 						],
 						"settings":
@@ -1267,14 +1276,42 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 159.0,
+						"translation.y": 93.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Documents/JVD Docs/Video Game Backups/CEMU/graphicPacks/BSoD FPS ++/patches.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3693,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2970.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 2,
 					"file": "core/src/com/jaxson/lib/gdx/box2d/simulation/Box2DWorld.java",
 					"semi_transient": false,
 					"settings":
@@ -1299,11 +1336,11 @@
 						"translation.y": 792.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "build.gradle",
 					"semi_transient": false,
 					"settings":
@@ -1329,11 +1366,11 @@
 						"translation.y": 66.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "core/src/com/jaxson/woofers3d/Woofers3D.java",
 					"semi_transient": false,
 					"settings":
@@ -1358,11 +1395,11 @@
 						"translation.y": 264.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "core/src/com/jaxson/lib/gdx/graphics/g2d/entities/types/SpriteActor.java",
 					"semi_transient": false,
 					"settings":
@@ -1387,11 +1424,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "core/src/com/jaxson/woofers3d/states/FlatState.java",
 					"semi_transient": false,
 					"settings":
@@ -1416,11 +1453,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "core/src/com/jaxson/lib/gdx/graphics/g2d/entities/Text.java",
 					"semi_transient": false,
 					"settings":
@@ -1445,7 +1482,7 @@
 						"translation.y": 269.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
