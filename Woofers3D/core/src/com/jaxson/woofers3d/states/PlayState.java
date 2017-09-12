@@ -1,5 +1,6 @@
 package com.jaxson.woofers3d.states;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jaxson.lib.gdx.backend.Game;
@@ -22,7 +23,6 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.woofers3d.entities.g3d.Player;
-import com.badlogic.gdx.math.Vector2;
 
 public class PlayState extends BulletState
 {
@@ -50,7 +50,7 @@ public class PlayState extends BulletState
 		setSubState(new PauseState(game));
 
 		camera = new TargetCamera(width(), height());
-		//applyPhysics(camera);
+		// applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
 		// final float IMPORT_SCALE = 0.15f;

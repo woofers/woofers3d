@@ -3,9 +3,9 @@ package com.jaxson.lib.gdx.box2d.bodies;
 import static com.jaxson.lib.gdx.box2d.simulation.Box2DWorld.METERS_TO_PIXELS;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.jaxson.lib.gdx.box2d.bodies.types.SpriteBody;
-import com.badlogic.gdx.math.Vector2;
 
 public class Floor extends SpriteBody
 {

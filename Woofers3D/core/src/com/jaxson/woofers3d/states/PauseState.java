@@ -1,12 +1,12 @@
 package com.jaxson.woofers3d.states;
 
+import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.graphics.g2d.entities.types.SpriteActor;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.io.TextureFromFile;
 import com.jaxson.lib.gdx.states.SubState;
-import com.badlogic.gdx.math.Vector2;
 
 public class PauseState extends SubState
 {
@@ -25,10 +25,10 @@ public class PauseState extends SubState
 						new GdxFile(PAUSE_SCREEN_PATH)));
 
 		image.moveTo(
-			new Vector2(
-					image.location().x,game().display().center().y
-					- image.height() / 2)
-				);
+				new Vector2(
+						image.location().x,
+						game().display().center().y
+								- image.height() / 2));
 
 		image.setAlpha(PAUSE_ALPHA);
 		image.scale(RES_SCALE);

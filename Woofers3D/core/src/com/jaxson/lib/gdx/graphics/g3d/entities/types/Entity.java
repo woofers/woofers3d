@@ -56,11 +56,6 @@ public abstract class Entity extends GameObject
 		return boundingBox().getCenter(new Vector3());
 	}
 
-	public Vector3 locationFromCenter()
-	{
-		return center().add(location());
-	}
-
 	public float diameter()
 	{
 		return size().len();
@@ -103,6 +98,11 @@ public abstract class Entity extends GameObject
 	public Vector3 location()
 	{
 		return transform().getTranslation(new Vector3());
+	}
+
+	public Vector3 locationFromCenter()
+	{
+		return center().add(location());
 	}
 
 	public Model model()

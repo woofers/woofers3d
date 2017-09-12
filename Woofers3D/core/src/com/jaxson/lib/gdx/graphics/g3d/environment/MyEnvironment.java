@@ -11,6 +11,8 @@ import com.jaxson.lib.gdx.graphics.g3d.environment.lighting.Light;
 import com.jaxson.lib.gdx.graphics.g3d.environment.lighting.MyDirectionalLight;
 import com.jaxson.lib.gdx.graphics.g3d.environment.lighting.MyDirectionalShadowLight;
 import com.jaxson.lib.util.MyArrayList;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
+import com.badlogic.gdx.graphics.g3d.environment.SpotLight;
 
 public class MyEnvironment extends Environment
 {
@@ -36,7 +38,8 @@ public class MyEnvironment extends Environment
 
 	public void add(Light light)
 	{
-		add(light.light());
+		add(new SpotLight().set(Light.COLOR, new Vector3(0f, 4f, -8f), Light.DIRECTION, 15f, 90f, 1f));
+		//add(light.light());
 	}
 
 	public void begin(Camera camera)

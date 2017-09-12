@@ -2,10 +2,9 @@ package com.jaxson.lib.gdx.graphics.g2d.entities.types;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.util.Unwrapable;
-import com.badlogic.gdx.math.Vector2;
 
 public class SpriteActor extends Sprite
 {
@@ -47,15 +46,28 @@ public class SpriteActor extends Sprite
 		flip(false, true);
 	}
 
-	public Color tint()
-	{
-		return sprite.getColor();
-	}
-
 	@Override
 	public float height()
 	{
 		return originalHeight() * scale().y;
+	}
+
+	@Override
+	public void moveCenterTo(Vector2 center)
+	{
+		sprite.setCenter(center.x, center.y);
+	}
+
+	@Override
+	public void moveTo(Vector2 location)
+	{
+		sprite.setPosition(location.x, location.y);
+	}
+
+	@Override
+	public Vector2 origin()
+	{
+		return new Vector2(sprite.getOriginX(), sprite.getOriginY());
 	}
 
 	public float originalHeight()
@@ -66,11 +78,6 @@ public class SpriteActor extends Sprite
 	public float originalWidth()
 	{
 		return sprite.getWidth();
-	}
-
-	public Vector2 origin()
-	{
-		return new Vector2(sprite.getOriginX(), sprite.getOriginY());
 	}
 
 	@Override
@@ -86,26 +93,28 @@ public class SpriteActor extends Sprite
 		return sprite.getRotation();
 	}
 
+	@Override
 	public Vector2 scale()
 	{
 		return new Vector2(sprite.getScaleX(), sprite.getScaleY());
 	}
 
+	@Override
+	public void scale(Vector2 scale)
+	{
+		sprite.setScale(scale.x, scale.y);
+	}
+
+	@Override
+	public void setAlpha(float alpha)
+	{
+		super.setAlpha(alpha);
+		sprite.setAlpha(alpha);
+	}
+
 	public void setBounds(float x, float y, float width, float height)
 	{
 		sprite.setBounds(x, y, width, height);
-	}
-
-	@Override
-	public void moveCenterTo(Vector2 center)
-	{
-		sprite.setCenter(center.x, center.y);
-	}
-
-	@Override
-	public void moveTo(Vector2 location)
-	{
-		sprite.setPosition(location.x, location.y);
 	}
 
 	@Override
@@ -127,12 +136,6 @@ public class SpriteActor extends Sprite
 	}
 
 	@Override
-	public void scale(Vector2 scale)
-	{
-		sprite.setScale(scale.x, scale.y);
-	}
-
-	@Override
 	public void setSize(float width, float height)
 	{
 		sprite.setSize(width, height);
@@ -143,10 +146,9 @@ public class SpriteActor extends Sprite
 		sprite.setColor(color);
 	}
 
-	public void setAlpha(float alpha)
+	public Color tint()
 	{
-		super.setAlpha(alpha);
-		sprite.setAlpha(alpha);
+		return sprite.getColor();
 	}
 
 	@Override

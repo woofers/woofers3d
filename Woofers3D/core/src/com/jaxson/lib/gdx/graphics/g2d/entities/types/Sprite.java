@@ -14,11 +14,6 @@ public abstract class Sprite extends GameObject
 		return alpha;
 	}
 
-	public Vector2 locationFromCenter()
-	{
-		return location().add(location().scl(0.5f));
-	}
-
 	public float depth()
 	{
 		return depth;
@@ -37,18 +32,43 @@ public abstract class Sprite extends GameObject
 		return new Vector2(x(), y());
 	}
 
+	public Vector2 locationFromCenter()
+	{
+		return location().add(location().scl(0.5f));
+	}
+
+	public abstract void moveCenterTo(Vector2 center);
+
+	public abstract void moveTo(Vector2 location);
+
+	public void moveTo(Vector3 location)
+	{
+		moveTo(new Vector2(location.x, location.y));
+		depth = location.z;
+	}
+
 	public abstract Vector2 origin();
+
+	public void rotate(float degrees)
+	{
+		setRotation(rotation() + degrees);
+	}
 
 	public abstract float rotation();
 
 	public abstract Vector2 scale();
 
+	public void scale(float scale)
+	{
+		scale(new Vector2(scale, scale));
+	}
+
+	public abstract void scale(Vector2 scale);
+
 	public void setAlpha(float alpha)
 	{
 		this.alpha = alpha;
 	}
-
-	public abstract void moveCenterTo(Vector2 center);
 
 	public void setDepth(float depth)
 	{
@@ -60,31 +80,11 @@ public abstract class Sprite extends GameObject
 		setFlip(flipX, flipY);
 	}
 
-	public abstract void moveTo(Vector2 location);
-
-	public void moveTo(Vector3 location)
-	{
-		moveTo(new Vector2(location.x, location.y));
-		depth = location.z;
-	}
-
 	public abstract void setOrigin();
 
 	public abstract void setOrigin(Vector2 origin);
 
 	public abstract void setRotation(float degrees);
-
-	public void rotate(float degrees)
-	{
-		setRotation(rotation() + degrees);
-	}
-
-	public void scale(float scale)
-	{
-		scale(new Vector2(scale, scale));
-	}
-
-	public abstract void scale(Vector2 scale);
 
 	public abstract void setSize(float width, float height);
 

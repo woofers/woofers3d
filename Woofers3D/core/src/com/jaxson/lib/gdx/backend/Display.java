@@ -79,7 +79,7 @@ public class Display extends GameObject
 				= new Keys(keyboard.key("F11"),
 						new KeyCombination(
 								new Keys(keyboard.key("L-Alt"),
-										 keyboard.key("R-Alt")),
+										keyboard.key("R-Alt")),
 								keyboard.key("Enter")));
 
 		setFullscreen(startsFullscreen());
@@ -635,7 +635,7 @@ public class Display extends GameObject
 	public void update(float dt)
 	{
 		super.update(dt);
-		//if (!isPaused()) view().update(dt);
+		// if (!isPaused()) view().update(dt);
 	}
 
 	private void updateLastWindowedMode()

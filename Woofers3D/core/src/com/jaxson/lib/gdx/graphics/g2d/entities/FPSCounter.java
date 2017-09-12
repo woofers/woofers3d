@@ -1,8 +1,8 @@
 package com.jaxson.lib.gdx.graphics.g2d.entities;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.jaxson.lib.gdx.backend.Game;
 import com.badlogic.gdx.math.Vector2;
+import com.jaxson.lib.gdx.backend.Game;
 
 public class FPSCounter extends Text
 {

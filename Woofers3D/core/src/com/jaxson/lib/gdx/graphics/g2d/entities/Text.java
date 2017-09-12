@@ -57,6 +57,19 @@ public class Text extends Sprite
 		return location;
 	}
 
+	@Override
+	public void moveCenterTo(Vector2 center)
+	{
+
+	}
+
+	@Override
+	public void moveTo(Vector2 location)
+	{
+		this.location = location;
+	}
+
+	@Override
 	public Vector2 origin()
 	{
 		return Vector2.Zero;
@@ -81,15 +94,9 @@ public class Text extends Sprite
 	}
 
 	@Override
-	public void moveCenterTo(Vector2 center)
+	public void scale(Vector2 scale)
 	{
-
-	}
-
-	@Override
-	public void moveTo(Vector2 location)
-	{
-		this.location = location;
+		this.scale.set(scale);
 	}
 
 	@Override
@@ -108,12 +115,6 @@ public class Text extends Sprite
 	public void setRotation(float roll)
 	{
 
-	}
-
-	@Override
-	public void scale(Vector2 scale)
-	{
-		this.scale.set(scale);
 	}
 
 	@Override

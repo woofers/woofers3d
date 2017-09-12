@@ -104,6 +104,21 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
+	public void moveCenterTo(Vector2 center)
+	{
+		super.moveCenterTo(center.scl(METERS_TO_PIXELS));
+	}
+
+	@Override
+	public void moveTo(Vector2 location)
+	{
+		super.moveTo(location.scl(METERS_TO_PIXELS));
+		if (hasBody()) body().setTransform(
+				location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS,
+				rotation() * MyMath.DEGREES_TO_RADIANS);
+	}
+
+	@Override
 	public Vector2 origin()
 	{
 		return super.origin().scl(PIXELS_TO_METERS);
@@ -116,16 +131,9 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
-	public void moveCenterTo(Vector2 center)
+	public void scale(Vector2 scale)
 	{
-		super.moveCenterTo(center.scl(METERS_TO_PIXELS));
-	}
-
-	@Override
-	public void moveTo(Vector2 location)
-	{
-		super.moveTo(location.scl(METERS_TO_PIXELS));
-		if (hasBody()) body().setTransform(location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS, rotation() * MyMath.DEGREES_TO_RADIANS);
+		super.scale(scale);
 	}
 
 	@Override
@@ -135,9 +143,11 @@ public class SpriteBody extends SpriteActor
 	}
 
 	@Override
-	public void scale(Vector2 scale)
+	public void setRotation(float roll)
 	{
-		super.scale(scale);
+		super.setRotation(roll);
+		body().setTransform(
+				body().getPosition(), roll * MyMath.DEGREES_TO_RADIANS);
 	}
 
 	@Override
@@ -157,7 +167,12 @@ public class SpriteBody extends SpriteActor
 	public void update(float dt)
 	{
 		super.update(dt);
-		super.moveTo(body().getPosition().add(-originalWidth() * PIXELS_TO_METERS / 2, -originalHeight() * PIXELS_TO_METERS / 2).scl(METERS_TO_PIXELS));
+		super.moveTo(
+				body().getPosition()
+						.add(
+								-originalWidth() * PIXELS_TO_METERS / 2,
+								-originalHeight() * PIXELS_TO_METERS / 2)
+						.scl(METERS_TO_PIXELS));
 		setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
 	}
 
@@ -170,13 +185,6 @@ public class SpriteBody extends SpriteActor
 	public float widthPixels()
 	{
 		return super.width();
-	}
-
-	@Override
-	public void setRotation(float roll)
-	{
-		super.setRotation(roll);
-		body().setTransform(body().getPosition(), roll * MyMath.DEGREES_TO_RADIANS);
 	}
 
 	@Override

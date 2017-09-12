@@ -15,7 +15,7 @@ import com.jaxson.lib.util.MyArrayList;
 
 public abstract class BulletState extends State
 {
-	private static final boolean SHADOWS = true;
+	private static final boolean SHADOWS = false;
 
 	private BulletWorld world;
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 
 public class View
 {
@@ -115,6 +116,12 @@ public class View
 	public void setSpriteView(Viewport sprite)
 	{
 		this.sprite = sprite;
+	}
+
+	public void setShaderProvider(ShaderProvider shaderProvider)
+	{
+		if (modelBatch != null)	modelBatch().dispose();
+		this.modelBatch = new ModelBatch(shaderProvider);
 	}
 
 	private void setToOrthographic()
