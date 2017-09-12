@@ -16,7 +16,7 @@ public class MyDirectionalShadowLight extends BaseLight<DirectionalShadowLight>
 			= (int) Math.pow(2, SHADOW_RESOLUTION_SCALE);
 	private static final float SHADOW_NEAR = 1f;
 	private static final float SHADOW_FAR = 100f;
-	private static final Vector3 WORLD_SIZE = new Vector3(100f, 100f, 100f);
+	private static final Vector3 WORLD_SIZE = new Vector3(16f, 16f, 16f);
 
 	private ShadowBatch shadowBatch;
 
