@@ -32,6 +32,8 @@ public class PlayState extends BulletState
 	private static final float IMPULSE_SPEED = 1.3f;
 	private static final float MARKER_LENGTH = 35f;
 
+	private static final float SCALE_TEST = 1f;
+
 	private Floor floor;
 	private Floor ramp;
 	private RigidBox blocker;
@@ -50,14 +52,14 @@ public class PlayState extends BulletState
 		setSubState(new PauseState(game));
 
 		camera = new TargetCamera(width(), height());
-		// applyPhysics(camera);
+		applyPhysics(camera);
 		view().modelView().setCamera(camera);
 
 		// final float IMPORT_SCALE = 0.15f;
 		// for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
 		// {
-		// object.scale(IMPORT_SCALE);
-		// object.moveTo(object.location().scl(IMPORT_SCALE));
+		// 		object.scale(IMPORT_SCALE);
+		// 		object.moveTo(object.location().scl(IMPORT_SCALE));
 		// }
 
 		floor = new Floor();
@@ -83,7 +85,7 @@ public class PlayState extends BulletState
 					new RandomColor(new MyColor(255, 95, 0),
 							new MyColor(255, 165, 50)));
 			boxs[i].setSize(
-					new RandomVector3(0.15f, 0.6f, 0.15f, 0.3f, 0.15f, 0.6f));
+					new RandomVector3(0.15f, 0.6f, 0.15f, 0.3f, 0.15f, 0.6f).scl(SCALE_TEST));
 			boxs[i].moveTo(new RandomVector3(0.9f, 2.205f));
 			boxs[i].setMass(mass.floatValue());
 			applyPhysics(boxs[i]);
@@ -97,7 +99,7 @@ public class PlayState extends BulletState
 			{
 				spheres[i] = new RigidSphere(new RandomColor());
 				spheres[i].moveTo(new RandomVector3(0.9f, 2.205f));
-				spheres[i].setSize(new Vector3(0.3f, 0.3f, 0.3f));
+				spheres[i].setSize(new Vector3(0.3f, 0.3f, 0.3f).scl(SCALE_TEST));
 				spheres[i].setMass(mass.floatValue());
 				applyPhysics(spheres[i]);
 				add(spheres[i]);

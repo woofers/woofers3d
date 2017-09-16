@@ -66,6 +66,8 @@ public abstract class PlayerBody
 	private KeyboardKey rightKey;
 	private KeyboardKey jumpKey;
 
+	private Vector3 walkDirection = new Vector3();
+
 	public PlayerBody(Model model)
 	{
 		this(model, fittedShape(model));
@@ -186,135 +188,32 @@ public abstract class PlayerBody
 	@Override
 	protected void input(float dt)
 	{
-		direction.setZero();
+		walkDirection.setZero();
 		if (keyboard().exists())
 		{
 			if (onGround())
 			{
 				if (leftKey.isDown())
 				{
-					if (MyMath.abs(velocityPerTick().x) < angle(maxSpeed().x)
-							* dt)
-					{
-						if (angle(velocityPerTick().x) >= 0f)
-						{
-							velocityPerTick().x += angle(acceleration().x) * dt;
-						}
-						else
-						{
-							velocityPerTick().x
-									+= angle(decceleration().x) * dt;
-						}
-					}
-				}
-				else
-				{
-					if (velocityPerTick().x > 0f)
-						velocityPerTick().x -= angle(decceleration().x) * dt;
+					rotate(1f, 0f, 0f);
 				}
 				if (rightKey.isDown())
 				{
-					if (MyMath.abs(velocityPerTick().x) < angle(maxSpeed().x)
-							* dt)
-					{
-						if (angle(velocityPerTick().x) <= 0f)
-						{
-							velocityPerTick().x -= angle(acceleration().x) * dt;
-						}
-						else
-						{
-							velocityPerTick().x
-									-= angle(decceleration().x) * dt;
-						}
-					}
+					rotate(-1f, 0f, 0f);
 				}
-				else
-				{
-					if (velocityPerTick().x < 0f)
-						velocityPerTick().x += angle(decceleration().x) * dt;
-				}
-
-				if (jumpKey.isPressed())
+				if (jumpKey.isDown())
 				{
 					jump();
 				}
 			}
-			else
-			{
-				// velocityPerTick().x += -(MyMath.abs(velocityPerTick().x)
-				// / velocityPerTick().x) * angle(decceleration().x) * dt;
-			}
 			if (forwardKey.isDown())
 			{
-				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z * dt)
-				{
-					if (velocityPerTick().z >= 0f)
-					{
-						velocityPerTick().z += acceleration().z * dt;
-					}
-					else
-					{
-						velocityPerTick().z += decceleration().z * dt;
-					}
-				}
-			}
-			else
-			{
-				if (velocityPerTick().z > 0f)
-					velocityPerTick().z -= decceleration().z * dt;
+				walkDirection.add(direction());
 			}
 			if (backwardKey.isDown())
 			{
-				if (MyMath.abs(velocityPerTick().z) < maxSpeed().z
-						* dt
-						* backwardsMovementScale())
-				{
-					if (velocityPerTick().z <= 0f)
-					{
-						velocityPerTick().z -= acceleration().z
-								* dt
-								* backwardsMovementScale();
-					}
-					else
-					{
-						velocityPerTick().z -= decceleration().z
-								* dt
-								* backwardsMovementScale();
-					}
-				}
+				walkDirection.sub(direction());
 			}
-			else
-			{
-				if (velocityPerTick().z < 0f)
-					velocityPerTick().z += decceleration().z
-							* dt
-							* backwardsMovementScale();
-			}
-			if (leftKey.isDown() || rightKey.isDown())
-			{
-				if (MyMath.abs(velocityPerTick().z) > decceleration().z
-						* dt
-						* ROUND_TOLERANCE_SCALE)
-				{
-					if (MyMath.abs(velocityPerTick().z) > inertiaVelocity()
-							* dt)
-					{
-
-						velocityPerTick().z += -(MyMath.abs(velocityPerTick().z)
-								/ velocityPerTick().z)
-								* (dt * (acceleration().z + decceleration().z));
-					}
-				}
-			}
-			// if (MyMath.abs(velocityPerTick().z) < acceleration().z * dt
-			// * ROUND_TOLERANCE_SCALE)
-			// velocityPerTick().z = 0f;
-		}
-		if (MyMath.abs(angle(velocityPerTick().x)) < angle(acceleration().x)
-				* dt
-				* ROUND_TOLERANCE_SCALE)
-		{
-			velocityPerTick().x = 0f;
 		}
 
 		if (touchScreen.exists())
@@ -324,43 +223,11 @@ public abstract class PlayerBody
 				jump();
 			}
 		}
-		if (accelerometer.exists())
-		{
-
-		}
-		direction.add(direction());
-		direction.scl(velocityPerTick().z);
-		characterController().setWalkDirection(direction);
+		walkDirection.scl(5f * dt);
+		//walkDirection.scl(1f / dt);
+		characterController().setWalkDirection(walkDirection);
+		System.out.println(walkDirection);
 		bodyToTransform();
-		if (MyMath.abs(angle(velocityPerTick().x)) > angle(acceleration().x)
-				* angle(acceleration().x)
-				* dt
-				* ROUND_TOLERANCE_SCALE)
-		{
-			rotate(velocityPerTick().x, 0f, 0f);
-		}
-		else if (!leftKey.isDown() && !rightKey.isDown())
-		{
-			velocityPerTick().x = 0f;
-		}
-		velocity().set(velocityPerTick()).scl(new Reciprocal(dt).floatValue());
-		velocity().x = -turn(velocityPerTick().x / dt);
-		wasJumping = inAirFromJump();
-		if (inAirFromJump() || isFallingWithoutJumping())
-		{
-			jumpTime += dt;
-			velocity().y = acceleration().y * jumpTime;
-			if (inAirFromJump()) velocity().y += jumpVelocity().y;
-			if (velocity().y <= maxSpeed().y) velocity().y = maxSpeed().y;
-			if (justLanded()) inAirFromJump = false;
-		}
-		else
-		{
-			jumpTime = 0f;
-		}
-		// System.out.println("X " + round(velocity().x) + "m/s, Y "
-		// + round(velocity().y) + "m/s, Z "
-		// + round(velocity().z) + "m/s");
 	}
 
 	public boolean isFalling()

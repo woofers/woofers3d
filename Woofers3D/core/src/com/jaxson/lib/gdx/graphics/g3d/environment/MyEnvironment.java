@@ -38,8 +38,7 @@ public class MyEnvironment extends Environment
 
 	public void add(Light light)
 	{
-		add(new SpotLight().set(Light.COLOR, new Vector3(0f, 4f, -8f), Light.DIRECTION, 15f, 90f, 1f));
-		//add(light.light());
+		add(light.light());
 	}
 
 	public void begin(Camera camera)
