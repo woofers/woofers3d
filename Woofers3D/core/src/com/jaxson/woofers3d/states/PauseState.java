@@ -19,7 +19,6 @@ public class PauseState extends SubState
 	public PauseState(Game game)
 	{
 		super(game);
-
 		image = new SpriteActor(
 				new TextureFromFile(
 						new GdxFile(PAUSE_SCREEN_PATH)));

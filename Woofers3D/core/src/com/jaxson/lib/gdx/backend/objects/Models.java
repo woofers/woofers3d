@@ -5,9 +5,6 @@ import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.util.MyArrayList;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.jaxson.lib.gdx.graphics.g3d.environment.shadows.system.ShadowSystem;
-import com.jaxson.lib.gdx.graphics.g3d.environment.shadows.system.classical.ClassicalShadowSystem;
-import com.jaxson.lib.gdx.graphics.g3d.environment.shadows.system.realistic.RealisticShadowSystem;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.glutils.HdpiUtils;
@@ -16,55 +13,55 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class Models extends ObjectsBase<Entity>
 {
-	private MyEnvironment environment;
+    private MyEnvironment environment;
 
-	public Models()
-	{
-		this(new MyEnvironment());
-	}
+    public Models()
+    {
+        this(new MyEnvironment());
+    }
 
-	public Models(MyEnvironment environment)
-	{
-		super();
-		this.environment = environment;
-	}
+    public Models(MyEnvironment environment)
+    {
+        super();
+        this.environment = environment;
+    }
 
-	public MyEnvironment environment()
-	{
-		return environment;
-	}
+    public MyEnvironment environment()
+    {
+        return environment;
+    }
 
-	@Override
-	public void render(View view)
-	{
-		if (isEmpty()) return;
+    @Override
+    public void render(View view)
+    {
+        if (isEmpty()) return;
 
-		view.modelView().apply();
-		environment.render(getObjects(), view.modelView().getCamera());
-		view.modelBatch().begin(view.modelView().getCamera());
-		for (Entity entity: getObjects())
-		{
-			if (entity.isVisible(view.modelView().getCamera()))
-			{
-				view.modelBatch().render(
-						entity.modelInstance(), environment);
-			}
-		}
-		view.modelBatch().end();
-	}
+        view.modelView().apply();
+        environment.render(getObjects(), view.modelView().getCamera());
+        view.modelBatch().begin(view.modelView().getCamera());
+        for (Entity entity: getObjects())
+        {
+            if (entity.isVisible(view.modelView().getCamera()))
+            {
+                view.modelBatch().render(
+                        entity.modelInstance(), environment);
+            }
+        }
+        view.modelBatch().end();
+    }
 
-	public void setEnvironment(MyEnvironment environment)
-	{
-		this.environment = environment;
-	}
+    public void setEnvironment(MyEnvironment environment)
+    {
+        this.environment = environment;
+    }
 
-	private MyArrayList<ModelInstance> instances()
-	{
-		MyArrayList<ModelInstance> instances = new MyArrayList<ModelInstance>();
-		for (Entity entity : getObjects())
-		{
-			instances.add(entity.modelInstance());
-		}
-		return instances;
-	}
+    private MyArrayList<ModelInstance> instances()
+    {
+        MyArrayList<ModelInstance> instances = new MyArrayList<ModelInstance>();
+        for (Entity entity : getObjects())
+        {
+            instances.add(entity.modelInstance());
+        }
+        return instances;
+    }
 }

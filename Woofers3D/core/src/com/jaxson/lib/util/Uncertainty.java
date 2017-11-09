@@ -5,3 +5,4 @@ public interface Uncertainty
 {
 	public boolean exists();
 }
+

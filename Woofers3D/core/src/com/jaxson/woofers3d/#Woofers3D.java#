@@ -42,9 +42,6 @@ public class Woofers3D extends GameInstance
             System.out.println(file);
         }
         System.out.println("Done");
-
-
-
     }
 
     @Override
