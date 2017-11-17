@@ -31,20 +31,6 @@ public class Woofers3D extends GameInstance
         super();
         config().setTitle(TITLE);
         saveableConfig().save();
-
-        DataFile listFile = new DataFile("P:/Users/Jaxson/Reinstall Stuff/Misc/Music.txt");
-        MyArrayList<String> list = new MyArrayList<>(listFile.readString().split("\n"));
-        list.remove(0);
-        for (String song: list)
-        {
-            DataFile file = new DataFile("P:/Music/Music Library/" + song);
-            file.copy(new DataFile("D:/Music/" + song));
-            System.out.println(file);
-        }
-        System.out.println("Done");
-
-
-
     }
 
     @Override
