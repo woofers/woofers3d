@@ -19,214 +19,256 @@ import com.jaxson.lib.gdx.box2d.bodies.types.SpriteBody;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
+import com.jaxson.lib.gdx.input.Inputs;
+import com.jaxson.lib.gdx.input.Keyboard;
+import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.TouchScreen;
 
 public class Box2DWorld extends GameObject
 {
-	private static final boolean SLEEP = true;
-	public static float METERS_TO_PIXELS = 64f;
-	public static float PIXELS_TO_METERS = 1f / METERS_TO_PIXELS;
+    private static final boolean SLEEP = true;
+    public static float METERS_TO_PIXELS = 64f;
+    public static float PIXELS_TO_METERS = 1f / METERS_TO_PIXELS;
 
-	private World world;
-	private MyArrayList<SpriteBody> sprites = new MyArrayList<>();
-	private int velocityIterations = 6;
-	private int positionIterations = 2;
-	private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    private World world;
+    private MyArrayList<SpriteBody> sprites = new MyArrayList<>();
 
-	public Box2DWorld()
-	{
-		this(new Vector2(0f, -9.8f));
-	}
+    private int velocityIterations = 6;
+    private int positionIterations = 2;
+    private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    private boolean debug;
 
-	public Box2DWorld(Vector2 gravity)
-	{
-		this.world = new World(gravity, SLEEP);
-	}
+    private Keyboard keyboard;
+    private TouchScreen touchScreen;
+    private KeyboardKey debugKey;
 
-	public void add(SpriteBody sprite)
-	{
-		sprite.createBody(this);
-		sprites.add(sprite);
-	}
+    public Box2DWorld()
+    {
+        this(new Vector2(0f, -9.8f));
+    }
 
-	public boolean autoClearsForces()
-	{
-		return world.getAutoClearForces();
-	}
+    public Box2DWorld(Vector2 gravity)
+    {
+        this.world = new World(gravity, SLEEP);
 
-	public void clearForces()
-	{
-		world.clearForces();
-	}
+        this.keyboard = Inputs.keyboard();
+        this.touchScreen = Inputs.touchScreen();
+        this.debugKey = keyboard.key("F5");
+    }
 
-	public Array<Contact> contactList()
-	{
-		return world.getContactList();
-	}
+    public void add(SpriteBody sprite)
+    {
+        sprite.createBody(this);
+        sprites.add(sprite);
+    }
 
-	public Body createBody(BodyDef def)
-	{
-		return world.createBody(def);
-	}
+    public boolean autoClearsForces()
+    {
+        return world.getAutoClearForces();
+    }
 
-	public Joint createJoint(JointDef def)
-	{
-		return world.createJoint(def);
-	}
+    public void clearForces()
+    {
+        world.clearForces();
+    }
 
-	public void destroyBody(Body body)
-	{
-		world.destroyBody(body);
-	}
+    public Array<Contact> contactList()
+    {
+        return world.getContactList();
+    }
 
-	public void destroyJoint(Joint joint)
-	{
-		world.destroyJoint(joint);
-	}
+    public Body createBody(BodyDef def)
+    {
+        return world.createBody(def);
+    }
 
-	@Override
-	public void dispose()
-	{
-		world.dispose();
-	}
+    public Joint createJoint(JointDef def)
+    {
+        return world.createJoint(def);
+    }
 
-	@Override
-	public boolean equals(Object arg0)
-	{
-		return world.equals(arg0);
-	}
+    public void destroyBody(Body body)
+    {
+        world.destroyBody(body);
+    }
 
-	public void getBodies(Array<Body> bodies)
-	{
-		world.getBodies(bodies);
-	}
+    public void destroyJoint(Joint joint)
+    {
+        world.destroyJoint(joint);
+    }
 
-	public int getBodyCount()
-	{
-		return world.getBodyCount();
-	}
+    @Override
+    public void dispose()
+    {
+        world.dispose();
+    }
 
-	public int getContactCount()
-	{
-		return world.getContactCount();
-	}
+    @Override
+    public boolean equals(Object arg0)
+    {
+        return world.equals(arg0);
+    }
 
-	public int getFixtureCount()
-	{
-		return world.getFixtureCount();
-	}
+    public void getBodies(Array<Body> bodies)
+    {
+        world.getBodies(bodies);
+    }
 
-	public void getFixtures(Array<Fixture> fixtures)
-	{
-		world.getFixtures(fixtures);
-	}
+    public int getBodyCount()
+    {
+        return world.getBodyCount();
+    }
 
-	public Vector2 getGravity()
-	{
-		return world.getGravity();
-	}
+    public int getContactCount()
+    {
+        return world.getContactCount();
+    }
 
-	public int getJointCount()
-	{
-		return world.getJointCount();
-	}
+    public int getFixtureCount()
+    {
+        return world.getFixtureCount();
+    }
 
-	public void getJoints(Array<Joint> joints)
-	{
-		world.getJoints(joints);
-	}
+    public void getFixtures(Array<Fixture> fixtures)
+    {
+        world.getFixtures(fixtures);
+    }
 
-	public int getProxyCount()
-	{
-		return world.getProxyCount();
-	}
+    public Vector2 getGravity()
+    {
+        return world.getGravity();
+    }
 
-	@Override
-	public int hashCode()
-	{
-		return world.hashCode();
-	}
+    public int getJointCount()
+    {
+        return world.getJointCount();
+    }
 
-	public boolean isLocked()
-	{
-		return world.isLocked();
-	}
+    public void getJoints(Array<Joint> joints)
+    {
+        world.getJoints(joints);
+    }
 
-	public void queryAABB(QueryCallback callback, float lowerX, float lowerY,
-			float upperX, float upperY)
-	{
-		world.QueryAABB(callback, lowerX, lowerY, upperX, upperY);
-	}
+    public int getProxyCount()
+    {
+        return world.getProxyCount();
+    }
 
-	public void rayCast(RayCastCallback callback, float point1x, float point1y,
-			float point2x, float point2y)
-	{
-		world.rayCast(callback, point1x, point1y, point2x, point2y);
-	}
+    @Override
+    public int hashCode()
+    {
+        return world.hashCode();
+    }
 
-	public void rayCast(RayCastCallback callback, Vector2 point1,
-			Vector2 point2)
-	{
-		world.rayCast(callback, point1, point2);
-	}
+    public boolean isLocked()
+    {
+        return world.isLocked();
+    }
 
-	public void remove(SpriteBody sprite)
-	{
-		sprites.remove(sprite);
-	}
+    public void queryAABB(QueryCallback callback, float lowerX, float lowerY,
+            float upperX, float upperY)
+    {
+        world.QueryAABB(callback, lowerX, lowerY, upperX, upperY);
+    }
 
-	@Override
-	public void render(View view)
-	{
-		// debugRenderer.render(
-		// world, view.spriteBatch().getProjectionMatrix().cpy().scale(
-		// METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
-	}
+    public void rayCast(RayCastCallback callback, float point1x, float point1y,
+            float point2x, float point2y)
+    {
+        world.rayCast(callback, point1x, point1y, point2x, point2y);
+    }
 
-	public void setAutoClearForces(boolean flag)
-	{
-		world.setAutoClearForces(flag);
-	}
+    public void rayCast(RayCastCallback callback, Vector2 point1,
+            Vector2 point2)
+    {
+        world.rayCast(callback, point1, point2);
+    }
 
-	public void setContactFilter(ContactFilter filter)
-	{
-		world.setContactFilter(filter);
-	}
+    public void remove(SpriteBody sprite)
+    {
+        sprites.remove(sprite);
+    }
 
-	public void setContactListener(ContactListener listener)
-	{
-		world.setContactListener(listener);
-	}
+    @Override
+    public void render(View view)
+    {
+        if (debug)
+        {
+        debugRenderer.render(
+            world, view.spriteBatch().getProjectionMatrix().cpy().scale(
+            METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
+        }
+    }
 
-	public void setContinuousPhysics(boolean flag)
-	{
-		world.setContinuousPhysics(flag);
-	}
+    public void enableDebug()
+    {
+        debug = true;
+    }
 
-	public void setDestructionListener(DestructionListener listener)
-	{
-		world.setDestructionListener(listener);
-	}
+    public void disableDebug()
+    {
+        debug = false;
+    }
 
-	public void setGravity(Vector2 gravity)
-	{
-		world.setGravity(gravity);
-	}
+    public void toggleDebug()
+    {
+        debug = !debug;
+    }
 
-	public void setWarmStarting(boolean flag)
-	{
-		world.setWarmStarting(flag);
-	}
+    public void setAutoClearForces(boolean flag)
+    {
+        world.setAutoClearForces(flag);
+    }
 
-	@Override
-	public String toString()
-	{
-		return world.toString();
-	}
+    public void setContactFilter(ContactFilter filter)
+    {
+        world.setContactFilter(filter);
+    }
 
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-		world.step(dt, velocityIterations, positionIterations);
-	}
+    public void setContactListener(ContactListener listener)
+    {
+        world.setContactListener(listener);
+    }
+
+    public void setContinuousPhysics(boolean flag)
+    {
+        world.setContinuousPhysics(flag);
+    }
+
+    public void setDestructionListener(DestructionListener listener)
+    {
+        world.setDestructionListener(listener);
+    }
+
+    public void setGravity(Vector2 gravity)
+    {
+        world.setGravity(gravity);
+    }
+
+    public void setWarmStarting(boolean flag)
+    {
+        world.setWarmStarting(flag);
+    }
+
+    @Override
+    public String toString()
+    {
+        return world.toString();
+    }
+
+    @Override
+    public void update(float dt)
+    {
+        super.update(dt);
+        world.step(dt, velocityIterations, positionIterations);
+    }
+
+    @Override
+    protected void input(float dt)
+    {
+        if (keyboard.exists() && debugKey.isPressed()
+                || touchScreen.exists() && touchScreen.fingersTouched(3))
+        {
+            toggleDebug();
+        }
+    }
 }

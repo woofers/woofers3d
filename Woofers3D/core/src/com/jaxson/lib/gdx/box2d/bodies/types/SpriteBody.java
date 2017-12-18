@@ -17,195 +17,195 @@ import com.jaxson.lib.util.Unwrapable;
 
 public class SpriteBody extends SpriteActor
 {
-	private Body body;
-	private Fixture fixture;
+    private Body body;
+    private Fixture fixture;
 
-	private PolygonShape shape;
-	private BodyDef bodyDef;
-	private FixtureDef fixtureDef;
+    private PolygonShape shape;
+    private BodyDef bodyDef;
+    private FixtureDef fixtureDef;
 
-	public SpriteBody(Texture texture, BodyType type, float density)
-	{
-		super(texture);
+    public SpriteBody(Texture texture, BodyType type, float density)
+    {
+        super(texture);
 
-		setOrigin();
+        setOrigin();
 
-		this.bodyDef = new BodyDef();
-		this.bodyDef.type = type;
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = type;
 
-		this.fixtureDef = new FixtureDef();
-		this.fixtureDef.density = density;
-	}
+        this.fixtureDef = new FixtureDef();
+        this.fixtureDef.density = density;
+    }
 
-	public SpriteBody(Unwrapable<Texture> texture, BodyType type, float density)
-	{
-		this(texture.unwrap(), type, density);
-	}
+    public SpriteBody(Unwrapable<Texture> texture, BodyType type, float density)
+    {
+        this(texture.unwrap(), type, density);
+    }
 
-	public Body body()
-	{
-		return body;
-	}
+    public Body body()
+    {
+        return body;
+    }
 
-	public void createBody(Box2DWorld world)
-	{
-		this.bodyDef.position.set(x() + width() / 2, y() + height() / 2);
+    public void createBody(Box2DWorld world)
+    {
+        this.bodyDef.position.set(x() + width() / 2, y() + height() / 2);
 
-		this.shape = new PolygonShape();
-		this.shape.setAsBox(
-				width() / 2, height() / 2, Vector2.Zero,
-				rotation() * MyMath.DEGREES_TO_RADIANS);
+        this.shape = new PolygonShape();
+        this.shape.setAsBox(
+                width() / 2, height() / 2, Vector2.Zero,
+                rotation() * MyMath.DEGREES_TO_RADIANS);
 
-		this.fixtureDef.shape = shape;
+        this.fixtureDef.shape = shape;
 
-		body = world.createBody(bodyDef);
-		fixture = body.createFixture(fixtureDef);
-		shape.dispose();
-		shape = null;
-	}
+        body = world.createBody(bodyDef);
+        fixture = body.createFixture(fixtureDef);
+        shape.dispose();
+        shape = null;
+    }
 
-	@Override
-	public void dispose()
-	{
-		super.dispose();
-		if (shape != null) shape.dispose();
-	}
+    @Override
+    public void dispose()
+    {
+        super.dispose();
+        if (shape != null) shape.dispose();
+    }
 
-	public boolean hasBody()
-	{
-		return body != null;
-	}
+    public boolean hasBody()
+    {
+        return body != null;
+    }
 
-	public boolean hasFixture()
-	{
-		return fixture != null;
-	}
+    public boolean hasFixture()
+    {
+        return fixture != null;
+    }
 
-	public boolean hasPhysics()
-	{
-		return hasFixture() && hasBody();
-	}
+    public boolean hasPhysics()
+    {
+        return hasFixture() && hasBody();
+    }
 
-	@Override
-	public float height()
-	{
-		return heightPixels() * PIXELS_TO_METERS;
-	}
+    @Override
+    public float height()
+    {
+        return heightPixels() * PIXELS_TO_METERS;
+    }
 
-	public float heightPixels()
-	{
-		return super.height();
-	}
+    public float heightPixels()
+    {
+        return super.height();
+    }
 
-	@Override
-	public Vector2 location()
-	{
-		return super.location().scl(PIXELS_TO_METERS);
-	}
+    @Override
+    public Vector2 location()
+    {
+        return super.location().scl(PIXELS_TO_METERS);
+    }
 
-	@Override
-	public void moveCenterTo(Vector2 center)
-	{
-		super.moveCenterTo(center.scl(METERS_TO_PIXELS));
-	}
+    @Override
+    public void moveCenterTo(Vector2 center)
+    {
+        super.moveCenterTo(center.scl(METERS_TO_PIXELS));
+    }
 
-	@Override
-	public void moveTo(Vector2 location)
-	{
-		super.moveTo(location.scl(METERS_TO_PIXELS));
-		if (hasBody()) body().setTransform(
-				location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS,
-				rotation() * MyMath.DEGREES_TO_RADIANS);
-	}
+    @Override
+    public void moveTo(Vector2 location)
+    {
+        super.moveTo(location.scl(METERS_TO_PIXELS));
+        if (hasBody()) body().setTransform(
+                location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS,
+                rotation() * MyMath.DEGREES_TO_RADIANS);
+    }
 
-	@Override
-	public Vector2 origin()
-	{
-		return super.origin().scl(PIXELS_TO_METERS);
-	}
+    @Override
+    public Vector2 origin()
+    {
+        return super.origin().scl(PIXELS_TO_METERS);
+    }
 
-	public void resetVelocity()
-	{
-		body().setLinearVelocity(new Vector2());
-		body().setAngularVelocity(0f);
-	}
+    public void resetVelocity()
+    {
+        body().setLinearVelocity(new Vector2());
+        body().setAngularVelocity(0f);
+    }
 
-	@Override
-	public void scale(Vector2 scale)
-	{
-		super.scale(scale);
-	}
+    @Override
+    public void scale(Vector2 scale)
+    {
+        super.scale(scale);
+    }
 
-	@Override
-	public void setOrigin(Vector2 origin)
-	{
-		super.setOrigin(origin.scl(METERS_TO_PIXELS));
-	}
+    @Override
+    public void setOrigin(Vector2 origin)
+    {
+        super.setOrigin(origin.scl(METERS_TO_PIXELS));
+    }
 
-	@Override
-	public void setRotation(float roll)
-	{
-		super.setRotation(roll);
-		body().setTransform(
-				body().getPosition(), roll * MyMath.DEGREES_TO_RADIANS);
-	}
+    @Override
+    public void setRotation(float roll)
+    {
+        super.setRotation(roll);
+        body().setTransform(
+                body().getPosition(), roll * MyMath.DEGREES_TO_RADIANS);
+    }
 
-	@Override
-	public void setSize(float width, float height)
-	{
-		super.setSize(width * METERS_TO_PIXELS, height * METERS_TO_PIXELS);
-	}
+    @Override
+    public void setSize(float width, float height)
+    {
+        super.setSize(width * METERS_TO_PIXELS, height * METERS_TO_PIXELS);
+    }
 
-	@Override
-	public void translate(Vector2 translation)
-	{
-		translation.scl(METERS_TO_PIXELS);
-		super.translate(translation);
-	}
+    @Override
+    public void translate(Vector2 translation)
+    {
+        translation.scl(METERS_TO_PIXELS);
+        super.translate(translation);
+    }
 
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-		super.moveTo(
-				body().getPosition()
-						.add(
-								-originalWidth() * PIXELS_TO_METERS / 2,
-								-originalHeight() * PIXELS_TO_METERS / 2)
-						.scl(METERS_TO_PIXELS));
-		setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
-	}
+    @Override
+    public void update(float dt)
+    {
+        super.update(dt);
+        super.moveTo(
+                body().getPosition()
+                        .add(
+                                -originalWidth() * PIXELS_TO_METERS / 2,
+                                -originalHeight() * PIXELS_TO_METERS / 2)
+                        .scl(METERS_TO_PIXELS));
+        setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
+    }
 
-	@Override
-	public float width()
-	{
-		return widthPixels() * PIXELS_TO_METERS;
-	}
+    @Override
+    public float width()
+    {
+        return widthPixels() * PIXELS_TO_METERS;
+    }
 
-	public float widthPixels()
-	{
-		return super.width();
-	}
+    public float widthPixels()
+    {
+        return super.width();
+    }
 
-	@Override
-	public float x()
-	{
-		return xPixels() * PIXELS_TO_METERS;
-	}
+    @Override
+    public float x()
+    {
+        return xPixels() * PIXELS_TO_METERS;
+    }
 
-	public float xPixels()
-	{
-		return super.x();
-	}
+    public float xPixels()
+    {
+        return super.x();
+    }
 
-	@Override
-	public float y()
-	{
-		return yPixels() * PIXELS_TO_METERS;
-	}
+    @Override
+    public float y()
+    {
+        return yPixels() * PIXELS_TO_METERS;
+    }
 
-	public float yPixels()
-	{
-		return super.y();
-	}
+    public float yPixels()
+    {
+        return super.y();
+    }
 }
