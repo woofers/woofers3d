@@ -4,8 +4,7 @@
 *.war
 *.ear
 hs_err_pid*
-bin/
-Woofers3D/gradle.properties/
+**/bin/
 
 ## GWT
 war/
