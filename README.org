@@ -38,7 +38,7 @@ Supports modern features such as Ray Tracing, Chasing Camera, States and 3D Mode
 
 ** Acknowledgments
 **** *Built using* [[https://github.com/libgdx/libgdx][LibGDX]], [[https://github.com/bulletphysics/bullet3][Bullet Physics]] and [[https://github.com/erincatto/Box2D][Box2D]]
-**** *2016-2017*, /Jaxson Van Doorn/
+**** *GPL 3.0 2016-2017*, /Jaxson Van Doorn/
 ** Other Projects
 **** [[https://github.com/woofers/whale][Whale]]
 **** [[https://github.com/woofers/k9-krew][K9Krew]]

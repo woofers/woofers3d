@@ -36,7 +36,7 @@ Supports modern features such as Ray Tracing, Chasing Camera, States and 3D Mode
 
 -   **Built using** [LibGDX](https://github.com/libgdx/libgdx), [Bullet Physics](https://github.com/bulletphysics/bullet3) and [Box2D](https://github.com/erincatto/Box2D)
 
--   **2016-2017**, *Jaxson Van Doorn*
+-   **GPL 3.0 2016-2017**, *Jaxson Van Doorn*
 
 ## Other Projects<a id="sec-1-3" name="sec-1-3"></a>
 
