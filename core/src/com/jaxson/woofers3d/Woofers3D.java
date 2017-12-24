@@ -18,7 +18,7 @@ public class Woofers3D extends GameInstance
      * -Fix Player Anchor
      * -2D Camera
      * -Adjust PPM Scaling
-     * -Fix File API
+     * -Improve File API
      * -Fix Zoom on Pause
      * RULES
      * -Ideally keep constructors under 4 per object
@@ -38,6 +38,6 @@ public class Woofers3D extends GameInstance
     public void create()
     {
         super.create();
-        pushState(new FlatState(game()));
+        pushState(new PlayState(game()));
     }
 }
