@@ -10,51 +10,51 @@ import com.jaxson.lib.gdx.states.SubState;
 
 public class PauseState extends SubState
 {
-	private static final String PAUSE_SCREEN_PATH = "pausescreen.png";
-	private static final float PAUSE_ALPHA = 3f / 4f;
-	private static final float RES_SCALE = 720f / 1080f;
+    private static final String PAUSE_SCREEN_PATH = "pauseScreen.png";
+    private static final float PAUSE_ALPHA = 3f / 4f;
+    private static final float RES_SCALE = 720f / 1080f;
 
-	private SpriteActor image;
+    private SpriteActor image;
 
-	public PauseState(Game game)
-	{
-		super(game);
-//		image = new SpriteActor(
-//				new TextureFromFile(
-//						new GdxFile(PAUSE_SCREEN_PATH)));
-//
-//		image.moveTo(
-//				new Vector2(
-//						image.location().x,
-//						game().display().center().y
-//								- image.height() / 2));
-//
-//		image.setAlpha(PAUSE_ALPHA);
-//		image.scale(RES_SCALE);
-//		add(image);
-	}
+    public PauseState(Game game)
+    {
+        super(game);
+        image = new SpriteActor(
+                new TextureFromFile(
+                        new GdxFile(PAUSE_SCREEN_PATH)));
 
-	@Override
-	public void dispose()
-	{
-		super.dispose();
-	}
+        image.moveTo(
+                new Vector2(
+                        image.location().x,
+                        game().display().center().y
+                                - image.height() / 2));
 
-	@Override
-	protected void input(float dt)
-	{
+        image.setAlpha(PAUSE_ALPHA);
+        image.scale(RES_SCALE);
+        add(image);
+    }
 
-	}
+    @Override
+    public void dispose()
+    {
+        super.dispose();
+    }
 
-	@Override
-	public void render(View view)
-	{
-		super.render(view);
-	}
+    @Override
+    protected void input(float dt)
+    {
 
-	@Override
-	public void update(float dt)
-	{
-		super.update(dt);
-	}
+    }
+
+    @Override
+    public void render(View view)
+    {
+        super.render(view);
+    }
+
+    @Override
+    public void update(float dt)
+    {
+        super.update(dt);
+    }
 }
