@@ -7,85 +7,101 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.MotionState;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
+import com.jaxson.lib.gdx.math.GdxMath;
 
 public class RigidBody extends ShapeBody<btRigidBody, Shape>
 {
-	private MotionState motionState;
+    private MotionState motionState;
 
-	public RigidBody(Model model, Shape shape)
-	{
-		this(model, shape, MASS);
-	}
+    public RigidBody(Model model, Shape shape)
+    {
+        this(model, shape, MASS);
+    }
 
-	public RigidBody(Model model, Shape shape, float mass)
-	{
-		this(new ModelInstance(model), shape, mass);
-	}
+    public RigidBody(Model model, Shape shape, float mass)
+    {
+        this(new ModelInstance(model), shape, mass);
+    }
 
-	public RigidBody(ModelInstance modelInstance, Shape shape)
-	{
-		this(modelInstance, shape, MASS);
-	}
+    public RigidBody(ModelInstance modelInstance, Shape shape)
+    {
+        this(modelInstance, shape, MASS);
+    }
 
-	public RigidBody(ModelInstance modelInstance, Shape shape, float mass)
-	{
-		super(modelInstance,
-				new btRigidBody(mass, null, null, shape.inertia(mass)),
-				shape,
-				mass);
-		setMotionState(new MotionState(transform()));
-	}
+    public RigidBody(ModelInstance modelInstance, Shape shape, float mass)
+    {
+        super(modelInstance,
+                new btRigidBody(mass, null, null, shape.inertia(mass)),
+                shape,
+                mass);
+        setMotionState(new MotionState(transform()));
+    }
 
-	public void applyCentralImpulse(Ray ray)
-	{
-		applyCentralImpulse(ray, 1f);
-	}
+    public void applyCentralImpulse(Ray ray)
+    {
+        applyCentralImpulse(ray, 1f);
+    }
 
-	public void applyCentralImpulse(Ray ray, float impulse)
-	{
-		applyCentralImpulse(ray.direction.scl(impulse));
-	}
+    public void applyCentralImpulse(Ray ray, float impulse)
+    {
+        applyCentralImpulse(ray.direction.scl(impulse));
+    }
 
-	public void applyCentralImpulse(Vector3 impulse)
-	{
-		activate();
-		body().applyCentralImpulse(impulse);
-	}
+    public void applyCentralImpulse(Vector3 impulse)
+    {
+        activate();
+        body().applyCentralImpulse(impulse);
+    }
 
-	@Override
-	public void dispose()
-	{
-		super.dispose();
-		motionState.dispose();
-	}
+    @Override
+    public void dispose()
+    {
+        super.dispose();
+        motionState.dispose();
+    }
 
-	public MotionState motionState()
-	{
-		return motionState;
-	}
+    public MotionState motionState()
+    {
+        return motionState;
+    }
 
-	private void recalculateInertia()
-	{
-		body().setMassProps(mass(), inertia());
-	}
+    private void recalculateInertia()
+    {
+        body().setMassProps(mass(), inertia());
+    }
 
-	@Override
-	public void setCollisionShape(Shape shape)
-	{
-		super.setCollisionShape(shape);
-		recalculateInertia();
-	}
+    @Override
+    public void setCollisionShape(Shape shape)
+    {
+        super.setCollisionShape(shape);
+        recalculateInertia();
+    }
 
-	@Override
-	public void setMass(float mass)
-	{
-		super.setMass(mass);
-		recalculateInertia();
-	}
+    @Override
+    public void setMass(float mass)
+    {
+        super.setMass(mass);
+        recalculateInertia();
+    }
 
-	public void setMotionState(MotionState motionState)
-	{
-		this.motionState = motionState;
-		body().setMotionState(motionState);
-	}
+    public void setMotionState(MotionState motionState)
+    {
+        this.motionState = motionState;
+        body().setMotionState(motionState);
+    }
+
+    public Vector3 linearVelocity()
+    {
+        return body().getLinearVelocity();
+    }
+
+    public Vector3 angularVelocity()
+    {
+        return body().getAngularVelocity();
+    }
+
+    public boolean onGround()
+    {
+        return Math.signum(linearVelocity().y) <= GdxMath.FLOAT_ROUNDING;
+    }
 }

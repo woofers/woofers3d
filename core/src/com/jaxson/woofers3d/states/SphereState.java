@@ -35,15 +35,8 @@ public class SphereState extends BulletState
     private static final float SCALE_TEST = 1f;
 
     private Floor floor;
-    private Floor ramp;
-    private RigidBox blocker;
-    private RigidBox[] boxs;
-    private RigidSphere[] spheres;
-    private SoftBox softBox;
     private SpherePlayer player;
     private TargetCamera camera;
-    private Text text;
-    private float counter;
     private Mouse mouse;
 
     public SphereState(Game game)
@@ -60,6 +53,7 @@ public class SphereState extends BulletState
         add(floor);
 
         player = new SpherePlayer(camera);
+        player.moveTo(new Vector3(0f, 100f, 0f));
         applyPhysics(player);
         add(player);
 
