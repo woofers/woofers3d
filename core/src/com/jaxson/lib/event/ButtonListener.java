@@ -5,18 +5,18 @@ import java.awt.event.ActionListener;
 
 public abstract class ButtonListener<T> implements ActionListener
 {
-	private T object;
+    private T object;
 
-	public ButtonListener(T object)
-	{
-		this.object = object;
-	}
+    public ButtonListener(T object)
+    {
+        this.object = object;
+    }
 
-	@Override
-	public abstract void actionPerformed(ActionEvent event);
+    @Override
+    public abstract void actionPerformed(ActionEvent event);
 
-	protected T getObject()
-	{
-		return object;
-	}
+    protected T getObject()
+    {
+        return object;
+    }
 }

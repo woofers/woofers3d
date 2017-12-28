@@ -8,20 +8,20 @@ import com.jaxson.lib.gdx.graphics.g3d.entities.Sphere;
 
 public class RigidSphere extends RigidBody
 {
-	protected static final Color COLOR = new MyColor(81, 101, 107);
+    protected static final Color COLOR = new MyColor(81, 101, 107);
 
-	public RigidSphere()
-	{
-		this(COLOR);
-	}
+    protected static SphereShape getShape()
+    {
+        return new SphereShape();
+    }
 
-	public RigidSphere(Color color)
-	{
-		super(new Sphere(color).modelInstance(), getShape());
-	}
+    public RigidSphere()
+    {
+        this(COLOR);
+    }
 
-	protected static SphereShape getShape()
-	{
-		return new SphereShape();
-	}
+    public RigidSphere(Color color)
+    {
+        super(new Sphere(color).modelInstance(), getShape());
+    }
 }

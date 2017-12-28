@@ -5,28 +5,28 @@ import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 
 public class MotionState extends btMotionState
 {
-	private Matrix4 transform;
+    private Matrix4 transform;
 
-	public MotionState(Matrix4 transform)
-	{
-		super();
-		this.transform = transform;
-	}
+    public MotionState(Matrix4 transform)
+    {
+        super();
+        this.transform = transform;
+    }
 
-	@Override
-	public void getWorldTransform(Matrix4 worldTransform)
-	{
-		worldTransform.set(transform);
-	}
+    @Override
+    public void getWorldTransform(Matrix4 worldTransform)
+    {
+        worldTransform.set(transform);
+    }
 
-	@Override
-	public void setWorldTransform(Matrix4 worldTransform)
-	{
-		transform.set(worldTransform);
-	}
+    @Override
+    public void setWorldTransform(Matrix4 worldTransform)
+    {
+        transform.set(worldTransform);
+    }
 
-	protected Matrix4 transform()
-	{
-		return transform;
-	}
+    protected Matrix4 transform()
+    {
+        return transform;
+    }
 }

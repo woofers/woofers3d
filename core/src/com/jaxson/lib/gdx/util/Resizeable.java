@@ -10,10 +10,10 @@ import com.jaxson.lib.gdx.backend.Game;
 @FunctionalInterface
 public interface Resizeable
 {
-	/**
-	 * Called when the {@link Game} is resized.
-	 * @param width The new width in pixels
-	 * @param height The new height in pixels
-	 */
-	public void resize(int width, int height);
+    /**
+     * Called when the {@link Game} is resized.
+     * @param width The new width in pixels
+     * @param height The new height in pixels
+     */
+    public void resize(int width, int height);
 }

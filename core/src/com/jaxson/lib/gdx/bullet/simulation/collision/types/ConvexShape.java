@@ -4,8 +4,8 @@ import com.badlogic.gdx.physics.bullet.collision.btConvexShape;
 
 public class ConvexShape extends Shape<btConvexShape>
 {
-	public ConvexShape(btConvexShape shape)
-	{
-		super(shape);
-	}
+    public ConvexShape(btConvexShape shape)
+    {
+        super(shape);
+    }
 }

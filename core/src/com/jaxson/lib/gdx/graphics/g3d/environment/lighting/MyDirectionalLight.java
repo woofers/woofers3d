@@ -6,52 +6,52 @@ import com.badlogic.gdx.math.Vector3;
 
 public class MyDirectionalLight extends BaseLight<DirectionalLight>
 {
-	public MyDirectionalLight()
-	{
-		this(DIRECTION);
-	}
+    public MyDirectionalLight()
+    {
+        this(DIRECTION);
+    }
 
-	public MyDirectionalLight(Color color, Vector3 direction)
-	{
-		this(new DirectionalLight().set(color, direction));
-	}
+    public MyDirectionalLight(Color color, Vector3 direction)
+    {
+        this(new DirectionalLight().set(color, direction));
+    }
 
-	public MyDirectionalLight(DirectionalLight light)
-	{
-		super(light);
-	}
+    public MyDirectionalLight(DirectionalLight light)
+    {
+        super(light);
+    }
 
-	public MyDirectionalLight(Light light)
-	{
-		this(light.color(), light.direction());
-	}
+    public MyDirectionalLight(Light light)
+    {
+        this(light.color(), light.direction());
+    }
 
-	public MyDirectionalLight(Vector3 direction)
-	{
-		this(COLOR, direction);
-	}
+    public MyDirectionalLight(Vector3 direction)
+    {
+        this(COLOR, direction);
+    }
 
-	@Override
-	public MyDirectionalLight copy()
-	{
-		return new MyDirectionalLight(this);
-	}
+    @Override
+    public MyDirectionalLight copy()
+    {
+        return new MyDirectionalLight(this);
+    }
 
-	@Override
-	public boolean hasShadows()
-	{
-		return false;
-	}
+    @Override
+    public boolean hasShadows()
+    {
+        return false;
+    }
 
-	@Override
-	public MyDirectionalLight toLight()
-	{
-		return this;
-	}
+    @Override
+    public MyDirectionalLight toLight()
+    {
+        return this;
+    }
 
-	@Override
-	public MyDirectionalShadowLight toShadow()
-	{
-		return new MyDirectionalShadowLight(this);
-	}
+    @Override
+    public MyDirectionalShadowLight toShadow()
+    {
+        return new MyDirectionalShadowLight(this);
+    }
 }

@@ -7,20 +7,20 @@ import com.jaxson.lib.gdx.graphics.g3d.util.MyModelBuilder;
 
 public class Box extends Entity
 {
-	private static final Color COLOR = Color.ORANGE;
+    private static final Color COLOR = Color.ORANGE;
 
-	public Box()
-	{
-		this(COLOR);
-	}
+    protected static Model getModel(Color color)
+    {
+        return new MyModelBuilder().createBox(color);
+    }
 
-	public Box(Color color)
-	{
-		super(getModel(color));
-	}
+    public Box()
+    {
+        this(COLOR);
+    }
 
-	protected static Model getModel(Color color)
-	{
-		return new MyModelBuilder().createBox(color);
-	}
+    public Box(Color color)
+    {
+        super(getModel(color));
+    }
 }

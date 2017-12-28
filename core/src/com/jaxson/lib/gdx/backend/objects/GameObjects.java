@@ -5,21 +5,21 @@ import com.jaxson.lib.gdx.util.GameObject;
 
 public interface GameObjects<T extends GameObject>
 {
-	public void add(T object);
+    public void add(T object);
 
-	public void dispose();
+    public void dispose();
 
-	public boolean isEmpty();
+    public boolean isEmpty();
 
-	public void pause();
+    public void pause();
 
-	public void remove(T object);
+    public void remove(T object);
 
-	public void render(View view);
+    public void render(View view);
 
-	public void resize(int width, int height);
+    public void resize(int width, int height);
 
-	public void resume();
+    public void resume();
 
-	public void update(float dt);
+    public void update(float dt);
 }

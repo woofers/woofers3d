@@ -2,10 +2,6 @@ package com.jaxson.woofers3d;
 
 import com.jaxson.lib.gdx.GameInstance;
 import com.jaxson.woofers3d.states.PlayState;
-import com.jaxson.woofers3d.states.FlatState;
-import com.jaxson.woofers3d.states.SphereState;
-import com.jaxson.lib.io.DataFile;
-import com.jaxson.lib.util.MyArrayList;
 
 public class Woofers3D extends GameInstance
 {

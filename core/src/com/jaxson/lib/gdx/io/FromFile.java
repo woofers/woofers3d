@@ -4,18 +4,18 @@ import com.jaxson.lib.util.Unwrapable;
 
 public abstract class FromFile<T> implements Unwrapable<T>
 {
-	private GdxFile file;
+    private GdxFile file;
 
-	public FromFile(GdxFile file)
-	{
-		this.file = file;
-	}
+    public FromFile(GdxFile file)
+    {
+        this.file = file;
+    }
 
-	protected GdxFile file()
-	{
-		return file;
-	}
+    protected GdxFile file()
+    {
+        return file;
+    }
 
-	@Override
-	public abstract T unwrap();
+    @Override
+    public abstract T unwrap();
 }

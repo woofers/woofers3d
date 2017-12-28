@@ -8,9 +8,9 @@ package com.jaxson.lib.gdx.util;
 @FunctionalInterface
 public interface Updateable
 {
-	/**
-	 * Called when the {@link Object} should update its logic.
-	 * @param dt The delta time
-	 */
-	public void update(float dt);
+    /**
+     * Called when the {@link Object} should update its logic.
+     * @param dt The delta time
+     */
+    public void update(float dt);
 }

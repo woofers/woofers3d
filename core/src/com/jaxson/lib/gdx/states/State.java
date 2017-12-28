@@ -4,31 +4,31 @@ import com.jaxson.lib.gdx.backend.Game;
 
 public abstract class State extends BaseState
 {
-	private SubState subState;
+    private SubState subState;
 
-	public State(Game game)
-	{
-		super(game);
-	}
+    public State(Game game)
+    {
+        super(game);
+    }
 
-	public boolean hasPauseState()
-	{
-		if (hasSubState()) return subState().isPauseState();
-		return false;
-	}
+    public boolean hasPauseState()
+    {
+        if (hasSubState()) return subState().isPauseState();
+        return false;
+    }
 
-	public boolean hasSubState()
-	{
-		return subState() != null;
-	}
+    public boolean hasSubState()
+    {
+        return subState() != null;
+    }
 
-	public void setSubState(SubState subState)
-	{
-		this.subState = subState;
-	}
+    public void setSubState(SubState subState)
+    {
+        this.subState = subState;
+    }
 
-	public SubState subState()
-	{
-		return subState;
-	}
+    public SubState subState()
+    {
+        return subState;
+    }
 }

@@ -9,27 +9,27 @@ import com.jaxson.lib.gdx.box2d.bodies.types.SpriteBody;
 
 public class Floor extends SpriteBody
 {
-	public Floor(float x, float y)
-	{
-		super(getTex(16f, 0.5f), BodyDef.BodyType.StaticBody, 1f);
-		moveTo(new Vector2(x, y));
-	}
+    public static Texture getTex(float width, float height)
+    {
+        int pixelWidth = (int) (width * METERS_TO_PIXELS);
+        int pixelHeight = (int) (height * METERS_TO_PIXELS);
 
-	@Override
-	public void dispose()
-	{
-		super.dispose();
-	}
+        Pixmap pixmap
+                = new Pixmap(pixelWidth, pixelHeight, Pixmap.Format.RGBA8888);
+        pixmap.setColor(1f, 1f, 1f, 1f);
+        pixmap.fillRectangle(0, 0, pixelWidth, pixelHeight);
+        return new Texture(pixmap);
+    }
 
-	public static Texture getTex(float width, float height)
-	{
-		int pixelWidth = (int) (width * METERS_TO_PIXELS);
-		int pixelHeight = (int) (height * METERS_TO_PIXELS);
+    public Floor(float x, float y)
+    {
+        super(getTex(16f, 0.5f), BodyDef.BodyType.StaticBody, 1f);
+        moveTo(new Vector2(x, y));
+    }
 
-		Pixmap pixmap
-				= new Pixmap(pixelWidth, pixelHeight, Pixmap.Format.RGBA8888);
-		pixmap.setColor(1f, 1f, 1f, 1f);
-		pixmap.fillRectangle(0, 0, pixelWidth, pixelHeight);
-		return new Texture(pixmap);
-	}
+    @Override
+    public void dispose()
+    {
+        super.dispose();
+    }
 }

@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface MyList<E> extends List<E>, Measurable
 {
-	public boolean addAll(E[] array);
+    public boolean addAll(E[] array);
 
-	public int length();
+    public int length();
 
-	public void removeRange(int startIndex);
+    public void removeRange(int startIndex);
 }

@@ -8,18 +8,18 @@ import com.jaxson.lib.gdx.graphics.g3d.entities.Box;
 
 public class RigidBox extends RigidBody
 {
-	public RigidBox()
-	{
-		this(COLOR);
-	}
+    protected static Shape getShape()
+    {
+        return new BoxShape();
+    }
 
-	public RigidBox(Color color)
-	{
-		super(new Box(color).modelInstance(), getShape());
-	}
+    public RigidBox()
+    {
+        this(COLOR);
+    }
 
-	protected static Shape getShape()
-	{
-		return new BoxShape();
-	}
+    public RigidBox(Color color)
+    {
+        super(new Box(color).modelInstance(), getShape());
+    }
 }

@@ -40,6 +40,11 @@ public abstract class PlayerBody
 
     private static final float Y_BALANCE = -0.5f;
 
+    private static float round(float i)
+    {
+        return Math.round(i * 100.0f) / 100.0f;
+    }
+
     private btKinematicCharacterController characterController;
     private btGhostPairCallback callback;
     private Vector3 direction;
@@ -50,13 +55,13 @@ public abstract class PlayerBody
     private Vector3 acceleration;
     private Vector3 decceleration;
     private float inertiaVelocity;
-    private float backwardsMovementScale;
 
+    private float backwardsMovementScale;
     private float jumpTime;
     private boolean wasJumping;
     private boolean inAirFromJump;
-    private Vector3 jumpVelocity;
 
+    private Vector3 jumpVelocity;
     private Keyboard keyboard;
     private GameAccelerometer accelerometer;
     private TouchScreen touchScreen;
@@ -64,6 +69,7 @@ public abstract class PlayerBody
     private KeyboardKey backwardKey;
     private KeyboardKey leftKey;
     private KeyboardKey rightKey;
+
     private KeyboardKey jumpKey;
 
     public PlayerBody(Model model)
@@ -359,8 +365,8 @@ public abstract class PlayerBody
             jumpTime = 0f;
         }
         // System.out.println("X " + round(velocity().x) + "m/s, Y "
-        //                    + round(velocity().y) + "m/s, Z "
-        //                    + round(velocity().z) + "m/s");
+        // + round(velocity().y) + "m/s, Z "
+        // + round(velocity().z) + "m/s");
     }
 
     public boolean isFalling()
@@ -563,10 +569,5 @@ public abstract class PlayerBody
             }
         }
         return y - Y_BALANCE;
-    }
-
-    private static float round(float i)
-    {
-        return Math.round(i * 100.0f) / 100.0f;
     }
 }

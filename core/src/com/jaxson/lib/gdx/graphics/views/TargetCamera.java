@@ -343,16 +343,16 @@ public class TargetCamera extends PerspectiveCamera
         return up;
     }
 
-    public void updateTracking()
-    {
-        input();
-        oldTargetLocation = targetLocation();
-    }
-
     @Override
     public void update()
     {
         super.update();
+    }
+
+    public void updateTracking()
+    {
+        input();
+        oldTargetLocation = targetLocation();
     }
 
     private float validateFov(float fov)

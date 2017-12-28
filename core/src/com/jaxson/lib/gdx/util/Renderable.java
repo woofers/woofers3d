@@ -9,9 +9,9 @@ import com.jaxson.lib.gdx.graphics.views.View;
  */
 public interface Renderable extends Updateable
 {
-	/**
-	 * Called when the {@link Object} should render itself.
-	 * @param view View
-	 */
-	public void render(View view);
+    /**
+     * Called when the {@link Object} should render itself.
+     * @param view View
+     */
+    public void render(View view);
 }

@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class TextureFromFile extends FromFile<Texture>
 {
-	public TextureFromFile(GdxFile file)
-	{
-		super(file);
-	}
+    public TextureFromFile(GdxFile file)
+    {
+        super(file);
+    }
 
-	@Override
-	public Texture unwrap()
-	{
-		return new Texture(file().getFileHandle());
-	}
+    @Override
+    public Texture unwrap()
+    {
+        return new Texture(file().getFileHandle());
+    }
 }

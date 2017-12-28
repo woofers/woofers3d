@@ -1,15 +1,10 @@
 package com.jaxson.lib.gdx.backend.objects;
 
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.jaxson.lib.gdx.graphics.g3d.entities.types.Entity;
 import com.jaxson.lib.gdx.graphics.g3d.environment.MyEnvironment;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.util.MyArrayList;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.glutils.HdpiUtils;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 
 public class Models extends ObjectsBase<Entity>
 {
@@ -29,6 +24,16 @@ public class Models extends ObjectsBase<Entity>
     public MyEnvironment environment()
     {
         return environment;
+    }
+
+    private MyArrayList<ModelInstance> instances()
+    {
+        MyArrayList<ModelInstance> instances = new MyArrayList<>();
+        for (Entity entity: getObjects())
+        {
+            instances.add(entity.modelInstance());
+        }
+        return instances;
     }
 
     @Override
@@ -53,15 +58,5 @@ public class Models extends ObjectsBase<Entity>
     public void setEnvironment(MyEnvironment environment)
     {
         this.environment = environment;
-    }
-
-    private MyArrayList<ModelInstance> instances()
-    {
-        MyArrayList<ModelInstance> instances = new MyArrayList<ModelInstance>();
-        for (Entity entity : getObjects())
-        {
-            instances.add(entity.modelInstance());
-        }
-        return instances;
     }
 }

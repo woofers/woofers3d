@@ -5,74 +5,74 @@ import com.jaxson.lib.util.Printer;
 
 public class MouseButton extends Input.Buttons implements Button
 {
-	public static final int[] BUTTONS = {
-			LEFT,
-			RIGHT,
-			MIDDLE,
-			BACK,
-			FORWARD
-	};
+    public static final int[] BUTTONS = {
+            LEFT,
+            RIGHT,
+            MIDDLE,
+            BACK,
+            FORWARD
+    };
 
-	public static final int[] PRIMARY = {
-			LEFT,
-			RIGHT,
-			MIDDLE
-	};
+    public static final int[] PRIMARY = {
+            LEFT,
+            RIGHT,
+            MIDDLE
+    };
 
-	private int button;
-	private Input input;
+    private int button;
+    private Input input;
 
-	MouseButton(int button, Input input)
-	{
-		this.button = button;
-		this.input = input;
-		if (!isValid()) throw new InvalidKeyException(button);
-	}
+    MouseButton(int button, Input input)
+    {
+        this.button = button;
+        this.input = input;
+        if (!isValid()) throw new InvalidKeyException(button);
+    }
 
-	public int button()
-	{
-		return button;
-	}
+    public int button()
+    {
+        return button;
+    }
 
-	private Input input()
-	{
-		return input;
-	}
+    private Input input()
+    {
+        return input;
+    }
 
-	@Override
-	public boolean isDown()
-	{
-		return input().isButtonPressed(button());
-	}
+    @Override
+    public boolean isDown()
+    {
+        return input().isButtonPressed(button());
+    }
 
-	private boolean isValid()
-	{
-		return LEFT <= button() && button() <= FORWARD;
-	}
+    private boolean isValid()
+    {
+        return LEFT <= button() && button() <= FORWARD;
+    }
 
-	public String name()
-	{
-		switch (button())
-		{
-			case LEFT:
-				return "Left";
-			case RIGHT:
-				return "Right";
-			case MIDDLE:
-				return "Middle";
-			case BACK:
-				return "Back";
-			case FORWARD:
-				return "Forward";
-		}
-		return new Integer(button).toString();
-	}
+    public String name()
+    {
+        switch (button())
+        {
+            case LEFT:
+                return "Left";
+            case RIGHT:
+                return "Right";
+            case MIDDLE:
+                return "Middle";
+            case BACK:
+                return "Back";
+            case FORWARD:
+                return "Forward";
+        }
+        return new Integer(button).toString();
+    }
 
-	@Override
-	public String toString()
-	{
-		return new Printer(getClass(),
-				new Printer.Label("Name", name()),
-				new Printer.Label("Button", button())).toString();
-	}
+    @Override
+    public String toString()
+    {
+        return new Printer(getClass(),
+                new Printer.Label("Name", name()),
+                new Printer.Label("Button", button())).toString();
+    }
 }

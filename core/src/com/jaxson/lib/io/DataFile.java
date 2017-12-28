@@ -24,6 +24,21 @@ public class DataFile implements File<DataFile, String, String>
 
     private static final String PATH_EMPTY = "Path can not be empty";
 
+    private static String validatePath(String path)
+    {
+        path = path.replace(BACK_SLASH, FOWARD_SLASH).trim();
+        String[] dirs = path.split(FOWARD_SLASH);
+        String newDir = "";
+        for (String dir: dirs)
+        {
+            dir = dir.trim();
+            if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
+        }
+        if (!newDir.isEmpty())
+            path = newDir.substring(0, newDir.length() - 1);
+        return path;
+    }
+
     private final String path;
 
     /**
@@ -512,20 +527,5 @@ public class DataFile implements File<DataFile, String, String>
             if (writer != null) writer.close();
         }
         return this;
-    }
-
-    private static String validatePath(String path)
-    {
-        path = path.replace(BACK_SLASH, FOWARD_SLASH).trim();
-        String[] dirs = path.split(FOWARD_SLASH);
-        String newDir = "";
-        for (String dir: dirs)
-        {
-            dir = dir.trim();
-            if (!dir.isEmpty()) newDir += dir + FOWARD_SLASH;
-        }
-        if (!newDir.isEmpty())
-            path = newDir.substring(0, newDir.length() - 1);
-        return path;
     }
 }

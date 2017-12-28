@@ -59,8 +59,8 @@ public class PlayState extends BulletState
 
         // for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
         // {
-        //      object.scale(IMPORT_SCALE);
-        //      object.moveTo(object.location().scl(IMPORT_SCALE));
+        // object.scale(IMPORT_SCALE);
+        // object.moveTo(object.location().scl(IMPORT_SCALE));
         // }
 
         floor = new Floor();
@@ -84,9 +84,10 @@ public class PlayState extends BulletState
         {
             boxs[i] = new RigidBox(
                     new RandomColor(new MyColor(255, 95, 0),
-                        new MyColor(255, 165, 50)));
+                            new MyColor(255, 165, 50)));
             boxs[i].setSize(
-                new RandomVector3(0.15f, 0.6f, 0.15f, 0.3f, 0.15f, 0.6f).scl(SCALE_TEST));
+                    new RandomVector3(0.15f, 0.6f, 0.15f, 0.3f, 0.15f, 0.6f)
+                            .scl(SCALE_TEST));
             boxs[i].moveTo(new RandomVector3(0.9f, 2.205f));
             boxs[i].setMass(mass.floatValue());
             applyPhysics(boxs[i]);
@@ -100,7 +101,8 @@ public class PlayState extends BulletState
             {
                 spheres[i] = new RigidSphere(new RandomColor());
                 spheres[i].moveTo(new RandomVector3(0.9f, 2.205f));
-                spheres[i].setSize(new Vector3(0.3f, 0.3f, 0.3f).scl(SCALE_TEST));
+                spheres[i]
+                        .setSize(new Vector3(0.3f, 0.3f, 0.3f).scl(SCALE_TEST));
                 spheres[i].setMass(mass.floatValue());
                 applyPhysics(spheres[i]);
                 add(spheres[i]);

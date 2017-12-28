@@ -14,6 +14,17 @@ import com.jaxson.lib.util.Optional;
 public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
         extends EntityBody<B>
 {
+    protected static BoxShape fittedHitbox(Model model)
+    {
+        return new BoxShape(model.calculateBoundingBox(
+                new BoundingBox()).getDimensions(new Vector3()));
+    }
+
+    protected static ConvexHullShape fittedShape(Model model)
+    {
+        return new ConvexHullShape(model);
+    }
+
     private S shape;
 
     public ShapeBody(Model model, B body, S shape)
@@ -49,15 +60,14 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
         return new BoxShape(size());
     }
 
+    public ConvexHullShape fittedShape()
+    {
+        return new ConvexHullShape(model());
+    }
 
     public SphereShape fittedSphere()
     {
         return new SphereShape(size());
-    }
-
-    public ConvexHullShape fittedShape()
-    {
-        return new ConvexHullShape(model());
     }
 
     public Vector3 inertia()
@@ -104,16 +114,5 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
     public Vector3 shapeScale()
     {
         return shape().scale();
-    }
-
-    protected static BoxShape fittedHitbox(Model model)
-    {
-        return new BoxShape(model.calculateBoundingBox(
-                new BoundingBox()).getDimensions(new Vector3()));
-    }
-
-    protected static ConvexHullShape fittedShape(Model model)
-    {
-        return new ConvexHullShape(model);
     }
 }

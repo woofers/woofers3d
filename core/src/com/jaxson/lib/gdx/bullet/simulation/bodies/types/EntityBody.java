@@ -10,174 +10,174 @@ import com.jaxson.lib.gdx.graphics.g3d.entities.types.AnimatedEntity;
 import com.jaxson.lib.util.Optional;
 
 public abstract class EntityBody<B extends btCollisionObject>
-		extends AnimatedEntity
+        extends AnimatedEntity
 {
-	public static final int ACTIVE_TAG = 1;
-	public static final int ISLAND_SLEEPING = 2;
-	public static final int WANTS_DEACTIVATION = 3;
-	public static final int DISABLE_DEACTIVATION = 4;
-	public static final int DISABLE_SIMULATION = 5;
+    public static final int ACTIVE_TAG = 1;
+    public static final int ISLAND_SLEEPING = 2;
+    public static final int WANTS_DEACTIVATION = 3;
+    public static final int DISABLE_DEACTIVATION = 4;
+    public static final int DISABLE_SIMULATION = 5;
 
-	protected static final float MASS = 1f;
-	protected static final Color COLOR = Color.ORANGE;
+    protected static final float MASS = 1f;
+    protected static final Color COLOR = Color.ORANGE;
 
-	private float mass;
-	private B body;
+    private float mass;
+    private B body;
 
-	public EntityBody(Model model, B body, float mass)
-	{
-		this(new ModelInstance(model), body, mass);
-	}
+    public EntityBody(Model model, B body, float mass)
+    {
+        this(new ModelInstance(model), body, mass);
+    }
 
-	public EntityBody(ModelInstance modelInstance, B body)
-	{
-		this(modelInstance, body, MASS);
-	}
+    public EntityBody(ModelInstance modelInstance, B body)
+    {
+        this(modelInstance, body, MASS);
+    }
 
-	public EntityBody(ModelInstance modelInstance, B body, float mass)
-	{
-		super(modelInstance);
-		this.mass = mass;
-		setBody(body);
-	}
+    public EntityBody(ModelInstance modelInstance, B body, float mass)
+    {
+        super(modelInstance);
+        this.mass = mass;
+        setBody(body);
+    }
 
-	public void activate()
-	{
-		body().activate();
-		body().setActivationState(ACTIVE_TAG);
-	}
+    public void activate()
+    {
+        body().activate();
+        body().setActivationState(ACTIVE_TAG);
+    }
 
-	public int activationState()
-	{
-		return body().getActivationState();
-	}
+    public int activationState()
+    {
+        return body().getActivationState();
+    }
 
-	public void addCollisionFlag(int flag)
-	{
-		setCollisionFlags(collisionFlags() | flag);
-	}
+    public void addCollisionFlag(int flag)
+    {
+        setCollisionFlags(collisionFlags() | flag);
+    }
 
-	public B body()
-	{
-		return body;
-	}
+    public B body()
+    {
+        return body;
+    }
 
-	protected void bodyToTransform()
-	{
-		body().getWorldTransform(transform());
-	}
+    protected void bodyToTransform()
+    {
+        body().getWorldTransform(transform());
+    }
 
-	public int collisionFlags()
-	{
-		return body().getCollisionFlags();
-	}
+    public int collisionFlags()
+    {
+        return body().getCollisionFlags();
+    }
 
-	public int contactCallbackFilter()
-	{
-		return body().getContactCallbackFilter();
-	}
+    public int contactCallbackFilter()
+    {
+        return body().getContactCallbackFilter();
+    }
 
-	public int contactCallbackFlag()
-	{
-		return body().getContactCallbackFlag();
-	}
+    public int contactCallbackFlag()
+    {
+        return body().getContactCallbackFlag();
+    }
 
-	public void deactivate()
-	{
-		body().setActivationState(DISABLE_SIMULATION);
-	}
+    public void deactivate()
+    {
+        body().setActivationState(DISABLE_SIMULATION);
+    }
 
-	@Override
-	public void dispose()
-	{
-		if (!wasImpoted()) super.dispose();
-		body.dispose();
-	}
+    @Override
+    public void dispose()
+    {
+        if (!wasImpoted()) super.dispose();
+        body.dispose();
+    }
 
-	public boolean isBody(btCollisionObject body)
-	{
-		return body().equals(body);
-	}
+    public boolean isBody(btCollisionObject body)
+    {
+        return body().equals(body);
+    }
 
-	public float mass()
-	{
-		return mass;
-	}
+    public float mass()
+    {
+        return mass;
+    }
 
-	@Override
-	public void moveTo(Vector3 location)
-	{
-		super.moveTo(location);
-		transformToBody();
-	}
+    @Override
+    public void moveTo(Vector3 location)
+    {
+        super.moveTo(location);
+        transformToBody();
+    }
 
-	@Override
-	public void rotate(float yaw, float pitch, float roll)
-	{
-		super.rotate(yaw, pitch, roll);
-		transformToBody();
-	}
+    @Override
+    public void rotate(float yaw, float pitch, float roll)
+    {
+        super.rotate(yaw, pitch, roll);
+        transformToBody();
+    }
 
-	public void setActivationState(int state)
-	{
-		body().setActivationState(state);
-	}
+    public void setActivationState(int state)
+    {
+        body().setActivationState(state);
+    }
 
-	protected void setBody(B body)
-	{
-		this.body = body;
-	}
+    protected void setBody(B body)
+    {
+        this.body = body;
+    }
 
-	public void setCollisionFlags(int flags)
-	{
-		body().setCollisionFlags(flags);
-	}
+    public void setCollisionFlags(int flags)
+    {
+        body().setCollisionFlags(flags);
+    }
 
-	public void setContactCallbackFilter(int flag)
-	{
-		body().setContactCallbackFilter(flag);
-	}
+    public void setContactCallbackFilter(int flag)
+    {
+        body().setContactCallbackFilter(flag);
+    }
 
-	public void setContactCallbackFlag(int flag)
-	{
-		body().setContactCallbackFlag(flag);
-	}
+    public void setContactCallbackFlag(int flag)
+    {
+        body().setContactCallbackFlag(flag);
+    }
 
-	public void setMass(float mass)
-	{
-		this.mass = mass;
-	}
+    public void setMass(float mass)
+    {
+        this.mass = mass;
+    }
 
-	@Override
-	public void setRotation(float yaw, float pitch, float roll)
-	{
-		super.setRotation(yaw, pitch, roll);
-		transformToBody();
-	}
+    @Override
+    public void setRotation(float yaw, float pitch, float roll)
+    {
+        super.setRotation(yaw, pitch, roll);
+        transformToBody();
+    }
 
-	protected void transformToBody()
-	{
-		body().setWorldTransform(transform());
-	}
+    protected void transformToBody()
+    {
+        body().setWorldTransform(transform());
+    }
 
-	@Override
-	public void translate(Vector3 translation)
-	{
-		super.translate(translation);
-		transformToBody();
-	}
+    @Override
+    public void translate(Vector3 translation)
+    {
+        super.translate(translation);
+        transformToBody();
+    }
 
-	@Override
-	public void translateABS(Vector3 translation)
-	{
-		super.translateABS(translation);
-		transformToBody();
-	}
+    @Override
+    public void translateABS(Vector3 translation)
+    {
+        super.translateABS(translation);
+        transformToBody();
+    }
 
-	public boolean wasImpoted()
-	{
-		Optional<Integer> data = new Optional<>(
-				(Integer) modelInstance().userData);
-		return data.exists() && data.unwrap() == WorldImporter.IMPORTED;
-	}
+    public boolean wasImpoted()
+    {
+        Optional<Integer> data = new Optional<>(
+                (Integer) modelInstance().userData);
+        return data.exists() && data.unwrap() == WorldImporter.IMPORTED;
+    }
 }

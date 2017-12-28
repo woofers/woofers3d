@@ -9,13 +9,13 @@ import com.jaxson.lib.gdx.backend.Game;
  */
 public interface Pauseable
 {
-	/**
-	 * Called when the {@link Game} is paused.
-	 */
-	public void pause();
+    /**
+     * Called when the {@link Game} is paused.
+     */
+    public void pause();
 
-	/**
-	 * Called when the {@link Game} is resumed.
-	 */
-	public void resume();
+    /**
+     * Called when the {@link Game} is resumed.
+     */
+    public void resume();
 }

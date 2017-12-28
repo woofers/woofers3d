@@ -17,12 +17,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.jaxson.lib.gdx.box2d.bodies.types.SpriteBody;
 import com.jaxson.lib.gdx.graphics.views.View;
-import com.jaxson.lib.gdx.util.GameObject;
-import com.jaxson.lib.util.MyArrayList;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.input.TouchScreen;
+import com.jaxson.lib.gdx.util.GameObject;
+import com.jaxson.lib.util.MyArrayList;
 
 public class Box2DWorld extends GameObject
 {
@@ -97,10 +97,20 @@ public class Box2DWorld extends GameObject
         world.destroyJoint(joint);
     }
 
+    public void disableDebug()
+    {
+        debug = false;
+    }
+
     @Override
     public void dispose()
     {
         world.dispose();
+    }
+
+    public void enableDebug()
+    {
+        debug = true;
     }
 
     @Override
@@ -160,6 +170,16 @@ public class Box2DWorld extends GameObject
         return world.hashCode();
     }
 
+    @Override
+    protected void input(float dt)
+    {
+        if (keyboard.exists() && debugKey.isPressed()
+                || touchScreen.exists() && touchScreen.fingersTouched(3))
+        {
+            toggleDebug();
+        }
+    }
+
     public boolean isLocked()
     {
         return world.isLocked();
@@ -193,25 +213,10 @@ public class Box2DWorld extends GameObject
     {
         if (debug)
         {
-        debugRenderer.render(
-            world, view.spriteBatch().getProjectionMatrix().cpy().scale(
-            METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
+            debugRenderer.render(
+                    world, view.spriteBatch().getProjectionMatrix().cpy().scale(
+                            METERS_TO_PIXELS, METERS_TO_PIXELS, 0));
         }
-    }
-
-    public void enableDebug()
-    {
-        debug = true;
-    }
-
-    public void disableDebug()
-    {
-        debug = false;
-    }
-
-    public void toggleDebug()
-    {
-        debug = !debug;
     }
 
     public void setAutoClearForces(boolean flag)
@@ -249,6 +254,11 @@ public class Box2DWorld extends GameObject
         world.setWarmStarting(flag);
     }
 
+    public void toggleDebug()
+    {
+        debug = !debug;
+    }
+
     @Override
     public String toString()
     {
@@ -260,15 +270,5 @@ public class Box2DWorld extends GameObject
     {
         super.update(dt);
         world.step(dt, velocityIterations, positionIterations);
-    }
-
-    @Override
-    protected void input(float dt)
-    {
-        if (keyboard.exists() && debugKey.isPressed()
-                || touchScreen.exists() && touchScreen.fingersTouched(3))
-        {
-            toggleDebug();
-        }
     }
 }

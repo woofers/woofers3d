@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.g3d.Model;
 
 public class ModelFromFile extends FromFile<Model>
 {
-	public ModelFromFile(GdxFile file)
-	{
-		super(file);
-	}
+    public ModelFromFile(GdxFile file)
+    {
+        super(file);
+    }
 
-	@Override
-	public Model unwrap()
-	{
-		return file().readObject();
-	}
+    @Override
+    public Model unwrap()
+    {
+        return file().readObject();
+    }
 }

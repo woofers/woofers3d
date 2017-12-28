@@ -8,19 +8,19 @@ import com.jaxson.lib.gdx.graphics.color.MyColor;
 
 public interface Light
 {
-	public static final long TYPE = ColorAttribute.AmbientLight;
-	public static final Color COLOR = new MyColor(200, 200, 200);
-	public static final Vector3 DIRECTION = new Vector3(-1f, -0.8f, -0.2f);
+    public static final long TYPE = ColorAttribute.AmbientLight;
+    public static final Color COLOR = new MyColor(200, 200, 200);
+    public static final Vector3 DIRECTION = new Vector3(-1f, -0.8f, -0.2f);
 
-	public Color color();
+    public Color color();
 
-	public Vector3 direction();
+    public Vector3 direction();
 
-	public boolean hasShadows();
+    public boolean hasShadows();
 
-	public DirectionalLight light();
+    public DirectionalLight light();
 
-	public MyDirectionalLight toLight();
+    public MyDirectionalLight toLight();
 
-	public MyDirectionalShadowLight toShadow();
+    public MyDirectionalShadowLight toShadow();
 }

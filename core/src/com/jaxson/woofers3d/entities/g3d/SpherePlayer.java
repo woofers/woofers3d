@@ -1,15 +1,13 @@
 package com.jaxson.woofers3d.entities.g3d;
 
-import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
+import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
+import com.jaxson.lib.gdx.bullet.simulation.collision.SphereShape;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
-import com.jaxson.lib.gdx.input.Accelerometer;
 import com.jaxson.lib.gdx.input.GameAccelerometer;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
-import com.jaxson.lib.gdx.bullet.simulation.collision.SphereShape;
-import com.badlogic.gdx.math.Vector3;
 
 public class SpherePlayer extends RigidBody
 {
@@ -44,13 +42,8 @@ public class SpherePlayer extends RigidBody
         this.leftKey = keyboard.key("A");
         this.rightKey = keyboard.key("D");
         this.jumpKey = keyboard.key("Space");
-        //this.cameraKey = keyboard().key("T");
-        //this.resetKey = keyboard().key("Y");
-    }
-
-    private Keyboard keyboard()
-    {
-        return keyboard;
+        // this.cameraKey = keyboard().key("T");
+        // this.resetKey = keyboard().key("Y");
     }
 
     @Override
@@ -90,8 +83,13 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
             }
         }
-        //if (cameraKey.isPressed()) toggleCamera();
-        //if (resetKey.isPressed()) reset();
+        // if (cameraKey.isPressed()) toggleCamera();
+        // if (resetKey.isPressed()) reset();
+    }
+
+    private Keyboard keyboard()
+    {
+        return keyboard;
     }
 
     @Override

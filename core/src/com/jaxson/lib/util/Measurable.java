@@ -8,5 +8,5 @@ package com.jaxson.lib.util;
 @FunctionalInterface
 public interface Measurable
 {
-	public int size();
+    public int size();
 }

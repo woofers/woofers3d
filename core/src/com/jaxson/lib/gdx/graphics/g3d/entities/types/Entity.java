@@ -16,244 +16,244 @@ import com.jaxson.lib.math.Circle;
 
 public abstract class Entity extends GameObject
 {
-	private static final int MATRIX_DIRECTION_X = 8;
-	private static final int MATRIX_DIRECTION_Y = 9;
-	private static final int MATRIX_DIRECTION_Z = 10;
+    private static final int MATRIX_DIRECTION_X = 8;
+    private static final int MATRIX_DIRECTION_Y = 9;
+    private static final int MATRIX_DIRECTION_Z = 10;
 
-	private static final int ROOT_NODE_LOCATION = 0;
-	private static final float FORWARD_DIRECTION = 0f;
-	private static final float BACKWARD_DIRECTION = 180f;
+    private static final int ROOT_NODE_LOCATION = 0;
+    private static final float FORWARD_DIRECTION = 0f;
+    private static final float BACKWARD_DIRECTION = 180f;
 
-	private ModelInstance modelInstance;
+    protected static Model readModel(String modelPath)
+    {
+        return new GdxFile(modelPath).readObject();
+    }
 
-	public Entity(Model model)
-	{
-		this(new ModelInstance(model));
-	}
+    private ModelInstance modelInstance;
 
-	public Entity(ModelInstance modelInstance)
-	{
-		this.modelInstance = modelInstance;
-	}
+    public Entity(Model model)
+    {
+        this(new ModelInstance(model));
+    }
 
-	public Ray backwardRay()
-	{
-		return ray(BACKWARD_DIRECTION);
-	}
+    public Entity(ModelInstance modelInstance)
+    {
+        this.modelInstance = modelInstance;
+    }
 
-	public BoundingBox boundingBox()
-	{
-		return modelInstance().calculateBoundingBox(new BoundingBox());
-	}
+    public Ray backwardRay()
+    {
+        return ray(BACKWARD_DIRECTION);
+    }
 
-	protected void calculateTransforms()
-	{
-		modelInstance().calculateTransforms();
-	}
+    public BoundingBox boundingBox()
+    {
+        return modelInstance().calculateBoundingBox(new BoundingBox());
+    }
 
-	public Vector3 center()
-	{
-		return boundingBox().getCenter(new Vector3());
-	}
+    protected void calculateTransforms()
+    {
+        modelInstance().calculateTransforms();
+    }
 
-	public float diameter()
-	{
-		return size().len();
-	}
+    public Vector3 center()
+    {
+        return boundingBox().getCenter(new Vector3());
+    }
 
-	public Vector3 direction()
-	{
-		float[] matrix = transformValues();
-		return new Vector3(matrix[MATRIX_DIRECTION_X],
-				matrix[MATRIX_DIRECTION_Y],
-				matrix[MATRIX_DIRECTION_Z]);
-	}
+    public float diameter()
+    {
+        return size().len();
+    }
 
-	@Override
-	public void dispose()
-	{
-		model().dispose();
-	}
+    public Vector3 direction()
+    {
+        float[] matrix = transformValues();
+        return new Vector3(matrix[MATRIX_DIRECTION_X],
+                matrix[MATRIX_DIRECTION_Y],
+                matrix[MATRIX_DIRECTION_Z]);
+    }
 
-	public Vector3 distance(Entity entity)
-	{
-		return distance(entity.location());
-	}
+    @Override
+    public void dispose()
+    {
+        model().dispose();
+    }
 
-	public Vector3 distance(Vector3 location)
-	{
-		return location().sub(location);
-	}
+    public Vector3 distance(Entity entity)
+    {
+        return distance(entity.location());
+    }
 
-	public Ray forwardRay()
-	{
-		return ray(FORWARD_DIRECTION);
-	}
+    public Vector3 distance(Vector3 location)
+    {
+        return location().sub(location);
+    }
 
-	public boolean isVisible(Camera camera)
-	{
-		return camera.frustum.sphereInFrustum(locationFromCenter(), radius());
-	}
+    public Ray forwardRay()
+    {
+        return ray(FORWARD_DIRECTION);
+    }
 
-	public Vector3 location()
-	{
-		return transform().getTranslation(new Vector3());
-	}
+    public boolean isVisible(Camera camera)
+    {
+        return camera.frustum.sphereInFrustum(locationFromCenter(), radius());
+    }
 
-	public Vector3 locationFromCenter()
-	{
-		return center().add(location());
-	}
+    public Vector3 location()
+    {
+        return transform().getTranslation(new Vector3());
+    }
 
-	public Model model()
-	{
-		return modelInstance().model;
-	}
+    public Vector3 locationFromCenter()
+    {
+        return center().add(location());
+    }
 
-	public ModelInstance modelInstance()
-	{
-		return modelInstance;
-	}
+    public Model model()
+    {
+        return modelInstance().model;
+    }
 
-	public void moveTo(Vector3 location)
-	{
-		Quaternion rotation = rotationQuaternion();
-		transform().setToTranslation(location);
-		setRotation(rotation);
-	}
+    public ModelInstance modelInstance()
+    {
+        return modelInstance;
+    }
 
-	public Vector3 originalSize()
-	{
-		return GdxMath.divideVector(size(), scale());
-	}
+    public void moveTo(Vector3 location)
+    {
+        Quaternion rotation = rotationQuaternion();
+        transform().setToTranslation(location);
+        setRotation(rotation);
+    }
 
-	public float radius()
-	{
-		return diameter() * Circle.DIAMETER_TO_RADIUS;
-	}
+    public Vector3 originalSize()
+    {
+        return GdxMath.divideVector(size(), scale());
+    }
 
-	public Ray ray(Entity entity)
-	{
-		return ray(entity.location());
-	}
+    public float radius()
+    {
+        return diameter() * Circle.DIAMETER_TO_RADIUS;
+    }
 
-	public Ray ray(float direction)
-	{
-		return new Ray(location(),
-				direction().rotate(
-						Vector3.Y,
-						direction));
-	}
+    public Ray ray(Entity entity)
+    {
+        return ray(entity.location());
+    }
 
-	public Ray ray(Vector3 location)
-	{
-		return new Ray(location(), distance(location));
-	}
+    public Ray ray(float direction)
+    {
+        return new Ray(location(),
+                direction().rotate(
+                        Vector3.Y,
+                        direction));
+    }
 
-	public Node rootNode()
-	{
-		return modelInstance().nodes.get(ROOT_NODE_LOCATION);
-	}
+    public Ray ray(Vector3 location)
+    {
+        return new Ray(location(), distance(location));
+    }
 
-	public Vector3 rootNodeSize()
-	{
-		return rootNode().calculateBoundingBox(new BoundingBox())
-				.getDimensions(new Vector3());
-	}
+    public Node rootNode()
+    {
+        return modelInstance().nodes.get(ROOT_NODE_LOCATION);
+    }
 
-	public void rotate(float yaw, float pitch, float roll)
-	{
-		rotate(Vector3.X, pitch);
-		rotate(Vector3.Y, yaw);
-		rotate(Vector3.Z, roll);
-	}
+    public Vector3 rootNodeSize()
+    {
+        return rootNode().calculateBoundingBox(new BoundingBox())
+                .getDimensions(new Vector3());
+    }
 
-	public void rotate(Vector3 angles)
-	{
-		rotate(angles.x, angles.y, angles.z);
-	}
+    public void rotate(float yaw, float pitch, float roll)
+    {
+        rotate(Vector3.X, pitch);
+        rotate(Vector3.Y, yaw);
+        rotate(Vector3.Z, roll);
+    }
 
-	public void rotate(Vector3 axis, float amount)
-	{
-		transform().rotate(axis, amount);
-	}
+    public void rotate(Vector3 angles)
+    {
+        rotate(angles.x, angles.y, angles.z);
+    }
 
-	public Vector3 rotation()
-	{
-		Quaternion rotation = rotationQuaternion();
-		return new Vector3(rotation.getYaw(),
-				rotation.getPitch(),
-				rotation.getRoll());
-	}
+    public void rotate(Vector3 axis, float amount)
+    {
+        transform().rotate(axis, amount);
+    }
 
-	public Quaternion rotationQuaternion()
-	{
-		return transform().getRotation(new Quaternion());
-	}
+    public Vector3 rotation()
+    {
+        Quaternion rotation = rotationQuaternion();
+        return new Vector3(rotation.getYaw(),
+                rotation.getPitch(),
+                rotation.getRoll());
+    }
 
-	public Vector3 scale()
-	{
-		return rootNode().scale;
-	}
+    public Quaternion rotationQuaternion()
+    {
+        return transform().getRotation(new Quaternion());
+    }
 
-	public void scale(float scale)
-	{
-		scale(new Vector3(scale, scale, scale));
-	}
+    public Vector3 scale()
+    {
+        return rootNode().scale;
+    }
 
-	public void scale(Vector3 scale)
-	{
-		rootNode().scale.set(scale);
-		calculateTransforms();
-	}
+    public void scale(float scale)
+    {
+        scale(new Vector3(scale, scale, scale));
+    }
 
-	public void setRotation(float yaw, float pitch, float roll)
-	{
-		transform().setFromEulerAngles(yaw, pitch, roll);
-	}
+    public void scale(Vector3 scale)
+    {
+        rootNode().scale.set(scale);
+        calculateTransforms();
+    }
 
-	public void setRotation(Quaternion quaternion)
-	{
-		transform().set(quaternion);
-	}
+    public void setRotation(float yaw, float pitch, float roll)
+    {
+        transform().setFromEulerAngles(yaw, pitch, roll);
+    }
 
-	public void setRotation(Vector3 angles)
-	{
-		setRotation(angles.x, angles.y, angles.z);
-	}
+    public void setRotation(Quaternion quaternion)
+    {
+        transform().set(quaternion);
+    }
 
-	public void setSize(Vector3 size)
-	{
-		scale(GdxMath.divideVector(size, size()));
-	}
+    public void setRotation(Vector3 angles)
+    {
+        setRotation(angles.x, angles.y, angles.z);
+    }
 
-	public Vector3 size()
-	{
-		return boundingBox().getDimensions(new Vector3());
-	}
+    public void setSize(Vector3 size)
+    {
+        scale(GdxMath.divideVector(size, size()));
+    }
 
-	public Matrix4 transform()
-	{
-		return modelInstance().transform;
-	}
+    public Vector3 size()
+    {
+        return boundingBox().getDimensions(new Vector3());
+    }
 
-	public float[] transformValues()
-	{
-		return transform().getValues();
-	}
+    public Matrix4 transform()
+    {
+        return modelInstance().transform;
+    }
 
-	public void translate(Vector3 translation)
-	{
-		transform().translate(translation);
-	}
+    public float[] transformValues()
+    {
+        return transform().getValues();
+    }
 
-	public void translateABS(Vector3 translation)
-	{
-		transform().trn(translation);
-	}
+    public void translate(Vector3 translation)
+    {
+        transform().translate(translation);
+    }
 
-	protected static Model readModel(String modelPath)
-	{
-		return new GdxFile(modelPath).readObject();
-	}
+    public void translateABS(Vector3 translation)
+    {
+        transform().trn(translation);
+    }
 }

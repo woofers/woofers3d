@@ -5,18 +5,18 @@ import com.jaxson.lib.util.Uncertainty;
 
 public abstract class Peripheral implements Uncertainty
 {
-	private Input input;
+    private Input input;
 
-	public Peripheral(Input input)
-	{
-		this.input = input;
-	}
+    public Peripheral(Input input)
+    {
+        this.input = input;
+    }
 
-	@Override
-	public abstract boolean exists();
+    @Override
+    public abstract boolean exists();
 
-	protected Input input()
-	{
-		return input;
-	}
+    protected Input input()
+    {
+        return input;
+    }
 }

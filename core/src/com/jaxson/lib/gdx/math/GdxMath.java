@@ -1,10 +1,10 @@
 package com.jaxson.lib.gdx.math;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.math.Reciprocal;
-import com.badlogic.gdx.math.MathUtils;
 
 public class GdxMath extends MyMath
 {

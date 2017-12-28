@@ -5,34 +5,34 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Gyroscope extends Peripheral
 {
-	Gyroscope(Input input)
-	{
-		super(input);
-	}
+    Gyroscope(Input input)
+    {
+        super(input);
+    }
 
-	@Override
-	public boolean exists()
-	{
-		return input().isPeripheralAvailable(Input.Peripheral.Gyroscope);
-	}
+    @Override
+    public boolean exists()
+    {
+        return input().isPeripheralAvailable(Input.Peripheral.Gyroscope);
+    }
 
-	public Vector3 values()
-	{
-		return new Vector3(x(), y(), z());
-	}
+    public Vector3 values()
+    {
+        return new Vector3(x(), y(), z());
+    }
 
-	public float x()
-	{
-		return input().getGyroscopeX();
-	}
+    public float x()
+    {
+        return input().getGyroscopeX();
+    }
 
-	public float y()
-	{
-		return input().getGyroscopeY();
-	}
+    public float y()
+    {
+        return input().getGyroscopeY();
+    }
 
-	public float z()
-	{
-		return input().getGyroscopeZ();
-	}
+    public float z()
+    {
+        return input().getGyroscopeZ();
+    }
 }

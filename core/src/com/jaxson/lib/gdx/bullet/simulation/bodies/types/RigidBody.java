@@ -37,6 +37,11 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         setMotionState(new MotionState(transform()));
     }
 
+    public Vector3 angularVelocity()
+    {
+        return body().getAngularVelocity();
+    }
+
     public void applyCentralImpulse(Ray ray)
     {
         applyCentralImpulse(ray, 1f);
@@ -60,9 +65,19 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         motionState.dispose();
     }
 
+    public Vector3 linearVelocity()
+    {
+        return body().getLinearVelocity();
+    }
+
     public MotionState motionState()
     {
         return motionState;
+    }
+
+    public boolean onGround()
+    {
+        return Math.signum(linearVelocity().y) <= GdxMath.FLOAT_ROUNDING;
     }
 
     private void recalculateInertia()
@@ -88,20 +103,5 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
     {
         this.motionState = motionState;
         body().setMotionState(motionState);
-    }
-
-    public Vector3 linearVelocity()
-    {
-        return body().getLinearVelocity();
-    }
-
-    public Vector3 angularVelocity()
-    {
-        return body().getAngularVelocity();
-    }
-
-    public boolean onGround()
-    {
-        return Math.signum(linearVelocity().y) <= GdxMath.FLOAT_ROUNDING;
     }
 }
