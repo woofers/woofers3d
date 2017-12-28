@@ -19,234 +19,234 @@ import com.jaxson.lib.io.Json;
 
 public class Game
 {
-	private Json<GameConfig> config;
-	private GameStates gameStates;
-	private Display display;
-	private Inputs inputs;
-	private float dt;
-	private float accumulator;
-	private float step;
-	private float clamp;
+    private Json<GameConfig> config;
+    private GameStates gameStates;
+    private Display display;
+    private Inputs inputs;
+    private float dt;
+    private float accumulator;
+    private float step;
+    private float clamp;
 
-	public Game(Json<GameConfig> config)
-	{
-		this.config = config;
-		this.inputs = new Inputs(this);
-		this.gameStates = new GameStates(this);
-		this.display = new Display(this);
-	}
+    public Game(Json<GameConfig> config)
+    {
+        this.config = config;
+        this.inputs = new Inputs(this);
+        this.gameStates = new GameStates(this);
+        this.display = new Display(this);
+    }
 
-	public Application application()
-	{
-		return Gdx.app;
-	}
+    public Application application()
+    {
+        return Gdx.app;
+    }
 
-	public ApplicationType applicationType()
-	{
-		return application().getType();
-	}
+    public ApplicationType applicationType()
+    {
+        return application().getType();
+    }
 
-	public Audio audio()
-	{
-		return application().getAudio();
-	}
+    public Audio audio()
+    {
+        return application().getAudio();
+    }
 
-	public float clampInterval()
-	{
-		return config().clampInterval();
-	}
+    public float clampInterval()
+    {
+        return config().clampInterval();
+    }
 
-	public Clipboard clipboard()
-	{
-		return application().getClipboard();
-	}
+    public Clipboard clipboard()
+    {
+        return application().getClipboard();
+    }
 
-	public GameConfig config()
-	{
-		return saveableConfig().unwrap();
-	}
+    public GameConfig config()
+    {
+        return saveableConfig().unwrap();
+    }
 
-	public State currentState()
-	{
-		return gameStates.peek();
-	}
+    public State currentState()
+    {
+        return gameStates.peek();
+    }
 
-	private float deltaTime()
-	{
-		return graphics().getDeltaTime();
-	}
+    private float deltaTime()
+    {
+        return graphics().getDeltaTime();
+    }
 
-	public Display display()
-	{
-		return display;
-	}
+    public Display display()
+    {
+        return display;
+    }
 
-	public void dispose()
-	{
-		gameStates.dispose();
-		display().dispose();
-	}
+    public void dispose()
+    {
+        gameStates.dispose();
+        display().dispose();
+    }
 
-	public void exit()
-	{
-		application().exit();
-	}
+    public void exit()
+    {
+        application().exit();
+    }
 
-	public Files files()
-	{
-		return application().getFiles();
-	}
+    public Files files()
+    {
+        return application().getFiles();
+    }
 
-	public GL20 gl()
-	{
-		return display().gl();
-	}
+    public GL20 gl()
+    {
+        return display().gl();
+    }
 
-	public Graphics graphics()
-	{
-		return application().getGraphics();
-	}
+    public Graphics graphics()
+    {
+        return application().getGraphics();
+    }
 
-	public boolean hasFixedTimeStamp()
-	{
-		return config().hasFixedTimeStep();
-	}
+    public boolean hasFixedTimeStamp()
+    {
+        return config().hasFixedTimeStep();
+    }
 
-	public Input input()
-	{
-		return application().getInput();
-	}
+    public Input input()
+    {
+        return application().getInput();
+    }
 
-	public boolean isAndroid()
-	{
-		return applicationType() == ApplicationType.Android;
-	}
+    public boolean isAndroid()
+    {
+        return applicationType() == ApplicationType.Android;
+    }
 
-	public boolean isDesktop()
-	{
-		return applicationType() == ApplicationType.Desktop;
-	}
+    public boolean isDesktop()
+    {
+        return applicationType() == ApplicationType.Desktop;
+    }
 
-	public boolean isFocused()
-	{
-		return display().isFocused();
-	}
+    public boolean isFocused()
+    {
+        return display().isFocused();
+    }
 
-	public boolean isIOS()
-	{
-		return applicationType() == ApplicationType.iOS;
-	}
+    public boolean isIOS()
+    {
+        return applicationType() == ApplicationType.iOS;
+    }
 
-	public boolean isMinimized()
-	{
-		return display().isMinimized();
-	}
+    public boolean isMinimized()
+    {
+        return display().isMinimized();
+    }
 
-	public boolean isMobile()
-	{
-		return isSmartPhone() || isWeb();
-	}
+    public boolean isMobile()
+    {
+        return isSmartPhone() || isWeb();
+    }
 
-	public boolean isPaused()
-	{
-		return display().isPaused();
-	}
+    public boolean isPaused()
+    {
+        return display().isPaused();
+    }
 
-	public boolean isSmartPhone()
-	{
-		return isAndroid() || isIOS();
-	}
+    public boolean isSmartPhone()
+    {
+        return isAndroid() || isIOS();
+    }
 
-	public boolean isWeb()
-	{
-		return applicationType() == ApplicationType.WebGL;
-	}
+    public boolean isWeb()
+    {
+        return applicationType() == ApplicationType.WebGL;
+    }
 
-	public void log(String tag, String message)
-	{
-		application().log(tag, message);
-	}
+    public void log(String tag, String message)
+    {
+        application().log(tag, message);
+    }
 
-	public Net network()
-	{
-		return application().getNet();
-	}
+    public Net network()
+    {
+        return application().getNet();
+    }
 
-	public void pause()
-	{
-		gameStates.pause();
-		display().pause();
-	}
+    public void pause()
+    {
+        gameStates.pause();
+        display().pause();
+    }
 
-	public void pushState(State state)
-	{
-		gameStates.push(state);
-	}
+    public void pushState(State state)
+    {
+        gameStates.push(state);
+    }
 
-	public void render()
-	{
-		dt = deltaTime();
-		if (hasFixedTimeStamp())
-		{
-			clamp = clampInterval();
-			if (dt > clamp) dt = clamp;
-			step = stepInterval();
-			accumulator += dt;
-			while (accumulator >= step)
-			{
-				update(step);
-				accumulator -= step;
-			}
-		}
-		else
-		{
-			update(dt);
-		}
-		display().render(view());
-		gameStates.render(view());
-	}
+    public void render()
+    {
+        dt = deltaTime();
+        if (hasFixedTimeStamp())
+        {
+            clamp = clampInterval();
+            if (dt > clamp) dt = clamp;
+            step = stepInterval();
+            accumulator += dt;
+            while (accumulator >= step)
+            {
+                update(step);
+                accumulator -= step;
+            }
+        }
+        else
+        {
+            update(dt);
+        }
+        display().render(view());
+        gameStates.render(view());
+    }
 
-	public void resize(int width, int height)
-	{
-		gameStates.resize(width, height);
-		display().resize(width, height);
-	}
+    public void resize(int width, int height)
+    {
+        gameStates.resize(width, height);
+        display().resize(width, height);
+    }
 
-	public void resume()
-	{
-		gameStates.resume();
-		display().resume();
-	}
+    public void resume()
+    {
+        gameStates.resume();
+        display().resume();
+    }
 
-	public Json<GameConfig> saveableConfig()
-	{
-		return config;
-	}
+    public Json<GameConfig> saveableConfig()
+    {
+        return config;
+    }
 
-	public void setInputProcessor(InputProcessor inputProcessor)
-	{
-		input().setInputProcessor(inputProcessor);
-	}
+    public void setInputProcessor(InputProcessor inputProcessor)
+    {
+        input().setInputProcessor(inputProcessor);
+    }
 
-	public void setState(State state)
-	{
-		gameStates.set(state);
-	}
+    public void setState(State state)
+    {
+        gameStates.set(state);
+    }
 
-	public float stepInterval()
-	{
-		return config().stepInterval();
-	}
+    public float stepInterval()
+    {
+        return config().stepInterval();
+    }
 
-	public void update(float step)
-	{
-		gameStates.update(step);
-		display().update(step);
-		Inputs.update(step);
-	}
+    public void update(float step)
+    {
+        gameStates.update(step);
+        display().update(step);
+        Inputs.update(step);
+    }
 
-	public View view()
-	{
-		return display().view();
-	}
+    public View view()
+    {
+        return display().view();
+    }
 }

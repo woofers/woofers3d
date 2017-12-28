@@ -343,11 +343,15 @@ public class TargetCamera extends PerspectiveCamera
         return up;
     }
 
-    @Override
-    public void update()
+    public void updateTracking()
     {
         input();
         oldTargetLocation = targetLocation();
+    }
+
+    @Override
+    public void update()
+    {
         super.update();
     }
 
