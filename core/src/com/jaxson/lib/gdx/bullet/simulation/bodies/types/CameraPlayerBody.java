@@ -66,7 +66,7 @@ public class CameraPlayerBody extends PlayerBody
     }
 
     @Override
-    protected void reset()
+    public void reset()
     {
         super.reset();
         unlockCamera();

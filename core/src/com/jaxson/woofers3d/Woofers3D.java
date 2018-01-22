@@ -2,6 +2,7 @@ package com.jaxson.woofers3d;
 
 import com.jaxson.lib.gdx.GameInstance;
 import com.jaxson.woofers3d.states.PlayState;
+import com.jaxson.woofers3d.states.SphereState;
 
 public class Woofers3D extends GameInstance
 {
@@ -18,6 +19,6 @@ public class Woofers3D extends GameInstance
     public void create()
     {
         super.create();
-        pushState(new PlayState(game()));
+        pushState(new SphereState(game()));
     }
 }

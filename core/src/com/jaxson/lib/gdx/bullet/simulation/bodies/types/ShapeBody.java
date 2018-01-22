@@ -101,6 +101,11 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
         setLocalScaling(scale.scl(scale()));
     }
 
+    public void reset()
+    {
+        moveTo(Vector3.Zero);
+    }
+
     private void setLocalScaling(Vector3 scale)
     {
         shape().setScale(scale);

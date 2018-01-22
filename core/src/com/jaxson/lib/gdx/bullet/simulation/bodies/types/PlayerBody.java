@@ -438,7 +438,8 @@ public abstract class PlayerBody
         return characterController().onGround();
     }
 
-    protected void reset()
+    @Override
+    public void reset()
     {
         moveTo(Vector3.Zero);
         velocityPerTick().setZero();

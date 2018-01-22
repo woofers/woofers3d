@@ -42,6 +42,11 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         return body().getAngularVelocity();
     }
 
+    public void setAngularVelocity(Vector3 velocity)
+    {
+        body().setAngularVelocity(velocity);
+    }
+
     public void applyCentralImpulse(Ray ray)
     {
         applyCentralImpulse(ray, 1f);
@@ -68,6 +73,11 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
     public Vector3 linearVelocity()
     {
         return body().getLinearVelocity();
+    }
+
+    public void setLinearVelocity(Vector3 velocity)
+    {
+        body().setLinearVelocity(velocity);
     }
 
     public MotionState motionState()
@@ -103,5 +113,14 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
     {
         this.motionState = motionState;
         body().setMotionState(motionState);
+    }
+
+    @Override
+    public void reset()
+    {
+        super.reset();
+        setRotation(0f, 0f, 0f);
+        setLinearVelocity(Vector3.Zero);
+        setAngularVelocity(Vector3.Zero);
     }
 }

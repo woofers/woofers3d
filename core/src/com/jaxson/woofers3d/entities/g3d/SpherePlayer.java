@@ -43,7 +43,7 @@ public class SpherePlayer extends RigidBody
         this.rightKey = keyboard.key("D");
         this.jumpKey = keyboard.key("Space");
         // this.cameraKey = keyboard().key("T");
-        // this.resetKey = keyboard().key("Y");
+        this.resetKey = keyboard().key("Y");
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SpherePlayer extends RigidBody
             }
         }
         // if (cameraKey.isPressed()) toggleCamera();
-        // if (resetKey.isPressed()) reset();
+        if (resetKey.isPressed()) reset();
     }
 
     private Keyboard keyboard()
