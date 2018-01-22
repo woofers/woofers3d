@@ -34,7 +34,8 @@ public class SpherePlayer extends RigidBody
         super(readModel(PATH), new SphereShape(RADIUS), 1f);
         setCollisionShapeScale(HITBOX_SCALE);
         scale(SCALE);
-        rotate(180f, 0f, 0f);
+        camera.setTarget(this);
+        // rotate(180f, 0f, 0f);
 
         this.keyboard = Inputs.keyboard();
         this.accelerometer = new GameAccelerometer(Inputs.accelerometer());

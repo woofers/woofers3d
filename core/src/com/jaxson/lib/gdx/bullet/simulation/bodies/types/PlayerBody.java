@@ -15,9 +15,11 @@ import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.math.Reciprocal;
 import com.jaxson.lib.util.Printer;
+import com.jaxson.lib.util.Resetable;
 
 public abstract class PlayerBody
         extends ShapeBody<btPairCachingGhostObject, ConvexShape>
+        implements Resetable
 {
     private static final float GRAVITY_SCALE = 1f;
     private static final float GHOST_MASS = -1f;

@@ -8,8 +8,10 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.MotionState;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 import com.jaxson.lib.gdx.math.GdxMath;
+import com.jaxson.lib.util.Resetable;
 
 public class RigidBody extends ShapeBody<btRigidBody, Shape>
+        implements Resetable
 {
     private MotionState motionState;
 
