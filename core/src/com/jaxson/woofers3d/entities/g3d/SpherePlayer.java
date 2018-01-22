@@ -2,6 +2,7 @@ package com.jaxson.woofers3d.entities.g3d;
 
 import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
+import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraControlls;
 import com.jaxson.lib.gdx.bullet.simulation.collision.SphereShape;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
 import com.jaxson.lib.gdx.input.GameAccelerometer;
@@ -17,6 +18,8 @@ public class SpherePlayer extends RigidBody
     private static final float HITBOX_SCALE = 1f;
     private static final float SPEED = 4f;
     private static final float JUMP_IMPULSE = 350f;
+
+    private CameraControlls cameraControlls;
 
     private Keyboard keyboard;
     private GameAccelerometer accelerometer;
@@ -34,8 +37,9 @@ public class SpherePlayer extends RigidBody
         super(readModel(PATH), new SphereShape(RADIUS), 1f);
         setCollisionShapeScale(HITBOX_SCALE);
         scale(SCALE);
-        camera.setTarget(this);
         // rotate(180f, 0f, 0f);
+
+        this.cameraControlls = new CameraControlls<SpherePlayer>(this, camera);
 
         this.keyboard = Inputs.keyboard();
         this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -44,7 +48,7 @@ public class SpherePlayer extends RigidBody
         this.leftKey = keyboard.key("A");
         this.rightKey = keyboard.key("D");
         this.jumpKey = keyboard.key("Space");
-        // this.cameraKey = keyboard().key("T");
+        this.cameraKey = keyboard().key("T");
         this.resetKey = keyboard().key("Y");
     }
 
@@ -82,7 +86,7 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
             }
         }
-        // if (cameraKey.isPressed()) toggleCamera();
+        if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
     }
 

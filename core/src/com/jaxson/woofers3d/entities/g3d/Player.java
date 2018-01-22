@@ -33,7 +33,7 @@ public class Player extends CameraPlayerBody
     protected void input(float dt)
     {
         super.input(dt);
-        if (cameraKey.isPressed()) toggleCamera();
+        if (cameraKey.isPressed()) cameraControlls().toggleCamera();
         if (resetKey.isPressed()) reset();
     }
 

@@ -7,12 +7,12 @@ import com.jaxson.lib.util.Unwrapable;
 
 public class CameraPlayerBody extends PlayerBody
 {
-    private TargetCamera camera;
+    private CameraControlls cameraControlls;
 
     public CameraPlayerBody(Model model, ConvexShape shape, TargetCamera camera)
     {
         super(model, shape);
-        setCamera(camera);
+        this.cameraControlls = new CameraControlls<CameraPlayerBody>(this, camera);
     }
 
     public CameraPlayerBody(Model model, TargetCamera camera)
@@ -34,24 +34,19 @@ public class CameraPlayerBody extends PlayerBody
 
     public TargetCamera camera()
     {
-        return camera;
+        return cameraControlls().camera();
     }
 
-    public boolean cameraIsLocked()
+    public CameraControlls cameraControlls()
     {
-        return !camera().hasTarget();
+        return cameraControlls;
     }
 
     @Override
     public void dispose()
     {
         super.dispose();
-        unlockCamera();
-    }
-
-    public boolean hasCamera()
-    {
-        return camera() != null;
+        cameraControlls().dispose();
     }
 
     @Override
@@ -60,41 +55,11 @@ public class CameraPlayerBody extends PlayerBody
         super.input(dt);
     }
 
-    public void lockCamera()
-    {
-        if (hasCamera()) camera().setTarget(null);
-    }
-
     @Override
     public void reset()
     {
         super.reset();
-        unlockCamera();
-    }
-
-    public void setCamera(TargetCamera camera)
-    {
-        if (camera == camera()) return;
-        if (camera == null) lockCamera();
-        this.camera = camera;
-        unlockCamera();
-    }
-
-    public void toggleCamera()
-    {
-        if (cameraIsLocked())
-        {
-            unlockCamera();
-        }
-        else
-        {
-            lockCamera();
-        }
-    }
-
-    public void unlockCamera()
-    {
-        if (hasCamera()) camera().setTarget(this);
+        cameraControlls().reset();
     }
 
     @Override
