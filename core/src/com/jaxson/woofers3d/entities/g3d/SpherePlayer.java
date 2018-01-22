@@ -34,6 +34,7 @@ public class SpherePlayer extends RigidBody
         super(readModel(PATH), new SphereShape(RADIUS), 1f);
         setCollisionShapeScale(HITBOX_SCALE);
         scale(SCALE);
+        rotate(180f, 0f, 0f);
 
         this.keyboard = Inputs.keyboard();
         this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
@@ -59,20 +60,17 @@ public class SpherePlayer extends RigidBody
 
         if (keyboard().exists())
         {
-            if (true)
+            if (leftKey.isDown())
             {
-                if (leftKey.isDown())
-                {
-                    applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
-                }
-                if (rightKey.isDown())
-                {
-                    applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
-                }
-                if (onGround() && jumpKey.isDown())
-                {
-                    applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
-                }
+                applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
+            }
+            if (rightKey.isDown())
+            {
+                applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
+            }
+            if (onGround() && jumpKey.isDown())
+            {
+                applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
             }
             if (forwardKey.isDown())
             {
