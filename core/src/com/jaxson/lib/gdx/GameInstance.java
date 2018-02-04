@@ -3,7 +3,7 @@ package com.jaxson.lib.gdx;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+//import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.gdx.states.State;
 import com.jaxson.lib.gdx.util.Pauseable;
@@ -155,8 +155,8 @@ public abstract class GameInstance extends ApplicationAdapter
      * Starts the game on desktop.
      * @return {@link Lwjgl3Application} - Instance of the game
      */
-    public Lwjgl3Application startLwjgl3()
-    {
-        return new Lwjgl3Application(this, config().toLwjgl3Config());
-    }
+//    public Lwjgl3Application startLwjgl3()
+//    {
+//        return new Lwjgl3Application(this, config().toLwjgl3Config());
+//    }
 }

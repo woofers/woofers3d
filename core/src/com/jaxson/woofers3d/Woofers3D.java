@@ -19,6 +19,6 @@ public class Woofers3D extends GameInstance
     public void create()
     {
         super.create();
-        pushState(new SphereState(game()));
+        pushState(new PlayState(game()));
     }
 }

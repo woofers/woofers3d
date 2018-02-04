@@ -129,7 +129,6 @@ project(":core") {
 		compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
 		compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
 		compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-		compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
 		compile 'com.google.code.gson:gson:2.8.1'
 	}
 }

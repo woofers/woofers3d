@@ -3,7 +3,7 @@ package com.jaxson.lib.gdx;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+//import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.jaxson.lib.gdx.backend.Game;
 import com.jaxson.lib.io.DataFile;
@@ -550,22 +550,22 @@ public class GameConfig
      * {@link GameConfig}.
      * @return {@link Lwjgl3ApplicationConfiguration} - The config.
      */
-    public Lwjgl3ApplicationConfiguration toLwjgl3Config()
-    {
-        Lwjgl3ApplicationConfiguration config
-                = new Lwjgl3ApplicationConfiguration();
-        config.setTitle(title());
-        config.setWindowedMode(width(), height());
-        config.useVsync(isVsync());
-        config.setResizable(isResizable());
-        config.setWindowPosition(x(), y());
-        config.useOpenGL3(usesGL30(), 3, 2);
-        // config.foregroundFPS = getMaxFps();
-        // config.backgroundFPS = getBackgroundFps();
-        // config.samples = getAntiAliasing();
-        // if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
-        return config;
-    }
+//    public Lwjgl3ApplicationConfiguration toLwjgl3Config()
+//    {
+//        Lwjgl3ApplicationConfiguration config
+//                = new Lwjgl3ApplicationConfiguration();
+//        config.setTitle(title());
+//        config.setWindowedMode(width(), height());
+//        config.useVsync(isVsync());
+//        config.setResizable(isResizable());
+//        config.setWindowPosition(x(), y());
+//        config.useOpenGL3(usesGL30(), 3, 2);
+//        // config.foregroundFPS = getMaxFps();
+//        // config.backgroundFPS = getBackgroundFps();
+//        // config.samples = getAntiAliasing();
+//        // if (getIcon().exists()) config.addIcon(getIcon().path(), ICON_TYPE);
+//        return config;
+//    }
 
     /**
      * Gets the {@link LwjglApplicationConfiguration} of the {@link GameConfig}.
