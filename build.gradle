@@ -1,150 +1,139 @@
-
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmmss')
-    return formattedDate
-}
-
-
 buildscript {
 
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
-    }
-    dependencies {
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:2.2.0'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.1'
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+		jcenter()
+	}
+	dependencies {
+		classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+		classpath 'com.android.tools.build:gradle:2.2.0'
+		classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.1'
 
 
-    }
+	}
 }
 
 allprojects {
-    apply plugin: "eclipse"
-    apply plugin: "idea"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
 
-    tasks.withType(JavaCompile) {
-        sourceCompatibility = "1.7"
-        targetCompatibility = "1.7"
-    }
+	tasks.withType(JavaCompile) {
+		sourceCompatibility = "1.8"
+		targetCompatibility = "1.8"
+	}
 
-    version = '1.0'
-    ext {
-        appName = "my-gdx-game"
-        gdxVersion = '1.9.8'
-        roboVMVersion = '2.3.1'
-        box2DLightsVersion = '1.4'
-        ashleyVersion = '1.7.0'
-        aiVersion = '1.8.0'
-        gsonVersion = '2.8.1'
-        poiVersion = '3.10.1'
-    }
+	version = '1.0'
+	ext {
+		appName = "my-gdx-game"
+		gdxVersion = '1.9.8'
+		roboVMVersion = '2.3.1'
+		box2DLightsVersion = '1.4'
+		ashleyVersion = '1.7.0'
+		aiVersion = '1.8.0'
+	}
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    }
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+		maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+	}
 }
 
 project(":desktop") {
-    apply plugin: "java"
+	apply plugin: "java"
 
 
-    dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
+	dependencies {
+		compile project(":core")
+		compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+		compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+		compile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
 
-    }
+	}
 }
 
 project(":android") {
-    apply plugin: "android"
+	apply plugin: "android"
 
-    configurations { natives }
+	configurations { natives }
 
-    dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
-        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
-        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-        compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-arm64-v8a"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86_64"
+	dependencies {
+		compile project(":core")
+		compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
+		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
+		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+		compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
+		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
+		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
+		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
+		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
+		compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+		natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-armeabi"
+		natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-armeabi-v7a"
+		natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-arm64-v8a"
+		natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86"
+		natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86_64"
 
-    }
+	}
 }
 
 project(":ios") {
-    apply plugin: "java"
-    apply plugin: "robovm"
+	apply plugin: "java"
+	apply plugin: "robovm"
 
 
-    dependencies {
-        compile project(":core")
-        compile "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
-        compile "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
-        compile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-ios"
+	dependencies {
+		compile project(":core")
+		compile "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+		compile "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+		compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+		compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
+		compile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-ios"
 
-    }
+	}
 }
 
 project(":html") {
-    apply plugin: "gwt"
-    apply plugin: "war"
+	apply plugin: "gwt"
+	apply plugin: "war"
 
 
-    dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
+	dependencies {
+		compile project(":core")
+		compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+		compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+		compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
+		compile "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
 
-    }
+	}
 }
 
 project(":core") {
-    apply plugin: "java"
+	apply plugin: "java"
 
 
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        compile 'com.google.code.gson:gson:2.8.1'
-
-    }
+	dependencies {
+		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+		compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+		compile 'com.google.code.gson:gson:2.8.1'
+	}
 }
 
 tasks.eclipse.doLast {
-    delete ".project"
+	delete ".project"
 }
