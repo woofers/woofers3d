@@ -10,6 +10,7 @@ import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.woofers3d.entities.g3d.SpherePlayer;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 
 public class SphereState extends BulletState
 {
@@ -31,11 +32,13 @@ public class SphereState extends BulletState
         super(game);
         setSubState(new PauseState(game));
 
+        game().display().setClearColor(new MyColor(244, 164, 96));
+
         camera = new TargetCamera(width(), height());
         applyPhysics(camera);
         view().modelView().setCamera(camera);
 
-        floor = new Floor();
+        floor = new Floor(new MyColor(73, 49, 28));
         applyPhysics(floor);
         add(floor);
 

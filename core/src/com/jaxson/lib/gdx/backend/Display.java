@@ -40,7 +40,6 @@ public class Display extends GameObject
             = GL20.GL_COVERAGE_BUFFER_BIT_NV;
 
     private static final int EMPTY_MASK = GL20.GL_ZERO;
-    private static final Color CLEAR_COLOR = Color.ROYAL;
     private static final int NATIVE_ROTATION_OFFSET = 90;
 
     private Game game;
@@ -50,6 +49,7 @@ public class Display extends GameObject
     private DisplayMode windowedMode;
     private DisplayMode fullscreenMode;
     private DisplayMode defaultMode;
+    private Color clearColor = Color.ROYAL;
 
     private Keyboard keyboard;
     private Mouse mouse;
@@ -132,11 +132,20 @@ public class Display extends GameObject
     }
 
     /**
+     * Gets the clear color of the {@link Display}.
+     * @return {@link Color} - The clear color of the {@link Display}
+     */
+    public Color clearColor()
+    {
+        return clearColor;
+    }
+
+    /**
      * Clears the screen with the {@link #clearMask()} and clear color.
      */
     public void clearScreen()
     {
-        clearScreen(CLEAR_COLOR);
+        clearScreen(clearColor());
         clearScreen(clearMask());
     }
 
@@ -636,6 +645,11 @@ public class Display extends GameObject
     {
         super.update(dt);
         if (!isPaused()) view().update(dt);
+    }
+
+    public void setClearColor(Color color)
+    {
+        this.clearColor = color;
     }
 
     private void updateLastWindowedMode()
