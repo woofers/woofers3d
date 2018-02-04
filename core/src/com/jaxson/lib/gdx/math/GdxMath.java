@@ -9,6 +9,7 @@ import com.jaxson.lib.math.Reciprocal;
 public class GdxMath extends MyMath
 {
     public static float FLOAT_ROUNDING = MathUtils.FLOAT_ROUNDING_ERROR;
+    public static float FLOAT_ROUNDING_GROUND = 0.025328785f;
 
     public static Vector3 absVector(Vector3 vector)
     {

@@ -88,6 +88,7 @@ public class SpherePlayer extends RigidBody
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
+        System.out.println(linearVelocity().y + "   " + angularVelocity().y + "  " + onGround());
     }
 
     private Keyboard keyboard()

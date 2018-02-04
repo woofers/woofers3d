@@ -251,8 +251,13 @@ public class BulletWorld extends GameObject
 
     public Optional<EntityBody> rayTrace(Ray ray)
     {
+        return rayTrace(ray, BulletRay.MAX_DISTANCE);
+    }
+
+    public Optional<EntityBody> rayTrace(Ray ray, float distance)
+    {
         Optional<btCollisionObject> body
-                = rayCallback.collisionObject(ray, this);
+                = rayCallback.collisionObject(ray, distance, this);
         if (!body.exists()) return new Optional<>();
         for (EntityBody entity: objects)
             if (entity.isBody(body.unwrap())) return new Optional<>(entity);

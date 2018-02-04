@@ -89,7 +89,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
     public boolean onGround()
     {
-        return Math.signum(linearVelocity().y) <= GdxMath.FLOAT_ROUNDING;
+        return Math.abs(linearVelocity().y) <= GdxMath.FLOAT_ROUNDING_GROUND;
     }
 
     private void recalculateInertia()

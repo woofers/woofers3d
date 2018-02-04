@@ -10,7 +10,7 @@ import com.jaxson.lib.util.Optional;
 public class BulletRay implements Disposable
 {
     private static final float CLOSEST_HIT_FRACTION = 1f;
-    private static final float MAX_DISTANCE = 50f;
+    public static final float MAX_DISTANCE = 50f;
     private static final Vector3 RAY_START = Vector3.Zero;
     private static final Vector3 RAY_END = Vector3.Y;
 
