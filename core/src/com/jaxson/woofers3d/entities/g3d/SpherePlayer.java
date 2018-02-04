@@ -17,7 +17,7 @@ public class SpherePlayer extends RigidBody
     private static final float RADIUS = 0.34231704f / 2f + 0.03f;
     private static final float HITBOX_SCALE = 1f;
     private static final float SPEED = 4f;
-    private static final float JUMP_IMPULSE = 350f;
+    private static final float JUMP_IMPULSE = 365f;
 
     private CameraControlls cameraControlls;
 
@@ -88,7 +88,6 @@ public class SpherePlayer extends RigidBody
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
-        System.out.println(linearVelocity().y + "   " + angularVelocity().y + "  " + onGround());
     }
 
     private Keyboard keyboard()
