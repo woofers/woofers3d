@@ -37,6 +37,7 @@ public class PlayState extends BulletState
 
     private Floor floor;
     private Floor ramp;
+    private RigidBody imported;
     private RigidBox blocker;
     private RigidBox[] boxs;
     private RigidSphere[] spheres;
@@ -56,18 +57,17 @@ public class PlayState extends BulletState
         applyPhysics(camera);
         view().modelView().setCamera(camera);
 
-        final float IMPORT_SCALE = 0.15f;
-
-        for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
-        {
-            object.scale(IMPORT_SCALE);
-            object.moveTo(object.location().scl(IMPORT_SCALE));
-            System.out.println(object.location());
-        }
-
         floor = new Floor();
         applyPhysics(floor);
         add(floor);
+
+        final float IMPORT_SCALE = 0.2f;
+
+        for (RigidBody object: load(new GdxFile("entities/cube/TestCube.g3db")))
+        {
+            object.scale(IMPORT_SCALE);
+            object.moveTo(object.location().scl(IMPORT_SCALE));
+        }
 
         ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
         ramp.rotate(new Vector3(0f, 0f, 23f));

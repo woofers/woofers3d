@@ -28,7 +28,6 @@ public class WorldImporter
 
         private void add(RigidBody entity)
         {
-            System.out.println(entity);
             entities.add(entity);
         }
 
