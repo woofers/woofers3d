@@ -26,9 +26,10 @@ public class WorldImporter
             this.entities = new MyArrayList<>();
         }
 
-        private void add(RigidBody entitiy)
+        private void add(RigidBody entity)
         {
-            entities.add(entitiy);
+            System.out.println(entity);
+            entities.add(entity);
         }
 
         @Override

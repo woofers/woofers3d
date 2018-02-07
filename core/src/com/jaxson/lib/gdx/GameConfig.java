@@ -41,7 +41,7 @@ public class GameConfig
     public static final int WINDOW_CENTER = -1;
 
     private static final FileType ICON_TYPE = FileType.Internal;
-    private static final float SENSITIVITY = 1.3f;
+    private static final float SENSITIVITY = 3.2f;
     private static final String ICON_PATH = "icon.png";
 
     private String title = "New Game";

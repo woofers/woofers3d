@@ -23,6 +23,7 @@ import com.jaxson.lib.gdx.math.random.RandomVector3;
 import com.jaxson.lib.math.random.RandomNumber;
 import com.jaxson.lib.util.Optional;
 import com.jaxson.woofers3d.entities.g3d.Player;
+import com.jaxson.lib.gdx.io.GdxFile;
 
 public class PlayState extends BulletState
 {
@@ -55,13 +56,14 @@ public class PlayState extends BulletState
         applyPhysics(camera);
         view().modelView().setCamera(camera);
 
-        // final float IMPORT_SCALE = 0.15f;
+        final float IMPORT_SCALE = 0.15f;
 
-        // for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
-        // {
-        // object.scale(IMPORT_SCALE);
-        // object.moveTo(object.location().scl(IMPORT_SCALE));
-        // }
+        for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
+        {
+            object.scale(IMPORT_SCALE);
+            object.moveTo(object.location().scl(IMPORT_SCALE));
+            System.out.println(object.location());
+        }
 
         floor = new Floor();
         applyPhysics(floor);
