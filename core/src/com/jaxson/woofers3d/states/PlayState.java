@@ -68,7 +68,7 @@ public class PlayState extends BulletState
             object.scale(IMPORT_SCALE);
             object.moveTo(object.location().scl(IMPORT_SCALE));
         }
-
+/*
         ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
         ramp.rotate(new Vector3(0f, 0f, 23f));
         ramp.translateABS(new Vector3(1f, 0.4f, 5f));
@@ -114,7 +114,7 @@ public class PlayState extends BulletState
         softBox = new SoftBox(physicsWorld());
         applyPhysics(softBox);
         add(softBox);
-
+*/
         player = new Player(camera);
         applyPhysics(player);
         add(player);
