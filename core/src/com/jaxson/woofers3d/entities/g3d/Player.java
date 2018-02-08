@@ -2,6 +2,7 @@ package com.jaxson.woofers3d.entities.g3d;
 
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraPlayerBody;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.jaxson.lib.gdx.input.KeyboardKey;
 
 public class Player extends CameraPlayerBody
@@ -18,6 +19,7 @@ public class Player extends CameraPlayerBody
         super(readModel(PATH), camera);
         setCollisionShapeScale(HITBOX_SCALE);
         scale(SCALE);
+        moveTo(new Vector3(0f, 10f, 0f));
 
         this.cameraKey = keyboard().key("T");
         this.resetKey = keyboard().key("Y");
