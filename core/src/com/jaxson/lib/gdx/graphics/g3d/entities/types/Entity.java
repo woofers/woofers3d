@@ -219,7 +219,7 @@ public abstract class Entity extends GameObject
 
     public void setRotation(Quaternion quaternion)
     {
-        transform().set(quaternion);
+        transform().rotate(quaternion);
     }
 
     public void setRotation(Vector3 angles)

@@ -63,11 +63,10 @@ public class PlayState extends BulletState
 
         final float IMPORT_SCALE = 0.2f;
 
-        for (RigidBody object: load(new GdxFile("entities/testScene/testScene.g3db")))
+        for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
         {
             object.scale(IMPORT_SCALE);
             object.moveTo(object.location().scl(IMPORT_SCALE));
-            imported = object;
         }
 
         ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
@@ -167,7 +166,6 @@ public class PlayState extends BulletState
     public void update(float dt)
     {
         super.update(dt);
-        System.out.println(imported.location());
         counter += dt;
         while (counter >= 0.05f)
         {

@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.bullet.simulation;
 
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
@@ -43,6 +44,7 @@ public class WorldImporter
                     = new ModelInstance(model, nodeName, true, true);
             instance.userData = IMPORTED;
             instance.transform.set(startTransform);
+            System.out.println(instance.transform.getTranslation(new Vector3()));
             RigidBody body = new RigidBody(instance, new Shape(shape), mass);
             add(body);
             return body.body();
