@@ -44,9 +44,15 @@ public class WorldImporter
                     = new ModelInstance(model, nodeName, true, true);
             instance.userData = IMPORTED;
             instance.transform.set(startTransform);
-            System.out.println(instance.transform.getTranslation(new Vector3()));
             RigidBody body = new RigidBody(instance, new Shape(shape), mass);
             add(body);
+
+            // Compensate for Z Up in Blender
+            Vector3 location = body.location();
+            location.set(location.x, location.z, location.y);
+            body.moveTo(location);
+            System.out.println(body.location());
+
             return body.body();
         }
 
