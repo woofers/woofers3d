@@ -54,11 +54,11 @@ public class WorldImporter
             RigidBody body = new RigidBody(instance, bodyShape, mass);
             add(body);
 
-
             // Compensate for Z Up in Blender
             Vector3 location = body.location();
             location.set(location.x, location.z, location.y);
-            body.rotate(0f, 45f, 0f);
+                //.rotate(Vector3.X, -90f);
+            body.rotate(0f, 225f, 0f);
             body.moveTo(location);
 
 
