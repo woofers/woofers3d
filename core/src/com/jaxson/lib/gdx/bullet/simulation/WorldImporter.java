@@ -56,9 +56,9 @@ public class WorldImporter
 
             // Compensate for Z Up in Blender
             Vector3 location = body.location();
-            location.set(location.x, location.z, location.y);
-                //.rotate(Vector3.X, -90f);
-            body.rotate(0f, 225f, 0f);
+            body.moveTo(Vector3.Zero);
+            body.transform().rotate(Vector3.X, -135f);
+            location.rotate(Vector3.X, -90f);
             body.moveTo(location);
 
 
