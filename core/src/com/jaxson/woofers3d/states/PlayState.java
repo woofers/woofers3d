@@ -61,7 +61,7 @@ public class PlayState extends BulletState
         applyPhysics(floor);
         add(floor);
 
-        final float IMPORT_SCALE = 0.15f;
+        final float IMPORT_SCALE = 1f;
 
         for (RigidBody object: load(new GdxFile("entities/testScene/testScene.g3db")))
         {

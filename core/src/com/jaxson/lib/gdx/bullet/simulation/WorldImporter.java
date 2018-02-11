@@ -44,13 +44,23 @@ public class WorldImporter
                     = new ModelInstance(model, nodeName, true, true);
             instance.userData = IMPORTED;
             instance.transform.set(startTransform);
-            RigidBody body = new RigidBody(instance, new Shape(shape), mass);
+
+            Shape bodyShape = new Shape(shape);
+            Vector3 scale = bodyShape.scale();
+            scale.set(scale.x, scale.z, scale.y);
+            //instance.nodes.get(0).scale.set(scale);
+            //instance.calculateTransforms();
+
+            RigidBody body = new RigidBody(instance, bodyShape, mass);
             add(body);
+
 
             // Compensate for Z Up in Blender
             Vector3 location = body.location();
             location.set(location.x, location.z, location.y);
+            body.rotate(0f, 45f, 0f);
             body.moveTo(location);
+
 
             return body.body();
         }
