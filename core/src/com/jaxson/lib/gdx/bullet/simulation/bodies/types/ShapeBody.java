@@ -26,6 +26,7 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
     }
 
     private S shape;
+    private Vector3 originalBodyScale;
 
     public ShapeBody(Model model, B body, S shape)
     {
@@ -46,6 +47,7 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
     {
         super(modelInstance, body, mass);
         setCollisionShape(shape);
+        this.originalBodyScale = new Vector3(1f, 1f, 1f);
     }
 
     @Override
@@ -76,10 +78,10 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
     }
 
     @Override
-    public void scale(Vector3 scale)
+    public void setScale(Vector3 scale)
     {
-        super.scale(scale);
-        setLocalScaling(scale.scl(shapeScale()));
+        super.setScale(scale);
+        setCollisionShapeScale(scale);
     }
 
     public void setCollisionShape(S shape)
@@ -98,17 +100,12 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
 
     public void setCollisionShapeScale(Vector3 scale)
     {
-        setLocalScaling(scale.scl(scale()));
+        shape().setScale(scale);
     }
 
     public void reset()
     {
         moveTo(Vector3.Zero);
-    }
-
-    private void setLocalScaling(Vector3 scale)
-    {
-        shape().setScale(scale);
     }
 
     public S shape()

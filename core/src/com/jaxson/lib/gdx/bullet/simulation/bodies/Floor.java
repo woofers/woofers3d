@@ -31,7 +31,7 @@ public class Floor extends RigidBox
     {
         super(color);
         setMass(MASS);
-        scale(new Vector3(width, THICKNESS, height));
+        setScale(new Vector3(width, THICKNESS, height));
 
         // Move slightly down so objects will not spawn in the floor
         translate(new Vector3(0f, -1f, 0f));

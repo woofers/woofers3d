@@ -51,7 +51,6 @@ public class WorldImporter
             Vector3 location = body.location();
             location.set(location.x, location.z, location.y);
             body.moveTo(location);
-            System.out.println(body.location());
 
             return body.body();
         }

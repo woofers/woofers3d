@@ -18,7 +18,7 @@ public class Player extends CameraPlayerBody
     {
         super(readModel(PATH), camera);
         setCollisionShapeScale(HITBOX_SCALE);
-        scale(SCALE);
+        setScale(SCALE);
         moveTo(new Vector3(0f, -0.25f, -1f));
 
         this.cameraKey = keyboard().key("T");

@@ -36,7 +36,7 @@ public class SpherePlayer extends RigidBody
     {
         super(readModel(PATH), new SphereShape(RADIUS), 1f);
         setCollisionShapeScale(HITBOX_SCALE);
-        scale(SCALE);
+        setScale(SCALE);
         // rotate(180f, 0f, 0f);
 
         this.cameraControlls = new CameraControlls<SpherePlayer>(this, camera);

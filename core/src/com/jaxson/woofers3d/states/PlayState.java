@@ -61,11 +61,11 @@ public class PlayState extends BulletState
         applyPhysics(floor);
         add(floor);
 
-        final float IMPORT_SCALE = 0.2f;
+        final float IMPORT_SCALE = 0.15f;
 
-        for (RigidBody object: load(new GdxFile("btscene1.g3dj")))
+        for (RigidBody object: load(new GdxFile("entities/testScene/testScene.g3db")))
         {
-            object.scale(IMPORT_SCALE);
+            object.setScale(IMPORT_SCALE);
             object.moveTo(object.location().scl(IMPORT_SCALE));
         }
 

@@ -66,8 +66,12 @@ public abstract class BulletState extends State
     public MyArrayList<RigidBody> load(GdxFile file)
     {
         MyArrayList<RigidBody> imported = physicsWorld().load(file);
+        RigidBody t = null;
         for (RigidBody entity: imported)
+        {
             add(entity);
+            t = entity;
+        }
         return imported;
     }
 

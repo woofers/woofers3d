@@ -30,6 +30,8 @@ public abstract class Entity extends GameObject
     }
 
     private ModelInstance modelInstance;
+    private Vector3 currentScale;
+    private Vector3 currentSize;
 
     public Entity(Model model)
     {
@@ -201,12 +203,12 @@ public abstract class Entity extends GameObject
         return rootNode().scale;
     }
 
-    public void scale(float scale)
+    public void setScale(float scale)
     {
-        scale(new Vector3(scale, scale, scale));
+        setScale(new Vector3(scale, scale, scale));
     }
 
-    public void scale(Vector3 scale)
+    public void setScale(Vector3 scale)
     {
         rootNode().scale.set(scale);
         calculateTransforms();
@@ -229,7 +231,7 @@ public abstract class Entity extends GameObject
 
     public void setSize(Vector3 size)
     {
-        scale(GdxMath.divideVector(size, size()));
+        setScale(GdxMath.divideVector(size, size()));
     }
 
     public Vector3 size()
