@@ -47,7 +47,7 @@ public class WorldImporter
 
             Shape bodyShape = new Shape(shape);
             Vector3 scale = bodyShape.scale();
-            scale.set(scale.x, scale.z, scale.y);
+            //scale.set(scale.x, scale.z, scale.y);
             //instance.nodes.get(0).scale.set(scale);
             //instance.calculateTransforms();
 
@@ -55,13 +55,12 @@ public class WorldImporter
             add(body);
 
             // Compensate for Z Up in Blender
-            Vector3 location = body.location();
+            Vector3 location = body.transform().getTranslation(new Vector3());
             body.transform().translate(-location.x, -location.y, -location.z);
             body.transform().rotate(Vector3.X, -90f);
             body.transform().translate(location.x, location.y, location.z);
             location.rotate(Vector3.X, -90f);
             body.moveTo(location);
-
 
             return body.body();
         }
