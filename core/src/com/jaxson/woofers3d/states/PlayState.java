@@ -65,8 +65,8 @@ public class PlayState extends BulletState
 
         for (RigidBody object: load(new GdxFile("entities/testScene/testScene.g3db")))
         {
-            object.setScale(IMPORT_SCALE);
-            object.moveTo(object.location().scl(IMPORT_SCALE));
+            //object.setScale(IMPORT_SCALE);
+            //object.moveTo(object.location().scl(IMPORT_SCALE));
         }
 
         ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));

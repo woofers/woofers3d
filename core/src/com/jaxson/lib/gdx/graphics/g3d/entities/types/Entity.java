@@ -216,7 +216,8 @@ public abstract class Entity extends GameObject
 
     public void setRotation(float yaw, float pitch, float roll)
     {
-        transform().setFromEulerAngles(yaw, pitch, roll);
+        rotate(rotation().scl(-1f));
+        rotate(new Vector3(yaw, pitch, roll));
     }
 
     public void setRotation(Quaternion quaternion)
