@@ -61,18 +61,16 @@ public class PlayState extends BulletState
         applyPhysics(floor);
         add(floor);
 
-        final float IMPORT_SCALE = 0.45f;
-
-        load(new GdxFile("entities/testScene/testScene.g3db"), IMPORT_SCALE);
+        load(new GdxFile("entities/testScene/testScene.g3db"));
 
         ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
-        ramp.translate(new Vector3(1f, 0.4f, 5f));
+        ramp.moveTo(new Vector3(1f, -0.6f, 5f));
         ramp.setRotation(new Vector3(0f, 0f, 23f));
         applyPhysics(ramp);
         add(ramp);
 
         blocker = new Floor(1f, 1f, new MyColor(250, 250, 250));
-        blocker.translate(new Vector3(3.25f, 0.64f, 5f));
+        blocker.moveTo(new Vector3(3.25f, -0.36f, 5f));
         applyPhysics(blocker);
         add(blocker);
 
