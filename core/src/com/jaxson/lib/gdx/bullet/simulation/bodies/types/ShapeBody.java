@@ -26,7 +26,6 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
     }
 
     private S shape;
-    private Vector3 originalBodyScale;
 
     public ShapeBody(Model model, B body, S shape)
     {
@@ -47,7 +46,6 @@ public abstract class ShapeBody<B extends btCollisionObject, S extends Shape>
     {
         super(modelInstance, body, mass);
         setCollisionShape(shape);
-        this.originalBodyScale = new Vector3(1f, 1f, 1f);
     }
 
     @Override

@@ -31,8 +31,6 @@ public abstract class Entity extends GameObject
     }
 
     private ModelInstance modelInstance;
-    private Vector3 currentScale;
-    private Vector3 currentSize;
 
     public Entity(Model model)
     {
@@ -204,6 +202,16 @@ public abstract class Entity extends GameObject
         return rootNode().scale;
     }
 
+    public void scale(float scale)
+    {
+        setScale(scale().scl(scale));
+    }
+
+    public void scale(Vector3 scale)
+    {
+        setScale(scale().scl(scale));
+    }
+
     public void setScale(float scale)
     {
         setScale(new Vector3(scale, scale, scale));
@@ -233,7 +241,7 @@ public abstract class Entity extends GameObject
 
     public void setSize(Vector3 size)
     {
-        setScale(GdxMath.divideVector(size, size()));
+        setScale(GdxMath.divideVector(size, originalSize()));
     }
 
     public Vector3 size()
@@ -245,8 +253,9 @@ public abstract class Entity extends GameObject
     {
         return new Printer(getClass(),
                 new Printer.Label("Location", location()),
+                new Printer.Label("Scale", scale()),
                 new Printer.Label("Size", size()),
-                new Printer.Label("Scale", scale())).toString();
+                new Printer.Label("Original Size", originalSize())).toString();
     }
 
     public Matrix4 transform()
