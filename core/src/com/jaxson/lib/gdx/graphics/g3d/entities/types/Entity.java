@@ -13,6 +13,7 @@ import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.math.Circle;
+import com.jaxson.lib.util.Printer;
 
 public abstract class Entity extends GameObject
 {
@@ -238,6 +239,14 @@ public abstract class Entity extends GameObject
     public Vector3 size()
     {
         return boundingBox().getDimensions(new Vector3());
+    }
+
+    public String toString()
+    {
+        return new Printer(getClass(),
+                new Printer.Label("Location", location()),
+                new Printer.Label("Size", size()),
+                new Printer.Label("Scale", scale())).toString();
     }
 
     public Matrix4 transform()
