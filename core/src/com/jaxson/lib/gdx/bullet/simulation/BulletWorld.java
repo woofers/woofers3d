@@ -232,9 +232,18 @@ public class BulletWorld extends GameObject
 
     public MyArrayList<RigidBody> load(GdxFile file)
     {
+        return load(file, 1f);
+    }
+
+    public MyArrayList<RigidBody> load(GdxFile file, float scale)
+    {
         importer = new WorldImporter(file, world);
         for (RigidBody body: importer.entities())
+        {
             add(body);
+            body.setScale(scale);
+            body.moveTo(body.location().scl(scale));
+        }
         return importer.entities();
     }
 
