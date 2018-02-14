@@ -11,6 +11,7 @@ public class Shape<S extends btCollisionShape> implements Disposable
     public Shape(S shape)
     {
         this.shape = shape;
+        setScale(scale());
     }
 
     public S bulletShape()
