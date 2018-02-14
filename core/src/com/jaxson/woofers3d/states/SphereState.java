@@ -43,7 +43,7 @@ public class SphereState extends BulletState
         add(floor);
 
         player = new SpherePlayer(camera);
-        player.moveTo(new Vector3(0f, 100f, 0f));
+        //player.moveTo(new Vector3(0f, 100f, 0f));
         applyPhysics(player);
         add(player);
 
