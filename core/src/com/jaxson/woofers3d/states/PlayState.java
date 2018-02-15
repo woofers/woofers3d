@@ -61,8 +61,6 @@ public class PlayState extends BulletState
         applyPhysics(floor);
         add(floor);
 
-        load(new GdxFile("entities/testScene/testScene.g3db"));
-
         ramp = new Floor(2f, 1f, new MyColor(250, 250, 250));
         ramp.moveTo(new Vector3(1f, -0.6f, 5f));
         ramp.setRotation(new Vector3(0f, 0f, 23f));

@@ -11,6 +11,7 @@ import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Mouse;
 import com.jaxson.woofers3d.entities.g3d.SpherePlayer;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.jaxson.lib.gdx.io.GdxFile;
 
 public class SphereState extends BulletState
 {
@@ -34,16 +35,13 @@ public class SphereState extends BulletState
 
         game().display().setClearColor(new MyColor(244, 164, 96));
 
+        load(new GdxFile("entities/testScene/testScene.g3db"));
+
         camera = new TargetCamera(width(), height());
         applyPhysics(camera);
         view().modelView().setCamera(camera);
 
-        floor = new Floor(new MyColor(73, 49, 28));
-        applyPhysics(floor);
-        add(floor);
-
         player = new SpherePlayer(camera);
-        //player.moveTo(new Vector3(0f, 100f, 0f));
         applyPhysics(player);
         add(player);
 
