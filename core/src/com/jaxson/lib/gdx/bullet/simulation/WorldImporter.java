@@ -54,6 +54,11 @@ public class WorldImporter
             RigidBody body = new RigidBody(instance, bodyShape, mass);
             add(body);
 
+
+            Vector3 rotation = body.rotation();
+            rotation.set(rotation.z, rotation.y, -rotation.x);
+            body.setRotation(rotation);
+
             // Compensate for Z Up in Blender
             Vector3 location = body.transform().getTranslation(new Vector3());
             body.transform().translate(-location.x, -location.y, -location.z);
@@ -61,6 +66,10 @@ public class WorldImporter
             body.transform().translate(location.x, location.y, location.z);
             location.rotate(Vector3.X, -90f);
             body.moveTo(location);
+
+            //rotation = body.rotation();
+            //body.setRotation(rotation.x, rotation.y, rotation.z);
+            //System.out.println(body.rotation());
 
             return body.body();
         }

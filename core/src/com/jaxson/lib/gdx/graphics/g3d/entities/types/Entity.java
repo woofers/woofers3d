@@ -225,7 +225,9 @@ public abstract class Entity extends GameObject
 
     public void setRotation(float yaw, float pitch, float roll)
     {
-        setRotation(new Vector3(yaw, pitch, roll));
+        Vector3 location = location();
+        transform().setFromEulerAngles(yaw, pitch, roll);
+        moveTo(location);
     }
 
     public void setRotation(Quaternion quaternion)
@@ -235,8 +237,7 @@ public abstract class Entity extends GameObject
 
     public void setRotation(Vector3 angles)
     {
-        rotate(rotation().scl(-1f));
-        rotate(angles);
+        setRotation(angles.x, angles.y, angles. z);
     }
 
     public void setSize(Vector3 size)
