@@ -55,21 +55,16 @@ public class WorldImporter
             add(body);
 
 
+            // Compensate for Z Up in Blender
             Vector3 rotation = body.rotation();
             rotation.set(rotation.z, rotation.y, -rotation.x);
             body.setRotation(rotation);
-
-            // Compensate for Z Up in Blender
-            Vector3 location = body.transform().getTranslation(new Vector3());
-            body.transform().translate(-location.x, -location.y, -location.z);
-            body.transform().rotate(Vector3.X, -90f);
-            body.transform().translate(location.x, location.y, location.z);
-            location.rotate(Vector3.X, -90f);
+            Vector3 location = body.location();
+            location.set(location.x, location.z, -location.y);
             body.moveTo(location);
+            body.rotate(0f, -90f, 0f);
 
-            //rotation = body.rotation();
-            //body.setRotation(rotation.x, rotation.y, rotation.z);
-            //System.out.println(body.rotation());
+
 
             return body.body();
         }
