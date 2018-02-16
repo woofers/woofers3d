@@ -169,8 +169,8 @@ public abstract class Entity extends GameObject
 
     public void rotate(float yaw, float pitch, float roll)
     {
-        rotate(Vector3.X, pitch);
         rotate(Vector3.Y, yaw);
+        rotate(Vector3.X, pitch);
         rotate(Vector3.Z, roll);
     }
 
