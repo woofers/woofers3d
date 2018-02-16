@@ -73,9 +73,9 @@ public class SpherePlayer extends RigidBody
             {
                 applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
             }
-            if (onGround() && jumpKey.isDown())
+            if (jumpKey.isDown())
             {
-                applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
+                applyCentralImpulse(new Vector3(0f, dt * 20f, 0f));
             }
             if (forwardKey.isDown())
             {
