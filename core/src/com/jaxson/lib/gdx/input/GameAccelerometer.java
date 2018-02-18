@@ -94,7 +94,7 @@ public class GameAccelerometer implements Accelerometer
     @Override
     public boolean tiltsUp()
     {
-        return z() > deadZone().y;
+        return z() > deadZone().z;
     }
 
     @Override

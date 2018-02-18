@@ -9,10 +9,16 @@ import com.jaxson.lib.gdx.input.Accelerometer;
 public class BallAccelerometer extends GameAccelerometer
 {
     private static float Y_OFFSET = 0.085f;
+    private static float SHAKE_OFFSET = 0.13f;
 
     public BallAccelerometer(Accelerometer accelerometer)
     {
         super(accelerometer);
+    }
+
+    public boolean shakeUp()
+    {
+        return z() < SHAKE_OFFSET;
     }
 
     @Override

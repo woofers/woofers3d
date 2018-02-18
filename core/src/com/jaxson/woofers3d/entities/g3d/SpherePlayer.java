@@ -176,14 +176,14 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
             }
 
-            if (touchScreen.justTouched() && onGround())
+            if ((touchScreen.justTouched() || accelerometer.shakeUp()) && onGround())
             {
                 applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
             }
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
-        System.out.println(accelerometer.values());
+        System.out.println(onGround());
         //System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
         //        + round(linearVelocity().y) + "m/s, Z "
         //        + round(linearVelocity().z) + "m/s");
