@@ -5,10 +5,11 @@ import com.jaxson.lib.gdx.bullet.simulation.bodies.types.RigidBody;
 import com.jaxson.lib.gdx.bullet.simulation.bodies.types.CameraControlls;
 import com.jaxson.lib.gdx.bullet.simulation.collision.SphereShape;
 import com.jaxson.lib.gdx.graphics.views.TargetCamera;
-import com.jaxson.lib.gdx.input.GameAccelerometer;
+import com.jaxson.lib.woofers3d.input.BallAccelerometer;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.util.Printer;
 import com.jaxson.lib.gdx.math.GdxMath;
 
@@ -25,7 +26,8 @@ public class SpherePlayer extends RigidBody
     private CameraControlls cameraControlls;
 
     private Keyboard keyboard;
-    private GameAccelerometer accelerometer;
+    private TouchScreen touchScreen;
+    private BallAccelerometer accelerometer;
     private KeyboardKey forwardKey;
     private KeyboardKey backwardKey;
     private KeyboardKey leftKey;
@@ -45,7 +47,8 @@ public class SpherePlayer extends RigidBody
         this.cameraControlls = new CameraControlls<SpherePlayer>(this, camera);
 
         this.keyboard = Inputs.keyboard();
-        this.accelerometer = new GameAccelerometer(Inputs.accelerometer());
+        this.accelerometer = new BallAccelerometer(Inputs.accelerometer());
+        this.touchScreen = Inputs.touchScreen();
         this.forwardKey = keyboard.key("W");
         this.backwardKey = keyboard.key("S");
         this.leftKey = keyboard.key("A");
@@ -118,16 +121,72 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
             }
 
-            if (jumpKey.isDown())
+            if (jumpKey.isDown() && onGround())
             {
-                applyCentralImpulse(new Vector3(0f, dt * 20f, 0f));
+                applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
+            }
+        }
+        if (accelerometer.exists())
+        {
+            if (accelerometer.tiltsLeft())
+            {
+                if (absVelocity.x <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
+                }
+            }
+            else if (velocity.x > 0f)
+            {
+                applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
+            }
+
+            if (accelerometer.tiltsRight())
+            {
+                if (absVelocity.x <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
+                }
+            }
+            else if (velocity.x < 0f)
+            {
+                applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
+            }
+
+            if (accelerometer.tiltsForward())
+            {
+                if (absVelocity.z <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
+                }
+            }
+            else if (velocity.z > 0f)
+            {
+                applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
+            }
+
+            if (accelerometer.tiltsBackward())
+            {
+                if (absVelocity.z <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
+                }
+            }
+            else if (velocity.z < 0f)
+            {
+                applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
+            }
+
+            if (touchScreen.justTouched() && onGround())
+            {
+                applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
             }
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
-        System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
-                + round(linearVelocity().y) + "m/s, Z "
-                + round(linearVelocity().z) + "m/s");
+        System.out.println(accelerometer.values());
+        //System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
+        //        + round(linearVelocity().y) + "m/s, Z "
+        //        + round(linearVelocity().z) + "m/s");
     }
 
     private Keyboard keyboard()

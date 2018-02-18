@@ -8,7 +8,7 @@ public class GameAccelerometer implements Accelerometer
 {
     private static final float ALPHA = 0.2f;
     public static final float BALANCE = 0f;
-    public static final float DEAD_ZONE = 0.175f;
+    public static final float DEAD_ZONE = 0.0475f;
 
     private Accelerometer accelerometer;
     private Vector3 alpha;
