@@ -224,7 +224,7 @@ public class BulletWorld extends GameObject
     protected void input(float dt)
     {
         if (keyboard.exists() && debugKey.isPressed()
-                || touchScreen.exists() && touchScreen.fingersTouched(3))
+                || touchScreen.exists() && touchScreen.fingersTouched(4))
         {
             debug.toggle();
         }
