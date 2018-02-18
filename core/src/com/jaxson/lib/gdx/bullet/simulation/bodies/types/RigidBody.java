@@ -9,6 +9,7 @@ import com.jaxson.lib.gdx.bullet.simulation.MotionState;
 import com.jaxson.lib.gdx.bullet.simulation.collision.types.Shape;
 import com.jaxson.lib.gdx.math.GdxMath;
 import com.jaxson.lib.util.Resetable;
+import com.jaxson.lib.util.Printer;
 
 public class RigidBody extends ShapeBody<btRigidBody, Shape>
         implements Resetable
@@ -95,6 +96,18 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
     private void recalculateInertia()
     {
         body().setMassProps(mass(), inertia());
+    }
+
+    @Override
+    public String toString()
+    {
+        return new Printer(getClass(),
+                new Printer.Label("Linear Velocity", angularVelocity()),
+                new Printer.Label("Angular Velocity", linearVelocity()),
+                new Printer.Label("Location", location()),
+                new Printer.Label("Scale", scale()),
+                new Printer.Label("Size", size()),
+                new Printer.Label("Original Size", originalSize())).toString();
     }
 
     @Override

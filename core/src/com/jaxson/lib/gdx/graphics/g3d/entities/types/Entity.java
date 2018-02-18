@@ -250,6 +250,7 @@ public abstract class Entity extends GameObject
         return boundingBox().getDimensions(new Vector3());
     }
 
+    @Override
     public String toString()
     {
         return new Printer(getClass(),
