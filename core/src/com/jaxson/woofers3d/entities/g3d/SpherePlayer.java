@@ -9,6 +9,8 @@ import com.jaxson.lib.gdx.input.GameAccelerometer;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
+import com.jaxson.lib.util.Printer;
+import com.jaxson.lib.gdx.math.GdxMath;
 
 public class SpherePlayer extends RigidBody
 {
@@ -17,6 +19,7 @@ public class SpherePlayer extends RigidBody
     private static final float RADIUS = 0.34231704f / 2f + 0.03f;
     private static final float HITBOX_SCALE = 1f;
     private static final float SPEED = 4f;
+    private static final float MAX_SPEED = 5f;
     private static final float JUMP_IMPULSE = 365f;
 
     private CameraControlls cameraControlls;
@@ -63,31 +66,68 @@ public class SpherePlayer extends RigidBody
     {
         super.input(dt);
 
+        Vector3 velocity = linearVelocity();
+        Vector3 absVelocity = GdxMath.absVector(velocity.cpy());
         if (keyboard().exists())
         {
             if (leftKey.isDown())
             {
-                applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
+                if (absVelocity.x <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
+                }
             }
-            if (rightKey.isDown())
+            else if (velocity.x > 0f)
             {
                 applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
             }
+
+            if (rightKey.isDown())
+            {
+                if (absVelocity.x <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
+                }
+            }
+            else if (velocity.x < 0f)
+            {
+                applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
+            }
+
+            if (forwardKey.isDown())
+            {
+                if (absVelocity.z <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
+                }
+            }
+            else if (velocity.z > 0f)
+            {
+                applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
+            }
+
+            if (backwardKey.isDown())
+            {
+                if (absVelocity.z <= MAX_SPEED)
+                {
+                    applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
+                }
+            }
+            else if (velocity.z < 0f)
+            {
+                applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
+            }
+
             if (jumpKey.isDown())
             {
                 applyCentralImpulse(new Vector3(0f, dt * 20f, 0f));
             }
-            if (forwardKey.isDown())
-            {
-                applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
-            }
-            if (backwardKey.isDown())
-            {
-                applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
-            }
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
+        System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
+                + round(linearVelocity().y) + "m/s, Z "
+                + round(linearVelocity().z) + "m/s");
     }
 
     private Keyboard keyboard()
@@ -96,8 +136,21 @@ public class SpherePlayer extends RigidBody
     }
 
     @Override
+    public String toString()
+    {
+        return new Printer(getClass(),
+                new Printer.Label("Linear Velocity", angularVelocity()),
+                new Printer.Label("Angular Velocity", linearVelocity())).toString();
+    }
+
+    @Override
     public void update(float dt)
     {
         super.update(dt);
+    }
+
+    private static float round(float i)
+    {
+        return Math.round(i * 100.0f) / 100.0f;
     }
 }
