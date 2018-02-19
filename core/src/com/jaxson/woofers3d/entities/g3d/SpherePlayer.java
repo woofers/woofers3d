@@ -21,7 +21,9 @@ public class SpherePlayer extends RigidBody
     private static final float HITBOX_SCALE = 1f;
     private static final float SPEED = 4f;
     private static final float MAX_SPEED = 5f;
-    private static final float JUMP_IMPULSE = 365f;
+    private static final float JUMP_IMPULSE = 340f;
+
+    private int jumpCount;
 
     private CameraControlls cameraControlls;
 
@@ -42,7 +44,6 @@ public class SpherePlayer extends RigidBody
         super(readModel(PATH), new SphereShape(RADIUS), 1f);
         setCollisionShapeScale(HITBOX_SCALE);
         setScale(SCALE);
-        // rotate(180f, 0f, 0f);
 
         this.cameraControlls = new CameraControlls<SpherePlayer>(this, camera);
 
@@ -121,9 +122,9 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
             }
 
-            if (jumpKey.isDown() && onGround())
+            if (jumpKey.isDown())
             {
-                applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
+                jump(dt);
             }
         }
         if (accelerometer.exists())
@@ -176,14 +177,28 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
             }
 
-            if ((touchScreen.justTouched() || accelerometer.shakeUp()) && onGround())
+            if ((touchScreen.justTouched() || accelerometer.shakeUp()))
             {
-                applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
+                //jump(dt);
             }
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
+        // System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
+        //                    + round(linearVelocity().y) + "m/s, Z "
+        //                    + round(linearVelocity().z) + "m/s");
+        //System.out.println(jumpCount);
+    }
 
+    public void jump(float dt)
+    {
+        if (onGround())
+        {
+            applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
+            body().setUserPointer(1l);
+            System.out.println(onGround());
+            jumpCount ++;
+        }
     }
 
     private Keyboard keyboard()
