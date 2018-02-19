@@ -90,7 +90,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
     public boolean onGround()
     {
-        return Math.abs(linearVelocity().y) <= GdxMath.FLOAT_ROUNDING_GROUND;
+        return body().getUserPointer() == 0l;
     }
 
     private void recalculateInertia()
@@ -137,5 +137,22 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         setRotation(0f, 0f, 0f);
         setLinearVelocity(Vector3.Zero);
         setAngularVelocity(Vector3.Zero);
+    }
+
+    @Override
+    public void update(float dt)
+    {
+        super.update(dt);
+
+        // Set Body's User Data to Y Component of Velocity
+        // Except When it is Near Zero
+        if ((long)GdxMath.abs(linearVelocity().y) <= 1l)
+        {
+            body().setUserPointer(1l);
+        }
+        else
+        {
+            body().setUserPointer((long)linearVelocity().y);
+        }
     }
 }

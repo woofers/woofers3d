@@ -6,15 +6,17 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 class MyContactListener extends ContactListener
 {
     @Override
-    public boolean onContactAdded(btCollisionObject colObj0,
-                                  int partId0,
-                                  int index0,
-                                  btCollisionObject colObj1,
-                                  int partId1,
-                                  int index1)
+    public boolean onContactAdded(btCollisionObject body1,
+                                  int part1,
+                                  int index1,
+                                  btCollisionObject body2,
+                                  int part2,
+                                  int index2)
     {
-
-
+        // Reset to Zero When Object is In Contact with Another Body
+        // Used for Determining if the Object is on the Ground
+        body1.setUserPointer(0l);
+        body2.setUserPointer(0l);
         return true;
     }
 }
