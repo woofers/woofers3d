@@ -15,6 +15,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         implements Resetable
 {
     private MotionState motionState;
+    private boolean velocityDirrection;
 
     public RigidBody(Model model, Shape shape)
     {
@@ -90,7 +91,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
     public boolean onGround()
     {
-        return body().getUserPointer() == 0l;
+        return (long)linearVelocity().y == 0l && !velocityDirrection;
     }
 
     private void recalculateInertia()
@@ -144,15 +145,16 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
     {
         super.update(dt);
 
-        // Set Body's User Data to Y Component of Velocity
-        // Except When it is Near Zero
-        if ((long)GdxMath.abs(linearVelocity().y) <= 1l)
+        if ((long)linearVelocity().y != 0l)
         {
-            body().setUserPointer(1l);
-        }
-        else
-        {
-            body().setUserPointer((long)linearVelocity().y);
+            if (linearVelocity().y > 0f)
+            {
+                velocityDirrection = true;
+            }
+            else if (linearVelocity().y < 0f)
+            {
+                velocityDirrection = false;
+            }
         }
     }
 }

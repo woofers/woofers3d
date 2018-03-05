@@ -250,7 +250,7 @@ public abstract class PlayerBody
             else
             {
                 // velocityPerTick().x += -(MyMath.abs(velocityPerTick().x)
-                // / velocityPerTick().x) * angle(decceleration().x) * dt;
+                // velocityPerTick().x) * angle(decceleration().x) * dt;
             }
             if (forwardKey.isDown())
             {
