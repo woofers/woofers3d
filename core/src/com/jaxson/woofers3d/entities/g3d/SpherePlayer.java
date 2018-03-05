@@ -21,7 +21,8 @@ public class SpherePlayer extends RigidBody
     private static final float HITBOX_SCALE = 1f;
     private static final float SPEED = 4f;
     private static final float MAX_SPEED = 5f;
-    private static final float JUMP_IMPULSE = 340f;
+    private static final float JUMP_IMPULSE = 340f * 1.45f;
+    private static final float JUMP_MULTIPLER = 0.03f;
 
     private int jumpCount;
 
@@ -184,21 +185,20 @@ public class SpherePlayer extends RigidBody
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
-        // System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
-        //                    + round(linearVelocity().y) + "m/s, Z "
-        //                    + round(linearVelocity().z) + "m/s");
-        //System.out.println(jumpCount);
     }
 
     public void jump(float dt)
     {
         if (onGround())
         {
-            applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE, 0f));
-            body().setUserPointer(1l);
-            System.out.println(onGround());
+            applyCentralImpulse(new Vector3(0f, dt * JUMP_IMPULSE * jumpScale(), 0f));
             jumpCount ++;
         }
+    }
+
+    private float jumpScale()
+    {
+        return ((jumpCount + 1) * JUMP_MULTIPLER) + 1f;
     }
 
     private Keyboard keyboard()
