@@ -94,6 +94,11 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         return (long)linearVelocity().y == 0l && !movingUp;
     }
 
+    public boolean isFalling()
+    {
+        return !onGround();
+    }
+
     private void recalculateInertia()
     {
         body().setMassProps(mass(), inertia());
