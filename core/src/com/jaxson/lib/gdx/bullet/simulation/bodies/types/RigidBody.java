@@ -15,7 +15,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         implements Resetable
 {
     private MotionState motionState;
-    private boolean velocityDirrection;
+    protected boolean movingUp;
 
     public RigidBody(Model model, Shape shape)
     {
@@ -91,7 +91,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
     public boolean onGround()
     {
-        return (long)linearVelocity().y == 0l && !velocityDirrection;
+        return (long)linearVelocity().y == 0l && !movingUp;
     }
 
     private void recalculateInertia()
@@ -145,15 +145,17 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
     {
         super.update(dt);
 
-        if ((long)linearVelocity().y != 0l)
+        float velocity = linearVelocity().y;
+
+        if (Math.abs(velocity) > 1f)
         {
-            if (linearVelocity().y > 0f)
+            if (velocity > 0f)
             {
-                velocityDirrection = true;
+                movingUp = true;
             }
-            else if (linearVelocity().y < 0f)
+            else if (velocity < 0f)
             {
-                velocityDirrection = false;
+                movingUp = false;
             }
         }
     }
