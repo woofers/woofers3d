@@ -178,9 +178,9 @@ public class SpherePlayer extends RigidBody
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
             }
 
-            if ((touchScreen.justTouched() || accelerometer.shakeUp()))
+            if (touchScreen.justTouched())
             {
-                //jump(dt);
+                jump(dt);
             }
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
