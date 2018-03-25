@@ -22,7 +22,7 @@ public abstract class BulletState extends State
     public BulletState(Game game)
     {
         super(game);
-        this.world = new BulletWorld(environment());
+        this.world = new BulletWorld(environment(), game);
         setShadows(SHADOWS);
     }
 

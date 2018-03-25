@@ -1,6 +1,7 @@
 package com.jaxson.lib.gdx.bullet.simulation;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.jaxson.lib.gdx.backend.Game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -66,6 +67,7 @@ public class BulletWorld extends GameObject
     protected static final Vector3 GRAVITY
             = new Vector3(0, -GdxMath.GRAVITY_EARTH, 0);
 
+    private Game game;
     private MyArrayList<EntityBody> objects;
     private MyContactListener contactListener;
     private BulletDebug debug;
@@ -83,24 +85,26 @@ public class BulletWorld extends GameObject
     private TouchScreen touchScreen;
     private KeyboardKey debugKey;
 
-    public BulletWorld(MyEnvironment environment)
+    public BulletWorld(MyEnvironment environment, Game game)
     {
-        this(environment, WORLD_SIZE);
+        this(environment, game, WORLD_SIZE);
     }
 
-    public BulletWorld(MyEnvironment environment, Vector3 worldSize)
+    public BulletWorld(MyEnvironment environment, Game game, Vector3 worldSize)
     {
-        this(environment,
+        this(environment, game,
                 worldSize.cpy().scl(VECOTR_TO_MIN),
                 worldSize.scl(VECOTR_TO_MAX));
     }
 
     public BulletWorld(MyEnvironment environment,
+            Game game,
             Vector3 minSize,
             Vector3 maxSize)
     {
         BulletStarter.init();
 
+        this.game = game;
         this.worldSize = maxSize.sub(minSize);
         environment.setWorldSize(worldSize);
         this.objects = new MyArrayList<>();
@@ -317,7 +321,7 @@ public class BulletWorld extends GameObject
     public void update(float dt)
     {
         super.update(dt);
-        world.stepSimulation(dt);
+        world.stepSimulation(dt, 1, game.config().stepInterval());
     }
 
     public btSoftBodyWorldInfo worldInfo()
