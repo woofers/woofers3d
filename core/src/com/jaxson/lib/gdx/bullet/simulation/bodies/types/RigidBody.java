@@ -42,6 +42,11 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
         setMotionState(new MotionState(transform()));
     }
 
+    public void clearForces()
+    {
+        body().clearForces();
+    }
+
     public Vector3 angularVelocity()
     {
         return body().getAngularVelocity();
