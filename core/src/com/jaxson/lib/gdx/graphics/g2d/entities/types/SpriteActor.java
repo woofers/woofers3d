@@ -102,7 +102,8 @@ public class SpriteActor extends Sprite
     @Override
     public void scale(Vector2 scale)
     {
-        sprite.setScale(scale.x, scale.y);
+        Vector2 newScale = scale().scl(scale);
+        sprite.setScale(newScale.x, newScale.y);
     }
 
     @Override
