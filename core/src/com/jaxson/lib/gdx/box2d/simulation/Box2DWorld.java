@@ -23,10 +23,13 @@ import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.input.TouchScreen;
 import com.jaxson.lib.gdx.util.GameObject;
 import com.jaxson.lib.util.MyArrayList;
+import com.jaxson.lib.gdx.math.GdxMath;
 
 public class Box2DWorld extends GameObject
 {
     private static final boolean SLEEP = true;
+    private static final Vector2 GRAVITY = new Vector2(0f, -GdxMath.GRAVITY_EARTH);
+
     public static float METERS_TO_PIXELS = 64f;
     public static float PIXELS_TO_METERS = 1f / METERS_TO_PIXELS;
 
@@ -44,7 +47,7 @@ public class Box2DWorld extends GameObject
 
     public Box2DWorld()
     {
-        this(new Vector2(0f, -9.8f));
+        this(GRAVITY);
     }
 
     public Box2DWorld(Vector2 gravity)
