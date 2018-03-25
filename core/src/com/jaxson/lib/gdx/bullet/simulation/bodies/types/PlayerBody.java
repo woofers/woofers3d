@@ -366,9 +366,6 @@ public abstract class PlayerBody
         {
             jumpTime = 0f;
         }
-        // System.out.println("X " + round(velocity().x) + "m/s, Y "
-        // + round(velocity().y) + "m/s, Z "
-        // + round(velocity().z) + "m/s");
     }
 
     public boolean isFalling()
