@@ -1,5 +1,6 @@
 package com.jaxson.woofers3d.states;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.jaxson.lib.gdx.backend.Game;
@@ -7,6 +8,7 @@ import com.jaxson.lib.gdx.box2d.Box2DState;
 import com.jaxson.lib.gdx.box2d.bodies.Floor;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.woofers3d.entities.g2d.Player;
+import com.jaxson.lib.gdx.graphics.color.MyColor;
 
 public class FlatState extends Box2DState
 {
@@ -27,11 +29,12 @@ public class FlatState extends Box2DState
         add(player);
         applyPhysics(player);
 
-        floor2 = new Floor(6f, 3.1f);
+        floor2 = new Floor(6f, 3.1f, new MyColor(237, 125, 7));
         add(floor2);
         applyPhysics(floor2);
 
-        floor = new Floor(2f, 3f);
+        floor = new Floor(2f, 3f, new MyColor(237, 175, 7));
+        floor.scale(new Vector2(0.1f, 2f));
         add(floor);
         applyPhysics(floor);
     }
