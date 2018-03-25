@@ -16,6 +16,7 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 {
     private MotionState motionState;
     protected boolean movingUp;
+    protected float previousVelocity;
 
     public RigidBody(Model model, Shape shape)
     {
@@ -152,16 +153,21 @@ public class RigidBody extends ShapeBody<btRigidBody, Shape>
 
         float velocity = linearVelocity().y;
 
-        if (Math.abs(velocity) > 1f)
+        if (!(Math.signum(velocity) != Math.signum(previousVelocity) && isFalling()))
         {
-            if (velocity > 0f)
+            if (Math.abs(velocity) > 1f)
             {
-                movingUp = true;
-            }
-            else if (velocity < 0f)
-            {
-                movingUp = false;
+                if (velocity > 0f)
+                {
+                    movingUp = true;
+                }
+                else if (velocity < 0f)
+                {
+                    movingUp = false;
+                }
             }
         }
+
+        previousVelocity = velocity;
     }
 }
