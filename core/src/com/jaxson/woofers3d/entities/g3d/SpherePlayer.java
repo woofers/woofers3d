@@ -86,7 +86,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.x > 0f)
             {
                 applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (rightKey.isDown())
@@ -99,7 +99,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.x < 0f)
             {
                 applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (forwardKey.isDown())
@@ -112,7 +112,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.z > 0f)
             {
                 applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (backwardKey.isDown())
@@ -125,7 +125,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.z < 0f)
             {
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (jumpKey.isDown())
@@ -145,7 +145,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.x > 0f)
             {
                 applyCentralImpulse(new Vector3(-dt * SPEED, 0f, 0f));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (accelerometer.tiltsRight())
@@ -158,7 +158,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.x < 0f)
             {
                 applyCentralImpulse(new Vector3(dt * SPEED, 0f, 0f));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (accelerometer.tiltsForward())
@@ -171,7 +171,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.z > 0f)
             {
                 applyCentralImpulse(new Vector3(0f, 0f, -dt * SPEED));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (accelerometer.tiltsBackward())
@@ -184,7 +184,7 @@ public class SpherePlayer extends RigidBody
             else if (velocity.z < 0f)
             {
                 applyCentralImpulse(new Vector3(0f, 0f, dt * SPEED));
-                clampVelocity(velocity);
+                clampVelocity();
             }
 
             if (touchScreen.justTouched())
@@ -194,18 +194,19 @@ public class SpherePlayer extends RigidBody
         }
         if (cameraKey.isPressed()) cameraControlls.toggleCamera();
         if (resetKey.isPressed()) reset();
+        printVelocity();
     }
 
     protected void printVelocity()
     {
-        System.out.println("X " + round(linearVelocity().x) + "m/s, Y "
-        + round(linearVelocity().y) + "m/s, Z "
-        + round(linearVelocity().z) + "m/s");
+        System.out.println("X " + round(angularVelocity().x) + "m/s, Y "
+        + round(angularVelocity().y) + "m/s, Z "
+        + round(angularVelocity().z) + "m/s");
     }
 
-    protected void clampVelocity(Vector3 velocity)
+    protected void clampVelocity()
     {
-        velocity = linearVelocity();
+        Vector3 velocity = linearVelocity();
         velocity.x = VELOCITY_CLAMP < Math.abs(velocity.x) ? velocity.x : 0f;
         velocity.y = VELOCITY_CLAMP < Math.abs(velocity.y) ? velocity.y : 0f;
         velocity.z = VELOCITY_CLAMP < Math.abs(velocity.z) ? velocity.z : 0f;
