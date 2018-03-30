@@ -9,7 +9,7 @@ import com.jaxson.lib.gdx.input.KeyboardKey;
 import com.jaxson.lib.gdx.io.GdxFile;
 import com.jaxson.lib.gdx.io.TextureFromFile;
 import com.jaxson.lib.math.MyMath;
-
+map
 public class Player extends SpriteBody
 {
     private static final String PATH = "2D.png";

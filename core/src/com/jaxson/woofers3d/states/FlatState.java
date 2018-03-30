@@ -9,6 +9,10 @@ import com.jaxson.lib.gdx.box2d.bodies.Floor;
 import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.woofers3d.entities.g2d.Player;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class FlatState extends Box2DState
 {
@@ -17,6 +21,8 @@ public class FlatState extends Box2DState
     private Player player;
     private Floor floor;
     private Floor floor2;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
     public FlatState(Game game)
     {
@@ -37,6 +43,9 @@ public class FlatState extends Box2DState
         floor.scale(new Vector2(0.1f, 2f));
         add(floor);
         applyPhysics(floor);
+
+        map = new TmxMapLoader().load("levels/2d/sample.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map);
     }
 
     @Override
@@ -55,6 +64,8 @@ public class FlatState extends Box2DState
     public void render(View view)
     {
         super.render(view);
+        mapRenderer.setView((OrthographicCamera)view.spriteView().getCamera());
+        mapRenderer.render();
     }
 
     @Override
