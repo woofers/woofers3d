@@ -126,6 +126,7 @@ public class SpriteBody extends SpriteActor
 
     public void resetVelocity()
     {
+        if (!hasBody()) return;
         body().setLinearVelocity(new Vector2());
         body().setAngularVelocity(0f);
     }
@@ -146,6 +147,7 @@ public class SpriteBody extends SpriteActor
     public void setRotation(float roll)
     {
         super.setRotation(roll);
+        if (!hasBody()) return;
         body().setTransform(
                 body().getPosition(), roll * MyMath.DEGREES_TO_RADIANS);
     }
@@ -167,6 +169,7 @@ public class SpriteBody extends SpriteActor
     public void update(float dt)
     {
         super.update(dt);
+        if (!hasBody()) return;
         super.moveTo(
                 body().getPosition()
                         .add(
