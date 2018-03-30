@@ -59,6 +59,16 @@ public class Box2DWorld extends GameObject
         this.debugKey = keyboard.key("F5");
     }
 
+    public float metersToPixels()
+    {
+        return METERS_TO_PIXELS;
+    }
+
+    public float pixelsToMeters()
+    {
+        return PIXELS_TO_METERS;
+    }
+
     public void add(SpriteBody sprite)
     {
         sprite.createBody(this);
