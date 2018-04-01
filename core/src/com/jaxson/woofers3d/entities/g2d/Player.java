@@ -13,7 +13,7 @@ import com.jaxson.lib.math.MyMath;
 public class Player extends SpriteBody
 {
     private static final String PATH = "2D.png";
-    private static final float SCALE = 3.7f;
+    private static final float SCALE = 3.2f;
     private static final float SPEED = 4.5f;
     private static final float JUMP_VELOCITY = 7.4f;
 
@@ -25,13 +25,15 @@ public class Player extends SpriteBody
     private KeyboardKey jumpKey;
     private KeyboardKey resetKey;
 
+    private Vector2 startLocation = new Vector2(5f, 5.5f);
+
     public Player()
     {
         super(new TextureFromFile(new GdxFile(PATH)),
                 BodyDef.BodyType.DynamicBody,
                 1f);
         scale(SCALE);
-        moveTo(new Vector2(5f, 5.5f));
+        reset();
 
         this.keyboard = Inputs.keyboard();
         this.forwardKey = keyboard.key("W");
@@ -77,7 +79,7 @@ public class Player extends SpriteBody
 
     protected void reset()
     {
-        moveTo(new Vector2(5f, 5.5f));
+        moveTo(startLocation.cpy());
         setRotation(0f);
         resetVelocity();
     }

@@ -37,9 +37,9 @@ public class FlatState extends Box2DState
         add(player);
         applyPhysics(player);
 
-        map = new TmxMapLoader().load("levels/2d/sample.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map);
-        collisionMap = new Box2DTiledMap(map, physicsWorld());
+        map = new TmxMapLoader().load("levels/2d/untitled.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 6f);
+        collisionMap = new Box2DTiledMap(map, physicsWorld(), 6f);
     }
 
     @Override
