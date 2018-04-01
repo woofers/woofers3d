@@ -14,12 +14,11 @@ import com.jaxson.lib.gdx.box2d.simulation.Box2DWorld;
 import com.jaxson.lib.gdx.graphics.g2d.entities.types.SpriteActor;
 import com.jaxson.lib.math.MyMath;
 import com.jaxson.lib.util.Unwrapable;
+import com.badlogic.gdx.physics.box2d.Shape;
 
 public class SpriteBody extends SpriteActor
 {
-    private Body body;
     private Fixture fixture;
-
     private PolygonShape shape;
     private BodyDef bodyDef;
     private FixtureDef fixtureDef;
@@ -44,7 +43,8 @@ public class SpriteBody extends SpriteActor
 
     public Body body()
     {
-        return body;
+        if (!hasFixture()) return null;
+        return fixture().getBody();
     }
 
     public void createBody(Box2DWorld world)
@@ -58,11 +58,13 @@ public class SpriteBody extends SpriteActor
 
         this.fixtureDef.shape = shape;
 
-        body = world.createBody(bodyDef);
+        Body body = world.createBody(bodyDef);
         fixture = body.createFixture(fixtureDef);
+
         shape.dispose();
         shape = null;
     }
+
 
     @Override
     public void dispose()
@@ -73,12 +75,17 @@ public class SpriteBody extends SpriteActor
 
     public boolean hasBody()
     {
-        return body != null;
+        return body() != null;
+    }
+
+    public Fixture fixture()
+    {
+        return fixture;
     }
 
     public boolean hasFixture()
     {
-        return fixture != null;
+        return fixture() != null;
     }
 
     public boolean hasPhysics()
