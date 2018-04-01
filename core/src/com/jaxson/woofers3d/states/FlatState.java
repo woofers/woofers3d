@@ -10,6 +10,7 @@ import com.jaxson.lib.gdx.graphics.views.View;
 import com.jaxson.woofers3d.entities.g2d.Player;
 import com.jaxson.lib.gdx.graphics.color.MyColor;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.AtlasTmxMapLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,7 +38,7 @@ public class FlatState extends Box2DState
         add(player);
         applyPhysics(player);
 
-        map = new TmxMapLoader().load("levels/2d/untitled.tmx");
+        map = new AtlasTmxMapLoader().load("levels/2d/tiles.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 6f);
         collisionMap = new Box2DTiledMap(map, physicsWorld(), 6f);
     }

@@ -13,7 +13,7 @@ import com.jaxson.lib.math.MyMath;
 public class Player extends SpriteBody
 {
     private static final String PATH = "2D.png";
-    private static final float SCALE = 3.2f;
+    private static final float SCALE = 2.9f;
     private static final float SPEED = 4.5f;
     private static final float JUMP_VELOCITY = 7.4f;
 

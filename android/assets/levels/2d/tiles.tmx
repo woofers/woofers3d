@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><map height="10" nextobjectid="1" orientation="orthogonal" renderorder="right-down" tileheight="10" tilewidth="10" version="1.0" width="20">
+ <properties>
+  <property name="atlas" value="tileset/tiles.atlas"/>
+ </properties>
+ <tileset columns="21" firstgid="1" margin="2" name="tiles" spacing="2" tilecount="42" tileheight="10" tilewidth="10">
+  <image height="32" source="tiles.png" width="256"/>
+ </tileset>
+ <layer height="10" name="Tile Layer 1" width="20">
+  <data compression="zlib" encoding="base64">
+   eJxjYBgF1AByVDSLBYiZSdQjTyW7pYCYC4iZyNCLHgYgs9iBWAKKsQF5qDpJNMwEpVmBmBOLWbjMY0LDjGhsZCzBQNg8AJozAno=
+  </data>
+ </layer>
+ <objectgroup name="Collision">
+  <object id="5" x="0.0434783" y="89.8261">
+   <polyline points="0,0 9.95652,0.0869565 20,-9.95652 79.8696,-9.82609 89.9565,0.0869565 99.9565,0.130435"/>
+  </object>
+  <object id="7" x="13.1739" y="59.8696">
+   <polyline points="0,0 13.6087,0.0434783 16.8261,-1.91304 16.8696,-8.95652 15.7826,-9.91304 -2.13043,-9.86957 -3.17391,-8.86957 -3.21739,-2.04348 0,-0.0434783"/>
+  </object>
+  <object id="8" x="100.182" y="89.5455">
+   <polyline points="0,0 29.7273,-29.7273 49.5455,-29.6364"/>
+  </object>
+ </objectgroup>
+</map>
