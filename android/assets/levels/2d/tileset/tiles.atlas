@@ -27,6 +27,13 @@ tiles
   index: 2
 tiles
   rotate: false
+  xy: 25, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 22
+tiles
+  rotate: false
   xy: 37, 1
   size: 10, 10
   orig: 10, 10
@@ -69,6 +76,97 @@ tiles
   index: 8
 tiles
   rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 16
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 34
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 35
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 30
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 31
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 27
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 26
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 29
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 32
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 15
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 17
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 33
+tiles
+  rotate: false
+  xy: 97, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 28
+tiles
+  rotate: false
   xy: 109, 1
   size: 10, 10
   orig: 10, 10
@@ -90,211 +188,71 @@ tiles
   index: 11
 tiles
   rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 34
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 37
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 39
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 13
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 16
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 40
-tiles
-  rotate: false
-  xy: 133, 1
+  xy: 145, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: 12
 tiles
   rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 20
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 14
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 35
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 33
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 38
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 41
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 17
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 15
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 21
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 32
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 19
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 36
-tiles
-  rotate: false
-  xy: 133, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 18
-tiles
-  rotate: false
-  xy: 145, 1
-  size: 10, 10
-  orig: 10, 10
-  offset: 0, 0
-  index: 22
-tiles
-  rotate: false
   xy: 157, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 23
+  index: 13
 tiles
   rotate: false
   xy: 169, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 24
+  index: 14
 tiles
   rotate: false
   xy: 181, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 25
+  index: 18
 tiles
   rotate: false
   xy: 193, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 26
+  index: 19
 tiles
   rotate: false
   xy: 205, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 27
+  index: 20
 tiles
   rotate: false
   xy: 217, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 28
+  index: 21
 tiles
   rotate: false
   xy: 229, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 29
+  index: 23
 tiles
   rotate: false
   xy: 241, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 30
+  index: 24
 tiles
   rotate: false
   xy: 253, 1
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
-  index: 31
+  index: 25
