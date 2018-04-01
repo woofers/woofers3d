@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="30" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIw3IDYCdLEDMTANzQX6Rp4G56EAKiBnxYGIBKWEPspMdiCXwYGQgD9UjiYaZoDQrAfs4ibRTAqoWpp6JgB4ZBkgYMeHAsDAkZCcIAwCGxQTa
+   eJxjYBgFIw3IDYCdLEDMTANzQX6Rp4G56EAKiBnxYGIBKWEPspMdiCXwYGQgD9UjiYaZoDQrAfs4ibRTAqoWpp6JgB4ZBkgYMeHAjETaCcIAh7UE4A==
   </data>
  </layer>
  <objectgroup name="Collision">
