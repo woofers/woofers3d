@@ -50,6 +50,7 @@ public class SpriteBody extends SpriteActor
     public void createBody(Box2DWorld world)
     {
         this.bodyDef.position.set(x() + width() / 2, y() + height() / 2);
+        this.bodyDef.fixedRotation = true;
 
         this.shape = new PolygonShape();
         this.shape.setAsBox(
