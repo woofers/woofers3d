@@ -18,6 +18,8 @@ import com.jaxson.lib.gdx.box2d.Box2DTiledMap;
 
 public class FlatState extends Box2DState
 {
+    private static final float LEVEL_SCALE = 6f;
+
     private Camera camera;
     private World world;
     private Player player;
@@ -39,8 +41,8 @@ public class FlatState extends Box2DState
         applyPhysics(player);
 
         map = new AtlasTmxMapLoader().load("levels/2d/tiles.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 6f);
-        collisionMap = new Box2DTiledMap(map, physicsWorld(), 6f);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, LEVEL_SCALE);
+        collisionMap = new Box2DTiledMap(map, physicsWorld(), LEVEL_SCALE);
     }
 
     @Override
