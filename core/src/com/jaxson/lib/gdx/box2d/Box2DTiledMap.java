@@ -27,6 +27,7 @@ import com.jaxson.lib.util.MyArrayList;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.math.Polygon;
 
 public class Box2DTiledMap
@@ -116,8 +117,13 @@ public class Box2DTiledMap
 
             BodyDef bodyDef = new BodyDef();
             bodyDef.type = BodyType.StaticBody;
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.friction = 0f;
+
             Body body = world.createBody(bodyDef);
-            body.createFixture(shape, 1);
+            body.createFixture(fixtureDef);
             bodies.add(body);
             shape.dispose();
         }
