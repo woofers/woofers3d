@@ -25,9 +25,12 @@ public class FlatState extends Box2DState
     private Player player;
     private Floor floor;
     private Floor floor2;
+
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
     private Box2DTiledMap collisionMap;
+    private int[] backgroundLayers = { 0 };
+    private int[] foregroundLayers = { 1 };
 
     public FlatState(Game game)
     {
@@ -61,8 +64,9 @@ public class FlatState extends Box2DState
     public void render(View view)
     {
         mapRenderer.setView((OrthographicCamera)view.spriteView().getCamera());
-        mapRenderer.render();
+        mapRenderer.render(backgroundLayers);
         super.render(view);
+        mapRenderer.render(foregroundLayers);
     }
 
     @Override
