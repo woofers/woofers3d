@@ -160,6 +160,12 @@ public class SpriteActor extends Sprite
     }
 
     @Override
+    public void setFlip(boolean flipX, boolean flipY)
+    {
+        sprite.setFlip(flipX, flipY);
+    }
+
+    @Override
     public float width()
     {
         return originalWidth() * scale().x;

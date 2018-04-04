@@ -18,7 +18,7 @@ import com.jaxson.lib.gdx.box2d.Box2DTiledMap;
 
 public class FlatState extends Box2DState
 {
-    private static final float LEVEL_SCALE = 6f;
+    private static final float LEVEL_SCALE = 5f;
 
     private Camera camera;
     private World world;

@@ -12,8 +12,8 @@ import com.jaxson.lib.math.MyMath;
 
 public class Player extends SpriteBody
 {
-    private static final String PATH = "sprites/2D.png";
-    private static final float SCALE = 2.9f;
+    private static final String PATH = "sprites/gazelle/gazelle.png";
+    private static final float SCALE = 4f;
     private static final float SPEED = 4.5f;
     private static final float JUMP_VELOCITY = 7.4f;
 
@@ -57,10 +57,12 @@ public class Player extends SpriteBody
         if (rightKey.isDown())
         {
             body().setLinearVelocity(SPEED, body().getLinearVelocity().y);
-        }
+            setFlip(false, false);
+         }
         else if (leftKey.isDown())
         {
             body().setLinearVelocity(-SPEED, body().getLinearVelocity().y);
+            setFlip(true, false);
         }
         else
         {

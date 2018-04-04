@@ -100,6 +100,12 @@ public class Text extends Sprite
     }
 
     @Override
+    public void setFlip(boolean flipX, boolean flipY)
+    {
+
+    }
+
+    @Override
     public void setOrigin()
     {
 

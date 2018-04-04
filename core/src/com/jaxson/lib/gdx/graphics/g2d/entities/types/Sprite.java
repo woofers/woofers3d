@@ -75,10 +75,7 @@ public abstract class Sprite extends GameObject
         this.depth = depth;
     }
 
-    public void setFlip(boolean flipX, boolean flipY)
-    {
-        setFlip(flipX, flipY);
-    }
+    public abstract void setFlip(boolean flipX, boolean flipY);
 
     public abstract void setOrigin();
 
