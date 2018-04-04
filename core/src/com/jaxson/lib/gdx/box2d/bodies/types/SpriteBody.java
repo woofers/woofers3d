@@ -22,6 +22,7 @@ public class SpriteBody extends SpriteActor
     private PolygonShape shape;
     private BodyDef bodyDef;
     private FixtureDef fixtureDef;
+    private Hitbox hitbox;
 
     public SpriteBody(Texture texture, BodyType type, float density)
     {
@@ -49,21 +50,16 @@ public class SpriteBody extends SpriteActor
 
     public void createBody(Box2DWorld world)
     {
-        this.bodyDef.position.set(x() + width() / 2, y() + height() / 2);
         this.bodyDef.fixedRotation = true;
 
-        this.shape = new PolygonShape();
-        this.shape.setAsBox(
-                width() / 2, height() / 2, Vector2.Zero,
-                rotation() * MyMath.DEGREES_TO_RADIANS);
-
-        this.fixtureDef.shape = shape;
+        this.hitbox = new Hitbox(width(), height());
+        hitbox.apply(bodyDef, x(), y());
+        hitbox.apply(fixtureDef, rotation());
 
         Body body = world.createBody(bodyDef);
         fixture = body.createFixture(fixtureDef);
 
-        shape.dispose();
-        shape = null;
+        hitbox.dispose();
     }
 
 
