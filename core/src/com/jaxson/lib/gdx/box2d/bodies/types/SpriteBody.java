@@ -26,6 +26,11 @@ public class SpriteBody extends SpriteActor
 
     public SpriteBody(Texture texture, BodyType type, float density)
     {
+        this(texture, null, type, density);
+    }
+
+    public SpriteBody(Texture texture, Hitbox hitbox, BodyType type, float density)
+    {
         super(texture);
 
         setOrigin();
@@ -35,11 +40,18 @@ public class SpriteBody extends SpriteActor
 
         this.fixtureDef = new FixtureDef();
         this.fixtureDef.density = density;
+
+        this.hitbox = hitbox;
     }
 
     public SpriteBody(Unwrapable<Texture> texture, BodyType type, float density)
     {
-        this(texture.unwrap(), type, density);
+        this(texture, null, type, density);
+    }
+
+    public SpriteBody(Unwrapable<Texture> texture, Hitbox hitbox, BodyType type, float density)
+    {
+        this(texture.unwrap(), hitbox, type, density);
     }
 
     public Body body()
@@ -52,7 +64,7 @@ public class SpriteBody extends SpriteActor
     {
         this.bodyDef.fixedRotation = true;
 
-        this.hitbox = new Hitbox(width(), height());
+        if (hitbox == null) hitbox = new Hitbox(width(), height());
         hitbox.apply(bodyDef, x(), y());
         hitbox.apply(fixtureDef, rotation());
 
@@ -177,10 +189,13 @@ public class SpriteBody extends SpriteActor
         super.moveTo(
                 body().getPosition()
                         .add(
-                                -originalWidth() * PIXELS_TO_METERS / 2,
-                                -originalHeight() * PIXELS_TO_METERS / 2)
+                                (-originalWidth() * PIXELS_TO_METERS
+                                - hitbox.offsetX() * Math.signum(scale().x)) / 2,
+                                (-originalHeight() * PIXELS_TO_METERS
+                                -hitbox.offsetY() * Math.signum(scale().y)) / 2)
                         .scl(METERS_TO_PIXELS));
         setRotation(body().getAngle() * MyMath.RADIANS_TO_DEGREES);
+        System.out.println(Math.signum(scale().x));
     }
 
     @Override

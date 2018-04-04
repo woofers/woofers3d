@@ -3,6 +3,7 @@ package com.jaxson.woofers3d.entities.g2d;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.jaxson.lib.gdx.box2d.bodies.types.SpriteBody;
+import com.jaxson.lib.gdx.box2d.bodies.types.Hitbox;
 import com.jaxson.lib.gdx.input.Inputs;
 import com.jaxson.lib.gdx.input.Keyboard;
 import com.jaxson.lib.gdx.input.KeyboardKey;
@@ -30,6 +31,7 @@ public class Player extends SpriteBody
     public Player()
     {
         super(new TextureFromFile(new GdxFile(PATH)),
+                new Hitbox(1.15f, 1f, -0.6f, -1.8f),
                 BodyDef.BodyType.DynamicBody,
                 1f);
         scale(SCALE);

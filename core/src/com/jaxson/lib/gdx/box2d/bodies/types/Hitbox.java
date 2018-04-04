@@ -56,7 +56,7 @@ public class Hitbox implements Disposable
 
     public BodyDef apply(BodyDef bodyDef, float x, float y)
     {
-        bodyDef.position.set(x + width() / 2 + offsetY(), y + height() / 2 + offsetY());
+        bodyDef.position.set(x + width() / 2, y + height() / 2);
         return bodyDef;
     }
 

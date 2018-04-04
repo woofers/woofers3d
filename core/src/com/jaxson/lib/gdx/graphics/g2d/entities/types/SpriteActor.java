@@ -162,7 +162,22 @@ public class SpriteActor extends Sprite
     @Override
     public void setFlip(boolean flipX, boolean flipY)
     {
-        sprite.setFlip(flipX, flipY);
+        if (flipX)
+        {
+            sprite.setScale(-Math.abs(sprite.getScaleX()), sprite.getScaleY());
+        }
+        else
+        {
+            sprite.setScale(Math.abs(sprite.getScaleX()), sprite.getScaleY());
+        }
+        if (flipY)
+        {
+            sprite.setScale(sprite.getScaleX(), -Math.abs(sprite.getScaleY()));
+        }
+        else
+        {
+            sprite.setScale(sprite.getScaleX(), Math.abs(sprite.getScaleY()));
+        }
     }
 
     @Override
