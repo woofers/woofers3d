@@ -34,9 +34,9 @@ public abstract class PlayerBody
     private static final float ACCELERATION_X = 0.014f * 1.18f;
     private static final float DECCELERATION_X = ACCELERATION_X * 3f;
     private static final float MAX_VELOCITY_X = 1.04f;
-    private static final float ACCELERATION_Z = 0.23f;
-    private static final float DECCELERATION_Z = ACCELERATION_Z / 2f;
-    private static final float MAX_VELOCITY_Z = 7f;
+    private static final float ACCELERATION_Z = 0.04f;
+    private static final float DECCELERATION_Z = ACCELERATION_Z * 2f;
+    private static final float MAX_VELOCITY_Z = 5f;
     private static final float INERTIA_VELOCITY = MAX_VELOCITY_Z * 0.88f;
     private static final float BACKWARD_SCALE = 0.72f;
 
