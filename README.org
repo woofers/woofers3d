@@ -2,12 +2,14 @@
 #+TITLE:	Woofers3D
 #+AUTHOR:	Jaxson Van Doorn
 #+EMAIL:	jaxson.vandoorn@gmail.com
-#+OPTIONS:  num:nil
+#+OPTIONS:  num:nil toc:nil
 
 * Woofers3D
 *A 3D game API designed to be effortless and simple to use.*
 
 Supports modern features such as Ray Tracing, Chasing Camera, States and 3D Model Importing.
+
+Built with [[https://github.com/libgdx/libgdx][LibGDX]], [[https://github.com/bulletphysics/bullet3][Bullet Physics]] and [[https://github.com/erincatto/Box2D][Box2D]].
 
 ** Screenshots
 
@@ -35,11 +37,3 @@ Supports modern features such as Ray Tracing, Chasing Camera, States and 3D Mode
 #+NAME:    Woofers3D
 #+ATTR_HTML: :style margin-left: auto; margin-right: auto;
 [[./screenshots/3.png]]
-
-** Acknowledgments
-**** *Built using* [[https://github.com/libgdx/libgdx][LibGDX]], [[https://github.com/bulletphysics/bullet3][Bullet Physics]] and [[https://github.com/erincatto/Box2D][Box2D]]
-**** *GPL 3.0 2016-2017*, /Jaxson Van Doorn/
-** Other Projects
-**** [[https://github.com/woofers/whale][Whale]]
-**** [[https://github.com/woofers/k9-krew][K9Krew]]
-**** [[https://github.com/woofers/dotfiles][Dotfiles]]
